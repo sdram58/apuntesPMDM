@@ -1,7 +1,11 @@
 window.addEventListener("load", start);
 
 function start(){
-    alert("Hello");
-
-    navigator.clipboard.writeText("Pasta\nPesto");
+    navigator.clipboard.writeText("<empty clipboard>").then(function() {
+        /* clipboard successfully set */
+        alert("ok");
+      }, function() {
+        /* clipboard write failed */
+        alert("ko");
+      });
 }
