@@ -4,5 +4,14 @@
 }
 
 body{
-    background-color: aqua;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+.codigo{
+    font-family: monospace;
+    padding: 10px;
+    border:2px solid blue;
+    background-color: cadetblue;
+    color:chocolate;
+}
+
