@@ -23,6 +23,7 @@ body{
     padding: 8px;    
     border-bottom: 0;
     background-color: dodgerblue;
+    margin-top: 20px;
 }
 
 .icono + span{
@@ -32,6 +33,7 @@ body{
 .marco-b{
     border:1px solid gray;
     border-top: 0;
+    margin-bottom: 20px;
 }
 .explicacion{
     padding: 10px;
@@ -48,18 +50,29 @@ span.icono{
 .info, .warning{
     display: inline-block;
     width: 60px;
-    height: 60px;
-    
+    height: 60px;    
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
 }
 .info{
     background-image: url(../imagenes/info.png);
+    background-color: dodgerblue;
 }
 
 .warning{
     background-image: url(../imagenes/warning.png);
+    background-color:khaki;
+}
+
+.file{
+    background-image: url(../imagenes/file.png);
+    background-color: gray;
+}
+
+.folder{
+    background-image: url(../imagenes/folder.png);
+    background-color: black;
 }
 
 
