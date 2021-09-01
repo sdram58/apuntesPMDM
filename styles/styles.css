@@ -25,6 +25,10 @@ body{
     background-color: dodgerblue;
 }
 
+.icono + span{
+    vertical-align: middle;
+}
+
 .marco-b{
     border:1px solid gray;
     border-top: 0;
@@ -32,6 +36,7 @@ body{
 .explicacion{
     padding: 10px;
 }
+
 
 span.icono{
     padding-left: 15px;
