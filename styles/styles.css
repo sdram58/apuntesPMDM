@@ -17,3 +17,10 @@ body{
     color:chocolate;
 }
 
+.marco{
+    border-radius: 8px 8px 0 0;
+    border: 1px solid gray;
+}
+
+
+
