@@ -17,19 +17,32 @@ body{
     color:chocolate;
 }
 
-.marco{
+.marco-t{
     border-radius: 8px 8px 0 0;
     border: 1px solid gray;
-    padding: 8px;
+    padding: 8px;    
+    border-bottom: 0;
+    background-color: dodgerblue;
 }
 
+.marco-b{
+    border:1px solid gray;
+    border-top: 0;
+}
 .explicacion{
     padding: 10px;
 }
 
-.espacio{
+span.icono{
     padding-left: 15px;
 }
+
+
+
+.info::before{
+    content: url(../imagenes/info.png);
+}
+
 
 .cursiva{
     font-style: italic;
@@ -42,17 +55,6 @@ body{
 .bigger{
     font-size: 1.1em;
 }
-
-.marco .info{
-    background-color: dodgerblue;
-    padding: 8px;
-    margin-left: 10px;
-}
-
-.marco .info::before{
-    content: url(../imagenes/info.png);
-}
-
 
 
 
