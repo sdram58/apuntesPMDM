@@ -39,8 +39,14 @@ span.icono{
 
 
 
-.info::before{
-    content: url(../imagenes/info.png);
+.info{
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    background-image: url(../imagenes/info.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 }
 
 
