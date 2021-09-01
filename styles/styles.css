@@ -22,5 +22,14 @@ body{
     border: 1px solid gray;
 }
 
+.marco .info{
+    background-color: dodgerblue;
+    padding: 8px;
+}
+
+.marco .info::before{
+    content: url(../imagenes/info.png);
+}
+
 
 
