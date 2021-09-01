@@ -47,7 +47,7 @@ span.icono{
 
 
 
-.info, .warning{
+.info, .warning, .folder, .file{
     display: inline-block;
     width: 60px;
     height: 60px;    
