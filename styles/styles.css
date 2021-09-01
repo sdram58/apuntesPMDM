@@ -23,6 +23,26 @@ body{
     padding: 8px;
 }
 
+.explicacion{
+    padding: 10px;
+}
+
+.espacio{
+    padding-left: 15px;
+}
+
+.cursiva{
+    font-style: italic;
+}
+
+.negrita{
+    font-weight: bold;
+}
+
+.bigger{
+    font-size: 1.1em;
+}
+
 .marco .info{
     background-color: dodgerblue;
     padding: 8px;
