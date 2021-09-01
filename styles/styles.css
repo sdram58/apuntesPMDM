@@ -20,16 +20,19 @@ body{
 .marco{
     border-radius: 8px 8px 0 0;
     border: 1px solid gray;
+    padding: 8px;
 }
 
 .marco .info{
     background-color: dodgerblue;
     padding: 8px;
+    margin-left: 10px;
 }
 
 .marco .info::before{
     content: url(../imagenes/info.png);
 }
+
 
 
 
