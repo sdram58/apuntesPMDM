@@ -87,5 +87,23 @@ span.icono{
     font-size: 1.1em;
 }
 
+.r-word{
+    display:inline-block;
+    border:1px solid rgba(0,255, 0, 0.7);
+    background-color: rgba(0,255, 0, 0.3);;
+    border-radius: 5px;
+    padding: 5px;
+    color:green;
+}
+
+.d-word{
+    display:inline-block;
+    border:1px solid rgba(0,0, 255, 0.7);
+    background-color:1px solid rgba(0,0, 255, 0.3);
+    border-radius: 5px;
+    padding: 5px;
+    color:blue;
+}
+
 
 
