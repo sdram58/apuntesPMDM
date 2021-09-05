@@ -46,6 +46,8 @@ span.icono{
 
 
 
+
+
 .info, .warning, .folder, .file{
     display: inline-block;
     width: 60px;
@@ -57,6 +59,21 @@ span.icono{
 .info{
     background-image: url(../imagenes/info.png);
     background-color: dodgerblue;
+}
+
+.inf{
+    background-color: dodgerblue;
+}
+.warn{
+    background-color: khaki;
+}
+.file-{
+    background-color: gray;
+
+}
+.folder-{
+    background-color: black;
+    color: white;
 }
 
 .warning{
