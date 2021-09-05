@@ -74,6 +74,10 @@ span.icono{
     background-color: black;
 }
 
+.marco-t:has(> .info){
+    background-color: dodgerblue;
+}
+
 
 .cursiva{
     font-style: italic;
