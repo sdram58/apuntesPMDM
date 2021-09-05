@@ -74,7 +74,7 @@ span.icono{
     background-color: black;
 }
 
-.marco-t:has(> .info){
+.info:parent{
     background-color: dodgerblue;
 }
 
