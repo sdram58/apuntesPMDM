@@ -126,6 +126,9 @@ span.icono{
     text-align: center;
 
 }
+.main-menu>li a{
+    text-decoration: none;
+}
 
 
 
