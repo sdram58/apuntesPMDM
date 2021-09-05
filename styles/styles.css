@@ -114,7 +114,7 @@ span.icono{
     list-style: none;    
 }
 
-.main-menu>li{
+.main-menu>a{
     display: inline-block;
     width: 31%;
     padding: 10px;
