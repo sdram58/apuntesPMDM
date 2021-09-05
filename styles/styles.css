@@ -110,4 +110,22 @@ span.icono{
 }
 
 
+.main-menu, .main-menu>li{
+    list-style: none;    
+}
+
+.main-menu>li{
+    display: inline-block;
+    width: 33%;
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid blue;
+    border-radius: 7px;
+    background-color:rgba(0,0, 255, 0.3);
+    color:rgba(0,0, 255, 0.7);
+    text-align: center;
+
+}
+
+
 
