@@ -33,6 +33,7 @@ body{
     border:1px solid gray;
     border-top: 0;
     margin-bottom: 20px;
+    border-radius:0 0 8px 8px;
 }
 .explicacion{
     padding: 10px;
