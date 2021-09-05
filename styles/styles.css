@@ -116,11 +116,10 @@ span.icono{
 
 .main-menu>a{
     display: inline-block;
-    width: 31%;
+    width: 30%;
     padding: 10px;
     margin: 10px 1%;
     border: 2px solid blue;
-    outline: 1px solid green;
     border-radius: 7px;
     background-color:rgba(0,0, 255, 0.3);
     color:rgba(0,0, 255, 0.7);
