@@ -135,7 +135,9 @@ span.icono{
 
 .main-menu>a{
     display: inline-block;
-    min-height: 250px;
+    min-height: 90px;
+    line-height: 90px;
+    overflow: hidden;
     width: 31.33%;
     padding: 10px;
     margin: 10px 1%;
@@ -164,6 +166,3 @@ body>h1{
 html body .oculto{
     display: none !important;
 }
-
-
-
