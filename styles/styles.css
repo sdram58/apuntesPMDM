@@ -135,16 +135,16 @@ span.icono{
 
 .main-menu>a{
     display: inline-block;
-    min-height: 90px;
-    line-height: 90px;
+    min-height: 75px;
+    line-height: 75px;
     overflow: hidden;
     width: 31.33%;
     padding: 10px;
     margin: 10px 1%;
-    border: 2px solid blue;
+    border: 2px solid rgb(16, 190, 68);
     border-radius: 7px;
-    background-color:rgba(0,0, 255, 0.3);
-    color:rgba(0,0, 255, 0.7);
+    background-color:rgba(158, 253, 171, 0.5);
+    color:rgba(53, 78, 64, 0.7);
     text-align: center;
     box-sizing: border-box;
 
