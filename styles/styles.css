@@ -74,7 +74,7 @@ span.icono{
 
 }
 .folder-{
-    background-color: black;
+    background-color: cadetblue;
     color: white;
 }
 
@@ -90,7 +90,7 @@ span.icono{
 
 .folder{
     background-image: url(../imagenes/folder.png);
-    background-color: black;
+    background-color:cadetblue;
 }
 
 .info:parent{
