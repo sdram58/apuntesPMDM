@@ -187,3 +187,11 @@ a.enlace{
 a.enlace::before{
     content: url('../imagenes/link.png') " ";
 }
+
+p{
+    margin-bottom: 10px;
+}
+
+p ul{
+    margin-left: 20px;
+}
