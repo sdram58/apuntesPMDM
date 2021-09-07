@@ -15,15 +15,15 @@
   
   <div class="main-menu">
     <a href="#s1">Why Kotlin?</a><a 
-       href="./unidades/underconstruction.html">UD2.- Introducing Android</a><a 
-       href="./unidades/underconstruction.html">UD3.- Fragments</a><a 
-       href="./unidades/underconstruction.html">UD4.- Navigation</a><a 
-       href="./unidades/underconstruction.html">UD5.- Model-View-View-Model</a><a 
-       href="./unidades/underconstruction.html">UD6.- Kotlin's basics</a><a 
-       href="./unidades/underconstruction.html">UD7.- Kotlin's basics</a><a 
-       href="./unidades/underconstruction.html">UD8.- Kotlin's basics</a><a 
-       href="./unidades/underconstruction.html">UD9.- Kotlin's basics</a><a 
-       href="./unidades/underconstruction.html">UD10.- Kotlin's basics</a><a 
+       href="#s2">Variable Declaration</a><a 
+       href="#s3">Conditionals</a><a 
+       href="#s4">UD4.- Navigation</a><a 
+       href="#s5">UD5.- Model-View-View-Model</a><a 
+       href="#s6">UD6.- Kotlin's basics</a><a 
+       href="#s7">UD7.- Kotlin's basics</a><a 
+       href="#s8">UD8.- Kotlin's basics</a><a 
+       href="#s9">UD9.- Kotlin's basics</a><a 
+       href="#s10">UD10.- Kotlin's basics</a><a 
        class="oculto" href="./unidades/underconstruction.html">UD11.- Kotlin's basics</a>
 </div>
 
@@ -122,6 +122,46 @@ val languageName: String = "Kotlin"
   <p>With a <span class="cursiva">String?</span>  type, you can assign either a String value or null to <span class="cursiva">languageName</span>. <br> 
     You must handle nullable variables carefully or risk a dreaded <span class="cursiva">NullPointerException</span> . In Java, for example, if you attempt to invoke a method on a null value, your program crashes. <br>
     Kotlin provides a number of mechanisms for safely working with nullable variables</p>
+
+    <a name="s3"><a>
+    <h2>Conditionals</h2>
+
+    <p>Kotlin features several mechanisms for implementing conditional logic. The most common of these <span class="cursiva">is</span>  an <span class="cursiva">if-else</span>  statement. If an expression wrapped in parentheses next to an if keyword evaluates to <span class="cursiva">true</span> , then code within that branch (i.e. the immediately-following code that is wrapped in curly braces) is executed. Otherwise, the code within the <span class="cursiva">else</span>  branch is executed.</p>
+
+    <section><pre><code class="language-kotlin">
+if (count == 42) {
+  println("I have the answer.")
+} else {
+  println("The answer eludes me.")
+}
+    </code></pre></section><br><br>
+
+    <p>You can represent multiple conditions using <span class="cursiva">else if</span> . This lets you represent more granular, complex logic within a single conditional statement, as shown in the following example:</p>
+
+    <section><pre><code class="language-kotlin">
+if (count == 42) {
+    println("I have the answer.")
+} else if (count > 35) {
+    println("The answer is close.")
+} else {
+    println("The answer eludes me.")
+}
+    </code></pre></section><br><br>
+
+
+    <p>Conditional statements are useful for representing stateful logic, but you may find that you repeat yourself when writing them. In the example above, you simply print a <span class="cursiva">String</span>  in each branch. To avoid this repetition, Kotlin offers <span class="cursiva">conditional expressions</span> . The last example can be rewritten as follows:</p>
+
+    <section><pre><code class="language-kotlin">
+val answerString: String = if (count == 42) {
+    "I have the answer."
+} else if (count > 35) {
+    "The answer is close."
+} else {
+    "The answer eludes me."
+}
+
+println(answerString)
+    </code></pre></section><br><br>
 
 
 
