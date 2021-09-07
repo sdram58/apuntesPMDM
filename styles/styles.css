@@ -190,13 +190,13 @@ body h2{
 body h3{
     text-align: center;
     margin: 0 20px;
-    color:rgb(248, 247, 169);
+    color:rgb(68, 68, 40);
     font-size: 1.1em;
-    padding: 15px;
+    padding: 9px;
     margin: 20px 0;
     border: 2px solid rgb(243, 170, 12);
     border-radius: 9px;
-    background-color: rgba(49, 49, 24, 0.7);
+
 }
 
 a.enlace{
