@@ -166,3 +166,24 @@ body>h1{
 html body .oculto{
     display: none !important;
 }
+
+body>h2{
+    text-align: center;
+    color:rgb(104, 138, 240);
+    font-size: 1.2em;
+    padding: 15px;
+    margin: 20px 0;
+    border: 2px solid rgb(12, 12, 243);
+    border-radius: 9px;
+    background-color: rgba(156, 178, 218, 0.7);
+}
+
+a.enlace{
+    text-decoration: none;
+    color: green;
+    font-style: italic;
+}
+
+a.enlace::before{
+    content: url('../imagenes/link.png');
+}
