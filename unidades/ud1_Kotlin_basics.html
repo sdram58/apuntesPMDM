@@ -32,7 +32,7 @@
 <h2>Why Kotlin?</h2>
 <p>Kotlin is a modern programming language than make developers happier…</p>
 
-<img src="./imagenes/ud1/Imagen1.png" alt="Kotlin's uses" title="Kotlin's uses" />
+<img style="width:100%" src="./imagenes/ud1/Imagen1.png" alt="Kotlin's uses" title="Kotlin's uses" />
 <br><br>
 <a class="enlace" target="_blank" href="https://kotlinlang.org/">https://kotlinlang.org/</a> 
 
@@ -85,8 +85,8 @@ val languageName: String = "Kotlin"
   </code></pre></section><br><br>
 
 
-  <section class="marco-t warn">
-    <span class="icono warning"> </span> <span class="negrita">Warning</span>
+  <section class="marco-t err">
+    <span class="icono error"> </span> <span class="negrita">Warning</span>
     </section>
   <section class="marco-b">
       <section><pre><code class="language-kotlin">
@@ -104,10 +104,13 @@ val languageName: String = "Kotlin"
   <br><br>
   <p>In some languages, a reference type variable can be declared without providing an initial explicit value. In these cases, the variables usually contain a null value. Kotlin variables can't hold null values by default. This means that the following snippet is invalid:</p>
 
-  <section><pre><code class="language-kotlin">
-  // Fails to compile
-  val languageName: String = null
-  </code></pre></section><br><br>
+  <section class="marco-t err">
+    <span class="icono error"> </span> <span class="negrita">Warning</span>
+    </section>
+  <section class="marco-b">
+      <section><pre><code class="language-kotlin">val languageName: String? = null
+      </code></pre></section><br><br>
+  </section>
 
   <p>For a variable to hold a null value, it must be of a nullable type. You can specify a variable as being nullable by suffixing its type with <span class="d-word">?</span> > , as shown in the following example:</p>
 
