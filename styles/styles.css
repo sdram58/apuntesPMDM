@@ -185,5 +185,5 @@ a.enlace{
 }
 
 a.enlace::before{
-    content: url('../imagenes/link.png');
+    content: url('../imagenes/link.png') " ";
 }
