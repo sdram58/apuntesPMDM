@@ -65,6 +65,64 @@ count = 15
 <br>
 <p>Some values are not meant to be changed, though. Consider a String called <span class="cursiva">languageName</span>  . If you want to ensure that <span class="cursiva">languageName</span>  always holds a value of "Kotlin", then you can declare <span class="cursiva">languageName</span>  using the <span class="d-word">val</span>  keyword:</p>
 
+<section><pre><code class="language-kotlin">
+val languageName: String = "Kotlin"
+</code></pre></section><br><br>
+
+<p>These keywords allow you to be explicit about what can be changed. Use them to your advantage as needed. If a variable reference must be reassignable, then declare it as a <span class="cursiva">var</span> . Otherwise, use <span class="cursiva">val</span> .</p>
+
+<h3>Type Inference</h3>
+
+<br>
+<p>Continuing the previous example, when you assign an initial value to <span class="cursiva">languageName</span> , the Kotlin compiler can infer the type based on the type of the assigned value.
+  <br>Since the value of "Kotlin" is of type String, the compiler infers that <span class="cursiva">languageName</span>  is also a String. Note that Kotlin is a <span class="negrita">statically-typed</span>  language. This means that the type is resolved at compile time and never changes.
+  <br>In the following example, <span class="cursiva">languageName</span>  is inferred as a String, so you can't call any functions that aren't part of the String class:
+  </p>
+
+  <section><pre><code class="language-kotlin">
+  val languageName = "Kotlin"
+  val upperCaseName = languageName.toUpperCase()
+  </code></pre></section><br><br>
+
+
+  <section class="marco-t warn">
+    <span class="icono warning"> </span> <span class="negrita">Warning</span>
+    </section>
+  <section class="marco-b">
+      <section><pre><code class="language-kotlin">
+  // Fails to compile
+  languageName.inc()
+      </code></pre></section><br><br>
+  </section>
+  
+
+  <p><span class="cursiva">toUpperCase()</span>  is a function that can only be called on variables of type <span class="cursiva">String</span> . Because the Kotlin compiler has inferred <span class="cursiva">languageName</span>  as a String, you can safely call <span class="cursiva">toUpperCase(). inc()</span> , however, is an <span class="r-word">Int</span>  operator function, so it can’t be called on a <span class="cursiva">String</span> . Kotlin’s approach to type inference gives you both conciseness and type-safety.</p>
+
+
+  <h3>Null Safety</h3>
+
+  <br><br>
+  <p>In some languages, a reference type variable can be declared without providing an initial explicit value. In these cases, the variables usually contain a null value. Kotlin variables can't hold null values by default. This means that the following snippet is invalid:</p>
+
+  <section><pre><code class="language-kotlin">
+  // Fails to compile
+  val languageName: String = null
+  </code></pre></section><br><br>
+
+  <p>For a variable to hold a null value, it must be of a nullable type. You can specify a variable as being nullable by suffixing its type with <span class="d-word">?</span> > , as shown in the following example:</p>
+
+  <section><pre><code class="language-kotlin">
+  val languageName: String? = null
+  </code></pre></section><br><br>
+
+
+  <p>With a <span class="cursiva">String?</span>  type, you can assign either a String value or null to <span class="cursiva">languageName</span>. <br> 
+    You must handle nullable variables carefully or risk a dreaded <span class="cursiva">NullPointerException</span> . In Java, for example, if you attempt to invoke a method on a null value, your program crashes. <br>
+    Kotlin provides a number of mechanisms for safely working with nullable variables</p>
+
+
+
+
   <script src="../script/prism.js"></script>
 </body>
 </html>
