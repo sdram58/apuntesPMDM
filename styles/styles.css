@@ -188,13 +188,13 @@ body h2{
 }
 
 body h3{
-    text-align: center;
+    text-align: left;
     margin: 0 20px;
     color:rgb(68, 68, 40);
     font-size: 1.1em;
     padding: 9px;
     margin: 20px 0;
-    border: 2px solid rgb(243, 170, 12);
+    border-bottom: 2px solid rgb(243, 170, 12);
     border-radius: 9px;
 
 }
