@@ -48,7 +48,7 @@ import com.example.*
 // ...
 </code></pre></section><br><br>
 
-
+<!--**********************Variable declaration **************************************-->
 <a name="s2"><a>
 <h2>Variable declaration</h2>
 
@@ -258,7 +258,7 @@ when (x) {
   </code></pre></section><br><br>
 
 
-  /**********************LOOPS**************************************/
+  <!--**********************LOOPS**************************************-->
   <a name="sloops"><a>
   <h2>Loops</h2>
 
@@ -280,6 +280,97 @@ when (x) {
     print("$i ") // "10 8 6 4 2 0"
   }
   </code></pre></section><br><br>
+
+  <p>The <span class="cursiva">for</span>  loop iterates through anything that provides an iterator. This is equivalent to the <span class="cursiva">foreach</span>  loop in languages like C#. The syntax of for is the following:</p>
+
+  <section><pre><code class="language-kotlin">
+  for (item in collection) print(item)
+  </code></pre></section><br><br>
+
+  <p>The body of <span class="cursiva">for</span>  can be a block.</p>
+  <section><pre><code class="language-kotlin">
+  for (item: Int in ints) {
+    // ...
+  }
+  </code></pre></section><br><br>
+
+  <p>A for loop over a range or an array is compiled to an index-based loop that does not create an iterator object.</p>
+
+  <section><pre><code class="language-kotlin">
+  for (i in array.indices) {
+    println(array[i])
+  }
+  </code></pre></section><br><br>
+
+
+  <p>Alternatively, you can use the <span class="d-word">withIndex</span>  library function:</p>
+
+  <section><pre><code class="language-kotlin">
+  for ((index, value) in array.withIndex()) {
+    println("the element at $index is $value")
+  }
+  </code></pre></section><br><br>
+
+
+  <h3>While Loops</h3>
+
+  <p><span class="cursiva">while</span>  and <span class="cursiva">do-while</span>  loops execute their body continuously while their condition is satisfied. The difference between them is the condition checking time:</p>
+
+  <p>
+    <ul>
+      <li><span class="d-word">while</span> checks the condition and, if it's satisfied, executes the body and then returns to the condition check.</li>
+      <li><span class="d-word">do-while</span> executes the body and then checks the condition. If it's satisfied, the loop repeats. So, the body of do-while executes at least once regardless of the condition.</li>
+    </ul>
+  </p>
+
+  <section><pre><code class="language-kotlin">
+  while (x > 0) {
+    //Some code here
+    x--    
+  }
+
+  do {
+    val y = retrieveData()
+  } while (y != null) // y is visible here!
+  </code></pre></section><br><br>
+
+  <h3>Break and continue in loops</h3>
+
+  <p>Kotlin supports traditional break and continue operators in loops</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   <script src="../script/prism.js"></script>
 </body>
