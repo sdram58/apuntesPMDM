@@ -17,6 +17,10 @@ body{
     color:chocolate;
 }
 
+p{
+    text-align: justify;
+}
+
 .marco-t{
     border-radius: 8px 8px 0 0;
     border: 1px solid gray;
