@@ -242,3 +242,22 @@ p{
 p ul,p ul li{
     margin-left: 20px;
 }
+
+figure{
+    width: 100%;
+    text-align: center;
+    background-color: rgba(100,100,100,0.3);
+    
+}
+
+figure>img{
+    width: 80%;
+}
+
+figure figcaption{
+    display: block;
+    margin: 6px 0px;
+    font-size: 0.8em;
+    font-style: italic;
+    text-align: center;
+}
