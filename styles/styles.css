@@ -15,9 +15,10 @@ body{
 
 .logos div{
     display: inline-block;
-    width: 33.33%;
+    width: 30.33%;
+    margin:0 1.5%;
     height: 100px;
-    background-position: center;
+    background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
 }
