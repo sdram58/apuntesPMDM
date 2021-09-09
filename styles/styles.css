@@ -9,6 +9,28 @@ body{
     margin: 0 auto;
 }
 
+.logos{
+    margin:0 20px;
+}
+
+.logos div{
+    display: inline-block;
+    width: 33.33%;
+    height: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.logos div:nth-child(1){
+    background-image: url(../imagenes/logo_ies.png);
+}
+.logos div:nth-child(2){
+    background-image: url(../imagenes/logo_con.jpg);
+}
+.logos div:nth-child(3){
+    background-image: url(../imagenes/logo_fons.png);
+}
+
 .codigo{
     font-family: monospace;
     padding: 10px;
