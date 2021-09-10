@@ -237,6 +237,7 @@ a.enlace::before{
 
 p{
     margin-bottom: 10px;
+    line-height: 2em;
 }
 
 p ul,p ul li{
