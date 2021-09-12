@@ -14,7 +14,7 @@
     <div class="logos">
         <div></div><div></div><div></div>
     </div>
-    <h1>Introduction to mobile programming</h1>
+    <h1>UD1.- Introduction to mobile programming</h1>
 
     <div class="main-menu">
         <a href="#sIntroduction">1.- Introduction</a><a 
@@ -49,7 +49,30 @@
 
         <br><br>
 
-        <p></p>
+        <p>The comparison of feautures between Android / iOS can be summarized in ...</p>
+         <table style="width:50%; margin: 0 auto;">
+             <tr style="text-align: center; background-color: gray;">
+                 <th>Android</th>
+                 <th>IOS</th>
+             </tr>
+             <tr>
+                 <td>It is very customizable, but you need to invest time acquiring some knowledge to personalize the phone</td>
+                 <td>It is very specialized and the platform has everything under control. It's okay for those who settle for the default settings</td>
+             </tr>
+             <tr>
+                 <td>Due to the fragmentation that exists, updates depend on the model and manufacturer of each device.</td>
+                 <td>
+                    Users can always get the latest IOS' version, due to free and automatic updates</td>
+             </tr>
+             <tr>
+                 <td>It is available on cells from various manufacturers: HTC, Google, Samsung, Motorola, LG, etc. Wide variety of models</td>
+                 <td>It is only available on Apple devices: IPod touch, IPad, iPhone and Apple TV.</td>
+             </tr>
+             <tr>
+                 <td>Anyone can create and distribute Android apps. Users can download and install apps from outside the official store.</td>
+                 <td>It is more expensive for developers to publish apps for IOS. The App Store is practically the only place from which you can download apps.</td>
+             </tr>
+         </table>
         
         
 
@@ -65,17 +88,250 @@
     <a name="sTypeOfApps"><a>
     <h2>2.- Type Of Apps</h2>
 
+    <p>
+        The mobile market is very very diverse. Dozens of new smartphones are released every month, and as a result, 
+        mobile developers and entrepreneurs are facing challenges due to an increasing number of <span class="negrita">mobile app</span> . 
+        There is no a magic solution in order to choose the platform to use.</p>
+    <p>Both <span class="negrita">native and cross-platform mobile app</span>  development has its own <span class="cursiva">advantages and disadvantages</span> . As a business owner, you should know the differences between them.</p>
+
+
+    <h3>Advantages of native application development</h3>
+
+    <ul>
+        <li><span class="negrita">You have available all the potential of the mobile</span>
+        <p style="padding-left: 20px;">The essence of native applications is that they are written for a specific platform (nowadays, Android or iOS). 
+            This means that developers can provide a much better <span class="negrita">integration between the functionalities of the applications with the hardware characteristics of the mobiles</span> 
+            : Bluetooth, NFC, GPS sensor, camera, microphone, accelerometer, gyroscope, etc.
+        </p></li>
+        <li><span class="negrita">Higher throwput to the screens</span>
+        <p  style="padding-left: 20px;">Using a native language gives you more freedom in terms of <span class="negrita">screen optimization</span> . 
+            With the number of mobiles and their different screens and aspect ratios out there, it is crucial to make sure that your applications are seen correctly in all parts.
+        </p> </li>
+
+        <li><span class="negrita">Better throwput</span> 
+        <p  style="padding-left: 20px;">
+            In addition to that control and flexibility, better integration with mobile hardware provides another significant advantage. 
+            <span class="negrita">Native applications are very fast</span>  and works noticeably better than others, for example, web applications.
+            Native applications <span class="negrita">maximize usage of processing power</span> , so response time is minimized as much as possible.</p></li>
+            <li><span class="negrita">Internet connection is not mandatory</span> 
+            <p style="padding-left: 20px;">Since the native applications are installed on the mobile itself, <span class="negrita">they can access the app's data offline</span>. On the contrary, 
+                a web application or any other platform requires a constant online connection, which will depend on the speed of the network.</p>
+            <p style="padding-left: 20px;">Combined with the performance we talked about in the previous point, the ability to work offline makes 
+                <span class="negrita">native applications </span>  the perfect choice for developing apps such as mobile games.
+            </p></li>
+    </ul>
+
+
+    <h3>Disadvantages Native applications</h3>
+
+    <p>If we had to put some disadvantage to the development of native applications, that would obviously be <span class="negrita">the incompatibility with other mobile operating systems</span> . 
+        Native iOS apps are developed using Swift or Objective-C and can be installed on iPhone or iPad only. 
+        Similarly, Android applications are not compatible with iOS because they are developed with Java or Kotlin.
+    </p>
+    <p>Another aspect worth mentioning is <span class="negrita"> version compatibility</span> . 
+        For example, due to the wide variety of Android versions, providing full support to all users of the application becomes a challenge.
+    </p>
+
+    <h3>Advantages of cross-platform application development</h3>
+
+    <ul>
+        <li> <span class="negrita">Reusable code</span> 
+            <p style="padding-left: 20px;">Instead of developing different applications, mobile developers <span class="negrita">can use the same code for all platforms</span>. 
+                That is, unlike a native app, with the multiplatform you can implement a feature in an app for one operating system and it will work in the others.</p>
+            <p  style="padding-left: 20px;">This reuse is also an advantage when it comes to the <span class="negrita">deployment of the app</span> .</p>
+        </li>
+        <li> <span class="negrita">Cost effectiveness</span> 
+            <p style="padding-left: 20px;">For your idea to be implemented as a multiplatform application, <span class="negrita">large investments in resources are not required</span>.
+                This is because you don't need a dedicated team for each mobile operating system. 
+                Thanks to a short learning curve and a unified stack of technologies, all platforms can be supported by a single team.</p>
+        </li>
+        <li> <span class="negrita">The same UI and UX on all platforms.</span> 
+            <p style="padding-left: 20px;">The throwput of the application is undoubtedly something important. 
+                However, no less important is how the application looks and flows. It can be difficult to have <span class="negrita">the same user interface and user experience</span>  simply because there are two separate computers.
+                </p>
+            <p style="padding-left: 20px;">The use of a single code allows cross-platform applications to <span class="negrita">maintain the same appearance and user experience on all mobiles</span>.</p>
+        </li>
+    </ul>
+
+
+    <h3>Disadvantages of cross-platform application development.</h3>
+
+    <ul>
+        <li>They <span class="negrita">are not as flexible</span>  as native applications.</li>
+        <li><span class="negrita">Throwput</span>  is not the strongest point.</li>
+        <li>The process to <span class="negrita">add them to the app stores is complicated</span>.</li>
+    </ul>
+
+
+
+
+
     <!--************************AndroidFeatures**************************-->
     <a name="sAndroidFeatures"><a>
     <h2>3.- Android Features</h2>
+
+    <p>Although there are several mobile platforms, the operating system for mobile devices Android offers a set of features that differentiate it from others:</p>
+
+    <ul>
+        <li><span class="negrita">Open platform</span>. It is a free development platform based on Linux and open source. Its advantages include being able to use and adapt the system without paying royalties.</li>
+        <li><span class="negrita">Guaranteed portability</span> . Thanks to the virtual machine concept, the final applications are developed in Java, ensuring the execution and operation on a wide variety of devices, both current and future. </li>
+        <li><span class="negrita">Architecture based on components inspired by the Internet</span>. For example, the design of the user interface is done in XML, allowing the same application to run on a mobile with a reduced screen or on a Netbook</li>
+        <li><span class="negrita">Philosophy</span>  of device <span class="negrita">always connected</span>  to the Internet</li>
+        <li><span class="negrita">Lots of built-in services</span>. For example, GPS-based location, SQL databases, speech recognition and synthesis, navigator, maps, etc.</li>
+        <li><span class="negrita">Acceptable level of security</span>. The programs are isolated from each other thanks to the concept of execution inside a box that incorporates the virtual machine.</li>
+        <li><span class="negrita">Optimized for low power and low memory</span>. Android uses the Dalvik Virtual Machine which is a Google implementation of the Java virtual machine optimized for mobile devices.</li>
+        <li><span class="negrita">High quality graphics and sound</span>. Anti-aliased vector graphics, Flash-inspired animations, OpenGL-based 3D graphics, standard audio and video codecs.</li>
+    </ul>
+    <br>
+
+    <p>Android is an operating system oriented to mobile devices, the company, like so many other technology companies, 
+        was founded in Palo Alto (California) in 2003, but due to its rapid growth and what it promised Google became interested in it and bought it in 2005 for 50 million dollars.
+    </p>
+
+
 
     <!--************************AndroidArchitecture**************************-->
     <a name="sAndroidArchitecture"><a>
     <h2>5.- Android Architecture</h2>
 
+    <p>Android implements a Linux-based operating system and its virtual machine (Dalvik) compiles the Java files. 
+        Applications in the .apk format. An apk <sup>(*)</sup> contains Java classes compiled in a bytecode format known as DEX. 
+        The DEX format is independent of processor architecture, so to be executed it needs to be translated into native "machine code" for the processor of our device. 
+        Logically, it is slower compared to direct execution. <br> <span class="cursiva"><sup>*</sup>Now we have to use AAB (Androi App Bundle) instead.</span> 
+    </p>
+
+    <p>
+        As a solution to this problem, Google decided from the KitKat 4.4 version to introduce the new ART virtual machine.
+    </p>
+
+    <p>
+        The fundamental difference between Dalvik and ART is that Dalvik uses just-in-time (or JIT) compilation, while ART uses ahead-of-time (AOT) compilation. 
+        Dalvik runs a virtual machine that interprets the code as the application runs while ART performs a pre-compilation during the application installation process.
+    </p>
+
+    <p>
+        Among other differences, it also presents improvements in the garbage collector and in the development and debugging of applications.
+    </p>
+
+    <figure><img src="./imagenes/ud1/2021-09-12-19-20-29.png" /><br><figcaption>Android's architecture</figcaption></figure>
+    <br>
+    
+    <p>
+        As can be seen, Android makes internal use of numerous libraries, such as SGL, OpenGL, OpenCORE, WebKit, SSL, FreeType, SQLite and libc.
+    </p>
+
+    <p>
+        Nowadays Android is present in all kinds of devices, mainly in SmartPhones, Tablets, SmartWatch, Android Tv, Android Auto, etc. 
+        Even since the Android-x86 project appeared, it is possible to use the open source Android operating system installed on a PC, such as the adapted version of Android 9 Pie.
+    </p>
+
+    <p>Thus appears one of the main problems that the Android developer must face, the large number of different types of devices, 
+        the different screen formats and orientation of common use, the density of the screens, etc. 
+        Indeed, when designing an App we must choose in which types of devices we want it to work without problems, and how many different screens (layouts)
+         we will have to design.</p>
+
+    <p>
+        The other main problem is fragmentation, too many versions, each with its peculiarities, coexisting in the market, and they come out so fast that it is difficult to adapt, therefore, 
+        when designing an App we must choose from which version it will work. However, there are support libraries for using old functionality on modern devices.
+    </p>
+
+    <p>
+        A peculiarity not known by non-developers is that in the Android world the version of the S.O. with the API that we must use to make an App for it. We'll see the relationship below.
+    </p>
+
+
+
     <!--************************Fragmentation**************************-->
     <a name="sFragmentation"><a>
     <h2>6.- Fragmentation</h2>
+
+    <p>      
+        Android fragmentation is the different versions of the same operating system. As in other operating systems, Android evolves adding new security improvements, 
+        new features and to differentiate these, different versions are created.
+    </p>
+
+    <p>
+        In Android, we must distinguish between the version number and the API level, when we develop applications we must take into account the selected API 
+        to see in which versions or devices our application can run. Although the developers have created backwards compatibility libraries.
+    </p>
+
+    <figure><img src="imagenes/ud1/2021-09-12-19-42-23.png" /><br><figcaption>Android versions / API version</figcaption></figure>
+    <br>
+    
+    <br>
+    <p>To end this point, also indicate the existing fragmentation between brands / models (2015).</p>
+
+    <figure><img src="imagenes/ud1/2021-09-12-19-45-50.png" /><br><figcaption>Brand fragmentation</figcaption></figure>
+    <br>
+
+    <!--************************Android Studio**************************-->
+    <a name="sAndroidStudio"><a>
+    <h2>Android Studio</h2>
+
+    <h3>Introduction</h3>
+    <p>
+        <span class="negrita">Android Studio</span>(AS)  is Google's official IDE to create executable applications in its famous operating system, 
+        it is the replacement of what was the first official environment for Android, Eclipse (<a class="enlace" target="_blank" href="https://www.eclipse.org/">https://www.eclipse.org/</a>), 
+        and allows you to choose both the <span class="negrita">Java</span> language and <span class="negrita">Kotlin</span>  (<a class="enlace" target="_blank" href="https://kotlinlang.org/">https://kotlinlang.org/</a> ).
+    </p>
+
+    <p>
+    Unlike AppInventor (<a class="enlace" target="_blank" href="http://appinventor.mit.edu/">http://appinventor.mit.edu/</a>), 
+    which allows you to easily generate applications graphically using block language, we are going to have to work and develop them from scratch, 
+    in effect, as we are going to see working with Android Studio is very laborious, but the advantage will be clear, almost total control of what we want to do.
+    </p>
+
+    <p>
+        The App's created using PhoneGap (<a class="enlace" target="_blank" href="https://phonegap.com/">https://phonegap.com/</a>) or its brother Apache Cordova (<a class="enlace" target="_blank" href="https://cordova.apache.org/">https://cordova.apache.org/</a>)
+         are hybrid applications (App's using HTML / CSS / JS), however Apps created with AS they will be fully native, so it has a complet access to hardware system resources.
+    </p>
+    <p>
+        The current appearance (Artic Fox 2020.3.1 patch 2) can be seen below, mainly we can observe the upper menu bar, on the left the project tree, 
+        in the center the code through tabs, and on the right the interface design . 
+        Below we are looking at the consumption of resources, generally we will have the ideal notification area for the Event Log, the Logcat and the Terminal. 
+        The palette window of the components or that of their corresponding attributes also becomes important.
+    </p>
+
+    
+
+    <figure><img src="imagenes/ud1/2021-09-12-20-36-58.png" /><br><figcaption>AS screen shot</figcaption></figure>
+    <br>
+
+    <br>
+
+    <p><span class="negrita">NOTE</span> : During this course, as an extra, intensive reference will be made to the official Android documentation. <br>
+
+        <span class="negrita">URLs</span> : Official Android Studio Introduction and Google Developer Guides. <br>
+        
+        <a class="enlace" target="_blank" href="https://developer.android.com/studio/intro">https://developer.android.com/studio/intro</a> <br>
+        
+        <a class="enlace" target="_blank" href="https://developer.android.com/guide">https://developer.android.com/guide</a> 
+        </p>
+
+    <h3>DEVELOPMENT ENVIRONMENT INSTALLATION AND CONFIGURATION</h3>
+    
+    <p>
+        To follow this course we are going to require installing the Android Studio IDE itself in our favorite operating system, 
+        which includes the Android SDK with embedded API and JAVA libraries, the USB driver of our real device for real tests, and some external emulator software.
+    </p>
+
+    <p>
+        Although we will not need it, optionally, you can install the components to work offline (the Gradle plugin and the Maven dependencies), 
+        in addition to the command line tool (in this case it must be the specific version for our system operating), although it is not necessary 
+        since today we always have the computer connected to the Internet.
+    </p>
+
+
+    <h3>JAVA SDK (Java SE Development Kit)</h3>
+    <p>
+        Every Java development environment requires the JDK, <span class="negrita">AS already has one incorporated in its own folders</span> , but it can be configured to use an external one. In addition, if afterwards we use any auxiliary program that requires JAVA as a dependency, such as an external Android emulator or similar, it could be necessary, and it is better to leave everything installed at this point.
+        </p>
+<p>
+Although you have no problem with the installation, I am going to explain it step by step in detail in Windows, you never know who is going to read this document. If you are going to use Linux or Mac, follow the installation instructions on the download website. If you already have the JDK installed and updated, go to the next point.
+</p> <p>
+So we are going to install or update the JAVA JDK, in addition to configuring the environment variables. The normal thing today is to have 64-bit machines, so we refer to said x64 platform.
+    </p>
+
 
 
     <!--************************7.- Android Emulator (AVD)**************************-->
@@ -87,15 +343,185 @@
     <a name="sTestOnReal"><a>
     <h2>8.- Tests on Real Devices</h2>
 
+    <h3>INSTALLING THE USB DRIVER. DEVELOPER MODE. USB DEBUGGING</h3>
+
+    <p>Although with Android Studio we can test our applications by simulating with the Android Virtual Device (AVD), 
+        it is evident that there is nothing better than testing them with our own mobile device (be it a phone, tablet, etc.) 
+        even with several of different sizes and / or Android versions. We can use drivers from the device manufacturer, those from 
+        google or the famous universal ADB drivers. This does not prevent us from expanding the tests of our programs with different types of devices, 
+        different screens, different versions, etc. the AVD emulator is usually used as well.
+    </p>
+
+    <p>Before installing the driver we are going to put our Android device (s) in <span class="negrita">developer mode</span> , this is very important, 
+        thanks to this we can test our application and even debug directly from AS with the mobile device connected directly to the USB. 
+        To do this we touch on <span class="negrita">settings</span> , then on <span class="negrita"> about the mobile</span> , touch the <span class="negrita">compilation number seven times</span> 
+        , then a floating message will appear that we are already a developer.</p>
+
+    <figure><img src="imagenes/ud1-2021-09-12-21-22-54.png" /><br><figcaption>Developer mode</figcaption></figure>
+    <br>
+
+    <p>Going back in settings, a new menu called <span class="negrita">development options</span>  should now appear, in which we must activate 
+        <span class="negrita">USB debugging</span> 
+    </p>
+    <section class="marco-t warn">
+        <span class="icono warning"> </span> <span class="negrita">pay attention on the photo is disabled</span>
+        </section>
+    <section class="marco-b">
+            
+    </section>
+
+    <figure><img src="imagenes/ud1-2021-09-12-21-27-03.png" /><br><figcaption>Enable USB debugging</figcaption></figure>
+    <br>
+
+    <p>We are now going to install the USB driver of the device, if we do not have it already installed, the manufacturer may provide us with one, 
+        which is installed automatically from the Internet with update, or even, that the phone itself when connecting it to the computer asks us to install it directly.
+        </p>
+        <p>
+        Before connecting anything, install the google drivers, it can help us. Go to <span class="negrita">Tools -> SDK Manager -> SDK Tools</span>  and activate the <span class="negrita">Google USB Driver</span>  checkbox, then press ok twice and Finish.
+    </p>
+
+    <figure><img src="imagenes/ud1-2021-09-12-21-29-48.png" /><br><figcaption>Installing Google USB Driver</figcaption></figure>
+    <br>
+    
+
+    <p>In my case I have connected three different devices and they have worked without doing any action, as you can seen in the Device Manager. 
+        Modern devices do not usually give problems in Windows.
+    </p>
+
+    
+    <figure><img src="imagenes/ud1-2021-09-12-21-31-13.png" /><br><figcaption>Android devices connected</figcaption></figure>
+    <br>
+    
+    <p>Another option is to try the manufacturer's OEM driver, we see below some links.
+    </p>
+
+    <p>
+        OEM					URL del controlador
+															
+Acer	<a class="enlace" target="_blank" href="http://www.acer.com/worldwide/support/">http://www.acer.com/worldwide/support/</a> <br>
+
+															
+ALCATEL ONE TOUCH	http://www.alcatelonetouch.com/global-en/support/
+
+Asus	https://www.asus.com/support/Download-Center/
+
+													
+BlackBerry	https://swdownloads.blackberry.com/Downloads/entry.do?code=4EE0932F46276313
+
+	B51570F46266A608
+
+	
+													
+Dell	http://support.dell.com/support/downloads/index.aspx?c=us&cs=19&l=en&s=dhs&~c
+
+	k=anavml
+
+		
+Fujitsu	http://www.fmworld.net/product/phone/sp/android/develop/
+
+HTC	http://www.htc.com/support
+
+HUAWEI	http://consumer.huawei.com/en/support/index.htm
+
+Intel	http://www.intel.com/software/android
+
+Kyocera	http://www.kyocera-wireless.com/support/phone_drivers.htm
+
+Lenovo	http://support.lenovo.com/us/en/GlobalProductSelector
+
+LGE	http://www.lg.com/us/support/software-firmware
+
+						
+Motorola	https://motorola-global-portal.custhelp.com/app/answers/detail/a_id/88481/
+
+MTK	http://online.mediatek.com/Public%20Documents/MTK_Android_USB_Driver.zip
+
+	(descarga ZIP)
+	
+Samsung	http://developer.samsung.com/galaxy/others/android-usb-driver-for-windows
+
+Sharp	http://k-tai.sharp.co.jp/support/
+
+Sony Mobile Communic					
+	http://developer.sonymobile.com/downloads/drivers/
+
+ations															
+															
+Toshiba	http://support.toshiba.com/sscontent?docId=4001814
+
+Xiaomi	http://www.xiaomi.com/c/driver/index.html
+
+ZTE	http://support.zte.com.cn/support/news/NewsDetail.aspx?newsId=1000442
+
+
+
+    </p>
+    
+    
 
     <!--************************9.- Third Party Emulators**************************-->
     <a name="sThirdPartyEmulators"><a>
     <h2>9.- Third Party Emulators</h2>
 
+    <h3>BlueStacks 4</h3>
+    We're going to download BlueStacks in this link <a class="enlace" target="_blank" href="https://www.bluestacks.com/es/index.html">https://www.bluestacks.com/es/index.html</a>. Once the installer was downloaded we execute it <span class="negrita">BlueStacksInstaller_4.190.0.5002_native_29f58463653ea660bf50c11c52fa2a25.exe </span> which is an online installer, the we allow that it makes changes.
+
+        <figure><img src="imagenes/ud1/2021-09-12-20-59-59.png" /><br><figcaption>Bluestacks 4 installation 1</figcaption></figure>
+        <br>
+        
+        <p>Click on install now</p>
+
+        <figure><img src="imagenes/ud1/2021-09-12-21-00-59.png" /><br><figcaption>Bluestacks 4 installation 2 </figcaption></figure>
+        <br>
+
+        <p>Finishing installation</p>
+        <figure><img src="imagenes/ud1/2021-09-12-21-02-43.png" /><br><figcaption>Finishing installation</figcaption></figure>
+        <br>
+
+        <p>We are not log in now, push <span class="negrita">I'll do it later</span> </p>
+        
+        <figure><img src="imagenes/ud1/2021-09-12-21-05-41.png" /><br><figcaption>Deny log in</figcaption></figure>
+        <br>
+
+        <p>In my case, once loaded the OpenGL that had been set by default gave me problems, I have passed it to <span class="negrita">DirectX</span> 
+            in the <span class="negrita">settings</span>  configuration and then <span class="negrita">engine</span> .</p>
+        
+            <figure><img src="imagenes/ud1/2021-09-12-21-08-09.png" /><br><figcaption>Choose Graphics mode</figcaption></figure>
+            <br>
+            
+        
+        <p>Once loaded drag the APK directly to the <span class="negrita">home screen</span>  of the simulator and it will be installed.</p>
+
+        <figure><img src="imagenes/ud1-2021-09-12-21-10-21.png" /><br><figcaption>Installing APK</figcaption></figure>
+        <br>
+        
+        <p>In addition to being installed within the emulator, a shortcut will be created on the desktop.</p>
+
+        <figure><img src="imagenes/ud1-2021-09-12-21-11-26.png" /><br><figcaption>Installed APK</figcaption></figure>
+        <br>
+
+        <p>
+            We click on the icon of our App and… <span class="negrita"> HelloThere!</span> </p>
+
+            <figure><img src="imagenes/ud1-2021-09-12-21-12-46.png" /><br><figcaption>Hello There! running</figcaption></figure>
+            <br>
+            
+        
+
+
+    <h3>Genymotion</h3>
+        
+    tarea
+    <a class="enlace" target="_blank" href="https://desarrollador-android.com/desarrollo/herramientas/herramientas-de-ayuda/genymotion-emulador/">https://desarrollador-android.com/desarrollo/herramientas/herramientas-de-ayuda/genymotion-emulador/</a> 
+
 
     <!--************************10.- Other Systems**************************-->
     <a name="sOtherSystems"><a>
     <h2>10.- Other Systems</h2>
+
+    <p>The other big mobile environment is, how not, IOS from Apple</p>
+    <p>Developing IOS Apps requires in the most cases do it un a MAC computer that has installed XCODE.</p>
+    <p>Concerning to the IOS Apps programming language it is C++ or his own programming language Swift</p>
 
 
 

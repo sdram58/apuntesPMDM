@@ -262,3 +262,14 @@ figure figcaption{
     font-style: italic;
     text-align: center;
 }
+
+table, td{
+    border: 1px solid black; 
+    border-collapse: collapse;
+    padding: 10px;
+}
+
+ul>li{
+    padding-left: 20px;
+    list-style:inside;
+}
