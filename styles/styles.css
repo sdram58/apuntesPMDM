@@ -261,7 +261,7 @@ figure{
 }
 
 figure>img{
-    width: 80%;
+    max-width: 80%;
 }
 
 figure figcaption{
