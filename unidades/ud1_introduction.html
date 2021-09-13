@@ -322,15 +322,116 @@
     </p>
 
 
-    <h3>JAVA SDK (Java SE Development Kit)</h3>
+    <h3>INSTALLATION ANDROID STUDIO  (AS) </h3>
     <p>
-        Every Java development environment requires the JDK, <span class="negrita">AS already has one incorporated in its own folders</span> , but it can be configured to use an external one. In addition, if afterwards we use any auxiliary program that requires JAVA as a dependency, such as an external Android emulator or similar, it could be necessary, and it is better to leave everything installed at this point.
-        </p>
-<p>
-Although you have no problem with the installation, I am going to explain it step by step in detail in Windows, you never know who is going to read this document. If you are going to use Linux or Mac, follow the installation instructions on the download website. If you already have the JDK installed and updated, go to the next point.
-</p> <p>
-So we are going to install or update the JAVA JDK, in addition to configuring the environment variables. The normal thing today is to have 64-bit machines, so we refer to said x64 platform.
+        There are Android Studio (AS) versions for Windows, Linux, Mac, and Chrome. You can use whatever you want, of course depending on your Operative System. <br>        
     </p>
+    <br><span class="negrita">Download Link: </span> <a class="enlace" target="_blank" href="https://developer.android.com/studio?hl=es&gclid=CjwKCAjw7fuJBhBdEiwA2lLMYS2tJIQIHNyuQYOZFHskPetu2H4f2dY-Fo3Sy7xUoMZHAr8RNcCdyxoC4IsQAvD_BwE&gclsrc=aw.ds#downloads">https://developer.android.com/studio?hl=es&gclid=CjwKCAjw7fuJBhBdEiwA2lLMYS2tJIQIHNyuQYOZFHskPetu2H4f2dY-Fo3Sy7xUoMZHAr8RNcCdyxoC4IsQAvD_BwE&gclsrc=aw.ds#downloads</a> <br><br>
+
+    <figure><img src="imagenes/ud1-2021-09-13-10-36-50.png" /><br><figcaption>AS versions</figcaption></figure>
+        <br>
+    
+    <p>The current hardware requirements for each version are:</p>
+
+    <figure><img src="imagenes/ud1-2021-09-13-10-39-21.png" /><br><figcaption>AS Requirements</figcaption></figure>
+    <br>
+    
+
+    <p>For this course I am going to use the latest version of AS as of today, 2020.3.1.24 for 64-bit Windows. 
+        The reason for using Windows for the explanations, is that it gives less problems when it comes to recognizing our real mobile device via USB for real simulations using 
+        the ADB driver or others. However, you can use the version for the OS you want, even the portable one, if our real device gave us problems, we can use the Android Emulator 
+        for testing, or one of third parties
+    </p>
+    <p><span class="negrita">NOTE</span> : We need an internet connection during the installation, since according to the chosen options it will download components to finish the process.</p>
+
+    <p>
+        Once the <span class="negrita">android-studio-2020.3.1.24-windows.exe</span>  file is downloaded, we right-click on it and run as administrator, double-clicking 
+        it would give us an error as shown below.</p>
+
+        <figure><img src="imagenes/ud1-2021-09-13-10-59-17.png" /><br><figcaption>Installation error</figcaption></figure>
+        <br>
+        
+    
+    <p>
+        We say <span class="negrita">YES</span>  to make changes and then we select both components (the AS itself and the <span class="negrita"> AVD</span> that is the Android emulator), 
+        <span class="negrita">click on next</span> , it will ask us for the destination folder and click on next again, then <span class="negrita">push install</span>  to install it.</p>
+
+        <figure><img src="imagenes/ud1-2021-09-13-11-00-36.png" /><br><figcaption></figcaption></figure>
+        <br>
+        <br>
+
+        <figure><img src="imagenes/ud1-2021-09-13-11-01-23.png" /><br><figcaption>Choose Components</figcaption></figure>
+        <br><br>
+        
+        <figure><img src="imagenes/ud1-2021-09-13-11-01-49.png" /><br><figcaption>Choose destination folder</figcaption></figure>
+        <br><br>
+        
+        <figure><img src="imagenes/ud1-2021-09-13-11-03-02.png" /><br><figcaption>Start installation</figcaption></figure>
+        <br>
+        <br>
+        <figure><img src="imagenes/ud1-2021-09-13-11-05-50.png" /><br><figcaption>Installation finished</figcaption></figure>
+        <br>
+        <br>
+
+    <p>When the proccess finishes push <span class="negrita">Next</span> and then push <span class="negrita">finish</span>  to launch AS</p>
+
+    <figure><img src="imagenes/ud1-2021-09-13-11-06-20.png" /><br><figcaption>Finish and launch AS</figcaption></figure>
+        <br>
+        <br>
+
+    <p>First time we lauch AS it ask as if we want to import settings from another configuration. Keep "Do not import Settings" selected</p>
+
+    <figure><img src="imagenes/ud1-2021-09-13-11-09-50.png" /><br><figcaption>Do not import settings</figcaption></figure>
+    <br>
+    <br>
+    
+    <figure><img src="imagenes/ud1-2021-09-13-11-11-18.png" /><br><figcaption>Starting and downloading some components</figcaption></figure>
+    <br>
+    <br>
+    <p>It will ask us if we want to share data, better not so push <span class="negrita">Don´t send</span> </p>
+
+    <figure><img src="imagenes/ud1-2021-09-13-11-12-13.png" /><br><figcaption>Don's send statistics</figcaption></figure>
+    <br>
+    <br>
+    <p>Then Welcome Wizard appears </p>
+
+    <figure><img src="imagenes/ud1-2021-09-13-11-15-52.png" /><br><figcaption>Welcome Wizard</figcaption></figure>
+    <br>
+    <br>
+
+    <p>Click on next and it will ask us if we want a standard installation by default or a custom custom, we choose the second one to make sure it does not install something unwanted and click on next.
+    </p>
+
+    <section class="marco-t inf">
+        <span class="icono info"> </span> <span class="negrita">if a plugin update installation, push to update it before</span>
+        </section>
+    <section class="marco-b">
+            
+    </section>
+
+    <figure><img src="imagenes/ud1-2021-09-13-11-17-30.png" /><br><figcaption>Type of setup</figcaption></figure>
+    <br>
+    <br>
+
+    <p>Then it will let us choose the graphical interface UI between a dark or a light one (Darcula or Light). </p>
+
+    <figure><img src="imagenes/ud1-2021-09-13-11-20-06.png" /><br><figcaption>UI type</figcaption></figure>
+    <br>
+    <br>
+    <p>Verify Settings and click <span class="negrita">finish</span> </p>
+    <figure><img src="imagenes/ud1-2021-09-13-11-20-59.png" /><br><figcaption>Verify settings</figcaption></figure>
+    <br>
+    <br>
+
+
+
+
+
+
+
+        
+    
+
 
 
 
@@ -396,64 +497,49 @@ So we are going to install or update the JAVA JDK, in addition to configuring th
     </p>
 
     <p>
-        OEM					URL del controlador
-															
-Acer	<a class="enlace" target="_blank" href="http://www.acer.com/worldwide/support/">http://www.acer.com/worldwide/support/</a> <br>
+        <table>
+            <tr>
+                <th>OEM</th>
+                <th>URL del controlador</th>
+            </tr>
+            <tr>
+                <td>Acer</td>
+                <td><a class="enlace" target="_blank" href="http://www.acer.com/worldwide/support/">http://www.acer.com/worldwide/support/</a></td>
+            </tr>
+            <tr>
+                <td>ALCATEL ONE TOUCH</td>
+                <td><a class="enlace" target="_blank" href="http://www.alcatelonetouch.com/global-en/support/">http://www.alcatelonetouch.com/global-en/support/</a></td>
+            </tr>
+            <tr>
+                <td>Asus</td>
+                <td><a class="enlace" target="_blank" href="https://www.asus.com/support/Download-Center/">https://www.asus.com/support/Download-Center/</a></td>
+            </tr>
+            <tr>
+                <td>BlackBerry</td>
+                <td><a class="enlace" target="_blank" href="https://swdownloads.blackberry.com/Downloads/entry.do?code=4EE0932F46276313B51570F46266A608">https://swdownloads.blackberry.com/Downloads/entry.do?code=4EE0932F46276313B51570F46266A608</a> </td>
+            </tr>
+            <tr>
+                <td>Dell</td>
+                <td><a class="enlace" target="_blank" href="http://support.dell.com/support/downloads/index.aspx?c=us&cs=19&l=en&s=dhs&~ck=anavml">http://support.dell.com/support/downloads/index.aspx?c=us&cs=19&l=en&s=dhs&~ck=anavml</a> </td>
+            </tr>
+          	
+<tr><td>Fujitsu</td><td><a class="enlace" target="_blank" href="http://www.fmworld.net/product/phone/sp/android/develop/">http://www.fmworld.net/product/phone/sp/android/develop/</a> </td></tr>
+<tr><td>HTC</td><td><a class="enlace" target="_blank" href="http://www.htc.com/support">http://www.htc.com/support</a> </td></tr>
+<tr><td>HUAWEI</td><td><a class="enlace" target="_blank" href="http://consumer.huawei.com/en/support/index.htm">http://consumer.huawei.com/en/support/index.htm</a> </td></tr>
+<tr><td>Intel</td><td><a class="enlace" target="_blank" href="http://www.intel.com/software/android">http://www.intel.com/software/android</a> </td></tr>
+<tr><td>Kyocera</td><td><a class="enlace" target="_blank" href="http://www.kyocera-wireless.com/support/phone_drivers.htm">http://www.kyocera-wireless.com/support/phone_drivers.htm</a> </td></tr>
+<tr><td>Lenovo</td><td><a class="enlace" target="_blank" href="http://support.lenovo.com/us/en/GlobalProductSelector">http://support.lenovo.com/us/en/GlobalProductSelector</a> </td></tr>
+<tr><td>LGE</td><td><a class="enlace" target="_blank" href="http://www.lg.com/us/support/software-firmware">http://www.lg.com/us/support/software-firmware</a> </td></tr>
+<tr><td>Motorola</td><td><a class="enlace" target="_blank" href="https://motorola-global-portal.custhelp.com/app/answers/detail/a_id/88481/">https://motorola-global-portal.custhelp.com/app/answers/detail/a_id/88481/</a> </td></tr>
+<tr><td>MTK</td><td><a class="enlace" target="_blank" href="http://online.mediatek.com/Public%20Documents/MTK_Android_USB_Driver.zip">http://online.mediatek.com/Public%20Documents/MTK_Android_USB_Driver.zip</a> </td></tr>
+<tr><td>Samsung</td><td><a class="enlace" target="_blank" href="http://developer.samsung.com/galaxy/others/android-usb-driver-for-windows">http://developer.samsung.com/galaxy/others/android-usb-driver-for-windows</a> </td></tr>
+<tr><td>Sharp</td><td><a class="enlace" target="_blank" href="http://k-tai.sharp.co.jp/support/">http://k-tai.sharp.co.jp/support/</a> </td></tr>
+<tr><td>Sony Mobile Communications	</td><td><a class="enlace" target="_blank" href="http://developer.sonymobile.com/downloads/drivers/">http://developer.sonymobile.com/downloads/drivers/</a> 		</td></tr>
+<tr><td>Toshiba</td><td><a class="enlace" target="_blank" href="http://support.toshiba.com/sscontent?docId=4001814">http://support.toshiba.com/sscontent?docId=4001814</a> </td></tr>
+<tr><td>Xiaomi</td><td><a class="enlace" target="_blank" href="http://www.xiaomi.com/c/driver/index.html">http://www.xiaomi.com/c/driver/index.html</a> </td></tr>
+<tr><td>ZTE</td><td><a class="enlace" target="_blank" href="http://support.zte.com.cn/support/news/NewsDetail.aspx?newsId=1000442">http://support.zte.com.cn/support/news/NewsDetail.aspx?newsId=1000442</a> </td></tr>
 
-															
-ALCATEL ONE TOUCH	http://www.alcatelonetouch.com/global-en/support/
-
-Asus	https://www.asus.com/support/Download-Center/
-
-													
-BlackBerry	https://swdownloads.blackberry.com/Downloads/entry.do?code=4EE0932F46276313
-
-	B51570F46266A608
-
-	
-													
-Dell	http://support.dell.com/support/downloads/index.aspx?c=us&cs=19&l=en&s=dhs&~c
-
-	k=anavml
-
-		
-Fujitsu	http://www.fmworld.net/product/phone/sp/android/develop/
-
-HTC	http://www.htc.com/support
-
-HUAWEI	http://consumer.huawei.com/en/support/index.htm
-
-Intel	http://www.intel.com/software/android
-
-Kyocera	http://www.kyocera-wireless.com/support/phone_drivers.htm
-
-Lenovo	http://support.lenovo.com/us/en/GlobalProductSelector
-
-LGE	http://www.lg.com/us/support/software-firmware
-
-						
-Motorola	https://motorola-global-portal.custhelp.com/app/answers/detail/a_id/88481/
-
-MTK	http://online.mediatek.com/Public%20Documents/MTK_Android_USB_Driver.zip
-
-	(descarga ZIP)
-	
-Samsung	http://developer.samsung.com/galaxy/others/android-usb-driver-for-windows
-
-Sharp	http://k-tai.sharp.co.jp/support/
-
-Sony Mobile Communic					
-	http://developer.sonymobile.com/downloads/drivers/
-
-ations															
-															
-Toshiba	http://support.toshiba.com/sscontent?docId=4001814
-
-Xiaomi	http://www.xiaomi.com/c/driver/index.html
-
-ZTE	http://support.zte.com.cn/support/news/NewsDetail.aspx?newsId=1000442
-
-
+</table>
 
     </p>
     
@@ -511,7 +597,7 @@ ZTE	http://support.zte.com.cn/support/news/NewsDetail.aspx?newsId=1000442
 
     <h3>Genymotion</h3>
         
-    tarea
+    <a class="tarea" target="_blank" href="Tarea">Tarea</a> <br>
     <a class="enlace" target="_blank" href="https://desarrollador-android.com/desarrollo/herramientas/herramientas-de-ayuda/genymotion-emulador/">https://desarrollador-android.com/desarrollo/herramientas/herramientas-de-ayuda/genymotion-emulador/</a> 
 
 
