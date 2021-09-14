@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UD1.-Kotlin's basics</title>
+  <title>UD2.-Kotlin's basics</title>
   <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
   <link rel="stylesheet" href="../styles/prism.css">
   <link rel="stylesheet" href="../styles/styles.css">
   <script src="../script/script.js"></script>
 </head>
 <body class="line-numbers">
-  <h1>UD1.-Kotlin's basics</h1>
+  <h1>UD2.-Kotlin's basics</h1>
   
   <div class="main-menu">
     <a href="#s1">Why Kotlin?</a><a 
@@ -19,12 +19,12 @@
        href="#s2">Variable Declaration</a><a 
        href="#s3">Conditionals</a><a 
        href="#sloops">Loops</a><a 
-       href="#s5">UD5.- Model-View-View-Model</a><a 
-       href="#s6">UD6.- Kotlin's basics</a><a 
-       href="#s7">UD7.- Kotlin's basics</a><a 
-       href="#s8">UD8.- Kotlin's basics</a><a 
-       href="#s9">UD9.- Kotlin's basics</a><a 
-       href="#s10">UD10.- Kotlin's basics</a><a 
+       href="#sClasses">Classes and Objects</a><a 
+       class="oculto" href="#s6">UD6.- Kotlin's basics</a><a 
+       class="oculto" href="#s7">UD7.- Kotlin's basics</a><a 
+       class="oculto" href="#s8">UD8.- Kotlin's basics</a><a 
+       class="oculto" href="#s9">UD9.- Kotlin's basics</a><a 
+       class="oculto" href="#s10">UD10.- Kotlin's basics</a><a 
        class="oculto" href="./unidades/underconstruction.html">UD11.- Kotlin's basics</a>
 </div>
 
@@ -334,32 +334,472 @@ when (x) {
   } while (y != null) // y is visible here!
   </code></pre></section><br><br>
 
+  <h3>Repeat</h3>
+  <p>The <span class="d-word">repeat()</span>  statement starts with the word <span class="negrita">repeat</span> , followed by <span class="negrita">()</span>.</p>
+  <ul>
+    <li>Inside the parentheses <span class="d-word">()</span>  is the number of repetitions,</li>
+    <li>followed by curly braces <span class="d-word">{}</span> ,</li>
+    <li>and inside the curly braces <span class="d-word">{}</span> , is the code to repeat.</li>
+  </ul>
+
+  <section><pre><code class="language-kotlin">
+  fun main() {
+    repeat(5){
+        println("Hello World")
+    }
+  }
+  </code></pre></section><br><br>
+
+  <figure><img src="imagenes/ud2-2021-09-14-11-59-27.png" /><br><figcaption>Repeat Hello World 5 times</figcaption></figure>
+  <br>
+  <br>
+
+
+  
+
+
   <h3>Break and continue in loops</h3>
 
-  <p>Kotlin supports traditional break and continue operators in loops</p>
+  <p>Kotlin supports traditional break and continue operators in loops.</p>
+  <p>Kotlin has three structural jump expressions</p>
+  <ul>
+    <li><span class="d-word">return</span>  by default returns from the nearest enclosing function or <span class="negrita">anonymous function</span> </li>
+    <li><span class="d-word">break</span>  terminates the nearest enclosing loop</li>
+    <li><span class="d-word">continue</span>  proceeds to the next step of the nearest enclosing loop</li>
+  </ul>
+  <p>All of these expressions can be used as part of larger expressions:</p>
+
+  <section><pre><code class="language-kotlin">
+  val s = person.name ?: return
+  </code></pre></section><br><br>
+
+  <p>The type of these expressions is the <a class="enlace" target="_blank" href="https://kotlinlang.org/docs/exceptions.html#the-nothing-type">Nothing type</a> .</p>
+
+  <p class="sub-section">Break and continue labels</p>
+  
+  <p>Any expression in Kotlin may be marked with a label. Labels have the form of an identifier followed by the <span class="d-word">@</span>  sign, for example: <span class="cursiva">abc@, fooBar@</span>. 
+    To label an expression, just add a label in front of it.</p>
+
+<section><pre><code class="language-kotlin">
+loop@ for (i in 1..100) {
+    // ...
+}
+</code></pre></section><br><br>
+
+<p>Now, we can qualify a <span class="d-word">break</span>  or a <span class="d-word">continue</span>  with a label:</p>
+
+<section><pre><code class="language-kotlin">
+  fun main() {
+    
+
+    loop@ for (i in 1..10) {
+          for (j in 1..5) {
+              if (i%2==0 && j==2) break@loop
+              println("${i} - ${j}")
+          }
+      }
+      //Prints
+      //1 - 1
+      //1 - 2
+      //1- 3
+      //1 - 4
+      //1 - 5
+      //2 - 1
+      
+  }
+</code></pre></section><br><br>
+
+<p>A <span class="d-word">break</span>  qualified with a label jumps to the execution point right after the loop marked with that label. 
+  A <span class="d-word">continue</span>  proceeds to the next iteration of that loop.</p>
+
+<p class="sub-section">Return at labels</p>
+<p>With function literals, local functions and object expressions, functions can be nested in Kotlin. 
+  Qualified <span class="d-word">return</span> allow us to return from an outer function. 
+  The most important use case is returning from a lambda expression. Recall that when we write this:</p>
+
+<section><pre><code class="language-kotlin">
+fun foo() {
+    listOf(1, 2, 3, 4, 5).forEach {
+        if (it == 3) return // non-local return directly to the caller of foo()
+        print(it)
+    }
+    println("this point is unreachable")
+}
+</code></pre></section><br><br>
+
+<p>The <span class="d-word">return</span>  -expression returns from the nearest enclosing function - foo. 
+  Note that such non-local returns are <span class="negrita">supported only for lambda expressions</span>  passed to inline functions. 
+  To return from a lambda expression, label it and qualify the return:</p>
+
+<section><pre><code class="language-kotlin">
+fun foo() {
+    listOf(1, 2, 3, 4, 5).forEach lit@{
+        if (it == 3) return@lit // local return to the caller of the lambda - the forEach loop
+        print(it)
+    }
+    print(" done with explicit label")
+}
+</code></pre></section><br><br>
+
+<p>Now, it returns only from the lambda expression. Oftentimes it is more convenient to use <span class="cursiva">implicit labels</span>: 
+  such a label has the same name as the function to which the lambda is passed.</p>
+
+<section><pre><code class="language-kotlin">
+fun foo() {
+    listOf(1, 2, 3, 4, 5).forEach {
+        if (it == 3) return@forEach // local return to the caller of the lambda - the forEach loop
+        print(it)
+    }
+    print(" done with implicit label")
+}
+</code></pre></section><br><br>
+
+<p>Alternatively, you can replace the lambda expression with an anonymous function. A <span class="d-word">return</span> 
+  statement in an anonymous function will return from the anonymous function itself.</p>
+
+<section><pre><code class="language-kotlin">
+fun foo() {
+    listOf(1, 2, 3, 4, 5).forEach(fun(value: Int) {
+        if (value == 3) return  // local return to the caller of the anonymous function - the forEach loop
+        print(value)
+    })
+    print(" done with anonymous function")
+}
+</code></pre></section><br><br>
+
+<p>Note that the use of local returns in previous three examples is similar to the use of <span class="d-word">continue</span>  in regular loops. 
+  There is no direct equivalent for <span class="d-word">break</span> , but it can be simulated by adding another 
+  nesting lambda and non-locally returning from it:</p>
+
+<section><pre><code class="language-kotlin">
+fun foo() {
+    run loop@{
+        listOf(1, 2, 3, 4, 5).forEach {
+            if (it == 3) return@loop // non-local return from the lambda passed to run
+            print(it)
+        }
+    }
+    print(" done with nested loop")
+}
+</code></pre></section><br><br>
+
+<p>
+  When returning a value, the parser gives preference to the qualified return:
+
+<section><pre><code class="language-kotlin">
+return@a 1
+</code></pre></section><br><br>
+
+This means "return <span class="d-word">1</span>  at label <span class="d-word"> @a</span> " and not "return a labeled expression (@a 1)".
+</p>
+
+<!--************************Classes and objects**************************-->
+<a name="sClasses"><a>
+<h2>Classes and objects</h2>
+
+<h3>Classes</h3>
+
+<p>Classes in Kotlin are declared using the keyword <span class="d-word">class</span> :</p>
+
+<section><pre><code class="language-kotlin">
+class Person { /*...*/ }
+</code></pre></section><br><br>
+
+The <span class="cursiva">class</span>  declaration consists of the class name, the class header (specifying its type parameters, the primary constructor, and some other things), 
+and the class body surrounded by curly braces. Both the header and the body are optional; if the class has no body, the curly braces can be omitted.
+
+<section><pre><code class="language-kotlin">
+class Empty
+</code></pre></section><br><br>
+
+<h3>Constructors</h3>
+
+<p>A <span class="cursiva">class</span>  in Kotlin can have a primary constructor and one or more secondary constructors. 
+  <span class="negrita">The primary constructor</span>  is a part of the class header, and it goes after the class name and optional type parameters.</p>
+
+<section><pre><code class="language-kotlin">
+class Person constructor(firstName: String) { /*...*/ }
+</code></pre></section><br><br>
+
+If the primary constructor does not have any annotations or visibility modifiers, the constructor keyword <span class="negrita">can be omitted</span> :
+
+<section><pre><code class="language-kotlin">
+class Person(firstName: String) { /*...*/ }
+</code></pre></section><br><br>
+
+<p>The primary constructor cannot contain any code. Initialization code can be placed in <span class="cursiva">initializer blocks</span>  prefixed with the <span class="d-word">init</span>  keyword.</p>
+
+<p>During the initialization of an instance, the initializer blocks are executed in the same order as they appear in the class body, 
+  interleaved with the property initializers:</p>
+<section><pre><code class="language-kotlin">
+class InitOrderDemo(name: String) {
+    val firstProperty = "First property: $name".also(::println)
+    
+    init {
+        println("First initializer block that prints ${name}")
+    }
+    
+    val secondProperty = "Second property: ${name.length}".also(::println)
+    
+    init {
+        println("Second initializer block that prints ${name.length}")
+    }
+}
+</code></pre></section><br><br>
+
+<p>Primary constructor parameters can be used in the initializer blocks. They can also be used in property initializers declared in the class body:</p>
+
+<section><pre><code class="language-kotlin">
+class Customer(name: String) {
+    val customerKey = name.uppercase()
+}
+</code></pre></section><br><br>
+
+<p>Kotlin has a concise syntax for declaring properties and initializing them from the primary constructor:</p>
+
+<section><pre><code class="language-kotlin">
+class Person(val firstName: String, val lastName: String, var age: Int)
+</code></pre></section><br><br>
+
+<p>Such declarations can also include default values of the class properties:</p>
+
+<section><pre><code class="language-kotlin">
+class Person(val firstName: String, val lastName: String, var isEmployed: Boolean = true)
+</code></pre></section><br><br>
+
+<p>You can use a trailing comma when you declare class properties:</p>
+
+<section><pre><code class="language-kotlin">
+class Person(
+    val firstName: String,
+    val lastName: String,
+    var age: Int, // trailing comma
+) { /*...*/ }
+</code></pre></section><br><br>
+
+<p>Much like regular properties, properties declared in the primary constructor can be mutable (<span class="d-word">var</span>) or read-only (<span class="d-word">val</span>).</p>
+
+If the <span class="cursiva">constructor</span> has annotations or visibility modifiers, the <span class="d-word">constructor</span>  keyword is required and the modifiers go before it:
+
+<section><pre><code class="language-kotlin">
+class Customer public @Inject constructor(name: String) { /*...*/ }
+</code></pre></section><br><br>
+
+<p class="sub-section">Secondary constructors</p>
+
+<p>A class can also declare <span class="cursiva">secondary constructors</span> , which are prefixed with constructor:</p>
+
+<section><pre><code class="language-kotlin">
+class Person(val pets: MutableList<Pet> = mutableListOf())
+
+class Pet {
+    constructor(owner: Person) {
+        owner.pets.add(this) // adds this pet to the list of its owner's pets
+    }
+}
+</code></pre></section><br><br>
+
+<p>If the class has a primary constructor, each secondary constructor needs to delegate to the primary constructor, 
+  either directly or indirectly through another secondary constructor(s). 
+  Delegation to another constructor of the same class is done using the <span class="d-word">this</span>  keyword:</p>
+
+<section><pre><code class="language-kotlin">
+class Person(val name: String) {
+    var children: MutableList<Person> = mutableListOf()
+    constructor(name: String, parent: Person) : this(name) {
+        parent.children.add(this)
+    }
+}
+</code></pre></section><br><br>
+
+<p>Code in initializer blocks effectively becomes part of the primary constructor. 
+  Delegation to the primary constructor happens as the first statement of a secondary constructor, so the code in all initializer blocks and 
+  property initializers is executed before the body of the secondary constructor.</p>
+
+<p>Even if the class has no primary constructor, the delegation still happens implicitly, and the initializer blocks are still executed:</p>
+
+<section><pre><code class="language-kotlin">
+class Constructors {
+    init {
+        println("Init block")
+    }
+​
+    constructor(i: Int) {
+        println("Constructor $i")
+    }
+}
+</code></pre></section><br><br>
+
+<p>If a non-abstract class does not declare any constructors (primary or secondary), it will have a generated primary constructor with no arguments. The visibility of the constructor will be <span class="negrita">public</span> .</p>
 
 
+If you don't want your class to have a public constructor, declare an empty primary constructor with non-default visibility:
+
+<section><pre><code class="language-kotlin">
+class DontCreateMe private constructor () { /*...*/ }
+</code></pre></section><br><br>
+
+<p class="sub-section">Creating instances of classes</p>
+
+<p>To create an instance of a class, call the constructor as if it were a regular function:</p>
+
+<section><pre><code class="language-kotlin">
+val invoice = Invoice()
+
+val customer = Customer("Joe Smith")
+</code></pre></section><br><br>
+
+<section class="marco-t inf">
+  <span class="icono info"> </span> <span class="negrita">Kotlin does not have a <span class="d-word">new</span> keyword.</span>
+  </section>
+<section class="marco-b">
+    
+</section>
+
+<p class="sub-section">Class members</p>
+
+<p>Classes can contain:</p>
+<ul>
+    <li>Constructors and initializer blocks</li>
+    <li>Functions</li>
+    <li>Properties</li>
+    <li>Nested and inner classes</li>
+    <li>Object declarations</li>
+</ul>
+
+<p class="sub-section">Abstract classes</p>
+
+<p>A class may be declared <span class="d-word">abstract</span> , along with some or all of its members.
+  An abstract member does not have an implementation in its class.</p>
+
+<section><pre><code class="language-kotlin">
+abstract class Polygon {
+    abstract fun draw()
+}
+
+class Rectangle : Polygon() {
+    override fun draw() {
+        // draw the rectangle
+    }
+}
+</code></pre></section><br><br>
+
+<p>You can override a <span class="cursiva">non-abstract</span>  <span class="d-word">open</span>  member with an abstract one.</p>
+
+<section><pre><code class="language-kotlin">
+open class Polygon {
+    open fun draw() {
+        // some default polygon drawing method
+    }
+}
+
+abstract class WildShape : Polygon() {
+    // Classes that inherit WildShape need to provide their own
+    // draw method instead of using the default on Polygon
+    abstract override fun draw()
+}
+</code></pre></section><br><br>
+
+<h3>Inheritance</h3>
+
+<p>All classes in Kotlin have a common superclass, <span class="d-word">Any</span> , which is the default superclass for a class with no supertypes declared:</p>
+
+<section><pre><code class="language-kotlin">
+class Example // Implicitly inherits from Any
+</code></pre></section><br><br>
+
+<p>Any has three methods: <span class="d-word"> equals()</span> , <span class="d-word">hashCode()</span> , and <span class="d-word">toString()</span> . 
+  Thus, these methods are defined for all Kotlin classes.</p>
+
+<p>By default, <span class="negrita">Kotlin classes are final</span>  – they can’t be inherited. To make a class inheritable, mark it with the <span class="d-word">open</span>  keyword:</p>
+
+<section><pre><code class="language-kotlin">
+open class Base // Class is open for inheritance
+</code></pre></section><br><br>
+
+<p>To declare an explicit supertype, place the type after a colon in the class header:</p>
+
+<section><pre><code class="language-kotlin">
+open class Base(p: Int)
+
+class Derived(p: Int) : Base(p
+</code></pre></section><br><br>)
+
+<p>If the derived class has a primary constructor, the base class can (and must) be initialized in that primary constructor according to its parameters.</p>
+
+<p>if derived class has no primary constructor, then each secondary constructor has to initialize the base type using the <span class="d-word">super</span>  keyword
+   or it has to delegate to another constructor which does. Note that in this case different secondary constructors can call different constructors of the base type:</p>
+
+<section><pre><code class="language-kotlin">
+class MyView : View {
+    constructor(ctx: Context) : super(ctx)
+
+    constructor(ctx: Context, attrs: AttributeSet) : super(ctx, attrs)
+}
+</code></pre></section><br><br>
+
+<p class="sub-section">Overriding methods</p>
+
+<p>Kotlin requires explicit modifiers for overridable members and overrides:</p>
+
+<section><pre><code class="language-kotlin">
+open class Shape {
+  open fun draw() { /*...*/ }
+  fun fill() { /*...*/ }
+}
+
+class Circle() : Shape() {
+  override fun draw() { /*...*/ }
+}
+</code></pre></section><br><br>
+
+<p>The <span class="d-word">override</span>  modifier is required for <span class="d-word"> Circle.draw()</span>. If it were missing, the compiler would complain. 
+  If there is no open modifier on a function, like <span class="d-word">Shape.fill()</span> , declaring a method with the same signature in a subclass is 
+  <span class="negrita">not allowed</span> , either with <span class="d-word">override</span>  or without it. The <span class="d-word">open</span>  modifier has no effect when added to members of a final class – a class without an open modifier.</p>
+
+<p>A member marked <span class="d-word">override</span>  is itself open, so it may be overridden in subclasses. If you want to prohibit re-overriding, use <span class="d-word">final</span> :</p>
+
+<section><pre><code class="language-kotlin">
+open class Rectangle() : Shape() {
+    final override fun draw() { /*...*/ }
+}
+</code></pre></section><br><br>
 
 
+<p class="sub-section">Overriding properties</p>
+
+<p>The overriding mechanism works on properties in the same way that it does on methods. Properties declared on a superclass that are then redeclared 
+  on a derived class must be prefaced with <span class="d-word">override</span> , and they must have a <span class="negrita">compatible type</span> . 
+  Each declared property can be overridden by a property with an initializer or by a property with a <span class="d-word">get</span>  method:</p>
 
 
+<section><pre><code class="language-kotlin">
+open class Shape {
+    open val vertexCount: Int = 0
+}
 
+class Rectangle : Shape() {
+    override val vertexCount = 4
+}
+</code></pre></section><br><br>
 
+<p>You can also override a <span class="d-word">val</span>  property with a <span class="d-word">var</span>  property, but not vice versa. 
+  This is allowed because a <span class="d-word">val</span>  property essentially declares a <span class="d-word">get</span>  method, and overriding it 
+  as a var additionally declares a <span class="d-word">set</span>  method in the derived class.</p>
 
+<p>Note that you can use the <span class="d-word">override</span>  keyword as part of the property declaration in a <span class="cursiva">primary constructor</span> :</p>
 
+<section><pre><code class="language-kotlin">
+interface Shape {
+    val vertexCount: Int
+}
 
+class Rectangle(override val vertexCount: Int = 4) : Shape // Always has 4 vertices
 
-
-
-
-
-
-
-
-
-
-
-
+class Polygon : Shape {
+    override var vertexCount: Int = 0  // Can be set to any number later
+}
+</code></pre></section><br><br>
 
 
 
