@@ -498,6 +498,356 @@ This means "return <span class="d-word">1</span>  at label <span class="d-word">
 <a name="sFunciones"><a>
 <h2>Functions</h2>
 
+<p>Kotlin functions are declared using the <span class="d-word">fun</span> keyword:</p>
+
+<section><pre><code class="language-kotlin">
+fun double(x: Int): Int {
+    return 2 * x
+}
+</code></pre></section><br><br>
+
+<h3>Function Usage</h3>
+
+<p>Functions are called using the standard approach:</p>
+
+<section><pre><code class="language-kotlin">
+val result = double(2)
+</code></pre></section><br><br>
+
+<p>Calling member functions uses dot notation:</p>
+
+<section><pre><code class="language-kotlin">
+Stream().read() // create instance of class Stream and call read()
+</code></pre></section><br><br>
+
+<h3>Parameters</h3>
+
+<p>Function parameters are defined using <span class="cursiva">Pascal</span>  notation - name: <span class="cursiva">type</span> . 
+  Parameters are separated using commas, and each parameter must be explicitly typed:</p>
+
+<section><pre><code class="language-kotlin">
+fun powerOf(number: Int, exponent: Int): Int { /*...*/ }
+</code></pre></section><br><br>
+
+<p>You can use a trailing comma when you declare function parameters:</p>
+
+<section><pre><code class="language-kotlin">
+fun powerOf(
+    number: Int,
+    exponent: Int, // trailing comma
+) { /*...*/ }
+</code></pre></section><br><br>
+
+<h3>Default arguments</h3>
+
+<p>Function parameters can have default values, which are used when you skip the corresponding argument. 
+  This reduces the number of overloads:</p>
+
+<section><pre><code class="language-kotlin">
+fun read(
+    b: ByteArray,
+    off: Int = 0,
+    len: Int = b.size,
+) { /*...*/ }
+</code></pre></section><br><br>
+
+<p>A default value is defined using = after the type.</p>
+
+<p>Overriding methods always use the same default parameter values as the base method. 
+  When overriding a method that has default parameter values, the default parameter values must be omitted from the signature:</p>
+
+<section><pre><code class="language-kotlin">
+open class A {
+    open fun foo(i: Int = 10) { /*...*/ }
+}
+
+class B : A() {
+    override fun foo(i: Int) { /*...*/ }  // No default value is allowed.
+}
+</code></pre></section><br><br>
+
+<p>if a default parameter precedes a parameter with no default value, 
+  the default value can only be used by calling the function with named arguments:</p>
+
+<section><pre><code class="language-kotlin">
+fun foo(
+    bar: Int = 0,
+    baz: Int,
+) { /*...*/ }
+
+foo(baz = 1) // The default value bar = 0 is used
+</code></pre></section><br><br>
+
+<p>If the last argument after default parameters is a lambda, you can pass it either as a named argument or outside the parentheses:</p>
+
+<section><pre><code class="language-kotlin">
+fun foo(
+    bar: Int = 0,
+    baz: Int = 1,
+    qux: () -> Unit,
+) { /*...*/ }
+
+foo(1) { println("hello") }     // Uses the default value baz = 1
+foo(qux = { println("hello") }) // Uses both default values bar = 0 and baz = 1
+foo { println("hello") }        // Uses both default values bar = 0 and baz = 1
+</code></pre></section><br><br>
+
+<h3>Named Arguments</h3>
+<p>When calling a function, you can name one or more of its arguments. 
+  This can be helpful when a function has many arguments and it's difficult to associate a value with an argument, 
+  especially if it's a boolean or <span class="d-word">null</span>  value.</p>
+
+<p>When you use named arguments in a function call, you can freely change the order they are listed in, and if you want to use their default values, 
+  you can just leave these arguments out altogether.</p>
+
+<p>Consider the following function, <span class="d-word">reformat()</span> , which has 4 arguments with default values.</p>
+
+<section><pre><code class="language-kotlin">
+fun reformat(
+    str: String,
+    normalizeCase: Boolean = true,
+    upperCaseFirstLetter: Boolean = true,
+    divideByCamelHumps: Boolean = false,
+    wordSeparator: Char = ' ',
+) { /*...*/ }
+</code></pre></section><br><br>
+
+<p>When calling this function, you don’t have to name all its arguments:</p>
+
+reformat(
+    "String!",
+    false,
+    upperCaseFirstLetter = false,
+    divideByCamelHumps = true,
+    '_'
+)
+
+<p>You can skip all the ones with default values:</p>
+
+<section><pre><code class="language-kotlin">
+reformat("This is a long String!")
+</code></pre></section><br><br>
+
+<p>You are also able to skip specific arguments with default values, rather than omitting them all. 
+  However, after the first skipped argument, you must name all subsequent arguments:</p>
+
+<section><pre><code class="language-kotlin">
+reformat("This is a short String!", upperCaseFirstLetter = false, wordSeparator = '_')
+</code></pre></section><br><br>
+
+<h3>Unit-returning functions</h3>
+
+<p>If a function does not return a useful value, its return type is <span class="d-word">Unit</span> . <span class="d-word">Unit</span> 
+   is a type with only one value - <span class="d-word">Unit</span> . This value does not have to be returned explicitly:</p>
+
+<section><pre><code class="language-kotlin">
+fun printHello(name: String?): Unit {
+    if (name != null)
+        println("Hello $name")
+    else
+        println("Hi there!")
+    // `return Unit` or `return` is optional
+}
+</code></pre></section><br><br>
+
+<p>The <span class="d-word">Unit</span>  return type declaration is also optional. The above code is equivalent to:</p>
+
+<section><pre><code class="language-kotlin">
+fun printHello(name: String?) { ... }
+</code></pre></section><br><br>
+
+
+<h3>Single-expression functions</h3>
+
+<p>When a function returns a single expression, the curly braces can be omitted and the body is specified after a <span class="d-word">=</span>  symbol:</p>
+
+<section><pre><code class="language-kotlin">
+fun double(x: Int): Int = x * 2
+</code></pre></section><br><br>
+
+<p>Explicitly declaring the return type is optional when this can be inferred by the compiler:</p>
+
+<section><pre><code class="language-kotlin">
+fun double(x: Int) = x * 2
+</code></pre></section><br><br>
+
+<h3>Variable number of arguments (varargs)</h3>
+
+<p>You can mark a parameter of a function (usually the last one) with the vararg modifier:</p>
+
+<section><pre><code class="language-kotlin">
+fun &lt;T&gt; asList(vararg ts: T): List&lt;T> {
+    val result = ArrayList&lt;T>()
+    for (t in ts) // ts is an Array
+        result.add(t)
+    return result
+}
+</code></pre></section><br><br>
+
+<p>In this case, you can pass a variable number of arguments to the function:</p>
+
+<section><pre><code class="language-kotlin">
+val list = asList(1, 2, 3)
+</code></pre></section><br><br>
+
+<p>Inside a function, a <span class="d-word">vararg</span>  -parameter of type <span class="d-word">T</span> 
+  is visible as an array of <span class="d-word">T</span> , as in the example above, where the ts variable has type <span class="d-word">Array&lt;out T></span> .</p>
+
+  <p>Only one parameter can be marked as <span class="d-word">vararg</span> . If a <span class="d-word">vararg</span>  parameter is not the last one in the list, 
+    values for the subsequent parameters can be passed using named argument syntax, or, if the parameter has a function type, 
+    by passing a lambda outside the parentheses.</p>
+
+  <p>When you call a <span class="d-word">vararg</span>-function, you can pass arguments individually, 
+    for example <span class="d-word">asList(1, 2, 3)</span> . If you already have an array and want to pass its contents to the function, 
+    use the spread operator (prefix the array with <span class="d-word">*</span> ):</p>
+  
+<section><pre><code class="language-kotlin">
+val a = arrayOf(1, 2, 3)
+val list = asList(-1, 0, *a, 4)
+</code></pre></section><br><br>
+
+<h3>Function scope</h3>
+
+<p>Kotlin functions can be declared at the top level in a file, meaning you do not need to create a class to hold a function, 
+  which you are required to do in languages such as Java, C#, and Scala. 
+  In addition to top level functions, Kotlin functions can also be declared locally as <span class="negrita">member</span>  functions and <span class="negrita">extension</span>  functions.</p>
+
+
+<p class="sub-section">Local functions</p>
+
+<p>Kotlin supports local functions, which are functions <span class="negrita">inside</span> other functions:</p>
+
+<section><pre><code class="language-kotlin">
+fun dfs(graph: Graph) {
+    fun dfs(current: Vertex, visited: MutableSet<Vertex>) {
+        if (!visited.add(current)) return
+        for (v in current.neighbors)
+            dfs(v, visited)
+    }
+
+    dfs(graph.vertices[0], HashSet())
+}
+</code></pre></section><br><br>
+
+<p>A local function can access local variables of outer functions (the closure). In the case above, visited can be a local variable:</p>
+
+<section><pre><code class="language-kotlin">
+fun dfs(graph: Graph) {
+    val visited = HashSet<Vertex>()
+    fun dfs(current: Vertex) {
+        if (!visited.add(current)) return
+        for (v in current.neighbors)
+            dfs(v)
+    }
+
+    dfs(graph.vertices[0])
+}
+</code></pre></section><br><br>
+
+<p class="sub-section">Member functions</p>
+
+<p>A member function is a function that is defined inside a class or object:</p>
+
+<section><pre><code class="language-kotlin">
+class Sample {
+    fun foo() { print("Foo") }
+}
+</code></pre></section><br><br>
+
+<p>Member functions are called with dot notation:</p>
+
+<section><pre><code class="language-kotlin">
+Sample().foo() // creates instance of class Sample and calls foo
+</code></pre></section><br><br>
+
+
+<h3>Generic functions</h3>
+
+<p>Functions can have generic parameters, which are specified using angle brackets before the function name:</p>
+
+<section><pre><code class="language-kotlin">
+fun &lt;T> singletonList(item: T): List&lt;T> { /*...*/ }
+</code></pre></section><br><br>
+
+<h3>Tail recursive functions</h3>
+<p>Kotlin supports a style of functional programming known as <span class="cursiva">tail recursion</span>. 
+  For some algorithms that would normally use loops, you can use a recursive function instead without the risk of stack overflow. 
+  When a function is marked with the <span class="d-word">tailrec</span>  modifier and meets the required formal conditions, the compiler optimizes out the recursion, leaving behind a fast and efficient loop based version instead:</p>
+
+<section><pre><code class="language-kotlin">
+val eps = 1E-10 // "good enough", could be 10^-15
+
+tailrec fun findFixPoint(x: Double = 1.0): Double =
+    if (Math.abs(x - Math.cos(x)) &lt; eps) x else findFixPoint(Math.cos(x))
+</code></pre></section><br><br>
+
+
+<p>This code calculates the <span class="d-word">fixpoint</span>  of cosine, which is a mathematical constant. 
+  It simply calls <span class="d-word">Math.cos</span>  repeatedly starting at 1.0 until the result no longer changes, yielding a 
+  result of <span class="d-word">0.7390851332151611</span>  for the specified <span class="d-word">eps</span>  precision. 
+  The resulting code is equivalent to this more traditional style:</p>
+
+<section><pre><code class="language-kotlin">
+val eps = 1E-10 // "good enough", could be 10^-15
+
+private fun findFixPoint(): Double {
+    var x = 1.0
+    while (true) {
+        val y = Math.cos(x)
+        if (Math.abs(x - y) < eps) return x
+        x = Math.cos(x)
+    }
+}
+</code></pre></section><br><br>
+
+<p>To be eligible for the <span class="d-word">tailrec</span>  modifier, a function must call itself as the last operation it performs. 
+  You cannot use tail recursion when there is more code after the recursive call, and you cannot use it within <span class="d-word">try/ catch/ finally</span>  blocks. Currently, tail recursion is supported by Kotlin for the JVM and Kotlin/Native.</p>
+
+
+<h3>High-order functions and lambdas</h3>
+
+<p>Kotlin functions are <span class="cursiva">first-class</span> , which means they can be stored in <span class="negrita">variables</span>  and <span class="negrita">data structures</span> 
+  , and can be passed as arguments to and returned from other <span class="d-word">higher-order</span>  functions. 
+  You can perform any operations on functions that are possible for other non-function values.</p>
+
+<p>To facilitate this, Kotlin, as a statically typed programming language, uses a family of function types to represent functions, 
+  and provides a set of specialized language constructs, such as lambda expressions.</p>
+
+  <div class="oculto">
+<p class="sub-section">Higher-order functions</p>
+
+<p>A <span class="d-word">higher-order</span> function is a function that takes functions as parameters, or returns a function.</p>
+
+<p>A good example of a <span class="d-word">higher-order</span> function is the functional programming idiom fold for collections. It takes an initial accumulator value and a combining function and builds its return value by consecutively combining the current accumulator value with each collection element, replacing the accumulator value each time:</p>
+
+
+<p class="sub-section">Function Types</div></p>
+
+<p>Kotlin uses function types, such as <span class="d-word">(Int) -> String</span> , for declarations that deal with functions: 
+  <span class="d-word">val onClick: () -> Unit = ....</span> </p>
+
+<p>These types have a special notation that corresponds to the signatures of the functions - their parameters and return values:</p>
+
+<p>All function types have a parenthesized list of parameter types and a return type: <span class="d-word">(A, B) -> C</span>  denotes a 
+  type that represents functions that take two arguments of types <span class="d-word">A</span>  and <span class="d-word">B</span>  and return a value of type <span class="d-word">C</span> . 
+  The list of parameter types may be empty, as in <span class="d-word">() -> A</span> . The <span class="d-word">Unit</span>  return type cannot be omitted.</p>
+
+<p>Function types can optionally have an additional receiver type, which is specified before the dot in the notation: the type <span class="d-word">A.(B) -> C</span> 
+  represents functions that can be called on a receiver object <span class="d-word">A</span>  with a parameter <span class="d-word">B</span>  and return a value <span class="d-word">C</span> . Function literals with receiver are often used along with these types.</p>
+
+<p>Suspending functions belong to a special kind of function type that have a suspend modifier in their notation, 
+  such as suspend <span class="d-word">() -> Unit</span>  or suspend <span class="d-word">A.(B) -> C</span> .</p>
+</div>
+
+
+
+
+
+
+
+
+
+
 <!--************************Classes and objects**************************-->
 <a name="sClasses"><a>
 <h2>Classes and objects</h2>
