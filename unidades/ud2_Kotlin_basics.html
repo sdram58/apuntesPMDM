@@ -19,6 +19,7 @@
        href="#s2">Variable Declaration</a><a 
        href="#s3">Conditionals</a><a 
        href="#sloops">Loops</a><a 
+       href="#sFunciones">Functions</a><a 
        href="#sClasses">Classes and Objects</a><a 
        class="oculto" href="#s6">UD6.- Kotlin's basics</a><a 
        class="oculto" href="#s7">UD7.- Kotlin's basics</a><a 
@@ -493,6 +494,10 @@ return@a 1
 This means "return <span class="d-word">1</span>  at label <span class="d-word"> @a</span> " and not "return a labeled expression (@a 1)".
 </p>
 
+<!--************************Functions**************************-->
+<a name="sFunciones"><a>
+<h2>Functions</h2>
+
 <!--************************Classes and objects**************************-->
 <a name="sClasses"><a>
 <h2>Classes and objects</h2>
@@ -801,7 +806,35 @@ class Polygon : Shape {
 }
 </code></pre></section><br><br>
 
+<p class="sub-section">Derived class initialization order</p>
 
+<p>During the construction of a new instance of a derived class, the base class initialization is done as the first step 
+  (preceded only by evaluation of the arguments for the base class constructor), which means that it happens before the initialization logic of the derived class is run.</p>
+
+  <section><pre><code class="language-kotlin">
+open class Base(val name: String) {
+
+    init { println("Initializing a base class") }
+
+    open val size: Int = 
+        name.length.also { println("Initializing size in the base class: $it") }
+}
+
+class Derived(
+    name: String,
+    val lastName: String,
+) : Base(name.replaceFirstChar { it.uppercase() }.also { println("Argument for the base class: $it") }) {
+
+    init { println("Initializing a derived class") }
+
+    override val size: Int =
+        (super.size + lastName.length).also { println("Initializing size in the derived class: $it") }
+}
+fun main() {
+  println("Constructing the derived class(\"hello\", \"world\")")
+  Derived("hello", "world")
+}
+  </code></pre></section><br><br>
 
 
 
