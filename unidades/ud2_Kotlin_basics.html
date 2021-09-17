@@ -813,15 +813,13 @@ private fun findFixPoint(): Double {
 <p>To facilitate this, Kotlin, as a statically typed programming language, uses a family of function types to represent functions, 
   and provides a set of specialized language constructs, such as lambda expressions.</p>
 
-  <div class="oculto">
 <p class="sub-section">Higher-order functions</p>
 
 <p>A <span class="d-word">higher-order</span> function is a function that takes functions as parameters, or returns a function.</p>
 
-<p>A good example of a <span class="d-word">higher-order</span> function is the functional programming idiom fold for collections. It takes an initial accumulator value and a combining function and builds its return value by consecutively combining the current accumulator value with each collection element, replacing the accumulator value each time:</p>
 
 
-<p class="sub-section">Function Typess</p>
+<p class="sub-section">Function Types</p>
 
 <p>Kotlin uses function types, such as <span class="d-word">(Int) -> String</span> , for declarations that deal with functions: 
   <span class="d-word">val onClick: () -> Unit = ....</span> </p>
@@ -837,7 +835,6 @@ private fun findFixPoint(): Double {
 
 <p>Suspending functions belong to a special kind of function type that have a suspend modifier in their notation, 
   such as suspend <span class="d-word">() -> Unit</span>  or suspend <span class="d-word">A.(B) -> C</span> .</p>
-</div>
 
 
 
