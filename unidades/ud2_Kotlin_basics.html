@@ -1244,311 +1244,425 @@ return result
 
 <h3>Classes</h3>
 
-<p>Classes in Kotlin are declared using the keyword <span class="d-word">class</span> :</p>
+<p>When we declare a <span class="r-word">class</span>  in <span class="d-word">Kotlin</span>  we can indicate parameters that are used to define a default <span class="d-word">constructor</span>.
+  If we indicate <span class="d-word">var</span>  or <span class="d-word">val</span>  in these parameters, they will become part of the <span class="negrita">class properties</span> :</p>
 
-<section><pre><code class="language-kotlin">class Person { /*...*/ }
+<p><span class="negrita">Class</span>  in <span class="d-word">Java</span>  syntax</p>
+<section><pre><code class="language-kotlin">public class Complejo {
+   private double re, im;
+   public Complejo(double re, 
+                  double im) {
+      this.re = re; this.im = im;
+   }
+   public void suma(Complejo v) {
+      re = re + v.re;
+      im = im + v.im;
+   }
+} 
 </code></pre></section><br><br>
 
-The <span class="cursiva">class</span>  declaration consists of the class name, the class header (specifying its type parameters, the primary constructor, and some other things), 
-and the class body surrounded by curly braces. Both the header and the body are optional; if the class has no body, the curly braces can be omitted.
-
-<section><pre><code class="language-kotlin">class Empty
+<p>The same <span class="negrita">class</span>  in <span class="d-word">Kotlin</span>  syntax</p>
+<section><pre><code class="language-kotlin">class Complejo(var re: Double, 
+               var im: Dou-ble=0.0){
+     
+   fun suma(v: Complejo) {
+      re = re + v.re;
+      im = im + v.im;
+   }
+}  
 </code></pre></section><br><br>
+<p>If not stated otherwise, a <span class="negrita">class</span>  extends from <span class="d-word">Any</span> , which is similar to <span class="d-word">Object</span>  in <span class="negrita">Java</span>.
+  <span class="negrita">Classes in Kotlin by default are <span class="d-word">public</span> </span> .</p>
+<p>We can also declare properties and initialize them from parameters. The following class has three properties: <span class="cursiva">Name, Age, and PersonKey</span> :</p>
 
-<h3>Constructors</h3>
-
-<p>A <span class="cursiva">class</span>  in Kotlin can have a primary constructor and one or more secondary constructors. 
-  <span class="negrita">The primary constructor</span>  is a part of the class header, and it goes after the class name and optional type parameters.</p>
-
-<section><pre><code class="language-kotlin">class Person constructor(firstName: String) { /*...*/ }
+<section><pre><code class="language-kotlin">class Persona(nombre: String, var edad: Int) {
+   val clavePersona = nombre.toUpperCase()
+}
 </code></pre></section><br><br>
+<p>If we need to add instructions to initialize the object we can use an <span class="d-word">init block</span> . 
+  We could also add <span class="d-word">alternative constructors</span>  as long as they use different parameters</p>
 
-If the primary constructor does not have any annotations or visibility modifiers, the constructor keyword <span class="negrita">can be omitted</span> :
-
-<section><pre><code class="language-kotlin">class Person(firstName: String) { /*...*/ }
-</code></pre></section><br><br>
-
-<p>The primary constructor cannot contain any code. Initialization code can be placed in <span class="cursiva">initializer blocks</span>  prefixed with the <span class="d-word">init</span>  keyword.</p>
-
-<p>During the initialization of an instance, the initializer blocks are executed in the same order as they appear in the class body, 
-  interleaved with the property initializers:</p>
-<section><pre><code class="language-kotlin">class InitOrderDemo(name: String) {
-    val firstProperty = "First property: $name".also(::println)
-    
-    init {
-        println("First initializer block that prints ${name}")
-    }
-    
-    val secondProperty = "Second property: ${name.length}".also(::println)
-    
-    init {
-        println("Second initializer block that prints ${name.length}")
-    }
+<section><pre><code class="language-kotlin">class Persona(val nombre: String) {
+   init {
+      println("Inicialización objeto")
+   }
+   constructor(nombre: String, edal: Int) : this(nombre) {
+      println("Inicialización segundo constructor")
+   }
 }
 </code></pre></section><br><br>
 
-<p>Primary constructor parameters can be used in the initializer blocks. They can also be used in property initializers declared in the class body:</p>
+<p>You don't need to use <span class="d-word">new</span> to <span class="negrita">create objects</span>. Nor is it essential to indicate the <span class="negrita">type of the object</span>, 
+  this is deduced from the <span class="d-word">constructor</span> .</p>
 
-<section><pre><code class="language-kotlin">class Customer(name: String) {
-    val customerKey = name.uppercase()
-}
-</code></pre></section><br><br>
+  <section><pre><code class="language-kotlin">//Java syntax
+Persona p = new Persona("Ana"); 	
 
-<p>Kotlin has a concise syntax for declaring properties and initializing them from the primary constructor:</p>
+//Kotlin syntax
+ val p = Persona("Ana") 
+  </code></pre></section><br><br>
 
-<section><pre><code class="language-kotlin">class Person(val firstName: String, val lastName: String, var age: Int)
-</code></pre></section><br><br>
+<p>To access the <span class="negrita">properties</span>  of an object it is no longer necessary to define <span class="d-word">getters</span>  and <span class="d-word">setters</span>. 
+  They are created automatically:</p>
 
-<p>Such declarations can also include default values of the class properties:</p>
-
-<section><pre><code class="language-kotlin">class Person(val firstName: String, val lastName: String, var isEmployed: Boolean = true)
-</code></pre></section><br><br>
-
-<p>You can use a trailing comma when you declare class properties:</p>
-
-<section><pre><code class="language-kotlin">class Person(
-    val firstName: String,
-    val lastName: String,
-    var age: Int, // trailing comma
-) { /*...*/ }
-</code></pre></section><br><br>
-
-<p>Much like regular properties, properties declared in the primary constructor can be mutable (<span class="d-word">var</span>) or read-only (<span class="d-word">val</span>).</p>
-
-If the <span class="cursiva">constructor</span> has annotations or visibility modifiers, the <span class="d-word">constructor</span>  keyword is required and the modifiers go before it:
-
-<section><pre><code class="language-kotlin">class Customer public @Inject constructor(name: String) { /*...*/ }
-</code></pre></section><br><br>
-
-<p class="sub-section">Secondary constructors</p>
-
-<p>A class can also declare <span class="cursiva">secondary constructors</span> , which are prefixed with constructor:</p>
-
-<section><pre><code class="language-kotlin">class Person(val pets: MutableList<Pet> = mutableListOf())
-
-class Pet {
-    constructor(owner: Person) {
-        owner.pets.add(this) // adds this pet to the list of its owner's pets
-    }
-}
-</code></pre></section><br><br>
-
-<p>If the class has a primary constructor, each secondary constructor needs to delegate to the primary constructor, 
-  either directly or indirectly through another secondary constructor(s). 
-  Delegation to another constructor of the same class is done using the <span class="d-word">this</span>  keyword:</p>
-
-<section><pre><code class="language-kotlin">class Person(val name: String) {
-    var children: MutableList<Person> = mutableListOf()
-    constructor(name: String, parent: Person) : this(name) {
-        parent.children.add(this)
-    }
-}
-</code></pre></section><br><br>
-
-<p>Code in initializer blocks effectively becomes part of the primary constructor. 
-  Delegation to the primary constructor happens as the first statement of a secondary constructor, so the code in all initializer blocks and 
-  property initializers is executed before the body of the secondary constructor.</p>
-
-<p>Even if the class has no primary constructor, the delegation still happens implicitly, and the initializer blocks are still executed:</p>
-
-<section><pre><code class="language-kotlin">class Constructors {
-    init {
-        println("Init block")
-    }
-​
-    constructor(i: Int) {
-        println("Constructor $i")
-    }
-}
-</code></pre></section><br><br>
-
-<p>If a non-abstract class does not declare any constructors (primary or secondary), it will have a generated primary constructor with no arguments. The visibility of the constructor will be <span class="negrita">public</span> .</p>
-
-
-If you don't want your class to have a public constructor, declare an empty primary constructor with non-default visibility:
-
-<section><pre><code class="language-kotlin">class DontCreateMe private constructor () { /*...*/ }
-</code></pre></section><br><br>
-
-<p class="sub-section">Creating instances of classes</p>
-
-<p>To create an instance of a class, call the constructor as if it were a regular function:</p>
-
-<section><pre><code class="language-kotlin">val invoice = Invoice()
-
-val customer = Customer("Joe Smith")
-</code></pre></section><br><br>
-
-<section class="marco-t inf">
-  <span class="icono info"> </span> <span class="negrita">Kotlin does not have a <span class="d-word">new</span> keyword.</span>
-  </section>
-<section class="marco-b">
-    
-</section>
-
-<p class="sub-section">Class members</p>
-
-<p>Classes can contain:</p>
-<ul>
-    <li>Constructors and initializer blocks</li>
-    <li>Functions</li>
-    <li>Properties</li>
-    <li>Nested and inner classes</li>
-    <li>Object declarations</li>
-</ul>
-
-<p class="sub-section">Abstract classes</p>
-
-<p>A class may be declared <span class="d-word">abstract</span> , along with some or all of its members.
-  An abstract member does not have an implementation in its class.</p>
-
-<section><pre><code class="language-kotlin">abstract class Polygon {
-    abstract fun draw()
+  <section><pre><code class="language-kotlin">//Java syntax
+public class Persona {
+   private String nombre;
+   public String getNombre() {
+      return nombre;
+   }
+   public void setNombre(String n){
+      nombre = n;
+   }
 }
 
-class Rectangle : Polygon() {
-    override fun draw() {
-        // draw the rectangle
-    }
-}
+//Kotlin syntax
+class Persona {
+  var nombre: String = ""
+} 
+  </code></pre></section><br><br>
+<p>Modifying the properties of an object is simpler in Kotlin, simply enter its name and Kotlin 
+  will make the call to the <span class="d-word">getter</span>  or <span class="d-word">setter</span>. 
+  Thanks to this, the <span class="negrita">code</span>  is much <span class="negrita">more readable</span> </p>
+
+<section><pre><code class="language-kotlin">p.nombre = "Ana"
+var s = p.nombre 
 </code></pre></section><br><br>
 
-<p>You can override a <span class="cursiva">non-abstract</span>  <span class="d-word">open</span>  member with an abstract one.</p>
+<p>Kotlin also allows us to create our own <span class="d-word">getters</span>  and <span class="d-word">setters</span>.</p>
 
-<section><pre><code class="language-kotlin">open class Polygon {
-    open fun draw() {
-        // some default polygon drawing method
-    }
-}
+<section><pre><code class="language-kotlin">class Persona {
+   var nombre: String = ""
+      get() = field.toUpperCase()
+      set(value) {
+         if (value=="Osama bin Laden") llamarFBI()
+         field = value
+      }  
+} 
+</code></pre></section><br><br>
+<p>In a <span class="d-word">getter</span>  and <span class="d-word">setter</span>  we have to use <span class="r-word">field</span>  to access the property.</p>
 
-abstract class WildShape : Polygon() {
-    // Classes that inherit WildShape need to provide their own
-    // draw method instead of using the default on Polygon
-    abstract override fun draw()
-}
+<p>In Kotlin there is no need for a property to be stored in a backing variable. Let's see an example</p>
+
+<section><pre><code class="language-kotlin">class Persona {
+   var nombre: String = ""
+   var longNombre: Int
+      get() = nombre.size
+}  
+</code></pre></section><br><br>
+<p>In the second property, a variable of type Int <span class="negrita">will not be created</span>. 
+  This occurs as long as get or set is implemented and, furthermore, they do not refer to <span class="d-word">field</span>  (as in the previous example).
+</p>
+<p><span class="negrita">By default</span> , both the <span class="cursiva">class</span>  and its <span class="cursiva">properties</span> 
+  and functions are <span class="d-word">public</span> . If we want something not to be accessible from outside the class, we will prepend <span class="d-word">private</span>.
+  If we want only the <span class="d-word">getter</span>  or <span class="d-word">setter</span>  to be <span class="d-word">private</span>, we will indicate it as follows:
+</p>
+
+<section><pre><code class="language-kotlin">class Persona {
+   private var edad: Int = 0
+   var nombre: String = ""
+      private set
+}  
 </code></pre></section><br><br>
 
 <h3>Inheritance</h3>
 
-<p>All classes in Kotlin have a common superclass, <span class="d-word">Any</span> , which is the default superclass for a class with no supertypes declared:</p>
+<p>Classes above cannot be used as a basis for creating new classes; by default they are <span class="d-word">closed</span> . (In Java a closed class is marked as final.)
+If we want to inherit from a class we have to prepend <span class="d-word">open</span>.</p>
 
-<section><pre><code class="language-kotlin">class Example // Implicitly inherits from Any
+<section><pre><code class="language-kotlin">open class Padre(p: Int) 
+class Hijo(p: Int) : Padre(p) 
 </code></pre></section><br><br>
 
-<p>Any has three methods: <span class="d-word"> equals()</span> , <span class="d-word">hashCode()</span> , and <span class="d-word">toString()</span> . 
-  Thus, these methods are defined for all Kotlin classes.</p>
-
-<p>By default, <span class="negrita">Kotlin classes are final</span>  – they can’t be inherited. To make a class inheritable, mark it with the <span class="d-word">open</span>  keyword:</p>
-
-<section><pre><code class="language-kotlin">open class Base // Class is open for inheritance
-</code></pre></section><br><br>
-
-<p>To declare an explicit supertype, place the type after a colon in the class header:</p>
-
-<section><pre><code class="language-kotlin">open class Base(p: Int)
-
-class Derived(p: Int) : Base(p
-</code></pre></section><br><br>)
-
-<p>If the derived class has a primary constructor, the base class can (and must) be initialized in that primary constructor according to its parameters.</p>
-
-<p>if derived class has no primary constructor, then each secondary constructor has to initialize the base type using the <span class="d-word">super</span>  keyword
-   or it has to delegate to another constructor which does. Note that in this case different secondary constructors can call different constructors of the base type:</p>
+<p>If the class does not have a parent <span class="d-word">constructor</span> , each child <span class="d-word">constructor</span>  has to initialize the base type with 
+  the <span class="d-word">super</span>  keyword</p>
 
 <section><pre><code class="language-kotlin">class MyView : View {
     constructor(ctx: Context) : super(ctx)
-
     constructor(ctx: Context, attrs: AttributeSet) : super(ctx, attrs)
-}
+}  
 </code></pre></section><br><br>
 
-<p class="sub-section">Overriding methods</p>
+<p>By default, the properties and methods of a class are <span class="d-word">closed</span> . (In Java marked as <span class="d-word">final</span>.) 
+  To be able to overwrite them we have to indicate <span class="d-word">open</span> :</p>
 
-<p>Kotlin requires explicit modifiers for overridable members and overrides:</p>
-
-<section><pre><code class="language-kotlin">open class Shape {
-  open fun draw() { /*...*/ }
-  fun fill() { /*...*/ }
+<section><pre><code class="language-kotlin">open class Padre {
+    open var nombre = "Soy padre"
+    open fun abierto() {}
+    fun cerrado() {}
 }
 
-class Circle() : Shape() {
-  override fun draw() { /*...*/ }
-}
+class Hijo() : Padre() {
+    override var nombre = "Soy hijo"
+    final override fun abierto() {}
+} 
+</code></pre></section><br><br>
+<p>A member marked with <span class="d-word">override</span>  continues to be opened. To close it, you have to put <span class="d-word">final</span>  before it.</p>
+<p>To access properties and methods of the parent class we will use <span class="d-word">super</span>.</p>
+<section><pre><code class="language-kotlin">class Hijo() : Padre() {
+    override var nombre = "hijo de ${super.nombre}"
+    final override fun abierto() {
+        super.abierto()
+    }
+} 
 </code></pre></section><br><br>
 
-<p>The <span class="d-word">override</span>  modifier is required for <span class="d-word"> Circle.draw()</span>. If it were missing, the compiler would complain. 
-  If there is no open modifier on a function, like <span class="d-word">Shape.fill()</span> , declaring a method with the same signature in a subclass is 
-  <span class="negrita">not allowed</span> , either with <span class="d-word">override</span>  or without it. The <span class="d-word">open</span>  modifier has no effect when added to members of a final class – a class without an open modifier.</p>
+<h3>Extensions</h3>
+<p><span class="d-word">Extensions</span>  allow us to extend the functionality of a class without using <span class="negrita">inheritance</span>. 
+  Kotlin supports extension <span class="cursiva">functions</span>  and extension <span class="cursiva">properties</span>. </p><p>Let's see an example:</p>
 
-<p>A member marked <span class="d-word">override</span>  is itself open, so it may be overridden in subclasses. If you want to prohibit re-overriding, use <span class="d-word">final</span> :</p>
+<section><pre><code class="language-kotlin">fun MutableList&lt;Int&gt;.swap(index1: Int, index2: Int) {
+    val tmp = this[index1] // 'this' corresponde con la lista
+    this[index1] = this[index2]
+    this[index2] = tmp
+} 
+</code></pre></section><br><br>
+<p>From a syntactic point of view it is as if we have added a method to the MutableList class &lt;Int&gt; and all his descendants. 
+  But the extension function does not modify the class, it is resolved statically.</p>
+<p>In Java you will be used to using * <span class="cursiva">Utils</span>  classes, such as <span class="cursiva">FileUtils</span> ,
+   <span class="cursiva">StringUtils</span>  or <span class="cursiva">java.util.Collections</span>. 
+   These classes extend the functionality of others without using inheritance.
+   The syntax is less readable than in Kotlin:</p>
+<section><pre><code class="language-kotlin">//Wihout extension, swap function already exists in Collections
+Collections.swap(lista, 2, 5); 	
 
-<section><pre><code class="language-kotlin">open class Rectangle() : Shape() {
-    final override fun draw() { /*...*/ }
-}
+//With extension, a new swap function is extended on Collections
+lista.swap(2, 5) 
+</code></pre></section><br><br>
+<p>We can also extend a class with new properties. Let's see an example:</p>
+<section><pre><code class="language-kotlin">val <Int> List<Int>.lastIndex: Int
+    get() = size – 1 
 </code></pre></section><br><br>
 
 
-<p class="sub-section">Overriding properties</p>
-
-<p>The overriding mechanism works on properties in the same way that it does on methods. Properties declared on a superclass that are then redeclared 
-  on a derived class must be prefaced with <span class="d-word">override</span> , and they must have a <span class="negrita">compatible type</span> . 
-  Each declared property can be overridden by a property with an initializer or by a property with a <span class="d-word">get</span>  method:</p>
 
 
-<section><pre><code class="language-kotlin">open class Shape {
-    open val vertexCount: Int = 0
-}
 
-class Rectangle : Shape() {
-    override val vertexCount = 4
-}
+
+
+
+<h3>Data classes in Kotlin</h3>
+<p>You are probably used to using <span class="d-word">POJO</span> ("Plain old Java Objects") classes in your projects. 
+  They are very simple classes where the information necessary to represent an object is described, 
+  but which interact with other classes or require external APIs.</p>
+
+<p>Usually a <span class="d-word">POJO</span>  only provides us with a collection of fields. 
+  Although we can also add functions that only involve objects of this class. 
+  For example, the GeographicalPoint class could have longitude and latitude fields and a function that calculates the distance between two points.
+</p>
+
+<section><pre><code class="language-kotlin">data class Complejo(var real: Double, 
+                    var imaginario: Double=0.0) 
+</code></pre></section><br><br>
+<p>All kinds of data include the following functions:</p>
+
+<ul>
+  <li><span class="d-word">equals()</span> : compares two objects.</li>
+  <li><span class="d-word">hashCode()</span> : hash code of an object used by the previous method.</li>
+  <li><span class="d-word">copy()</span> : copy an object.</li>
+  <li><span class="d-word">toString()</span> : convert object to string.</li>
+  <li><span class="d-word">component1()</span> , <span class="d-word">component2()</span> ,…: components in order of declaration.</li>
+</ul>
+
+<p>If a property is declared in the body of the class, instead of in the parent constructor, <span class="negrita">it will no longer have the indicated benefits</span>:</p>
+
+<section><pre><code class="language-kotlin">data class Complejo(var real: Double, 
+                    var imaginario: Double=0.0) {
+    val irracional: Boolean = false
+} 
+</code></pre></section><br><br>
+<p>In the previous example the <span class="cursiva">irracional</span> property is ignored in the equals(), hashCode(), copy(), toString() and componentX() functions.</p>
+<p>Data classes must meet the following requirements:</p>
+
+<ul>  
+  <li>The primary constructor must have at least one parameter.</li>
+  <li>All main constructor parameters must be marked as <span class="d-word">val</span>  or <span class="d-word">var</span> .</li>
+  <li>Data classes cannot be <span class="d-word">abstract</span> , <span class="d-word">open</span> , <span class="d-word">sealed</span> , or <span class="d-word">internal</span> </li>
+</ul>
+
+<p>When copying an object we can change some of its properties:</p>
+<section><pre><code class="language-kotlin">val c = Complejo(1.0, -1.0)
+val c2 = c.copy(im = 0.0)
 </code></pre></section><br><br>
 
-<p>You can also override a <span class="d-word">val</span>  property with a <span class="d-word">var</span>  property, but not vice versa. 
-  This is allowed because a <span class="d-word">val</span>  property essentially declares a <span class="d-word">get</span>  method, and overriding it 
-  as a var additionally declares a <span class="d-word">set</span>  method in the derived class.</p>
+<p class="sub-section">Unstructured statements</p>
+<p>Destructuring is the procedure by which we can extract multiple values ​​that are stored in objects and vectors. 
+  Some times occasions it is necessary to deconstruct an object into different variables. It is done as follows:</p>
 
-<p>Note that you can use the <span class="d-word">override</span>  keyword as part of the property declaration in a <span class="cursiva">primary constructor</span> :</p>
-
-<section><pre><code class="language-kotlin">interface Shape {
-    val vertexCount: Int
-}
-
-class Rectangle(override val vertexCount: Int = 4) : Shape // Always has 4 vertices
-
-class Polygon : Shape {
-    override var vertexCount: Int = 0  // Can be set to any number later
-}
-</code></pre></section><br><br>
-
-<p class="sub-section">Derived class initialization order</p>
-
-<p>During the construction of a new instance of a derived class, the base class initialization is done as the first step 
-  (preceded only by evaluation of the arguments for the base class constructor), which means that it happens before the initialization logic of the derived class is run.</p>
-
-  <section><pre><code class="language-kotlin">open class Base(val name: String) {
-
-    init { println("Initializing a base class") }
-
-    open val size: Int = 
-        name.length.also { println("Initializing size in the base class: $it") }
-}
-
-class Derived(
-    name: String,
-    val lastName: String,
-) : Base(name.replaceFirstChar { it.uppercase() }.also { println("Argument for the base class: $it") }) {
-
-    init { println("Initializing a derived class") }
-
-    override val size: Int =
-        (super.size + lastName.length).also { println("Initializing size in the derived class: $it") }
-}
-fun main() {
-  println("Constructing the derived class(\"hello\", \"world\")")
-  Derived("hello", "world")
-}
+  <section><pre><code class="language-kotlin">val c = Complejo(1.0, -1.0); 
+val (re, im) = c 
   </code></pre></section><br><br>
+
+<p>In this way we can access each of the values ​​of a <span class="d-word">data class</span>  using a single assignment. 
+  To access each property, the <span class="negrita">component1()</span> , <span class="negrita">component2()</span>,… functions are defined. </p>
+<p>Those codes are similar.</p>
+<section><pre><code class="language-kotlin">//A
+val (re, im) = c 	
+
+//B
+val re = c.component1()
+val im = c.component2() 
+</code></pre></section><br><br>
+
+<p>If we are not interested in any value, we use <span class="d-word">_</span> :</p>
+<section><pre><code class="language-kotlin">val (_, im) = c 
+
+  val im = c.component2() //Same result
+</code></pre></section><br><br>
+
+<p>We can use destructuring to return multiple values ​​from a function:</p>
+<section><pre><code class="language-kotlin">data class Resultado(val res1: String, val res2: Int)
+
+fun funcion(): Resultado {
+    val res1 = "texto"
+    val res2 = 3
+    return Resultado(res1, res2)
+}
+// To use the function
+val (res1, res2) = funcion()  
+</code></pre></section><br><br>
+
+<p>First we define a <span class="d-word">data class</span>  that has as attributes the types to return, so that the function has to return this class.</p>
+</p>Another of the most common uses of destructuring is to decompose objects stored in a <span class="d-word">Map</span>  by their key identifier and value.</p>
+<section><pre><code class="language-kotlin">val mapa = HashMap<String, Int>()
+for ((clave, valor) in mapa) { … } 
+</code></pre></section><br><br>
+
+
+<h3>Kotlin class types: open, abstract, inner, and aliased</h3>
+
+<p class="sub-section">Abstract classes</p>
+
+
+<p>As with Java, Kotlin's <span class="d-word">abstract</span>  classes are classes that cannot be instantiated. Its purpose is to use them in order to provide a common template for other
+   classes that extend them.
+  The way to declare an abstract class is by using the <span class="d-word">abstract</span>  keyword. An <span class="d-word">abstract</span>  class can contain both abstract (marking them with the abstract keyword) and non-abstract properties and functions:</p>
+  <section><pre><code class="language-kotlin">abstract class Vehiculo(val nombre: String,
+                        val color: String,
+                        val peso: Double) {   // Propiedades no abstrac-tas
+   abstract var maxVelocidad: Double   // Propiedad abstracta
+   abstract fun arrancar() // función abstractos
+   abstract fun parar()
+   fun muestraDetalless() {  // función no abstracto
+      println("Nombre: $nombre, Color: $color, Velicidad: $maxVelocidad ")
+   }
+} 
+  </code></pre></section><br><br>
+
+<p>Any subclass that extends an <span class="d-word">abstract</span>  class must implement all of its <span class="d-word">abstract</span>  
+  <span class="cursiva">methods</span>  and <span class="cursiva">variables</span> , or be declared abstract as well.</p>
+<p>As we have seen above, in inheritance, it would be necessary to use the <span class="d-word">open</span>  keyword to indicate that we 
+  can extends from that class. However, with <span class="d-word">abstract</span>  classes <span class="negrita">it is not necessary</span>
+   to do so, since they incorporate this property by default.</p><p>Let's see an example of how to extend an abstract class:</p>
+
+<section><pre><code class="language-kotlin">class Coche(nombre: String, color: String, peso: Double,
+       override var maxVelocidad: Double): Vehiculo(nombre, color, peso) {
+   override fun arrancar() {
+      println("Coche arrancado")
+   }
+   override fun parar() {        
+      println("Coche parado")
+   }
+} 
+</code></pre></section><br><br>
+<br>
+
+<p class="sub-section">Nested and inner classes</p>
+<p>In Kotlin, a class can be declared inside another, resulting in a <span class="d-word">nested</span>  class.</p>
+<p>Nested class</p>
+<section><pre><code class="language-kotlin">class Externa {
+   private val propiedad: Int = 1
+   class Anidada {
+      fun funcion() = 2
+   }
+} 
+</code></pre></section><br><br>
+<p>Inner class</p>
+
+<section><pre><code class="language-kotlin">class Externa {
+   private val propiedad: Int = 1
+   inner class Interna {
+      fun funcion() = propiedad
+   }
+} 
+</code></pre></section><br><br>
+<p>If we put the <span class="d-word">inner</span>  modifier in front of a <span class="d-word">nested</span>  class, 
+  we transform it into internal, with which we achieve that the class can access all the members of the external class.</p>
+
+
+  <p class="sub-section">Type Alias</p>
+  
+<p>
+  One of the interesting things we can do in Kotlin is assign an <span class="d-word">alias</span>  to a data type, that is very useful to shorten the name of data types
+  when they are very long or if we want to clarify the meaning:</p>
+
+  <section><pre><code class="language-kotlin">typealias GrupoPersonas = Set&lt;Persona>
+typealias TablaFicheros<K> = MutableMap&lt;K, Mutable-List&lt;File>> 
+</code></pre></section><br><br>
+<p>It can even be applied to function types:</p>
+<section><pre><code class="language-kotlin">typealias Manejador = (Int, String, Any) -> Unit
+typealias Predicado<T> = (T) -> Boolean 
+</code></pre></section><br><br>
+
+<p>Use example</p>
+<section><pre><code class="language-kotlin">typealias MyMapList = MutableMap&lt;Int,ArrayList&lt;String>>
+typealias MyFun = (Int,String, MyMapList) -> Boolean
+
+  //..........
+  var myNewMap : MutableMap&lt;Int,ArrayList&lt;String>> = mutableMapOf()
+  //using it
+  var myNewMap : MyMapList = mutableMapOf()
+  
+  myNewMap[1] = arrayListOf("Hello", "World")
+  myNewMap[2] = arrayListOf("PMDM", "2DAM")
+
+
+  fun myHighFun(a:Int, mFun:MyFun){
+
+  }
+</code></pre></section><br><br>
+
+<p class="sub-section">Sealed classes in Kotlin</p>
+<p><span class="d-word">Sealed</span>  classes are used to represent a hierarchy of classes that inherit from a parent class, 
+  so that both the <span class="negrita">parent</span>  class and the <span class="negrita">nested</span>  classes <span class="negrita">are defined together</span>  
+  in the same file.</p>
+<p>Let's imagine that we want to define the parent class <span class="d-word">Figura</span>  from which the <span class="d-word">Triangulo</span> , 
+  <span class="d-word">Cuadrado</span>  and <span class="d-word">Circulo</span>  subclasses extend. As you can see, it is a technique to do polymorphism.</p>
+<section><pre><code class="language-kotlin">sealed class Figura {
+   class Triangulo(val lado1:Int, val lado2:Int, val lado3:Int) : Figu-ra()
+   class Cuadrado(val lado:Int) : Figura()
+   class Circulo(val radio:Int) : Figura()
+} 
+</code></pre></section><br><br>
+<p>Since Kotlin 1.1 it is no longer necessary for child classes to be nested within the parent class:</p>
+<section><pre><code class="language-kotlin">sealed class Figura 
+class Triangulo(val lado1:Int, val lado2:Int, val lado3:Int) : Figura()
+class Cuadrado(val lado:Int) : Figura()
+class Circulo(val radio:Int) : Figura() 
+</code></pre></section><br><br>
+<p>A <span class="d-word">sealed</span>  class is declared as <span class="d-word">abstract</span> , when we create instances of this class 
+  we are forced to <span class="negrita"> use one of its children</span>. Furthermore, a <span class="d-word">sealed</span>  class must be defined in a single file, 
+  so the number of child classes <span class="negrita">cannot be expanded in the future</span>. 
+  Which means that we will not be able to enlarge the type of figures. For this reason they are known as sealed. 
+</p><p>Thanks to this fact, when we use them with a <span class="r-word">when</span>  expression, since it is possible to verify that all cases are covered, it will not be necessary to add the else clause.
+</p>
+
+<section><pre><code class="language-kotlin">val figura: Figura = Triangulo()
+val texto = when (figura) {
+   is Triangulo -> "triangulo"
+   is Cuadrado -> "cuadrado"
+   is Circulo -> "circulo"
+   else -> "sin definir" 
+} 
+</code></pre></section><br><br>
+
+
+
+
+
+
+
+
 
 
   <!--*********************************************************Initialization with lateinit vs lazy***********************************************************-->
