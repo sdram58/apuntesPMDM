@@ -1644,7 +1644,8 @@ class Circulo(val radio:Int) : Figura()
   we are forced to <span class="negrita"> use one of its children</span>. Furthermore, a <span class="d-word">sealed</span>  class must be defined in a single file, 
   so the number of child classes <span class="negrita">cannot be expanded in the future</span>. 
   Which means that we will not be able to enlarge the type of figures. For this reason they are known as sealed. 
-</p><p>Thanks to this fact, when we use them with a <span class="r-word">when</span>  expression, since it is possible to verify that all cases are covered, it will not be necessary to add the else clause.
+</p><p>Thanks to this fact, when we use them with a <span class="r-word">when</span>  expression, since it is possible to verify that all cases are covered,
+   it will not be necessary to add the <span class="d-word">else</span> clause.
 </p>
 
 <section><pre><code class="language-kotlin">val figura: Figura = Triangulo()
@@ -1656,12 +1657,190 @@ val texto = when (figura) {
 } 
 </code></pre></section><br><br>
 
+<p class="sub-section">object</p>
+
+<p>In case that we are interested in considering the possibility that a <span class="d-word">figura</span>  is not defined, or even a type of <span class="d-word">figura</span> 
+  that does not require storing a state, we add <span class="d-word">object</span>  elements to our <span class="d-word">sealed</span>  class:
+</p>
 
 
 
+<section><pre><code class="language-kotlin">sealed class Figura 
+class Triangulo(val lado1:Int, val lado2:Int, val lado3:Int) : Figura()
+…
+object Punto : Figura()
+object SinDefinir : Figura() 
+</code></pre></section><br><br>
+
+<p>we will have to incorporate these options to the <span class="d-word">when</span> block:</p>
+<section><pre><code class="language-kotlin">val texto = when (figura) {
+   is Triangulo -> "triangulo"
+   …
+   Punto -> "punto"
+   SinDefinir -> "sin definir"
+} 
+</code></pre></section><br><br>
+<p>Note that the new options are no classes, so we will not use is in the comparison.</p>
+<p>To understand the difference between class and object, let's see how it works internally.</p>
+<p>When it is a <span class="cursiva">Triangulo</span> , <span class="cursiva">Cuadrado</span>  or <span class="cursiva">Circulo</span>  type <span class="cursiva">Figura</span>,
+ it will work normally. That is, a new object will be created in memory with all its properties.</p>
+ <p>But when it is <span class="d-word">Punto</span>  or <span class="d-word">SinDefinir</span> , it will work differently. 
+  The first time it is needed, an instance of the object will be created. These objects are only created once in memory. 
+  The second time a variable with this value is needed, a <span class="negrita">new object will not be created</span> , 
+  but this variable will be a reference to the previously created object. This behavior is the same as those listed, 
+  which we will see in the next section. An object cannot extend the class with new properties, but it can overwrite its functions.</p> <p>Let's see it with an example:
+</p>
 
 
+<section><pre><code class="language-kotlin">sealed class Figura(open var color:Int=0) {
+   abstract fun area(): Int
 
+   class Cuadrado(override var color: Int,  
+          val lado: Int) : Figura(color) {
+      override fun area() = lado * lado
+   }
+   object Punto : Figura(1) {
+      override fun area() = 0
+      init {print("Punto Creado, ")}
+   }
+} 
+</code></pre></section><br><br>
+
+<section><pre><code class="language-kotlin">fun main(){
+  val p1 = Figura.Punto
+  val p2 = Figura.Punto
+  val c = Figura.Cuadrado(2,8)
+
+  p1.color = 3
+  print("color c=${c.color}, ")
+  print("color p2=${p2.color}")
+}
+</code></pre></section><br><br>
+<a class="tarea" target="_blank" href="#">With the code above</a> 
+<ol style="list-style-position: inside;">
+  <li>Which is the exit?</li>
+  <li>How do you explain that "Punto creado" apears just once?</li>
+  <li>Why is the color of p2 3, if what we have changed is the color of p1?</li>
+  <li>Why is the color of c still 2?</li>
+  <li>How can we get each point to have its own color?</li>
+</ol>
+
+<section class="marco-t inf">
+  <span class="icono info"> </span> <span class="negrita">Solution</span>
+  </section>
+<section class="marco-b">
+  <p>When the <span class="d-word">Figura</span>  class is created, an instance is created for each object element. The example will create the <span class="d-word">Punto</span> 
+    object. The creation of the variables <span class="cursiva">p1</span>  and <span class="cursiva">p2</span>  will <span class="negrita">not</span>  imply the creation of <span class="negrita">new objects</span> , 
+    both will be references to the previous object. The initialization of c will mean the creation of a new object in memory, with its two properties. 
+    In the following instruction, the color of <span class="cursiva">p1</span>  is modified, but since there is only one color, the color of <span class="negrita">p2</span>  is also modified.
+  </p>
+
+  <ol style="list-style-position: inside;">
+    <li>Only one Point object is created.</li>
+    <li>The variables <span class="cursiva">p1</span>  and <span class="cursiva">p2</span>  point to the same object.</li>
+    <li>The variable <span class="cursiva">c</span>  is an independent object.</li>
+    <li>We would use class <span class="d-word">Punto</span>  instead of object <span class="d-word">Punto</span> .</li>
+  </ol>
+    
+</section>
+  
+<p>The previous example defined types of shapes. However, it is not necessary for the different subclasses to be related to each other. </p>
+<p>We can use a <span class="d-word">sealed</span>  class to represent a variable that can take values ​​of different types, even though these types have no relation to each other.</p>
+<p>For example, an <span class="d-word">HTTP request</span>  might return a <span class="negrita">web page</span>  or an <span class="negrita">error code</span> :</p>
+
+<section><pre><code class="language-kotlin">sealed class RespuestaHTTP 
+data class Correcta(val contenido: String) : Respuesta()
+data class Error(val codigo: Int, val mesaje: String) : Respuesta()
+
+fun getUrl(url: String): Respuesta {
+   val valido = …
+   if (valido) return Correcta("Contenido…")
+   else        return Error(404, "No encontrada")
+}
+
+val respuesta = getUrl("/")
+when (respuesta) {
+   is Correcta -> println(respuesta.contenido)
+   is Error -> println(respuesta.mesaje)
+} 
+</code></pre></section><br><br>
+
+
+<h3>Enum classes in Kotlin</h3>
+
+<p><span class="d-word">Enum</span>  classes allow us to declare a set of values ​​that a variable can take:</p>
+<section><pre><code class="language-kotlin">enum class Estacion{PRIMAVERA, VERANO, OTOÑO, INVIERNO}
+</code></pre></section><br><br>
+<p>As in Java, an enum is defined by means of a <span class="r-word">class</span> , although now it is more obvious when having to indicate <span class="r-word">class</span>.
+  Each one of the constants of an enum supposes the creation of an object. A variable of type <span class="d-word">Sesion</span>  is nothing more than a reference to one of these four objects. 
+  We study it in detail in the next point. 
+</p>
+<p>Since each constant is an instance of the class, they can be initialized:</p>
+<section><pre><code class="language-kotlin">enum class VersionAndroid(val api: Int) {
+    JELLY_BEAN(16), KITKAT(19), MASHMALLOW(23), NOUGAT(24)
+} 
+</code></pre></section><br><br>
+<p>An enum constant can also declare its own <span class="cursiva">methods</span>  and <span class="cursiva">properties</span> :</p>
+<section><pre><code class="language-kotlin">enum class Estacion {
+   PRIMAVERA { override fun temperatura() = 24.0 },
+   VERANO { override fun temperatura() = 32.2 }; //Look at semicolon, starts parent class members.
+   abstract fun temperatura(): Double
+   var diasSoleados: Int = 0
+} 
+</code></pre></section><br><br>
+<p>If an enumeration defines a member, it must be separated from the constants with a <span class="d-word">semicolon</span> , in the same way as we did in Java. 
+  Likewise, enum classes in Kotlin have synthetic methods that allow you to list the defined constants (<span class="d-word">values​​()</span>)
+   and obtain a constant by name (<span class="d-word">valueOf()</span> ). In addition, the <span class="d-word">name</span>  and <span class="d-word">ordinal</span> properties are defined in each constant:
+</p>
+
+<p class="sub-section">Comparison of enum and sealed classes</p>
+<p><span class="d-word">Sealed</span>  class looks like <span class="d-word">enum</span> classes, but they are not exactly the same. 
+  <span class="d-word">Sealed</span>  classes are an extension of enum classes, since the possible set of values ​​of an enumerated type is also restricted,
+   but while each constant of the enumerated type only exists as a single instance, a subclass of a class sealed can have multiple instances.
+</p>
+<p>enum class</p>
+<section><pre><code class="language-kotlin">enum class Estacion { 
+   PRIMAVERA, 
+   VERANO, 
+   …
+}
+</code></pre></section><br><br>
+<p>Sealed class</p>
+<section><pre><code class="language-kotlin">sealed class Estacion() {
+   object PRIMAVERA: Estacion() 
+   object VERANO: Estacion() 
+   …
+} 
+</code></pre></section><br><br>
+
+<p>Both classes below have the same behavior as an abstract class, avoiding a direct instantiation of them, while allowing us to declare abstract methods:
+</p>
+<section><pre><code class="language-kotlin">enum class Direcciones {
+   ARRIBA   { override fun direccion(x: Int, y: Int) = x to (y - 1) },
+   IZQUIERDA{ override fun direccion(x: Int, y: Int) = (x - 1) to (y) },
+   DERECHA  { override fun direccion(x: Int, y: Int) = (x + 1) to (y) },
+   ABAJO    { override fun direccion(x: Int, y: Int) = x to (y + 1) };
+   abstract fun direccion(x: Int, y: Int): Pair<Int, Int>
+}
+sealed class Intention {
+   object None : Intention() {
+      override fun log() { println("none") }
+   }
+   object Refresh : Intention() {
+      override fun log() { println("refresh") }
+   }
+   data class Error(val reason: String) : Intention() {
+      override fun log() { println("error") }
+   }
+   data class LoadContent(val content: List<String>) : Intention() {
+      override fun log() { println("loadContent") }
+   }
+   abstract fun log()
+} 
+</code></pre></section><br><br>
+<p>On the other hand, an <span class="d-word">enumerated</span>  class can only create one instance of each constant,
+   while we can have several instances of the subclasses of a <span class="d-word">sealed</span>  class. </p>
+<p>Depending on what we want to do, we can use one or the other. That is, if we need constant behavior, we will use an enumerated class, and otherwise a sealed class.</p>
 
 
 
@@ -1724,7 +1903,7 @@ fun doSomething() {
 
 
 <!-- ************************************************************Exercises***************************************************************************-->
-<div class="oculto" style="width: 100%;">
+<div class="" style="width: 100%;">
   <p>Practice with those exercises from <a class="enlace" target="_blank" href="https://kotlinlang.org/">https://kotlinlang.org/</a> </p> <br>
   <iframe src="https://play.kotlinlang.org/koans/Introduction/Hello,%20world!/Task.kt" frameborder="1" style="width: 100%;height: 1500px;"></iframe>
 </div>
