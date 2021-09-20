@@ -21,7 +21,7 @@
        href="#sloops">Loops</a><a 
        href="#sFunciones">Functions</a><a 
        href="#sClasses">Classes and Objects</a><a 
-       class="oculto" href="#s6">UD6.- Kotlin's basics</a><a 
+       href="#sLateinit">Initialization with lateinit vs lazy</a><a 
        class="oculto" href="#s7">UD7.- Kotlin's basics</a><a 
        class="oculto" href="#s8">UD8.- Kotlin's basics</a><a 
        class="oculto" href="#s9">UD9.- Kotlin's basics</a><a 
@@ -41,8 +41,7 @@
 <a name="s1_1"><a>
 <h2>Packets</h2>
 <p>As in Java, in Kotlin the packages are placed at the top of the file:</p>
-<section><pre><code class="language-kotlin">
-package com.example
+<section><pre><code class="language-kotlin">package com.example
 
 import com.example.*
 
@@ -63,24 +62,21 @@ import com.example.*
 
 <p>In the example below, count is a variable of type Int that is assigned an initial value of 10:</p>
 
-<section><pre><code class="language-kotlin">
-var count: Int = 10
+<section><pre><code class="language-kotlin">var count: Int = 10
 </code></pre></section>
 
 <p><span class="r-word">Int</span>  is a type that represents an integer, one of the many numerical types that can be represented in Kotlin. Similar to other languages, you can also use Byte, Short, Long, Float, and Double depending on your numerical data.</p>
 
 <p>The <span class="cursiva">var</span>   keyword means that you can reassign values to count as needed. For example, you can change the value of <span class="cursiva">count</span>  from 10 to 15:</p>
 
-<section><pre><code class="language-kotlin">
-var count: Int = 10
+<section><pre><code class="language-kotlin">var count: Int = 10
 count = 15
 </code></pre></section>
 
 <br>
 <p>Some values are not meant to be changed, though. Consider a String called <span class="cursiva">languageName</span>  . If you want to ensure that <span class="cursiva">languageName</span>  always holds a value of "Kotlin", then you can declare <span class="cursiva">languageName</span>  using the <span class="d-word">val</span>  keyword:</p>
 
-<section><pre><code class="language-kotlin">
-val languageName: String = "Kotlin"
+<section><pre><code class="language-kotlin">val languageName: String = "Kotlin"
 </code></pre></section><br><br>
 
 <p>These keywords allow you to be explicit about what can be changed. Use them to your advantage as needed. If a variable reference must be reassignable, then declare it as a <span class="cursiva">var</span> . Otherwise, use <span class="cursiva">val</span> .</p>
@@ -93,8 +89,7 @@ val languageName: String = "Kotlin"
   <br>In the following example, <span class="cursiva">languageName</span>  is inferred as a String, so you can't call any functions that aren't part of the String class:
   </p>
 
-  <section><pre><code class="language-kotlin">
-  val languageName = "Kotlin"
+  <section><pre><code class="language-kotlin">  val languageName = "Kotlin"
   val upperCaseName = languageName.toUpperCase()
   </code></pre></section><br><br>
 
@@ -103,8 +98,7 @@ val languageName: String = "Kotlin"
     <span class="icono error"> </span> <span class="negrita">Error</span>
     </section>
   <section class="marco-b">
-      <section><pre><code class="language-kotlin">
-  // Fails to compile
+      <section><pre><code class="language-kotlin">  // Fails to compile
   languageName.inc()
       </code></pre></section><br><br>
   </section>
@@ -112,31 +106,291 @@ val languageName: String = "Kotlin"
 
   <p><span class="cursiva">toUpperCase()</span>  is a function that can only be called on variables of type <span class="cursiva">String</span> . Because the Kotlin compiler has inferred <span class="cursiva">languageName</span>  as a String, you can safely call <span class="cursiva">toUpperCase(). inc()</span> , however, is an <span class="r-word">Int</span>  operator function, so it can’t be called on a <span class="cursiva">String</span> . Kotlin’s approach to type inference gives you both conciseness and type-safety.</p>
 
+  <h3>Know values in compilation time</h3>
+
+  <p>
+    They can only be declared at the top level (outside of a class) or as a member of a class</p>
+    <p>They can only be declared with primitive or String values</p>
+
+    <section><pre><code class="language-kotlin">package com.cartatar.testkotlin
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+
+const val PI=3.1416
+    </code></pre></section><br><br>
+
 
   <h3>Null Safety</h3>
 
   <br><br>
-  <p>In some languages, a reference type variable can be declared without providing an initial explicit value. In these cases, the variables usually contain a null value. Kotlin variables can't hold null values by default. This means that the following snippet is invalid:</p>
 
-  <section class="marco-t err">
-    <span class="icono error"> </span> <span class="negrita">Error</span>
-    </section>
-  <section class="marco-b">
-      <section><pre><code class="language-kotlin">val languageName: String? = null
-      </code></pre></section><br><br>
-  </section>
+  <p>One of the most common mistakes in programming is the hated <span class="d-word">NullPointerException</span>. 
+    It occurs when the programmer forgets to initialize an object or it has not been able to do so due to some kind of problem. 
+    To try to minimize the appearance of this type of error, Kotlin incorporates a series of measures, which we will discuss in this section.
+  </p>
 
-  <p>For a variable to hold a null value, it must be of a nullable type. You can specify a variable as being nullable by suffixing its type with <span class="d-word">?</span> , as shown in the following example:</p>
+<p>Kotlin supports <span class="d-word">null</span>  safetly natively, giving us the ability to define whether a variable can be <span class="d-word">null</span>  or not. 
+  In this way, the compiler can catch potential <span class="d-word">NullPointerException</span>  errors at compile time,
+   reducing the possibility of error in run time. <span class="negrita">By default, all variables in Kotlin are non-nullable</span>. 
+   Thus, if we try to assign a <span class="d-word">null</span>  value to any variable, the compiler will throw an error:
+</p>
 
-  <section><pre><code class="language-kotlin">
-  val languageName: String? = null
+<section><pre><code class="language-kotlin">var saludo: String = "Hola"
+saludo = null // Compiling Error
+</code></pre></section><br><br>
+
+<section><pre><code class="language-kotlin">var saludoNullable: String? = "Hello"
+saludoNullable = null //Compiles
+</code></pre></section><br><br>
+
+<p>As shown in the example above, if we want to allow a variable to be null, we will have to define it by adding <span class="d-word">?</span> to your data type.</p>
+
+<p>Since <span class="d-word">NullPointerException</span> errors occur when we try to access a method or property of a <span class="d-word">null</span> 
+  variable, Kotlin will avoid such errors by denying the call to the methods or access to the affected properties. 
+  However, some times, it will be necessary to use these methods or properties. For this, we have several alternatives.</p>
+
+<p class="sub-section">Adding a preflight</p>
+
+<br>
+<p>We can check if a variable is <span class="d-word">null</span>  before performing an operation, just as we did in <span class="d-word">Java</span> .</p>
+
+<section><pre><code class="language-kotlin">val nombreNullable: String? = "Juan"
+if (nobreNullable != null) {
+    println("Hola, ${nombreNullable.toUpperCase()}.")
+    println("Tu nombre tiene ${nombreNullable.length} caracteres.")
+} else {
+    println("Hola, invitado")
+} 
+</code></pre></section><br><br>
+
+
+<p>
+  If we try to access a <span class="d-word">nullable</span>  variable without this check, a compilation error occurs. </p>
+  <section><pre><code class="language-kotlin">val s: String? = "Hola"
+print(s.length) // Compile Error 
+  </code></pre></section><br><br>
+  <p>For it to compile we have to use the code below.</p>
+
+  <section><pre><code class="language-kotlin">if (s != null) {
+   print(s.length) // compiles
+} 
   </code></pre></section><br><br>
 
 
-  <p>With a <span class="cursiva">String?</span>  type, you can assign either a String value or null to <span class="cursiva">languageName</span>. <br> 
-    You must handle nullable variables carefully or risk a dreaded <span class="cursiva">NullPointerException</span> . In Java, for example, if you attempt to invoke a method on a null value, your program crashes. <br>
-    Kotlin provides a number of mechanisms for safely working with nullable variables</p>
+<p class="sub-section">Secure call with "?" operator.</p><br><br>
+<p>The above check is simple, but requires a lot of code to do it. Kotlin offers us the <span class="d-word">?</span>  operator in order to reduce that code, 
+  so that we can have the null check and the method call on the same line. Thus, the following code:</p>
 
+<section><pre><code class="language-kotlin">name?.toUpperCase()
+
+//it is equivalent to
+	
+if (name != null)
+     name.toUpperCase()
+else null
+</code></pre></section><br><br>
+
+<p>This operator will allow us multiple simultaneous checks:</p>
+
+<section><pre><code class="language-kotlin">val currentCity: String? = user?.address?.ciudad 
+</code></pre></section><br><br>
+
+<p>In the example, <span class="cursiva">currentCity</span>  will be <span class="negrita">null</span>  if <span class="cursiva">user</span>,
+   <span class="cursiva">address</span>  or <span class="cursiva">ciudad</span>  are null.</p>
+
+<p></p>
+
+<p class="sub-section">Elvis operator: "?:"</p>
+
+<p>The Elvis operator <span class="d-word">?:</span>  is used to offer a default value when the variable to be validated contains <span class="negrita">null</span>. 
+  For example, the following code:</p>
+
+  <section><pre><code class="language-kotlin">name ?: "unknown"
+
+  //Equivalent code 
+
+if (name != null) name
+else "unknown" 
+  </code></pre></section><br><br>
+
+  <p>One of the most common uses of this operator is to <span class="negrita">return a default value</span> distinct to <span class="d-word">null</span>  when a method or property is <span class="d-word">null</span> :</p>
+
+<section><pre><code class="language-kotlin">val nombreMayuscula = nombre?.toUpperCase() ?: "DESCONOCIDO"
+val ciudadActual = usuario?.direccion?.ciudad ?: "desconocida"
+</code></pre></section><br><br>
+
+<p>The complexity of the expressions to the left of the Elvis operator can be even greater, as shown in the second example.</p>
+<p>Also, we can use the right part of the operator to <span class="negrita">throw</span>  an exception or return a value. 
+  This will be very useful to us when we evaluate the preconditions of a function.</p>
+
+<section><pre><code class="language-kotlin">val n = nameNullable ?: throw IllegalArgumentException("Name is null") 
+</code></pre></section><br><br>
+
+<p>If, in addition to returning a value, we need to execute multiple operations to the right of the elvis operator, 
+  it will be necessary to include them in a <span class="negrita">block</span>  of type <span class="d-word">run</span>.</p>
+
+<section><pre><code class="language-kotlin">val a = b ?: run {
+    val valorSiBEsNull = c.obtenValor()
+    almacena(valorSiBEsNull)
+    valorSiBEsNull //This is the return value
+} 
+</code></pre></section><br><br>
+
+<p class="sub-section">The "!!" operator</p>
+
+<p>Through the <span class="d-word">!!</span>  operator. We can skip the null check of a variable, so that an exception of the type <span class="d-word">NullPointerException</span> 
+   will be thrown if the variable is null.
+</p>
+
+<section><pre><code class="language-kotlin">val name: String? = null
+name!!.toUpperCase() // NullPointerException
+</code></pre></section><br><br>
+
+<p>It is used on those occasions when we as programmers <span class="negrita">are sure</span>  that a variable <span class="negrita">is not going to be null</span>
+  , even though it may contain that value, and we reaffirm ourselves before the compiler. 
+  Its appearance is quite common when we migrate <span class="d-word">Java</span>  code to <span class="d-word">Kotlin</span>, but Kotlin's philosophy is contrary to that, 
+  so we must avoid its use as much as possible. Later, several alternatives are described to eliminate this operator in case of a migration from Java.
+</p>
+
+<p class="sub-section">The let operator in Kotlin</p>
+
+<p>During application programming we will encounter the following situation on several occasions:
+</p>
+
+<section><pre><code class="language-kotlin">var propiedad: Int? = 42
+fun unMetodo() {
+    if (propiedad != null) {
+        print(propiedad) // Error: even check null has been taken. Another thread is able to change the value to null
+    }
+} 
+</code></pre></section><br><br>
+
+
+<p>Since we are using a mutable variable (property), its value can be changed by another thread, just after having done the check.
+  A quick alternative, which is used by the system when importing Java code, is to use the <span class="d-word">!!</span>  operator  but, as we have commented, 
+  it is an operator that <span class="negrita">we should avoid</span>  as far as possible.
+</p>
+<p>Another possible solution would be to create a read-only copy of said variable:</p>
+<section><pre><code class="language-kotlin">var propiedad: Int? = 42
+fun unMetodo() {
+    val copia = propiedad
+    if (copia != null) {
+        print(copia)
+    }
+} 
+</code></pre></section><br><br>
+
+<p>The previous code compiles, but one of the advantages of Kotlin is <span class="negrita">the reduction of unnecessary code</span>  (boilerplate code) 
+  and this code does not fit with this philosophy, since all we do is add more lines of code.
+</p>
+
+<p>A more suitable alternative would be to use the <span class="d-word">let</span>  operator, which, internally, creates a copy of the variable 
+  to be checked in a local immutable variable that will be used in the block defined below. 
+  In this way, we could think of a possible solution like the following:
+</p>
+<section><pre><code class="language-kotlin">var propiedad: Int? = 42
+fun unMetodo() {
+    propiedad.let {
+        print(it) //it is propiedad after not null check
+    }
+}  
+</code></pre></section><br><br>
+
+<p>In this example, the <span class="d-word">let</span>  function checks to see if property is <span class="d-word">null</span> .
+   If not, make a copy of the property in it and run the <span class="d-word">Lambda</span> .</p>
+
+<p>This solution is valid, but if inside the <span class="d-word">let</span>  block we need to call a function with its value, we may run into an error.
+</p>
+
+<section><pre><code class="language-kotlin">var propiedad: Int? = 42
+fun unMetodo() {
+    propiedad.let {
+        imprimir(it) // error. imprimir function expects Int (not nullable) but gets it (propiedad) which is nullable, then ERROR.
+    }
+}
+fun imprimir(int: Int) {
+    print(int)
+}  
+</code></pre></section><br><br>
+
+<p>In this case, our print function needs a value of type <span class="d-word">Int</span>  and receives a value of type <span class="d-word">Int ?</span>. 
+  Luckily, this type of error is very easy to solve with the <span class="d-word">?</span>  Operator, which will allow us to call our <span class="d-word">let</span> 
+   operator in a safe way.</p>
+
+<section><pre><code class="language-kotlin">var propiedad: Int? = 42
+fun unMetodo() {
+    propiedad?.let {
+        imprimir(it)
+    }
+}
+fun imprimir(int: Int) {
+    print(int)
+}  
+</code></pre></section><br><br>
+
+<p>The <span class="d-word">let</span>  function is more complex. If we look at its implementation, we will see that, 
+  in addition to the variable with which we call the function <span class="d-word">T,</span>  we have a return value <span class="d-word">R</span>.</p>
+
+<section><pre><code class="language-kotlin">inline fun &lt;T, R> T.let(block: (T) -> R): R 
+</code></pre></section><br><br>
+
+<p>Let's see a more complete code where to show the interaction of our class with the rest of the code:</p>
+
+<section><pre><code class="language-kotlin">class MiClase {
+    var propiedad: Int? = 42
+
+    fun unMetodo() {
+        val valor = propiedad?.let {
+            imprimir(it)
+            "correcto"
+        }
+    }
+    fun imprimir(i: Int) {
+        print(i)
+    }
+} 
+</code></pre></section><br><br>
+
+<p>In this example, apart from printing the value of the variable, we <span class="negrita">return a text string</span>  indicating that the <span class="d-word">let</span> 
+  block has been executed. But what happens in case property is <span class="cursiva">null</span>?
+</p>
+<p>It is a good programming practice to cover this route, for which we can use the <span class="d-word">Elvis operator</span> .
+  In this way, if the variable exists we will capture it and use it, and if it is <span class="negrita">null</span>  we will <span class="negrita">show an error message</span>:
+</p>
+
+<section><pre><code class="language-kotlin">fun unMetodo() {
+    propiedad?.let {
+        imprimir(it)
+    } ?: run {
+        mostrarError()
+    }
+} 
+</code></pre></section><br><br>
+
+<p>In this way, we can use the value returned by the <span class="d-word">let block</span>  to inform the user, something that was not possible without the <span class="d-word">Elvis block</span> .</p>
+
+<section><pre><code class="language-kotlin">class MiClase {
+    var propiedad: Int? = 42
+    fun unMetodo() {
+        val valor = propiedad?.let {
+            imprimir(it)
+            "correcto"
+        } ?: "sin Valor"
+        imprimir(valor)
+    }
+    fun imprimir(i: Int) {
+        print(i)
+    }
+    fun imprimir(string: String) {
+        print(string)
+    }
+} 
+</code></pre></section><br><br><br>
+
+
+
+    <!--***********************************************************Conditionals***************************************************************** -->
     <a name="s3"><a>
     <h2>Conditionals</h2>
 
@@ -144,8 +398,7 @@ val languageName: String = "Kotlin"
 
     <p>Kotlin features several mechanisms for implementing conditional logic. The most common of these <span class="cursiva">is</span>  an <span class="cursiva">if-else</span>  statement. If an expression wrapped in parentheses next to an if keyword evaluates to <span class="cursiva">true</span> , then code within that branch (i.e. the immediately-following code that is wrapped in curly braces) is executed. Otherwise, the code within the <span class="cursiva">else</span>  branch is executed.</p>
 
-    <section><pre><code class="language-kotlin">
-if (count == 42) {
+    <section><pre><code class="language-kotlin">if (count == 42) {
   println("I have the answer.")
 } else {
   println("The answer eludes me.")
@@ -154,8 +407,7 @@ if (count == 42) {
 
     <p>You can represent multiple conditions using <span class="cursiva">else if</span> . This lets you represent more granular, complex logic within a single conditional statement, as shown in the following example:</p>
 
-    <section><pre><code class="language-kotlin">
-if (count == 42) {
+    <section><pre><code class="language-kotlin">if (count == 42) {
     println("I have the answer.")
 } else if (count > 35) {
     println("The answer is close.")
@@ -167,8 +419,7 @@ if (count == 42) {
 
     <p>Conditional statements are useful for representing stateful logic, but you may find that you repeat yourself when writing them. In the example above, you simply print a <span class="cursiva">String</span>  in each branch. To avoid this repetition, Kotlin offers <span class="cursiva">conditional expressions</span> . The last example can be rewritten as follows:</p>
 
-    <section><pre><code class="language-kotlin">
-val answerString: String = if (count == 42) {
+    <section><pre><code class="language-kotlin">val answerString: String = if (count == 42) {
     "I have the answer."
 } else if (count > 35) {
     "The answer is close."
@@ -183,8 +434,7 @@ println(answerString)
 
     <p><span class="r-word">when</span>  defines a conditional expression with multiple branches. It is similar to the <span class="cursiva">switch</span>  statement in C-like languages. Its simple form looks like this.</p>
 
-    <section><pre><code class="language-kotlin">
-when (x) {
+    <section><pre><code class="language-kotlin">when (x) {
   1 -> print("x == 1")
   2 -> print("x == 2")
   else -> { // Note the block
@@ -201,8 +451,7 @@ when (x) {
 
   <p>To define a common behavior for multiple cases, combine their conditions in a single line with a comma:</p>
 
-  <section><pre><code class="language-kotlin">
-  when (x) {
+  <section><pre><code class="language-kotlin">  when (x) {
     0, 1 -> print("x == 0 or x == 1")
     else -> print("otherwise")
   }
@@ -210,8 +459,7 @@ when (x) {
 
 
   <p>You can use arbitrary expressions (not only constants) as branch conditions</p>
-  <section><pre><code class="language-kotlin">
-  when (x) {
+  <section><pre><code class="language-kotlin">  when (x) {
     parseInt(s) -> print("s encodes x")
     else -> print("s does not encode x")
 }
@@ -219,8 +467,7 @@ when (x) {
 
   <p>You can also check a value for being <span class="d-word">in</span>  or <span class="d-word">!in</span>  a range or a collection:</p>
 
-  <section><pre><code class="language-kotlin">
-  when (x) {
+  <section><pre><code class="language-kotlin">  when (x) {
     in 1..10 -> print("x is in the range")
     in validNumbers -> print("x is valid")
     !in 10..20 -> print("x is outside the range")
@@ -229,8 +476,7 @@ when (x) {
   </code></pre></section><br><br>
 
   <p>Another option is checking that a value <span class="d-word">is</span>  or <span class="d-word">!is</span>  of a particular type. Note that, due to smart casts, you can access the methods and properties of the type without any extra checks.</p>
-  <section><pre><code class="language-kotlin">
-  fun hasPrefix(x: Any) = when(x) {
+  <section><pre><code class="language-kotlin">  fun hasPrefix(x: Any) = when(x) {
     is String -> x.startsWith("prefix")
     else -> false
   }
@@ -238,8 +484,7 @@ when (x) {
 
   <p><span class="r-word">when</span>  can also be used as a replacement for an <span class="cursiva">if</span> - <span class="cursiva">else if</span>  chain. If no argument is supplied, the branch conditions are simply boolean expressions, and a branch is executed when its condition is true:</p>
 
-  <section><pre><code class="language-kotlin">
-  when {
+  <section><pre><code class="language-kotlin">  when {
     x.isOdd() -> print("x is odd")
     y.isEven() -> print("y is even")
     else -> print("x+y is odd")
@@ -248,8 +493,7 @@ when (x) {
 
   <p>You can capture <span class="cursiva">when</span>  subject in a variable using following syntax:</p>
 
-  <section><pre><code class="language-kotlin">
-  var x:Int = 100
+  <section><pre><code class="language-kotlin">  var x:Int = 100
     var b = when(x){
         in 1..10 -> true
         else -> false
@@ -270,35 +514,34 @@ when (x) {
   <p>Kotlin intervals would be the classic <span class="cursiva">for</span>  loops with <span class="cursiva">i</span>  in Java.</p>
   
 
-  <section><pre><code class="language-kotlin">
-  for (i in 1..3) {
-    print("$i ") // "1 2 3"
-  }
+  <section><pre><code class="language-kotlin">for (i in 1..3) {
+  print("$i ") // "1 2 3"
+}
   </code></pre></section><br><br>
 
-  <section><pre><code class="language-kotlin">
-  for (i in 10 downTo 0 step 2) {
+  <section><pre><code class="language-kotlin">for (i in 1 until 4) … //1,2,3 **4 not inculded**
+  </code></pre></section><br><br>
+
+  <section><pre><code class="language-kotlin">for (i in 10 downTo 0 step 2) {
     print("$i ") // "10 8 6 4 2 0"
   }
   </code></pre></section><br><br>
 
   <p>The <span class="cursiva">for</span>  loop iterates through anything that provides an iterator. This is equivalent to the <span class="cursiva">foreach</span>  loop in languages like C#. The syntax of for is the following:</p>
 
-  <section><pre><code class="language-kotlin">
-  for (item in collection) print(item)
+  <section><pre><code class="language-kotlin">for (item in collection) print(item)
   </code></pre></section><br><br>
 
   <p>The body of <span class="cursiva">for</span>  can be a block.</p>
-  <section><pre><code class="language-kotlin">
-  for (item: Int in ints) {
+
+  <section><pre><code class="language-kotlin">for (item: Int in ints) {
     // ...
   }
   </code></pre></section><br><br>
 
   <p>A for loop over a range or an array is compiled to an index-based loop that does not create an iterator object.</p>
 
-  <section><pre><code class="language-kotlin">
-  for (i in array.indices) {
+  <section><pre><code class="language-kotlin">for (i in array.indices) {
     println(array[i])
   }
   </code></pre></section><br><br>
@@ -306,8 +549,7 @@ when (x) {
 
   <p>Alternatively, you can use the <span class="d-word">withIndex</span>  library function:</p>
 
-  <section><pre><code class="language-kotlin">
-  for ((index, value) in array.withIndex()) {
+  <section><pre><code class="language-kotlin">for ((index, value) in array.withIndex()) {
     println("the element at $index is $value")
   }
   </code></pre></section><br><br>
@@ -324,8 +566,7 @@ when (x) {
     </ul>
   </p>
 
-  <section><pre><code class="language-kotlin">
-  while (x > 0) {
+  <section><pre><code class="language-kotlin">while (x > 0) {
     //Some code here
     x--    
   }
@@ -343,8 +584,7 @@ when (x) {
     <li>and inside the curly braces <span class="d-word">{}</span> , is the code to repeat.</li>
   </ul>
 
-  <section><pre><code class="language-kotlin">
-  fun main() {
+  <section><pre><code class="language-kotlin">  fun main() {
     repeat(5){
         println("Hello World")
     }
@@ -370,8 +610,7 @@ when (x) {
   </ul>
   <p>All of these expressions can be used as part of larger expressions:</p>
 
-  <section><pre><code class="language-kotlin">
-  val s = person.name ?: return
+  <section><pre><code class="language-kotlin">  val s = person.name ?: return
   </code></pre></section><br><br>
 
   <p>The type of these expressions is the <a class="enlace" target="_blank" href="https://kotlinlang.org/docs/exceptions.html#the-nothing-type">Nothing type</a> .</p>
@@ -381,16 +620,14 @@ when (x) {
   <p>Any expression in Kotlin may be marked with a label. Labels have the form of an identifier followed by the <span class="d-word">@</span>  sign, for example: <span class="cursiva">abc@, fooBar@</span>. 
     To label an expression, just add a label in front of it.</p>
 
-<section><pre><code class="language-kotlin">
-loop@ for (i in 1..100) {
+<section><pre><code class="language-kotlin">loop@ for (i in 1..100) {
     // ...
 }
 </code></pre></section><br><br>
 
 <p>Now, we can qualify a <span class="d-word">break</span>  or a <span class="d-word">continue</span>  with a label:</p>
 
-<section><pre><code class="language-kotlin">
-  fun main() {
+<section><pre><code class="language-kotlin">  fun main() {
     
 
     loop@ for (i in 1..10) {
@@ -418,8 +655,7 @@ loop@ for (i in 1..100) {
   Qualified <span class="d-word">return</span> allow us to return from an outer function. 
   The most important use case is returning from a lambda expression. Recall that when we write this:</p>
 
-<section><pre><code class="language-kotlin">
-fun foo() {
+<section><pre><code class="language-kotlin">fun foo() {
     listOf(1, 2, 3, 4, 5).forEach {
         if (it == 3) return // non-local return directly to the caller of foo()
         print(it)
@@ -432,8 +668,7 @@ fun foo() {
   Note that such non-local returns are <span class="negrita">supported only for lambda expressions</span>  passed to inline functions. 
   To return from a lambda expression, label it and qualify the return:</p>
 
-<section><pre><code class="language-kotlin">
-fun foo() {
+<section><pre><code class="language-kotlin">fun foo() {
     listOf(1, 2, 3, 4, 5).forEach lit@{
         if (it == 3) return@lit // local return to the caller of the lambda - the forEach loop
         print(it)
@@ -445,8 +680,7 @@ fun foo() {
 <p>Now, it returns only from the lambda expression. Oftentimes it is more convenient to use <span class="cursiva">implicit labels</span>: 
   such a label has the same name as the function to which the lambda is passed.</p>
 
-<section><pre><code class="language-kotlin">
-fun foo() {
+<section><pre><code class="language-kotlin">fun foo() {
     listOf(1, 2, 3, 4, 5).forEach {
         if (it == 3) return@forEach // local return to the caller of the lambda - the forEach loop
         print(it)
@@ -458,8 +692,7 @@ fun foo() {
 <p>Alternatively, you can replace the lambda expression with an anonymous function. A <span class="d-word">return</span> 
   statement in an anonymous function will return from the anonymous function itself.</p>
 
-<section><pre><code class="language-kotlin">
-fun foo() {
+<section><pre><code class="language-kotlin">fun foo() {
     listOf(1, 2, 3, 4, 5).forEach(fun(value: Int) {
         if (value == 3) return  // local return to the caller of the anonymous function - the forEach loop
         print(value)
@@ -472,8 +705,7 @@ fun foo() {
   There is no direct equivalent for <span class="d-word">break</span> , but it can be simulated by adding another 
   nesting lambda and non-locally returning from it:</p>
 
-<section><pre><code class="language-kotlin">
-fun foo() {
+<section><pre><code class="language-kotlin">fun foo() {
     run loop@{
         listOf(1, 2, 3, 4, 5).forEach {
             if (it == 3) return@loop // non-local return from the lambda passed to run
@@ -487,8 +719,7 @@ fun foo() {
 <p>
   When returning a value, the parser gives preference to the qualified return:
 
-<section><pre><code class="language-kotlin">
-return@a 1
+<section><pre><code class="language-kotlin">return@a 1
 </code></pre></section><br><br>
 
 This means "return <span class="d-word">1</span>  at label <span class="d-word"> @a</span> " and not "return a labeled expression (@a 1)".
@@ -500,8 +731,7 @@ This means "return <span class="d-word">1</span>  at label <span class="d-word">
 
 <p>Kotlin functions are declared using the <span class="d-word">fun</span> keyword:</p>
 
-<section><pre><code class="language-kotlin">
-fun double(x: Int): Int {
+<section><pre><code class="language-kotlin">fun double(x: Int): Int {
     return 2 * x
 }
 </code></pre></section><br><br>
@@ -510,14 +740,12 @@ fun double(x: Int): Int {
 
 <p>Functions are called using the standard approach:</p>
 
-<section><pre><code class="language-kotlin">
-val result = double(2)
+<section><pre><code class="language-kotlin">val result = double(2)
 </code></pre></section><br><br>
 
 <p>Calling member functions uses dot notation:</p>
 
-<section><pre><code class="language-kotlin">
-Stream().read() // create instance of class Stream and call read()
+<section><pre><code class="language-kotlin">Stream().read() // create instance of class Stream and call read()
 </code></pre></section><br><br>
 
 <h3>Parameters</h3>
@@ -525,14 +753,12 @@ Stream().read() // create instance of class Stream and call read()
 <p>Function parameters are defined using <span class="cursiva">Pascal</span>  notation - name: <span class="cursiva">type</span> . 
   Parameters are separated using commas, and each parameter must be explicitly typed:</p>
 
-<section><pre><code class="language-kotlin">
-fun powerOf(number: Int, exponent: Int): Int { /*...*/ }
+<section><pre><code class="language-kotlin">fun powerOf(number: Int, exponent: Int): Int { /*...*/ }
 </code></pre></section><br><br>
 
 <p>You can use a trailing comma when you declare function parameters:</p>
 
-<section><pre><code class="language-kotlin">
-fun powerOf(
+<section><pre><code class="language-kotlin">fun powerOf(
     number: Int,
     exponent: Int, // trailing comma
 ) { /*...*/ }
@@ -543,8 +769,7 @@ fun powerOf(
 <p>Function parameters can have default values, which are used when you skip the corresponding argument. 
   This reduces the number of overloads:</p>
 
-<section><pre><code class="language-kotlin">
-fun read(
+<section><pre><code class="language-kotlin">fun read(
     b: ByteArray,
     off: Int = 0,
     len: Int = b.size,
@@ -556,8 +781,7 @@ fun read(
 <p>Overriding methods always use the same default parameter values as the base method. 
   When overriding a method that has default parameter values, the default parameter values must be omitted from the signature:</p>
 
-<section><pre><code class="language-kotlin">
-open class A {
+<section><pre><code class="language-kotlin">open class A {
     open fun foo(i: Int = 10) { /*...*/ }
 }
 
@@ -569,8 +793,7 @@ class B : A() {
 <p>if a default parameter precedes a parameter with no default value, 
   the default value can only be used by calling the function with named arguments:</p>
 
-<section><pre><code class="language-kotlin">
-fun foo(
+<section><pre><code class="language-kotlin">fun foo(
     bar: Int = 0,
     baz: Int,
 ) { /*...*/ }
@@ -580,8 +803,7 @@ foo(baz = 1) // The default value bar = 0 is used
 
 <p>If the last argument after default parameters is a lambda, you can pass it either as a named argument or outside the parentheses:</p>
 
-<section><pre><code class="language-kotlin">
-fun foo(
+<section><pre><code class="language-kotlin">fun foo(
     bar: Int = 0,
     baz: Int = 1,
     qux: () -> Unit,
@@ -602,8 +824,7 @@ foo { println("hello") }        // Uses both default values bar = 0 and baz = 1
 
 <p>Consider the following function, <span class="d-word">reformat()</span> , which has 4 arguments with default values.</p>
 
-<section><pre><code class="language-kotlin">
-fun reformat(
+<section><pre><code class="language-kotlin">fun reformat(
     str: String,
     normalizeCase: Boolean = true,
     upperCaseFirstLetter: Boolean = true,
@@ -624,15 +845,13 @@ reformat(
 
 <p>You can skip all the ones with default values:</p>
 
-<section><pre><code class="language-kotlin">
-reformat("This is a long String!")
+<section><pre><code class="language-kotlin">reformat("This is a long String!")
 </code></pre></section><br><br>
 
 <p>You are also able to skip specific arguments with default values, rather than omitting them all. 
   However, after the first skipped argument, you must name all subsequent arguments:</p>
 
-<section><pre><code class="language-kotlin">
-reformat("This is a short String!", upperCaseFirstLetter = false, wordSeparator = '_')
+<section><pre><code class="language-kotlin">reformat("This is a short String!", upperCaseFirstLetter = false, wordSeparator = '_')
 </code></pre></section><br><br>
 
 <h3>Unit-returning functions</h3>
@@ -640,8 +859,7 @@ reformat("This is a short String!", upperCaseFirstLetter = false, wordSeparator 
 <p>If a function does not return a useful value, its return type is <span class="d-word">Unit</span> . <span class="d-word">Unit</span> 
    is a type with only one value - <span class="d-word">Unit</span> . This value does not have to be returned explicitly:</p>
 
-<section><pre><code class="language-kotlin">
-fun printHello(name: String?): Unit {
+<section><pre><code class="language-kotlin">fun printHello(name: String?): Unit {
     if (name != null)
         println("Hello $name")
     else
@@ -652,8 +870,7 @@ fun printHello(name: String?): Unit {
 
 <p>The <span class="d-word">Unit</span>  return type declaration is also optional. The above code is equivalent to:</p>
 
-<section><pre><code class="language-kotlin">
-fun printHello(name: String?) { ... }
+<section><pre><code class="language-kotlin">fun printHello(name: String?) { ... }
 </code></pre></section><br><br>
 
 
@@ -661,22 +878,19 @@ fun printHello(name: String?) { ... }
 
 <p>When a function returns a single expression, the curly braces can be omitted and the body is specified after a <span class="d-word">=</span>  symbol:</p>
 
-<section><pre><code class="language-kotlin">
-fun double(x: Int): Int = x * 2
+<section><pre><code class="language-kotlin">fun double(x: Int): Int = x * 2
 </code></pre></section><br><br>
 
 <p>Explicitly declaring the return type is optional when this can be inferred by the compiler:</p>
 
-<section><pre><code class="language-kotlin">
-fun double(x: Int) = x * 2
+<section><pre><code class="language-kotlin">fun double(x: Int) = x * 2
 </code></pre></section><br><br>
 
 <h3>Variable number of arguments (varargs)</h3>
 
-<p>You can mark a parameter of a function (usually the last one) with the vararg modifier:</p>
+<p>You can mark a parameter of a function (usually the last one) with the <span class="d-word">vararg</span>  modifier:</p>
 
-<section><pre><code class="language-kotlin">
-fun &lt;T&gt; asList(vararg ts: T): List&lt;T> {
+<section><pre><code class="language-kotlin">fun &lt;T&gt; asList(vararg ts: T): List&lt;T> {
     val result = ArrayList&lt;T>()
     for (t in ts) // ts is an Array
         result.add(t)
@@ -686,8 +900,7 @@ fun &lt;T&gt; asList(vararg ts: T): List&lt;T> {
 
 <p>In this case, you can pass a variable number of arguments to the function:</p>
 
-<section><pre><code class="language-kotlin">
-val list = asList(1, 2, 3)
+<section><pre><code class="language-kotlin">val list = asList(1, 2, 3)
 </code></pre></section><br><br>
 
 <p>Inside a function, a <span class="d-word">vararg</span>  -parameter of type <span class="d-word">T</span> 
@@ -701,8 +914,7 @@ val list = asList(1, 2, 3)
     for example <span class="d-word">asList(1, 2, 3)</span> . If you already have an array and want to pass its contents to the function, 
     use the spread operator (prefix the array with <span class="d-word">*</span> ):</p>
   
-<section><pre><code class="language-kotlin">
-val a = arrayOf(1, 2, 3)
+<section><pre><code class="language-kotlin">val a = arrayOf(1, 2, 3)
 val list = asList(-1, 0, *a, 4)
 </code></pre></section><br><br>
 
@@ -717,8 +929,7 @@ val list = asList(-1, 0, *a, 4)
 
 <p>Kotlin supports local functions, which are functions <span class="negrita">inside</span> other functions:</p>
 
-<section><pre><code class="language-kotlin">
-fun dfs(graph: Graph) {
+<section><pre><code class="language-kotlin">fun dfs(graph: Graph) {
     fun dfs(current: Vertex, visited: MutableSet<Vertex>) {
         if (!visited.add(current)) return
         for (v in current.neighbors)
@@ -731,8 +942,7 @@ fun dfs(graph: Graph) {
 
 <p>A local function can access local variables of outer functions (the closure). In the case above, visited can be a local variable:</p>
 
-<section><pre><code class="language-kotlin">
-fun dfs(graph: Graph) {
+<section><pre><code class="language-kotlin">fun dfs(graph: Graph) {
     val visited = HashSet<Vertex>()
     fun dfs(current: Vertex) {
         if (!visited.add(current)) return
@@ -748,16 +958,14 @@ fun dfs(graph: Graph) {
 
 <p>A member function is a function that is defined inside a class or object:</p>
 
-<section><pre><code class="language-kotlin">
-class Sample {
+<section><pre><code class="language-kotlin">class Sample {
     fun foo() { print("Foo") }
 }
 </code></pre></section><br><br>
 
 <p>Member functions are called with dot notation:</p>
 
-<section><pre><code class="language-kotlin">
-Sample().foo() // creates instance of class Sample and calls foo
+<section><pre><code class="language-kotlin">Sample().foo() // creates instance of class Sample and calls foo
 </code></pre></section><br><br>
 
 
@@ -765,8 +973,7 @@ Sample().foo() // creates instance of class Sample and calls foo
 
 <p>Functions can have generic parameters, which are specified using angle brackets before the function name:</p>
 
-<section><pre><code class="language-kotlin">
-fun &lt;T> singletonList(item: T): List&lt;T> { /*...*/ }
+<section><pre><code class="language-kotlin">fun &lt;T> singletonList(item: T): List&lt;T> { /*...*/ }
 </code></pre></section><br><br>
 
 <h3>Tail recursive functions</h3>
@@ -774,8 +981,7 @@ fun &lt;T> singletonList(item: T): List&lt;T> { /*...*/ }
   For some algorithms that would normally use loops, you can use a recursive function instead without the risk of stack overflow. 
   When a function is marked with the <span class="d-word">tailrec</span>  modifier and meets the required formal conditions, the compiler optimizes out the recursion, leaving behind a fast and efficient loop based version instead:</p>
 
-<section><pre><code class="language-kotlin">
-val eps = 1E-10 // "good enough", could be 10^-15
+<section><pre><code class="language-kotlin">val eps = 1E-10 // "good enough", could be 10^-15
 
 tailrec fun findFixPoint(x: Double = 1.0): Double =
     if (Math.abs(x - Math.cos(x)) &lt; eps) x else findFixPoint(Math.cos(x))
@@ -787,14 +993,13 @@ tailrec fun findFixPoint(x: Double = 1.0): Double =
   result of <span class="d-word">0.7390851332151611</span>  for the specified <span class="d-word">eps</span>  precision. 
   The resulting code is equivalent to this more traditional style:</p>
 
-<section><pre><code class="language-kotlin">
-val eps = 1E-10 // "good enough", could be 10^-15
+<section><pre><code class="language-kotlin">val eps = 1E-10 // "good enough", could be 10^-15
 
 private fun findFixPoint(): Double {
     var x = 1.0
     while (true) {
         val y = Math.cos(x)
-        if (Math.abs(x - y) < eps) return x
+        if (Math.abs(x - y) &lt; eps) return x
         x = Math.cos(x)
     }
 }
@@ -817,29 +1022,217 @@ private fun findFixPoint(): Double {
 
 <p>A <span class="d-word">higher-order</span> function is a function that takes functions as parameters, or returns a function.</p>
 
+<!--*****************************************Lambdas and Variables function in Kotlin*******************************************-->
+<h3>Lambdas and Variables function</h3>
+<p>A <span class="d-word">Lambda</span>  expression is a subroutine of code that is not normally assigned an identifier.</p>
+<p>A <span class="d-word">Lambda</span>  expression is usually passed as an argument to another function to parameterize its execution. 
+  A function that receives a Lambda expression as a parameter is known as a <span class="d-word">higher-order function</span> .</p>
+
+<p>Most modern languages ​​incorporate them. Java has <span class="d-word">Lambdas</span>  expressions since version 8.</p>
+<p>A <span class="d-word">Lambda</span>  expression is always <span class="negrita">enclosed in braces</span>. 
+  If you have parameters these are written at the beginning followed by <span class="d-word">-></span>.</p><p>Let's see some examples:</p>
+
+<section><pre><code class="language-kotlin">{ toast("Message") }           //calls a function
+{ x: Int, y: Int -> x + y }    //add two ints
+{ x, y -> x + y }              //add two values
+{ x -> x * 2 }                 //duplicates
+{ it * 2 }                     //"it" can be used if there is an only param
+{ x, _ -> x * 2 }              //"_" indicates a parameter that we do not use 
+</code></pre></section><br><br>
+
+<p>A <span class="d-word">Lambda</span>  expression can be passed as a parameter to a <span class="d-word">higher-order</span>  function. 
+  Let's first look at an example of a <span class="d-word">higher-order</span>  function:</p>
+
+<section><pre><code class="language-kotlin">fun opera(lista: List, valor: Int, funcion:(Int, Int)->Int ): List {
+   val result = arrayListOf()
+   for (item in lista)
+      result.add(funcion(item, valor))
+   return result
+} 
+</code></pre></section><br><br>
+
+<p>The <span class="d-word">opera</span>  function has three parameters a <span class="cursiva">list, a value and a function</span> . 
+  It is going to go through all the elements of the <span class="cursiva">list</span>  and it is going to use <span class="cursiva">funcion</span>, 
+  to perform a calculation of each element of the <span class="cursiva">list</span>  and with value. The result obtained is stored in each position of the output list.
+  To use <span class="cursiva">opera</span>  we could first <span class="negrita">declare function as a variable</span> :</p>
+<section><pre><code class="language-kotlin">val funcion =  fun (x: Int, y:Int ):Int = x + y
+lista = opera(lista, 2, funcion)  
+</code></pre></section><br><br>
+
+<p>We can also use an anonymous function, directly in the parameter</p>
+
+<section><pre><code class="language-kotlin">lista = opera(lista, 2, fun (x, y):Int = x + y) 
+</code></pre></section><br><br>
+
+<p>Notice how in this case it is no longer necessary to indicate the types of x and y. These can be inferred from the parameter they are replacing.</p>
+<p>This function can also be declared using a <span class="d-word">Lambda</span>  expression:</p>
+<section><pre><code class="language-kotlin">val lambda =  { x: Int, y:Int -> x + y }
+lista = opera(lista, 2, lambda)
+</code></pre></section><br><br>
+
+<p>But it is more readable if we use a <span class="d-word">Lambda</span>  expression:</p>
+
+<section><pre><code class="language-kotlin">lista = opera(lista, 2, { x, y -> x + y }) 
+</code></pre></section><br><br>
+
+<p>When the <span class="negrita">last parameter</span>  for a function is a <span class="d-word">Lambda</span> , it can be specified outside of parentheses:</p>
+<section><pre><code class="language-kotlin">lista = opera(lista, 2) { 
+    x, y -> x + y
+}  
+</code></pre></section><br><br>
+
+<p>As we have just seen, <span class="d-word">Lambda</span>  expressions have various utilities, but within the scope of Android they will 
+  be very useful for writing the code for <span class="cursiva">event listeners</span>.</p>
+<p>As you probably already know, writing a listener in Java is very laborious. An <span class="cursiva">anonymous object</span> 
+   is usually created that implements an interface with all its methods. As you can see in the code on the right, with <span class="d-word">Kotlin</span>,
+   it will be much simpler:</p>
+
+<p>Java's code</p>
+<section><pre><code class="language-kotlin">boton.setOnClickListener(
+  new View.OnClickListener(){
+    @Override
+    public void onClick(View v){
+       hazAlgo();
+    }
+});
+</code></pre></section><br><br>
+
+<p>Kotlin's code</p>
+<section><pre><code class="language-kotlin">boton.setOnClickListener { hazAlgo() }
+</code></pre></section><br><br>
+
+<p>This is possible thanks to the fact that <span class="d-word">Kotlin</span>  does the following optimization on the Android Java library. 
+  Every time it encounters a parameter whose type is an interface with a single function, the method is overloaded by replacing the parameter with a function:</p>
+
+<section><pre><code class="language-kotlin">fun setOnClickListener( escuchador: (View) –> Unit )
+</code></pre></section><br><br>
+
+<section class="marco-t inf">
+  <span class="icono info"> </span> <span class="negrita">
+    <span class="cursiva">Note</span>  : <span class="d-word">Unit</span>  is a single-valued type, the unit object. <span class="negrita">Corresponds to void in Java</span> .</span>
+  </section>
+<section class="marco-b">
+    
+</section>
+
+<p>the <span class="d-word">escuchador</span>  parameter must be replaced by a <span class="d-word">Lambda</span>  function or expression that has a <span class="d-word">View</span> 
+   object as a parameter and does not return anything.</p>
+<p>If we need to know the view that caused the event, we would write:</p>
+  <section><pre><code class="language-kotlin">boton.setOnClickListener { vista -> hazAlgo(vista) }
+  </code></pre></section><br><br>
 
 
-<p class="sub-section">Function Types</p>
+<!--*****************************************Inline Functions*******************************************-->
+<h3>Inline Functions</h3>
+<p>In a normal function your code is stored once in memory. Each time it is invoked, the parameters are added to the stack and it is invoked.</p>
+<p>In an inline function this invocation is not made, but the code of the function is inserted each time it is used.</p>
+<p>In theory, an inline function has better performance compared to normal ones, 
+  because they avoid using the stack to pass parameters and avoid jump and return instructions. 
+  This statement will depend on how the code is compiled. For example, in the Java virtual machine, 
+  it even uses the stack to execute instructions in machine code. Since the code has to be "copied" each time that function is called, 
+  the size of the executable will increase as the size of the inline function grows.</p>
 
-<p>Kotlin uses function types, such as <span class="d-word">(Int) -> String</span> , for declarations that deal with functions: 
-  <span class="d-word">val onClick: () -> Unit = ....</span> </p>
+  <section><pre><code class="language-kotlin">inline fun suma(a:Int, b:Int) = a + b
+val c = suma(2, 2) 
+  </code></pre></section><br><br>
+<p>The real advantage of <span class="d-word">inline</span>  functions appears when applied to higher-order functions. 
+  Higher-order functions have some performance penalty (both in time and memory). 
+  To call the Lambda parameter, a new object is created in memory that contains a method with the parameters indicated in the Lambda.</p>
+  <p>For example, given the function:</p>
 
-<p>These types have a special notation that corresponds to the signatures of the functions - their parameters and return values:</p>
+<section><pre><code class="language-kotlin">fun opera(l: List, v: Int, funcion: (Int, Int)->Int): List 
+</code></pre></section><br><br>
 
-<p>All function types have a parenthesized list of parameter types and a return type: <span class="d-word">(A, B) -> C</span>  denotes a 
-  type that represents functions that take two arguments of types <span class="d-word">A</span>  and <span class="d-word">B</span>  and return a value of type <span class="d-word">C</span> . 
-  The list of parameter types may be empty, as in <span class="d-word">() -> A</span> . The <span class="d-word">Unit</span>  return type cannot be omitted.</p>
+<p>when compiling the following call:</p>
+<section><pre><code class="language-kotlin">opera(l, v) { a, b -> a + b 
+</code></pre></section><br><br>
 
-<p>Function types can optionally have an additional receiver type, which is specified before the dot in the notation: the type <span class="d-word">A.(B) -> C</span> 
-  represents functions that can be called on a receiver object <span class="d-word">A</span>  with a parameter <span class="d-word">B</span>  and return a value <span class="d-word">C</span> . Function literals with receiver are often used along with these types.</p>
+<p>The resulting code would be something similar as if in Java we had written:</p>
+<section><pre><code class="language-kotlin">opera(l, v, new Funcion() { 
+   @Override public int funcion(int a, b) { return a + b; }
+}); 
+</code></pre></section><br><br>
+<p>Which means the creation of a new anonymous object. But if, on the contrary, we had written:</p>
 
-<p>Suspending functions belong to a special kind of function type that have a suspend modifier in their notation, 
-  such as suspend <span class="d-word">() -> Unit</span>  or suspend <span class="d-word">A.(B) -> C</span> .</p>
+<section><pre><code class="language-kotlin">inline fun opera(l: List<Int>, v: Int, funcion: (Int, Int)->Int): List<Int> 
+</code></pre></section><br><br>
+<p>The <span class="d-word">inline</span>  will apply not only to <span class="d-word">opera</span>  but also to <span class="d-word">funcion</span>. 
+  The final result will be to directly insert the <span class="d-word">opera</span>  code, and then within this code replace <span class="d-word">funcion</span>
+   with its code. It would look like this:</p>
+<section><pre><code class="language-kotlin">val result = arrayListOf<Int>()
+for (item in lista)
+   result.add(<del>funcion(item, valor)</del> item + valor)
+return result 
+</code></pre></section><br><br>
 
 
+<p>In the case of a list of 100,000 items, we have avoided creating 100,000 objects. Which is a significant improvement. 
+  Adding with the fact that we have avoided 100,000 calls to the function.</p>
 
+  <a class="tarea" target="_blank" href="#"> In this exercise we are going to try to demonstrate the influence of using Lambdas
+     on normal functions and on inline functions. We will look at both temporary performance and memory usage.
+     <ol style="list-style-type: decimal !important;line-height: 1.2em; list-style-position: inside;">
+       <li>Create a new project in Android Studio with the following data: <br>
+      <pre>Application Name: Funciones Inline
+        Package name: com.example.funcionesinline
+        - Including Kotlin support
+        - Phone and Tablet
+           Minimum SDK: API 16: Android 4.1 (Jelly Bean)
+        Basic Activity
+      </pre><br>Leave the rest of the default values.</li>
+       <li>
+        Add the following function in <span class="d-word">MainActivity</span> 
+        <section><pre><code class="language-kotlin">inline fun opera(l: IntArray, v: Int, funcion:(Int, Int)-&gt;Int): IntArray {
+    val result = IntArray(l.size)
+    for ((indice, item) in l.withIndex())
+        result[indice] = (funcion(item, v))
+    return result
+}
+        </code></pre></section><br><br>
+      </li>
+       <li>In the <span class="negrita">onCreate</span>  method add inside <span class="d-word">fab.setOnClickListener</span>:
+        <section><pre><code class="language-kotlin">fab.setOnClickListener { view ->
+    var lista = IntArray( 5, { 2 } )
+    val ini = System.currentTimeMillis()
+    for (n in 1..100_000) {
+        opera(lista, 2) { a, b -> a+b }
+    }
+    val fin = System.currentTimeMillis()
+    Snackbar.make(view, "Tiempo ${fin-ini}", Snackbar.LENGTH_LONG)
+            .setAction("Action", null).show()
+} 
+        </code></pre></section><br><br>
 
-
+        We start by initializing an array of integers of 5 elements and value 2. 
+        Observe how the value with which we initialize the elements is indicated by a Lambda. 
+        We write down the start time. We made 100,000 calls to <span class="negrita">opera</span>  and we wrote down the final time. 
+        Finally we show the time spent in a Snackbar.</li>
+       <li>
+        Run the application and note the elapsed time.</li>
+       <li>Remove the inline modifier from opera.</li>
+       <li>Run the application again and note the elapsed time. This has to be significantly higher.</li>
+       <li>For study of the memory used, click on the button: <br>
+         <figure><img src="imagenes/ud2-2021-09-20-02-32-17.png" /><br><figcaption></figcaption></figure>
+         <br>
+         
+       </li>
+       <li>Click on the middle MEMORY.</li>
+       <li>Press the Record Memory Alocation button<br>
+         <figure><img src="imagenes/ud2-2021-09-20-02-33-05.png" /><br><figcaption></figcaption></figure>
+         <br>
+         
+       </li>
+       <li>
+        Press the floating button of the application and when it shows the elapsed time, click on Stop Recording. <br>
+        <figure><img src="imagenes/ud2-2021-09-20-02-34-17.png" /><br><figcaption></figcaption></figure>
+        <br>
+        
+      </li>
+       <li>Capture the screen for later analysis.</li>
+       <li>Add the opera inline modifier.</li>
+       <li>Repeat the process and compare the results Has there been a significant difference in memory usage? </li>
+     </ol>
+  </a> 
 
 
 
@@ -853,15 +1246,13 @@ private fun findFixPoint(): Double {
 
 <p>Classes in Kotlin are declared using the keyword <span class="d-word">class</span> :</p>
 
-<section><pre><code class="language-kotlin">
-class Person { /*...*/ }
+<section><pre><code class="language-kotlin">class Person { /*...*/ }
 </code></pre></section><br><br>
 
 The <span class="cursiva">class</span>  declaration consists of the class name, the class header (specifying its type parameters, the primary constructor, and some other things), 
 and the class body surrounded by curly braces. Both the header and the body are optional; if the class has no body, the curly braces can be omitted.
 
-<section><pre><code class="language-kotlin">
-class Empty
+<section><pre><code class="language-kotlin">class Empty
 </code></pre></section><br><br>
 
 <h3>Constructors</h3>
@@ -869,22 +1260,19 @@ class Empty
 <p>A <span class="cursiva">class</span>  in Kotlin can have a primary constructor and one or more secondary constructors. 
   <span class="negrita">The primary constructor</span>  is a part of the class header, and it goes after the class name and optional type parameters.</p>
 
-<section><pre><code class="language-kotlin">
-class Person constructor(firstName: String) { /*...*/ }
+<section><pre><code class="language-kotlin">class Person constructor(firstName: String) { /*...*/ }
 </code></pre></section><br><br>
 
 If the primary constructor does not have any annotations or visibility modifiers, the constructor keyword <span class="negrita">can be omitted</span> :
 
-<section><pre><code class="language-kotlin">
-class Person(firstName: String) { /*...*/ }
+<section><pre><code class="language-kotlin">class Person(firstName: String) { /*...*/ }
 </code></pre></section><br><br>
 
 <p>The primary constructor cannot contain any code. Initialization code can be placed in <span class="cursiva">initializer blocks</span>  prefixed with the <span class="d-word">init</span>  keyword.</p>
 
 <p>During the initialization of an instance, the initializer blocks are executed in the same order as they appear in the class body, 
   interleaved with the property initializers:</p>
-<section><pre><code class="language-kotlin">
-class InitOrderDemo(name: String) {
+<section><pre><code class="language-kotlin">class InitOrderDemo(name: String) {
     val firstProperty = "First property: $name".also(::println)
     
     init {
@@ -901,28 +1289,24 @@ class InitOrderDemo(name: String) {
 
 <p>Primary constructor parameters can be used in the initializer blocks. They can also be used in property initializers declared in the class body:</p>
 
-<section><pre><code class="language-kotlin">
-class Customer(name: String) {
+<section><pre><code class="language-kotlin">class Customer(name: String) {
     val customerKey = name.uppercase()
 }
 </code></pre></section><br><br>
 
 <p>Kotlin has a concise syntax for declaring properties and initializing them from the primary constructor:</p>
 
-<section><pre><code class="language-kotlin">
-class Person(val firstName: String, val lastName: String, var age: Int)
+<section><pre><code class="language-kotlin">class Person(val firstName: String, val lastName: String, var age: Int)
 </code></pre></section><br><br>
 
 <p>Such declarations can also include default values of the class properties:</p>
 
-<section><pre><code class="language-kotlin">
-class Person(val firstName: String, val lastName: String, var isEmployed: Boolean = true)
+<section><pre><code class="language-kotlin">class Person(val firstName: String, val lastName: String, var isEmployed: Boolean = true)
 </code></pre></section><br><br>
 
 <p>You can use a trailing comma when you declare class properties:</p>
 
-<section><pre><code class="language-kotlin">
-class Person(
+<section><pre><code class="language-kotlin">class Person(
     val firstName: String,
     val lastName: String,
     var age: Int, // trailing comma
@@ -933,16 +1317,14 @@ class Person(
 
 If the <span class="cursiva">constructor</span> has annotations or visibility modifiers, the <span class="d-word">constructor</span>  keyword is required and the modifiers go before it:
 
-<section><pre><code class="language-kotlin">
-class Customer public @Inject constructor(name: String) { /*...*/ }
+<section><pre><code class="language-kotlin">class Customer public @Inject constructor(name: String) { /*...*/ }
 </code></pre></section><br><br>
 
 <p class="sub-section">Secondary constructors</p>
 
 <p>A class can also declare <span class="cursiva">secondary constructors</span> , which are prefixed with constructor:</p>
 
-<section><pre><code class="language-kotlin">
-class Person(val pets: MutableList<Pet> = mutableListOf())
+<section><pre><code class="language-kotlin">class Person(val pets: MutableList<Pet> = mutableListOf())
 
 class Pet {
     constructor(owner: Person) {
@@ -955,8 +1337,7 @@ class Pet {
   either directly or indirectly through another secondary constructor(s). 
   Delegation to another constructor of the same class is done using the <span class="d-word">this</span>  keyword:</p>
 
-<section><pre><code class="language-kotlin">
-class Person(val name: String) {
+<section><pre><code class="language-kotlin">class Person(val name: String) {
     var children: MutableList<Person> = mutableListOf()
     constructor(name: String, parent: Person) : this(name) {
         parent.children.add(this)
@@ -970,8 +1351,7 @@ class Person(val name: String) {
 
 <p>Even if the class has no primary constructor, the delegation still happens implicitly, and the initializer blocks are still executed:</p>
 
-<section><pre><code class="language-kotlin">
-class Constructors {
+<section><pre><code class="language-kotlin">class Constructors {
     init {
         println("Init block")
     }
@@ -987,16 +1367,14 @@ class Constructors {
 
 If you don't want your class to have a public constructor, declare an empty primary constructor with non-default visibility:
 
-<section><pre><code class="language-kotlin">
-class DontCreateMe private constructor () { /*...*/ }
+<section><pre><code class="language-kotlin">class DontCreateMe private constructor () { /*...*/ }
 </code></pre></section><br><br>
 
 <p class="sub-section">Creating instances of classes</p>
 
 <p>To create an instance of a class, call the constructor as if it were a regular function:</p>
 
-<section><pre><code class="language-kotlin">
-val invoice = Invoice()
+<section><pre><code class="language-kotlin">val invoice = Invoice()
 
 val customer = Customer("Joe Smith")
 </code></pre></section><br><br>
@@ -1024,8 +1402,7 @@ val customer = Customer("Joe Smith")
 <p>A class may be declared <span class="d-word">abstract</span> , along with some or all of its members.
   An abstract member does not have an implementation in its class.</p>
 
-<section><pre><code class="language-kotlin">
-abstract class Polygon {
+<section><pre><code class="language-kotlin">abstract class Polygon {
     abstract fun draw()
 }
 
@@ -1038,8 +1415,7 @@ class Rectangle : Polygon() {
 
 <p>You can override a <span class="cursiva">non-abstract</span>  <span class="d-word">open</span>  member with an abstract one.</p>
 
-<section><pre><code class="language-kotlin">
-open class Polygon {
+<section><pre><code class="language-kotlin">open class Polygon {
     open fun draw() {
         // some default polygon drawing method
     }
@@ -1056,8 +1432,7 @@ abstract class WildShape : Polygon() {
 
 <p>All classes in Kotlin have a common superclass, <span class="d-word">Any</span> , which is the default superclass for a class with no supertypes declared:</p>
 
-<section><pre><code class="language-kotlin">
-class Example // Implicitly inherits from Any
+<section><pre><code class="language-kotlin">class Example // Implicitly inherits from Any
 </code></pre></section><br><br>
 
 <p>Any has three methods: <span class="d-word"> equals()</span> , <span class="d-word">hashCode()</span> , and <span class="d-word">toString()</span> . 
@@ -1065,14 +1440,12 @@ class Example // Implicitly inherits from Any
 
 <p>By default, <span class="negrita">Kotlin classes are final</span>  – they can’t be inherited. To make a class inheritable, mark it with the <span class="d-word">open</span>  keyword:</p>
 
-<section><pre><code class="language-kotlin">
-open class Base // Class is open for inheritance
+<section><pre><code class="language-kotlin">open class Base // Class is open for inheritance
 </code></pre></section><br><br>
 
 <p>To declare an explicit supertype, place the type after a colon in the class header:</p>
 
-<section><pre><code class="language-kotlin">
-open class Base(p: Int)
+<section><pre><code class="language-kotlin">open class Base(p: Int)
 
 class Derived(p: Int) : Base(p
 </code></pre></section><br><br>)
@@ -1082,8 +1455,7 @@ class Derived(p: Int) : Base(p
 <p>if derived class has no primary constructor, then each secondary constructor has to initialize the base type using the <span class="d-word">super</span>  keyword
    or it has to delegate to another constructor which does. Note that in this case different secondary constructors can call different constructors of the base type:</p>
 
-<section><pre><code class="language-kotlin">
-class MyView : View {
+<section><pre><code class="language-kotlin">class MyView : View {
     constructor(ctx: Context) : super(ctx)
 
     constructor(ctx: Context, attrs: AttributeSet) : super(ctx, attrs)
@@ -1094,8 +1466,7 @@ class MyView : View {
 
 <p>Kotlin requires explicit modifiers for overridable members and overrides:</p>
 
-<section><pre><code class="language-kotlin">
-open class Shape {
+<section><pre><code class="language-kotlin">open class Shape {
   open fun draw() { /*...*/ }
   fun fill() { /*...*/ }
 }
@@ -1111,8 +1482,7 @@ class Circle() : Shape() {
 
 <p>A member marked <span class="d-word">override</span>  is itself open, so it may be overridden in subclasses. If you want to prohibit re-overriding, use <span class="d-word">final</span> :</p>
 
-<section><pre><code class="language-kotlin">
-open class Rectangle() : Shape() {
+<section><pre><code class="language-kotlin">open class Rectangle() : Shape() {
     final override fun draw() { /*...*/ }
 }
 </code></pre></section><br><br>
@@ -1125,8 +1495,7 @@ open class Rectangle() : Shape() {
   Each declared property can be overridden by a property with an initializer or by a property with a <span class="d-word">get</span>  method:</p>
 
 
-<section><pre><code class="language-kotlin">
-open class Shape {
+<section><pre><code class="language-kotlin">open class Shape {
     open val vertexCount: Int = 0
 }
 
@@ -1141,8 +1510,7 @@ class Rectangle : Shape() {
 
 <p>Note that you can use the <span class="d-word">override</span>  keyword as part of the property declaration in a <span class="cursiva">primary constructor</span> :</p>
 
-<section><pre><code class="language-kotlin">
-interface Shape {
+<section><pre><code class="language-kotlin">interface Shape {
     val vertexCount: Int
 }
 
@@ -1158,8 +1526,7 @@ class Polygon : Shape {
 <p>During the construction of a new instance of a derived class, the base class initialization is done as the first step 
   (preceded only by evaluation of the arguments for the base class constructor), which means that it happens before the initialization logic of the derived class is run.</p>
 
-  <section><pre><code class="language-kotlin">
-open class Base(val name: String) {
+  <section><pre><code class="language-kotlin">open class Base(val name: String) {
 
     init { println("Initializing a base class") }
 
@@ -1184,12 +1551,69 @@ fun main() {
   </code></pre></section><br><br>
 
 
+  <!--*********************************************************Initialization with lateinit vs lazy***********************************************************-->
+  <a name="sLateinit"><a>
+  <h2>Initialization with lateinit vs lazy</h2>
+
+  <p>Normally, those variables that are not declared null must be initialized in the constructor. 
+    However, this is often not the best option. In case we don't want to initialize a property in the constructor, we have two alternatives, <span class="d-word">lateinit</span> 
+     and <span class="d-word">lazy</span> .
+    By means of <span class="d-word">lateinit</span>  what we get is a <span class="cursiva">late</span> initialization, indicating to the compiler that said initialization 
+    will be done later in the code. If we try to access a variable before its initialization, we will get an error of the type Caused by:</p>
+    <section class="marco-t err">
+      <span class="icono error"> </span> <span class="negrita">kotlin.UninitializedPropertyAccessException: lateinit property test has not been initialized.</span>
+      </section>
+    <section class="marco-b">
+        
+    </section>
+
+    <section><pre><code class="language-kotlin">lateinit var text: String
+fun doSomething() {
+   text = "a value"
+   println("Length is "+text.length)
+   texto = "Another value"
+} 
+    </code></pre></section><br><br>
+
+<p>The <span class="d-word">lateinit</span>  modifier can only be used in mutable variables (<span class="negrita">var</span> ) declared in the body of a class 
+  (not the one in the primary constructor), and only when that variable does not have a custom getter or setter.</p>
+<p>Through <span class="d-word">lazy</span>  what we get is a lazy initialization, so a variable will not be initialized unless it is used in our code. 
+  It will be initialized only once, then it will keep the value.</p>
+
+<section><pre><code class="language-kotlin">public class Example{
+   val name: String by lazy { "Rosa López" }
+
+   if(condition) print("${name.length}") //Initialization takes place here
+} 
+</code></pre></section><br><br>
+
+<p>In the example above, both the first and subsequent calls to name will return "Rosa López".</p>
+<br><br>
+<p>Once we know what each of these functions does, when should we use each one?</p>
+
+<p>
+  <ul>
+    <li><span class="d-word">lazy</span>  can only be used for immutable <span class="d-word">val</span>  variables, while 
+      <span class="d-word">lateinit</span>  can only be applied to mutable var variables, 
+      since the immutability of that variable cannot be ensured because it cannot be compiled as <span class="d-word">final</span> </li>
+    <li> A variable of type <span class="d-word">lateinit</span>  can be initialized anywhere in the object where it is visible. 
+      If we need our variable to be initialized from outside, in an unknown way beforehand, we will have to use <span class="d-word">lateinit</span> </li>
+  </ul>
+</p>
+
+
+    
 
 
 
 
 
 
+<!-- ************************************************************Exercises***************************************************************************-->
+<div class="oculto" style="width: 100%;">
+  <p>Practice with those exercises from <a class="enlace" target="_blank" href="https://kotlinlang.org/">https://kotlinlang.org/</a> </p> <br>
+  <iframe src="https://play.kotlinlang.org/koans/Introduction/Hello,%20world!/Task.kt" frameborder="1" style="width: 100%;height: 1500px;"></iframe>
+</div>
 
 
   <script src="../script/prism.js"></script>
