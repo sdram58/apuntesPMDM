@@ -22,11 +22,9 @@
        href="#sFunciones">Functions</a><a 
        href="#sClasses">Classes and Objects</a><a 
        href="#sLateinit">Initialization with lateinit vs lazy</a><a 
-       class="oculto" href="#s7">UD7.- Kotlin's basics</a><a 
-       class="oculto" href="#s8">UD8.- Kotlin's basics</a><a 
-       class="oculto" href="#s9">UD9.- Kotlin's basics</a><a 
-       class="oculto" href="#s10">UD10.- Kotlin's basics</a><a 
-       class="oculto" href="./unidades/underconstruction.html">UD11.- Kotlin's basics</a>
+       href="#sModismos">Let, run, also, apply, with</a><a
+       href="#sExercises">Interactive exercises from Kotlinlang</a>
+
 </div>
 
 
@@ -1895,14 +1893,225 @@ fun doSomething() {
 </p>
 
 
+
+<!--*********************************************************Let, run, also, apply, with***********************************************************-->
+<a name="sModismos"><a>
+<h2>Let, run, also, apply, with</h2>
+
+<p>we’ll be implementing some of the important standard library functions available in Kotlin. The <span class="d-word">kotlin-stdlib</span>  provides us with useful <span class="d-word">higher order</span> 
+   functions implementing idiomatic patterns. We’ll see how they make programming in Kotlin so easier and faster.</p>
+
+  <p>The functions that we’re going to discuss below are:</p>
+  <ul>
+    <li>let</li>
+    <li>run</li>
+    <li>also</li>
+    <li>apply</li>
+    <li>with</li>
+  </ul>
+
+  <h3>Koltin let</h3>
+
+  <p><span class="d-word">let</span>  takes the object it is invoked upon as the parameter and returns the result of the lambda expression.
+    Kotlin let is a scoping function wherein the variables declared inside the expression cannot be used outside.</p>
     
+    <p>An example demonstrating kotlin let function is given below.</p>
+<section><pre><code class="language-kotlin">fun main(args: Array<String>) {
+        var str = "Hello World"
+        str.let { println("$it!!") }
+        println(str)
+    
+    }
+    //Prints
+    //Hello World!!
+    //Hello World
+</code></pre></section><br><br>
+<p><span class="d-word">it</span> keyword contains the copy of the property inside <span class="d-word">let</span> .</p>
+    
+    
+  <p>The last value from the <span class="d-word">let</span>  is returned as an argument as shown below.</p>
+  <section><pre><code class="language-kotlin">var strLength = str.let { "$it function".length }
+println("strLength is $strLength") //prints strLength is 20
+  </code></pre></section><br><br>
+
+  <p class="sub-section">Chaining let functions</p>
+
+  <section><pre><code class="language-kotlin">var a = 1
+var b= 2
+
+a = a.let { it + 2 }.let { val i = it + b
+        i}
+println(a) //5
+  </code></pre></section><br><br>
+
+ <p class="sub-section">Nesting let</p>
+
+ <p>We can set a let expression inside another let expression as shown below.</p>
+ <section><pre><code class="language-kotlin">var x = "Anupam"
+x.let { outer -> outer.let { inner -> print("Inner is $inner and outer is $outer") } }
+
+//Prints
+//Inner is Anupam and outer is Anupam
+ </code></pre></section><br><br>
+
+ <p>For <span class="d-word">nested</span>  let, we can’t use <span class="d-word">it</span>  keyword. We need to assign explicit names to <span class="d-word">it</span>  in both the let functions.
+  Only the outermost let returns the value as shown below.</p>
+
+<section><pre><code class="language-kotlin">var x = "Anupam"
+    x = x.let { outer ->
+        outer.let { inner ->
+            println("Inner is $inner and outer is $outer")
+            "Kotlin Tutorials Inner let"
+        }
+        "Kotlin Tutorials Outer let" 
+    }
+    println(x) //prints Kotlin Tutorials Outer let
+</code></pre></section><br><br>
+
+<p class="sub-section">let for null checks</p>
+
+<p>Additionally, let is useful for checking <span class="d-word">Nullable</span>  properties as shown below.</p>
+
+
+<section><pre><code class="language-kotlin">var name : String? = "Kotlin let null check"
+name?.let { println(it) } //prints Kotlin let null check
+name = null
+name?.let { println(it) } //nothing happens
+</code></pre></section><br><br>
+
+<p>The code inside the let expression is executed only when the property is not null. Thus let saves us from the <span class="d-word">if else</span>  null checker too!</p>
+
+<h3>Kotlin run</h3>
+
+<p>Kotlin <span class="d-word">run</span>  is another interesting function. The following example demonstrates its use cases.</p>
+<section><pre><code class="language-kotlin">var tutorial = "This is Kotlin Tutorial"
+    println(tutorial) //This is Kotlin Tutorial
+    tutorial = run {
+        val tutorial = "This is run function"
+        tutorial
+    }
+    println(tutorial) //This is run function
+</code></pre></section><br><br>
+
+<p>Kotlin run expression can change the outer property. Hence in the above code, we’ve redefined it for the local scope.</p>
+<ul>
+  <li>Similar to the <span class="d-word">let</span>  function, the run function also returns the last statement.</li>
+    <li>Unlike let, the <span class="d-word">run</span>  function doesn’t support the <span class="d-word">it</span>  keyword.</li>
+</ul>
+
+<p class="sub-section">let and run</p>
+<p>Let’s combine the let and run functions together.</p>
+<section><pre><code class="language-kotlin">var p : String? = null
+    p?.let { println("p is $p") } ?: run { println("p was null. Setting default value to: ")
+        p = "Kotlin"}
+
+    println(p)
+//Prints
+//p was null. Setting default value to: 
+//Kotlin
+</code></pre></section><br><br>
+
+
+<h3>Kotlin also</h3>
+<p>As the name says, <span class="d-word">also</span>  expressions does some additional processing on the object it was invoked.</p>
+<p>Unlike let, it returns the original object instead of any new return data. Hence the return data has always the same type.
+  Like <span class="d-word">let</span> , <span class="d-word">also</span>  uses <span class="d-word">it</span>  too.</p>
+
+<section><pre><code class="language-kotlin">var m = 1
+m = m.also { it + 1 }.also { it + 1 }
+println(m) //prints 1 
+</code></pre></section><br><br>
+
+<p class="sub-section">Kotlin let vs also</p>
+
+<p>Following code snippet shows a great example to differentiate between <span class="d-word">let</span>  and <span class="d-word">also</span> .</p>
+<section><pre><code class="language-kotlin">data class Person(var name: String, var tutorial : String)
+fun main(args: Array<String>) {
+    var person = Person("Carlos", "Kotlin")
+
+    var l = person.let { it.tutorial = "Android" }
+    var al = person.also { it.tutorial = "Java" }
+
+    println(l)
+    println(al)
+    println(person)
+
+}
+/*Prints
+kotlin.Unit
+Person(name=Carlos, tutorial=Java)
+Person(name=Carlos, tutorial=Java)
+  */
+</code></pre></section><br><br>
+
+<p class="sub-section">Kotlin apply</p>
+<p>Kotlin <span class="d-word">apply</span>  is an extension function on a type. 
+  It runs on the object reference (also known as receiver) into the expression and returns the object reference on completion.</p>
+<section><pre><code class="language-kotlin">data class Person(var name: String, var tutorial : String)
+var person = Person("Carlos", "Kotlin")
+
+person.apply { this.tutorial = "Swift" }
+println(person)
+</code></pre></section><br><br>
+
+<p class="sub-section">apply vs also</p>
+<span class="d-word">data class Person(var n: String, var t : String)
+var person = Person("Carlos", "Kotlin")
+
+person.apply { t = "Swift" }
+println(person)
+
+person.also { it.t = "Kotlin" }
+println(person)</span> 
+
+
+<p>Note: In <span class="d-word">apply</span>  <span class="r-word">it</span>  isn’t allowed. If the property name of the data class is unique in the function, you can omit <span class="r-word">this</span>.</p>
+
+  <p>We should use <span class="d-word">also</span>  only when we don’t want to shadow <span class="d-word">this</span> .</p>
+
+
+<h3>Kotlin with</h3>
+<p>Like <span class="d-word">apply</span> , <span class="d-word">with</span>  is used to change instance properties without the need to call <span class="negrita">dot</span>  operator over the reference every time.</p>
+  
+  
+<section><pre><code class="language-kotlin">data class Person(var name: String, var tutorial : String)
+var person = Person("Carlos", "Kotlin")
+
+with(person)
+    {
+        name = "No Name"
+        tutorial = "Kotlin tutorials"
+    }
+</code></pre></section><br><br>
+
+<p>Again <span class="d-word">with</span>  is similar to <span class="d-word">apply</span>  except for a few differences.</p>
+
+<p class="sub-section">Kotlin apply vs with</p>
+<ul>
+<li>with runs without an object(receiver) whereas apply needs one.</li>
+<li>apply runs on the object reference, whereas with just passes it as an argument.</li>
+<li>The last expression of with function returns a result.</li>
+</ul>
+
+<section><pre><code class="language-kotlin">var xyz = with(person)
+{
+    name = "No Name"
+    tutorial = "Kotlin tutorials"
+    val xyz = "End of tutorial"
+    xyz
+}
+println(xyz) //End of tutorial
+</code></pre></section><br><br>
+<p>That’s all for Kotlin standard functions to alter variables or modify objects within the function.</p>
 
 
 
 
 
+<!--*********************************************************Exercises***********************************************************-->
+<a name="sExercises"><a>
+<h2>Exercises</h2>
 
-<!-- ************************************************************Exercises***************************************************************************-->
 <div class="" style="width: 100%;">
   <p>Practice with those exercises from <a class="enlace" target="_blank" href="https://kotlinlang.org/">https://kotlinlang.org/</a> </p> <br>
   <iframe src="https://play.kotlinlang.org/koans/Introduction/Hello,%20world!/Task.kt" frameborder="1" style="width: 100%;height: 1500px;"></iframe>
