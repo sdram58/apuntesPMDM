@@ -153,10 +153,10 @@ saludoNullable = null //Compiles
 <br>
 <p>We can check if a variable is <span class="d-word">null</span>  before performing an operation, just as we did in <span class="d-word">Java</span> .</p>
 
-<section><pre><code class="language-kotlin">val nombreNullable: String? = "Juan"
+<section><pre><code class="language-kotlin">val nameNullable: String? = "Juan"
 if (nobreNullable != null) {
-    println("Hola, ${nombreNullable.toUpperCase()}.")
-    println("Tu nombre tiene ${nombreNullable.length} caracteres.")
+    println("Hola, ${nameNullable.toUpperCase()}.")
+    println("Tu name tiene ${nameNullable.length} caracteres.")
 } else {
     println("Hola, invitado")
 } 
@@ -214,7 +214,7 @@ else "unknown"
 
   <p>One of the most common uses of this operator is to <span class="negrita">return a default value</span> distinct to <span class="d-word">null</span>  when a method or property is <span class="d-word">null</span> :</p>
 
-<section><pre><code class="language-kotlin">val nombreMayuscula = nombre?.toUpperCase() ?: "DESCONOCIDO"
+<section><pre><code class="language-kotlin">val nameMayuscula = name?.toUpperCase() ?: "DESCONOCIDO"
 val ciudadActual = usuario?.direccion?.ciudad ?: "desconocida"
 </code></pre></section><br><br>
 
@@ -1271,22 +1271,22 @@ return result
    }
 }  
 </code></pre></section><br><br>
-<p>If not stated otherwise, a <span class="negrita">class</span>  extends from <span class="d-word">Any</span> , which is similar to <span class="d-word">Object</span>  in <span class="negrita">Java</span>.
-  <span class="negrita">Classes in Kotlin by default are <span class="d-word">public</span> </span> .</p>
+<p>If not stated otherwise, a <span class="negrita">class</span>  extends from <span class="d-word">Any</span> , which is similar to <span class="d-word">Object</span>  in <span class="negrita">Java</span>.</p>
+  <p><span class="negrita">Classes in Kotlin by default are <span class="d-word">public</span> </span> .</p>
 <p>We can also declare properties and initialize them from parameters. The following class has three properties: <span class="cursiva">Name, Age, and PersonKey</span> :</p>
 
-<section><pre><code class="language-kotlin">class Persona(nombre: String, var edad: Int) {
-   val clavePersona = nombre.toUpperCase()
+<section><pre><code class="language-kotlin">class Persona(name: String, var age: Int) {
+   val personKey = name.toUpperCase()
 }
 </code></pre></section><br><br>
 <p>If we need to add instructions to initialize the object we can use an <span class="d-word">init block</span> . 
   We could also add <span class="d-word">alternative constructors</span>  as long as they use different parameters</p>
 
-<section><pre><code class="language-kotlin">class Persona(val nombre: String) {
+<section><pre><code class="language-kotlin">class Persona(val name: String) {
    init {
       println("Inicialización objeto")
    }
-   constructor(nombre: String, edal: Int) : this(nombre) {
+   constructor(name: String, age: Int) : this(name) {
       println("Inicialización segundo constructor")
    }
 }
@@ -1307,35 +1307,35 @@ Persona p = new Persona("Ana");
 
   <section><pre><code class="language-kotlin">//Java syntax
 public class Persona {
-   private String nombre;
-   public String getNombre() {
-      return nombre;
+   private String name;
+   public String getname() {
+      return name;
    }
-   public void setNombre(String n){
-      nombre = n;
+   public void setname(String n){
+      name = n;
    }
 }
 
 //Kotlin syntax
 class Persona {
-  var nombre: String = ""
+  var name: String = ""
 } 
   </code></pre></section><br><br>
 <p>Modifying the properties of an object is simpler in Kotlin, simply enter its name and Kotlin 
   will make the call to the <span class="d-word">getter</span>  or <span class="d-word">setter</span>. 
   Thanks to this, the <span class="negrita">code</span>  is much <span class="negrita">more readable</span> </p>
 
-<section><pre><code class="language-kotlin">p.nombre = "Ana"
-var s = p.nombre 
+<section><pre><code class="language-kotlin">p.name = "Ana"
+var s = p.name 
 </code></pre></section><br><br>
 
 <p>Kotlin also allows us to create our own <span class="d-word">getters</span>  and <span class="d-word">setters</span>.</p>
 
 <section><pre><code class="language-kotlin">class Persona {
-   var nombre: String = ""
+   var name: String = ""
       get() = field.toUpperCase()
       set(value) {
-         if (value=="Osama bin Laden") llamarFBI()
+         if (value=="Carlos Tarazona") regalarJamon()
          field = value
       }  
 } 
@@ -1345,9 +1345,9 @@ var s = p.nombre
 <p>In Kotlin there is no need for a property to be stored in a backing variable. Let's see an example</p>
 
 <section><pre><code class="language-kotlin">class Persona {
-   var nombre: String = ""
-   var longNombre: Int
-      get() = nombre.size
+   var name: String = ""
+   var longname: Int
+      get() = name.size
 }  
 </code></pre></section><br><br>
 <p>In the second property, a variable of type Int <span class="negrita">will not be created</span>. 
@@ -1360,7 +1360,7 @@ var s = p.nombre
 
 <section><pre><code class="language-kotlin">class Persona {
    private var edad: Int = 0
-   var nombre: String = ""
+   var name: String = ""
       private set
 }  
 </code></pre></section><br><br>
@@ -1387,20 +1387,20 @@ class Hijo(p: Int) : Padre(p)
   To be able to overwrite them we have to indicate <span class="d-word">open</span> :</p>
 
 <section><pre><code class="language-kotlin">open class Padre {
-    open var nombre = "Soy padre"
+    open var name = "Soy padre"
     open fun abierto() {}
     fun cerrado() {}
 }
 
 class Hijo() : Padre() {
-    override var nombre = "Soy hijo"
+    override var name = "Soy hijo"
     final override fun abierto() {}
 } 
 </code></pre></section><br><br>
 <p>A member marked with <span class="d-word">override</span>  continues to be opened. To close it, you have to put <span class="d-word">final</span>  before it.</p>
 <p>To access properties and methods of the parent class we will use <span class="d-word">super</span>.</p>
 <section><pre><code class="language-kotlin">class Hijo() : Padre() {
-    override var nombre = "hijo de ${super.nombre}"
+    override var name = "hijo de ${super.name}"
     final override fun abierto() {
         super.abierto()
     }
@@ -1537,14 +1537,14 @@ for ((clave, valor) in mapa) { … }
 <p>As with Java, Kotlin's <span class="d-word">abstract</span>  classes are classes that cannot be instantiated. Its purpose is to use them in order to provide a common template for other
    classes that extend them.
   The way to declare an abstract class is by using the <span class="d-word">abstract</span>  keyword. An <span class="d-word">abstract</span>  class can contain both abstract (marking them with the abstract keyword) and non-abstract properties and functions:</p>
-  <section><pre><code class="language-kotlin">abstract class Vehiculo(val nombre: String,
+  <section><pre><code class="language-kotlin">abstract class Vehiculo(val name: String,
                         val color: String,
                         val peso: Double) {   // Propiedades no abstrac-tas
    abstract var maxVelocidad: Double   // Propiedad abstracta
    abstract fun arrancar() // función abstractos
    abstract fun parar()
    fun muestraDetalless() {  // función no abstracto
-      println("Nombre: $nombre, Color: $color, Velicidad: $maxVelocidad ")
+      println("name: $name, Color: $color, Velicidad: $maxVelocidad ")
    }
 } 
   </code></pre></section><br><br>
@@ -1555,8 +1555,8 @@ for ((clave, valor) in mapa) { … }
   can extends from that class. However, with <span class="d-word">abstract</span>  classes <span class="negrita">it is not necessary</span>
    to do so, since they incorporate this property by default.</p><p>Let's see an example of how to extend an abstract class:</p>
 
-<section><pre><code class="language-kotlin">class Coche(nombre: String, color: String, peso: Double,
-       override var maxVelocidad: Double): Vehiculo(nombre, color, peso) {
+<section><pre><code class="language-kotlin">class Coche(name: String, color: String, peso: Double,
+       override var maxVelocidad: Double): Vehiculo(name, color, peso) {
    override fun arrancar() {
       println("Coche arrancado")
    }
