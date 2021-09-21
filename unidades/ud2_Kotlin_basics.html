@@ -1342,7 +1342,7 @@ var s = p.name
 </code></pre></section><br><br>
 <p>In a <span class="d-word">getter</span>  and <span class="d-word">setter</span>  we have to use <span class="r-word">field</span>  to access the property.</p>
 
-<p>In Kotlin there is no need for a property to be stored in a backing variable. Let's see an example</p>
+<p>In Kotlin a property has no need to be stored in a backing variable. Let's see an example</p>
 
 <section><pre><code class="language-kotlin">class Persona {
    var name: String = ""
@@ -1354,7 +1354,7 @@ var s = p.name
   This occurs as long as get or set is implemented and, furthermore, they do not refer to <span class="d-word">field</span>  (as in the previous example).
 </p>
 <p><span class="negrita">By default</span> , both the <span class="cursiva">class</span>  and its <span class="cursiva">properties</span> 
-  and functions are <span class="d-word">public</span> . If we want something not to be accessible from outside the class, we will prepend <span class="d-word">private</span>.
+  and functions are <span class="d-word">public</span> . If we want something not to be accessible from outside the class, we will prepend with <span class="d-word">private</span> keyword.
   If we want only the <span class="d-word">getter</span>  or <span class="d-word">setter</span>  to be <span class="d-word">private</span>, we will indicate it as follows:
 </p>
 
