@@ -1365,9 +1365,10 @@ var s = p.name
 }  
 </code></pre></section><br><br>
 
+<!-- ***********************Inheritance**************************-->
 <h3>Inheritance</h3>
 
-<p>Classes above cannot be used as a basis for creating new classes; by default they are <span class="d-word">closed</span> . (In Java a closed class is marked as final.)
+<p>Classes above cannot be used as a basis for creating new classes; by default they are <span class="d-word">closed</span> . (In Java a closed class is marked as <span class="r-word">final</span> .)
 If we want to inherit from a class we have to prepend <span class="d-word">open</span>.</p>
 
 <section><pre><code class="language-kotlin">open class Padre(p: Int) 
@@ -1383,7 +1384,7 @@ class Hijo(p: Int) : Padre(p)
 }  
 </code></pre></section><br><br>
 
-<p>By default, the properties and methods of a class are <span class="d-word">closed</span> . (In Java marked as <span class="d-word">final</span>.) 
+<p>By default, the properties and methods of a class are <span class="d-word">closed</span> . (In Java marked as <span class="r-word">final</span>.) 
   To be able to overwrite them we have to indicate <span class="d-word">open</span> :</p>
 
 <section><pre><code class="language-kotlin">open class Padre {
@@ -1397,7 +1398,7 @@ class Hijo() : Padre() {
     final override fun abierto() {}
 } 
 </code></pre></section><br><br>
-<p>A member marked with <span class="d-word">override</span>  continues to be opened. To close it, you have to put <span class="d-word">final</span>  before it.</p>
+<p>A member marked with <span class="d-word">override</span>  <span class="negrita">continues to be opened</span> . To close it, you have to put <span class="d-word">final</span>  before it.</p>
 <p>To access properties and methods of the parent class we will use <span class="d-word">super</span>.</p>
 <section><pre><code class="language-kotlin">class Hijo() : Padre() {
     override var name = "hijo de ${super.name}"
