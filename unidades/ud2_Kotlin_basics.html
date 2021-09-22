@@ -1631,7 +1631,7 @@ typealias MyFun = (Int,String, MyMapList) -> Boolean
 <p>Let's imagine that we want to define the parent class <span class="d-word">Figura</span>  from which the <span class="d-word">Triangulo</span> , 
   <span class="d-word">Cuadrado</span>  and <span class="d-word">Circulo</span>  subclasses extend. As you can see, it is a technique to do polymorphism.</p>
 <section><pre><code class="language-kotlin">sealed class Figura {
-   class Triangulo(val lado1:Int, val lado2:Int, val lado3:Int) : Figu-ra()
+   class Triangulo(val lado1:Int, val lado2:Int, val lado3:Int) : Figura()
    class Cuadrado(val lado:Int) : Figura()
    class Circulo(val radio:Int) : Figura()
 } 
@@ -2059,14 +2059,15 @@ println(person)
 </code></pre></section><br><br>
 
 <p class="sub-section">apply vs also</p>
-<span class="d-word">data class Person(var n: String, var t : String)
+<section><pre><code class="language-kotlin">data class Person(var n: String, var t : String)
 var person = Person("Carlos", "Kotlin")
 
 person.apply { t = "Swift" }
 println(person)
 
 person.also { it.t = "Kotlin" }
-println(person)</span> 
+println(person)
+</code></pre></section><br><br>
 
 
 <p>Note: In <span class="d-word">apply</span>  <span class="r-word">it</span>  isn’t allowed. If the property name of the data class is unique in the function, you can omit <span class="r-word">this</span>.</p>
@@ -2092,8 +2093,8 @@ with(person)
 
 <p class="sub-section">Kotlin apply vs with</p>
 <ul>
-<li>with runs without an object(receiver) whereas apply needs one.</li>
-<li>apply runs on the object reference, whereas with just passes it as an argument.</li>
+<li><span class="d-word">with</span>  runs without an object(receiver) whereas apply needs one.</li>
+<li><span class="d-word">apply</span>  runs on the object reference, whereas <span class="d-word">with</span>  just passes it as an argument.</li>
 <li>The last expression of with function returns a result.</li>
 </ul>
 
