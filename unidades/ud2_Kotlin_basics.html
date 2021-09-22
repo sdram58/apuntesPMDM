@@ -1645,7 +1645,7 @@ class Circulo(val radio:Int) : Figura()
 <p>A <span class="d-word">sealed</span>  class is declared as <span class="d-word">abstract</span> , when we create instances of this class 
   we are forced to <span class="negrita"> use one of its children</span>. Furthermore, a <span class="d-word">sealed</span>  class must be defined in a single file, 
   so the number of child classes <span class="negrita">cannot be expanded in the future</span>. 
-  Which means that we will not be able to enlarge the type of figures. For this reason they are known as sealed. 
+  Which means that we will not be able to enlarge the type of figures. For this reason they are known as <span class="d-word">sealed</span> . 
 </p><p>Thanks to this fact, when we use them with a <span class="r-word">when</span>  expression, since it is possible to verify that all cases are covered,
    it will not be necessary to add the <span class="d-word">else</span> clause.
 </p>
@@ -1751,10 +1751,10 @@ object SinDefinir : Figura()
 <p>For example, an <span class="d-word">HTTP request</span>  might return a <span class="negrita">web page</span>  or an <span class="negrita">error code</span> :</p>
 
 <section><pre><code class="language-kotlin">sealed class RespuestaHTTP 
-data class Correcta(val contenido: String) : Respuesta()
-data class Error(val codigo: Int, val mesaje: String) : Respuesta()
+data class Correcta(val contenido: String) : RespuestaHTTP()
+data class Error(val codigo: Int, val mesaje: String) : RespuestaHTTP()
 
-fun getUrl(url: String): Respuesta {
+fun getUrl(url: String): RespuestaHTTP {
    val valido = …
    if (valido) return Correcta("Contenido…")
    else        return Error(404, "No encontrada")
@@ -1774,7 +1774,7 @@ when (respuesta) {
 <section><pre><code class="language-kotlin">enum class Estacion{PRIMAVERA, VERANO, OTOÑO, INVIERNO}
 </code></pre></section><br><br>
 <p>As in Java, an enum is defined by means of a <span class="r-word">class</span> , although now it is more obvious when having to indicate <span class="r-word">class</span>.
-  Each one of the constants of an enum supposes the creation of an object. A variable of type <span class="d-word">Sesion</span>  is nothing more than a reference to one of these four objects. 
+  Each one of the constants of an enum supposes the creation of an object. A variable of type <span class="d-word">Estacion</span>  is nothing more than a reference to one of these four objects. 
   We study it in detail in the next point. 
 </p>
 <p>Since each constant is an instance of the class, they can be initialized:</p>
@@ -1902,7 +1902,7 @@ fun doSomething() {
 <a name="sModismos"><a>
 <h2>Let, run, also, apply, with</h2>
 
-<p>we’ll be implementing some of the important standard library functions available in Kotlin. The <span class="d-word">kotlin-stdlib</span>  provides us with useful <span class="d-word">higher order</span> 
+<p>We’ll be implementing some of the important standard library functions available in Kotlin. The <span class="d-word">kotlin-stdlib</span>  provides us with useful <span class="d-word">higher order</span> 
    functions implementing idiomatic patterns. We’ll see how they make programming in Kotlin so easier and faster.</p>
 
   <p>The functions that we’re going to discuss below are:</p>
