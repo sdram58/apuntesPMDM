@@ -1541,11 +1541,11 @@ for ((clave, valor) in mapa) { … }
   The way to declare an abstract class is by using the <span class="d-word">abstract</span>  keyword. An <span class="d-word">abstract</span>  class can contain both abstract (marking them with the abstract keyword) and non-abstract properties and functions:</p>
   <section><pre><code class="language-kotlin">abstract class Vehiculo(val name: String,
                         val color: String,
-                        val peso: Double) {   // Propiedades no abstrac-tas
-   abstract var maxVelocidad: Double   // Propiedad abstracta
-   abstract fun arrancar() // función abstractos
+                        val peso: Double) {   // no abstract properties
+   abstract var maxVelocidad: Double   // abstract propertie
+   abstract fun arrancar() // abstract functions
    abstract fun parar()
-   fun muestraDetalless() {  // función no abstracto
+   fun muestraDetalless() {  // no abstract function
       println("name: $name, Color: $color, Velicidad: $maxVelocidad ")
    }
 } 
