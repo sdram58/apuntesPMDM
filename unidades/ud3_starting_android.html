@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starting With Android. My first App</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/prism.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <script src="../script/script.js"></script>
+</head>
+<body>
+    <h1>Starting With Android. My first App</h1>
+
+    <div class="main-menu">
+        <a href="#sNewProject">Create an Android Project</a><a 
+           href="#ssProjectStructure">Project Structure</a><a 
+           href="#sEditing Layout">Editing Layout</a>   
+    </div>
+    <br><br><br><br><br>
+    <p>In this topic we are going to develop our first mobile application with Android Studio and Kotlin.</p>
+    <p>You will learn:
+        <ul>
+            <li>How to <span class="d-word">create</span>  and <span class="d-word">run</span>  a project with Android Studio and also, how to debug applications.</li>
+            <li>To know the <span class="d-word">structure</span>  of a project and its most relevant files.</li>
+            <li>To use the most <span class="d-word">basic views</span> , and assign <span class="d-word">events</span>  to them.</li>
+        </ul>
+    </p>
+
+
+    <!--*********************************************************Create an Android Project***********************************************************-->
+    <section class="apartado">
+    <a name="sNewProject"><a>
+    <h2>Create an Android Project</h2>
+
+    <p>In Android Studio, create a new project:</p>
+    <section class="marco-t inf">
+        <span class="icono info"> </span> <span class="negrita">If you haven't opened a project yet, on the <span class="negrita">welcome screen</span>, click 
+        <span class="d-word">New  project</span> :</span>
+        </section>
+    <section class="marco-b">
+        <figure><img src="imagenes/ud3-2021-09-25-13-06-29.png" /><br><figcaption></figcaption></figure>        
+    </section>
+
+    <section class="marco-t inf">
+        <span class="icono info"> </span> <span class="negrita">If you have already opened a project: Go to <span class="negrita">File -> New -> New Project</span> </span>
+        </section>
+    <section class="marco-b">
+        
+            <figure><img src="imagenes/ud3-2021-09-25-13-12-39.png" /><br><figcaption></figcaption></figure>
+            <br>
+            
+    </section>
+           
+    <br>
+    <p>Choose the template for the <span class="negrita">main Activity</span>  of the App. For this practice choose <span class="d-word">Empty Activity</span> .</p>
+
+    <figure><img src="imagenes/ud3-2021-09-25-13-17-15.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>Fill the fields on the next screen. Remember in package name field to set your data, that is com.XXYYZZ.appname where XXYYZZ stands for two first letters of your name and surnames. For instance, some one named "Pedro García Marquez" should set <span class="cursiva">com.pegama.appName</span> </p>
+
+    <figure><img src="imagenes/ud3-2021-09-25-13-31-53.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+    <section class="marco-t inf">
+        <span class="icono info"> </span> <span class="negrita">Minimum SDK</span>
+        </section>
+    <section class="marco-b">
+            <p>It is the minimum version of Android that the devices must have in order to run the app. To support as many devices as possible, it should be set to the lowest possible version. However, the lower the version, the less modern android features the app can use.</p>
+    </section>
+
+</section>
+        
+    <!--*********************************************************Project Structure***********************************************************-->
+    <section class="apartado">
+    <a name="sProjectStructure"><a>
+    <h2>Project Structure</h2>
+    
+    <p>The created project is a basic "Hello World" application that contains some <span class="negrita">default files</span>.</p>
+    <figure><img src="imagenes/ud3-2021-09-25-19-05-02.png" /><br><figcaption>Main files and dirs in Android App</figcaption></figure>
+    <br>
+    
+    <p>Let's have a look at the important ones:</p>
+    <ul>
+        <li>
+            <section class="marco-t file-">
+                <span class="icono file"> </span> <span class="negrita">app/src/main/<span class="subrayado">AndroidManifest.xml</span> </span>
+                </section>
+            <section class="marco-b">
+                <p>The <span class="d-word">manifest</span>  file describes the fundamental characteristics of the application and defines each of its components. Here we will specify the Activities that our app has and the <span class="d-word">permissions</span>  it requires (Camera, Contacts, Internet, etc.)</p>        
+            </section>
+        </li>
+        <li>
+            <section class="marco-t file-">
+                <span class="icono file"> </span> <span class="negrita">app/src/main/java/com.catata.clickscounter/<span class="subrayado">MainActivity.kt</span> </span>
+                </section>
+            <section class="marco-b">
+                <p>Contains the class definition for the <span class="negrita">main</span>  <span class="r-word">Activity</span> (screen). In this file we will program the behavior of this Activity.</p>
+            </section>
+            
+        </li>
+
+        <li>
+            <section class="marco-t file-">
+                <span class="icono file"> </span> <span class="negrita">app/src/main/res/layout/<span class="subrayado">activity_main.xml</span></span>
+                </section>
+            <section class="marco-b">
+                <p>This XML file defines the <span class="subrayado">layout of the activity</span>, that is, the elements (widgets) that belong to the screen. By default,
+                     it contains a <span class="r-word">TextView</span>  element with the text <span class="cursiva">Hello world!</span> .</p>
+            </section>
+            
+        </li>
+
+        <li>
+            <section class="marco-t file-">
+                <span class="icono file"> </span> <span class="negrita">app/<span class="subrayado">build.gradle</span></span>
+                </section>
+            <section class="marco-b">
+                 <p>Android Studio uses <span class="d-word">Gradle</span> to compile and build the application. 
+                    There is a <span class="negrita">build.gradle</span> file for each module in the project, as well there is a <span class="negrita">build.gradle</span> 
+                    file for the entire project. Usually we will only be interested in the <span class="negrita"><span class="subrayado">build.gradle (module: app)</span></span> file. 
+                    That's where the app's build dependencies are, including the <span class="subrayado">defaultConfig settings</span>:
+                </p>   
+                <ul>
+                    <li>
+                        <p><span class="d-word">compiledSdkVersion</span>  is the version of the platform with which you are going to compile the application. 
+                            By default, it is set to the latest version of the SDK installed on the computer.</p></li>
+                        <li>
+                            <p>
+                                <span class="d-word">applicationId</span>  is the fully qualified package name for the application, which was specified in the New Project wizard.
+                                </p>
+                        </li>
+                        <li>
+                            <p><span class="d-word">minSdkVersion</span>  is the minimum SDK version specified during the New Project wizard. It is the oldest version of the Android SDK that the application supports.
+                                </p>
+                        </li>
+                        <li>
+                            <p><span class="d-word">targetSdkVersion</span>  indicates the highest version of Android that the application has been tested against.</p>
+                        </li>
+                </ul>
+
+                <p>
+                    Later we will use the <span class="negrita">build.gradle</span>  (module: app) file to install new libraries and components for our App, 
+                    in the <span class="subrayado">dependencies section</span>.</p>
+            </section>
+            
+        </li>
+            
+            
+
+    </ul>
+    
+    <section class="marco-t folder-">
+        <span class="icono folder"> </span> <span class="negrita">/res</span>
+        </section>
+    <section class="marco-b">
+            <p>This folder contains resources for the App </p>
+            <section class="marco-t folder-">
+                <span class="icono folder"> </span> <span class="negrita">drawable/</span>
+                </section>
+            <section class="marco-b">
+                    Images directory
+            </section>
+            
+
+            <section class="marco-t folder-">
+                <span class="icono folder"> </span> <span class="negrita">layout/</span>
+                </section>
+            <section class="marco-b">
+                    <p>Directory for files that define the application's user interface, such as <span class="r-word">activity_main.xml</span> , which describes a basic layout for the <span class="negrita">MainActivity</span> </p>
+            </section>
+            <section class="marco-t folder-">
+                <span class="icono folder"> </span> <span class="negrita">mipmap/</span>
+                </section>
+            <section class="marco-b">
+                <p>Contains app launcher <span class="negrita">icons</span> </p>
+            </section>
+            <section class="marco-t folder-">
+                <span class="icono folder"> </span> <span class="negrita">values/</span>
+                </section>
+            <section class="marco-b">
+                <p>Directory for other XML files that contain a collection of resources.</p>
+                    <ul>
+                        <li>The colors of the app are defined in the <span class="negrita"><span class="r-word">colors.xml</span> </span>  file.</li>
+                        <li>In the <span class="r-word">strings.xml</span>  file, all the texts that are displayed in our app are defined.</li>
+                        <li>The <span class="r-word">styles.xml</span>  file defines the theme of our app.</li>
+                        
+                    </ul>
+            </section>            
+    </section>        
+ </section>
+
+ <!--*********************************************************Editing Layout***********************************************************-->
+ <section class="apartado">
+ <a name="sEditingLayout"><a>
+ <h2>Editing Layout</h2>
+ 
+ <p>In the XML files in the <span class="inline-folder">res/layout</span> folder, the layout of the <span class="cursiva">widgets</span> of the screens is defined.</p>
+ <p>At the moment, in the <span class="inline-file">activity_main.xml</span> screen there is only one <span class="r-word">TextView</span>  that shows the text <span class="cursiva">Hello world</span>.</p>
+    <p>To edit the layout files there are two ways:</p>    
+    
+    <ul>
+        <li><span class="negrita">Graphic mode</span> : allows you to drag the widgets from the palette to the screen, and modify their attributes. <br><br></li>
+        <li><span class="negrita">Code mode</span> : allows you to directly modify the XML code.</li>
+    </ul>
+    
+   <p>Usually, we will work in code mode:</p>
+    
+    <ol style="list-style-position: inside; padding-left: 25px;">
+        <li>Double click on the file <span class="inline-file">res/layout/activity_main.xml</span></li>
+        <li>Click on the icon <img style="vertical-align: baseline;margin-top: 3px;" src="imagenes/ud3-2021-09-25-20-02-54.png" /> (or also Split ...) <br>
+        <figure><img src="imagenes/ud3-2021-09-25-20-07-10.png" /><br><figcaption></figcaption></figure>
+        <br>
+        
+        </li>
+    </ol>
+    
+
+
+ 
+ 
+ </section> <!-- End section -->
+
+
+    
+    
+        
+    
+    
+    
+    
+         
+    
+
+    <script src="../script/prism.js"></script>
+</body>
+</html>
