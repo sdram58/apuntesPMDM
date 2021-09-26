@@ -87,11 +87,11 @@ span.icono{
 }
 .info{
     background-image: url(../imagenes/info.png);
-    background-color: dodgerblue;
+    background-color: rgba(0,0,200,0.5);
 }
 
 .inf{
-    background-color: dodgerblue;
+    background-color: rgba(0,0,200,0.5);
 }
 .warn{
     background-color: khaki;
@@ -128,7 +128,7 @@ span.icono{
 }
 
 .info:parent{
-    background-color: dodgerblue;
+    background-color: rgba(0,0,200,0.5);
 }
 
 
@@ -153,7 +153,7 @@ span.icono{
     border:1px solid rgba(0,255, 0, 0.7);
     background-color: rgba(0,255, 0, 0.3);;
     border-radius: 5px;
-    padding: 5px;
+    padding: 3px;
     color:green;
 }
 
@@ -162,7 +162,7 @@ span.icono{
     border:1px solid rgba(0,0, 255, 0.7);
     background-color:rgba(0,0, 255, 0.3);
     border-radius: 5px;
-    padding: 5px;
+    padding: 3px;
     color:blue;
 }
 
@@ -286,6 +286,14 @@ ul>li{
     padding-left: 20px;
     list-style:inside;
     list-style-type:circle;
+}
+ol>li{
+    padding-left: 20px;
+    list-style-position:inside;
+}
+
+li{
+    line-height: 1.5em;
 }
 
 p.sub-section{

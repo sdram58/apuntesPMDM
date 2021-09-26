@@ -10,13 +10,17 @@
     <link rel="stylesheet" href="../styles/styles.css">
     <script src="../script/script.js"></script>
 </head>
-<body>
+<body class="line-numbers">
     <h1>Starting With Android. My first App</h1>
 
     <div class="main-menu">
         <a href="#sNewProject">Create an Android Project</a><a 
-           href="#ssProjectStructure">Project Structure</a><a 
-           href="#sEditing Layout">Editing Layout</a>   
+           href="#sProjectStructure">Project Structure</a><a 
+           href="#sEditingLayout">Editing Layout</a><a
+           href="#sProgrammingAction">Programming Action</a> <a
+           href="#sPractice">Practice</a> <a
+           href="#sWebgrafia">Webgraphy</a> 
+    </div>
     </div>
     <br><br><br><br><br>
     <p>In this topic we are going to develop our first mobile application with Android Studio and Kotlin.</p>
@@ -27,6 +31,10 @@
             <li>To use the most <span class="d-word">basic views</span> , and assign <span class="d-word">events</span>  to them.</li>
         </ul>
     </p>
+
+    <figure><img src="imagenes/ud3_runningExample.gif" /><br><figcaption>Running sample</figcaption></figure>
+    <br>
+    
 
 
     <!--*********************************************************Create an Android Project***********************************************************-->
@@ -217,14 +225,505 @@
         </li>
     </ol>
     
+    <p>Next we are going to modify the layout as follows:                
+        <ul>
+            <li>The <span class="r-word">TextView</span>  that currently contains the <span class="cursiva">Hello World</span>  text, we will use it to display the counter</li>
+            <li>We will add a button that, when pressed, will increase the counter</li>
+        </ul>
+    </p>
 
 
- 
- 
+    <h3>TextView</h3>
+    
+    <p>To change the text that is displayed in a <span class="r-word">TextView</span> , you must modify the android: text attribute.</p>
+    <p>Change the value of this attribute to text <span class="d-word">You have clicked 0 times</span> </p>
+
+    <section><pre><code class="language-kotlin">android:text="Has clicado 0 veces"</code></pre></section><br><br>
+
+    <figure><img src="imagenes/ud3-2021-09-26-10-57-16.png" /><br><figcaption>Modifing TextView from Layout</figcaption></figure>
+    <br>
+    
+    <h3>Button</h3>
+    <p>Also add the <span class="r-word">Button</span>  that, when pressed, will increase the <span class="negrita">counter</span> :</p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita"> res/layout/activity_main.xml</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-kotlin">&lt;Button
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:text="Click me!"/></code></pre></section><br><br>
+    </section>
+
+    <figure><img src="./imagenes/ud3_addbutton.gif" /><br><figcaption></figcaption></figure>
+    <br>
+    <section class="marco-t inf">
+        <span class="icono info"> </span> <span class="negrita">Some important properties</span>
+        </section>
+    <section class="marco-b">
+        <ul>
+       <p><li>The <span class="r-word">layout_width</span>  and <span class="r-word">layout_height</span>  attributes specify the 
+        <span class="negrita">width</span>  and <span class="negrita">height</span>  of the element.</li></p>
+
+        <p><li>The value <span class="r-word">wrap_content</span>  indicates that the width / height <span class="negrita">must be adapted</span>  to the content of the element.
+           In the case of the <span class="r-word">Button</span>  and the <span class="r-word">TextView</span> , they must fit to the text that they contain.</p></li>
+        <p><li>The value "<span class="r-word">match_parent</span> " indicates that the width / height <span class="negrita">must be the same</span>  as the parent element.</p></li>
+        <p><li>You can also set a fixed size width / height in pixels or others units.</p>           </li>
+        </ul>
+    </section>
+        
+    <h3>Constraint Layout</h3>
+
+    <p>In the current design of the layout we can see that the button layout is not <span class="cursiva">the most appropriate</span>:</p>
+
+    <figure><img src="imagenes/ud3-2021-09-26-11-14-04.png" /><br><figcaption>Bad design</figcaption></figure>
+    <br>
+    
+    <p><span class="cursiva">Maybe it would be better if the button was arranged below the TextView ...</span> </p>
+
+    <p>To arrange the elements in a <span class="r-word">ConstraintLayout</span> , you have to define <span class="negrita">constraints</span> in each element.</p>
+    <p>We can imagine constraints as <span class="negrita">springs</span> that pull an element in all four directions 
+        (up, down, left, and right). The element is <span class="subrayado">positioned in equilibrium</span>  between the forces 
+        of the springs that have been defined.</p>
+    
+    <p class="sub-section">TextView</p>
+        
+    <p>In the case of the <span class="r-word">TextView</span>  we see that there are already 
+        four <span class="negrita">constraints</span>  defined:</p>
+
+    <figure><img src="imagenes/ud3-2021-09-26-12-00-47.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>In each constraint it is indicated where the "spring" should pull. We can see that:</p>
+    <ul>
+
+        <li>The <span class="r-word">constraintBottom</span>  pulls the TextView to the bottom (<span class="r-word">toBottomOf</span> ) of its <span class="negrita">parent</span> 
+        (The <span class="negrita">parent</span>  element of the TextView is the ConstraintLayout).</li>
+        <li>The <span class="r-word">constraintLeft</span>  pulls the TextView to the left (<span class="r-word">toLeftOf</span> ) of its <span class="negrita">parent</span> .</li>
+        <li>The <span class="r-word">constraintRight</span>  pulls the TextView to the right (<span class="r-word">toRightOf</span> ) of its <span class="negrita">parent</span> .</li>
+        <li>The <span class="r-word">constraintTop</span>  pulls the TextView to the top (<span class="r-word">toTopOf</span> ) of its <span class="negrita">parent</span> .</li>
+    </ul>
+
+    
+
+    <figure><img src="imagenes/ud3-2021-09-26-12-10-04.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>
+        As we can see, the <span class="r-word">TextView</span>  is in vertical balance between the Top and Bottom constraints, and horizontal between Left and Right,
+         and in this way it remains centered within the <span class="r-word">ConstraintLayout</span> .</p>
+
+
+    <p class="sub-section">Button</p>
+    
+    <p>Now, we're going to define Button constraints to arrange it on this way</p>
+
+    <figure><img src="imagenes/ud3-2021-09-26-12-13-29.png" /><br><figcaption>Button constraint</figcaption></figure>
+    <br>
+    
+    <p>The button's <span class="r-word">constraintBottom</span>  will pull it towards the bottom of its parent (the ConstraintLayout).</p>
+    <p>The <span class="r-word">constraintLeft</span>  to the left of its parent.</p>        
+    <p>The <span class="r-word">constraintRight</span>  towards the right side of its parent.</p>
+    <p>So far the thing is simple. It is enough to define the constraints as in the <span class="r-word">TextView</span> . These constraints all point to the parent element:</p>
+
+    <figure><img src="imagenes/ud3-2021-09-26-12-16-06.png" /><br><figcaption>Constraints</figcaption></figure>
+    <br>
+    
+    <p>In the <span class="r-word">constraintTop</span>  things change ...</p>
+    <p>Notice in the image above that the <span class="r-word">constraintTop</span>  pulls the button to the bottom of the <span class="r-word">TextView</span>.</p>
+    <p>To refer to the <span class="cursiva">parent element</span>  we have seen that we can use <span class="r-word">parent</span>. 
+        But how do we reference the <span class="r-word">TextView</span>? To do this, you have to assign an <span class="negrita">identifier</span>  to the <span class="r-word">TextView</span>.</p>
+    <p>To assign an <span class="negrita">identifier</span>  to an element, you must use the android: <span class="r-word">id</span>  attribute, and in the value you must put <span class="r-word"> @+id/</span>
+        before the identifier that we want to assign to it.</p>
+    <p>So, to assign the <span class="d-word">ClickCounter</span>  identifier to the <span class="r-word">TextView</span> , we will add this attribute:</p>
+
+    <section><pre><code class="language-kotlin">android:id="@+id/clicksCounter"</code></pre>
+    </section><br><br>
+
+    <figure><img src="imagenes/ud3_addId.gif" /><br><figcaption></figcaption></figure>
+    <br>
+    <p>Now we can add the <span class="r-word">constraintTop</span>  to the button and make it pull it towards the bottom (<span class="r-word">toBottomOf</span> ) of the <span class="r-word">TextView</span>:</p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">res/layout/activity_main.xml</span>
+        </section>
+    <section class="marco-b">
+        <section><pre><code class="language-kotlin">&lt;Button
+  android:id="@+id/increaseCounter"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:text="Click me!"
+  app:layout_constraintTop_toBottomOf="@+id/clicksCounter"
+  app:layout_constraintBottom_toBottomOf="parent"
+  app:layout_constraintLeft_toLeftOf="parent"
+  app:layout_constraintRight_toRightOf="parent"/> 
+</code></pre>
+        </section><br><br>
+    </section>
+
+    <section class="marco-t inf">
+        <span class="icono info"> </span> <span class="negrita">
+            We have also added the identifier <span class="d-word">increaseCounter</span>  to the button,
+             since in the next section we will refer to this button from the Kotlin code.</span>
+        </section>
+    <section class="marco-b">
+            
+    </section>
+
+    <p>Complet layout code of <span class="inline-file">activity_main.xml</span> look like this</p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">app/src/main/res/layout/activity_main.xml</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-kotlin">&lt;?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    &lt;TextView
+        android:id="@+id/clicksCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You have clicked 0 times"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    &lt;Button
+        android:id="@+id/increaseCounter
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click me!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clicksCounter" />
+
+&lt;/android.support.constraint.ConstraintLayout></code></pre>
+            </section><br><br>
+    </section>
+     
  </section> <!-- End section -->
+
+ <!--*********************************************************Action programming***********************************************************-->
+ <section class="apartado">
+ <a name="sProgrammingAction"><a>
+ <h2>Programming action</h2>
+
+ <p>
+    If you launch the app, you will see the <span class="cursiva">text</span>  and the <span class="cursiva">button</span>. 
+    However, when you click the button, nothing happens. <span class="subrayado">The behavior of this button has not been defined</span>.</p>
+    
+ <p>To add a behavior to the <span class="d-word">button</span>  we must do it in the <span class="d-word">Kotlin</span>  code (or also Java). We will write the code in the <span class="inline-file">MainActivity.kt</span> file</p>
+ <figure><img src="imagenes/ud3-2021-09-26-12-52-09.png" /><br><figcaption>MainActivity.kt</figcaption></figure>
+ <br>
+ 
+ <p>The <span class="d-word">MainActivity</span>  class is defined in this file, and in it the <span class="r-word">onCreate()</span> method.</p>
+ <p>This <span class="r-word">onCreate()</span>  method is the one that the Android System executes first when our App starts.</p>
+ <p>In this method the first thing you should look at is the call <span class="r-word">setContentView(R.layout.activity_main)</span> . 
+    This call establishes the layout <span class="inline-file">activity_main.xml</span>, that is, what will be shown on the screen is what we have put in this layout file
+     (the <span class="r-word">TextView</span>  and the <span class="r-word">Button</span> ).</p>
+ 
+ <p>Once we have seen this, let's go to the necessary code for our counter. We will need:
+     <ol>
+         <li>An <span class="r-word">int</span>  variable that stores the <span class="negrita">counter</span> </li>
+         <li>Program the <span class="r-word">Button</span>  to <span class="negrita">increase the counter</span>  and updates the <span class="r-word">TextView</span>  each time it is clicked</li>
+     </ol>
+ </p>
+<p>Creating the variable to store the number of clicks is the simplest part:</p>
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+    </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">class MainActivity : AppCompatActivity() {
+
+    var counter = 0  //creates a inits counter variable
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+    }
+}</code></pre>
+    </section><br><br>
+</section>
+
+<h3>findViewById</h3>
+<p> 
+    To program the behavior of the <span class="r-word">Button</span> , and then update the text of the <span class="r-word">TextView</span> , 
+    we will <span class="subrayado">need to have a reference</span>  to these two elements.
+</p>
+<p>
+    To do this, we will <span class="negrita">define a variable for each element</span>  and call the <span class="r-word">findViewById()</span> 
+     method to link these variables with the corresponding layout elements. The <span class="r-word">findViewById()</span>  method must be passed the 
+     identifier that we have defined in the XML file.
+</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita"> MainActivity.kt</span>
+    </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">class MainActivity : AppCompatActivity() {
+
+    var counter = 0
+
+    val tvClickCounter: TextView by lazy { findViewById<TextView>(R.id.clicksCounter) }
+    //var tvClickCounter: TextView? = null
+
+    lateinit var btnIncreaseCounter: Button
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        btnIncreaseCounter = findViewById(R.id.increaseCounter) as Button
+        //tvClickCounter = findViewById(R.id.increaseCounter) as TextView
+    }</code></pre>
+    </section>
+
+    <p><span class="cursiva">notice comment declaration</span> </p>
+        
+</section>
+
+<section class="marco-t inf">
+    <span class="icono info"> </span> <span class="negrita">
+        Notice that the calls to <span class="r-word">findViewById()</span>  were made after setting the <span class="inline-file">activity_main.xml</span> layout. 
+        The <span class="r-word">findViewById()</span>  method will look for the elements in this file.</span>
+    </section>
+<section class="marco-b">
+        
+</section>
+
+<p class="sub-section">ViewBinding</p>
+<p>Optionally, the <span class="d-word">ViewBinding</span>  can be activated to avoid having to make calls to <span class="r-word">findViewById()</span>
+     to bind the elements of the XML with the Kotlin variables.
+<p>Imagine that instead of 1 button and 1 textview, we have 10 buttons and 5 textviews ... that's 15 variables and 15 calls to <span class="negrita">findViewById</span>!!</p>
+<p>To activate the <span class="d-word">ViewBinding</span> , go to the <span class="inline-file">build.gradle (Module: app)</span> file and add the following configuration:</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita"> build.gradle (Module: app)</span>
+    </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">android {
+    // .......
+    buildFeatures {
+        viewBinding true
+    }
+}</code></pre>
+</section><br><br>
+</section>
+
+<p>Then, you have to define a single variable and from this we can access the XML elements. You also have to modify the call to <span class="r-word">setContentView()</span> , as follows:</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita"> MainActivity.kt</span>
+    </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">class MainActivity : AppCompatActivity() {
+
+    var counter = 0
+
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+
+        setContentView(view)
+        
+    }
+}</code></pre>
+    </section><br><br>
+</section>
+
+<p>In this way, to access the <span class="r-word">Button</span>  and the <span class="r-word">TextView</span>  (or other elements that we had) we can do it directly through the <span class="negrita">binding</span> 
+     variable and the identifier of the elements, like this:</p>
+<section><pre><code class="language-kotlin">binding.clicksCounter
+binding.increaseCounter</code></pre>
+</section><br><br>
+<section class="marco-t warn">
+    <span class="icono warning"> </span> <span class="negrita">If you want a layout file to be ignored while generating binding classes, add there <span class="r-word"> tools: viewBindingIgnore = "true"</span> 
+     attribute to the root view of that file:</span>
+    </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">&lt;LinearLayout
+    ...
+    tools:viewBindingIgnore="true" >
+    ...
+&lt;/LinearLayout></code></pre>
+    </section><br><br>
+</section>
+
+
+<h3>OnClickListener</h3>
+<p>Once we have linked the <span class="r-word">Button</span>  and the <span class="r-word">TextView</span> , the next step is to program the action for the 
+    button so that it responds to the <span class="negrita">CLICK</span>  (increasing the counter and displaying the text in the <span class="r-word">TextView</span> ).</p>
+<p>For the <span class="negrita">button</span>  to respond to the <span class="negrita">CLICK</span>  event, call the <span class="r-word">setOnClickListener()</span>  
+    method and pass it a <span class="r-word">View.OnClickListener</span>  class object. In the <span class="negrita">onClick()</span>  method of this object we will 
+    program what we want to do when the button is pressed:</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">class MainActivity : AppCompatActivity() {
+
+    var counter = 0
+
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+
+        setContentView(view)
+
+
+        binding.increaseCounter.setOnClickListener(){
+            //TODO: Increase counter var
+            //TODO: Set counter val into TextView (clicksCounter)
+        }
+
+    }
+}</code></pre>
+        </section><br><br>
+</section>
+
+<figure><img src="imagenes/ud3_setOnClick.gif" /><br><figcaption></figcaption></figure>
+<br>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> <span class="negrita">If you haven't used <span class="d-word">ViewBinding</span> , remember to declare <span class="cursiva">increaseCounter</span>  variable.</span>
+    </section>
+<section class="marco-b">
+        
+</section>
+
+<p>Finally, the application code looks like this:</p>
+
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+    </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">class MainActivity : AppCompatActivity() {
+
+    var counter = 0
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+
+        setContentView(view)
+
+        binding.increaseCounter.setOnClickListener(){
+            counter++;
+            binding.clicksCounter.setText("You have clicked $counter times")
+        }
+    }
+}</code></pre>
+    </section><br><br>
+</section>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> <span class="negrita">If you haven't use <span class="r-word">ViewBinding</span>, the resulting code looks more or less like this:</span>
+    </section>
+<section class="marco-b">
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+        </section>
+    <section class="marco-b">
+        <section><pre><code class="language-kotlin">class MainActivity : AppCompatActivity() {
+
+    var counter = 0
+
+    private val tvClicksCounter:TextView by lazy { findViewById(R.id.clicksCounter) }
+    private val btnIncreaseCounter:TextView by lazy { findViewById(R.id.increaseCounter) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_main)
+
+        btnIncreaseCounter.setOnClickListener(){
+            counter++;
+            tvClicksCounter.setText("You have clicked $counter times")
+        }
+    }
+}</code></pre>
+        </section><br><br>
+    </section>
+</section>
+ </section><!-- End section -->
+
+ <!--*********************************************************MultiCounter Practice***********************************************************-->
+ <section class="apartado">
+ <a name="sPractice"><a>
+ <h2>MultiCounter Practice</h2>
+ 
+ <a class="tarea" target="_blank" href="#sPractice">Develop an app named <span class="d-word">P1_MultiCounter</span>  that functions as a people counter</a> 
+ <figure><img src="imagenes/ud3-2021-09-26-19-23-22.png" /><br><figcaption>Multicounter</figcaption></figure>
+ <br>
+ 
+
+ <p>The app must have <span class="negrita">4 independent counters</span>  and a <span class="negrita">global counter</span>  (that takes the sum of the 4 counters).</p>
+ <p>There should be a <span class="negrita">reset button</span>  for each counter and a global reset button that resets all 4 counters at the same time.</p>
+ <p>There should also be a <span class="negrita">deacrease button</span> , but de careful that its counter doesn't drop below 0</p>
+ <p>You can use the following app as a model for the multiconductor</p>
+<figure><img src="imagenes/ud3_P1runningExample.gif" /><br><figcaption>Running sample</figcaption></figure>
+<br>
+
+
+ <p>
+    In the following image you can see the <span class="negrita">constraints</span>  that have been defined in the layout:</p>
+
+    <figure><img src="imagenes/ud3-2021-09-26-20-32-55.png" /><br><figcaption>Defined Constraints</figcaption></figure>
+    <br>
+
+    
+
+<p><span class="negrita">Validate</span>  the layout of the elements in the <span class="r-word">ConstraintLayout</span>  using the <span class="d-word">"Layout Validator"</span>:</p>
+ <figure><img src="imagenes/ud3-2021-09-26-20-31-47.png" /><br><figcaption>Layout Inspector</figcaption></figure>
+ <br>
+ 
+ <section class="marco-t inf">
+    <span class="icono info"> </span> Use <span class="r-word"><span class="negrita">android:backgroundTint</span> </span> property to change background color of buttons
+    </section>
+<section class="marco-b">
+        
+</section>
+    
+ 
+ </section><!-- End section -->
+
+
+<!--*********************************************************Webgraphy***********************************************************-->
+<section class="apartado">
+<a name="sWebgrafia"><a>
+<h2>Webgraphy</h2>
+
+<ul>
+    <li><a class="enlace" target="_blank" href="https://gerardfp.github.io/apps/">Gerard's notes</a> </li>
+    <li><a class="enlace" target="_blank" href="https://developer.android.com/topic/libraries/view-binding?hl=es-419#kotlin">Android developer. ViewBinding</a> </li>
+    <li><a class="enlace" target="_blank" href="https://developer.android.com/training/constraint-layout">Android developer. Constraint Layout</a> </li>
+</ul>
+
+
 
 
     
+
+
+</section><!-- End section -->
     
         
     
@@ -233,7 +732,7 @@
     
          
     
-
-    <script src="../script/prism.js"></script>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<script src="../script/prism.js"></script>
 </body>
 </html>
