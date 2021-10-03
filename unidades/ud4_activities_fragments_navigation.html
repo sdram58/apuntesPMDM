@@ -102,24 +102,357 @@
             <li>Crashing or losing the user's progress when the screen rotates between landscape and portrait orientation.</li>
         </ul>
 
+        <p>To navigate transitions between stages of the activity lifecycle, the Activity class provides a core set of six callbacks: 
+            <span class="r-word">onCreate()</span> , <span class="r-word">onStart()</span> , <span class="r-word">onResume()</span> , <span class="r-word">onPause()</span> , 
+            <span class="r-word">onStop()</span> , and <span class="r-word">onDestroy()</span> . The system invokes each of these callbacks as an activity enters a new state.</p>
+        
+    <figure><img src="imagenes/ud4-2021-10-03-19-45-47.png" /><br><figcaption>Activity Lifecycle</figcaption></figure>
+    <br>
 
-<p>This document explains the activity lifecycle in detail. The document begins by describing the lifecycle paradigm. Next, it explains each of the callbacks: what happens internally while they execute, and what you should implement during them. It then briefly introduces the relationship between activity state and a process’s vulnerability to being killed by the system. Last, it discusses several topics related to transitions between activity states.</p>
+    <p>As the user begins to leave the activity, the system calls methods to dismantle the activity. In some cases, this dismantlement is only partial; 
+        the activity still resides in memory (such as when the user switches to another app), 
+        and can still come back to the foreground. If the user returns to that activity, the activity resumes from where the user left off.</p>
 
-<p>For information about handling lifecycles, including guidance about best practices, see Handling Lifecycles with Lifecycle-Aware Components and Saving UI States. To learn how to architect a robust, production-quality app using activities in combination with architecture components, see Guide to App Architecture.
+    <p>The system’s likelihood of killing a given process —along with the activities in it— depends on the state of the activity at the time</p>
+    <figure><img src="imagenes/ud4-2021-10-03-19-51-35.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p class="sub-section">onCreate()</p>
+    
+    <p>You must implement this callback, which fires when the system creates your activity. 
+        Your implementation should initialize the essential components of your activity: 
+        For example, your app should create views and bind data to lists here.
+        Most importantly, this is where you must call <span class="r-word">setContentView()</span>  to define the layout for the activity's user interface.</p>
+
+    <p>When <span class="r-word">onCreate()</span>  finishes, the next callback is always onStart().</p>
+
+    <p class="sub-section">onStart()</p>
+    <p>As <span class="r-word">onCreate()</span>  exits, the activity enters the <span class="negrita">Started state</span> , 
+        and the <span class="subrayado">activity becomes visible to the user</span>. This callback contains what amounts to the activity’s final 
+        preparations for coming to the foreground and becoming interactive.</p>
+    
+    <p class="sub-section">onResume()</p>
+    <p>The system invokes this callback just before the activity starts interacting with the user. 
+        At this point, the activity is at the top of the activity stack, and captures all user input. Most of an app’s core functionality is 
+        implemented in the <span class="r-word">onResume()</span>  method.
+
+        The <span class="r-word">onPause()</span> callback always follows <span class="r-word">onResume()</span> .</p>
+
+    
+    <p class="sub-section">onPause()</p>
+    <p>The system calls <span class="r-word">onPause()</span>  when the activity loses focus and enters a <span class="negrita">Paused state</span>. 
+        This state occurs when, for example, the user taps the <span class="cursiva">Back</span>  or <span class="cursiva">Recents button</span>. 
+        When the system calls <span class="r-word">onPause()</span> for your activity, it technically means your activity is still partially visible, 
+        but most often is an indication that the user is leaving the activity, and the activity will soon enter the <span class="cursiva">Stopped</span>  or <span class="cursiva">Resumed state</span>.</p>
+
+    <p>An activity in the <span class="negrita">Paused state</span> may continue to update the UI if the user is expecting the UI to update. 
+        Examples of such an activity include one showing a navigation map screen or a media player playing. 
+        Even if such activities lose focus, the user expects their UI to continue updating.</p>
+        
+    <p>You should <span class="subrayado">not use</span> <span class="r-word">onPause()</span> to save application or user data, make network calls, 
+        or execute database transactions.</p>
+        
+    <p>Once <span class="r-word">onPause()</span>  finishes executing, the next callback is either <span class="r-word">onStop()</span>  or <span class="r-word">onResume()</span>, 
+        depending on what happens after the activity enters the <span class="negrita">Paused state</span> .</p>
+
+    <p class="sub-section">onStop()</p>
+    <p>The system calls <span class="r-word">onStop()</span>  when the activity is no longer visible to the user. This may happen because the activity is <span class="negrita">being destroyed</span> , 
+        <span class="negrita">a new activity is starting</span> , or an existing activity is entering a <span class="negrita">Resumed state</span>  and is covering the stopped activity. 
+        In all of these cases, the stopped activity is no longer visible at all.
+
+    <p>The next callback that the system calls is either <span class="r-word">onRestart()</span> , 
+        if the activity is coming back to interact with the user, or by <span class="r-word">onDestroy()</span> if this activity is completely terminating.</p></p>
+    
+
+    <p class="sub-section">onRestart()</p>
+    <p>The system invokes this callback when an activity in the <span class="negrita">Stopped state</span>  is about to restart. <span class="r-word">onRestart()</span> 
+        restores the state of the activity from the time that it was stopped.</p>
+    <p>This callback is always followed by <span class="r-word">onStart()</span>.</p>
+    
+    <p class="sub-section">onDestroy()</p>
+    <p>The system invokes this callback before an <span class="cursiva">activity is destroyed.</span> </p>
+    <p>This callback is the final one that the activity receives <span class="r-word">onDestroy()</span>  is usually implemented to 
+        ensure that all of an activity’s resources are released when the activity, or the process containing it, is destroyed.</p>
+
+
+
+    
+
+    <h3>Intents - Intent Filters</h3>
+
+    <p>An <span class="d-word">Intent</span> is a messaging object you can use to request an action from another app component. 
+        Although intents facilitate communication between components in several ways, there are three fundamental use cases:</p>
+
+    <p>
+        <ul>
+            <li><span class="negrita">Starting an activity</span><p>An Activity represents a single screen in an app. 
+                You can start a new instance of an Activity by passing an Intent to <span class="r-word">startActivity()</span>. 
+                The Intent describes the activity to start and carries any necessary data.</p><p>If you want to receive a result from the activity 
+                    when it finishes, call <span class="r-word">startActivityForResult()</span>. 
+                    Your activity receives the result as a separate Intent object in your activity's <span class="negrita">onActivityResult()</span> callback</p></li>
+            <li><span class="negrita">Starting an service</span><p>A <span class="negrita">Service</span> is a component that performs operations in the background 
+                without a user interface. With Android 5.0 (API level 21) and later, you can start a service with <span class="d-word">JobScheduler</span>.</p></li>
+            <li><span class="negrita">Delivering a broadcast</span><p>A broadcast is a message that any app can receive. 
+                The system delivers various broadcasts for system events, such as when the system boots up or the device starts charging. 
+                You can deliver a broadcast to other apps by passing an <span class="d-word">Intent</span>  to <span class="r-word">sendBroadcast()</span>  or <span class="r-word">sendOrderedBroadcast()</span> </p></li>        </ul>
     </p>
 
+    <p class="sub-section">Launching another Activity from same app</p>
+
+    <p>You can see the whole example in: </p>
+    
+    <p>In this subsection we are going to see one way to launch another activity in the same app with intents.</p>
+
+    <p>Firstly, we have to create new project with an empty activity template and then we're going to add another activity. For that, click with the right button of the mouse over project section and then selecte new -> activity -> empty activity</p>
 
 
-    <div class="tarea">Test live cicle</div> 
+    <figure><img src="./imagenes/ud4_NewActivity.gif" /><br><figcaption></figcaption></figure>
+    <br>
 
-    <h3>Intents - Intent filter</h3>
+    <p>Name it as <span class="d-word">Activity2</span> . Is not a good name but for this example is enough.</p>
 
+    <figure><img src="imagenes/ud4-2021-10-03-21-22-23.png" /><br><figcaption>New activity "Activity2" created</figcaption></figure>
+    <br>
 
+    <p>In order to show <span class="d-word">Activity2</span>  we're going to add a button in the <span class="d-word">MainActivity</span> </p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">activity_main.xml</span>
+        </section>
+    <section class="marco-b">
+        <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+        &lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".Activity2">
+        
+            &lt;TextView
+                android:id="@+id/tvGreeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="76dp"
+                android:text="Main Activity"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        
+        
+            &lt;Button
+                android:id="@+id/btnGoActivity2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                android:text="@string/go"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvGreeting" />
+        &lt;/androidx.constraintlayout.widget.ConstraintLayout></code></pre>
+        </section><br><br>
+
+        <figure><img src="imagenes/ud4-2021-10-04-00-12-55.png" /><br><figcaption>activity_main.xml</figcaption></figure>
+        <br>
+        
+    </section>
+
+    <p>Actitivy2 layout will have the next code below with a <span class="cursiva">TextView</span> , <span class="cursiva">EditText</span>  and a <span class="cursiva">Button</span>  to go back. For now we're not using them</p>
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">activity_2.xml</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity2">
+
+    &lt;TextView
+    android:id="@+id/tvTop"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="76dp"
+    android:text="Second Activity"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+    &lt;EditText
+        android:id="@+id/etName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTop" />
+
+    &lt;Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="@string/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etName" />
+&lt;/androidx.constraintlayout.widget.ConstraintLayout></code></pre>
+            </section><br><br>
+
+    <figure><img src="imagenes/ud4-2021-10-04-00-12-13.png" /><br><figcaption>activity_2.xml</figcaption></figure>
+    <br>
+    
+    </section>
+
+    <p>For create an <span class="r-word">Intent</span>  that goes to another of our actitities we should use its constructor. It accepts at least two params, 
+        the first one is the <span class="negrita">context</span> , that is where and who is going to call the function. The second one is the <span class="negrita">destination activity class</span> .</p>
+    <section><pre><code class="language-kotlin">val intent = Intent(this, Activity2::class.java)</code></pre>
+    </section><br><br>
+    
+
+    <p>Then in the MainActivity.kt we should add a listener for the button that starts the new activity with the created Intent</p>
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-kotlin"> override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+
+    binding = ActivityMainBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+
+    binding.button.setOnClickListener{ openActivity2() }
+}
+
+private fun openActivity2() {
+    val intent = Intent(this, Activity2::class.java)
+    startActivity(intent)
+}</code></pre>
+            </section><br><br>
+    </section>
+
+    <p>Now is Actitity2's turn, so let's make the listener for the back button. To return to the previous activity we have mainly two options:</p>
+    <p><ol>
+        <li>Implement a similar method that in MainActivity.
+            <section><pre><code class="language-kotlin">binding.btnBack.setOnClickListener{
+    val intent = Intent(this, MainActivity::class.java)
+    startActivity(intent)
+}</code></pre>
+            </section><br><br>
+        </li>
+        <li>Simply close current Activity. By default, when you start an activity goes to the top of the task stack, if you start another activity, 
+            the last one opened goes to the top. If you close the last activity, the previous activity goes to the top, that means this is the one is running
+        <section><pre><code class="language-kotlin">binding.btnBack.setOnClickListener{
+        finish()
+    }</code></pre>
+        </section><br><br>
+    </ol></p>
+    <p>The two options above are distincs, let's see why. The thing is that if you call again <span class="r-word">startActivity</span>  function you creates a new Instance</p>
+    <p>Activity Task Stack using startActivity again in the Activity2:
+        <ol>
+            <li>Empty</li>
+            <li>Empty &lt;- MainActivity: Starts the app</li>
+            <li>Empty &lt;- MainActivity &lt;- Activity2: startActivity "Acitvity2"</li>
+            <li>Empty &lt;- MainActivity &lt;- Activity2 &lt;- MainActivity: startActivity "MainActivity"</li>
+            <li>Empty &lt;- MainActivity &lt;- Activity2: push mobile back button</li>
+            <li>Empty &lt;- MainActivity: push mobile back button</li>
+            <li>Empty: push mobile back button (Exit app)</li>            
+        </ol>
+    </p>
+    <figure><img src="imagenes/ud4_startActivity.gif" /><br><figcaption>Using startActivity to return</figcaption></figure>
+    <br>
+    
+    <p>Activity Task Stack using finish:
+        <ol>
+            <li>Empty</li>
+            <li>Empty &lt;- MainActivity: Starts the app</li>
+            <li>Empty &lt;- MainActivity &lt;- Activity2: startActivity "Acitvity2"</li>
+            <li>Empty &lt;- MainActivity : finish</li>
+            <li>Empty &lt;- MainActivity: push mobile back button</li>
+            <li>Empty: push mobile back button (Exit app)</li>            
+        </ol>
+    </p>
+    <figure><img src="imagenes/ud4_finish.gif" /><br><figcaption>Using finish to return</figcaption></figure>
+    <br>
+    
+    
     <h3>Sending data between activities</h3>
+    <p>Hasta ahora hemos abierto y cerrado actividades, de nuestra aplicación pero... ¿y si queremos que las actividades se comuniquen una con otra, es decir, pasar información de una a otra?
+    </p>
+    <p>En este apartado veremos como pasar datos simple a otra actividad mediante bundles y pasar objetos enteros parcelables </p>
+    <p class="sub-section">Bundle extra</p>
+    <p>Imaginemos que nuestra MainActivity fuera una pantalla de Login, y queremos pasarle el nombre de usuario a la Activity2. En este caso el nombre de usuario será un String.
+        Lo añadiremos este dato al Intent
+    </p>
 
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-kotlin">private val userName:String = "Carlos"
+private val surName:String = "Tarazona"
+companion object{ //A companion objects acts like an static class in Java
+    val KEY_EXTRA_NAME:String ="MY_KEY_EXTRA_NAME"
+    val KEY_EXTRA_SURNAME:String ="MY_KEY_EXTRA_SURNAME"
+}
+private fun openActivity2() {
+    val intent = Intent(this, Activity2::class.java)
+    val bundle = Bundle()
+    bundle.putString(KEY_EXTRA_NAME,userName)        
+    intent.putExtras(bundle)
+    
+    //or directly
+    intent.putExtra(KEY_EXTRA_SURNAME, surName)
+    
+    startActivity(intent,bundle)
+}</code></pre>
+            </section><br><br>
+    </section>
+
+    <p>O usando el operador Apply de Kotlin</p>
+    <section><pre><code class="language-kotlin">private fun openActivity2() {
+    val intent = Intent(this, Activity2::class.java).apply {
+        putExtra(KEY_EXTRA_NAME, userName)
+        putExtra(KEY_EXTRA_SURNAME, surName)
+    }     
+    
+    startActivity(intent)
+}</code></pre>
+    </section><br><br>
+    
+    <p>Ahora en la otra actividad (Activity2), comprobamos si hay extras y los recuperamos</p>
+    
+    <section><pre><code class="language-kotlin"> override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+
+    binding = Activity2Binding.inflate(layoutInflater)
+    setContentView(binding.root)
+
+    var myText:String? = null
+
+    if(intent.hasExtra(KEY_EXTRA_NAME))
+        myText = "${intent.getStringExtra(KEY_EXTRA_NAME).toString()}"
+
+    if(intent.hasExtra(KEY_EXTRA_SURNAME))
+        myText = "${myText?:""} ${intent.getStringExtra(KEY_EXTRA_SURNAME).toString()}"
+
+    binding.tvTop.text = myText?:"No user"
+    //......
+}</code></pre>
+</section><br><br>
+
+<p>Ahora vamos a hacer que la actividad llamada nos devuelva datos, podríamos hacer como en la anterior y ponerlo en el Intent y llamar a startActivity(), 
+    pero como hemos visto, esto nos crea más elementos en la pila. Para realizar este tipo de acciones tenemos registerForActivityResult()</p>
+    
+    
     <p class="sub-section">Parcelable objects</p>
 
 
+    <div class="tarea">Test Activity Lifecycle</div> 
     
     
     </section><!-- End section -->
@@ -152,6 +485,7 @@
 
     <ul>
         <li><a class="enlace" target="_blank" href="https://developer.android.com/guide/components/activities/intro-activities">https://developer.android.com/guide/components/activities/intro-activities</a> </li>
+        <li><a class="enlace" target="_blank" href="https://developer.android.com/guide/components/activities/activity-lifecycle">https://developer.android.com/guide/components/activities/activity-lifecycle</a> </li>
     </ul>
     
     
