@@ -237,13 +237,13 @@ a.enlace{
 a.enlace::before{
     content: url('../imagenes/link.png') " ";
 }
-a.tarea{
+.tarea{
     text-decoration: none;
     color: rgba(50, 50, 255, 0.8);
     font-style: italic;
 }
 
-a.tarea::before{
+.tarea::before{
     content: url('../imagenes/tarea.jpg') " ";
 }
 

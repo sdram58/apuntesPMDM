@@ -13,10 +13,150 @@
 <body>
     <h1>Activities, Intents, Fragments. Navigation</h1>
 
-    Live cicle.
-    Intents - Intent filter
-    Fragment, Live cicle --> chage Fragments
-    Navigation.
+    <div class="main-menu">
+        <a href="#sActivities">Activities</a><a 
+           href="#sFragments">Fragments</a><a 
+           href="#sNavigation">Navigation</a><a
+           href="#sWebgrafia">Webgraphy</a>
+    </div>
+
+    <!--*********************************************************Activities***********************************************************-->
+    <section class="apartado">
+    <a name="sActivities"><a>
+    <h2>Activities</h2>
+    <h3>Introduction to Activities</h3>
+    <p>The <span class="r-word">Activity</span>  class is a crucial component of an Android app, and the way activities are launched and put together is a fundamental part of the platform's application model.
+        Unlike other programming paradigms in which apps are launched with a <span class="negrita">main()</span> method, the Android system initiates code in an <span class="r-word">Activity</span> 
+        instance by invoking specific callback methods that correspond to <span class="negrita">specific stages of its <span class="subrayado">lifecycle</span> </span> .</p>
+
+    <p class="sub-section">The concept of activities</p>
+    
+    <p>The mobile-app experience <span class="subrayado">differs from</span>  its <span class="subrayado">desktop</span>  counterpart in that a user's interaction with the app 
+        doesn't always begin in the same place. Instead, the user journey often begins non-deterministically. For instance, if you open an email app from your home screen,
+        you might see a list of emails. By contrast, if you are using a social media app that then launches your email app, 
+        you might go directly to the email app's screen for composing an email.</p>
+
+    <p>The <span class="r-word">Activity</span>  class is designed to facilitate this paradigm. When one app invokes another, the calling app invokes an activity in the other app,
+        rather than the app as an atomic whole. In this way, the <span class="negrita">activity serves as the entry point</span> for an app's interaction with the user.
+        You implement an activity as a subclass of the <span class="r-word">Activity</span> class.</p>
+
+    <p>An <span class="subrayado">activity provides the window</span> in which the app draws its UI. This window typically fills the screen, but may be smaller 
+        than the screen and float on top of other windows. <span class="negrita">Generally, one activity implements one screen in an app</span>. 
+        For instance, one of an app’s activities may implement a <span class="cursiva">Preferences screen</span> , while another activity implements a <span class="cursiva">Select Photo screen</span> .</p>
+
+    <p>Most apps contain <span class="negrita">multiple screens</span> , which means they are composed by <span class="negrita">multiple activities</span>. 
+        Typically, one activity in an app is specified as the main activity, which is the first screen to appear when the user launches the app. 
+        Each activity can then start another activity in order to perform different actions. 
+        For example, the main activity in a <span class="cursiva">simple e-mail app</span>  may provide the screen that shows an <span class="cursiva">e-mail inbox</span>. 
+        From there, the main activity might launch other activities that provide screens for tasks like <span class="cursiva">writing e-mails</span>  and <span class="cursiva">opening individual e-mails</span> .</p>
+
+    <p>Although activities work together to form a cohesive user experience in an app, each activity is only loosely bound to the other activities; 
+        there are usually minimal dependencies among the activities in an app. In fact, activities often start up activities belonging to other apps. 
+        For example, a browser app might launch the <span class="cursiva">Share activity</span>  of a <span class="cursiva">social-media app.</span></p>
+
+    <p>To use activities in your app, you must register information about them in the app’s manifest, and you must manage activity lifecycles appropriately.</p>
+
+
+    <p class="sub-section">Configuring the manifest</p>
+    
+    <p>For your app to be able to use activities, you must declare the activities, and certain of their attributes, in the manifest.</p>
+    <p>To declare your activity, open your manifest file and add an <span class="d-word">&lt;activity></span>  element as a child of the <span class="d-word">&lt;application></span>  element. For example:</p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">AndroidManifest.xml</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-kotlin">&lt;manifest ... >
+  &lt;application ... >
+      &lt;activity android:name=".ExampleActivity" />
+      ...
+  &lt;/application ... >
+  ...
+&lt;/manifest ></code></pre>
+            </section><br><br>
+    </section>
+    
+
+
+
+
+
+    
+    <h3>Live cicle.</h3>
+
+    <p>
+        As a user navigates through, out of, and back to your app, the <span class="r-word">Activity</span> instances in your app transition through different states
+         in their <span class="d-word">lifecycle</span>. The <span class="r-word">Activity</span>  class <span class="negrita">provides a number of callbacks</span> 
+         that allow the activity to know that a state has changed: that <span class="cursiva">the system is creating, stopping, or resuming an activity</span> , or 
+         destroying the process in which the activity resides. </p>
+    <p>Within the lifecycle callback methods, you can declare how your activity behaves when the user <span class="cursiva">leaves and re-enters the activity</span> . 
+        For example, if you're building a streaming video player, you might pause the video and terminate the network connection when the user switches to another app. 
+        When the user returns, you can reconnect to the network and allow the user to resume the video from the same spot. 
+        In other words, each callback allows you to perform specific work that's appropriate to a given change of state. 
+        Doing the <span class="negrita">right work at the right time</span> and handling transitions properly <span class="subrayado"> make your app more robust and performant</span>.
+        For example, good implementation of the lifecycle callbacks can help ensure that your app avoids:</p>
+        <ul>
+            <li>Crashing if the user receives a phone call or switches to another app while using your app.</li>
+            <li>Consuming valuable system resources when the user is not actively using it.</li>
+            <li>Losing the user's progress if they leave your app and return to it at a later time.</li>
+            <li>Crashing or losing the user's progress when the screen rotates between landscape and portrait orientation.</li>
+        </ul>
+
+
+<p>This document explains the activity lifecycle in detail. The document begins by describing the lifecycle paradigm. Next, it explains each of the callbacks: what happens internally while they execute, and what you should implement during them. It then briefly introduces the relationship between activity state and a process’s vulnerability to being killed by the system. Last, it discusses several topics related to transitions between activity states.</p>
+
+<p>For information about handling lifecycles, including guidance about best practices, see Handling Lifecycles with Lifecycle-Aware Components and Saving UI States. To learn how to architect a robust, production-quality app using activities in combination with architecture components, see Guide to App Architecture.
+    </p>
+
+
+
+    <div class="tarea">Test live cicle</div> 
+
+    <h3>Intents - Intent filter</h3>
+
+
+    <h3>Sending data between activities</h3>
+
+    <p class="sub-section">Parcelable objects</p>
+
+
+    
+    
+    </section><!-- End section -->
+    
+    
+    <!--*********************************************************Fragments***********************************************************-->
+    <section class="apartado">
+    <a name="sFragments"><a>
+    <h2>Fragments</h2>
+    
+    
+    
+    </section><!-- End section -->
+    
+
+    <!--*********************************************************Navigation***********************************************************-->
+    <section class="apartado">
+    <a name="sNavigation"><a>
+    <h2>Navigation</h2>
+    
+    
+    
+    </section><!-- End section -->
+
+
+    <!--*********************************************************Webgraphy***********************************************************-->
+    <section class="apartado">
+    <a name="sWebgrafia"><a>
+    <h2>Webgraphy</h2>
+
+    <ul>
+        <li><a class="enlace" target="_blank" href="https://developer.android.com/guide/components/activities/intro-activities">https://developer.android.com/guide/components/activities/intro-activities</a> </li>
+    </ul>
+    
+    
+    
+    </section><!-- End section -->
 
     
 
