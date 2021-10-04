@@ -228,6 +228,10 @@ body h3{
 
 }
 
+li p{
+    padding-left: 30px;
+}
+
 a.enlace{
     text-decoration: none;
     color: green;

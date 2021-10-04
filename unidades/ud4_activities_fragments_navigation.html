@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../styles/styles.css">
     <script src="../script/script.js"></script>
 </head>
-<body>
+<body class="line-numbers">
     <h1>Activities, Intents, Fragments. Navigation</h1>
 
     <div class="main-menu">
@@ -256,7 +256,7 @@
         
     </section>
 
-    <p>Actitivy2 layout will have the next code below with a <span class="cursiva">TextView</span> , <span class="cursiva">EditText</span>  and a <span class="cursiva">Button</span>  to go back. For now we're not using them</p>
+    <p><span class="cursiva">Actitivy2</span> layout will have the next code below with a <span class="cursiva">TextView</span> , <span class="cursiva">EditText</span>  and a <span class="cursiva">Button</span>  to go back. For now we're not using them</p>
     <section class="marco-t file-">
         <span class="icono file"> </span> <span class="negrita">activity_2.xml</span>
         </section>
@@ -381,13 +381,12 @@ private fun openActivity2() {
     
     
     <h3>Sending data between activities</h3>
-    <p>Hasta ahora hemos abierto y cerrado actividades, de nuestra aplicación pero... ¿y si queremos que las actividades se comuniquen una con otra, es decir, pasar información de una a otra?
-    </p>
-    <p>En este apartado veremos como pasar datos simple a otra actividad mediante bundles y pasar objetos enteros parcelables </p>
+    <p>So far we have opened and closed activities, from our application, but ... what if we want the activities to communicate with each other, that is, pass information from one to another?</p>
+    <p>In this section we will see how to pass simple data to another activity through <span class="d-word">bundles</span> (<span class="d-word">extras</span>)and pass full <span class="d-word">parcelable</span>  objects.</p>
     <p class="sub-section">Bundle extra</p>
-    <p>Imaginemos que nuestra MainActivity fuera una pantalla de Login, y queremos pasarle el nombre de usuario a la Activity2. En este caso el nombre de usuario será un String.
-        Lo añadiremos este dato al Intent
-    </p>
+    <p>Let's imagine that our <span class="negrita">MainActivity</span>  was a <span class="cursiva">Login screen</span> , and we want to pass the username and surname to <span class="negrita">Activity2</span>.
+        In this case username and surname will be a <span class="cursiva">String</span>.</p>
+    <p>We will add this data to the <span class="r-word">Intent</span> </p>
 
     <section class="marco-t file-">
         <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
@@ -413,7 +412,7 @@ private fun openActivity2() {
             </section><br><br>
     </section>
 
-    <p>O usando el operador Apply de Kotlin</p>
+    <p>Or even better, using Kotlin operator <span class="r-word">Apply</span> </p>
     <section><pre><code class="language-kotlin">private fun openActivity2() {
     val intent = Intent(this, Activity2::class.java).apply {
         putExtra(KEY_EXTRA_NAME, userName)
@@ -424,7 +423,7 @@ private fun openActivity2() {
 }</code></pre>
     </section><br><br>
     
-    <p>Ahora en la otra actividad (Activity2), comprobamos si hay extras y los recuperamos</p>
+    <p>Now in the other activity (<span class="cursiva">Activity2</span> ), we check for extras and retrieve them</p>
     
     <section><pre><code class="language-kotlin"> override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -445,11 +444,640 @@ private fun openActivity2() {
 }</code></pre>
 </section><br><br>
 
-<p>Ahora vamos a hacer que la actividad llamada nos devuelva datos, podríamos hacer como en la anterior y ponerlo en el Intent y llamar a startActivity(), 
-    pero como hemos visto, esto nos crea más elementos en la pila. Para realizar este tipo de acciones tenemos registerForActivityResult()</p>
+<p>Now we are going to make the called activity return data, we could do as in the previous one and put it in the Intent and call <span class="r-word">startActivity()</span> ,
+        but as we've seen before, this push more activities into the task stack. To perform this type of actions we use <span class="r-word">registerForActivityResult()</span></p>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span>Traditional <span class="r-word">startActivityForResult()</span> method  is deprecated
+    </section>
+<section class="marco-b">
+        
+</section>
+
+<p>So, to start another activity waiting for a result we should use <span class="negrita">registerForActivityResult</span> </p>
+
+<section><pre><code class="language-kotlin">var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    if (result.resultCode == Activity.RESULT_OK) {
+        //Here we have the result of Activity2
+        val data: Intent? = result.data
+        //We use the extra included in the returned intent
+        binding.tvGreeting.text = "Hello ${data?.getStringExtra(KEY_EXTRA_RESULT)?:"No return"}"
+    }
+}</code></pre>
+</section><br><br>
+
+<p>As you would have noticed, <span class="r-word">registerForActivityResult</span> takes two parameters. 
+    The first defines the type of action/interaction needed (ActivityResultContracts) and the second is a callback function where we receive the result.</p>
+
+<p>And for launching that activity we use:</p>
+<section><pre><code class="language-kotlin">val intent = Intent(this, Activity2::class.java)
+resultLauncher.launch(intent)</code></pre>
+</section><br><br>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+    </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">class MainActivity : AppCompatActivity() {
+    private lateinit var binding:ActivityMainBinding
+
+    private val userName:String = "Carlos"
+    private val surName:String = "Tarazona"
+
+    companion object{
+        val KEY_EXTRA_NAME:String ="MY_KEY_EXTRA_NAME"
+        val KEY_EXTRA_SURNAME:String ="MY_KEY_EXTRA_SURNAME"
+        val KEY_EXTRA_RESULT:String ="MY_KEY_EXTRA_RESULT"
+    }
+
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+
+
+
+        binding.button.setOnClickListener{ openSomeActivityForResult() }
+    }
+
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            binding.tvGreeting.text = "Hello ${data?.getStringExtra(KEY_EXTRA_RESULT)?:"No return"}"
+        }
+    }
+
+
+
+    fun openSomeActivityForResult() {
+        val intent = Intent(this, Activity2::class.java)
+        resultLauncher.launch(intent)
+    }
+}</code></pre>
+    </section><br><br>
+</section>
+
+<p>But, how can we return data from called activity (<span class="negrita">Activity2</span>)?. We just have call <span class="r-word">seResult</span> method, that takes two 
+    params, the first one is the <span class="d-word">resultCode</span> and the last one the intent with data </p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">Activity2.kt</span>
+    </section>
+<section class="marco-b">
+     <section><pre><code class="language-kotlin">binding.btnBack.setOnClickListener{
+
+    val text = binding.etName.text.toString()
+    val returnIntent = Intent().apply {
+        putExtra(KEY_EXTRA_RESULT, text)
+    }   //Creates a new Intent with editText content as extra
+
+    if(text != "")
+        setResult(RESULT_OK, returnIntent) //The action went ok.
+    else
+        setResult(RESULT_CANCELED, returnIntent)
+
+    finish() //Finish and close this activity
+
+}</code></pre>
+     </section><br><br>   
+</section>
+
+<figure><img src="imagenes/ud4-sampleReturnData.gif"/><br><figcaption></figcaption></figure>
+<br>
+
+
+<p class="sub-section">Parcelable objects</p>
+
+<p><span class="negrita">What is Parcelable?</span> </p>
+<p>It is an interface whose purpose is to <span class="subrayado">allow a quick way to pass objects between the various components that Android has</span>. 
+    This process is lighter and faster than using <span class="cursiva">serializable</span> .</p>
+
+<p>The first thing we will do is create a data class called <span class="negrita">Person</span>  and I will make it implement <span class="r-word">Parcelable</span>. 
+    The good news is that Kotlin allows us to implement implementations in this particular type of class.</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">Person.kt</span>
+    </section>
+<section class="marco-b">
+<section><pre><code class="language-kotlin">package com.cartatar.intentactivitysameapp
+
+import android.os.Parcel
+import android.os.Parcelable
+
+data class Person(val name: String?, val surname: String?):Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),//name
+        parcel.readString()//surname, the parameters have to have same order that writeToParcel
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(name)
+        parcel.writeString(surname)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Person> {
+        override fun createFromParcel(parcel: Parcel): Person {
+            return Person(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Person?> {
+            return arrayOfNulls(size)
+        }
+    }
+}</code></pre>
+</section><br><br>
+</section>
+
+<p>And now, we simply have to pass this object through the intent with an extra.</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+    </section>
+<section class="marco-b">
+<section><pre><code class="language-kotlin">override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+
+    binding = ActivityMainBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+
+    binding.button.setOnClickListener{ sendParcelablePerson() }
+}
+
+private fun sendParcelablePerson() {
+    val person = Person("Carlos", "Tarazona")
+    val intent = Intent(this, Activity2::class.java).apply {
+        putExtra(KEY_EXTRA_RESULT_PARCELABLE, person)
+    }
+
+    startActivity(intent)
+}</code></pre>
+</section><br><br>
+</section>
+
+<p>Receiving the data class in <span class="negrita">Activity2</span>  is quite similar to receiving other data</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">Activity2.kt</span>
+    </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">var myText:String? = null
+
+if(intent.hasExtra(KEY_EXTRA_RESULT_PARCELABLE)){
+    val person = intent.getParcelableExtra<Person>(KEY_EXTRA_RESULT_PARCELABLE)
+    person.let{person ->
+        myText = "${person?.name} ${person?.surname}"
+    }
+}
+
+binding.tvTop.text = myText?:"No user"</code></pre>
+        </section><br><br>     
+</section>
+
+
+
+
+<h3>Allowing Other Apps to Start Your Activity</h3>
+    <p>If your app can perform an action that might be useful from another app, your app should be prepared to respond to action requests by specifying the appropriate <span class="d-word">intent filter</span> in your activity.</p>
+    <p>For example, if you build a social app that can share messages or photos with the user's friends, you should support the <span class="r-word">ACTION_SEND</span> intent. 
+        Then, when users initiate a "share" action from another app, your app appears as an option in the chooser dialog (also known as the "disambiguation dialog"), 
+        as shown in figure</p>
+    
+    <figure><img src="imagenes/ud4-2021-10-04-11-25-17.png" /><br><figcaption>Disambiguation dialog</figcaption></figure>
+    <br>
+    
+    <p>To allow other apps to start your activity in this way, you need to add an <span class="r-word">&lt;intent-filter></span> element in your manifest file for 
+        the corresponding <span class="r-word">&lt;activity></span>  element.</p>
+    <p>When your app is installed on a device, the system identifies your intent filters and adds the information to an internal catalog of intents supported by all installed apps. When an app calls <span class="r-word">startActivity()</span> 
+         or <span class="r-word">startActivityForResult()</span> , with an implicit intent, the system finds which activity (or activities) can respond to the intent.</p>
+    
+<p class="sub-section">Add an Intent Filter</p>
+<p>In order to properly define which intents your activity can handle, each <span class="negrita">intent filter</span> you add should be as specific as possible 
+    in terms of the type of action and data the activity accepts.</p>
+
+    <p>The system may send a given <span class="r-word">Intent</span>  to an activity if that activity has an intent filter fulfills the following criteria of the <span class="r-word">Intent</span> object:</p>
+    <p>
+
+        <ul>
+            <li><span class="negrita">Action</span> 
+                <p>A string naming the action to perform. Usually one of the platform-defined values such as <span class="r-word">ACTION_SEND</span>  or <span class="r-word">ACTION_VIEW</span> .</p>
+                    
+                <p>Specify this in your intent filter with the <span class="d-word">&lt;action></span>  element. 
+                    The value you specify in this element must be the full string name for the action, instead of the API constant.</p>
+            </li>
+            <li><span class="negrita">Data</span> 
+                <p>A description of the data associated with the intent.</p>
+                <p>Specify this in your intent filter with the <span class="d-word">&lt;data></span>  element. Using one or more attributes in this element, 
+                    you can specify just the MIME type, just a URI prefix, just a URI scheme, or a combination of these and others that indicate the data type accepted.</p>
+            </li>
+            <li><span class="negrita">Category</span> 
+                <p>Provides an additional way to characterize the activity handling the intent, usually related to the user gesture or location from which it's started. 
+                    There are several different categories supported by the system, but most are rarely used. 
+                    However, all implicit intents are defined with <span class="r-word">CATEGORY_DEFAULT</span>  by default.</p>
+                <p>Specify this in your intent filter with the <span class="r-word">&lt;category></span> element.</p>
+            </li>
+        </ul>
+    </p>
+
+    <p>In your intent filter, you can declare which criteria your activity accepts by declaring each of them with corresponding XML elements nested in the 
+        <span class="d-word">&lt;intent-filter></span>  element.</p>
+
+    <p>For example, here's an activity with an intent filter that handles the ACTION_SEND intent when the data type is either text or an image:</p>
+
+    <section><pre><code class="language-xml">&lt;activity android:name="ShareActivity">
+    &lt;intent-filter>
+        &lt;action android:name="android.intent.action.SEND"/>
+        &lt;category android:name="android.intent.category.DEFAULT"/>
+        &lt;data android:mimeType="text/plain"/>
+        &lt;data android:mimeType="image/*"/>
+    &lt;/intent-filter>
+&lt;/activity></code></pre>
+    </section><br><br>
+
+    <p>We are going to show an example using the application we created earlier. Basically we will make our App send a defined text to another App
+        called SharedActivities, it will take the text, convert it to capital letters and when pressing the button it will return that text to the initial application. In the image below you can see how it works</p>
+
+    <figure><img src="./imagenes/ud4-activities_dif_apps_com.gif" /><br><figcaption>Running sample</figcaption></figure>
+    <br>
+    
+    <p>So, let's code</p>
+
+    <p>First we are going to create an application, which converts a text into capital letters, it is a silly application but it serves as an example.</p>
+    <p>In addition, this application will have 2 activities <span class="cursiva">MainActivity</span>, which will not do anything it is only for
+         academic purpose, and <span class="cursiva">SharedActivity</span> , which will receive a text, and pass it to uppercase, it will also 
+         have a button to return the text in uppercase to the application that called it.</p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">SharedActivities app -> activity_main.xml</span>
+        </section>
+    <section class="marco-b">
+        <p>Nothing special</p>
+<section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    &lt;TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout></code></pre>
+</section><br><br>
+    </section>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">SharedActivities app -> activity_shared.xml</span>
+        </section>
+    <section class="marco-b">
+        <p>Nothing special</p>
+<section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+    &lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".SharedActivity">
+    
+        &lt;TextView
+            android:id="@+id/tvShared"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/orange"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="TextView" />
     
     
-    <p class="sub-section">Parcelable objects</p>
+        &lt;Button
+            android:id="@+id/btnSendBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Send back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvShared" />
+    &lt;/androidx.constraintlayout.widget.ConstraintLayout></code></pre>
+</section><br><br>
+    </section>
+
+    <p>Then we have to add <span class="r-word">&lt;intent-filter></span>  in the AndroidManifest file to indicate to the 
+        system that this activity is capable of resolving this request </p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">AndroidManifest.xml</span>
+        </section>
+    <section class="marco-b">
+<section><pre><code class="language-kotlin">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cartatar.sharedactivities">
+
+    &lt;application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SharedActivities">
+        &lt;activity android:name="SharedActivity"
+            android:exported="true">
+            &lt;intent-filter>
+                &lt;action android:name="android.intent.action.SEND"/>
+                &lt;category android:name="android.intent.category.DEFAULT"/>
+                &lt;data android:mimeType="text/plain"/>
+            &lt;/intent-filter>
+        &lt;/activity>
+        &lt;activity
+            android:name=".MainActivity"
+            android:exported="true">
+            &lt;intent-filter>
+                &lt;action android:name="android.intent.action.MAIN" />
+
+                &lt;category android:name="android.intent.category.LAUNCHER" />
+            &lt;/intent-filter>
+        &lt;/activity>
+    &lt;/application>
+
+&lt;/manifest></code></pre>
+</section><br><br>
+    </section>
+
+    
+    <p>To call <span class="d-word">SharedActivities</span>  app from our app responding to click event. Pay atention in <span class="r-word">Intent.createChooser()</span>  method, that allows us choose destination App</p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-kotlin">var myResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    if (result.resultCode == Activity.RESULT_OK) {
+        val data: Intent? = result.data
+
+        //When data go back we put it in the text view
+        binding.tvGreeting.text = "${data?.getStringExtra(Intent.EXTRA_RETURN_RESULT)}"
+    }
+}
+
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+
+    binding = ActivityMainBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+
+    binding.button.setOnClickListener{ sendShared() }
+}
+
+
+
+private fun sendShared() {
+    val sendIntent: Intent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, "Hi there! pass that to uppercase and send back.")
+        type = "text/plain"
+    }
+
+    val shareIntent = Intent.createChooser(//Selector that allow us choose destination app according the action and intent-filter
+        sendIntent,
+        "Hey choose an app to uppercase") //Title of selector window
+    myResultLauncher.launch(shareIntent)
+}</code></pre>
+            </section><br><br>
+    </section>
+
+
+    <p>And now, in <span class="negrita">SharedActivity</span>  of <span class="cursiva">SharedActivities</span> app, we have to receive the data</p>
+
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">SharedActivity.kt</span>
+        </section>
+    <section class="marco-b">
+        <section><pre><code class="language-kotlin">class SharedActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivitySharedBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_shared)
+        binding = ActivitySharedBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+
+        val data = intent
+        var text:String? = null
+
+        data?.let{
+            if(data.hasExtra(Intent.EXTRA_TEXT))
+                text = data.getStringExtra(Intent.EXTRA_TEXT).toString().uppercase()
+            binding.tvShared.text = text
+        }
+
+
+        binding.btnSendBack.setOnClickListener {
+            val intent = Intent().apply {
+                putExtra(Intent.EXTRA_RETURN_RESULT, text?:"No text")
+            }
+
+            setResult(RESULT_OK,intent)
+            finish()
+        }
+    }
+}</code></pre>
+        </section><br><br>
+    </section>
+
+    <p class="sub-section">Some examples of common intents</p>
+
+       
+    
+    <p>Next snippets show you how to implement some common functions</p>
+
+    <section class="marco-t warn">
+        <span class="icono warning"> </span>  Warning 
+        </section>
+    <section class="marco-b">
+        <p>If there are no apps on the device that can receive the implicit intent, your app <span class="subrayado">will crash</span>  when it calls <span class="r-word">startActivity()</span>.
+        To first verify that an app exists to receive the intent, call <span class="r-word">resolveActivity()</span> on your Intent object. 
+        If the result is <span class="negrita">non-null</span> , there is at least one app that can handle the intent and it's safe to call <span class="r-word">startActivity()</span>.
+        If the result is <span class="negrita">null</span> , you should not use the intent and, if possible, you should disable the feature that invokes the intent.</p>
+        
+    </section>
+
+    <p><span class="negrita">Make a phone call</span></p>
+    <section><pre><code class="language-kotlin">fun dialPhoneNumber(phoneNumber: String) {
+    val intent = Intent(Intent.ACTION_DIAL).apply {
+        data = Uri.parse("tel:$phoneNumber")
+    }
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    }
+}</code></pre>
+    </section><br><br>
+    <section class="marco-t inf">
+        <span class="icono info"> </span> Do not forget give <span class="r-word">CALL_PHONE</span>  permission
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-xml">&lt;uses-permission android:name="android.permission.CALL_PHONE" /></code></pre>
+            </section><br><br>
+    </section>
+
+    <p><span class="negrita">Create an Alarm</span> </p>
+    <section><pre><code class="language-kotlin">fun createAlarm(message: String, hour: Int, minutes: Int) {
+    val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
+        putExtra(AlarmClock.EXTRA_MESSAGE, message)
+        putExtra(AlarmClock.EXTRA_HOUR, hour)
+        putExtra(AlarmClock.EXTRA_MINUTES, minutes)
+    }
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    }
+}</code></pre>
+    </section><br><br>   
+        
+
+    <section class="marco-t inf">
+        <span class="icono info"> </span> Remember give your app permission
+        </section>
+    <section class="marco-b">
+        <section><pre><code class="language-xml">&lt;uses-permission android:name="com.android.alarm.permission.SET_ALARM" /></code></pre>
+        </section><br><br>
+    </section>
+        
+    <p><span class="negrita">Add a calendar event</span> </p>
+    <section><pre><code class="language-kotlin">fun addEvent(title: String, location: String, begin: Long, end: Long) {
+    val intent = Intent(Intent.ACTION_INSERT).apply {
+        data = Events.CONTENT_URI
+        putExtra(Events.TITLE, title)
+        putExtra(Events.EVENT_LOCATION, location)
+        putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, begin)
+        putExtra(CalendarContract.EXTRA_EVENT_END_TIME, end)
+    }
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    }
+}</code></pre>
+    </section><br><br>
+
+    <p><span class="negrita">Capture a picture or video and return it</span> </p>
+    <section><pre><code class="language-kotlin">const val REQUEST_IMAGE_CAPTURE = 1
+val locationForPhotos: Uri = ...
+
+fun capturePhoto(targetFilename: String) {
+    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
+        putExtra(MediaStore.EXTRA_OUTPUT, Uri.withAppendedPath(locationForPhotos, targetFilename))
+    }
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+    }
+}
+
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+        val thumbnail: Bitmap = data.getParcelableExtra("data")
+        // Do other work with full size photo saved in locationForPhotos
+        ...
+    }
+}</code></pre>
+    </section><br><br>
+
+    <p><span class="negrita">Email</span></p>
+    <section><pre><code class="language-kotlin">fun composeEmail(addresses: Array<String>, subject: String, attachment: Uri) {
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "*/*"
+        putExtra(Intent.EXTRA_EMAIL, addresses)
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+        putExtra(Intent.EXTRA_STREAM, attachment)
+    }
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    }
+}</code></pre>
+    </section><br><br>
+
+    <p><span class="negrita">New note</span> </p>
+    <section><pre><code class="language-kotlin">fun createNote(subject: String, text: String) {
+    val intent = Intent(NoteIntents.ACTION_CREATE_NOTE).apply {
+        putExtra(NoteIntents.EXTRA_NAME, subject)
+        putExtra(NoteIntents.EXTRA_TEXT, text)
+    }
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    }
+}</code></pre>
+    </section><br><br>
+
+    <p><span class="negrita">Web search</span></p>
+    <section><pre><code class="language-kotlin">fun searchWeb(query: String) {
+    val intent = Intent(Intent.ACTION_WEB_SEARCH).apply {
+        putExtra(SearchManager.QUERY, query)
+    }
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    }
+}</code></pre>
+    </section><br><br>
+
+    <p><span class="negrita">Show a location on a map</span></p>
+    <section><pre><code class="language-kotlin">fun showMap(geoLocation: Uri) { //example "geo:0,0?q=39.4295152,-0.4660814(Treasure)"
+    val intent = Intent(Intent.ACTION_VIEW).apply {
+        data = geoLocation
+    }
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    }
+}</code></pre>
+    </section><br><br>
+
+    <p><span class="negrita">Open Wifi Settings</span> </p>
+    <section><pre><code class="language-kotlin">fun openWifiSettings() {
+    val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    }
+}</code></pre>
+    </section><br><br>
+
+    <p><span class="negrita">Text message</span> </p>
+    <section><pre><code class="language-kotlin">fun composeMmsMessage(message: String, attachment: Uri) {
+    val intent = Intent(Intent.ACTION_SENDTO).apply {
+        type = HTTP.PLAIN_TEXT_TYPE
+        putExtra("sms_body", message)
+        putExtra(Intent.EXTRA_STREAM, attachment)
+    }
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    }
+}</code></pre>
+    </section><br><br>
+
+    <p><span class="negrita">Web browser</span> </p>
+<section><pre><code class="language-kotlin">fun openWebPage(url: String) {
+    val webpage: Uri = Uri.parse(url)
+    val intent = Intent(Intent.ACTION_VIEW, webpage)
+    if (intent.resolveActivity(packageManager) != null) {
+        startActivity(intent)
+    }
+}</code></pre>
+</section><br><br>
 
 
     <div class="tarea">Test Activity Lifecycle</div> 
@@ -462,6 +1090,10 @@ private fun openActivity2() {
     <section class="apartado">
     <a name="sFragments"><a>
     <h2>Fragments</h2>
+
+    <figure><img src="../imagenes/underconstruction.gif" /><br><figcaption>underconstruction</figcaption></figure>
+    <br>
+    
     
     
     
@@ -473,6 +1105,8 @@ private fun openActivity2() {
     <a name="sNavigation"><a>
     <h2>Navigation</h2>
     
+    <figure><img src="../imagenes/underconstruction.gif" /><br><figcaption>underconstruction</figcaption></figure>
+    <br>
     
     
     </section><!-- End section -->
@@ -486,6 +1120,9 @@ private fun openActivity2() {
     <ul>
         <li><a class="enlace" target="_blank" href="https://developer.android.com/guide/components/activities/intro-activities">https://developer.android.com/guide/components/activities/intro-activities</a> </li>
         <li><a class="enlace" target="_blank" href="https://developer.android.com/guide/components/activities/activity-lifecycle">https://developer.android.com/guide/components/activities/activity-lifecycle</a> </li>
+        <li><a class="enlace" target="_blank" href="https://medium.com/kotlin-dev-reactor/android-parcelable-en-kotlin-5514314f15e">https://medium.com/kotlin-dev-reactor/android-parcelable-en-kotlin-5514314f15e</a> </li>
+        <li><a class="enlace" target="_blank" href="https://developer.android.com/training/basics/intents/filters">https://developer.android.com/training/basics/intents/filters</a> </li>
+        <li><a class="enlace" target="_blank" href="https://developer.android.com/guide/components/intents-common">https://developer.android.com/guide/components/intents-common</a> </li>
     </ul>
     
     
