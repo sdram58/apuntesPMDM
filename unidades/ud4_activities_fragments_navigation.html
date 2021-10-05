@@ -1697,6 +1697,118 @@ class RedFragment : Fragment() {
 <figure><img src="./imagenes/ud4-fragment_layout.gif" /><br><figcaption></figcaption></figure>
 <br>
 
+    <h3>Using fragments programmatically</h3>
+    <p>With the previous example we have managed to add <span class="cursiva">fragments</span>  with the xml layout, 
+        which allows us to add them easily and quickly. Let's complicate things a bit now and see how we can add a <span class="cursiva">fragment</span> 
+        programmatically (for example by pressing a button) or even replace it and change it depending on the user's selection.
+    </p>
+
+    <p>For this we will modify the <span class="negrita">xml</span>  of our <span class="d-word">MainActivity</span>  class.</p>
+
+    <!--activity_main.xml-->
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">activity_main.xml</span>
+        </section>
+    <section class="marco-b">
+        <section><pre><code class="language-kotlin">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple"
+    android:orientation="vertical">
+
+    &lt;Button
+        android:id="@+id/btnRed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="8dp"
+        android:layout_margin="5dp"
+        android:background="@color/red"
+        android:text="Fragment rojo" />
+
+    &lt;Button
+        android:id="@+id/btnBlue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:background="@color/blue"
+        android:text="Fragment azul" />
+
+    &lt;FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+&lt;/LinearLayout>
+        </code></pre></section><br><br>
+    </section>
+
+    
+
+    <p>We have added two buttons in the main activity that will be responsible for changing the fragment through code and 
+        we have also added a <span class="r-word">FrameLayout</span>  that will be the <span class="negrita">container</span>  for said <span class="cursiva">fragments</span> .</p>
+
+    <p>Surely the XML gives us an error, because I have added a new color, we go to <span class="d-word">Res > Values > Colors</span>  and add the violet.</p>
+    
+    <section><pre><code class="language-xml">&lt;color name="purple">#673AB7&lt;/color></code></pre></section><br><br>
+
+    <p>Let's go to the <span class="d-word">ActivityMain</span>  class and create a method called <span class="r-word">loadFragment(fragment: Fragment)</span> 
+    </p>
+
+    <section><pre><code class="language-kotlin">private fun loadFragment(fragment:Fragment) {
+    val fragmentTransaction = supportFragmentManager.beginTransaction()
+    fragmentTransaction.add(R.id.fragmentContainer, fragment)
+    fragmentTransaction.<span class="r-word">commit()</span> 
+}
+    </code></pre></section><br><br>
+
+    <p>This function receives a <span class="cursiva">fragment</span>  that will be the one we want to load in our <span class="r-word">FrameLayout</span> 
+         of the xml. First we create a <span class="r-word">fragmentTransaction</span>  object, this object is created with <span class="r-word">supportFragmentManager</span> 
+         which is the one in charge of managing the <span class="r-word">fragments</span>  and has most of the methods we need in the management.</p>
+
+    <p>To load a <span class="cursiva">fragment</span>  we will always do the same, <span class="subrayado">we need to notify the system that we are going 
+        to make a change</span> , add it and save that change. That is exactly what our previous function does. 
+        We start notifying the change with <span class="r-word">beginTransaction()</span> , then we call the <span class="r-word">add()</span> 
+         function of the <span class="r-word">fragmentTransaction</span>  and close it with <span class="r-word">commit()</span> .</p>
+
+    <p>To finish we need to add the <span class="r-word">onClickListener()</span>  function to our buttons to add the fragments.</p>
+
+
+    <section><pre><code class="language-kotlin">btnRed.setOnClickListener { loadFragment(RedFragment()) }
+btnBlue.setOnClickListener { replaceFragment(BlueFragment()) }</code></pre></section><br><br>
+
+<p>In the previous example we saw how to add <span class="cursiva">fragments</span> , but if you look closely, every time we add one, 
+    the previous one will die. Now let's think that we are mkaing a workflow and there are two screens, in the first one the user has 
+    to enter their personal data and in the second their address. If we work with fragments we have the possibility of 
+    emulating the operation of the activities, that is, we can press back (both in the toolbar and the mobile button) 
+    and return to the previous one.
+</p>
+
+<p>For this we will have to make two changes in the <span class="r-word">loadFragment()</span>  method.</p>
+
+<section><pre><code class="language-kotlin">private fun replaceFragment(fragment: Fragment){
+    val fragmentTransaction = supportFragmentManager.beginTransaction()
+    fragmentTransaction.replace(R.id.fragmentContainer, fragment)
+    fragmentTransaction.addToBackStack(null)
+    fragmentTransaction.commit()
+}
+</code></pre></section><br><br>
+
+<p>The first thing we have done is to rename it, since it no longer adds <span class="cursiva">fragments</span> , but replaces them. 
+    This time the <span class="r-word">fragmentTransaction</span>  object does not call the <span class="r-word">add()</span>  
+    function, but rather <span class="r-word">replace()</span>. To finish before doing the <span class="r-word">commit()</span>,
+    we have added <span class="r-word">addToBackStack(null)</span> , which this we're telling the system to allow going back in the stack.
+</p>
+
+<p>If we run the complete example above and open a couple of <span class="cursiva">fragments</span> , pressing return will take us to the <span class="cursiva">previous fragment</span> .</p>
+
+
+
+
+
+
 
     <!----------------------------------------------Master/detail. RecyclerView------------------------------------------------------>
 
