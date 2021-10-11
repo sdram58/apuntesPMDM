@@ -1823,22 +1823,22 @@ binding.btnBlue.setOnClickListener { loadFragment(BlueFragment()) }</code></pre>
 
     <h3>Master/detail. RecyclerView</h3> 
 
-    En esta sección vamos a ver un ejemplo de como implementar aplicaciones tipo Master/Detail. Normalmente, en este tipo de aplicaciones tenemos una lista con una serie de elementos.
-    La lista la implementaremos mediante un RecyclerView.
+    <p>In this section we are going to see an example of how to implement Master / Detail type applications. Normally, in this type of application we have a list with a series of elements.</p>
+    <p>We will implement the list through a RecyclerView.</p>
 
-    Estas aplicaciones se suelen diseñar de dos formas distintas en función de en qué dispositivo se vea. Si es un móvil en portrait, suelen ser dos pantallas distintas, una para la lista
-    y otra para el detalle. Para dispositivos anchos, ambas pantallas se ven en una sola. Mira la imagen de abajo.
+    <p>These applications are usually designed in two different ways depending on what device it is viewed on. If it is a mobile in portrait, there are usually two different screens, one for the list and one for the detail. For wide devices, both screens are seen in one. </p><p>Look at the image below.</p>
+
 
     <figure><img src="imagenes/ud4-2021-10-11-16-57-46.png" /><br><figcaption>Primary/Detal App</figcaption></figure>
     <br>
 
-    Nosotros en lugar de implementar en función del ancho del dispositivo, por no tener que instalar más emuladores, lo haremos en función de si el móvil está en vertical o en horizontal.
-    De esta manera, con el móvil vertical tendremos una actividad que irá cargando el Fragment de la lista o el Fragment del detalle. Por otra parte, en la vista Landscape, la misma 
-    Activity contendrá los dos Fragments, el de la lista y el del detalle.
+    <p>Instead of implementing according to the width of the device, because we do not have to install more emulators, we will do it depending on 
+        whether the mobile is portrait or landscape. </p>
+    <p>In this way, with the vertical mobile we will have an activity that will load the Fragment of the list or the Fragment of the detail. On the other hand, in the Landscape view, 
+        the same Activity will contain the two Fragments, the one from the list and the one from the detail. So we will have a single Activity and 
+        two Fragments, depending on the orientation we will load one or both. We will start by designing the Layout of the MainActivity, 
+        we will create two versions, one for the Portrait version and the other for the Landscape version.</p>
 
-    Así pues tendremos una única Activity y dos Fragments, en función de la orientación cargaremos uno o los dos.
-
-    Empezaremos diseñando el Layout del MainActivity, crearemos dos versiones, una para la versión Portrait y otro para la versión Landscape
 
     <section class="marco-t file-">
         <span class="icono file"> </span> <span class="negrita">activity_main.xml</span>
@@ -1861,14 +1861,15 @@ binding.btnBlue.setOnClickListener { loadFragment(BlueFragment()) }</code></pre>
     </section>
     <br><br>
 
-    Vemos que contiene un único contenedor para Fragments, al que le ponemos un Id para poder referenciarlo.
+    <p>We see that it contains a single container for Fragments, to which we put an ID to be able to reference it. </p>
+    <p>Now it's time to create the Landscape version. We can do it in several ways, but the easiest is from the editor itself in design view. 
+        We press the rotate view button <img style="vertical-align: baseline"  src="imagenes/ud4-2021-10-11-17-08-23.png" /> and select the option to create a Landscape variant. You could also create a version for a tablet, etc ...</p>
 
-    Ahora toca crear la versión Landscape. Lo podemos hacer de varias formas, pero la más fácil es desde el propio editor en vista diseño. Pulsamos el botón de rotar vista, <img style="vertical-align: baseline"  src="imagenes/ud4-2021-10-11-17-08-23.png" /> y seleccionamos la opción de crear variante Landscape. También podrías crear versión para tablet, etc...
 
     <figure><img src="./imagenes/ud4-landscape.gif" /><br><figcaption></figcaption></figure>
     <br>
 
-    Fíjate que ha creado el directorio activity_main, con los dos layouts. Al Landscape se ha añadido el sufijo (land)
+   <p>Notice that it has created the activity_main directory, with the two layouts. The suffix (land) has been added to Landscape</p>
 
     <figure><img src="imagenes/ud4-2021-10-11-17-10-16.png" /><br><figcaption></figcaption></figure>
     <br>
@@ -1908,9 +1909,9 @@ binding.btnBlue.setOnClickListener { loadFragment(BlueFragment()) }</code></pre>
     </section>
     <br><br>
 
-   La versión Landscape tendrá dos contenedores, el de la lista y el del detalle.
-
-   Ahora vamos a crear los Fragments para la lista y para el detalle. Vamos con sus Layout.
+   
+<p>The Landscape version will have two containers, the one for the list and the other for the detail.</p>
+<p>Now we are going to create the Fragments for the list and for the detail. Let's go with their Layout.</p>
 
    <section class="marco-t file-">
        <span class="icono file"> </span> <span class="negrita">fragment_list.xml</span>
@@ -1932,9 +1933,9 @@ binding.btnBlue.setOnClickListener { loadFragment(BlueFragment()) }</code></pre>
            </section><br><br>
    </section>
 
-   Podemos observar que solo contiene un RecyclerView, que ocupará a todo su padre.
-
-   Ahora vamos con el detalle.
+   
+    <p>We can see that it only contains one <span class="d-word">RecyclerView</span> , which will occupy all of its parent.</p>
+    <p>Now we go to the detail.</p>
 
    <section class="marco-t file-">
        <span class="icono file"> </span> <span class="negrita">fragment_detail.xml</span>
@@ -2007,6 +2008,133 @@ binding.btnBlue.setOnClickListener { loadFragment(BlueFragment()) }</code></pre>
    </section>
    
 <br><br>
+
+<p>As we see in the layout above, we will have an ImageView that will contain the image and three TexViews, one for the name, another for the real name and the last one for the description.</p>
+<p>The description is inside a ScrollView, to be able to scroll if the description grows a lot.</p>
+
+<p>The data that our application will handle will be SuperHeroes, with your name, alter ego, description, and photo. Below we see the class that contains your information.</p>
+
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">SuperHero.kt</span>
+    </section>
+<section class="marco-b">
+        <section class="marco-t inf">
+            <span class="icono info"> </span> <span class="negrita">Create the file inside the model folder</span>
+            </section>
+        <section class="marco-b">
+                
+        </section>
+        <section><pre><code class="language-kotlin">data class Superhero(
+    var id:Int,
+    var superhero:String,
+    var publisher:String,
+    var realName:String,
+    var photo:String,
+    var description:String
+){
+    companion object{
+        var listSuper:MutableList<Superhero> = ArrayList()
+        fun getSuperheros(): MutableList<Superhero>{
+            listSuper.clear()
+            listSuper.add(Superhero(1,"Spiderman", "Marvel", "Peter Parker", "spiderman.jpg",LoremIpsum().values.first()))
+            listSuper.add(Superhero(2,"Daredevil", "Marvel", "Matthew Michael Murdock", "daredevil.jpg",LoremIpsum().values.first()))
+            listSuper.add(Superhero(3,"Wolverine", "Marvel", "James Howlett", "logan.jpeg",LoremIpsum().values.first()))
+            listSuper.add(Superhero(4,"Batman", "DC", "Bruce Wayne", "batman.jpg",LoremIpsum().values.first()))
+            listSuper.add(Superhero(5,"Thor", "Marvel", "Thor Odinson", "thor.jpg",LoremIpsum().values.first()))
+            listSuper.add(Superhero(6,"Flash", "DC", "Jay Garrick", "flash.png",LoremIpsum().values.first()))
+            listSuper.add(Superhero(7,"Superman", "DC", "Clark Kent", "superman.jpg",LoremIpsum().values.first()))
+            listSuper.add(Superhero(8,"Iron Man", "DC", "Tonny Stark", "ironman.jpg",LoremIpsum().values.first()))
+            listSuper.add(Superhero(9,"Green Lantern", "DC", "Alan Scott", "green_lantern.jpg",LoremIpsum().values.first()))
+            listSuper.add(Superhero(10,"Wonder Woman", "DC", "Princess Diana", "wonder_woman.jpg",LoremIpsum().values.first()))
+            return listSuper
+        }
+
+        fun getSuperHeroById(mId: Int?):Superhero?{
+            val superhero = getSuperheros().filter { superHero ->
+                superHero.id==mId
+            }
+
+            return  superhero[0]?:null
+        }
+
+        fun getFirstID():Int{
+            return getSuperheros()[0].id
+        }
+    }
+}
+        </code></pre></section><br><br>
+            
+</section>
+
+<p>Pay special attention to the Companion object, which will act as the source of our data, in a real application the data would be obtained from the Internet or from other sources such as Databases.
+    Access methods have also been created.</p>
+
+
+<p>The next thing we will do is save the images in our project. For this we are going to create the RAW folder within res. This folder is used to store images, videos, audios, that is, raw files.</p>
+
+<!-- Mostrar crear directorio RAW -->
+
+En esta carpeta pegamos las imágenes, podemos hacerlo directamente desde el explorador
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> <span class="negrita">El nombre de los ficheros en le directorio RAW ha de ser específico.</span>
+    </section>
+<section class="marco-b">
+    <ul>
+        <li>No puede tener caracterés especiales que no sea el guion bajo "_"</li>
+        <li>No se puede hacer uso de mayúsculas.</li>
+        <li>No puede empezar por número.</li>
+    </ul>        
+</section>
+
+Para acceder a estas imágenes desde código y ponerlas en una ImageView primero obtenemos el recurso. Fíjate que es el nombre de la imagen sin extensión. 
+<section><pre><code class="language-kotlin">val inputStream =context.resources.openRawResource(R.raw.batman)
+//Get an inputStream por batman.jpg in RAW folder.
+</code></pre></section><br><br>
+
+Luego con BitmapFactory y el inputStream obtenemos el bitmap.
+<section><pre><code class="language-kotlin">val image = BitmapFactory.decodeStream(inputStream)
+</code></pre></section><br><br>
+
+Finalmente asignamos ese Bitmap a el ImageView a través de su método setImageBitmap(bitmap:Bitmap)
+
+<section><pre><code class="language-kotlin">ivPoster.setImageBitmap(image)
+</code></pre></section><br><br>
+
+El código quedaría algo así:
+<section><pre><code class="language-kotlin">val inputStream =context.resources.openRawResource(R.raw.batman)
+val image = BitmapFactory.decodeStream(inputStream)
+ivPoster.setImageBitmap(image)
+</code></pre></section><br><br>
+
+Pero claro, nosotros en este caso obtemos el nombre de la imagen de un objeto tipo SuperHero en su atributo "Photo", ¿Cómo hacemos para obtener el recurso RAW de un String?
+Una solución es usando el método getIdentifier(String, resType, package). Supongamos que tenemos en la varible "imageName" la cadena de texto de la imagen (recuerda sin la extensión).
+Vemos un ejemplo:
+<section><pre><code class="language-kotlin">val context: Context = ivPoster.context
+val id = context.resources.getIdentifier(
+    imageName,
+    "raw",
+    context.packageName
+)
+
+val inputStream =context.resources.openRawResource(id)
+
+//........
+</code></pre></section><br><br>
+El contexto lo podemos obtener de propio ImageView.
+
+
+<br>
+
+
+
+
+
+
+
+
+
 
 
 
