@@ -1694,8 +1694,11 @@ class RedFragment : Fragment() {
             </section><br><br>
     </section>
 
+
 <figure><img src="./imagenes/ud4-fragment_layout.gif" /><br><figcaption></figcaption></figure>
 <br>
+<br>
+<a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/FragmentExample">https://github.com/sdram58/PMDM2021/tree/master/FragmentExample</a> 
 
     <h3>Using fragments programmatically</h3>
     <p>With the previous example we have managed to add <span class="cursiva">fragments</span>  with the xml layout, 
@@ -1776,8 +1779,8 @@ class RedFragment : Fragment() {
     <p>To finish we need to add the <span class="r-word">onClickListener()</span>  function to our buttons to add the fragments.</p>
 
 
-    <section><pre><code class="language-kotlin">btnRed.setOnClickListener { loadFragment(RedFragment()) }
-btnBlue.setOnClickListener { replaceFragment(BlueFragment()) }</code></pre></section><br><br>
+    <section><pre><code class="language-kotlin">binding.btnRed.setOnClickListener { loadFragment(RedFragment()) }
+binding.btnBlue.setOnClickListener { loadFragment(BlueFragment()) }</code></pre></section><br><br>
 
 <p>In the previous example we saw how to add <span class="cursiva">fragments</span> , but if you look closely, every time we add one, 
     the previous one will die. Now let's think that we are mkaing a workflow and there are two screens, in the first one the user has 
@@ -1804,6 +1807,12 @@ btnBlue.setOnClickListener { replaceFragment(BlueFragment()) }</code></pre></sec
 
 <p>If we run the complete example above and open a couple of <span class="cursiva">fragments</span> , pressing return will take us to the <span class="cursiva">previous fragment</span> .</p>
 
+<figure><img src="./imagenes/ud4-fragment_prog.gif" /><br><figcaption></figcaption></figure>
+<br>
+<br>
+<a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/FragmentsProgrammatically">https://github.com/sdram58/PMDM2021/tree/master/FragmentsProgrammatically</a> 
+
+
 
 
 
@@ -1812,7 +1821,17 @@ btnBlue.setOnClickListener { replaceFragment(BlueFragment()) }</code></pre></sec
 
     <!----------------------------------------------Master/detail. RecyclerView------------------------------------------------------>
 
-    <h3>Master/detail. RecyclerView</h3>    
+    <h3>Master/detail. RecyclerView</h3> 
+
+    En esta sección vamos a ver un ejemplo de como implementar aplicaciones tipo Master/Detail. Normalmente, en este tipo de aplicaciones tenemos una lista con una serie de elementos.
+    La lista la implementaremos mediante un RecyclerView.
+
+
+
+
+
+
+    <!----------------------------------------------NavGraph------------------------------------------------------>
 
     <h3>Navgraph</h3>
 
@@ -1845,7 +1864,7 @@ btnBlue.setOnClickListener { replaceFragment(BlueFragment()) }</code></pre></sec
     <a name="s"><a>
     <h2>Bonus track: Splash Screen</h2>
     
-    figure><img src="../imagenes/underconstruction.gif" /><br><figcaption>underconstruction</figcaption></figure>
+    <figure><img src="../imagenes/underconstruction.gif" /><br><figcaption>underconstruction</figcaption></figure>
     <br>
     
     
