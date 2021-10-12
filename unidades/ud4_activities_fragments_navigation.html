@@ -22,7 +22,7 @@
 
     <!--*********************************************************Activities***********************************************************-->
     <section class="apartado">
-    <a name="sActivities"><a>
+    <a name="sActivities"></a>
     <h2>Activities</h2>
     <h3>Introduction to Activities</h3>
     <p>The <span class="r-word">Activity</span>  class is a crucial component of an Android app, and the way activities are launched and put together is a fundamental part of the platform's application model.
@@ -1091,7 +1091,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
     
     <!--*********************************************************Fragments***********************************************************-->
     <section class="apartado">
-    <a name="sFragments"><a>
+    <a name="sFragments"></a>
     <h2>Fragments</h2>
 
     <h3>What's a fragment?</h3>
@@ -1911,7 +1911,10 @@ binding.btnBlue.setOnClickListener { loadFragment(BlueFragment()) }</code></pre>
 
    
 <p>The Landscape version will have two containers, the one for the list and the other for the detail.</p>
-<p>Now we are going to create the Fragments for the list and for the detail. Let's go with their Layout.</p>
+<p>Now we are going to create two blank <span class="negrita">Fragments</span> , one for the list and other for the detail. Their names could be <span class="d-word">ListFragment</span> 
+     and <span class="d-word">DetailFragment</span></p>
+
+<p>Let's go with their Layout.</p>
 
    <section class="marco-t file-">
        <span class="icono file"> </span> <span class="negrita">fragment_list.xml</span>
@@ -2067,53 +2070,68 @@ binding.btnBlue.setOnClickListener { loadFragment(BlueFragment()) }</code></pre>
             
 </section>
 
-<p>Pay special attention to the Companion object, which will act as the source of our data, in a real application the data would be obtained from the Internet or from other sources such as Databases.
+<p>Pay special attention to the <span class="r-word">Companion object</span> , which will act as the source of our data, in a real application the data would be obtained from the Internet or from other sources such as Databases.
     Access methods have also been created.</p>
 
 
-<p>The next thing we will do is save the images in our project. For this we are going to create the RAW folder within res. This folder is used to store images, videos, audios, that is, raw files.</p>
+<p>The next thing we will do is save the images in our project. For this we are going to create the <span class="d-word">RAW</span> folder within res folder. This folder is used to store images, videos, audios, that is, raw files.</p>
 
-<!-- Mostrar crear directorio RAW -->
+<figure><img src="./imagenes/ud4-raw_folder.gif" /><br><figcaption>Creating RAW resources</figcaption></figure>
+<br>
 
-En esta carpeta pegamos las imágenes, podemos hacerlo directamente desde el explorador
+
+<p>In this folder we paste the images, we can do it directly from the explorer</p>
+
+<figure><img src="imagenes/ud4-2021-10-11-21-10-10.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<figure><img src="imagenes/ud4-2021-10-11-21-11-08.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>You can get images from <a class="enlace" target="_blank" href="./UD4/RecyclerViewAssets/SuperHeros.zip">here</a> </p>
 
 <section class="marco-t warn">
-    <span class="icono warning"> </span> <span class="negrita">El nombre de los ficheros en le directorio RAW ha de ser específico.</span>
+    <span class="icono warning"> </span> <span class="negrita">Files' name in RAW directory must be specific.</span>
     </section>
 <section class="marco-b">
     <ul>
-        <li>No puede tener caracterés especiales que no sea el guion bajo "_"</li>
-        <li>No se puede hacer uso de mayúsculas.</li>
-        <li>No puede empezar por número.</li>
+        <li>It cannot have special characters other than the underscore "_".</li>
+        <li>Capitalization is not possible.</li>
+        <li>It cannot start with a number.</li>
     </ul>        
 </section>
 
-Para acceder a estas imágenes desde código y ponerlas en una ImageView primero obtenemos el recurso. Fíjate que es el nombre de la imagen sin extensión. 
+<p>To access these images from code and put them in an <span class="r-word">ImageView</span>  we first get the <span class="negrita">resource</span>.
+     Note that <span class="subrayado">it is the name of the image without an extension</span> </p> 
 <section><pre><code class="language-kotlin">val inputStream =context.resources.openRawResource(R.raw.batman)
 //Get an inputStream por batman.jpg in RAW folder.
 </code></pre></section><br><br>
 
-Luego con BitmapFactory y el inputStream obtenemos el bitmap.
+<p>Then with <span class="r-word">BitmapFactory</span>  and the <span class="d-word">inputStream</span>  we get the <span class="negrita">bitmap</span> .</p>
 <section><pre><code class="language-kotlin">val image = BitmapFactory.decodeStream(inputStream)
 </code></pre></section><br><br>
 
-Finalmente asignamos ese Bitmap a el ImageView a través de su método setImageBitmap(bitmap:Bitmap)
+<p>Finally we assign that <span class="d-word">Bitmap</span>  to the <span class="r-word">ImageView</span>  through its method <span class="d-word">setImageBitmap(bitmap: Bitmap)</span> </p>
 
 <section><pre><code class="language-kotlin">ivPoster.setImageBitmap(image)
 </code></pre></section><br><br>
 
-El código quedaría algo así:
+<p>The code would look something like this:</p>
 <section><pre><code class="language-kotlin">val inputStream =context.resources.openRawResource(R.raw.batman)
 val image = BitmapFactory.decodeStream(inputStream)
 ivPoster.setImageBitmap(image)
 </code></pre></section><br><br>
 
-Pero claro, nosotros en este caso obtemos el nombre de la imagen de un objeto tipo SuperHero en su atributo "Photo", ¿Cómo hacemos para obtener el recurso RAW de un String?
-Una solución es usando el método getIdentifier(String, resType, package). Supongamos que tenemos en la varible "imageName" la cadena de texto de la imagen (recuerda sin la extensión).
-Vemos un ejemplo:
+<p>But of course, in this case we obtain the name of the image of a <span class="negrita">SuperHero</span>  type object in its "<span class="cursiva">photo</span>" attribute. 
+    How do we obtain the <span class="d-word">RAW</span>  resource of a <span class="cursiva">String</span>?</p>
+<p>One solution is using the <span class="d-word">getIdentifier(String, resType, package)</span> method. Suppose we have in the variable "<span class="negrita">imageName</span>"
+     the string of the image (<span class="subrayado">remember without the extension</span>).</p>
+    <p>Let's see an example:</p>
+
 <section><pre><code class="language-kotlin">val context: Context = ivPoster.context
 val id = context.resources.getIdentifier(
-    imageName,
+    imageName, //Something like "batman"
     "raw",
     context.packageName
 )
@@ -2122,10 +2140,454 @@ val inputStream =context.resources.openRawResource(id)
 
 //........
 </code></pre></section><br><br>
-El contexto lo podemos obtener de propio ImageView.
 
+<p>The <span class="d-word">context</span> can be obtained from the <span class="r-word">ImageView</span> itself.</p>
+
+<p>Now it is necessary to create one more <span class="negrita">layout</span>. This will be the layout that will be used for <span class="subrayado">each of the elements in the list</span>.
+    So we are going to create a layout type resource, called <span class = "inline-file">list_item.xml </span>
+    
+    <p>As already mentioned, this file will be the one that shapes each element of the list. That is, how each item will look</p>
+
+<figure><img src="imagenes/ud4-2021-10-12-00-40-42.png" /><br><figcaption>list_item</figcaption></figure>
+<br>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">list_item.xml</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardElevation="5dp"
+    android:layout_width="match_parent"
+    android:layout_margin="9dp"
+    app:cardCornerRadius="8dp"
+    android:layout_height="wrap_content">
+    &lt;androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        &lt;ImageView
+            android:id="@+id/ivPoster"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        &lt;TextView
+            android:id="@+id/tvSuperhero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="28dp"
+            android:layout_toEndOf="@+id/ivPoster"
+            android:layout_toRightOf="@+id/ivPoster"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/ivPoster"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="dadawdawdwd" />
+
+        &lt;TextView
+            android:id="@+id/tvRealName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSuperhero"
+            android:layout_marginTop="12dp"
+            android:layout_toEndOf="@+id/ivPoster"
+            android:layout_toRightOf="@+id/ivPoster"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@+id/tvSuperhero"
+            app:layout_constraintTop_toBottomOf="@+id/tvSuperhero"
+            tools:text="wdawd" />
+
+        &lt;TextView
+            android:id="@+id/tvPublisher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="3dp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="DC" />
+    &lt;/androidx.constraintlayout.widget.ConstraintLayout>
+&lt;/androidx.cardview.widget.CardView></code></pre>
+        </section><br><br>
+</section>
+
+<p>Notice how we use a <span class="r-word">CardView</span>  that allows us to give an <span class="cursiva">elevation</span>  effect and <span class="cursiva">border radius</span> .</p>
+<br>
+<p>Before continuing, let's create an <span class="d-word">OnItemClick</span>  interface, which will have an <span class="d-word">onItemClick (hero: SuperHero)</span> method. 
+    We will use it as a <span class="negrita">callback</span>  to communicate the <span class="d-word">MainActivity</span>  with the <span class="d-word">DetailFragment</span> </p>
 
 <br>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">OnItemClick.kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">interface OnItemClick {
+    fun onItemClick(hero:Superhero)
+}</code></pre>
+        </section><br><br>
+</section>
+
+<p>Now we are going to implement the code of the <span class="negrita">Fragments</span> . Let's start with <span class = "inline-file"> ListFragment.kt </span></p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">ListFragment.kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">class ListFragment() : Fragment() {
+
+    //property that indicates if we want to view a single item list or grid list. Used on onCreateView
+    private var columnCount = 2
+    
+    //Listener is our callback
+    var listener:OnItemClick? = null
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        //When fragment is created, "search" on its arguments a bundle with Key ARG_COLUMN_COUNT and set the property above
+        arguments?.let {
+            columnCount = it.getInt(ARG_COLUMN_COUNT)
+        }
+
+    }
+
+    //When fragment is attaching to an activity, the context is the activity. Remember MainActivity Implements OnItemclick
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnItemClick) {
+            listener = context
+        }
+    }
+
+    //Detach the listener. Set it to null
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        //inflate creates a View variable from a layout resource, in this case fragment_list which is just a RecyclerView 
+        val view = inflater.inflate(R.layout.fragment_list, container, false)
+
+        // Set the adapter and the LayoutManager of the recyclerView
+        if (view is RecyclerView) { //smart cast
+            with(view) {
+                layoutManager = when {
+                    columnCount &lt;= 1 -> LinearLayoutManager(context)
+                    else -> GridLayoutManager(context, columnCount)
+                }
+                adapter = MyItemRecyclerViewAdapter(Superhero.getSuperheros(),listener)
+            }
+        }
+        return view
+    }
+
+    //Creating an static method to simulate factory pattern. Creates a new ListFragment, and sets countColumn param through bundle.
+    companion object {
+        const val ARG_COLUMN_COUNT = "column-count"
+
+        @JvmStatic
+        fun newInstance(columnCount: Int) =
+            ListFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(ARG_COLUMN_COUNT, columnCount)
+                }
+            }
+    }
+
+}</code></pre>
+        </section><br><br>
+</section>
+
+
+<section><pre><code class="language-kotlin">adapter = MyItemRecyclerViewAdapter(Superhero.getSuperheros(),listener)</code></pre>
+</section><br><br>
+
+<p>
+    Nothing different from other Fragments, except for the <span class="r-word">onCreateView</span>  method. This method <span class="cursiva">inflates</span> 
+     the view (<span class="negrita">R.layout.fragment_list</span> )
+     remembering that it is a Recyclerview. Then based on the <span class="negrita">columnCount</span>  parameters that we have passed when creating it, 
+     will put a <span class="d-word">LayourManager</span>  or another in the <span class="r-word">Recyclerview</span> . <span class="r-word">LinearLayoutManager</span> 
+     for a single item per row and <span class="r-word">GridLayoutManager</span> for more than one item per row.</p>
+<p>Another important element of the <span class="r-word">RecyclerView</span>  are the <span class="d-word">adapters</span> . The <span class="d-word">adapters</span> 
+    are the classes in charge of putting the data (usually a list) each one in its element.</p>
+    <p>We must assign one. In this case one of ours (<span class="d-word">MyItemRecyclerViewAdapter</span> ).</p>
+</p>
+<p>This class (<span class="d-word">MyItemRecyclerViewAdapter</span> ) will be the one that uses the data from the <span class="negrita">SuperHero</span>  List and creates a new item for each item in the list, 
+    and will create the indicated layout, in this case <span class="inline-file">list_item.xml</span></p>
+
+<p>Let's see the MyItemRecyclerViewAdapter.kt class</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">MyItemRecyclerViewAdapter.kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">class MyItemRecyclerViewAdapter(
+    private val superHeroList: List<Superhero>,
+    private val listener:OnItemClick?
+) : RecyclerView.Adapter&lt;MyItemRecyclerViewAdapter.ViewHolder>() {
+
+    //Creates a ViewHolder for every item of the list (superHeroList)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
+        return ViewHolder(
+            ListItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+
+    }
+
+    //In this function customize our ViewHolder with its data depending on the position 
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        
+        val superhero = superHeroList[position]
+        holder.tvSuperhero.text = superhero.superhero
+        holder.tvRealName.text = superhero.realName
+        holder.tvPublisher.text = superhero.publisher
+
+
+        //We are using an extension toBipmap
+        holder.ivPoster.setImageBitmap(superhero.photo.toBitmap(holder.ivPoster.context))
+
+        //We set the tag with superhero data, in order to obtain its data in the listener
+        holder.itemView.tag = superhero
+        
+        holder.itemView.setOnClickListener(holder) //Our ViewHolder implements OnClickListener
+    }
+
+    //We need to know the length of the list. It will be the size of out data list
+    override fun getItemCount(): Int = superHeroList.size
+
+    //This inner class contains all view of each item on list_item.xml
+    inner class ViewHolder(binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+        val tvSuperhero: TextView = binding.tvSuperhero
+        val tvRealName: TextView = binding.tvRealName
+        val tvPublisher: TextView = binding.tvPublisher
+        val ivPoster: ImageView = binding.ivPoster
+
+        override fun toString(): String {
+            return super.toString() + " ${tvRealName.text} is ${tvSuperhero.text} from ${tvPublisher.text}"
+        }
+
+        override fun onClick(v: View?) {
+            
+            //First we recovery de superHero through the tag. Remember we have set it before (onBindViewHolder)
+            val superHero = v?.tag as Superhero
+            
+            //later we call our callback with the SuperHero param to inform ListFragment, and then MainActivity
+            listener?.onItemClick(superHero)
+        }
+    }
+
+}</code></pre>
+        </section><br><br>
+</section>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> We have made an extension in order of implementing toBipmap method in <span class="inline-file">Extensions.kt</span>.
+    </section>
+<section class="marco-b">
+       <section><pre><code class="language-kotlin">//This function pass an string like "batman.jpg" that is in raw folder to an Bitmap
+fun String.toBitmap(context:Context):Bitmap{
+    val imageName = this.split(".")[0]
+     val id = context.resources.getIdentifier(
+         imageName,
+        "raw",
+        context.packageName
+    )
+
+    val inputStream =context.resources.openRawResource(id)
+    return  BitmapFactory.decodeStream(inputStream)
+}</code></pre>
+       </section><br><br> 
+</section>
+
+
+<p>First we see that two objects are passed to the constructor, the data list (<span class="negrita">SuperHero</span> ) and the <span class="r-word">OnItemClick</span>  callback, to communicate with the activity when clicking on an element.</p>
+<p>We also see, that the class extends from <span class="d-word">RecyclerView.Adapter&lt;MyItemRecyclerViewAdapter.ViewHolder> ()</span> </p>
+
+
+<br><br><br>
+<p>Now take a look to <span class="inline-file">DetailFragment.kt</span></p>
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">DetailFragment.kt</span>
+    </section>
+<section class="marco-b">
+        
+    <section><pre><code class="language-kotlin">class DetailFragment : Fragment() {
+        private var superHeroId: Int? = null
+        private var superHero: Superhero? = null
+    
+    
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            arguments?.let {
+                superHeroId = it.getInt(ARG_HERO,-1)
+                superHero = Superhero.getSuperHeroById(superHeroId)
+            }
+        }
+    
+        override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            // Inflate the layout for this fragment
+            return  inflater.inflate(R.layout.fragment_detail, container, false)
+        }
+    
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+    
+            view.findViewById&lt;TextView>(R.id.tvSuperhero).text = superHero?.superhero
+            view.findViewById&lt;TextView>(R.id.tvRealName).text  = superHero?.realName
+            view.findViewById&lt;TextView>(R.id.tvDescription).text  = superHero?.description
+    
+            view.findViewById&lt;ImageView>(R.id.ivPoster).setImageBitmap(superHero?.photo?.toBitmap(view.context))
+    
+        }
+    
+    
+    
+    
+        companion object {
+            @JvmStatic
+            fun newInstance(heroId: Int) =
+                DetailFragment().apply {
+                    arguments = Bundle().apply {
+                        putInt(ARG_HERO, heroId)
+                    }
+                }
+        }
+    }</code></pre>
+    </section><br><br>
+</section>
+
+<p>This fragment receives an Int param which is the <span class="negrita">ID</span>  of a <span class="negrita">SuperHero</span> , 
+    then on <span class="d-word">onCreate</span>  method we search the <span class="negrita">hero</span>  that corresponds to this ID</p>
+
+    <section><pre><code class="language-kotlin">superHeroId = it.getInt(ARG_HERO,-1) //Get the incoming param
+superHero = Superhero.getSuperHeroById(superHeroId)</code></pre>
+    </section><br><br>
+
+<br><br><br>
+
+
+<p>Now, let's see through some images the arrangement of elements of how the different elements are going to be positioned.</p>
+
+<figure><img src="imagenes/ud4-2021-10-12-01-16-30.png" /><br><figcaption>Layouts portrait List</figcaption></figure>
+<br>
+<p>First we have the <span class="d-word">MainActiviy</span>  in <span class="negrita">Portrait</span>  whose layout only has one container (<span class="cursiva">listContainer</span>), 
+    in this container we will load the <span class="d-word">ListFragment</span>  or <span class="d-word">DetailFragment</span>  as the case may be.</p>
+    <p>Initially we will load <span class="d-word">ListFragment</span> , and once we click on an element we will load <span class="d-word">DetailFragment</span>  with the element's data in the same <span class="cursiva">listContainer</span> .</p>
+
+<figure><img src="imagenes/ud4-2021-10-12-01-24-03.png" /><br><figcaption>Layout potrait Detail</figcaption></figure>
+<br>
+
+<p>In the case of <span class="cursiva">landscape</span> , as the <span class="d-word">MainActivity</span>  has 2 containers (<span class="subrayado">listContainer and detailContainer</span>),
+     we will load <span class="d-word">ListFragment</span>  and <span class="d-word">DetailFragment</span>  in their respective containers. 
+     When starting the <span class="d-word">DetailFragment</span>  it will contain the data of the first SuperHero in the list.</p>
+
+<figure><img src="imagenes/ud4-2021-10-12-01-21-29.png" /><br><figcaption>Layouts landscape</figcaption></figure>
+<br>
+
+
+<p>Finally let's see MainActivity.kt code</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">class MainActivity : AppCompatActivity(),OnItemClick {
+    private val layoutList:FrameLayout by lazy { findViewById(R.id.containerList) }
+    private val layoutDetail:FrameLayout? by lazy { findViewById(R.id.containerDetail) }
+    
+    
+    
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_main)
+    
+            //Load ListFragment on its container. (layoutList)
+            loadRecyclerView()
+    
+            //In the case we were in landscape we load also the DetailFragment in its container. (layoutDetail)
+            if (isLandScape()){
+                //We load first SuperHero
+                loadDetailFragment(true, Superhero.getFirstID())
+            }
+        }
+    
+    
+        private fun loadRecyclerView() {
+            supportFragmentManager.beginTransaction()
+                .replace(layoutList.id, ListFragment.newInstance(1))
+                .addToBackStack(null)
+                .commit()
+        }
+    
+    
+        /*Work around that let  us to know if we're un landscape mode*/
+        private fun isLandScape():Boolean {
+            return layoutDetail != null
+        }
+    
+        
+        private fun loadDetailFragment(twoPane:Boolean, heroID:Int){
+            //If layoutDetail is null (we're in portrait mode) then we load DetailFragment in layoutList
+            val id = layoutDetail?.id?:layoutList.id
+    
+            supportFragmentManager.beginTransaction()
+                .replace(id, DetailFragment.newInstance(heroID))
+                .addToBackStack(null)
+                .commit()
+        }
+    
+        //Callback implementation
+        override fun onItemClick(hero: Superhero) {
+            //We don't nee to use snackbar, which is such as an enhanced Toast where you can implement actions.
+            //But I wanted to introduce it to you
+            Snackbar.make(layoutList, "You have clicked on ${hero.superhero}", Snackbar.LENGTH_LONG)
+                .setAction("Open"){
+    
+                    loadDetailFragment(isLandScape(), hero.id)
+    
+                }
+                .show()
+        }
+    }</code></pre>
+</section><br><br>
+</section>
+
+<p>Here some running samples</p>
+<figure><img src="./imagenes/ud4-recycler_portrait.gif" /><br><figcaption>Portrait Version</figcaption></figure>
+<br>
+
+<figure><img src="./imagenes/ud4-recycler_landscape.gif" /><br><figcaption>Landscape Version</figcaption></figure>
+<br>
+<p>
+<a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/MasterDetailRecyclerView">Github link</a> 
+</p>
 
 
 
@@ -2166,7 +2628,7 @@ El contexto lo podemos obtener de propio ImageView.
 
     <!--*********************************************************Navigation***********************************************************-->
     <section class="apartado">
-    <a name="sNavigation"><a>
+    <a name="sNavigation"></a>
     <h2>Navigation</h2>
     
     <figure><img src="../imagenes/underconstruction.gif" /><br><figcaption>underconstruction</figcaption></figure><br><br>
@@ -2180,7 +2642,7 @@ El contexto lo podemos obtener de propio ImageView.
 
     <!--*********************************************************Bonus track: Splash Screen***********************************************************-->
     <section class="apartado">
-    <a name="s"><a>
+    <a name="s"></a>
     <h2>Bonus track: Splash Screen</h2>
     
     <figure><img src="../imagenes/underconstruction.gif" /><br><figcaption>underconstruction</figcaption></figure>
@@ -2192,7 +2654,7 @@ El contexto lo podemos obtener de propio ImageView.
 
     <!--*********************************************************Webgraphy***********************************************************-->
     <section class="apartado">
-    <a name="sWebgrafia"><a>
+    <a name="sWebgrafia"></a>
     <h2>Webgraphy</h2>
 
     <ul>
