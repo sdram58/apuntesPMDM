@@ -71,7 +71,7 @@
 	},
 	"subrayado": {
 		"scope": "html",
-		"prefix": "su-",
+		"prefix": "sb",
 		"body": ["<span class=\"subrayado\">${CLIPBOARD:\"Subrayado\"}</span> $0"],
 		"description": "Palabra subrayado"
 	},
