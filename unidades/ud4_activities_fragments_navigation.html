@@ -2614,17 +2614,432 @@ superHero = Superhero.getSuperHeroById(superHeroId)</code></pre>
 
     <!----------------------------------------------NavGraph------------------------------------------------------>
 
-    <h3>Navgraph</h3>
+    <h3>Navigation</h3>
 
-    
+    <p>The Navigation component consists of three key components:</p>
 
+    <p><ul>
+        <li><span class="d-word">Navigation Graph</span>  (XML resource) - It is a resource that contains all the information related to navigation in a centralized place. 
+            This includes all the places in the app, known as <span class="negrita">destinations</span> , and all the possible paths that a user can take in the app.
+            <figure><img src="imagenes/ud4-2021-10-13-15-02-52.png" /><br><figcaption>Navigation graph example</figcaption></figure>
+            <br>
+            
+        </li>
+            <li><span class="d-word">NavHostFragment</span>  (Layout XML) - It is a special widget that you add to the layout. It shows the different destinations of the 
+                <span class="negrita">Navigation Graph</span>. It is like a container for destinations.
+            <figure><img src="imagenes/ud4-2021-10-13-15-07-48.png" /><br><figcaption>NavHostFragment</figcaption></figure>
+            <br>            
+            </li>
+            <li><span class="d-word">NavController</span>  (object) - It is an object that keeps track of the current position within the <span class="negrita">navigation graph</span> . 
+                Exchange the target content in the <span class="negrita">NavHostFragment</span>  as the user moves through the <span class="negrita">navigation graph</span> .</li>
+    </ul>
+
+        </p>
+
+        <br>
+        <p>When you navigate, you use the <span class="d-word">NavController</span>  object, telling it where you want to go or which way you want to take in 
+            the <span class="d-word">Navigation Graph</span> . The <span class="d-word">NavController</span>  will show the appropriate destination in the <span class="d-word">NavHostFragment</span>.</p>
+
+
+        <p class="sub-section">Making an example</p>
+
+        <p>
+            <ul>
+                <li>Select <span class="d-word">Empty Activity</span> as the template for the <span class="d-word">MainActivity</span> </li>
+                <li>Add the dependencies to include Navigation support:
+
+            <section class="marco-t file-">
+                <span class="icono file"> </span> <span class="negrita">build.gradle (Module: app)</span>
+                </section>
+            <section class="marco-b">
+                <section><pre><code class="language-kotlin">implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'</code></pre>
+</section>
+</section>                    
+                <section class="marco-t inf">
+                    <span class="icono info"> </span> 
+                    </section>
+                <section class="marco-b">
+                    You can add the dependencies right now, or you can also let Android Studio itself add them automatically <span class="subrayado">when you create the navigation graph</span>  in the next section.
+                </section>
+                </li>
+            </ul>
+        </p>
+
+
+    <p class="sub-section">Creating Nav Graph</p>
+
+    <p>On the root of the project, right click and then selec <span class="d-word">New -> Android Resource File</span> </p>
+    <p>Fill in the file name, for instance <span class="negrita">my_nav_graph</span> </p>
+        
     <figure><img src="./UD4/NavGraph/images/UD4-Nav_graph_creation.gif" /><br><figcaption></figcaption></figure>
+    <br><br><br>
+
+    <p><span class="negrita">Add destination fragments to nav graph</span></p><br>
+
+    <p>We create 3 destination, <span class="cursiva">LoginFragment</span> , <span class="cursiva">InfoFragment</span>  and <span class="cursiva">HomeFragment</span>.</p>
+    <figure><img src="imagenes/ud4-2021-10-13-15-29-02.png" /><br><figcaption></figcaption></figure>
     <br>
+    
+    <p>For that, open <span class="inline-file">res/navigation/my_nav_graph.xml</span> in desgin mode and then click on <span class="d-word">New Destination</span> icon <img style="vertical-align: baseline"  src="imagenes/ud4-2021-10-13-15-28-15.png" /></p>
+
+
     <figure><img src="./UD4/NavGraph/images/UD4-Creating_login_fragment.gif" /><br><figcaption></figcaption></figure>
     <br>
-    
-    
-    
+
+    <p>The icon <img style="vertical-align: baseline"  src="imagenes/ud4-2021-10-13-15-30-09.png" /> over <span class="cursiva">LoginFragment</span> indicates that it is the first destination: Look at property 
+        <span class="negrita">Start Destination</span>  in XML </p>
+
+    <br><br>
+    <p><span class="negrita">Connection destinations</span></p><br>
+    <p>Navigation between destinations is defined by creating navigation <span class="d-word">actions</span>.</p>
+    <p>To create an <span class="d-word">action</span> , click on the orgien handle of a destination and <span class="subrayado">drag it over the following destination</span>:</p>
+
+    <figure><img src="./UD4/NavGraph/images/UD4-Creating_actions.gif" /><br><figcaption>Creating Actions</figcaption></figure>
+    <br>
+
+
+    <section class="marco-t inf">
+        <span class="icono info"> </span> Look at the XML code. There, some <span class="r-word">&lt;action></span>  have been created.
+        </section>
+    <section class="marco-b">
+            <section class="marco-t file-">
+                <span class="icono file"> </span> <span class="negrita">res/navigation/my_nav_graph.xml</span>
+                </section>
+            <section class="marco-b">
+                    <section><pre><code class="language-xml">...... 
+&lt;action
+    android:id="@+id/action_loginFragment_to_infoFragment"
+    app:destination="@id/infoFragment" />
+.........
+&lt;action
+    android:id="@+id/action_infoFragment_to_homeFragment"
+    app:destination="@id/homeFragment" />
+.......</code></pre>
+                    </section><br><br>
+            </section>
+            
+    </section>
+<br><br>
+<p><span class="negrita">Add NavHost</span> </p><br>
+
+<p>In the layout of <span class="d-word">MainActivity</span>  (<span class="inline-file">activity_main.xml</span>) 
+    add a <span class="r-word">&lt;FragmentContainerView></span>  that will be the <span class="d-word">NavHostFragment</span> :</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">res/layout/activity_main.xml</span>
+    </section>
+<section class="marco-b">
+    <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    &lt;androidx.fragment.app.FragmentContainerView
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:id="@+id/nav_host_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout></code></pre>
+    </section><br><br>
+</section>
+
+<p>You can see the <span class="d-word">NavHostFragment</span>  <span class="subrayado">as a container</span>  in which the different destinations will be placed 
+    as you navigate. Notice that we have linked it to the navigation graph we just created using the app attribute: <span class="r-word">app:navGraph="@navigation/my_nav_graph"</span>.
+    When we do that, in the <span class="d-word">MainActivity</span>  layout is loaded the <span class="d-word">StartDestination</span> 
+</p> <br><br>
+
+<p><span class="negrita">Designing Layouts</span> </p><br><br>
+
+<p>In this case we are going to make a simple design. Look at the pictures below.</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">fragment_login.xml</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_200"
+    tools:context=".LoginFragment">
+
+    &lt;TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/login_screen"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    &lt;Button
+        android:id="@+id/btnLoginNext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="130dp"
+        android:layout_marginEnd="130dp"
+        android:layout_marginBottom="36dp"
+        android:text="@string/next"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    &lt;androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="142dp" />
+
+    &lt;TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="@string/user"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_marginEnd="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    &lt;EditText
+        android:id="@+id/etUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+
+        android:layout_marginStart="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    &lt;TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="@string/pass"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_marginEnd="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    &lt;EditText
+        android:id="@+id/etPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:text="Name"
+        android:layout_marginStart="15sp"
+        android:textColorHint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout></code></pre>
+        </section><br><br>
+</section>
+
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">fragment_info.xml</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_500"
+    tools:context=".InfoFragment">
+
+
+    &lt;TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/info_screen"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    &lt;Button
+        android:id="@+id/btnLoginNext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="130dp"
+        android:layout_marginEnd="130dp"
+        android:layout_marginBottom="36dp"
+        android:text="@string/next"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/purple_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    &lt;androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="142dp" />
+
+    &lt;TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="@string/email"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_marginEnd="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    &lt;EditText
+        android:id="@+id/etEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+
+        android:layout_marginStart="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    &lt;TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="@string/birth_date"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_marginEnd="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    &lt;EditText
+        android:id="@+id/etBirth_Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="date"
+        android:text="Name"
+        android:layout_marginStart="15sp"
+        android:textColorHint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout></code></pre>
+        </section><br><br>
+</section>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">fragment_home.xml</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".HomeFragment">
+
+
+    &lt;TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/home_screen"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    &lt;TextView
+        android:id="@+id/tvInfo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        tools:text="Info"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout></code></pre>
+        </section><br><br>
+</section>
+
+<p>The fragment should look something like this</p>
+<figure><img src="imagenes/ud4-2021-10-13-16-21-08.png" /><br><figcaption></figcaption></figure>
+<br><br><br>
+
+<p><span class="negrita">Implementing navigation</span> </p><br><br>
+
+<p>The next step is to add the <span class="cursiva">listeners</span>  to the buttons so that when pressed they <span class="negrita">navigate</span>  to the next screen.</p>
+<p>We open the file <span class="d-word">LoginFragment.kt</span> . In this file we see a boilerplate code generated by the wizard. At the moment we are not interested in this code, so we delete everything before the <span class="r-word">onCreateView()</span> 
+    method, until we leave the <span class="d-word">LoginFragment</span>  class like this:</p>
+
+<section><pre><code class="language-kotlin">class LoginFragment : Fragment() {
+
+    lateinit var binding:FragmentLoginBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        binding = FragmentLoginBinding.inflate(inflater,container,false)
+        return binding.root
+    }
+}</code></pre>
+</section><br><br>
+
+
+
+
     
     
     </section><!-- End section -->
