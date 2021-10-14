@@ -2771,6 +2771,7 @@ implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'</code></pre>
     android:background="@color/purple_200"
     tools:context=".LoginFragment">
 
+    &lt;!-- TODO: Update blank fragment layout -->
     &lt;TextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
@@ -2890,7 +2891,7 @@ implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'</code></pre>
         app:layout_constraintTop_toTopOf="parent" />
 
     &lt;Button
-        android:id="@+id/btnLoginNext"
+        android:id="@+id/btnInfoNext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="130dp"
@@ -2928,8 +2929,8 @@ implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'</code></pre>
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
+        android:inputType="textEmailAddress"
+        android:text="mail@mail.com"
 
         android:layout_marginStart="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
@@ -2954,7 +2955,7 @@ implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'</code></pre>
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="date"
-        android:text="Name"
+        android:text="20/10/1990"
         android:layout_marginStart="15sp"
         android:textColorHint="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/textView2"
@@ -2969,7 +2970,7 @@ implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'</code></pre>
     <span class="icono file"> </span> <span class="negrita">fragment_home.xml</span>
     </section>
 <section class="marco-b">
-        <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+<section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
 &lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
