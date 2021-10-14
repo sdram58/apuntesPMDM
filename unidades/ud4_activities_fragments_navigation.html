@@ -3039,11 +3039,162 @@ implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'</code></pre>
 
 
 
+<p class="sub-section">Safe args</p>
 
+
+
+<p class="sub-section">Adding transitions</p>
+
+<p>By default the transition between navigation destinations is a little bit bored. Simply place one destination over another.</p>
+<p>We can customize the way the destination fragment appears and the way the source fragment disappears.</p>
+<p>The transitions of a navigation action <span class="r-word">&lt;action> </span>are defined in 4 attributes:</p>
+<p>
+    <ul>
+        <li><span class="r-word">enterAnim</span>  and <span class="r-word">exitAnim</span>: define how the destination fragment enters and how the source fragment leaves, 
+            when navigating "<span class="cursiva">forward</span> ".</li>
+        <li><span class="r-word">popEnterAnim</span>  and <span class="r-word">popExitAnim</span> : define the transition when navigating "<span class="cursiva">backwards</span>" 
+            (by pressing the back button)</li>
+    </ul>
+</p>
+
+
+<p>Android incorporates serveral animations by default, and it also allows you to define your <span class="subrayado">own animations</span>. We will do the second.</p>
+
+<br><br><br><p><span class="negrita">Defining animations</span></p><br><br>
+
+<p>For this example we will make the destination fragment appear <span class="subrayado">sliding from the right</span> , and the source fragment <span class="subrayado"> disappear sliding to the left</span> :</p>
+
+<p>Over the <span class="inline-folder">app</span> directory, right-click and select <span class="negrita">New -> Android Resource File</span> </p>  
+
+<figure><img src="imagenes/ud4-2021-10-14-21-17-35.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Enter the name of the animation <span class="d-word">slide_in_right</span>, and select <span class="d-word">Animation</span> as <span class="r-word">Resource Type</span>:</p>
+<figure><img src="imagenes/ud4-2021-10-14-21-19-36.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>In the <span class="inline-file">res/anim/slide_in_right.xml</span> file that was created, define the <span class="d-word">slide_in_right</span> animation:</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">slide_in_right.xml</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;set xmlns:android="http://schemas.android.com/apk/res/android">
+&lt;translate
+    android:fromXDelta="100%" android:toXDelta="0%"
+    android:duration="700"/>
+&lt;/set></code></pre>
+        </section><br><br>
+</section>
+
+<p>Also define the <span class="d-word">slide_out_left</span> animation:</p>
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">slide_out_left.xml</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;set xmlns:android="http://schemas.android.com/apk/res/android">
+&lt;translate
+    android:fromXDelta="0%" android:toXDelta="-100%"
+    android:duration="700"/>
+&lt;/set></code></pre>
+        </section><br><br>
+</section>
+
+<p>And <span class="d-word">slide_out_right</span> animation: </p>
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">slide_out_right.xml</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;set xmlns:android="http://schemas.android.com/apk/res/android">
+&lt;translate
+    android:fromXDelta="0%" android:toXDelta="100%"
+    android:duration="700"/>
+&lt;/set></code></pre>
+        </section><br><br>
+</section>
+
+<p>And finally the <span class="d-word">slide_in_left</span> animation: </p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">slide_in_left.xml</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;set xmlns:android="http://schemas.android.com/apk/res/android">
+&lt;translate
+    android:fromXDelta="-100%" android:toXDelta="0%"
+    android:duration="700"/>
+&lt;/set></code></pre>
+        </section><br><br>
+</section>
+
+
+
+<section class="marco-t inf">
+    <span class="icono info"> </span> Animations
+    </section>
+<section class="marco-b">
+    <p>In the animations we have created, we simply perform a horizontal (<span class="r-word">fromXDelta</span>  🡒 <span class="r-word">toXDelta</span> ) move (translation).</p>
+    <p>There are several types of animation that can be created: <span class="negrita">transparencies</span> , <span class="negrita">sizes</span> , <span class="negrita">rotation</span> .</p>
+    <p>For more info consult: <a class="enlace" target="_blank" href="https://developer.android.com/guide/topics/resources/animation-resource#View">View animation.</a></p>
+    <p>In addition to the animations in the navigation, Android incorporates the <span class="r-word">MotionLayout</span> to create animations within a "screen". Look at
+    <a class="enlace" target="_blank" href="https://developer.android.com/studio/write/motion-editor">Build animation with the Motion Editor</a> </p>
+</section>
     
-    
+<br><br><br>
+<p>Assigning animations to actions</p>
+<br><br>
+
+<p>Open <span class="inline-file">my_nav_graph.xml</span> file and set the following attributes to the two actions: </p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">nav_graph.xml</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-xml">...
+
+&lt;action
+    ...
+
+    app:enterAnim="@anim/slide_in_right"
+    app:exitAnim="@anim/slide_out_left"
+    app:popEnterAnim="@anim/slide_in_left"
+    app:popExitAnim="@anim/slide_out_right" />
+
+... </code></pre>
+        </section><br><br>
+</section>
+
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> You can also do it from <span class="negrita">design mode</span> 
+    </section>
+<section class="marco-b">
+        <p>Select each action and set the <span class="r-word">enterAnim</span> , <span class="r-word">exitAnim</span> , <span class="r-word">popEnterAnim</span> , and <span class="r-word">popExitAnim</span>  attributes:</p>
+        <figure><img src="imagenes/ud4-2021-10-14-21-43-50.png" /><br><figcaption></figcaption></figure>
+        <br>
+        
+</section>
+
+<p>The final result would be this</p>
+<figure><img src="./UD4/NavGraph/images/UD4-final_result.gif" /><br><figcaption></figcaption></figure>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </section><!-- End section -->
-    
 
     <!--*********************************************************Navigation***********************************************************-->
     <section class="apartado">
@@ -3053,10 +3204,8 @@ implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'</code></pre>
     <figure><img src="../imagenes/underconstruction.gif" /><br><figcaption>underconstruction</figcaption></figure><br><br>
 
     
-    
 
-    <h3>Safe args</h3>
-    
+
     
     
     </section><!-- End section -->
