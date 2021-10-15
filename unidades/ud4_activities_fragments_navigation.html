@@ -3038,12 +3038,348 @@ implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'</code></pre>
 }</code></pre>
 </section><br><br>
 
+<p>This <span class="r-word">onCreateView()</span>  method is similar to the call to setContentView () that we saw in previous section with activities.
+    Its function is to establish the layout file for the Fragment, that is, what will be seen when this fragment is loaded.</p>
+
+
+<br><br><br><p><span class="negrita">Implementing <span class="cursiva">onViewCreated</span>  method</span> </p> <br><br>
+
+<p>In general, we can say that the code to be executed in a fragment is put in the <span class="r-word">onViewCreated()</span>  method. 
+    This method will be executed by the Android System once the layout of the Fragment has been established, that is, 
+    when the <span class="r-word">onCreateView()</span>  has <span class="negrita">finished</span>.</p>
+
+    <p>Let's implement this method:</p>
+
+<figure><img src="./UD4/NavGraph/images/UD4-onViewCreated.gif" /><br><figcaption></figcaption></figure>
+<br>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">LoginFragment.kt</span>
+    </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">class LoginFragment : Fragment() {
+
+    lateinit var binding:FragmentLoginBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+
+        // Inflate the layout for this fragment
+        binding = FragmentLoginBinding.inflate(inflater,container,false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+}</code></pre></section><br><br>
+</section>
+
+<br><br><br><p><span class="negrita">Adding listeners to  buttons</span> </p> <br><br>
+
+<p>As we saw in the previous section, the first step will be to link the buttons that we have added in the XML layout with Kotlin variables.
+    For this we use the <span class="r-word">findViewById()</span>  or also <span class="d-word">viewBinding</span>  methods.</p>
+
+<p>When we work with fragments, the calls to findViewById() will be made on the view parameter, of the <span class="r-word">onViewCreated() </span>
+    method. This view parameter that the Android System gives us corresponds to the layout that was created in the <span class="r-word">onCreateView()</span> 
+    method.</p>
+
+
+<section><pre><code class="language-kotlin">binding.btnLoginNext.setOnClickListener{
+    //Navigates to InfoFragment
+
+    ..... 
+
+}</code></pre></section><br><br>
+
+<br><br><br>
+<p class="negrita">Using the NavController to navigate between destinations</p>
+<br><br>
+
+<p>To navigate to the different destinations, android provides the <span class="r-word">NavController</span>  class. 
+    This class is responsible for exchanging the different fragments of the app in the <span class="r-word">NavHost</span> .</p>
+<p>To use the <span class="r-word">NavController</span> , we first save it in a variable with the <span class="r-word">Navigation.findNavController()</span>
+    method, and then we can call the <span class="r-word">navigate()</span>  method and pass it the navigation action to be performed.
+</p>
+<p>
+    <ol>
+        <li>We obtain the <span class="r-word">NavController</span>  with <span class="r-word">findNavController()</span></li>
+        <li>We call the <span class="r-word">navigate()</span>  method inside the listener to navigate to the following 
+            Fragment when the button is clicked:
+        </li>
+    </ol>
+
+</p>
+
+<section><pre><code class="language-kotlin">//In this function view is R.layout.fragment_login
+override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+        //We obtain the NavController through findNavigation
+        //navController is  defined as member variable of the fragment
+        navController = findNavController()
+
+    binding.btnLoginNext.setOnClickListener{
+        //Navigates to InfoFragment
+
+        navController.navigate(R.id.action_loginFragment_to_infoFragment)
+
+    }
+}</code></pre></section><br><br>
+
+
+<p>The parameter passed to the <span class="r-word">navigate()</span>  method is the identifier of the navigation action to be performed. 
+    In this case from LoginFragment to InfoFragment.</p>
+    <br><br>
+    
+<p>We do the same in InfoFragment</p>
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">InfoFragment.kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">class InfoFragment : Fragment() {
+
+    lateinit var binding: FragmentInfoBinding
+
+    var navController: NavController? = null
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        // Inflate the layout for this fragment
+        binding = FragmentInfoBinding.inflate(inflater,container,false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        navController = findNavController()
+
+        binding.btnInfoNext.setOnClickListener{
+            
+            navController?.navigate(R.id.action_infoFragment_to_homeFragment)
+        }
+    }
+}</code></pre></section><br><br>
+
+<p>In this moment you can test the navigtion</p>
+</section>
+
+ <p>But... one moment!. What about passing info between fragments. If you see the layout, we have some <span class="r-word">EditText</span>, we need to retrieve info and pass
+it to the other fragments. </p>
+
+<p>We could do it with bundle like we did between activities. By doing something like this</p>
+<section><pre><code class="language-kotlin">val bundle = Bundle()// Some extra info
+navController?.navigate(R.id.action_infoFragment_to_homeFragment, bundle)
+</code></pre></section><br><br>
+
+<p>Android provides us Safe Args to do that. So let's go </p>
+
+<!--------------------safeArgs------------------>
 
 
 <p class="sub-section">Safe args</p>
 
+<p>We need pass info between our fragments, so the first thing that we're going to do is to create a <span class="negrita">data class</span> called <span class="d-word">Login</span> , that 
+    contains the Login Info. Notice that this class implements <span class="d-word">parcelable</span> 
+</p>
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">Login.kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">data class Login(
+    var usr:String?,
+    var pass:String?,
+    var email:String?,
+    var birthDate:String?
+):Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString()
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(usr)
+        parcel.writeString(pass)
+        parcel.writeString(email)
+        parcel.writeString(birthDate)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Login> {
+        override fun createFromParcel(parcel: Parcel): Login {
+            return Login(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Login?> {
+            return arrayOfNulls(size)
+        }
+    }
+
+    constructor() : this("","","","")
+}</code></pre></section><br>
+</section>
+<br>
+<p>The second thing to do is to install some android libraries about <span class="negrita">safe args</span> </p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">Build.gradle (project)</span>
+    </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">dependencies {
+    .....
+
+    def nav_version = "2.3.5"
+    classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+
+    ....
+    
+}
+    </code></pre></section><br><br>
+</section>
 
 
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">build.gradle (module app)</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">dependencies {
+
+    ....
+
+    apply plugin: "androidx.navigation.safeargs"
+
+}
+        </code></pre></section><br><br>
+</section>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> Remmber run <span class="negrita">sync now</span> 
+</section>
+<section class="marco-b">
+        And it is also recommmended to rebuild the project
+</section>
+
+
+<br>
+<p>Now let's add the args to our nav graph fil. We can do it by design mode or by xml code.</p>
+<p>The args are set on the destination fragment, that is, the fragment that is expectin de args. </p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> my_nav_graph.xml
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    &lt;fragment
+        android:id="@+id/loginFragment"
+        android:name="com.cartatar.navgraph.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        &lt;action
+            android:id="@+id/action_loginFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
+    &lt;/fragment>
+    &lt;fragment
+        android:id="@+id/infoFragment"
+        android:name="com.cartatar.navgraph.InfoFragment"
+        android:label="fragment_info"
+        tools:layout="@layout/fragment_info" >
+        &lt;action
+            android:id="@+id/action_infoFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        &lt;argument
+            android:name="login_info"
+            app:argType="com.cartatar.navgraph.Login" />
+    &lt;/fragment>
+    &lt;fragment
+        android:id="@+id/homeFragment"
+        android:name="com.cartatar.navgraph.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        &lt;argument
+            android:name="login_info"
+            app:argType="com.cartatar.navgraph.Login" />
+    &lt;/fragment>
+&lt;/navigation></code></pre></section><br><br>
+</section>
+
+<p>As you see, <span class="d-word">&lt;argument></span>  has two properties the <span class="r-word">name</span>  and the <span class="r-word">argType</span>.</p>
+<p>In this case <span class="r-word">argType</span>  is our <span class="d-word">Login</span> class</p>
+
+<section><pre><code class="language-xml">&lt;argument
+        android:name="login_info"
+        app:argType="com.cartatar.navgraph.Login" />
+</code></pre></section><br><br>
+
+
+<p>if we want to do it by UI...</p>
+
+<figure><img src="./UD4/NavGraph/images/UD4-safe_args_creating.gif" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Now is time to send this args to the next fragment. For that let's go to <span class="d-word">LoginFragment</span>  and we're going to make a few changes on it</p>
+<p>First we have to retrieve the data from <span class="r-word">EdtiText</span>  that we want to send</p>
+<section><pre><code class="language-kotlin">val login = Login()
+login.usr = binding.etUser.text.toString()
+login.pass = binding.etPass.text.toString()
+</code></pre></section><br><br>
+
+<p>Then we have to pass de action with de data (our argument). For that <span class="cursiva">safe args</span>  creates a class named like the fragment but ended on 
+    "<span class="negrita">Directions</span> ". I our case it's named <span class="d-word">LoginFragmentDirections</span>. That class has de action that we made before, 
+    <span class="d-word">actionLoginFragmentToInfoFragment</span> as a method. Notice that we pass as param the argument data in our case <span class="negrita">login</span> 
+
+</p>
+
+<section><pre><code class="language-kotlin">val action = LoginFragmentDirections
+    .actionLoginFragmentToInfoFragment(login)
+</code></pre></section><br><br>
+
+<p>Last step we are going to make is to set that action to the param of navigate method</p>
+<section><pre><code class="language-kotlin">navController.navigate(action)</code></pre></section><br><br>
+
+<p>So our onViewCreated looks like this</p>
+
+<section><pre><code class="language-kotlin">override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+        //We obtain the NavController through findNavigation
+        //navController is  defined as member variable of the fragment
+        navController = findNavController()
+
+    binding.btnLoginNext.setOnClickListener{
+        //Navigates to InfoFragment
+
+        val login = Login()
+        login.usr = binding.etUser.text.toString()
+        login.pass = binding.etPass.text.toString()
+
+        val action = LoginFragmentDirections
+            .actionLoginFragmentToInfoFragment(login)
+        //navController.navigate(R.id.action_loginFragment_to_infoFragment)
+        //replace by:
+        navController.navigate(action)
+    }
+}</code></pre></section><br><br>
+
+
+
+<!-----Transitions-------->
 <p class="sub-section">Adding transitions</p>
 
 <p>By default the transition between navigation destinations is a little bit bored. Simply place one destination over another.</p>
