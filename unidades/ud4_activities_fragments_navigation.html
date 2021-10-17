@@ -3665,7 +3665,7 @@ navController?.navigate(action)</code></pre></section><br><br>
     
     <figure><img src="../imagenes/underconstruction.gif" /><br><figcaption>underconstruction</figcaption></figure><br><br>
 
-    <p>The <span class="d-word">Navigation</span>  component includes a <span class="r-word">NavigationUI</span> class. 
+    <p>The <a class="enlace" target="_blank" href="https://developer.android.com/guide/navigation/navigation-ui">Navigation</a>   component includes a <span class="r-word">NavigationUI</span> class. 
         This class contains <span class="cursiva">static methods</span>  that manage navigation with the <span class="r-word">NavigationView</span>, 
         the <span class="r-word">BottomNavigationView</span> , and the <span class="r-word">OptionsMenu</span> </p>
 
@@ -3928,9 +3928,30 @@ class MainActivity : AppCompatActivity() {
         </section><br><br>
 </section>
 
+<p>The call to <span class="r-word">setSupportActionBar()</span> makes the Activity use the <span class="r-word">Toolbar</span> 
+     that we have put in the layout, instead of the <span class="r-word">ActionBar</span>  that came by default, and that we have hidden.
+</p>
+
+<p>If you run the app now, you will see that each button takes us to an <span class="r-word">Activity</span> , which is still blank. 
+    In the following steps, we will implement navigation using a different menu for each of these activities.
+</p>
 
 
-        
+<h3>NavigationView</h3>
+<p>The <span class="r-word">NavigationView</span>  (better known as "<span class="d-word">Drawer menu</span> ") is the navigation 
+    menu that usually appears on the left of the app when the <span class="negrita">Hamburger</span>  icon is pressed.</p>
+
+<p>In the <span class="d-word">DrawerActivity</span>  of this app we will use a <span class="r-word">NavigationView</span> 
+    to navigate to 3 destinations (fragments).</p>
+
+<p>We start by creating the <span class="negrita">Navigation Graph</span> , which we will call <span class="d-word">drawer_graph.xml</span>.
+    In it we add the 3 destinations. To keep in mind that these destinations will be accessible from the Drawer, we will call them: 
+    <span class="d-word">Drawer1Fragment</span> , <span class="d-word">Drawer2Fragment</span> , <span class="d-word">Drawer3Fragment</span>.</p>
+
+
+<p>Create the graph <span class="inline-file"><p>Create the graph <span class="d-word">drawer_graph.xml</span>  and add the 3 destinations:</p>
+
+
     
 
     
