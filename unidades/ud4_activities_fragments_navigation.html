@@ -1329,7 +1329,6 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
 
     <h3>Fragment's lifecycle</h3>
 
-    <figure><img src="../imagenes/underconstruction.gif" /><br><figcaption>underconstruction</figcaption></figure><br><br>
     <p>The <span class="negrita">life cycle</span>  of a fragment is nothing more than the methods through which it passes <span class="subrayado">from when it is created until it is destroyed</span>,
         as a simile our life cycle if they were functions would be to be born (), grow (), reproduce () and die(). Well, it's basically the same.</p>
 
@@ -3641,13 +3640,19 @@ navController?.navigate(action)</code></pre></section><br><br>
 <p>Here you are a Github <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/NavGraph">link</a> </p>
 
 <p class="tarea"><span class="negrita">Onboarding</span><br><br>
-    Implement 3-screen <a class="enlace" target="_blank" href="https://greaterdanorequalto.com/dont-waste-time-on-onboarding/">Onboarding</a>. In the first two there should be an option to skip (skip). Use different animations in each navigation action.
+    Implement 3-screen <a class="enlace" target="_blank" href="https://greaterdanorequalto.com/dont-waste-time-on-onboarding/">Onboarding</a>. In the first two screens
+    there should be an option to skip (<span class="d-word">skip</span>). Use different animations in each navigation action.
     <br>Example:
 
+    <figure><img src="./UD4/NavGraph/images/UD4-final_result_onboarding.gif" /><br><figcaption>Example Onboarding</figcaption></figure>
+    <br>
+    
+    <br><br> Navigation Graph example: <br><br>
 
-
-
-    <br><br> Navigation Graph: <br><br>
+    <figure><img src="imagenes/ud4-2021-10-16-19-49-47.png" /><br><figcaption>Navigation graph</figcaption></figure>
+    <br>
+    
+    <p>Github link to <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/Onboarding">example</a></p>
 </p> 
 
 
@@ -3660,11 +3665,302 @@ navController?.navigate(action)</code></pre></section><br><br>
     
     <figure><img src="../imagenes/underconstruction.gif" /><br><figcaption>underconstruction</figcaption></figure><br><br>
 
+    <p>The <span class="d-word">Navigation</span>  component includes a <span class="r-word">NavigationUI</span> class. 
+        This class contains <span class="cursiva">static methods</span>  that manage navigation with the <span class="r-word">NavigationView</span>, 
+        the <span class="r-word">BottomNavigationView</span> , and the <span class="r-word">OptionsMenu</span> </p>
+
+        <figure><img src="UD4/navigation/images/ud4-2021-10-17-10-35-18.png" /><br><figcaption></figcaption></figure>
+        <br>
+        
+    <p>In addition to using these navigation elements, in this section we will also use navigation through Tabs (or tabs), 
+        using the <span class="r-word">TabLayout</span>  and <span class="r-word">ViewPager2</span> elements, 
+        although these are not included in the Navigation component.</p>
+
+    <figure><img src="UD4/navigation/images/ud4-2021-10-17-10-40-48.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>We will develop an app that will allow you to navigate between destinations using all these elements.</p>
+
+    <!--TODO: Sample app running-->
+
+    <h3>Creating the project</h3>
+
+    <section class="marco-t inf">
+        <span class="icono info"> </span> In the "New Activity" wizard, Android Studio provides templates for creating Activities 
+        that include these navigation components. However, this time we will do it "from 0", to understand all the elements involved.
+        </section>
+    <section class="marco-b">
+            
+    </section>
+
+    <p>Let's get started</p>
+
+    <ol>
+        <li>Selecct <span class="r-word">Empty Activity</span>  template for <span class="d-word">MainActivity</span> </li>
+        <li>Add this dependencies to include <span class="d-word">Navigation</span> , <span class="d-word">ViewPager2</span>  and <span class="d-word">Material</span> 
+        <section class="marco-t file-">
+            <span class="icono file"> </span> <span class="negrita">build.gradle (Module: app)</span>
+            </section>
+        <section class="marco-b">
+        <section><pre><code class="language-kotlin">dependencies {
+            ......
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation 'com.google.android.material:material:1.3.0-alpha03'
+            .......
+}</code></pre>
+        </section>
+        </section>        
+
+        </li>
+
+        <li>Enable <span class="r-word">viewBinding</span> <br>
+        <section class="marco-t file-">
+            <span class="icono file"> </span> <span class="negrita"> build.gradle (Module: app)</span>
+            </section>
+        <section class="marco-b">
+         <section><pre><code class="language-kotlin">android {
+    buildFeatures {
+        viewBinding true
+    }
+}</code></pre>
+         </section>      
+        </section>
+        
+        </li>
+
+        <li>
+            Finally, we will disable the <span class="r-word">ActionBar</span>  (the top bar) that is included automatically in all Activities, 
+            since in this project we will use the most recent version of the <span class="r-word">Toolbar</span> , which is better integrated with the navigation elements: <br>
+            Add the follow <span class="negrita">&lt;item>s </span> to the <span class="inline-file">themes.xml</span> file
+
+            <section><pre><code class="language-xml">&lt;item name="windowActionBar">false&lt;/item>
+&lt;item name="windowNoTitle">true&lt;/item></code></pre>
+            </section><br><br>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita"> res/values/themes.xml</span>
+    </section>
+<section class="marco-b">
+        
+    <section><pre><code class="language-xml">&lt;resources xmlns:tools="http://schemas.android.com/tools">
+&lt;!-- Base application theme. -->
+    &lt;style name="Theme.Navigation" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+
+        .................
+
+        &lt;item name="windowActionBar">false&lt;/item>
+        &lt;item name="windowNoTitle">true&lt;/item>
+    &lt;/style>
+&lt;/resources></code></pre>
+    </section>
+</section>
+        <br>
+        For futher info on updating the <span class="r-word">ActionBar</span>  by the <span class="r-word">Toolbar</span>, see: <a class="enlace" target="_blank" href="https://developer.android.com/training/appbar/setting-up">How to configure the app bar</a> 
+      </li>
+    </ol>
+
+
+    <h3>Activities </h3>
+
+    <p>
+        Each of the navigation elements (<span class="r-word">NavigationView</span> ,
+        <span class="r-word">BottomNavigationView</span> , <span class="r-word">OptionsMenu</span>  and <span class="r-word">TabLayout + ViewPager2</span>) 
+        will be implemented in a different Activity and we will use the MainActivity to launch the different Activities.</p>
+
+    <figure><img src="UD4/navigation/images/ud4-2021-10-17-11-19-41.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+    <p>We will start by creating these Activities, with the names: <span class="d-word">DrawerActivity</span> , <span class="d-word">BottomActivity</span>, 
+        <span class="d-word">OptionsActivity</span>  and <span class="d-word">TabbedActivity</span>.</p>
+        
+    <figure><img src="UD4/navigation/images/ud4-2021-10-17-11-25-25.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>Now the next step will be to add a Toolbar in each of these activities.</p>
+
+    <p>The Toolbar is used together with the <span class="r-word">CoordinatorLayout</span>  and the <span class="r-word">AppBarLayout</span> that allow the use 
+        of transitions and animations (for example a Collapsing Toolbar). Although in this practice we will not do them, better if we use it from now.</p>
+        
+    <p>Replace the layout of each of our 5 activities with this layout:</p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">res/layout/activity_XXXX.xml</span>
+        </section>
+    <section class="marco-b">
+        <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    &lt;com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        &lt;androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    &lt;/com.google.android.material.appbar.AppBarLayout>
+
+    &lt;androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        &lt;!-- Here goes the content of the activity -->
+
+    &lt;/androidx.constraintlayout.widget.ConstraintLayout>
+
+&lt;/androidx.coordinatorlayout.widget.CoordinatorLayout></code></pre>
+        </section>   
+    </section><br><br>
+
+<p class="sub-section">MainActivity</p>
+
+<p>The next step is to add 4 buttons in the <span class="d-word">MainActivity</span>  so that each one takes us to one of the other Activities.</p>
+    
+    <p>In the <span class="r-word">&lt;ConstraintLayout></span>  of the <span class="d-word">activity_main.xml</span>  add the 4 buttons:</p>
+    
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita"> res/layout/activity_main.xml</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-xml">.............
+&lt;androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    &lt;Button
+        android:id="@+id/action_goto_drawerActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Drawer"
+        app:layout_constraintBottom_toTopOf="@id/action_goto_bottomActivity"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    &lt;Button
+        android:id="@+id/action_goto_bottomActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bottom"
+        app:layout_constraintBottom_toTopOf="@id/action_goto_optionsActivity"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/action_goto_drawerActivity" />
+    &lt;Button
+        android:id="@+id/action_goto_optionsActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Options"
+        app:layout_constraintBottom_toTopOf="@id/action_goto_tabbedActivity"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/action_goto_bottomActivity" />
+    &lt;Button
+        android:id="@+id/action_goto_tabbedActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tabs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/action_goto_optionsActivity" />
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout>
+
+......</code></pre>
+        </section>
+</section><br><br>
+
+<p>Now we implement the behavior of the click event, adding an <span class="r-word">OnClickListener</span>  in each button, so that when a button is clicked, 
+    the corresponding activity will be launched.</p>
+<p>AS you know, to start an <span class="r-word">Activity</span>  you have to call the <span class="r-word">startActivity()</span>  method and pass it an <span class="r-word">Intent</span> 
+    class object, indicating in the constructor parameters the object of the <span class="r-word">Activity</span>  we are in and the class of the <span class="r-word">Activity</span> 
+     that we want to start.</p>
+<p>Replace the code in the MainActivity class with this (except the first line of the package!). Use <span class="cursiva">Alt + Enter</span>  to import the <span class="negrita">viewbinding</span> class:</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">package com.cartatar.navigation
+
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.content.Intent
+import com.cartatar.navigation.databinding.ActivityMainBinding
+
+
+class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(ActivityMainBinding.inflate(layoutInflater).also { binding = it }.root)
+
+        setSupportActionBar(binding.toolbar)
+
+
+        binding.btnGotoDrawerActivity.setOnClickListener {
+            startActivity(Intent(this, DrawerActivity::class.java))
+        }
+        binding.btnGotoBottomActivity.setOnClickListener {
+            startActivity(Intent(this, BottomActivity::class.java))
+        }
+        binding.btnGotoOptionsActivity.setOnClickListener {
+            startActivity(Intent(this, OptionsActivity::class.java))
+        }
+        binding.btnGotoTabbedActivity.setOnClickListener {
+            startActivity(Intent(this, TabbedActivity::class.java))
+        }
+    }
+}</code></pre>
+        </section><br><br>
+</section>
+
+
+
+        
+    
+
+    
     
 
 
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </section><!-- End section -->
 
 
@@ -3672,10 +3968,187 @@ navController?.navigate(action)</code></pre></section><br><br>
     <section class="apartado">
     <a name="s"></a>
     <h2>Bonus track: Splash Screen</h2>
+
+    <p>What's a Splash Screen? In some apps there ir an screens that appears just launched the app. It use to have a logo or similar and we can use it while app is loading or wating for some data. This is the <span class="d-word">Splash Screen</span>
+        <br>If you want to learn more about <span class="d-word">Splash Screens</span>  please read <a class="enlace" target="_blank" href="https://en.wikipedia.org/wiki/Splash_screen">https://en.wikipedia.org/wiki/Splash_screen</a> .</p>
+    <p>There are a many ways to implement a <span class="d-word">Splash Screen</span>, but in this section we're going to implement one of them, may be the simpliest. If you want
+    to learn more advanced method about implementing Splash Screens please go to  <a class="enlace" target="_blank" href="https://developer.android.com/guide/topics/ui/splash-screen">https://developer.android.com/guide/topics/ui/splash-screen</a> </p>
+    <p>So, let's get started</p>
+    <ol>
+        <li>First, we have to choose an image for the <span class="d-word">Splash Screen</span>. For this example we're going to use this
+            <a class="enlace" target="_blank" href="./UD4/splashscreen/assets/splashscreen.png"><img style="vertical-align: baseline;width: 40px;"  src="./UD4/splashscreen/assets/splashscreen.png" /></a> image. <br>
+        We have to paste that image into <span class="inline-folder">drawable</span> folder
+    </li>
+        <li>Creates a <span class="d-word">drawable layer</span>. For that we have to create a new <span class="d-word">drawable</span> resource.
+        <br>
+        <figure><img src="./UD4/splashscreen/images/UD4-creating_drawable.gif" /><br><figcaption></figcaption></figure>
+        <br>
+        
+        Then we modify our <span class="inline-file">Splash_screen.xml</span> adding some <span class="r-word">&lt;item></span> <br>
+        The background color. <br>
+        <section><pre><code class="language-xml">&lt;item android:drawable="@color/purple_500"/></code></pre>
+        </section><br><br>
+        and the image that we download before centered in the screen
+<section><pre><code class="language-xml">&lt;item>
+    &lt;bitmap android:src="@drawable/splashscreen"
+        android:gravity="center" />
+&lt;/item></code></pre>
+</section><br><br>
+
+
+        <section class="marco-t file-">
+            <span class="icono file"> </span> <span class="negrita">Splash_screen.xml</span>
+            </section>
+        <section class="marco-b">
+                <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:opacity="opaque">
+    &lt;item android:drawable="@color/purple_500"/>
+    &lt;item>
+        &lt;bitmap android:src="@drawable/splashscreen"
+            android:gravity="center" />
+    &lt;/item>
+&lt;/layer-list></code></pre>
+                </section><br><br>
+        </section>
+        
+        </li>
+
+
+        <li>Create a new <span class="d-word">Style</span>: We have to create a new style in <span class="inline-file">res/themes/themes.xml</span>. This themes extends
+        from our main style and just change <span class="r-word">windowBackground</span>  property. Look at <span class="r-word">parent</span>  property <br>
+<section><pre><code class="language-xml">&lt;style name="Theme.MySplashScreen" parent="Theme.SplashScreen">
+    &lt;item name="android:windowBackground">@drawable/splash_screen&lt;/item>
+    &lt;!-- Customize your theme here. -->
+&lt;/style></code></pre>
+</section><br><br>
+
+so our themes.xml looks like This
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">themes.xml</span>
+    </section>
+<section class="marco-b">
+        
+    <section><pre><code class="language-xml">&lt;resources xmlns:tools="http://schemas.android.com/tools">
+        &lt;!-- Base application theme. -->
+        &lt;style name="Theme.SplashScreen" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+            &lt;!-- Primary brand color. -->
+            &lt;item name="colorPrimary">@color/purple_500&lt;/item>
+            &lt;item name="colorPrimaryVariant">@color/purple_700&lt;/item>
+            &lt;item name="colorOnPrimary">@color/white&lt;/item>
+            &lt;!-- Secondary brand color. -->
+            &lt;item name="colorSecondary">@color/teal_200&lt;/item>
+            &lt;item name="colorSecondaryVariant">@color/teal_700&lt;/item>
+            &lt;item name="colorOnSecondary">@color/black&lt;/item>
+            &lt;!-- Status bar color. -->
+            &lt;item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant&lt;/item>
+            &lt;!-- Customize your theme here. -->
+        &lt;/style>
     
-    <figure><img src="../imagenes/underconstruction.gif" /><br><figcaption>underconstruction</figcaption></figure>
-    <br>
+        &lt;style name="Theme.MySplashScreen" parent="Theme.SplashScreen">
+            &lt;item name="android:windowBackground">@drawable/splash_screen&lt;/item>
+            &lt;!-- Customize your theme here. -->
+        &lt;/style>
+    &lt;/resources></code></pre>
+    </section>
+</section><br><br>
+
+
+
     
+    </li>
+        <li>We apply that theme to our activity: <br> We said to our app that <span class="d-word">MainActivity</span>  has the theme created before, and we do it in <span class="inline-file">AndroidManifest.xml</span> file
+        <section><pre><code class="language-xml">android:theme="@style/Theme.MySplashScreen"</code></pre>
+        </section><br><br>
+
+        <section class="marco-t file-">
+            <span class="icono file"> </span> <span class="negrita">AndroidManifest.xml</span>
+            </section>
+        <section class="marco-b">
+           <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cartatar.splashscreen">
+
+    &lt;application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SplashScreen">
+        &lt;activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MySplashScreen">
+
+            &lt;intent-filter>
+                &lt;action android:name="android.intent.action.MAIN" />
+
+                &lt;category android:name="android.intent.category.LAUNCHER" />
+            &lt;/intent-filter>
+        &lt;/activity>
+    &lt;/application>
+
+&lt;/manifest></code></pre>
+           </section>
+        </section>
+        <br><br>     
+        
+        </li>
+        <li>Change theme programmatically: Before executing <span class="r-word">setContentView()</span>  method  inside of <span class="r-word">onCrete()</span>  method of <span class="d-word">MainActivity</span> 
+             we can do every data loading action, when it finishes we have to replaces to our original theme. <br>
+    <section><pre><code class="language-kotlin">setTheme(R.style.Theme_SplashScreen)</code></pre>
+    </section><br><br>
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">MainActivity,kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        //Here our app is ready
+        //Set before setContentView
+        setTheme(R.style.Theme_SplashScreen)
+
+        setContentView(R.layout.activity_main)
+    }
+}</code></pre>
+        </section><br><br>
+</section>
+
+    </li>
+
+        <li>Check functionality: we run the app to see the result. <br>
+<figure><img src="./UD4/splashscreen/images/UD4-creating_running_quickly.gif" /><br><figcaption></figcaption></figure>
+<br>
+
+        </li>
+        <li>Adding a sleep thread to simulate task: As you can see before and depending on the power of your device, the Splash screen isn't almost visible. It happens becose emulator make the change very
+            quickly. To simulate a bit delay of doing task we have to add a <span class="negrita">sleep</span>  method from <span class="r-word">Thread</span> <br>
+            <section><pre><code class="language-kotlin">Thread.sleep(3000)</code></pre>
+            </section><br><br>
+            In the code above we delay the action 3 seconds.
+
+            <section class="marco-t warn">
+                <span class="icono warning"> </span> Thread.sleep(3000)
+                </section>
+            <section class="marco-b">
+                    Please remember that is a really bad practise to sleep <span class="negrita">main UI thread</span> .
+            </section><br><br>
+
+            Now launch again and see the difference.
+
+            <figure><img src="./UD4/splashscreen/images/UD4-creating_running_sleep.gif" /><br><figcaption></figcaption></figure>
+<br>
+            
+        </li>
+
+        
+    </ol>
+    
+    Github <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/splashscreen">link</a> 
     
     </section><!-- End section -->
 
@@ -3690,6 +4163,7 @@ navController?.navigate(action)</code></pre></section><br><br>
         <li><a class="enlace" target="_blank" href="https://developer.android.com/guide/components/activities/activity-lifecycle">https://developer.android.com/guide/components/activities/activity-lifecycle</a> </li>
         <li><a class="enlace" target="_blank" href="https://medium.com/kotlin-dev-reactor/android-parcelable-en-kotlin-5514314f15e">https://medium.com/kotlin-dev-reactor/android-parcelable-en-kotlin-5514314f15e</a> </li>
         <li><a class="enlace" target="_blank" href="https://developer.android.com/training/basics/intents/filters">https://developer.android.com/training/basics/intents/filters</a> </li>
+        <li><a class="enlace" target="_blank" href="https://gerardfp.github.io/navigation/">Gerard Notes</a> </li>
         <li><a class="enlace" target="_blank" href="https://developer.android.com/guide/components/intents-common">https://developer.android.com/guide/components/intents-common</a> </li>
         <li><a class="enlace" target="_blank" href="https://developer.android.com/guide/fragments">https://developer.android.com/guide/fragments</a> </li>
     </ul>

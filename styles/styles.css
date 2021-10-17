@@ -264,6 +264,7 @@ p ul,p ul li{
 figure{
     width: 100%;
     text-align: center;
+    padding: 10px;
     background-color: rgba(100,100,100,0.3);
     
 }

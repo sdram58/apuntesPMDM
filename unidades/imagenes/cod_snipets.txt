@@ -18,8 +18,20 @@
 
 	"Sample source code": {
 		"scope": "html",
-		"prefix": "cod-",
+		"prefix": "ck-",
 		"body": ["<section><pre><code class=\"language-kotlin\">$CLIPBOARD</code></pre>\n</section><br><br>"],
+		"description": "Code example"
+	},
+	"Sample Xml source code": {
+		"scope": "html",
+		"prefix": "cx-",
+		"body": ["<section><pre><code class=\"language-xml\">$CLIPBOARD</code></pre>\n</section><br><br>"],
+		"description": "Code example"
+	},
+	"Sample json source code": {
+		"scope": "html",
+		"prefix": "cj-",
+		"body": ["<section><pre><code class=\"language-json\">$CLIPBOARD</code></pre>\n</section><br><br>"],
 		"description": "Code example"
 	},
 
