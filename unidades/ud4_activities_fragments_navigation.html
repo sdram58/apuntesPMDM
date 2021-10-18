@@ -17,6 +17,7 @@
         <a href="#sActivities">Activities</a><a 
            href="#sFragments">Fragments</a><a 
            href="#sNavigation">Navigation</a><a
+           href="#sSplashScreen">Splash Screen</a><a
            href="#sWebgrafia">Webgraphy</a>
     </div>
 
@@ -2588,27 +2589,7 @@ superHero = Superhero.getSuperHeroById(superHeroId)</code></pre>
 <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/MasterDetailRecyclerView">Github link</a> 
 </p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    
-
-    
-
-
-
-
+<p class="tarea">Open and do <a class="enlace" target="_blank" href="./pr2_master_detail/pr2.html">Practice2: Master/Detail</a>. Remember upload in time the resulting App to "Aules"</p>
 
 
     <!----------------------------------------------NavGraph------------------------------------------------------>
@@ -3681,7 +3662,8 @@ navController?.navigate(action)</code></pre></section><br><br>
     
     <p>We will develop an app that will allow you to navigate between destinations using all these elements.</p>
 
-    <!--TODO: Sample app running-->
+    <figure><img src="UD4/navigation/images/UD4-running_app.gif" /><br><figcaption></figcaption></figure>
+    <br>
 
     <h3>Creating the project</h3>
 
@@ -4338,33 +4320,448 @@ class DrawerActivity : AppCompatActivity() {
 <p>The code of the BottomActivity should look like this:</p>
 
 <section class="marco-t file-">
-    <span class="icono file"> </span> <span class="negrita"> BottomActivity.kt</span>
+    <span class="icono file"> </span> <span class="negrita">BottomActivity.kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import com.cartatar.navigation.databinding.ActivityBottomBinding
+
+import androidx.navigation.fragment.NavHostFragment
+
+import androidx.navigation.ui.NavigationUI
+
+
+class BottomActivity : AppCompatActivity() {
+
+    lateinit var binding: ActivityBottomBinding
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(ActivityBottomBinding.inflate(layoutInflater).also { binding = it }.root)
+
+        setSupportActionBar(binding.toolbar);
+
+        val navController =
+            (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?)!!.navController
+
+        NavigationUI.setupWithNavController(binding.bottomNavView, navController);
+        NavigationUI.setupWithNavController(binding.toolbar, navController);
+    }
+}</code></pre>
+        </section><br><br>
+</section>
+
+<h3>OptionsMenu</h3>
+<p>The <span class="r-word">OptionsMenu</span> is the drop-down menu that appears in the upper right when the 3 dots icon 
+    <img style="vertical-align: baseline"  src="UD4/navigation/images/ud4-2021-10-18-09-33-35.png" /> is clicked</p>
+
+
+<p>We will use it to navigate to 3 destinations</p>
+
+<p>Create the navigation graph <span class="inline-file">options_graph.xml</span> and add 3 destinations: <span class="d-word">Options1Fragment</span>,
+    <span class="r-word">Options2Fragment</span>  and <span class="r-word">Options3Fragment</span>.</p>
+
+<figure><img src="UD4/navigation/images/ud4-2021-10-18-09-37-49.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Add the <span class="r-word">NavHostFragment</span>  in the <span class="d-word">activity_options.xml</span>  layout. Place it inside the <span class="r-word">ConstraintLayout</span>:</p>
+
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">res/layout/activity_options.xml</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-xml"> ........
+&lt;androidx.constraintlayout.widget.ConstraintLayout ...>
+
+    &lt;androidx.fragment.app.FragmentContainerView
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:id="@+id/nav_host_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/options_graph" />
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout>
+    ........</code></pre>
+        </section>
+</section><br><br>
+<p>Notice that we have linked the <span class="r-word">NavHostFragment</span>  with the <span class="d-word">options_graph</span> graph.</p>
+
+<p>Create the menu file for the represent <span class="inline-file">res/menu/options_menu.xml</span>. Add the items:</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">res/menu/options_menu.xml</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    &lt;item
+        android:id="@+id/options1Fragment"
+        android:icon="@android:drawable/ic_menu_directions"
+        android:title="Options 1"
+        app:showAsAction="always"/>
+
+    &lt;item
+        android:id="@+id/options2Fragment"
+        android:icon="@android:drawable/ic_menu_directions"
+        android:title="Options 2" />
+
+    &lt;item
+        android:id="@+id/options3Fragment"
+        android:icon="@android:drawable/ic_menu_directions"
+        android:title="Options 3" />
+
+&lt;/menu></code></pre>
+        </section>
+</section><br><br>
+
+<p>In the <span class="r-word">options1Fragment</span>  item we have added the app <span class="r-word">attribute:showAsAction = "always"</span>, 
+    this will make this menu option not show in the drop-down, but instead show as an icon in the bar. We can also set the value "ifRoom" to that attribute
+which means that if the icon can fit on the toolBar it will be shown, but if not the option will appear in the drop-down</p>
+
+<figure><img src="UD4/navigation/images/ud4-2021-10-18-09-49-59.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p class="sub-section">NavigationUI</p>
+
+<p>Finally, we will configure the <span class="r-word">NavigationUI</span>  <span class="subrayado">to manage the navigation</span>  of the <span class="negrita">Options Menu</span> </p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">OptionsActivity.kt</span>
+    </section>
+<section class="marco-b">
+       <section><pre><code class="language-kotlin">import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import com.cartatar.navigation.databinding.ActivityOptionsBinding
+
+class OptionsActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityOptionsBinding
+
+    private lateinit var navController:NavController
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(ActivityOptionsBinding.inflate(layoutInflater).also { binding = it }.root)
+
+        setSupportActionBar(binding.toolbar)
+
+        val navHosFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHosFragment.navController
+
+        val appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.options1Fragment,
+            R.id.options2Fragment,
+            )
+        )
+
+        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.onNavDestinationSelected(item, navController)
+                || super.onOptionsItemSelected(item);
+    }
+
+}</code></pre>
+       </section>
+</section>
+<br><br> 
+
+<p>In this activity, two methods have been <span class="negrita">overridden</span>:</p>
+<ul>
+    <li>The <span class="r-word">onCreateOptionsMenu()</span>  method sets the <span class="r-word">OptionsMenu</span>  items (the ones we have set in the <span class="inline-file">menu.options_menu</span> file).</li>
+    <li>The <span class="r-word">onOptionsItemSelected()</span>  method causes the <span class="r-word">navController</span>  to be used to navigate to the destination when an item is clicked.</li>
+</ul>
+<br>
+<p>Run the app and check the navigation with the <span class="r-word">OptionsMenu</span>. Notice that the first item appears as an icon on the bar. 
+    And also that when navigating to the third fragment, the "back" icon <img style="vertical-align: baseline"  src="UD4/navigation/images/ud4-2021-10-17-19-18-00.png" /> appears, since it is not set as a <span class="negrita">Top-level destination</span> .</p>
+    
+    <br><br> 
+    
+<h3>TabLayout y ViewPager2</h3>
+
+<p>The <span class="r-word">ViewPager2</span> element allows you to create sliding views that can be navigated by sliding your finger. 
+    The <span class="r-word">TabLayout</span> element adds some tabs on top.</p>
+
+<section class="marco-t inf">
+    <span class="icono info"> </span> These elements are not part of the <span class="negrita">Navigation</span>  component, and are not managed by <span class="negrita">NavigationUI</span>.
     </section>
 <section class="marco-b">
         
 </section>
 
+<p>In the <span class="d-word">TabbedActivity</span>  activity, we will add a fragment that will include a <span class="r-word">ViewPager2</span>  and a <span class="r-word">TabLayout</span>,
+    which will allow sliding between 3 fragments (A, B and C).</p>
+
+<figure><img src="UD4/navigation/images/ud4-2021-10-18-10-09-39.png" /><br><figcaption></figcaption></figure>
+<br>
+
+    
+<p>We will start by creating the navigation graph of the <span class="r-word">TabbedActivity</span> , which we will call <span class="inline-file">tabbed_graph.xml</span>. 
+    In this graph we only add the fragment <span class="d-word">Tabbed1Fragment</span>.</p>
+
+<figure><img src="UD4/navigation/images/ud4-2021-10-18-10-11-39.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>We add the <span class="r-word">NavHostFragment</span>  to the <span class="inline-file">activity_tabbed.xml</span> layout:</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">res/layout/activity_tabbed.xml</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-xml">.......
+&lt;androidx.constraintlayout.widget.ConstraintLayout ...>
+
+    &lt;androidx.fragment.app.FragmentContainerView
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:id="@+id/nav_host_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/tabbed_graph" />
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout>
+.......</code></pre>
+        </section>
+</section>
+<br><br>
+
+<p>In this <span class="r-word">NavHostFragment</span>  only the <span class="d-word">Tabbed1Fragment</span> will be shown.</p>
+
+<p class="sub-section">Creating sliding pages</p>
+
+<p>We will create 3 fragments (A, B, C), which will be the ones that slide through the <span class="d-word">Tabbed1Fragment</span> .</p>
+<p>These 3 fragments are not created in the navigation graph, since they will not be navigated between them using <span class="negrita">Navigation</span>, 
+but using the <span class="r-word">ViewPager2</span>.</p>
+
+<p>We will call these fragments: <span class="d-word">Tabbed1AFragment</span> , <span class="d-word">Tabbed1BFragment</span>  and <span class="d-word">Tabbed1CFragment</span>.</p>
+
+<p>To create a <span class="cursiva">Fragment</span> : right-click on <span class="inline-folder">app</span> and <span class="negrita">New Fragment -> Fragment (Blank)</span>.</p>
+
+<p>Create the 3 fragments: <span class="r-word">Tabbed1AFragment</span> , <span class="r-word">Tabbed1BFragment</span>  and <span class="r-word">Tabbed1CFragment</span> .</p>
+
+<figure><img src="UD4/navigation/images/ud4-2021-10-18-10-22-53.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p class="sub-section">Adding ViewPager2</p>
+
+<p>In the layout of the <span class="d-word">Tabbed1Fragment</span>  we add the <span class="r-word">ViewPager2</span>. It will show the 3 fragments (A, B, C) 
+    that we have created before.</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">res/layout/fragment_tabbed1.xml</span>
+    </section>
+<section class="marco-b">
+      <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    &lt;androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+&lt;/FrameLayout></code></pre>
+      </section>
+</section>
+
+<br><br>
+
+<p>To link the 3 fragments (A, B, C) with the <span class="r-word">ViewPager2</span> , you have to call the <span class="r-word">setAdapter()</span> method and pass it 
+    a <span class="r-word">FragmentStateAdapter</span> object with the configuration.</p>
+
+<p>We will make this call in the <span class="r-word">onViewCreated()</span>  method of the <span class="r-word">Tabbed1Fragment</span>.</p>
+
+<p>The <span class="d-word">Tabbed1Fragment</span> class should look like this:</p>
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">Tabbed1Fragment.kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.cartatar.navigation.databinding.FragmentTabbed1Binding
 
 
+class Tabbed1Fragment : Fragment() {
+
+    private lateinit var binding:FragmentTabbed1Binding
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return FragmentTabbed1Binding.inflate(inflater,container,false).also { binding = it }.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.viewPager.adapter = PagerAdapter(this)
+
+    }
+
+    class PagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+
+        override fun getItemCount(): Int = 3
+
+        override fun createFragment(position: Int): Fragment {
+            // Return a NEW fragment instance in createFragment(int)
+            return when (position) {
+                0 -> Tabbed1AFragment()
+                1 -> Tabbed1BFragment()
+                2 -> Tabbed1CFragment()
+                else -> Tabbed1AFragment()
+            }
+        }
+    }
+}</code></pre>
+        </section><br><br>
+</section>
+
+<p>The <span class="r-word">FragmentStateAdapter</span>  class object configures the <span class="r-word">viewPager</span>  by overriding two methods:</p>
+
+<ul>
+    <li><span class="r-word">createFragment()</span>  returns the fragment that should be displayed based on the position of the page.</li>
+    <li><span class="r-word">getItemCount()</span>  returns the number of pages the <span class="r-word">viewPager</span> should have.</li>
+</ul>
+
+<p>
+    If we run the app, we can slide through the 3 fragments, but there's no tab yet.
+</p>
+
+<figure><img src="./UD4/navigation/images/UD4-viewer_without_tab.gif" /><br><figcaption></figcaption></figure>
+<br>
 
 
+<p class="sub-section">Adding TabLayout</p>
+
+<p>In the <span class="inline-file">fragment_tabbed1.xml</span> layout we add the <span class="r-word">&lt;TabLayout></span>  just above the 
+    <span class="r-word">ViewPager2</span> . Replace the content with the following:</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">res/layout/fragment_tabbed1.xml</span>
+    </section>
+<section class="marco-b">
+   <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    &lt;com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    &lt;androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+&lt;/LinearLayout></code></pre>
+   </section>     
+</section><br><br>  
+
+<p>We have changed the <span class="r-word">FrameLayout</span>  to a <span class="r-word">LinearLayout</span>  with vertical orientation, 
+    so that the <span class="r-word">TabLayout</span>  and the <span class="r-word">ViewPager2</span> are displayed one above the other.</p>
+
+<p>To link the <span class="r-word">TabLayout</span>  with the <span class="r-word">ViewPager2</span>, so that the page changes when a tab is clicked, and vice versa, 
+    you have to create a <span class="r-word">TabLayoutMediator</span>  object to which the <span class="r-word">TabLayout</span> 
+     and <span class="r-word">ViewPager2</span>  are passed. A <span class="r-word">TabConfigurationStrategy</span>  is also passed to it indicating the 
+     title that should be displayed in each Tab. Finally, the <span class="r-word">attach()</span>  method of this object is called.</p>
+    
+<p>Add this code in <span class="r-word">Tabbed1Fragment</span> :</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita"> Tabbed1Fragment.kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre data-line="30-39"><code class="language-kotlin">import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.cartatar.navigation.databinding.FragmentTabbed1Binding
+import com.google.android.material.tabs.TabLayoutMediator
 
 
+class Tabbed1Fragment : Fragment() {
 
+    private lateinit var binding:FragmentTabbed1Binding
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return FragmentTabbed1Binding.inflate(inflater,container,false).also { binding = it }.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        binding.viewPager.adapter = PagerAdapter(this)
 
+        TabLayoutMediator(
+            binding.tabLayout, binding.viewPager
+        ) { tab, position ->
+            when (position) {
+                0 -> tab.text = "TAB A"
+                1 -> tab.text = "TAB B"
+                2 -> tab.text = "TAB C"
+                else -> tab.text = "TAB A"
+            }
+        }.attach()
 
+    }
 
+    class PagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
+        override fun getItemCount(): Int = 3
 
+        override fun createFragment(position: Int): Fragment {
+            // Return a NEW fragment instance in createFragment(int)
+            return when (position) {
+                0 -> Tabbed1AFragment()
+                1 -> Tabbed1BFragment()
+                2 -> Tabbed1CFragment()
+                else -> Tabbed1AFragment()
+            }
+        }
+    }
+}</code></pre>
+        </section><br><br>
+</section>
+<br><br>
 
+<p>
+    Now the <span class="negrita">Tabs</span>  are shown, with the title and synchronized with the pages.</p>    
+    
 
-
-
-
-
+    <p>Here you are the Gihub <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/Navigation">link</a> </p>
 
 
     </section><!-- End section -->
@@ -4372,7 +4769,7 @@ class DrawerActivity : AppCompatActivity() {
 
     <!--*********************************************************Bonus track: Splash Screen***********************************************************-->
     <section class="apartado">
-    <a name="s"></a>
+    <a name="sSplashScreen"></a>
     <h2>Bonus track: Splash Screen</h2>
 
     <p>What's a Splash Screen? In some apps there ir an screens that appears just launched the app. It use to have a logo or similar and we can use it while app is loading or wating for some data. This is the <span class="d-word">Splash Screen</span>
@@ -4555,6 +4952,8 @@ so our themes.xml looks like This
     </ol>
     
     Github <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/splashscreen">link</a> 
+
+    <p class="tarea">Create a free App with a Splash Screen and it should implement at least two navigation options, that we've seen in previous section.</p>
     
     </section><!-- End section -->
 
