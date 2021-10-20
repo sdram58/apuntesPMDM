@@ -585,12 +585,12 @@ data class Person(val name: String?, val surname: String?):Parcelable {
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Person> {
+    companion object CREATOR : Parcelable.Creator&lt;Person> {
         override fun createFromParcel(parcel: Parcel): Person {
             return Person(parcel)
         }
 
-        override fun newArray(size: Int): Array<Person?> {
+        override fun newArray(size: Int): Array&lt;Person?> {
             return arrayOfNulls(size)
         }
     }
@@ -3196,12 +3196,12 @@ navController?.navigate(R.id.action_infoFragment_to_homeFragment, bundle)
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Login> {
+    companion object CREATOR : Parcelable.Creator&lt;Login> {
         override fun createFromParcel(parcel: Parcel): Login {
             return Login(parcel)
         }
 
-        override fun newArray(size: Int): Array<Login?> {
+        override fun newArray(size: Int): Array&lt;Login?> {
             return arrayOfNulls(size)
         }
     }
