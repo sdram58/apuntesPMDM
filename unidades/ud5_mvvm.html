@@ -11,19 +11,64 @@
     <script src="../script/script.js"></script>
 </head>
 <body>
-    <h1>Coroutines - MVVM - Live Data</h1>
+    <h1>UD5.- Coroutines - MVVM - Live Data</h1>
     <div class="main-menu">
-        <a href="#sCoroutines">Camera</a><a 
-           href="#sMVVM">Getting Images</a><a 
-           href="#sLiveData">Audio and Video</a>
+        <a href="#sCoroutines">Introduction to Coroutines</a><a 
+           href="#sMVVM">MVVM</a><a 
+           href="#sLiveData">Live Data</a>
     </div>
 
     <!--*********************************************************COROUTINES***********************************************************-->
     <section class="apartado">
     <a name="sCoroutines"></a>
     <h2>INTRODUCTION TO COROUTINES</h2>
+
+    <h3>Introduction</h3>
     
+    <p>En Android, todas las tareas de la IU se realizan en el hilo principal, es por ello, que no es una buena práctica realizar tareas pesadas o de larga duración en el hilo principal.
+        Si bloqueamos el hilo principal realizando estas tareas, la interfaz de usuario dejará de actualizarse a sus 60fps y obtendremos una experiencia de usuario nada satisfactoria.
+    </p>
+
+    <p>Para solventar esto, podemos utilizar hilos de ejecución, y crear para cada una de estas tareas su propio hilo de ejecución.
+        Pero esto tiene una serie de desventajas.
+        <ul>
+            <li>Los hilos se bloquan y el cambio de contexto es muy pesado y lento</li>
+            <li>Los hilos son difíciles de manejar y depurar. No tenemos mucho control sobre ellos</li>
+            <li>Tenemos una limitación en el número de hilos hasta que afecten al rendimiento</li>
+        </ul>
+    </p>
+    <p>Una solución que se utilitzó de forma bastante extendida durante algún tiempo fue el uso de la clase AsyncTask, para ejecutar las tareas de larga duración en segundo plano. 
+        Solía ser más o menos así: </p>
     
+    <h3>Coroutines</h3>
+    <p>
+        A coroutine is a concurrency design pattern that you can use on Android to simplify code that executes asynchronously. 
+        Coroutines were added to Kotlin in version 1.3 and are based on established concepts from other languages.
+    </p>
+
+    <p>
+        On Android, coroutines help to manage long-running tasks that might otherwise block the main thread and cause your app 
+        to become unresponsive. Over 50% of professional developers who use coroutines have reported seeing increased productivity. 
+        This topic describes how you can use Kotlin coroutines to address these problems, enabling you to write cleaner and more concise app code.
+    </p>
+
+    
+    <p class="sub-section">Features</p>
+    <p>Coroutines is our recommended solution for asynchronous programming on Android. Noteworthy features include the following:</p>
+    <ul>
+        <li><span class="d-word">Lightweight</span>: You can run many coroutines on a single thread due to support for suspension, 
+            which doesn't block the thread where the coroutine is running. 
+            Suspending saves memory over blocking while supporting many concurrent operations.</li>
+        <li><span class="d-word">Fewer memory leaks</span>: Use structured concurrency to run operations within a scope.</li>
+        <li>
+            <span class="d-word">Built-in cancellation support</span>: Cancellation is propagated automatically through the running coroutine hierarchy.
+        </li>
+        <li><span class="d-word">Jetpack integration</span>: Many Jetpack libraries include extensions that provide full coroutines support. 
+            Some libraries also provide their own coroutine scope that you can use for structured concurrency.</li>
+    </ul>
+
+
+
     
     </section><!-- End section -->
 
