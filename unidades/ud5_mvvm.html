@@ -1990,8 +1990,17 @@ suspend fun function2(): String
 }</code></pre>
 </section><br><br>
 
+<p>One important point to note is that Async makes both of the networks call for result1 and result2 in parallel, whereas with launch parallel function calls are not made. 
+    When you will run the code in Android IDE, the log result will be:</p>
 
+    <figure><img src="UD5/mvvm/images/ud5-2021-11-08-16-44-47.png" /><br><figcaption>Async</figcaption></figure>
+    <br>
+    
 
+<p class="sub-section">When to Use Async?</p>
+
+<p>When making two or more network call in parallel, but you need to wait for the answers before computing the output, ie use async for results from multiple tasks 
+    that run in parallel. If you use async and do not wait for the result, it will work exactly the same as launch.</p>
 
 
 
@@ -2027,6 +2036,7 @@ suspend fun function2(): String
         <li><a class="enlace" target="_blank" href="https://github.com/koral--/android-gif-drawable">https://github.com/koral--/android-gif-drawable</a> </li>
         <li><a class="enlace" target="_blank" href="https://gerardfp.github.io/livedata/">Gerard's notes</a> </li>
         <li><a class="enlace" target="_blank" href="https://www.geeksforgeeks.org/suspend-function-in-kotlin-coroutines/?ref=lbp">Suspend function</a> </li>
+        <li><a class="enlace" target="_blank" href="https://www.geeksforgeeks.org/launch-vs-async-in-kotlin-coroutines/">Launch vs Async</a> </li>
     </ol>
     
     
