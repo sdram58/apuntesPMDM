@@ -154,11 +154,7 @@
 		"prefix": "ifold-",
 		"body": ["<span class=\"inline-folder\">${CLIPBOARD:\"file\"}</span>"],
 		"description": "Inline Folder"
-	},
-
-
-
-
+	}
 
 	
 }
