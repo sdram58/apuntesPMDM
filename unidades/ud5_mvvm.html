@@ -1873,7 +1873,7 @@ dependencies
     </section><br><br>
 
 <section class="marco-t inf">
-    <span class="icono info"> </span> Note: x.x.x is the version of the coroutine. Now (2021-11-08) is 1.3.9
+    <span class="icono info"> </span> Note: x.x.x is the version of the coroutine. For instance you could set 1.3.9
     </section>
 <section class="marco-b">
         
@@ -1910,12 +1910,13 @@ suspend fun fetchAndShowUser()
     As discussed above <span class="r-word">Coroutines</span>  has many advantages apart from not having callbacks, like they are <span class="negrita">nonblocking</span> 
     , <span class="negrita">easy</span> , and <span class="negrita">nonexpensive to create.</span>   </p>
 
-<h3>Launch vs Async in Kotlin Coroutines</h3>
-<p>There are mainly two functions in Kotlin to start the coroutines. </p>
+<h3>Launch vs Async vs withContext in Kotlin Coroutines</h3>
+<p>There are mainly three functions in Kotlin to start the coroutines. </p>
 
 <ul>
     <li><span class="negrita">launch</span> { }</li>
      <li><span class="negrita">async</span> { }</li>
+     <li><span class="negrita">withContext</span> { }</li>
 </ul>
 
 <p class="sub-section">Launch Function</p>
@@ -2010,8 +2011,8 @@ suspend fun function2(): String
 <section><pre><code class="language-kotlin">
 // kotlin program for demonstration of withContext
 fun testWithContext {
-    var resultOne = "Hardstyle"
-    var resultTwo = "Minions"
+    var resultOne = "Android"
+    var resultTwo = "Kotlin"
     Log.i("withContext", "Before")
     resultOne = withContext(Dispatchers.IO) { function1() }
     resultTwo = withContext(Dispatchers.IO) { function2() }
@@ -2054,11 +2055,84 @@ withContext: function1function2</code></pre>
 
 <h3>Job</h3>
 
+<p>Every time we create a <span class="r-word">coroutine</span> , a <span class="r-word">Job</span>  is associated with it. According to the official documentation -
+     <span class="subrayado">An instance of a Job in the coroutineContext represents the coroutine itself</span>-. A Job is a reference to the coroutine with which we can 
+     perform different actions. Among the most common are:</p>
+
+<ol>
+    <li>
+        <span class="r-word">isActive</span>: Allows you to verify if the coroutine is running. Returns <span class="cursiva">true</span>  if it is active, <span class="cursiva">false</span> otherwise.</li>
+        <li><span class="r-word">isCancelled</span>: Allows you to check if the coroutine was canceled. 
+            Returns <span class="cursiva">true</span>  if it was canceled, <span class="cursiva">false</span>  otherwise.</li>
+        <li><span class="r-word">isCompleted</span>: Allows you to verify if the coroutine finished its execution successfully.
+            Returns <span class="cursiva">true</span>  if it was completed, <span class="cursiva">false</span>  otherwise.</li>
+        <li><span class="r-word">join()</span>: Suspend the thread that makes the call to this function until the coroutine to which the Job is associated finishes its execution.</li>
+        <li><span class="r-word">cancel()</span>: Cancels the execution of the coroutine. <span class="subrayado">Canceling a Job cancels all the Jobs within the Scope of the canceled Job</span>.
+            That is, a call to the <span class="cursiva">cancel</span>  function of a Job, cancels the Jobs of the coroutines created within the Scope "parent" as long as the Job of the coroutine "daughter" is "child" of the canceled Job.</li>
+    </ol>
+
+<p>Let's do a test using the <span class="cursiva">launch</span> constructor.</p>
+
+<section><pre><code class="language-kotlin">import kotlinx.coroutines.*
+import kotlin.system.measureTimeMillis
+
+fun log(message: String) {
+    println("[${Thread.currentThread().name}] : $message")
+}
+
+fun log(character: Char) {
+    print("$character")
+}
+
+fun main() {
+    log("Start")
+
+    runBlocking {
+        val job = launch {
+            repeat(3) {
+                log("Launch rep #$it : I'm active")
+                delay(1000)
+            }
+            log("Launch : I'm finishing.")
+        }
+
+        delay(100)
+        while(job.isActive) {
+            log("RunBlocking : Job is active")
+            delay(1000)
+        }
+
+        log("RunBlocking : Job is not active")
+    }
+
+    log("End")
+}</code></pre>
+</section><br><br>
+
+<p>The exit would be something like this:</p>
+<section><pre><code class="language-kotlin">[main] : Start
+[main @coroutine#2] : Launch rep #0 : I'm active
+[main @coroutine#1] : RunBlocking : Job is active
+[main @coroutine#2] : Launch rep #1 : I'm active
+[main @coroutine#1] : RunBlocking : Job is active
+[main @coroutine#2] : Launch rep #2 : I'm active
+[main @coroutine#1] : RunBlocking : Job is active
+[main @coroutine#2] : Launch : I'm finishing.
+[main @coroutine#1] : RunBlocking : Job is not active
+[main] : End</code></pre>
+</section><br><br>
+
+<p>In the previous code we create a coroutine with the <span class="r-word">runBlocking</span>  constructor and inside it we use the <span class="cursiva">launch</span>
+     constructor to create another coroutine. The <span class="cursiva">launch</span>  constructor returns an object of type <span class="r-word">Job</span> 
+      when creating the coroutine. We use the object to verify that it is active, repeating the cycle until the coroutine finishes its execution, 
+      thus leaving the Job in a completed state. Once completed, the <span class="negrita">job.isActive</span>  condition ceases to be met, 
+      thus continuing the execution of the coroutine created with the <span class="r-word">runBlocking</span>  constructor.</p>
 
 
+<p class="sub-section">Job lifecycle</p>
 
-
-
+<figure><img src="UD5/coroutines/images/ud5-2021-11-10-10-00-09.png" /><br><figcaption>Job LifeCycle</figcaption></figure>
+<br>
 
 
      
