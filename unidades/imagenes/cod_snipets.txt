@@ -154,7 +154,30 @@
 		"prefix": "ifold-",
 		"body": ["<span class=\"inline-folder\">${CLIPBOARD:\"file\"}</span>"],
 		"description": "Inline Folder"
-	}
+	},
+	"PasteParagraph": {
+		"scope": "html",
+		"prefix": "p-",
+		"body": ["<p>${CLIPBOARD:\"file\"}</p>\n$1"],
+		"description": "Make copy text into a paragraph"
+	},
+
+	"TODO": {
+		"scope": "html",
+		"prefix": "todo",
+		"body": ["<!-- TODO: $1------------------------>\n$2"],
+		"description": "Generates a TODO commentary"
+	},
+	"Comment": {
+		"scope": "html",
+		"prefix": "comment-",
+		"body": ["<!------------------------------------------$CLIPBOARD------------------------------------------------->\n$2"],
+		"description": "Creates a commentary"
+	},
+
+
+
+
 
 	
 }
