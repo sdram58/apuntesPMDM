@@ -1394,7 +1394,7 @@ stop
 
     <ul>
         <li><span class="r-word">setValue()</span>: allows you to change the value <span class="negrita">from the main thread</span> </li>
-        <li><span class="r-word">postValue()</span>: allows changing the value from a background thread</li>
+        <li><span class="r-word">postValue()</span>: allows changing the value <span class="negrita">from a background thread</span> </li>
 </ul>
 
 <section><pre><code class="language-kotlin">integerNumberLiveData.setValue(-500);    // it can only be done from Main Thread
@@ -1505,7 +1505,7 @@ val orderLiveData:LiveData&lt;String> = object:LiveData&lt;String>(){
      However, the <span class="r-word">ViewModel</span>  fulfills another function, which is to <span class="negrita">transform</span>  the data from Model into the data that the view needs.</p>
 
 <p>In this case, the model (the trainer) sends the orders in <span class="negrita">String</span> format, separating the exercise to be done and the repetition with a colon 
-    <span class="d-word">(EXERCISE: 5)</span> . The View, for its part, needs to know separately which image to display and the repetition number. 
+    <span class="d-word">(EXERCISE: 5)</span> . The View, for its part, needs to know separately which <span class="subrayado">image to display and the repetition number</span> . 
     It will then be the <span class="r-word">ViewModel</span>  that will transform the String emitted by <span class="r-word">LiveData</span> 
     order into the two different data that the View needs.</p>
 
@@ -1663,8 +1663,8 @@ class TrainerFragment : Fragment() {
     <p>If we run the app it works changing all values and images but... One moment! we download a GIF image but there is no movement in the images. It's due to Android
         doesn't support natively Gif images.
     </p>
-    <p>We have some solutions such us using some librearies like Glide or Picasso but we will see in the next chapter. Now we're using this
-        <a class="enlace" target="_blank" href="https://github.com/koral--/android-gif-drawable">dependecie</a>. So let's add it on our <span class="inline-file">gradle module app</span></p>
+    <p>We have some solutions such us using some librearies like Glide or Picasso but we will see them in the next chapter. Now we're using this
+        <a class="enlace" target="_blank" href="https://github.com/koral--/android-gif-drawable">dependecies</a>. So let's add it on our <span class="inline-file">gradle module app</span></p>
 
     <section><pre><code class="language-kotlin">dependencies {
 
@@ -1697,7 +1697,7 @@ class TrainerFragment : Fragment() {
 
     <a name="PR4" class="tarea" target="_blank" href="#">
         <p>PRACTISE</p>
-        <p>It implements a <span class="negrita">Model</span>  with a <span class="negrita">LiveData</span> variable that emits data when it is observed.</p>
+        <p>You have to implement a <span class="negrita">Model</span>  with a <span class="negrita">LiveData</span> variable that emits data when it is observed.</p>
         <p>Implement a <span class="negrita">ViewModel</span>  that transforms the <span class="negrita">Model</span>  data into another <span class="negrita">LiveData</span> .</p>
         <p>Implement a <span class="negrita">View</span>  that observes the <span class="negrita">LiveData</span>  of the <span class="negrita">ViewModel</span>  and shows it to the user with images.</p>
         <p>For instance:</p>
