@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data persistence</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/prism.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <script src="../script/script.js"></script>
+</head>
+<body>
+    <h1>Data persistence</h1>
+    <div class="main-menu">
+        <a href="#sSaveState">Save State</a><a 
+           href="#sFileSystem">File System</a><a 
+           href="#sShared">Shared Preferences</a><a
+           href="#sRoom">Room</a><a
+           href="#sWebgrafia">Webgraphy</a>
+    </div>
+
+    <!--*********************************************************OnSaveState***********************************************************-->
+    <section class="apartado">
+    <a name="sSaveState"></a>
+    <h2>Save State</h2>
+    
+    <p>In this section, we’ll be discussing the two vital methods for managing the state of the application, namely <span class="r-word">onSaveInstanceState</span> 
+         and <span class="r-word">onRestoreInstanceState</span>.</p>
+         
+    <p>We’ll be developing a <span class="d-word">Counter</span>  Android Application in which we’ll handle the state of the application when the configuration changes.</p>
+         
+    <p>So, let's get started.</p>
+    
+    <h3>Creating the App</h3>
+
+    <p>Create an App called <span class="d-word">SaveState</span> from <span class="negrita">empty activity</span> which contains only a <span class="negrita">TextView</span>  
+        and a <span class="negrita">Button</span></p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">activity_main.xml</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    &lt;TextView
+        android:id="@+id/tvCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/purple_500"
+        android:textSize="40sp"
+        tools:text="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25" />
+
+    &lt;Button
+        android:id="@+id/btnInc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Increase"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCounter"
+        app:layout_constraintVertical_bias="0.50" />
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout></code></pre>
+            </section><br><br>
+    </section>
+
+    <p>Now we go with the code of the <span class="inline-file">MainActivity.kt</span>. It will simply have a <span class="subrayado">listener</span>  so that when the
+         button is pressed, the counter increases by 1. For this we will have a global variable <span class="d-word">counter</span>  that we will initialize to <span class="negrita">0</span> 
+          and that we will increase each time we press the button. It's an easy app but it serves us for that example.</p>
+
+    
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+        </section>
+    <section class="marco-b">
+        <section><pre><code class="language-kotlin">import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+
+class MainActivity : AppCompatActivity() {
+    private var counter = 0
+
+    private val tvCounter: TextView by lazy { findViewById(R.id.tvCounter) }
+    private val btnInc: Button by lazy { findViewById(R.id.btnInc) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+
+
+        btnInc.setOnClickListener {
+            increaseCounter()
+        }
+
+        updateTvCounter()
+    }
+
+    private fun increaseCounter() {
+        counter++
+
+        updateTvCounter()
+    }
+
+    private fun updateTvCounter() {
+        tvCounter.text = counter.toString()
+    }
+}</code></pre>
+        </section>
+    </section>
+    
+    <figure><img src="UD6/images/UD6-running_app_save_state.gif" /><br><figcaption>Running App</figcaption></figure>
+    <br>
+    
+    <br>
+    <p>The app works as expected. But what if we turn over the mobile phone to landscape position</p>
+
+
+    <figure><img src="UD6/images/UD6-running_app_save_state_error.gif" /><br><figcaption>Running App</figcaption></figure>
+    <br>
+    <br>
+    <p>As we can see, the counter value is set to 0 again. This is because when we turn the mobile, the activity is created again, starting the counter at 0.</p>
+    <p>Let's add a Log to check that in the <span class="inline-file">MainActitity</span></p>
+
+    <section><pre><code class="language-kotlin">private fun log(text:String){
+    Log.d(TAG, text )
+}</code></pre>
+    </section><br><br>
+
+    <p>And remember create the <span class="negrita">TAG</span> </p>
+
+    <section><pre><code class="language-kotlin">import ......
+
+const val TAG ="SAVE_STATE_TAG"
+
+class MainActivity : AppCompatActivity() { .....</code></pre>
+    </section><br><br>
+
+    <p>Now every time we enter the onCreate we execute the log function</p>
+
+    <section><pre><code class="language-kotlin">override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
+
+    log("onCreate Method")
+    .............</code></pre>
+    </section><br><br>
+
+    <p>Launch the App and let's see</p>
+
+    <figure><img src="UD6/images/UD6-running_app_save_state_log.gif" /><br><figcaption>onCreate is called two times</figcaption></figure>
+    <br>
+    <br>
+
+    <h3>onSaveInstanceState and onRestorenIstanceState</h3>
+
+    <p>
+        <span class="r-word">onSaveInstanceState</span>  allows us to save data after the activity stops.
+        <span class="r-word">onRestorenIstanceState</span>  allows us to retrieve previously stored data
+    </p>
+    <p>To see when each of these methods are executed we are going to override them and call our log function, in addition we will also include the 
+        <span class="r-word">onResume</span>  function on the <span class="inline-file">MainActivity.kt</span></p>
+
+    <section><pre><code class="language-kotlin">override fun onResume() {
+    super.onResume()
+    log("We are onResume")
+}
+override fun onSaveInstanceState(outState:Bundle){
+    super.onSaveInstanceState(outState)
+    log("We are onSaveInstanceState")
+}
+
+override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+    super.onRestoreInstanceState(savedInstanceState)
+    log("We are onRestoreInstanceState")
+}</code></pre>
+        </section><br><br>
+<p>
+    If we launch the application and later turn the mobile, the result of the log will be as follows.</p>
+
+    <section><pre><code class="language-kotlin">//App is recently launched
+com.cartatar.savestate D/SAVE_STATE_TAG: onCreate Method
+com.cartatar.savestate D/SAVE_STATE_TAG: We are onResume
+//Here we rotate the mobile
+com.cartatar.savestate D/SAVE_STATE_TAG: We are onSaveInstanceState
+com.cartatar.savestate D/SAVE_STATE_TAG: onCreate Method
+com.cartatar.savestate D/SAVE_STATE_TAG: We are onRestoreInstanceState
+com.cartatar.savestate D/SAVE_STATE_TAG: We are onResume</code>
+</pre></section>
+<br><br>
+
+<p class="sub-section">Saving and Restoring the State</p>
+
+<p>Now, we are using the <span class="negrita">Bundle</span>  to save our data so we can retrieve it later.</p>
+
+<p>We simply have to add our <span class="d-word">counter</span>  to the <span class="negrita">Bundle</span>  so that we can later retrieve it. 
+    Remember to use the same Key to retrieve it, the best option is to create a constant.</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+import android.widget.Button
+import android.widget.TextView
+
+const val TAG ="SAVE_STATE_TAG"
+
+const val COUNTER_KEY = "COUNTER_KEY"
+
+class MainActivity : AppCompatActivity() {
+    private var counter = 0
+
+    private val tvCounter: TextView by lazy { findViewById(R.id.tvCounter) }
+    private val btnInc: Button by lazy { findViewById(R.id.btnInc) }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        log("onCreate Method")
+
+        btnInc.setOnClickListener {
+            increaseCounter()
+        }
+
+
+    }
+
+    private fun increaseCounter() {
+        counter++
+
+        updateTvCounter()
+    }
+
+    private fun updateTvCounter() {
+        tvCounter.text = counter.toString()
+    }
+
+    private fun log(text:String){
+        Log.d(TAG, text )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        log("We are onResume")
+        updateTvCounter()
+    }
+
+    override fun onSaveInstanceState(outState:Bundle){
+        super.onSaveInstanceState(outState)
+        log("We are onSaveInstanceState")
+        outState.putInt(COUNTER_KEY,counter)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        log("We are onRestoreInstanceState")
+
+        counter = savedInstanceState.getInt(COUNTER_KEY)
+    }
+}</code></pre>
+        </section><br><br>
+</section>
+
+
+<p>Notice that we've moved the <span class="d-word">updateTvCounter()</span>  method from <span class="r-word">onCreate</span>  to <span class="r-word">onResume</span> </p>
+
+<figure><img src="UD6/images/UD6-running_app_save_state_ok.gif" /><br><figcaption>Save State Working ok</figcaption></figure>
+<br>
+
+<section class="marco-t inf">
+    <span class="icono info"> </span> <span class="negrita">EditText</span>  save its sate internally so you don't have to implement anything for them.
+    <br><br>
+    For more complex Apps, it is better to use ViewModel pattern.
+    </section>
+<section class="marco-b">
+        
+</section>
+    
+
+<p>You can see the complete project <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/SaveState">here</a> </p>
+
+
+
+
+    </section><!-- End section -->
+
+    <!--*********************************************************File System***********************************************************-->
+    <section class="apartado">
+    <a name="sFileSystem"></a>
+    <h2>File System</h2>
+    
+    <p>Android uses a file system that's similar to disk-based file systems on other platforms. The system provides several options for you to save your app data:</p>
+    <p>
+    <ul>
+        <li><span class="negrita">App-specific storage</span> : Store files that are meant for your app's use only, either in dedicated directories within an 
+            <span class="subrayado">internal storage</span>  volume or different dedicated directories within <span class="subrayado">external storage</span>. 
+            <span class="negrita"><span class="subrayado">Use the directories within internal storage to save sensitive information that other apps shouldn't access.</span> </span> </li>
+        <li><span class="negrita">Shared storage</span>: Store files that your app intends to share with other apps, including media, documents, and other files.</li>
+        <li><span class="negrita">Preferences</span>: Store private, primitive data in key-value pairs.</li>
+        <li><span class="negrita">Databases</span>: Store structured data in a private database using the Room persistence library.</li>
+    </ul>
+</p>    
+<p>The characteristics of these options are summarized in the following table:</p>
+
+    <figure><img src="UD6/images/ud6-2021-11-24-11-58-36.png" /><br><figcaption></figcaption></figure>
+    <br>
+    <br>
+
+    <p>The solution you choose depends on your specific needs:</p>
+    
+
+<p><span class="negrita">How much space does your data require?</span> </p>
+
+<p>Internal storage has limited space for app-specific data. Use other types of storage if you need to save a substantial amount of data.</p>
+<br>
+<p><span class="negrita">How reliable does data access need to be?</span> </p>
+
+<p>If your app's basic functionality requires certain data, such as when your app is starting up, place the data within internal storage directory or a database. App-specific files that are stored in external storage aren't always accessible because some devices allow users to remove a physical device that corresponds to external storage.</p>
+<br>
+<p><span class="negrita">What kind of data do you need to store?</span> </p>
+
+
+<p>If you have data that's only meaningful for your app, use app-specific storage. For shareable media content, use shared storage so that other apps can access the content. 
+    For structured data, use either preferences (for key-value data) or a database (for data that contains more than 2 columns).</p>
+
+<br>
+<p><span class="negrita">Should the data be private to your app?</span> </p>
+
+<p>When storing sensitive data—data that shouldn't be accessible from any other app—use internal storage, preferences, or a database. 
+    Internal storage has the added benefit of the data being hidden from users.</p>
+
+
+<h3>Access app-specific files</h3>
+
+<p>In many cases, your app creates files that other apps don't need to access, or shouldn't access. The system provides the following locations for storing such app-specific files:</p>
+
+<p>
+    <ul>
+        <li><span class="negrita">Internal storage directories</span>: These directories include both a dedicated location for storing persistent files, 
+            and another location for storing cache data. The system prevents other apps from accessing these locations, and on <span class="negrita">Android 10 (API level 29)</span> 
+            and higher, these locations are encrypted. These characteristics make these locations a good place to store sensitive data that only your app itself can access.</li>
+        <li>
+            <span class="negrita">External storage directories</span> : These directories include both a dedicated location for storing persistent files, and another 
+            location for storing cache data. Although it's possible for another app to access these directories if that app has the proper permissions, 
+            the files stored in these directories are meant for use only by your app. If you specifically intend to create files that other apps should be able to access, 
+            your app should store these files in the shared storage part of external storage instead.
+        </li>
+    </ul>
+</p>
+<p>When the user uninstalls your app, the files saved in app-specific storage are removed. Because of this behavior, you shouldn't use this storage to save anything that 
+    the user expects to persist independently of your app. For example, if your app allows users to capture photos, the user would expect that they can access those 
+    photos even after they uninstall your app. So you should instead use shared storage to save those types of files to the appropriate media collection.</p>
+
+
+<h3>Access from internal storage</h3>
+<p>For each app, the system provides directories within internal storage where an app can organize its files. One directory is designed for your app's persistent files, 
+    and another contains your app's cached files. Your app doesn't require any system permissions to read and write to files in these directories.</p>
+
+<p>Other apps cannot access files stored within internal storage. This makes internal storage a good place for app data that other apps shouldn't access.</p>
+<p>Keep in mind, however, that these directories tend to be small. Before writing app-specific files to internal storage, your app should <span class="negrita">query the free space</span> 
+    on the device.</p>
+<br>
+<p>This snippet allows us to know how much free space on the device</p>
+<section><pre><code class="language-kotlin">// App needs 10 MB within internal storage.
+const val NUM_BYTES_NEEDED_FOR_MY_APP = 1024 * 1024 * 10L;
+
+val storageManager = applicationContext.getSystemService&lt;StorageManager>()!!
+val appSpecificInternalDirUuid: UUID = storageManager.getUuidForPath(filesDir)
+val availableBytes: Long =
+        storageManager.getAllocatableBytes(appSpecificInternalDirUuid)
+if (availableBytes >= NUM_BYTES_NEEDED_FOR_MY_APP) {
+    storageManager.allocateBytes(
+        appSpecificInternalDirUuid, NUM_BYTES_NEEDED_FOR_MY_APP)
+} else {
+    val storageIntent = Intent().apply {
+        // To request that the user remove all app cache files instead, set
+        // "action" to ACTION_CLEAR_APP_CACHE.
+        action = ACTION_MANAGE_STORAGE
+    }
+}</code></pre>
+</section><br><br>
+
+<h3>Access persistent files</h3>
+
+<p>Your app's ordinary, persistent files reside in a directory that you can access using the <span class="r-word">filesDir</span>  property of a <span class="negrita">context</span> 
+     object. The framework provides several methods to help you access and store files in this directory.</p>
+
+<p>You can use the <span class="r-word">File</span>  API to access and store files.</p>
+<p>To help maintain your app's performance, <span class="subrayado">don't open and close the same file multiple times</span> .</p>
+<p>The following code snippet demonstrates how to use the <span class="r-word">File</span>  API:</p>
+<section><pre><code class="language-kotlin">val file = File(context.filesDir, filename)</code></pre>
+</section><br><br>
+
+<p class="sub-section">Store a file using a stream</p>
+<p>As an alternative to using the <span class="r-word">File</span>  API, you can call <span class="r-word">openFileOutput()</span>  to get a 
+<span class="r-word">FileOutputStream</span>  that writes to a file within the <span class="r-word">filesDir</span>  directory.</p>
+
+<p>The following code snippet shows how to write some text to a file:</p>
+
+<section><pre><code class="language-kotlin">val filename = "myfile"
+val fileContents = "Hello world!"
+context.openFileOutput(filename, Context.MODE_PRIVATE).use {
+        it.write(fileContents.toByteArray())
+}</code></pre>
+</section><br><br>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> Caution: On devices that run Android 7.0 (API level 24) or higher, unless you pass the <span class="negrita">Context.MODE_PRIVATE</span> 
+     file mode into <span class="negrita">openFileOutput()</span> , a <span class="subrayado">SecurityException occurs</span> .
+    </section>
+<section class="marco-b">
+        
+</section>
+
+<section class="marco-t inf">
+    <span class="icono info"> </span> To allow other apps to access files stored in this directory within internal storage, use a FileProvider 
+    with the <span class="negrita">FLAG_GRANT_READ_URI_PERMISSION</span>  attribute.
+    </section>
+<section class="marco-b">
+        
+</section>
+    
+<p class="sub-section">Access a file using a stream</p>
+<p>To read a file as a stream, use <span class="r-word">openFileInput()</span> :</p>
+
+<section><pre><code class="language-kotlin">context.openFileInput(filename).bufferedReader().useLines { lines ->
+    lines.fold("") { some, text ->
+        "$some\n$text"
+    }
+}</code></pre>
+</section><br><br>
+
+<p class="sub-section">View list of files</p>
+<p>You can get an array containing the names of all files within the <span class="r-word">filesDir</span>  directory by calling <span class="r-word">fileList()</span>, 
+    as shown in the following code snippet:</p>
+<section><pre><code class="language-kotlin">var files: Array<String> = context.fileList()</code></pre>
+</section><br><br>
+
+<p class="sub-section">Create nested directories</p>
+<p>You can also create nested directories, or open an inner directory, by calling <span class="r-word">getDir()</span>:
+<section><pre><code class="language-kotlin">context.getDir(dirName, Context.MODE_PRIVATE)</code></pre>
+</section><br><br>
+<section class="marco-t inf">
+    <span class="icono info"> </span> Note: filesDir is always an ancestor directory of this new directory.
+    </section>
+<section class="marco-b">
+        
+</section>
+
+
+
+<p class="sub-section">Create cache files</p>
+<p>f you need to store sensitive data only temporarily, you should use the app's designated cache directory within internal storage to save the data. 
+    As is the case for all app-specific storage, the files stored in this directory are removed when the user uninstalls your app, although the files in this directory 
+    might be removed sooner.</p>
+
+<p>To create a cached file, call <span class="r-word">File.createTempFile()</span> :</p>
+
+<section><pre><code class="language-kotlin">File.createTempFile(filename, null, context.cacheDir)</code></pre>
+</section><br><br>
+
+Your app accesses a file in this directory using the <span class="r-word">cacheDir</span>  property of a context object and the <span class="r-word">File</span>  API:
+<section><pre><code class="language-kotlin">val cacheFile = File(context.cacheDir, filename)</code></pre>
+</section><br><br>
+
+<p class="sub-section">Remove cache files</p>
+
+<p>Even though Android sometimes deletes cache files on its own, you shouldn't rely on the system to clean up these files for you. 
+    You should always maintain your app's cache files within internal storage.</p>
+
+<p>To remove a file from the cache directory within internal storage, use one of the following methods:</p>
+
+
+<p>The <span class="r-word">delete()</span>  method on a <span class="r-word">File</span>  object that represents the file:</p>
+
+<section><pre><code class="language-kotlin">cacheFile.delete()</code></pre>
+</section><br><br>
+
+<p>The <span class="r-word">deleteFile()</span> method of the app's context, passing in the name of the file:</p>
+<section><pre><code class="language-kotlin">context.deleteFile(cacheFileName)</code></pre>
+</section><br><br>
+
+
+<h3>Access from external storage</h3>
+<p>If internal storage doesn't provide enough space to store app-specific files, consider using external storage instead. 
+    The system provides directories within external storage where an app can organize files that provide value to the user only within your app. 
+    One directory is designed for your app's persistent files, and another contains your app's cached files</p>
+
+<p>On <span class="subrayado">Android 4.4 (API level 19) or higher</span>, your app doesn't need to request any storage-related permissions to access app-specific 
+    directories within external storage. The files stored in these directories <span class="negrita">are removed when your app is uninstalled</span>.</p>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> <span class="negrita">Caution</span> : The files in these directories aren't guaranteed to be accessible, such as when a removable 
+    SD card is taken out of the device. If your app's functionality depends on these files, you should instead store the files within internal storage.
+    </section>
+<section class="marco-b">
+        
+</section>
+
+
+<p>On devices that run <span class="subrayado">Android 9 (API level 28) or lower</span> , your app can access the app-specific files that belong to other apps, 
+    provided that your app has the appropriate storage permissions. To give users more control over their files and to limit file clutter, 
+    apps that target <span class="subrayado">Android 10 (API level 29) and higher</span>  are given scoped access into external storage, or scoped storage, by default. 
+    When scoped storage is enabled, apps cannot access the app-specific directories that belong to other apps.</p>
+
+
+<p class="sub-section">Verify that storage is available</p>
+
+<p>Because external storage resides on a physical volume that the <span class="subrayado">user might be able to remove</span>, verify that the volume is accessible before trying
+     to read app-specific data from, or write app-specific data to, <span class="negrita">external storage</span> .</p>
+
+<p>You can query the volume's state by calling <span class="negrita">Environment.getExternalStorageState()</span> . If the returned state is <span class="r-word">MEDIA_MOUNTED</span>, 
+    then you can read and write app-specific files within external storage. If it's <span class="r-word">MEDIA_MOUNTED_READ_ONLY</span> , you can only read these files.</p>
+
+<p>For example, the following methods are useful to determine the storage availability:</p>
+
+<section><pre><code class="language-kotlin">// Checks if a volume containing external storage is available
+// for read and write.
+fun isExternalStorageWritable(): Boolean {
+    return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
+}
+
+// Checks if a volume containing external storage is available to at least read.
+fun isExternalStorageReadable(): Boolean {
+     return Environment.getExternalStorageState() in
+        setOf(Environment.MEDIA_MOUNTED, Environment.MEDIA_MOUNTED_READ_ONLY)
+}</code></pre>
+</section><br><br>
+
+
+<p class="sub-section">Select a physical storage location</p>
+
+
+<p>Sometimes, a device that allocates a partition of its internal memory as external storage also provides an SD card slot. This means that the device has multiple physical volumes
+     that could contain external storage, so you need to select which one to use for your app-specific storage.</p>
+
+<p>To access the different locations, call <span class="negrita">ContextCompat.getExternalFilesDirs()</span> . As shown in the code snippet, the first element 
+    in the returned array is considered the primary external storage volume. Use this volume unless it's full or unavailable.</p>
+
+<section><pre><code class="language-kotlin">val externalStorageVolumes: Array<out File> =
+        ContextCompat.getExternalFilesDirs(applicationContext, null)
+val primaryExternalStorage = externalStorageVolumes[0]</code></pre>
+</section><br><br>
+
+<p class="sub-section">Access persistent files</p>
+
+<p>To access app-specific files from external storage, call <span class="r-word">getExternalFilesDir()</span>.</p>
+
+<p>To help maintain your app's performance, don't open and close the same file multiple times.</p>
+
+<p>The following code snippet demonstrates how to call <span class="negrita">getExternalFilesDir()</span>:</p>
+
+<section><pre><code class="language-kotlin">val appSpecificExternalDir = File(context.getExternalFilesDir(null), filename)</code></pre>
+</section><br><br>
+
+<section class="marco-t inf">
+    <span class="icono info"> </span> On Android 11 (API level 30) and higher, apps cannot create their own app-specific directory on external storage.
+    </section>
+<section class="marco-b">
+        
+</section>
+    
+<p class="sub-section">Create cache files</p>
+<p>To add an app-specific file to the cache within external storage, get a reference to the <span class="r-word">externalCacheDir</span>:</p>
+
+<section><pre><code class="language-kotlin">val externalCacheFile = File(context.externalCacheDir, filename)</code></pre>
+</section><br><br>
+
+<p class="sub-section">Remove cache files</p>
+
+<p>To remove a file from the external cache directory, use the <span class="r-word">delete()</span>  method on a <span class="r-word">File</span>  object that represents the file</p>
+
+<section><pre><code class="language-kotlin">externalCacheFile.delete()</code></pre>
+</section><br><br>
+
+<p class="sub-section">Media content</p>
+<p>If your app works with media files that provide value to the user only within your app, it's best to store them in app-specific directories within external storage, 
+    as demonstrated in the following code snippet:</p>
+
+    <section><pre><code class="language-kotlin">fun getAppSpecificAlbumStorageDir(context: Context, albumName: String): File? {
+    // Get the pictures directory that's inside the app-specific directory on
+    // external storage.
+    val file = File(context.getExternalFilesDir(
+            Environment.DIRECTORY_PICTURES), albumName)
+    if (!file?.mkdirs()) {
+        Log.e(LOG_TAG, "Directory not created")
+    }
+    return file
+}</code></pre>
+    </section><br><br>
+
+ <p>It's important that you use directory names provided by API constants like <span class="r-word">DIRECTORY_PICTURES</span>. These directory names ensure that the files 
+    are treated properly by the system. If none of the pre-defined sub-directory names suit your files, you can instead pass <span class="negrita">null</span> 
+     into <span class="negrita">getExternalFilesDir()</span> . This returns the root app-specific directory within external storage.</p>
+    
+
+
+
+
+
+
+    </section><!-- End section -->
+
+
+    <!--*********************************************************Shared Preferences***********************************************************-->
+    <section class="apartado">
+    <a name="sShared"></a>
+    <h2>Shared Preferences</h2>
+    
+    
+    
+    </section><!-- End section -->
+
+    <!--*********************************************************Room***********************************************************-->
+    <section class="apartado">
+    <a name="sRoom"></a>
+    <h2>Room</h2>
+    
+    
+    
+    </section><!-- End section -->
+
+    <!--*********************************************************Webgraphy***********************************************************-->
+    <section class="apartado">
+    <a name="sWebgrafia"></a>
+    <h2>Webgraphy</h2>
+    
+    <ul>
+        <li>
+            <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage">Data Storage</a> 
+            <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage/shared-preferences">Shared Preferences</a> 
+        </li>
+    </ul>
+    
+    </section><!-- End section -->
+    
+
+    <script src="../script/prism.js"></script>
+</body>
+</html>
