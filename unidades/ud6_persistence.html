@@ -49,7 +49,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    &lt;TextView
+   &lt;TextView
         android:id="@+id/tvCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.25" />
 
-    &lt;Button
+   &lt;Button
         android:id="@+id/btnInc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -647,7 +647,7 @@ val primaryExternalStorage=externalStorageVolumes[0]</code></pre>
     android: layout_height="match_parent"
     tools: context=".MainActivity">
 
-    &lt;TextView
+   &lt;TextView
         android: id="@+id/tvName"
         android: layout_width="wrap_content"
         android: layout_height="wrap_content"
@@ -656,7 +656,7 @@ val primaryExternalStorage=externalStorageVolumes[0]</code></pre>
         app: layout_constraintRight_toRightOf="parent"
         app: layout_constraintTop_toTopOf="parent" />
 
-    &lt;EditText
+   &lt;EditText
         android: id="@+id/etName"
         android: layout_width="wrap_content"
         android: layout_height="wrap_content"
@@ -666,7 +666,7 @@ val primaryExternalStorage=externalStorageVolumes[0]</code></pre>
         app: layout_constraintRight_toRightOf="parent"
         app: layout_constraintTop_toTopOf="parent" />
 
-    &lt;Button
+   &lt;Button
         android: id="@+id/btnDeleteValue"
         android: layout_width="wrap_content"
         android: layout_height="wrap_content"
@@ -675,7 +675,7 @@ val primaryExternalStorage=externalStorageVolumes[0]</code></pre>
         app: layout_constraintLeft_toLeftOf="parent"
         app: layout_constraintRight_toRightOf="parent" />
 
-    &lt;Button
+   &lt;Button
         android: id="@+id/btnSaveValue"
         android: layout_width="wrap_content"
         android: layout_height="wrap_content"
@@ -749,7 +749,7 @@ val primaryExternalStorage=externalStorageVolumes[0]</code></pre>
     
     <p>Remember that for this class to be launched when opening the app we must go to <span class="inline-file">AndroidManifest.xml</span> and add 
         <section><pre><code class="language-xml">android: name=". SharedApp"</code></pre>
-        </section><br><br> inside the &lt;Application> open tag</p>
+        </section><br><br> inside the&lt;Application> open tag</p>
 
     <p>Now we will go to our <span class="d-word">MainActivity</span>  to develop some logic.</p>
         
@@ -911,12 +911,12 @@ implementation ("androidx.preference: preference-ktx: $ preference_version")</co
 &lt;menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=". MainActivity">
-    &lt;item
+   &lt;item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
         app:showAsAction="never" />
-    &lt;item
+   &lt;item
         android:id="@+id/action"
         android:title="@string/action"
         android:orderInCategory="10"
@@ -939,7 +939,7 @@ implementation ("androidx.preference: preference-ktx: $ preference_version")</co
     android:layout_height="match_parent"
     tools:context=". MainActivity">
 
-    &lt;androidx.fragment.app.FragmentContainerView
+   &lt;androidx.fragment.app.FragmentContainerView
         android:id="@+id/container_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -964,7 +964,7 @@ implementation ("androidx.preference: preference-ktx: $ preference_version")</co
     android:layout_height="match_parent"
     tools:context=".MainFragment">
 
-    &lt;TextView
+   &lt;TextView
         android:id="@+id/tvInfo"
         android:text="Shared Preferences\nin Settings Screen"
         android:layout_gravity="center"
@@ -987,7 +987,7 @@ override fun onOptionsItemSelected (item: MenuItem): Boolean {
 
     when (item.itemId) {
         R.id.action_settings -> {
-            startActivity (Intent (this, SettingsActivity :: class.java))
+            startActivity (Intent (this, SettingsActivity::class.java))
         }
     }
     return super.onOptionsItemSelected (item)
@@ -1059,7 +1059,7 @@ override fun onOptionsItemSelected (item: MenuItem): Boolean {
 
         /* Obtaining SharedPreferences */
         val sharedPreferences: SharedPreferences =
-            PreferenceManager.getDefaultSharedPreferences (requireContext ()/* Activity context * /)
+            PreferenceManager.getDefaultSharedPreferences (requireContext ()/* Activity context */)
 
         listener=SharedPreferences.OnSharedPreferenceChangeListener {prefs, key ->
             val preferences=prefs.all
@@ -1086,7 +1086,7 @@ override fun onOptionsItemSelected (item: MenuItem): Boolean {
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
-    &lt;androidx.fragment.app.FragmentContainerView
+   &lt;androidx.fragment.app.FragmentContainerView
         android:id="@+id/container_settings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -1107,7 +1107,7 @@ override fun onOptionsItemSelected (item: MenuItem): Boolean {
         <span class="icono file"> </span> <span class="negrita">SettingsFragment.kt</span>
         </section>
     <section class="marco-b">
-            <section><pre><code class="language-kotlin">class SettingsFragment: PreferenceFragmentCompat () {
+            <section><pre><code class="language-kotlin">class SettingsFragment:PreferenceFragmentCompat() {
 
     override fun onCreatePreferences (savedInstanceState: Bundle ?, rootKey: String?) {
         setPreferencesFromResource(R.xml.my_settings, rootKey)
@@ -1137,47 +1137,47 @@ override fun onOptionsItemSelected (item: MenuItem): Boolean {
 &lt;androidx.preference.PreferenceScreen xmlns: android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    &lt;PreferenceCategory
+   &lt;PreferenceCategory
         android:key="category1"
         android:title="First Category">
 
-        &lt;SwitchPreferenceCompat
+       &lt;SwitchPreferenceCompat
             app:key="Notifications"
             app:title="Activate Notifications" />
 
-        &lt;Preference
+       &lt;Preference
             app:key="feedback"
             app:title="Send feedback"
             app:enabled="false"
             app:summary="Report technical issues or suggest new features" />
-    &lt;/PreferenceCategory>
-    &lt;PreferenceCategory
+   &lt;/PreferenceCategory>
+   &lt;PreferenceCategory
         android:key="Category2"
         android:title="Second Category">
 
 
-        &lt;ListPreference
+       &lt;ListPreference
             android:defaultValue="1"
             android:entries="@array/country"
             android:entryValues="@array/cod_country"
             android:key="list_preference_1"
             android:title="List preference" />
 
-        &lt;EditTextPreference
+       &lt;EditTextPreference
             android:defaultValue="Default value"
             android:key="edit_text_preference_1"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Edit text preference" />
 
-        &lt;Preference
+       &lt;Preference
             app:key="activity"
             app:title="Go activity 2">
-            &lt;intent
+           &lt;intent
                 android:targetPackage="com.cartatar.sharedsettings"
                 android:targetClass="com.cartatar.sharedsettings.MainActivity2" />
-        &lt;/Preference>
-    &lt;/PreferenceCategory>
+       &lt;/Preference>
+   &lt;/PreferenceCategory>
 
 &lt;/androidx.preference.PreferenceScreen></code></pre>
             </section>
@@ -1195,22 +1195,22 @@ override fun onOptionsItemSelected (item: MenuItem): Boolean {
     
     <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
 &lt;resources>
-    &lt;string-array name="country">
-        &lt;item> Spain &lt;/item>
-        &lt;item> France &lt;/item>
-        &lt;item> Germany &lt;/item>
-    &lt;/string-array>
-    &lt;string-array name="cod_country">
-        &lt;item> SPA &lt;/item>
-        &lt;item> FRA &lt;/item>
-        &lt;item> GER &lt;/item>
-    &lt;/string-array>
+   &lt;string-array name="country">
+       &lt;item>Spain&lt;/item>
+       &lt;item>France&lt;/item>
+       &lt;item>Germany&lt;/item>
+   &lt;/string-array>
+   &lt;string-array name="cod_country">
+       &lt;item>SPA&lt;/item>
+       &lt;item>FRA&lt;/item>
+       &lt;item>GER&lt;/item>
+   &lt;/string-array>
 &lt;/resources></code></pre>
     </section><br><br>
 
     
 <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/SharedSettings">Here</a>  you can see the whole code of the example.
-
+ <br><br>
 
 <div class="tarea">
     <span class="negrita">Activity</span>. <br>
