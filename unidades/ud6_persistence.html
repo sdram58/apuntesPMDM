@@ -889,14 +889,14 @@ class MainActivity: AppCompatActivity () {
     <section><pre><code class="language-kotlin">def nav_version="2.3.5"
 
 // Kotlin
-implementation ("androidx.navigation: navigation-fragment-ktx: $ nav_version")
-implementation ("androidx.navigation: navigation-ui-ktx: $ nav_version")
+implementation ("androidx.navigation:navigation-fragment-ktx:$nav_version")
+implementation ("androidx.navigation:navigation-ui-ktx:$nav_version")
 
 // Preferences
 def preference_version="1.1.1"
 
 // Kotlin
-implementation ("androidx.preference: preference-ktx: $ preference_version")</code></pre>
+implementation ("androidx.preference:preference-ktx:$preference_version")</code></pre>
     </section><br><br>
 
     <p>We are going to create a menu with a couple of options, one of them will not do anything, it is simply as an example to show the usefulness of the <span class="r-word">orderInCategory</span> property.</p>
@@ -932,7 +932,7 @@ implementation ("androidx.preference: preference-ktx: $ preference_version")</co
         </section>
     <section class="marco-b">
          <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
-&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns: android="http://schemas.android.com/apk/res/android"
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -1003,12 +1003,12 @@ override fun onOptionsItemSelected (item: MenuItem): Boolean {
         <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
         </section>
     <section class="marco-b">
-            <section><pre><code class="language-kotlin">class MainActivity: AppCompatActivity () {
+            <section><pre><code class="language-kotlin">class MainActivity:AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     override fun onCreate (savedInstanceState: Bundle?) {
         super.onCreate (savedInstanceState)
-        setContentView (ActivityMainBinding.inflate (layoutInflater) .also {binding=it} .root)
+        setContentView (ActivityMainBinding.inflate(layoutInflater).also{binding=it}.root)
 
 
     }
@@ -1023,7 +1023,7 @@ override fun onOptionsItemSelected (item: MenuItem): Boolean {
 
         when (item.itemId) {
             R.id.action_settings -> {
-                startActivity (Intent (this, SettingsActivity :: class.java))
+                startActivity (Intent (this, SettingsActivity::class.java))
             }
         }
         return super.onOptionsItemSelected (item)
