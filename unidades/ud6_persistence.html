@@ -1230,11 +1230,769 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
     <h2>Room</h2>
     
 
-    <figure><img src="../imagenes/underconstruction.gif" /><br><figcaption>underconstruction</figcaption></figure>
+    <p>Once we have seen some local persistence methods, we are going to see the handling of databases, in this case with
+    
+    <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage/sqlite">SQLite</a>. 
+    But as noted on the SQLite lite page, on this one, they highly recommend using the 
+    <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage/room"> Room </a> persistence library.
+    
+</p>
+
+    <section class="marco-t warn">
+        <span class="icono warning"> </span> <span class="negrita">Caution</span>: Although these APIs are powerful, they are characterized by being quite specific and their use requires
+         a lot of time and effort.
+        <li>There is no compile-time verification of raw SQL queries. As your data graph changes, you must manually update the affected SQL queries.
+        This process can be time consuming and cause errors.</li>
+        <li>You must use a lot of standard code to convert between SQL queries and data objects.</li>
+        For these reasons, <span class="negrita">we highly recommend</span>  using the <span class="r-word">Room Persistence Library</span>  as an abstraction layer to access information from your app's SQLite databases.
+        </section>
+    <section class="marco-b">
+            
+    </section>
+    
+
+    <p>To learn how to use <span class="r-word">Room</span>  we will create an application to <span class="subrayado">manage our tasks</span>. 
+        We will add a task in the corresponding field, we will have a <span class="cursiva">CheckBox</span>  to see if the task is done or not, 
+        we can change its status by checking and unchecking the <span class="cursiva">Check box</span>  and finally if we click on a task it will be eliminated.</p>
+    
+
+    <p>It is already beginning to be an App of a certain level. For the realization of this App we will need applications knowledge about:</p>
+    <ul>
+        <li><span class="negrita">RecyclerView</span> : The tasks will be shown as elements of the list.</li>
+        <li><span class="negrita">Room</span> : Database creation and access.</li>
+        <li><span class="negrita">ViewModel</span> : To separate the business logic from the views.</li>
+        <li><span class="negrita">DAO pattern</span> : To make persistence mode independent of logic.</li>
+        <li><span class="negrita">Corroutines</span> : To launch the DAO functions in a different thread from the main one.</li>
+
+    </ul>
+    <br><br>
+
+    <p>The application will look something like this:</p>
+    
+
+    <figure><img src="./UD6/images/UD6-Room_running_app.gif" /><figcaption>Running app</figcaption></figure>
     <br>
     
+    <p>The first thing we will do is create a new application from the <span class="negrita">Empty Activity</span>  template.</p>
     
+
+    <h3>Adding dependencies</h3>
+
+    <p>Once loaded in Android Studio we will add the necessary dependencies:</p>
     
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">Gradle Module App</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-kotlin">implementation "com.google.android.material:material:$material_version"
+
+    //RecycleView
+    implementation("androidx.recyclerview:recyclerview:$recycler_version")
+
+    //Room
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
+    // Lifecycle libraries
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"</code></pre>
+            </section>
+    </section>
+    
+
+    <p>We also add the activation of <span class="negrita">viewBinding</span> in the same file</p>
+    
+
+    <section><pre><code class="language-kotlin">buildFeatures{
+        viewBinding true
+    }</code></pre>
+    </section><br><br>
+    
+    <p>As we can see we are going to make use of the Kapt method, in order to use it we will have to apply the plugin. 
+        To do this in the same <span class="inline-file">Gradle Module App</span> file, in the plugins section we add it.</p>
+    
+    <section><pre><code class="language-kotlin">plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt' 
+}</code></pre>
+    </section><br><br>
+
+    <p>Finally, as we have used variables for the versions, we can define them as always, making use of "<span class="negrita">def</span>" or if we want it to be of 
+        global use we go to the <span class="inline-file">gradle file of the project</span> and add an <span class="negrita">ext</span>  object with the definition and value of the variables.</p>
+    
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">Gradle Project</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-kotlin">buildscript {
+    ext{
+        room_version = '2.3.0'
+        recycler_version = '1.2.1'
+        material_version = '1.4.0'
+        lifecycle_version = '2.4.0'
+    }
+
+    .........
+</code></pre>
+            </section>
+    </section>
+
+    <h3>Directory structure</h3>
+    
+    <p>Next we are going to create some files, so as not to lose sight of where we are and to be more organized we are going to create the necessary packages.</p>
+    
+
+    <figure><img src="UD6/images/ud6-2021-12-02-15-28-31.png" /><br><figcaption>Dir structure</figcaption></figure>
+    <br>
+    
+    <p>Note that <span class="d-word">MainActivity</span>  we have included it within a package called <span class="negrita">ui</span> , since it takes care of the view.
+    We also have a package with everything related to data. We have the entities package, where we will define our model.
+    We also have created two interfaces to implement the <span class="negrita">Damage</span>  and <span class="d-word">TaskDatabase</span>  pattern with the 
+    creation and definition of the <span class="negrita">Room Database</span> .
+    We have an adapters package where we will have the <span class="negrita">RecyclerView</span>  adapter and finally the viewmodel package where we will have our <span class="negrita">ViewModel</span> .</p>
+    
+
+    <h3>Starting to create files</h3>
+
+    <p>Let's start, the first thing we will do is create our model or in <span class="negrita">Room</span> terminology the entity.</p>
+    
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">TaskEntity.kt</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-kotlin">import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "task_entity")
+data class TaskEntity (
+    @PrimaryKey(autoGenerate = true)
+    var id:Int = 0,
+    var name:String = "",
+    var isDone:Boolean = false
+)</code></pre>
+            </section>
+    </section>
+
+    <p>As we can see we use the <span class="negrita">Entity decorator</span> , which allows us to assign the name of the table that will contain our tasks entity.
+    We can also see that we have defined an id attribute that will be the primary key and will also be generated by itself.
+    Finally, <span class="d-word">TaskEntity</span>  has a task name and a <span class="cursiva">Boolean</span>  <span class="negrita">isDone</span>  attribute, which tells us if the task has been completed or not.</p>
+    
+
+
+    <p class="sub-section">Dao Pattern (Data Access Object)</p>
+    
+    <p>Now we are going to create the Dao pattern. Room defines its own <span class="negrita">Dao pattern</span> <span class="subrayado"> through decorators</span>, 
+        but we will create a more generic interface in case we want to use definition another form of persistence such us Files. In this interface we will define the methods that we can use.</p>
+    
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">MyDao.kt</span>
+        </section>
+    <section class="marco-b">
+        <section><pre><code class="language-kotlin">import com.catata.tasknotesroom.database.entities.TaskEntity
+
+interface MyDao {
+    fun getAllTasks(): MutableList&lt;TaskEntity>
+
+    fun addTask(taskEntity : TaskEntity):Long //Id of the new  task
+
+    fun getTaskById(id: Long): TaskEntity
+
+    fun updateTask(taskEntity: TaskEntity):Int //Number of affected rows
+
+    fun deleteTask(taskEntity: TaskEntity):Int //Number of affected rows
+}</code></pre>
+        </section>
+    </section>
+
+
+    <p>As we can see, we have a method to recover all the tasks, another to recover a task given its ID, another to update a task and finally another to delete it.
+    The last two methods return the number of rows affected in the operation.</p>
+      
+    
+    <h3>RecyclerView</h3>
+
+    <p>To continue we are going to implement the <span class="negrita">recyclerview</span>  part. The first thing is to add it to the layout of the main activity.
+    We will also add a small form to add new tasks.</p>
+    
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">activity_main.xml</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-kotlin">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    tools:context="com.catata.tasknotesroom.ui.MainActivity">
+    &lt;androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rlAddTask"/>
+    &lt;RelativeLayout
+        android:id="@+id/rlAddTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_margin="10dp"
+        android:background="@android:color/white">
+        &lt;EditText
+            android:id="@+id/etTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Add a Task"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/btnAddTask"
+            />
+        &lt;Button
+            android:id="@+id/btnAddTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textAllCaps="false"
+            android:backgroundTint="#FFAAAAAA"
+            android:text="Add"/>
+    &lt;/RelativeLayout>
+&lt;/RelativeLayout></code></pre>
+            </section>
+    </section>
+    
+
+    <p>It is done with <span class="r-word">RelativeLayout</span>  but it could be done with any other Layout that we consider more comfortable.</p>
+    
+
+    <p>Next we are going to create the view adapter with its corresponding <span class="r-word">ViewHolder</span> .</p>
+    
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">adapters/TaskAdapter.kt</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-kotlin">import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.catata.tasknotesroom.R
+import com.catata.tasknotesroom.database.entities.TaskEntity
+
+class TasksAdapter(
+    val tasks: List&lt;TaskEntity>,
+    val checkTask: (TaskEntity) -> Unit,
+    val deleteTask: (TaskEntity) -> Unit) : RecyclerView.Adapter&lt;TasksAdapter.ViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        return ViewHolder(layoutInflater.inflate(R.layout.item_task, parent, false))
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = tasks[position]
+        holder.bind(item, checkTask, deleteTask)
+    }
+
+
+    override fun getItemCount() = tasks.size
+
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        val tvTask = view.findViewById&lt;TextView>(R.id.tvTask)
+        val cbIsDone = view.findViewById&lt;CheckBox>(R.id.cbIsDone)
+
+        fun bind(task: TaskEntity, checkTask: (TaskEntity) -> Unit, deleteTask: (TaskEntity) -> Unit) {
+            tvTask.text = task.name
+            cbIsDone.isChecked = task.isDone
+            cbIsDone.setOnClickListener{checkTask(task)}
+            itemView.setOnClickListener { deleteTask(task) }
+        }
+    }
+}</code></pre>
+            </section>
+    </section>
+    
+    <p>As we can see in the constructor, we pass it a <span class="negrita">list of tasks</span>  and <span class="negrita">two callbacks</span> , one for when we click on the
+         <span class="cursiva">Check box</span>  for the task performed and another for when we click on the entire element,
+    in which case we would delete said task. In this case we create within the <span class="r-word">ViewHolder</span>  the bind function that does all this task.</p>
+    
+
+    <p>Before seeing how the MainActivity implementation would be, let's see how to implement the Database with Room.</p>
+
+
+    <h3>Room</h3>
+    
+    <p>The <span class="negrita">Room library</span>  is an access layer to <span class="negrita">SQLite</span>  databases in Android applications. 
+        Provides an easy way to create and access the database. <span class="subrayado">It uses object-relational mapping</span> , which consists of each row in a database 
+        table corresponding to an object. It is also designed to easily integrate with the MVVM architecture.</p>
+    
+
+<p>To use the <span class="negrita">Room library</span>  you have to define 3 components:</p>
+
+<ul>
+    <li><span class="negrita">Database</span> : contains the reference to the database.</li>
+    <li><span class="negrita">Entity</span>: represents a database table.</li>
+    <li><span class="negrita">Dao</span>: It contains the methods with the queries to access the database. Will implement our dao MyDao</li>
+</ul>
+
+<p class="sub-section">TaskDao</p>
+<p><span class="d-word">TaskDao</span>  will be the interface that will contain the queries to the database, we will implement our <span class="d-word">MyDao</span>  in it. 
+    Here we will distinguish four kind of queries.</p>
+
+<ul>
+<li><span class="negrita">@Query:</span> Queries are made directly to the database, we will use SQL to do them. In this example we will do two very simple ones, but impressive things can be done.</li>
+<li><span class="negrita">@Insert:</span> It will be used to insert entities into the database, unlike <span class="negrita">@Query</span> , you do not have to do any kind of query, but rather pass the object to insert.</li>
+<li><span class="negrita">@Update:</span> They update an already inserted entity. We will only have to pass that modified object and it already takes care of updating it. 
+    How do you know which object to modify? Well, because of our id (remember that it is the PrimaryKey).</li>
+<li><span class="negrita">@Delete:</span>  As its name indicates, it deletes an object that we pass to it from the table.</li>
+</ul>
+
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">TaskDao.kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">import androidx.room.*
+import com.catata.tasknotesroom.database.entities.TaskEntity
+
+@Dao
+interface TaskDao:MyDao {
+    @Query("SELECT * FROM task_entity")
+    override fun getAllTasks(): MutableList&lt;TaskEntity>
+
+    @Insert
+    override fun addTask(taskEntity : TaskEntity):Long
+
+    @Query("SELECT * FROM task_entity WHERE id LIKE :id")
+    override fun getTaskById(id: Long): TaskEntity
+
+    @Update
+    override fun updateTask(taskEntity: TaskEntity):Int
+
+    @Delete
+    override fun deleteTask(taskEntity: TaskEntity):Int
+}</code></pre>
+        </section>
+</section>
+
+
+<p class="sub-section">Database</p>
+
+<p>To create the database, a class must be created that must:</p>
+
+<ul>
+    <li>Be abstract</li>
+    <li>Extend <span class="negrita">RoomDatabase</span> </li>
+    <li>Be annotated with <span class="negrita">@Database</span> </li>
+    <li>Include the list of entities within the <span class="negrita">@Database</span>  annotation</li>
+    <li>Contain an abstract method that returns the class annotated with <span class="negrita">@Dao</span> </li>
+</ul>
+
+<p>Inside the class, the static method <span class="r-word">Room.databaseBuilder ()</span>  is called <span class="subrayado">to obtain the reference to the database</span>.</p>
+
+
+<p>It is convenient to use the <span class="negrita">singleton pattern</span> , which ensures that there will only be a single instance of the database.</p>
+
+
+<p>Create the TaskDatabase.kt class:</p>
+
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">TaskDatabase.kt</span>
+    </section>
+<section class="marco-b">
+<section><pre><code class="language-kotlin">import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import com.catata.tasknotesroom.database.entities.TaskEntity
+
+@Database(entities = arrayOf(TaskEntity::class), version = 1)
+abstract class TasksDatabase : RoomDatabase() {
+    abstract fun taskDao(): TaskDao
+
+    companion object{ //Singleton Pattern
+        private var instance:TaskDao? = null
+
+        fun getInstance(context: Context):TaskDao{
+            return instance ?: Room.databaseBuilder(context, TasksDatabase::class.java, "tasks-db").build().taskDao().also { instance = it }
+        }
+    }
+}</code></pre>
+        </section>
+</section>
+
+
+<p>The first thing to look at is the <span class="negrita">@Database</span>  annotation, which specifies that the entity will be a list of <span class="d-word">TaskEntity</span> 
+     (entity that we have already created) and that the <span class="negrita">version</span>  is 1.
+Versions are used for possible data migration when updating the App.
+Let's imagine that we release a second version of the app and instead of 3 parameters we store 4, we cannot change our entity at once because there would be problems.
+For that, the version is used, together with a migration file that tells the program what it will have to do to go from version 1 to version 2, 3 or whatever.</p>
+
+
+<p>We must also make sure that our class extends from <span class="r-word">RoomDatabase()</span>  which is a class that we have thanks to importing the <span class="negrita">Room</span> 
+    dependency in our gradle.
+Finally, it has a single function that refers to the <span class="negrita">Damage</span>  that we have created previously, if we had more Dao's then we would have to 
+implement them there as well.</p>
+
+
+<p>The database instance will need three parameters, the <span class="negrita">context</span>  (<span class="d-word">this</span> ), <span class="negrita">the class</span> 
+     of our database (<span class="d-word">TasksDatabase</span> ) and the <span class="negrita">yam</span>  that we will give it, in this case we have called it "<span class="d-word">trasks-db</span>".</p>
+
+
+
+<h3>ViewModel</h3>
+
+<p>It is time to implement our <span class="r-word">ViewModel</span> , in this case we have chosen to create a <span class="r-word">LiveData</span> 
+     for each of the methods implemented in the database.
+These methods will give responses to the requests of the View (MainActivity + RecyclerView)</p>
+
+
+<section><pre><code class="language-kotlin">val taskListLD:MutableLiveData<MutableList<TaskEntity>> = MutableLiveData()
+    val updateTaskLD:MutableLiveData<TaskEntity?> = MutableLiveData()
+    val deleteTaskLD:MutableLiveData<Int> = MutableLiveData()
+    val insertTaskLD:MutableLiveData<TaskEntity> = MutableLiveData()</code></pre>
+</section><br><br>
+
+<p>We have also added a <span class="d-word">myDao</span>  variable which is what we will use to implement the <span class="negrita">Dao pattern</span>. 
+    In this case, we initialize it directly to the <span class="d-word">TaskDao</span>  of our <span class="d-word">TaskDatabase</span> .</p>
+
+
+<section><pre><code class="language-kotlin">var myDao:MyDao = TasksDatabase.getInstance(context)</code></pre>
+</section><br><br>
+
+<p>Finally, we implement the 4 methods that we will need. These methods call the corresponding <span class="d-word">MyDao</span>  method within a <span class="negrita">Corroutine</span> 
+     so as not to get in the way of the main thread.</p>
+
+
+<section><pre><code class="language-kotlin">fun getAllTasks(){
+        CoroutineScope(Dispatchers.IO).launch {
+            taskListLD.postValue(myDao.getAllTasks())
+        }
+
+    }
+    fun add(task:String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val id = myDao.addTask(TaskEntity(name = task))
+            val recoveryTask = myDao.getTaskById(id)
+            insertTaskLD.postValue(recoveryTask)
+        }
+    }
+
+    fun delete(task:TaskEntity){
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val res = myDao.deleteTask(task)
+            if(res>0)
+                deleteTaskLD.postValue(task.id)
+            else{
+                deleteTaskLD.postValue(-1)
+            }
+
+
+        }
+    }
+
+    fun update(task:TaskEntity){
+        CoroutineScope(Dispatchers.IO).launch {
+            task.isDone = !task.isDone
+            val res = myDao.updateTask(task)
+            if(res>0)
+                updateTaskLD.postValue(task)
+            else
+                updateTaskLD.postValue(null)
+        }
+    }</code></pre>
+</section><br><br>
+
+<p>The TaskViewModel class would look like this:</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">TaskViewModel.kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import com.catata.tasknotesroom.database.MyDao
+import com.catata.tasknotesroom.database.TasksDatabase
+import com.catata.tasknotesroom.database.entities.TaskEntity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+class TaskViewModel(application: Application): AndroidViewModel(application) {
+    val context = application
+
+    var myDao:MyDao = TasksDatabase.getInstance(context)
+
+    val taskListLD:MutableLiveData&lt;MutableList&lt;TaskEntity>> = MutableLiveData()
+    val updateTaskLD:MutableLiveData&lt;TaskEntity?> = MutableLiveData()
+    val deleteTaskLD:MutableLiveData&lt;Int> = MutableLiveData()
+    val insertTaskLD:MutableLiveData&lt;TaskEntity> = MutableLiveData()
+
+
+    fun getAllTasks(){
+        CoroutineScope(Dispatchers.IO).launch {
+            taskListLD.postValue(myDao.getAllTasks())
+        }
+
+    }
+    fun add(task:String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val id = myDao.addTask(TaskEntity(name = task))
+            val recoveryTask = myDao.getTaskById(id)
+            insertTaskLD.postValue(recoveryTask)
+        }
+    }
+
+    fun delete(task:TaskEntity){
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val res = myDao.deleteTask(task)
+            if(res>0)
+                deleteTaskLD.postValue(task.id)
+            else{
+                deleteTaskLD.postValue(-1)
+            }
+
+
+        }
+    }
+
+    fun update(task:TaskEntity){
+        CoroutineScope(Dispatchers.IO).launch {
+            task.isDone = !task.isDone
+            val res = myDao.updateTask(task)
+            if(res>0)
+                updateTaskLD.postValue(task)
+            else
+                updateTaskLD.postValue(null)
+        }
+    }
+}</code></pre>
+        </section><br><br>
+</section>
+
+<h3>MainActivity</h3>
+
+<p>Now we only have to implement the View, the <span class="r-word">MainActivity</span>  code. Basically we will do the following:</p>
+
+
+<ul>
+    <li>Get an instance of our ViewModel.
+        <section><pre><code class="language-kotlin">taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]</code></pre>
+        </section><br><br>
+    </li>
+    <li>Initially retrieve all saved tasks.
+        <section><pre><code class="language-kotlin">taskViewModel.getAllTasks()</code></pre>
+        </section><br><br>
+    </li>
+    <li>Create a listener for the add button.
+        <section><pre><code class="language-kotlin">binding.btnAddTask.setOnClickListener {
+            addTask()
+        }</code></pre>
+        </section><br><br>
+    </li>
+    <li>Observe all LiveData of the ViewModel.
+        <section><pre><code class="language-kotlin">taskViewModel.taskListLD.observe(this){
+    tasks.clear()
+    tasks.addAll(it)
+    recyclerView.adapter?.notifyDataSetChanged()
+}
+taskViewModel.updateTaskLD.observe(this){ taskUpdated ->
+    if(taskUpdated == null){
+        showMessage("Error updating task")
+    }
+}
+
+taskViewModel.deleteTaskLD.observe(this){ id ->
+    if(id != -1){
+        val task = tasks.filter {
+            it.id == id
+        }[0]
+        val pos = tasks.indexOf(task)
+        tasks.removeAt(pos)
+        recyclerView.adapter?.notifyItemRemoved(pos)
+    }else{
+        showMessage("Error deleting task")
+    }
+}
+
+taskViewModel.insertTaskLD.observe(this){
+    tasks.add(it)
+    recyclerView.adapter?.notifyItemInserted(tasks.size)
+
+}</code></pre>
+</section><br><br>
+
+<p>Notice that after modifying the task list we call the <span class="negrita">notifyItemInserted</span> , <span class="negrita">notifyItemRemoved</span> 
+     or <span class="negrita">notifyDataSetChanged</span>  methods from adapter.</p>
+
+    </li>
+    <li>Configure our RecyclerView.
+        <section><pre><code class="language-kotlin">fun setUpRecyclerView() {
+    adapter = TasksAdapter(tasks, { taskEntity ->  updateTask(taskEntity) }, { taskEntity -> deleteTask(taskEntity) })
+    recyclerView = binding.rvTask
+    recyclerView.setHasFixedSize(true)
+    recyclerView.layoutManager = LinearLayoutManager(this)
+    recyclerView.adapter = adapter
+}</code></pre>
+        </section><br><br>
+
+    </li>
+    <li>Add some extra function to hide Keyboard
+        <section><pre><code class="language-kotlin">private fun clearFocus(){
+    binding.etTask.setText("")
+}
+
+private fun Context.hideKeyboard() {
+    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+}</code></pre>
+    </section><br><br>
+    </li>
+</ul>
+
+<p>All the code would look like this.</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">import android.app.Activity
+import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.catata.tasknotesroom.adapters.TasksAdapter
+import com.catata.tasknotesroom.database.entities.TaskEntity
+import com.catata.tasknotesroom.databinding.ActivityMainBinding
+import com.catata.tasknotesroom.viewmodel.TaskViewModel
+
+class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    lateinit var recyclerView: RecyclerView
+    var tasks: MutableList&lt;TaskEntity> = mutableListOf()
+
+    private lateinit var taskViewModel:TaskViewModel
+
+    lateinit var adapter: TasksAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(ActivityMainBinding.inflate(layoutInflater).also {
+            binding = it
+        }.root)
+
+
+
+        taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
+
+        taskViewModel.getAllTasks()
+
+        taskViewModel.taskListLD.observe(this){
+            tasks.clear()
+            tasks.addAll(it)
+            recyclerView.adapter?.notifyDataSetChanged()
+        }
+        taskViewModel.updateTaskLD.observe(this){ taskUpdated ->
+            if(taskUpdated == null){
+                showMessage("Error updating task")
+            }
+        }
+
+        taskViewModel.deleteTaskLD.observe(this){ id ->
+            if(id != -1){
+                val task = tasks.filter {
+                    it.id == id
+                }[0]
+                val pos = tasks.indexOf(task)
+                tasks.removeAt(pos)
+                recyclerView.adapter?.notifyItemRemoved(pos)
+            }else{
+                showMessage("Error deleting task")
+            }
+        }
+
+        taskViewModel.insertTaskLD.observe(this){
+            tasks.add(it)
+            recyclerView.adapter?.notifyItemInserted(tasks.size)
+
+        }
+
+        binding.btnAddTask.setOnClickListener {
+            addTask()
+        }
+
+        setUpRecyclerView()
+    }
+
+    private fun showMessage(s: String) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
+    }
+
+
+    private fun addTask() {
+        taskViewModel.add(binding.etTask.text.toString())
+        clearFocus()
+        hideKeyboard()
+
+    }
+
+    fun setUpRecyclerView() {
+        adapter = TasksAdapter(tasks, { taskEntity ->  updateTask(taskEntity) }, { taskEntity -> deleteTask(taskEntity) })
+        recyclerView = binding.rvTask
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
+    }
+
+    private fun updateTask(taskEntity: TaskEntity) {
+       taskViewModel.update(taskEntity)
+    }
+
+    private fun deleteTask(taskEntity: TaskEntity) {
+        taskViewModel.delete(taskEntity)
+
+    }
+
+    private fun clearFocus(){
+        binding.etTask.setText("")
+    }
+
+    private fun Context.hideKeyboard() {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+    }
+}</code></pre>
+        </section>
+</section>
+
+<br><br>
+
+You can get all the code in the following <a class="link" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/TaskNotesRoom"> Github </a> link  
+
+<br><br>
+
+<div class="tarea">
+    <span class="negrita">PRACTISE:</span> <br>
+    
+You have to implement a shopping list as indicated in the following <a class="enlace" target="_blank" href="./UD6/Practise5_ShoppingList.pdf">document</a> . Remember that you have to use the Room library to save the elements, in addition to using the Dao and MVVM patterns
+
+</div>
     </section><!-- End section -->
 
     <!--*********************************************************Webgraphy***********************************************************-->
@@ -1249,10 +2007,12 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
         <li><a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage/shared-preferences">Shared Preferences</a> </li>
         <li><a class="enlace" target="_blank" href="https://developer.android.com/reference/androidx/preference/PreferenceFragmentCompat">https://developer.android.com/reference/androidx/preference/PreferenceFragmentCompat</a> </li>
         <li><a class="enlace" target="_blank" href="https://developer.android.com/guide/topics/ui/settings">https://developer.android.com/guide/topics/ui/settings</a> </li>
+        <li><a class="enlace" target="_blank" href="https://cursokotlin.com/capitulo-17-persistencia-de-datos-con-room/">Room example</a> </li>
+        <li><a class="enlace" target="_blank" href="https://gerardfp.github.io/room/">Room example</a> </li>
     </ul>
     
     </section><!-- End section -->
-<!------------------------------------------90086112376------------------------------------------------->
+
 
 
     <script src="../script/prism.js"></script>
