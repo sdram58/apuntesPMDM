@@ -15,8 +15,8 @@
     <div class="main-menu">
         <a href="#sIntroduction">Introduction</a><a 
            href="#sGlide">Glide</a><a 
-           href="#sVolley">Volley</a><a
            href="#sRetrofit">Retrofit2</a><a
+           href="#sVolley">Volley</a><a
            href="#sWebgraphy">Webgraphy</a>
     </div>
 
@@ -109,13 +109,123 @@
     <section class="apartado">
     <a name="sGlide"></a>
     <h2>GLIDE</h2>
-    <p>Before starting to see how to access REST services, let's see how to obtain images from the internet from their URL.
+    <p>Before starting to see how to access REST services, let's see how to obtain images from the internet with their URL and set it into an ImageView.
     Before continuing, remember that if you want to use an image you must be authorized and respect the copyrights &copy; if you have them.
     Remember that by default, if not indicated otherwise, the resource is protected by copy right &copy;</p>
+
+    <p>We have to do two fundamental things:</p>
+    <ul>
+       <li>Add Glide dependency.           
+           <section class="marco-t file-">
+               <span class="icono file"> </span> <span class="negrita">Gradle app</span>
+               </section>
+           <section class="marco-b">
+                   <section><pre><code class="language-kotlin">dependencies {
+..............
+  implementation 'com.github.bumptech.glide:glide:4.12.0'
+}</code></pre>
+                   </section>
+           </section>
+           
+       </li>
+       <li>Grant Internet access permissions to the application. You can see last versión <a class="enlace" target="_blank" href="https://github.com/bumptech/glide#download">here</a> 
+           <section class="marco-t file-">
+               <span class="icono file"> </span> <span class="negrita">Manifest.xml</span>
+               </section>
+           <section class="marco-b">
+                   <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.catata.glideexample">
+
+    &lt;uses-permission android:name="android.permission.INTERNET" />
+    
+    &lt;application
+    ............. 
+</code></pre>
+                   </section>
+           </section>
+           
+       </li>
+</ul>
+
+    <p>To show a basic example of using Glide, we will implement a simple application that will load images when the button is pressed.</p>
+    
+    <figure><img src="./UD7/images/UD7-Glide_app.gif" /><br><figcaption>Using glide</figcaption></figure>
+    <br>
+
+    Every time we press the button, the application will make a call via Glide to the page <a class="enlace" target="_blank" href="https://picsum.photos/">https://picsum.photos/</a> .
+    This website offers us a random image of a certain size.
+
+    <p>So what we will do is add the listener to the button:</p>
+    
+    <section><pre><code class="language-kotlin">override fun onViewCreated (view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated (view, savedInstanceState)
+
+    binding.btnChangeImage.setOnClickListener {
+        changeImage ()
+    }
+}</code></pre>
+    </section><br><br>
+
+    <p>Create the <span class="d-word">changeImage</span>  function</p>
+     
+
+    <section><pre><code class="language-kotlin">private fun changeImage() {
+    val url = "https://picsum.photos/200?rand=" + Random.nextInt()
+    Glide.with(requireContext())
+        .load(url) //Image that we want to show
+        .placeholder(getDrawable(requireContext(),R.drawable.loading)) //Image that will be displayed while loading the image to be displayed
+        .error(ERROR_IMAGE) //Image that we will show if something goes wrong. it is typically use a drawable image stored
+        .into(binding.ivImage) //ImageView that will contain the image
+}</code></pre>
+</section><br><br>
+
+    <p>As you can see, we have added a random parameter to the url, this is simply so that it interprets that it is a different url and not take it from the cache.</p>
+     
+    
+    <p>To use Glide we use its methods:</p>
+    <ul>
+        <li><span class="negrita">with</span> , to which the context is passed.</li>
+        <li><span class="negrita">load</span>  the location of the image to be loaded, it does not have to be a url on the internet.</li>
+        <li><span class="negrita">Placeholder</span>  tells us which image to display while the image is loading.</li>
+        <li><span class="negrita">error</span>  tells us which image to show in case the image cannot be loaded</li>
+        <li><span class = "bold"> into </span> tells us where to load that image.</li>
+    </ul>
+    
+    <p>Mandatory are only the <span class="r-word">with</span> , the <span class="r-word">load</span>  and the <span class="r-word">into</span> .</p>
+
     
     
+    <p>Alternatively we can add how we want the image to be displayed inside the ImageView using methods like <span class="r-word">centerCrop()</span>, 
+        <span class="r-word">centerInside()</span> , <span class="r-word">fitCenter()</span>. I encourage you to try them.</p>
+
     
+    <p><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/GlideExample">Here</a> you can see the complete example</p>
+
+    <h3> Picasso </h3>
+
+   <p>Also comment that there is another fantastic library to obtain images from the Internet called
+ <a class="enlace" target="_blank" href="https://square.github.io/picasso/">Picasso</a> . I also recommend that you take a look at it.
+    A basic use would be this.</p>
+   
+    <section><pre><code class="language-kotlin">Picasso.get().load(url).into (imageView)</code></pre>
+    </section><br><br>
+
+    <p>As you can see, it is very similar to using Glide.</p>
+    
+        
     </section><!-- End section -->
+
+
+    <!--*********************************************************Retrofit 2***********************************************************-->
+    <section class="apartado">
+        <a name="sRetrofit"></a>
+        <h2>Retrofit 2</h2>
+        
+        
+        
+        </section><!-- End section -->
+
 
     <!--*********************************************************Volley***********************************************************-->
     <section class="apartado">
@@ -126,14 +236,7 @@
     
     </section><!-- End section -->
 
-    <!--*********************************************************Retrofit 2***********************************************************-->
-    <section class="apartado">
-    <a name="sRetrofit"></a>
-    <h2>Retrofit 2</h2>
     
-    
-    
-    </section><!-- End section -->
 
     <!--*********************************************************Webgraphy***********************************************************-->
     <section class="apartado">
