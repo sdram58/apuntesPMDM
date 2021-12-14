@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internet data management</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/prism.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <script src="../script/script.js"></script>
+</head>
+<body>
+    <h1>Internet data management</h1>
+    <div class="main-menu">
+        <a href="#sIntroduction">Introduction</a><a 
+           href="#sGlide">Glide</a><a 
+           href="#sVolley">Volley</a><a
+           href="#sRetrofit">Retrofit2</a><a
+           href="#sWebgraphy">Webgraphy</a>
+    </div>
+
+    <!--*********************************************************Introduction***********************************************************-->
+    <section class="apartado">
+    <a name="sIntroduction"></a>
+    <h2>Introduction</h2>
+    In this topic we will see how to obtain / send information from / to the Internet. For this we will use REST services
+    <h3>What is an API Rest?</h3>
+    <p>We could define REST API as a service that provides us with the functions we need to be able to obtain information from an external client, 
+        such as a database hosted anywhere in the world from within our own application.</p>
+    <p>Let's think about Instagram, an application with millions of users. It is not feasible to have the information of each user within the application, right? 
+        Well, to solve the problem they use REST API services. The first thing we do when entering the app is a login, this would be the first of the services, 
+        since we send the server the <span class="negrita">username</span>  and <span class="negrita">password</span>  and this would return the information that we 
+        must show in the app.</p>
+
+    <p>We have four different types of requests as a general rule.</p>
+    <ul>
+        <li><span class="negrita">Get</span>: These are the simplest requests, <span class="subrayado">they only return information</span>. 
+            If we need to pass a parameter to the request, it will be through the url. That is, if, for example, we have to make a request that depends on an id 
+            (eg the user's identification), the url would be formed like this https://example.com/information/1, with 1 being the parameter that we pass to it. 
+            The problem with this is that it is not very secure to pass sensitive information.</li>
+        <li><span class="negrita">Post</span>: Similar to <span class="r-word">Get</span> but the parameters are not passed by url, so it is safer to send information.</li>
+        <li><span class="negrita">Put</span>: It is usually used to <span class="subrayado">create</span>  the entity, that is, if we think of a service as access to a database, 
+            this would create the user for example.</li>
+        <li><span class="negrita">Delete</span>: It would be the last of the four that would allow us to <span class="subrayado">delete</span>  the records from the database</li>
+    </ul>
+        
+    <p>The information usually comes in two different formats, <span class="negrita">XML</span>  or <span class="negrita">JSON</span>. 
+        In order not to get too deeply into the subject, we will only talk about <span class="negrita">JSON</span>, which is the most common format and with which 
+        we are going to work.</p>
+    
+    <p class="sub-section">JSON format</p>
+    <p><span class="r-word">Json</span>  is a simple text format, it is the acronym for <span class="negrita">JavaScript Object Notation</span>. 
+        It is one of the standards for the transfer of information between platforms, it has a very legible form that allows us to understand its content without problem. 
+        A simple example would be this.</p>
+
+    <section><pre><code class="language-json">{
+  "employees": [
+    {
+    "id": "1",
+    "firstName": "Tom",
+    "lastName": "Cruise",
+    "photo": "https://jsonformatter.org/img/tom-cruise.jpg"
+    },
+    {
+    "id": "2",
+    "firstName": "Maria",
+    "lastName": "Sharapova",
+    "photo": "https://jsonformatter.org/img/Maria-Sharapova.jpg"
+    },
+    {
+    "id": "3",
+    "firstName": "Robert",
+    "lastName": "Downey Jr.",
+    "photo": "https://jsonformatter.org/img/Robert-Downey-Jr.jpg"
+    }
+]
+}</code></pre>
+    </section><br><br>
+
+    <p>Every Json format begins and ends with braces and has a key-value. The employees key contains in turn a list of employee (note that instead of braces it has brackets), 
+        which stores id, firstName, lastName and photo. Thus we can pass a large amount of information from one platform to another with some standards that help us 
+        simplify the process.</p>
+    
+    <p>If it is still difficult for you to read these files at the beginning, we can make use of a multitude of websites that simplify the way of seeing it, such as 
+        <a class="enlace" target="_blank" href="https://jsoneditoronline.org/">JsonEditOnline</a>.</p>
+    
+    <figure><img src="UD7/images/ud7-2021-12-13-12-00-34.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+    <figure><img src="UD7/images/ud7-2021-12-13-12-01-13.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>There are many free APIs (some of them with registration) that we can make use of. It is enough to do a search in Google and find almost the theme that we are looking for.</p>
+    
+    <p>Here is a small list of APIs</p>
+    
+    
+    <ul>
+        <li><a class="enlace" target="_blank" href="https://www.themoviedb.org/movie?language=es-ES">API about movies</a> </li>
+        <li><a class="enlace" target="_blank" href="https://swapi.dev/">API about StarWars</a> </li>
+        <li><a class="enlace" target="_blank" href="https://developer.marvel.com/">API about Marvel</a> </li>
+        <li><a class="enlace" target="_blank" href="https://www.weatherapi.com/">API about weather</a> </li>
+    </ul>
+    
+    </section><!-- End section -->
+
+    <!--*******************************************************Glide*************************************************************-->
+    <section class="apartado">
+    <a name="sGlide"></a>
+    <h2>GLIDE</h2>
+    <p>Before starting to see how to access REST services, let's see how to obtain images from the internet from their URL.
+    Before continuing, remember that if you want to use an image you must be authorized and respect the copyrights &copy; if you have them.
+    Remember that by default, if not indicated otherwise, the resource is protected by copy right &copy;</p>
+    
+    
+    
+    </section><!-- End section -->
+
+    <!--*********************************************************Volley***********************************************************-->
+    <section class="apartado">
+    <a name="sVolley"></a>
+    <h2>Volley</h2>
+    
+    
+    
+    </section><!-- End section -->
+
+    <!--*********************************************************Retrofit 2***********************************************************-->
+    <section class="apartado">
+    <a name="sRetrofit"></a>
+    <h2>Retrofit 2</h2>
+    
+    
+    
+    </section><!-- End section -->
+
+    <!--*********************************************************Webgraphy***********************************************************-->
+    <section class="apartado">
+    <a name="sWebgraphy"></a>
+    <h2>Webgraphy</h2>
+    
+    <ul>
+        <li><a class="enlace" target="_blank" href="https://github.com/bumptech/glide">Glide</a> </li>
+        <li><a class="enlace" target="_blank" href="https://developer.android.com/training/volley">Volley</a> </li>
+        <li><a class="enlace" target="_blank" href="https://square.github.io/retrofit/">Retrofit</a> </li>
+        <li>
+            <a class="enlace" target="_blank" href="https://cursokotlin.com/tutorial-retrofit-2-en-kotlin-con-corrutinas-consumiendo-api-capitulo-20-v2/">Retrofit tutorial</a> 
+        </li>
+
+    </ul>
+    
+    
+    </section><!-- End section -->
+
+    <script src="../script/prism.js"></script>
+</body>
+</html>
