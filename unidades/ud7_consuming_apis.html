@@ -415,7 +415,342 @@ data class DogResponse(
         </section><br><br>
     </section>
     
+    <p>Look what we have done, before defining each variable I have used <span class="r-word">@SerializedName</span>  and in parentheses we have put the <span class="negrita">exact name</span> 
+        that appears in the JSON, so with that we can call our variable as we want, in this case we have called <span class="negrita">message</span> as  <span class="negrita">images</span>.
+        We will put this annotation whenever we work with <span class="r-word">Retrofit</span> .</p>
     
+    <h3>APIService</h3>
+
+    <p>The next thing we will do is create the contract that defines the Retrofit call, that is, we will create an interface that will define the type of 
+        API consumption and what it will return.</p>
+    
+    <p>We will create an interface in the same way that we create a class, <span class="negrita">New Kotlin File / Class</span> , we will select 
+        <span class="negrita">interface</span>  and we will call it <span class="negrita">APIService</span> .</p>
+
+    <p>In this interface we are only going to define the method that Retrofit will use and its configuration.</p>
+    
+    <section><pre><code class="language-kotlin">interface APIService {
+    @GET
+    suspend fun getDogsByBreeds (@Url url: String): Response&lt;DogsResponse>
+}</code></pre>
+    </section><br><br>
+
+    <p>Let's analyze the previous code, to begin with we are going to select the type of call that it is (remember at the beginning of the chapter that there were four types
+         GET, POST, PUT and DELETE). In this case it will be of type <span class="negrita">GET</span>  and for this we use the tag <span class="r-word">@GET</span>.</p>
+
+    <p>Notice that before the word <span class="negrita">fun</span>  there is a reserved word called <span class="r-word">suspend</span>,
+       remember this will be necessary to work with <span class="negrita">coroutines</span>, that is, whenever we want to make calls in the background using coroutines we will have to add 
+        it for our code to work.</p>
+    
+    <p>Before continuing I want you to remember the url of the API that we are going to use.</p>
+    
+    <section><pre><code class="language-kotlin">https://dog.ceo/api/breed/hound/images</code></pre>
+    </section><br><br>
+
+    <p>If we look a little more we can see that there are <span class="subrayado">two parts</span>  in this url, the first would be <span class="negrita">https://dog.ceo/api/breed/</span> 
+         which is the <span class="negrita">immutable part</span> , that is, this part will always be fixed. Then you have to pass dog breed followed by /images, so we could say that <span class="negrita">hound/images</span> 
+          is the <span class="negrita">mutable part</span> . Why am I emphasizing this? Well, because the second part of the url "breed_of_dog/images" we will have to pass as a parameter, 
+          and even if it is a <span class="cursiva">String</span>  we have to put the tag <span class="cursiva">@Url</span>  at the beginning.</p>
+
+    <p>We already understand almost all the function we have written, we are missing the answer. 
+        Everything that comes from <span class="negrita">Retrofit</span>  will be captured through the <span class="negrita">Response</span>  class, which is why we will 
+        always return a <span class="negrita">Response&lt;OurDataModel></span> , in this case <span class="d-word">Response&lt;DogsResponse></span> </p>
+    
+    <h3>Installing Retrofit 2</h3>
+    <p>The complicated part is over, but obviously we are not using Retrofit yet, so for that we go back to our <span class="d-word">MainActivity</span>. 
+        This <span class="negrita">Retrofit</span>  instance that we are going to create will be the one with the rest of the endpoint url, 
+        it will be in charge of converting the JSON to <span class="r-word">DogResponse</span>  and it will have all the configuration to make the API call.</p>
+
+        <section class="marco-t file-">
+            <span class="icono file"> </span> <span class="negrita">MainActivity</span>
+            </section>
+        <section class="marco-b">
+    <section> <pre> <code class = "language-kotlin"> //Creates an instance of Retrofit
+private fun getRetrofit ():Retrofit {
+    return Retrofit.Builder ()
+        .baseUrl ("https://dog.ceo/api/breed/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+} </code> </pre>
+        </section>
+        </section><br><br>
+        
+    <p>Our <span class="d-word">getRetrofit()</span> function will return a <span class="negrita">Retrofit</span> instance. 
+        To configure it, notice that we call the <span class="r-word">.Builder ()</span> function and once we have done it we will add the <span class="d-word">baseUrl</span> 
+         (which is the fixed part of our API) and then add <span class="r-word">.addConverterFactory (GsonConverterFactory.create ()</span>,
+         this line will implement the library of the principle that will do all the work of retrieving the JSON and passing it to <span class="d-word">DogsResponse</span>.
+         For all this to apply we end up with <span class="r-word">.build ()</span> </p>
+    
+    <h3>Thread handling with coroutines</h3>
+    
+    <p>Within our coroutine, we create a variable called <span class="d-word">call</span>  that will be in charge of calling the method that <span class="negrita">Retrofit</span>
+        returns (the one we created before) and that <span class="negrita">Retrofit</span>  instance we will have to call the <span class="r-word">create ()</span> function,
+        which will receive the interface we want (we can have multiple interfaces to retrofit) and doing that will allow us to call the <span class="d-word">getDogsByBreeds()</span> 
+         function.</p>
+    
+         <section class="marco-t file-">
+            <span class="icono file"> </span> <span class="negrita">MainActivity</span>
+            </section>
+        <section class="marco-b">
+    <section><pre><code class="language-kotlin">private fun searchByName(query:String){
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = getRetrofit().create(APIService::class.java).getDogsByBreeds("$query/images")
+        }
+    }</code></pre>
+    </section>
+    </section><br><br>
+
+    <p>Look at the text that we're passing to the <span class="d-word">getDogsByBreeds ()</span>  function, 
+        if you look earlier when creating Retrofit we put the fixed route of the API, but we were missing "<span class="negrita">dogBreed/images</span>"
+         that's just what we sent, the <span class="d-word">query</span>  variable will contain the race and we have to put it together with the final part of the <span class="negrita">/images</span>  call.</p>
+    
+    <p>Now our <span class="d-word">call</span>  variable will contain a <span class="d-word">Response&lt;DogsResponse></span> , notice that it is like our data class but 
+        with a Response on the outside, since it is what our method returned in the Retrofit interface.</p>
+
+    <p>This response object can be very useful, since calling <span class="r-word">call.isSuccessful()</span>  will tell us if the call has gone well, and then to retrieve
+         the real <span class="negrita">DogsResponse</span>  object, we just have to call <span class="r-word">call.body()</span> .</p>
+    
+         <section class="marco-t file-">
+            <span class="icono file"> </span> <span class="negrita">MainActivity</span>
+            </section>
+        <section class="marco-b">
+    <section><pre><code class="language-kotlin">private fun searchByName(query:String){
+    CoroutineScope(Dispatchers.IO).launch {
+        val call = getRetrofit().create(APIService::class.java).getDogsByBreeds("$query/images")
+        val puppies = call.body()
+            if(call.isSuccessful){
+                //show Recyclerview
+            }else{
+                //show error
+            }
+        }
+    }
+}</code></pre>
+</section>
+    </section><br><br>
+    
+<p>Our function would look like this for now, the only thing I have added since I showed the code is the creation of the variable <span class="negrita">puppies</span> 
+     that should contain our <span class="negrita">DogsResponse</span> and an unfinished <span class="negrita">if</span>  that will check if the call has worked correctly. 
+     If it went well we will create a <span class="cursiva">RecyclerView</span> , otherwise we will show an error.</p>
+
+     <h3>RecyclerView</h3>
+
+     <p>As you already know, a RecyclerView consists of 3 parts, the Adapter, the item_View and the ViewHolder, the first thing we will do is create the item_view, 
+         that is, the design. Inside <span class="negrita">res> layout</span>  we will create a layout called <span class="inline-file">item_dog.xml</span></p>
+
+         <p class="sub-section">Item View</p>
+         
+     <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="16dp"
+    android:background="@color/black"
+    android:layout_margin="16dp"
+    android:layout_height="320dp">
+    &lt;ImageView
+        android:id="@+id/ivDog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+&lt;/androidx.cardview.widget.CardView></code></pre>
+     </section><br><br>
+     <p>As you can see, the design is very simple, it is just a CardView that contains an image, which will be where the image of the searched dog is loaded.</p>
+     
+
+     <p class="sub-section">ViewHolder</p>
+     <p>Now that we have the view done, it is the ViewHolder's turn, so we will create a new class that we will call <span class="inline-file">DogViewHolder.kt</span></p>
+     
+     <section><pre><code class="language-kotlin">class DogViewHolder(view: View):RecyclerView.ViewHolder(view) {
+    private val binding = ItemDogBinding.bind(view)
+    fun bind (image:String) {
+        Picasso.get().Load(image).into(binding.ivDog)
+    }
+}</code></pre>
+     </section><br><br>
+
+     <p>This class is very simple, all it has is a <span class="d-word">bind ()</span>  function that will be called from the adapter and it will
+         pass a url in <span class="cursiva">String</span>  format, once inside we will use the <span class="negrita">Picasso</span> library to load that URL into our <span class="d-word">iVDog</span>.</p>
+
+
+    <p class="sub-section">Adapter</p>
+    <p>Now we would only have to create a simple adapter, which will receive a list of images (the photos of the dogs). We will call it <span class="inline-file">DogAdapter</span>.</p>
+    
+    <section><pre><code class="language-kotlin">class DogAdapter(private val images: List&lt;String>) : RecyclerView.Adapter&lt;DogViewHolder>() {
+    
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        return DogViewHolder(layoutInflater.inflate(R.layout.item_dog, parent, false))
+    }
+    override fun getItemCount(): Int = images.size
+    override fun onBindViewHolder(holder: DogViewHolder, position: Int) {
+        val item = images[position]
+        holder.bind(item)
+    }
+}</code></pre>
+    </section><br><br>
+
+    <p>We will return to our <span class="d-word">MainActivity</span>  to finish configuring the <span class="cursiva">RecyclerView</span>, 
+        but first I want you to notice that at the time of creating the activity we do not have images but to create our adapter we need to pass it a list of images, 
+        also that list has to vary when changing search, so the data in the <span class="cursiva">RecyclerView</span>  has to be able to vary. 
+        For this we go to the top of the class (outside of any method) and we will create an adapter with the <span class="negrita">lateinit</span>  function, that is, 
+        we will initialize it later, we will also create a variable called <span class="d-word">dogImages</span>  that will be a <span class="cursiva">mutableList of Strings</span>.</p>
+    
+        <section><pre><code class="language-kotlin">private lateinit var adapter:DogAdapter
+private val dogImages = mutableListOf&lt;String>()</code></pre>
+        </section><br><br>
+
+    <p>We have created this list of Strings for two reasons, the first one, begins as an empty list and is the one that we will use to create our <span class="cursiva">RecyclerView</span>, 
+        but we will modify the items once the user has searched for a breed of dog and thus we can change the images that are shown in the listing.</p>
+    
+    <p>Now we can create our <span class="d-word">initRecyclerView ()</span>  function.</p>
+    
+
+    <section><pre><code class="language-kotlin"> private fun initRecyclerView() {
+    adapter = DogAdapter(dogImages)
+    binding.rvDogs.layoutManager = LinearLayoutManager(this)
+    binding.rvDogs.adapter = adapter
+}</code></pre>
+    </section><br><br>
+
+    This method will be called in the <span class="negrita">onCreate()</span>  function.
+
+    <section><pre><code class="language-kotlin">override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    binding = ActivityMainBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    initRecyclerView()
+}</code></pre>
+    </section><br><br>
+
+<p>Although we already have the RecyclerView created, we still do not add data to it at any time. We return to the <span class="d-word">searchByName()</span>  method that we had left halfway.</p>
+
+<p>When we stopped we had to complete the <span class="cursiva">if()</span> , since if everything had gone well we had to update the images and if there was something wrong we had to show a Toast. 
+    But if you think about it, both actions are visual, that is, they are interface and that means that you have to do it in the main thread and we are inside a coroutine. 
+    In order to get out of that coroutine we will use <span class="negrita">runOnUiThread{}</span>  and everything between those braces will be done in the <span class="negrita">main thread</span> 
+     even if it is inside a coroutine.</p>
+
+<p>We add the previous code and put the if inside it.</p>
+
+<section><pre><code class="language-kotlin">private fun searchByName(query:String){
+    CoroutineScope(Dispatchers.IO).launch {
+        val call = getRetrofit().create(APIService::class.java).getDogsByBreeds("$query/images")
+        val puppies = call.body()
+        runOnUiThread {
+            if(call.isSuccessful){
+                //show recyclerview
+            }else{
+                //show error
+            }
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<p>Now we will fill in the <span class="cursiva">if</span> , starting if everything went well. 
+    In order to update the adapter we will have to modify the list of images that the <span class="negrita">dogImages</span>  variable receives, 
+    so what we have to do is add the new images in that variable.</p>
+
+    <section><pre><code class="language-kotlin">val images = puppies?.images ?: emptyList()
+dogImages.clear()
+dogImages.addAll(images)
+adapter.notifyDataSetChanged()</code></pre>
+    </section><br><br>
+
+<p>The first line creates a new variable called <span class="d-word">images</span> , the images are inside the <span class="d-word">puppies</span> variable and this variable 
+    is <span class="negrita">nullable</span>, that means it can be null and can cause an error, so we have to access the images with a question mark first, Well, 
+    we are saying that there may be a list of Strings or there may be a null. 
+    To solve it we will use the <span class="negrita">elvis Operator</span>  <span class="cursiva">?:</span>  which will act to control that it is <span class="cursiva">null</span>  
+    and if it is it will return an <span class="cursiva">emptyList()</span>  so our images variable can be a <span class="cursiva">list of strings</span> 
+    or an empty list but it will never be <span class="cursiva">null</span> .</p>
+
+<p>Then we call our variable <span class="negrita">dogImages</span>  and clean it so that it does not have any images and now that it is empty we use <span class="negrita">addAll()</span> 
+     to put all the new images in it. In order for the images to be reloaded in the <span class="cursiva">RecyclerView</span> we will have to call the adapter and its
+     <span class="r-word">notifyDataSetChanged()</span>  function.</p>
+
+<p>Now we have to call the <span class="d-word">showError()</span>  function (which we have not yet created) if instead of entering through the if, enters through the else.</p>
+
+<section><pre><code class="language-kotlin">private fun showError() {
+    Toast.makeText(this, "An error occurred", Toast.LENGTH_SHORT) .show()
+}</code></pre>
+</section><br><br>
+
+<p>As you can see, it is a simple <span class="negrita">Toast</span> in case something should fail.</p>
+
+<p>Our entire method would look like this.</p>
+
+<section><pre><code class="language-kotlin">private fun searchByName(query:String){
+    CoroutineScope(Dispatchers.IO).launch {
+        val call = getRetrofit().create(APIService::class.java).getDogsByBreeds("$query/images")
+        val puppies = call.body()
+        runOnUiThread {
+            if(call.isSuccessful){
+                val images = puppies?.images ?: emptyList()
+                dogImages.clear()
+                dogImages.addAll(images)
+                adapter.notifyDataSetChanged()
+            }else{
+                showError()
+            }
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<h3>Configuring our search engine</h3>
+<p>Now we only have to configure the search engine to be able to make all the mechanism work.</p>
+
+<p>What do we do when we want to capture that a button has been pressed? We put a <span class="cursiva">listener</span> on it, right? 
+    Well here we will do the same in a similar way.</p>
+
+<p>In the first line of the <span class="inline-file">MainActivity</span>, after <span class="r-word">AppCompatActivity ()</span>  we will 
+    add the <span class="negrita">SearchView.OnQueryTextListener</span>  <span class="cursiva">listener</span> .</p>
+
+<section><pre><code class="language-kotlin">class MainActivity:AppCompatActivity(), SearchView.OnQueryTextListener{
+    .....
+</code></pre>
+</section><br><br>
+
+<p>With that line we are telling you that our class is going to implement the <span class="negrita">SearchView</span>  <span class="cursiva">listeners</span>, 
+    but since we have not yet implemented them, we will get an error at the beginning of the class. 
+    <span class="negrita">To solve</span>  it we will have to <span class="negrita">implement two methods</span>  in our class.</p>
+<section><pre><code class="language-kotlin">override fun onQueryTextChange(newText:String?):Boolean {
+    return true
+}</code></pre>
+</section><br><br>
+
+<p>This is the first of the search engine methods, it will notify us of the character that is added to the search engine, but we do not need that, 
+    we only need it to notify us when the user has finished writing so we leave it as it is and do nothing.</p>
+
+<p>The following method will be quite similar but it will be called when the user presses on enter when finishing searching and that is when we will have the text that we 
+    have written and we will pass it to retrofit so that it makes the request to the internet.</p>
+
+<section><pre><code class="language-kotlin">override fun onQueryTextSubmit(query: String?):Boolean {
+    if(!query.isNullOrEmpty()){
+        searchByName(query.toLowerCase())
+    }
+    return true
+}</code></pre>
+</section><br><br>
+
+<p>This function returns a parameter called query which is the text that the user has written and if you look it can also be <span class="cursiva">null</span>, 
+    so we check if the query is <span class="cursiva">null</span>  or <span class="cursiva">empty</span>  and if it is not we will call <span class="d-word">searchByName ()</span> 
+    passing it the search. Attention that before passing the query we call <span class="negrita">toLowerCase()</span>  function,, this function passes all the <span class="cursiva">String</span> 
+    to lowercase in case our API does not know how to work with uppercase.</p>
+
+<p>We end up going back to the <span class="r-word">onCreate ()</span>  function and we implement this listener that we have created for our <span class="negrita">SearchView</span>.</p>
+
+<section><pre><code class="language-kotlin">binding.svDogs.setOnQueryTextListener(this)</code></pre>
+</section><br><br>
+
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/RetrofitSample">Here</a>  you can see the content of the entire application</p>
+
+<p>App looks something like this:</p>
+
+
+<figure><img src="./UD7/images/UD7-Retrofit_app.gif" /><br><figcaption></figcaption></figure>
+<br>
+
         </section><!-- End section -->
 
 
