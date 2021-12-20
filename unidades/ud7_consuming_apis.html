@@ -117,7 +117,7 @@
 
     <p>We have to do two fundamental things:</p>
     <ul>
-       <li>Add Glide dependency.           
+       <li>Add Glide dependency. You can see last versión <a class="enlace" target="_blank" href="https://github.com/bumptech/glide#download">here</a>            
            <section class="marco-t file-">
                <span class="icono file"> </span> <span class="negrita">Gradle app</span>
                </section>
@@ -130,7 +130,7 @@
            </section>
            
        </li>
-       <li>Grant Internet access permissions to the application. You can see last versión <a class="enlace" target="_blank" href="https://github.com/bumptech/glide#download">here</a> 
+       <li>Grant Internet access permissions to the application.
            <section class="marco-t file-">
                <span class="icono file"> </span> <span class="negrita">Manifest.xml</span>
                </section>
@@ -866,7 +866,7 @@ adapter.notifyDataSetChanged()</code></pre>
     </section><br><br>
     <p>Remember to add the internet permission in the <span class="inline-file">AndroidManifest.xml</span>, otherwise we will be able to make few internet calls</p>
 
-    <section><pre><code class="language-kotlin"><uses-permission android:name="android.permission.INTERNET" /></code></pre>
+    <section><pre><code class="language-kotlin">&lt;uses-permission android:name="android.permission.INTERNET" /></code></pre>
     </section><br><br>
 
 <!------------------------------------------GET String------------------------------------------------->
@@ -1071,7 +1071,7 @@ In the result we will have a response variable, which is the JSONObject that our
 
     //jsonObject Request
     val jsonObjectRequest = JsonObjectRequest(
-        Request.Method.GET,
+        Request.Method.POST,
         url,
         jsonObject,
         { response ->
@@ -1133,7 +1133,7 @@ In the result we will have a response variable, which is the JSONObject that our
 
     //jsonArrayRequest Request
     val jsonArrayRequest = JsonArrayRequest(
-        Request.Method.GET,
+        Request.Method.POST,
         url,
         jsonArray,
         { response ->
