@@ -13,28 +13,88 @@
 <body class="line-numbers">
     <h1>Multimedia</h1>
     <div class="main-menu">
-        <a 
-           href="#sAudioVideo">Audio and Video</a><a
-           href="#sAnimations">Animations</a><a
+        <a href="#sAudioVideo">Audio and Video</a><a
            href="#sCamera">Camera</a><a 
-           href="#sBarCode">Getting Images</a>
+           href="#sAnimations">Animations</a><a
            href="#sWebgrafia">Webgraphy</a>
     </div>
 
-   
+    
+
 
 
     <!--*********************************************************Audio and Video***********************************************************-->
     <section class="apartado">
     <a name="sAudioVideo"></a>
     <h2>Audio and Video</h2>
+    <p>The Android multimedia framework includes support for playing variety of common media types, so that you can easily integrate audio, video and images 
+        into your applications. You can play audio or video from media files stored in your application's resources (raw resources), 
+        from standalone files in the filesystem, or from a data stream arriving over a network connection, all using <span class="r-word">MediaPlayer</span>  APIs.</p>
+    
+    <p>The following classes are used to play sound and video in the Android framework:</p>
+    <ul>
+        <li><span class="r-word">MediaPlayer</span> 
+            <ul>
+                <li>This class is the primary API for playing sound and video.</li>
+            </ul>
+        </li>
+        <li><span class="r-word">AudioManager</span> 
+            <ul>
+                <li>This class manages audio sources and audio output on a device.</li>
+            </ul>
+        </li>
+    </ul>
+
+
+    <p class="sub-section">Permissions</p>
+    <p>Before starting development on your application using MediaPlayer, make sure your manifest has the appropriate declarations to allow use of related features on the <span class="inline-file">Manifest.xml</span>.
+        <ul>
+            <li> <span class="negrita">Internet Permission </span>- If you are using MediaPlayer to stream network-based content, your application must request network access.</li>
+            <section><pre><code class="language-xml">&lt;uses-permission android:name="android.permission.INTERNET" /></code></pre>
+            </section><br><br>
+            <li><span class="negrita">Wake Lock Permission</span>  - If your player application needs to keep the screen from dimming or the processor from sleeping, or uses the 
+                <span class="r-word">MediaPlayer.setScreenOnWhilePlaying()</span>  or <span class="r-word">MediaPlayer.setWakeMode()</span>  methods, you must request this permission.
+            <section><pre><code class="language-xml">&lt;uses-permission android:name="android.permission.WAKE_LOCK" /></code></pre>
+            </section><br><br></li>
+        </ul>
+</p>
+    
     
     <h3>Audio</h3>
+    <p>We will use <span class="r-word">MediaPlayer</span>  class for play our audios</p>
+    <p>In this section we're going to implement a basic audio player with 3 buttons <span class="cursiva">play</span> , <span class="cursiva">pause</span>  and <span class="cursiva">stop</span> 
+         like you can see in the image below.</p>
+        
+    <figure><img src="UD8/images/ud8-2022-01-10-12-40-23.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+    <p>The first thing we are going to do is create the raw directory inside res and save the audio or audios that we want to play. 
+        In our case you can download it from  <a class="enlace" target="_blank" href="./UD8/assets/bola_drac_intro.mp3">here</a> .</p>
+    
+
+
+    
     
     <h3>Video</h3>
+
+    <p class="sub-section">Play video from local resource</p>
+    
+    <p class="sub-section">Play video from url</p>
+    
+    <p class="sub-section">Play youtube video</p>
+    
     
     
     </section><!-- End section -->
+
+    <!--*********************************************************Camera***********************************************************-->
+    <section class="apartado">
+        <a name="sCamera"></a>
+        <h2>Camera</h2>
+        
+        
+        
+        </section><!-- End section -->
 
     <!--*********************************************************Animations***********************************************************-->
     <section class="apartado">
@@ -55,26 +115,6 @@
     
     
     </section><!-- End section -->
-
-     <!--*********************************************************Camera***********************************************************-->
-     <section class="apartado">
-        <a name="sCamera"></a>
-        <h2>Camera</h2>
-        
-        
-        
-        </section><!-- End section -->
-    
-        <!--*********************************************************Barcode***********************************************************-->
-        <section class="apartado">
-        <a name="sBarCode"></a>
-        <h2>Getting Images</h2>
-    
-        <h3>Picasso</h3>
-        
-        <h3>Glide</h3>
-        
-        </section><!-- End section -->
 
 
 
