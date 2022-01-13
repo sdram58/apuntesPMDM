@@ -1149,6 +1149,24 @@ In the result we will have a response variable, which is the JSONObject that our
     
 <p>You can see the example code in this <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/blob/master/VolleyCode/app/src/main/java/com/catata/volleycode/MainActivity.kt">GitHub link</a></p>
 
+<p><span class="negrita">Note:</span> If your API or your images are accessed through the <span class="d-word">http</span> protocol and not http<span class="negrita">s</span>, 
+    it may not work for you, that is, the image is not downloaded or the API does not respond. This is because for some versions, Android by default limits network connections
+     in clear, that is, they are not encrypted such as https. To solve it we have several ways, the simplest is to add the following directive in the <span class="inline-file">AndroidManifest.xml</span></p>
+
+<section><pre><code class="language-kotlin">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;manifest ...>
+    &lt;uses-permission android:name="android.permission.INTERNET" />
+    &lt;application
+        ...
+        android:usesCleartextTraffic="true"
+        ...>
+        ...
+    &lt;/application>
+&lt;/manifest></code></pre>
+</section><br><br>
+
+
+</section>
 
 <!--*********************************************************Practise 6***********************************************************-->
 <section class="apartado">
