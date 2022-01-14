@@ -818,7 +818,7 @@ adapter.notifyDataSetChanged()</code></pre>
 
 <section><pre><code class="language-kotlin">override fun onQueryTextSubmit(query: String?):Boolean {
     if(!query.isNullOrEmpty()){
-        searchByName(query.toLowerCase())
+        searchByName(query.lowercase())
     }
     return true
 }</code></pre>
