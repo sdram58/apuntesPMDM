@@ -23,7 +23,31 @@
     <section class="apartado">
     <a name="sNotifications"></a>
     <h2>Notifications</h2>
+     <h3>Introduction</h3>
+     <p>A <span class="d-word">notification</span>  is a message that Android displays outside of the app's UI to provide the user with reminders, 
+        messages from other people, and other timely information about the app. Users can tap the notification to open the app or perform an action directly from the notification.</p>
+
+    <p>Las notificaciones se muestran a los usuarios en diferentes ubicaciones y formatos (por ejemplo, como un ícono en la barra de estado, una entrada más detallada en el panel lateral de notificaciones o un distintivo en el ícono de la app), así como en wearables sincronizados automáticamente.</p>
+
+    <h3>Notification anatomy</h3>
+
+    <p>The design of a notification is determined by system templates—your app simply defines the contents for each portion of the template. 
+        Some details of the notification appear only in the expanded view.</p>
     
+     <figure><img src="UD9/images/ud9-2022-01-17-11-00-03.png" /><br><figcaption>A notification with basic details</figcaption></figure>
+     <br>
+     
+    <p>The most common parts of a notification are indicated in figure 7 as follows:</p>
+    <p>
+        <ol>
+            <li><span class="d-word">Small icon</span>: This is required and set with <span class="negrita">setSmallIcon()</span></li>
+            <li><span class="d-word">App name</span> : This is provided by the system.</li>
+            <li><span class="d-word">Time stamp</span> : This is provided by the system but you can override with <span class="negrita">setWhen()</span>  or hide it with <span class="negrita">setShowWhen(false)</span>.</li>
+            <li><span class="d-word">Large icon</span> : This is optional (usually used only for contact photos; do not use it for your app icon) and set with <span class="negrita">setLargeIcon()</span> .</li>
+            <li><span class="d-word">Title</span> : This is optional and set with <span class="negrita">setContentTitle()</span> </li>
+            <li><span class="d-word">Text</span> : This is optional and set with <span class="negrita">setContentText()</span> </li>
+        </ol>
+    </p>
     
     
     </section><!-- End section -->
@@ -51,7 +75,11 @@
     <a name="sWebgraphy"></a>
     <h2>Webgraphy</h2>
     
-    
+    <ul>
+        <li><a class="enlace" target="_blank" href="https://developer.android.com/guide/topics/ui/notifiers/notifications">Notifications.</a> </li>
+        <li><a class="enlace" target="_blank" href="https://developer.android.com/training/notify-user/build-notification?hl=es-419">Create notifications</a> </li>
+        <li><a class="enlace" target="_blank" href="https://developer.android.com/training/notify-user/expanded?hl=es-419">Create advanced notifications</a> </li>
+    </ul>
     
     </section><!-- End section -->
     
