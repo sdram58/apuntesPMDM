@@ -320,7 +320,18 @@ registerReceiver(receiver, filter, Manifest.permission.SEND_SMS, null )</code></
     <ol>
         <li>Every time an application (your receiver) detects a new message, it will launch a notification.</li>
         <li>The title of the notification will be the sender of the message (the other application) and the content of the message sent by the other application.</li>
-        <li>If we click on the notification, it will show us the main screen with the messages.</li>
+        <li>If we click on the notification, it will show us the main screen with the messages.
+            Be careful, if your PendingIntent has an intent and you don't use the proper flags, it will fire the MainActivity again, going into the onCreate and clearing the previous messages.
+            To do this, one of the possible solutions is to launch MainActivity as a single instance. This is that if the App is active it does not create a new one, but rather opens the one it has in memory.
+            From the <span class="inline-file">AndrodiManifest.xml</span> file you can add the following directive.
+
+            <section><pre><code class="language-xml">&lt;activity
+    android:name=".MainActivity"
+    android:launchMode="singleInstance"
+    android:exported="true">
+    &lt;intent-filter></code></pre>
+    </section><br><br>
+        </li>
         <li>Our messages and those sent to us should appear</li>
         <li>Each app will have a different color and message icon.</li>
     </ol>
