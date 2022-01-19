@@ -1,0 +1,104 @@
+Modern devices have potentially lots of apps with {1:SHORTANSWER:=background} services.
+
+And this is exactly as it should be. But it can be problematic when each of the services just runs willy-nilly all over the user's processor.
+
+What we see happening on devices in a low memory situation is that there is often a number of background services running, but there isn't enough memory for all of them.
+
+And when this happens the operating system must swap a lot of processes in and {1:SHORTANSWER:=out} of RAM, known as memory thrashing.
+
+And this reduces the overall system performance, which manifests as poor performance for the app the user is actually trying to use-- not great.
+
+So why do so many background services trigger at {1:SHORTANSWER:=once}? Often it is in response to an implicit {1:SHORTANSWER:=broadcast}.
+
+An implicit broadcast is a {1:SHORTANSWER:=connectivity} that declares an event instead of calling a specific app, meaning that the reasonable use case of passing some data along to another app to do a task for you is lost.
+
+Instead, we have the madness of a single app standing up and shouting that it just did something cool. Who wants to come see? 
+
+Even worse though, most apps have a static receiver declared in their manifest to listen for these, which means the app isn't even running when it gets the broadcast for this event.
+
+So it is woken up solely for the opportunity to respond.
+
+And the {1:SHORTANSWER:=worst} case is an app being woken up to look at the event and then deciding it wasn't interested after all, and we just wasted several precious RAM cycles.
+
+The most common instance of this is with {1:SHORTANSWER:=connectivity} change. On some {1:MULTICHOICE:=devices~mobiles~emulators~versions}, we've seen more than 40 apps woken up as a result of this broadcast.
+
+And when this broadcast is sent frequently, it could mean hundreds of wake-ups in a few minutes, crippling device performance.
+
+So what's the solution? Well, we're removing connectivity {1:SHORTANSWER:=change} as well as a few other broadcasts we commonly see causing this problem.
+
+Because any one app isn't a bad actor, but many apps doing the same not-so-great thing often translates to an overwhelming problem that only the {1:SHORTANSWER:=platform} can solve.
+
+So let's talk about these changes. First, connectivity change will no longer wake apps that are targeting in if you declared a static receiver in the manifest.
+
+If your app is already running and you're {1:SHORTANSWER:=registered} your receiver, you can {1:MULTICHOICE:~get~=still~send} receive this broadcast, but you will not wake up for it.
+
+Now, if you do have some work that needs to be done based on the connectivity change and regardless of whether app is running, you'll want to schedule a job with JobScheduler or Firebase JobDispatcher for the network conditions you truly care about instead of passively listening, and waking, and then checking to see if the connectivity change was the right change for you.
+
+And when your app uses JobScheduler and everyone else's apps start using it, the system can batch all of those {1:SHORTANSWER:=jobs}, leading to a much more stable situation overall.
+
+Another situation is with new NEW_PICTURE and NEW_VIDEO. 
+
+This is a critical user experience moment because slowing down the camera by waking all these apps can destroy the camera experience causing users to miss the moment.
+
+These broadcasts aren't sent by the system, but by apps, such as Camera. 
+
+So we're removing it entirely. 
+
+Know that these two changes are not specific for apps targeting NuGet.
+
+All apps on a device that is running NuGet will no longer be able to receive them {1:MULTICHOICE:~neverless~address~madness~=regardless} of which version you're targeting.
+
+Both broadcasts have been fully deprecated in API 24.
+
+The alternative here is to again use JobScheduler, which has been updated to consider content provider changes as a trigger.
+
+We're trying our best to move to a world that is dynamic without passive receivers claiming processor time for work that should be done in a better way.
+
+So check out the Docs for code you can copy and paste into your own app and have some fun getting to know JobScheduler's updated options.
+
+But most importantly, just continue to build {1:SHORTANSWER:=better} apps.
+
+
+
+/************NOTIFICATIONS***********/
+Read the text and answer the questions below:
+
+Channel importance affects the interruption level of all notifications posted in the channel, and you must specify it in the NotificationChannel constructor. 
+You can use one of five importance levels, ranging from IMPORTANCE_NONE(0) to IMPORTANCE_HIGH(4). 
+The importance level you assign to a channel applies to all notification messages that you post to it.
+
+In the a notification channel all notifications have the same priority? 
+{1:MULTICHOICE:~false~=true}
+
+After you create a notification channel, you cannot change the notification behaviors—the user has complete control at that point. Though you can still change a channel's name and description.
+
+You should create a channel for each distinct type of notification you need to send. You can also create notification channels to reflect choices made by users of your app. For example, you can set up separate notification channels for each conversation group created by a user in a messaging app.
+
+When you target Android 8.0 (API level 26), you must implement one or more notification channels. If your targetSdkVersion is set to 25 or lower, when your app runs on Android 8.0 (API level 26) or higher, it behaves the same as it would on devices running Android 7.1 (API level 25) or lower.
+
+If you target Android 8.0 (API level 26) and post a notification without specifying a notification channel, the notification does not appear and the system logs an error. 
+{1:MULTICHOICE:=true~false}
+
+Starting in Android 8.0 (API level 26), all notifications must be assigned to a channel. For each channel, you can set the visual and auditory behavior that is applied to all notifications in that channel. 
+Then, users can change these settings and decide which notification channels from your app should be intrusive or visible at all.
+
+If your app has two kind of notifications (channels) user can't silence just one off them. 
+{1:MULTICHOICE:=false~true}  
+
+
+Users might see notification actions on the device's lock screen. 
+If a given notification action causes an app to launch an activity or send a direct reply, users must unlock the device before the app can invoke that notification action.
+On Android 12 (API level 31) and higher, you can configure a notification action such that the device must be unlocked in order for your app to invoke that action, no matter what workflow the action launches. This option helps add an extra layer of security to notifications on locked devices.
+
+If we launch a notification and the device is locked, it always unlocks. 
+{1:MULTICHOICE:~true~=false}
+
+Although it's not required, every notification should open an appropriate app activity when tapped. 
+In addition to this default notification action, you can add action buttons that complete an app-related task from the notification (often without opening an activity)
+
+Notifications always launch an actitvity. 
+{1:MULTICHOICE:=false~true}
+
+By default, the notification's text content is truncated to fit on one line. 
+If you want your notification to be longer, you can enable a larger text area that's expandable by applying an additional template 
+{1:MULTICHOICE:=true~false}

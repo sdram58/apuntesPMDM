@@ -292,7 +292,60 @@ registerReceiver(receiver, filter, Manifest.permission.SEND_SMS, null )</code></
     <!--*********************************************************Practice***********************************************************-->
     <section class="apartado">
     <a name="sPractice"></a>
-    <h2>Practice</h2>
+    <div class="tarea">
+        <h2>Practice Chat with Notifications & Broadcast Receiver</h2>
+    <h3>Introduction</h3>
+    
+    <p>The goal of this practice is to create a chat between two of our applications.
+    As an application it doesn't make much sense since sending a chat message to another application installed on our same device isn't useful at all.
+    But it will allow us to practice the concepts seen in this unit, such as notifications and broadcast receivers.</p>
+    
+
+    <h3>Functioning.</h3>
+    
+
+    <p>Once the two applications are installed and running, when a message is sent in one of them, it will be done so that the recipient of the other captures it and vice versa.
+    To do this, remember that the actions that are text strings must be the same.</p>
+    
+    <p class="sub-section">Messages: <span class="negrita">4pts</span> </p>
+    <ol>
+        <li>All messages in the session should appear, that is, until the apps are closed.</li>
+        <li>The date and time of arrival will be added to each message.</li>
+        <li>Each message will be aligned to the left or right depending on the sender, which can be: the application itself or the other application.</li>
+        <li>You can send as many messages as you want.</li>
+    </ol>
+    
+    
+    <p class="sub-section">Notifications: <span class="negrita">3.5pts</span> </p>
+    <ol>
+        <li>Every time an application (your receiver) detects a new message, it will launch a notification.</li>
+        <li>The title of the notification will be the sender of the message (the other application) and the content of the message sent by the other application.</li>
+        <li>If we click on the notification, it will show us the main screen with the messages.</li>
+        <li>Our messages and those sent to us should appear</li>
+        <li>Each app will have a different color and message icon.</li>
+    </ol>
+     
+    <h3>Others: <span class="negrita">2.5pts</span> </h3>
+    <ol>
+        <li>Organize the code into folders.</li>
+        <li>Use the MVVM pattern.</li>
+        <li>Comment the code</li>
+        <li>Use clean code</li>
+    </ol>
+  
+    <h3>Delivery:</h3>
+    <p>You will upload the two applications in a compressed ZIP folder. Remember to clean your project. You will also make a video of less than a minute where you will demonstrate all the proposed functionalities.</p>
+
+
+    <p>In the following GIF you can see an approximation to the required application</p>
+
+    <figure><img src="./UD9/images/UD9_practice_demo.gif" /><br><figcaption>Practice Demo</figcaption></figure>
+    <br>
+    
+    </div>
+    
+
+    
     
     
     
