@@ -48,6 +48,239 @@
             <li><span class="d-word">Text</span> : This is optional and set with <span class="negrita">setContentText()</span> </li>
         </ol>
     </p>
+
+    <h3>Creating Notifications</h3>
+
+    <p>To create notifications we use the following code first we have to create the builder.
+    As you can see, a notification channel is passed to it. We see this later.</p>
+    
+
+    <section><pre><code class="language-kotlin">var builder = NotificationCompat.Builder(this, CHANNEL_ID)</code></pre>
+    </section><br><br>
+
+    <p>Once the builder is created, we add the options we need. Among others we can find the following:</p>
+    
+
+    <p>We can add the notification icon.</p>
+    <section><pre><code class="language-kotlin">builder.setSmallIcon(R.drawable.notification_icon)</code></pre>
+    </section><br><br>
+
+    <p>A title</p>
+    
+    <section><pre><code class="language-kotlin">builder.setContentTitle("My notification")</code></pre>
+    </section><br><br>
+
+    <p>A short text that will be displayed when the notification is collapsed.</p>
+    <section><pre><code class="language-kotlin">builder.setContentText("Much longer text that cannot fit one line...")</code></pre>
+    </section><br><br>
+
+    <p>If we need more lines we can add a long text.</p>
+    <section><pre><code class="language-kotlin">builder.setStyle(NotificationCompat.BigTextStyle()
+    .bigText("Much longer text that cannot fit one line..."))</code></pre>
+    </section><br><br>
+
+    <p>The priority of the notification. Remember that your application should not be very invasive.</p>
+    <section><pre><code class="language-kotlin">builder.setPriority(NotificationCompat.PRIORITY_DEFAULT)</code></pre>
+    </section><br><br>
+
+    <p>We indicate the color of the notification.</p>
+    <section><pre><code class="language-kotlin">builder.color = Color.RED</code></pre>
+    </section><br><br>
+
+    <p>We can manage the vibration of the notification</p>
+    <section><pre><code class="language-kotlin">//1 sec on 1 sec off 1 sec on 1 sec off
+builder.setVibrate(longArrayOf(1000, 1000, 1000, 1000))</code></pre>
+    </section><br><br>
+
+    <p>The sound you will use. It is recommended not to be intrusive and use the default user options.</p>
+    <section><pre><code class="language-kotlin">//builder.setSound(Uri)
+builder.setDefaults(Notification.DEFAULT_SOUND)</code></pre>
+    </section><br><br>
+
+    <p>We can also indicate how the flashing LED will look if the mobile has it, as well as the vibration of the mobile.</p>
+    <section><pre><code class="language-kotlin">//1 sec on 1 sec off
+builder.setLights(Color.MAGENTA, 1000, 1000)
+</code></pre>
+    </section><br><br>
+
+    <p>We can indicate which activity will be opened when the user clicks on the notification.
+    To do this, you have to pass a <span class="r-word">PendingIntent</span>, which is nothing more than an encapsulated <span class="r-word">intent</span>  but tells the application to launch it, typically the system, which must be launched with our application's permissions.</p>
+    <section><pre><code class="language-kotlin">builder.setContentIntent(pendingIntent)</code></pre>
+    </section><br><br>
+    
+    
+    <p class="sub-section">PendingIntent</p>
+    <p>To create a PendingIntent we have several options:</p>
+
+    <ul>
+        <li>Add it to the stackbuilder, and we have the option to indicate who will be its parent in the manifest, so the back arrow will appear.
+            <section><pre><code class="language-kotlin">//That is the real intent
+    val intent = Intent(this, YesActivity::class.java).apply {
+        putExtra(YES_EXTRA_KEY, "This text goes to Yes Activity")
+    }
+
+
+    //This makes the stack builder with the parent activity (optional)
+    //If we don't set it when we press back button the app will exit
+    val stackBuilder = TaskStackBuilder.create(this)
+    stackBuilder.addParentStack(YesActivity::class.java)
+    stackBuilder.addNextIntent(intent)
+
+    return stackBuilder.getPendingIntent(PENDING_REQUEST,
+        PendingIntent.FLAG_UPDATE_CURRENT)
+}</code></pre>
+    </section><br><br>
+
+    We have to indicate who is the parent of this activity in the <span class="inline-file">AndroidManifest.xml</span>
+
+        <section><pre><code class="language-xml">&lt;activity
+            android:name=".YesActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" /></code></pre>
+        </section><br><br>
+        </li>
+        <li>We can also make use of <span class="r-word">getActivity()</span>  function without flags.
+            <section><pre><code class="language-kotlin">private fun makePendingIntent():PendingIntent {
+    val intent = Intent(this, NotificationActivity::class.java)
+
+    return PendingIntent.getActivity(this, PENDING_REQUEST, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+}</code></pre>
+            </section>
+            In this case, we return to the previous activity if it is created when pressing back, but the return arrow does not generate
+            <br><br>
+        </li>
+        <li>Using getActivity with flags to open an activity that cannot be accessed from the normal flow of the application. That is, we will only use it to attend to the notification, if we press the back button, it exits the application.
+            <section><pre><code class="language-kotlin">private fun makePendingIntentNo():PendingIntent {
+    //This activity is only accessed by notifications, and what we want later is to close the app
+    //So system creates a new task just for this activity instead of adding it to the stack
+    val intent = Intent(this, NoActivity::class.java).apply {
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    }
+
+
+    return PendingIntent.getActivity(this, 0, intent, 0)
+}</code></pre>
+            </section><br><br>
+        </li>
+    </ul>
+    
+    
+    <p>We can also add response actions to the notification</p>
+    
+
+    <p>And if we want them to occupy the entire width of the notification, we will use the following option.</p>
+    
+
+    <p>Finally, we can say that the notification is canceled (closed) when clicking on it.</p>
+    <section><pre><code class="language-kotlin">builder.setAutoCancel(true)</code></pre>
+    </section><br><br>
+
+    <p>Or that it closes after a while.</p>
+
+
+    <p>Next, to fire the notification, we need to call the <span class="negrita">notify()</span> method of the NotificationManager. You have to pass the identifier of the notification to later be able to reference it.</p>
+    
+    <section><pre><code class="language-kotlin">with(NotificationManagerCompat.from(this)) {
+    // notificationId is a unique int for each notification that you must define
+    notify(notificationId, builder.build())
+}</code></pre>
+    </section><br><br>
+
+    <p>Notification creation example</p>
+    <section><pre><code class="language-kotlin">private fun makeNotificaton() {
+    val builder: NotificationCompat.Builder =
+        NotificationCompat.Builder(this, CHANNEL_ID)
+
+
+    with(builder){
+        setSmallIcon(R.drawable.ic_baseline_access_alarm)
+        setContentTitle("Notification Example")
+        setContentText("This is my notification")
+        setStyle(NotificationCompat.BigTextStyle()
+            .bigText("This is a long text that can't it into a single line. This is a long text that can't it into a single line. This is a long text that can't it into a single line. This is a long text that can't it into a single line"))
+
+
+        color = Color.RED
+        priority = NotificationCompat.PRIORITY_DEFAULT
+
+        //1 sec on 1 sec off
+        setLights(Color.MAGENTA, 1000, 1000)
+
+        //1 sec on 1 sec off 1 sec on 1 sec off
+        setVibrate(longArrayOf(1000, 1000, 1000, 1000))
+
+        //setSound()
+        setDefaults(Notification.DEFAULT_SOUND)
+
+        //When we click on the notification
+        setContentIntent(pendingIntent)
+
+        setVisibility(VISIBILITY_PUBLIC)
+
+        addAction(R.drawable.ic_yes, "Yes", pendingIntentYes)
+        addAction(R.drawable.ic_no, "No", pendingIntentNo)
+
+
+        setFullScreenIntent(pendingIntent, true)
+
+        //setTimeoutAfter(5000L) //cancels notification after 5 sec
+        setAutoCancel(true)
+    }
+
+    val notificationManagerCompat = NotificationManagerCompat.from(
+        Este)
+
+    //Launch the notification
+    notificationManagerCompat.notify(NOTIFICATION_ID , builder.build())
+}</code></pre>
+    </section><br><br>
+
+
+    <p class="sub-section">Notification Channel</p>
+    
+    <p>Starting from version 8 of Android, (Oreo) we can create different types of notifications for our application.</p>
+    
+    <p>In order to manage them and configure their parameters we need to create a <span class="negrita">notification channel</span> . We will do it in the following way.</p>
+    <section><pre><code class="language-kotlin">val notificationChannel = NotificationChannel(CHANNEL_ID,
+    CHANNEL_NAME,
+    NotificationManager.IMPORTANCE_DEFAULT)</code></pre>
+</section><br><br>
+
+    <p>As you can see, we pass a Channel_ID, a Channel_Description, among others...</p> 
+
+    <p>Thus, the user, from application settings and notifications, was able to choose whether to mute one channel and not another.</p>
+    
+    <section class="marco-t inf">
+        <span class="icono info"> </span> Note: For Android versions 8 and later if the notification does not have a notification channel, the notification will not be displayed.
+        </section>
+    <section class="marco-b">
+            
+    </section>
+        
+
+    <p>Notification channel creation example.</p>
+
+    <section><pre><code class="language-kotlin">private fun createNotificationChannel() {
+    //Notifications channels are just available from Oreo version and above.
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        //Features of channel
+        val notificationChannel = NotificationChannel(CHANNEL_ID,
+            CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_DEFAULT)
+
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        //Notification is visible on the App's icon
+        notificationChannel.setShowBadge(true)
+
+        //Creates the notification
+        notificationManager.createNotificationChannel(notificationChannel)
+    }
+}</code></pre>
+    </section><br><br>
+    
+
+    <h3>Sample App working with notifications</h3>
     
 
     <p><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/NotificationsExample">Here</a> you have the Notifications Example </p>
