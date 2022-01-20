@@ -138,6 +138,9 @@ builder.setLights(Color.MAGENTA, 1000, 1000)
             android:exported="false"
             android:parentActivityName=".MainActivity" /></code></pre>
         </section><br><br>
+
+        <figure><img src="ud9/images/UD9_notifications_yes.gif" /><br><figcaption>When we press the back button, the application closes</figcaption></figure>
+    <br>
         </li>
         <li>We can also make use of <span class="r-word">getActivity()</span>  function without flags.
             <section><pre><code class="language-kotlin">private fun makePendingIntent():PendingIntent {
@@ -148,6 +151,9 @@ builder.setLights(Color.MAGENTA, 1000, 1000)
             </section>
             In this case, we return to the previous activity if it is created when pressing back, but the return arrow does not generate
             <br><br>
+            <figure><img src="ud9/images/UD9_notifications_not.gif" /><br><figcaption>When we press the back button, the application closes</figcaption></figure>
+    <br>
+
         </li>
         <li>Using getActivity with flags to open an activity that cannot be accessed from the normal flow of the application. That is, we will only use it to attend to the notification, if we press the back button, it exits the application.
             <section><pre><code class="language-kotlin">private fun makePendingIntentNo():PendingIntent {
@@ -161,6 +167,9 @@ builder.setLights(Color.MAGENTA, 1000, 1000)
     return PendingIntent.getActivity(this, 0, intent, 0)
 }</code></pre>
             </section><br><br>
+
+            <figure><img src="ud9/images/UD9_notifications_no.gif" /><br><figcaption>When we press the back button, the application closes</figcaption></figure>
+    <br>
         </li>
     </ul>
     
@@ -235,6 +244,14 @@ builder.setLights(Color.MAGENTA, 1000, 1000)
 }</code></pre>
     </section><br><br>
 
+    <p class="sub-section">Cancel notifications from another activity</p>
+    <p>If we want to cancel, delete a notification from the notification bar, we must cancel it using the <span class="r-word">cancel()</span> method and the ID of the notification.</p>
+    <section><pre><code class="language-kotlin">NotificationManagerCompat.from(this).apply {
+    cancel(NOTIFICATION_ID)
+}</code></pre>
+    </section><br><br>
+
+    
 
     <p class="sub-section">Notification Channel</p>
     
