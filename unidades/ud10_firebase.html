@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/prism.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <script src="../script/script.js"></script>
+</head>
+<body>
+    <h1>Firebase</h1>
+
+    <div class="main-menu">
+        <a href="#sIntroduction">Introduction</a><a
+        href="#sLogin">Autentication</a><a
+        href="#sPush">Push Notifications</a><a
+        href="#crashlytics">Google Analytics</a><a            
+           href="#sDataBase">Database</a><a
+           href="#sStorage">Storage</a><a
+           href="#sWebgraphy">Webgraphy</a>
+    </div>
+
+    <!--*********************************************************Introduction***********************************************************-->
+    <section class="apartado">
+    <a name="sIntroduction"></a>
+    <h2>Introduction</h2>
+    <p>Firebase will help us to enhance the development of our Android, IOS, web, Unity games applications.
+    It appeared in 2014 and is owned by Google, since then it has been improving and adding new features.</p>
+    
+
+    <p>Its official page is <a class="enlace" target="_blank" href="https://firebase.google.com/">https://firebase.google.com/</a> </p>
+        
+    <p>This platform will provide us with different services, such as authentication (Google, Twitter, Apple, own users), analytics services, cloud storage, hosting, databases, etc.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-00-47-46.png" /><br><figcaption>Google firebase services</figcaption></figure>
+    <br>
+
+    <p>One of the main features of firebase is that initially everything is free, that is, we can use its services for free up to a certain limit.
+    This limit in general is quite high, and by the time we pass it, the application will surely start to do well and give us some benefit.
+    You can get more information about their prices <a class="enlace" target="_blank" href="https://firebase.google.com/pricing">here</a>  </p>
+    
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-00-50-23.png" /><br><figcaption>Pricing</figcaption></figure>
+    <br>
+    <p>For example, we can see that in Authentication we can log 10,000 users per month. At the time we spend we will pay for use.</p>
+      
+
+    <p>On the other hand, in the documentation section (<a class="enlace" target="_blank" href="https://firebase.google.com/docs/guides">https://firebase.google.com/docs/guides</a> ), 
+        which is very good, it gives us information on how to integrate it into the various platforms.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-00-58-20.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p class="sub-section">Accessing firebase</p>
+
+    <p>To access firebase, we will have to log in with our <span class="negrita">Google</span>  account and press go to console.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-01-01-12.png" /><br><figcaption></figcaption></figure>
+    <br>
+    <p>We can also access directly from <a class="enlace" target="_blank" href="https://console.firebase.google.com/">https://console.firebase.google.com/</a> </p>
+    
+
+    <p>Once we are in the console we will create a new project and follow each of the instructions.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-01-02-55.png" /><br><figcaption>Add project</figcaption></figure>
+    <br>
+    <p>We give it a name to identify the project, if it already exists it will create another name for us. We press continue.</p>
+    
+
+    <figure><img src="UD10/images/ud10-2022-01-24-01-04-08.png" /><br><figcaption>Project Name</figcaption></figure>
+    <br>
+    
+    <p>On the next screen it tells us if we want to leave the analytics enabled, in this case we say yes and press continue.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-01-06-24.png" /><br><figcaption>Enable Google Analytics</figcaption></figure>
+    <br>
+    <p>On the next screen we create a new account for analytics. And we fill in the location data and accept the terms and conditions. Click on create project.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-01-08-56.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+    <figure><img src="UD10/images/ud10-2022-01-24-01-10-59.png" /><br><figcaption></figcaption></figure>
+    <br>
+    <p>We wait a few seconds for our project to be created.</p>    
+    <figure><img src="UD10/images/ud10-2022-01-24-01-11-15.png" /><br><figcaption>Creating Project</figcaption></figure>
+    <br>
+    
+    <p>We press continue and we already have our console ready.
+    On the left, the main services that we will have to integrate one by one and on the central screen, our project.</p>
+    <figure><img src="UD10/images/ud10-2022-01-24-01-13-03.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    
+    <h3>Integrating Firebase to our App</h3>
+    <p>Once our App is created in Android Studio, we go to the Firebase console and add an app to get started. In our case it will be an Android App.</p>
+    <figure><img src="UD10/images/ud10-2022-01-24-01-26-54.png" /><br><figcaption>Adding App to Firebase</figcaption></figure>
+    <br>
+    
+    <p>As we did with the maps, it asks us for the name of the package, and the <span class="negrita">SHA-1</span>. 
+        Remember that you can get the SHA-1 using the <span class="negrita">signingReport</span>  gradle command</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-01-29-59.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>We fill in the data and press to register the App.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-01-31-01.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+    <p>This will generate a JSON file called <span class="inline-file">google-services.json</span> that we must save inside the <span class="inline-folder">apps</span>
+         folder of our project, as indicated in the instructions.
+    To make it better switch Android Studio to Project view. Once saved, click next.</p>
+    
+
+    <figure><img src="UD10/images/ud10-2022-01-24-01-32-40.png" /><br><figcaption>google-services.json</figcaption></figure>
+    <br>
+
+    <p>The next step is to add the firebase dependencies. For this we follow the instructions.
+    First in the project gradle we check that we have the <span class="negrita">Google()</span>  repository and add the dependency to google services.</p>
+    
+
+    <figure><img src="UD10/images/ud10-2022-01-24-01-37-09.png" /><br><figcaption>Build.gradle Project</figcaption></figure>
+    <br>
+    <p>Now it's the turn of the App module's <span class="inline-file">gradle:app</span> file.
+    We must add the google services plugin and the dependencies that it indicates</p>
+    
+
+    <section><pre><code class="language-kotlin">plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.google.gms.google-services'
+}
+
+.....
+
+dependencies {
+    ........ 
+
+
+  // Import the Firebase BoM
+  implementation platform('com.google.firebase:firebase-bom:29.0.4')
+
+
+  // Add the dependency for the Firebase SDK for Google Analytics
+  // When using the BoM, don't specify versions in Firebase dependencies
+  implementation 'com.google.firebase:firebase-analytics-ktx'
+
+
+  // Add the dependencies for any other desired Firebase products
+  // https://firebase.google.com/docs/android/setup#available-libraries
+}</code></pre>
+    </section><br><br>
+
+    <section class="marco-t warn">
+        <span class="icono warning"> </span> Remember to hit sync.
+        </section>
+    <section class="marco-b">
+            
+    </section>
+    
+
+    <p>Returning to the firebase console, we press next and it shows us links with examples and documentation and the button to return to the console.</p>    
+
+    <p>According to the documentation, for the integration to be carried out, it is better to uninstall the app if we had it installed and reinstall it again.</p>
+        
+    <p>Once we have the integration done, it should appear in our console. And if we go to the Analytics dashboard we will see the information that appears, 
+        number of users, where they do it from, platform, etc...</p>
+    
+
+    <p>We can also launch custom events for parts of our application, for example we are going to make it send us an event every time the Main activity is created.</p>
+    
+
+<section><pre><code class="language-kotlin">//If we want to launch our own events to Google Analytics we can do it as follows
+//According to Firebase, it can take up to 24 hours from integration for the first events to start appearing.
+val analytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+val bundle=Bundle().apply {
+    putString("message", "Firebase integration completed")
+}
+analytics.logEvent("InitScreen",bundle)</code></pre>
+</section><br><br>
+Luego dentro de Analytics en la sección de eventos podemos ver estos eventos en detalle.
+    
+
+    
+    </section><!-- End section -->
+
+    <!--*********************************************************Authentication***********************************************************-->
+    <section class="apartado">
+    <a name="sLogin"></a>
+    <h2>Autentication</h2>
+
+    <p>Within the authentication service we can see that we have different options to do it, such as username and password, Google, Facebook, etc...</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-02-06-41.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+    <p>If we click on the Users tab, we will see the users that we have authenticated, in this case it is empty.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-02-11-08.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+
+    <p>For reasons of time, we will only see two of them:
+        <ul>
+            <li>Email and password</li>
+            <li>Google</li>
+        </ul></p>
+    
+
+    <h3>Email and Password</h3>
+    <p>The first thing we will do is enable the email and password provider.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-02-13-08.png" /><br><figcaption></figcaption></figure>
+    <br>
+    <p>We enable it. We see that we also have the option to enable email without a password. We press save and we already have the creator provider.</p>
+    
+
+    <figure><img src="UD10/images/ud10-2022-01-24-02-15-25.png" /><br><figcaption>Email/Password provider</figcaption></figure>
+    <br>
+    <p>So far everything we have to do in the firebase console. Let's go back to Android Studio.</p>
+    
+
+    <p>We add the dependency in <span class="inline-file">Gradle:app</span> if we haven't already done so.</p>
+    
+
+    <section><pre><code class="language-kotlin">//Firebase Authentication
+implementation 'com.google.firebase:firebase-auth'</code></pre>
+    </section><br><br>
+
+    <p class="sub-section">Sign up</p>
+    <p>To register we first get the FirebaseAuth instance with the FirebaseAuth.getInstance() method
+    Later with the instance we can call the method <span class="negrita cursiva">createUserWithEmailAndPassword(email:String, password:String)</span>  to which, as you can see, the email and password are passed.</p>
+    
+    <section><pre><code class="language-kotlin">FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+        "carlos@gmail.com",
+        "123456"  //Note that password needs at least 6 characters
+    )</code></pre>
+    </section><br><br>
+
+    <p>In addition we can add some listener like for example addOnCompletListener, which will fire when the registration is finished.
+    It will return a <span class="r-word">Task<AuthResult!></span> . This has the <span class="r-word">isSuccessful</span> property that informs us in a <span class="negrita">Boolean</span> 
+     if the registration has gone well.
+    The registry code would be as follows.</p>
+    
+
+    <section><pre><code class="language-kotlin">FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+        "carlos@gmail.com",
+        "123456"  //Note that password needs at least 6 characters
+).addOnCompleteListener{
+    if(it.isSuccessful){ // Register completed ok
+        //do something
+        //we can't get the user and his email
+        Log.d(TAG, it.result?.user?.email ?: "")
+    }else{ //Something was wrong
+        //showError()
+    }
+}</code></pre>
+    </section><br><br>
+
+    <p>Once registered, we can see the access from the firebase console.</p>
+     
+    <figure><img src="UD10/images/ud10-2022-01-24-11-16-43.png" /><br><figcaption></figcaption></figure>
+    <br>
+    <p>As you can see we can also add users from the firebase console.</p>
+    
+    
+
+    <p class="sub-section">Sign in</p>
+    <p>To access with an existing user, the procedure is very similar.
+    Now you just have to call the <span class="negrita cursiva">signInWithEmailAndPassword()</span>  method from the instance, which also receives two text strings, email and password.</p>
+    
+
+    <section><pre><code class="language-kotlin">FirebaseAuth.getInstance().signInWithEmailAndPassword(
+        "carlos@gmail.com",
+        "123456"  //Note that password needs at least 6 characters
+).addOnCompleteListener{
+    if(it.isSuccessful){ // Register completed ok
+        //do something
+        //we can't get the user and his email
+        Log.d(TAG, it.result?.user?.email ?: "")
+    }else{ //Something was wrong
+        //showError()
+    }
+}</code></pre>
+    </section><br><br>
+
+
+    <h3>Using Google Account</h3>  
+    <p>To add access with Google, we must add a new <span class="d-word">Authentication Provider</span>. Remember for this provider we require the <span class="negrita">SHA-1</span>  in until now it was optional.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-11-42-03.png" /><br><figcaption>/figcaption></figure>
+    <br>
+    
+
+    <p>Click on Google and give it to enable and save. Additionally we can add a support email.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-03-11-48.png" /><br><figcaption></figcaption></figure>
+    <br>
+    <p>So far everything we have to do in the firebase console. Let's go back to Android Studio.</p>
+    
+
+
+    <p>This process is a bit more complicated than the previous one, but basically the steps to follow are:</p>
+    
+    <p>First add the dependency in <span class="inline-file">gradle:app</span></p>
+    
+    <section><pre><code class="language-kotlin">//Firebase google
+implementation 'com.google.android.gms:play-services-auth:20.0.1'</code></pre>
+    </section><br><br>
+
+    <p>Already in the code, we must create the <span class="negrita">Google</span> configuration with the data we need from the Google user.
+    In this case, we must pass the client ID of our server to the <span class="r-word">requestIdToken</span>  method of the <span class="inline-file">google-services.json</span> file and ask for the email.</p>
+     
+
+    <section><pre><code class="language-kotlin">val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+    .requestIdToken(getString(R.string.default_web_client_id))
+    .requestEmail()
+    .build()</code></pre>
+</section><br><br>
+
+    <p>Obtain our Google client to log in to which we pass the previous configuration and context.</p>
+    
+    <section><pre><code class="language-kotlin">val googleClient = GoogleSignIn.getClient(this, googleConf)</code></pre>
+    </section><br><br>
+
+    <p>We launch the activity to indicate with which account we want to access or create a new one. 
+        This activity is already created, we simply get the intent from the Google Client and launch it.</p>
+    
+
+    <section><pre><code class="language-kotlin">val signInIntent = googleClient.signInIntent
+launcher.launch(signInIntent)</code></pre>
+    </section><br><br>
+
+    <p>We launch it with <span class="negrita">registerForActivityResult</span> , since it remembers that it is precated. And we get the <span class="negrita">Google Account Activity</span>  result.</p>
+    
+    <section><pre><code class="language-kotlin">private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+                //If the result was OK we have to sign in with those credentials
+
+    }</code></pre>
+    </section><br><br>
+
+    <p>If the result has gone well, first we get the intent of the Google login activity.</p>
+    
+    <section><pre><code class="language-kotlin">val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)</code></pre>
+    </section><br><br>
+    
+    <p>We get the account. Eye This operation can throw an ApiException, we must catch it in a <span class="negrita">try catch</span>  block</p>
+    
+
+    <section><pre><code class="language-kotlin">try{
+
+    val account = task.getResult(ApiException::class.java)
+    if(account!=null){
+        //Here we have a valid Google Account
+
+    }
+}catch (apiException:ApiException){
+    //showError
+}</code></pre>
+    </section><br><br>
+
+    <p>With the account we obtain your credentials.</p>
+    
+    <section><pre><code class="language-kotlin">val credential = GoogleAuthProvider.getCredential(account.idToken, null)</code></pre>
+    </section><br><br>
+
+    <p>And with firebase and these credentials we call the signInWithCredential(credential) method to sign in.
+    The rest is the same as validation via email/password. It would stay like this.</p>
+     
+    <section><pre><code class="language-kotlin">private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+    if (result.resultCode == Activity.RESULT_OK) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            try{
+
+                val account = task.getResult(ApiException::class.java)
+                if(account!=null){
+                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                    FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener{
+                        if(it.isSuccessful){
+                            //Here we have access with that account and we can't get some data such us email.
+                            Log.d(TAG, account.email ?: "")
+                        }else{
+                            showError()
+                        }
+                    }
+
+                }
+            }catch (apiException:ApiException){
+                //showError()
+            }
+        }
+
+}</code></pre>
+    </section><br><br>
+
+
+<p>Now we can access with a Google account.</p>
+
+
+<figure><img src="UD10/images/UD10_google_login.gif" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>We check that we have accessed with that account in the firebase console.</p>
+
+
+    <figure><img src="UD10/images/ud10-2022-01-24-11-17-23.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+
+
+    
+    <div class="tarea">
+        Exercise: Add some more authentication method, with Github or Facebook. In their respective pages you have more information about the authentication API.
+    </div>
+
+    
+    </section><!-- End section -->
+
+    <!--*************************************************** ***********Push Notifications***************************************** **********************-->
+    <section class="section oculto">
+        <a name="sPush"></a>
+        <h2>Push Notifications</h2>
+        
+        Primero accedemos a la consola de firebase y accedemos al servicio de notificaciones que tiene por nombre Cloud Messaging.
+
+        <figure><img src="UD10/images/ud10-2022-01-24-12-32-30.png" /><br><figcaption>Cloud Messaging</figcaption></figure>
+        <br>
+        
+        Configurando la App. 
+
+        Enviando el primer mensaje.
+
+        <figure><img src="UD10/images/ud10-2022-01-24-12-46-25.png" /><br><figcaption>Send your first message</figcaption></figure>
+        <br>
+
+        Rellenamos los campos de la notificación. Pulsamos siguiente.
+
+        <figure><img src="UD10/images/ud10-2022-01-24-12-48-42.png" /><br><figcaption></figcaption></figure>
+        <br>
+        
+        En el punto dos seleccionamos los destinatarios. Seleccionamos todos los dispositivos android que tengan la apliacación.
+        <figure><img src="UD10/images/ud10-2022-01-24-12-51-07.png" /><br><figcaption></figcaption></figure>
+        <br>
+
+        El siguiente punto es indicar cuando queremos enviarla, elegimos ahora, pero podríamos programar una fecha y una hora.
+        <figure><img src="UD10/images/ud10-2022-01-24-12-52-16.png" /><br><figcaption></figcaption></figure>
+        <br>
+
+        Dejamos eventos de conversión y otras opciones en blanco, ya que son configuraciones más avanzadas. Finalmente podemos guardarlo o revisarlo.
+        Pulsamos en revisar.
+        Y pulsamos sobre Publish. 
+        <figure><img src="UD10/images/ud10-2022-01-24-12-53-56.png" /><br><figcaption></figcaption></figure><br>
+
+        <p>And we see that the notification arrives on our device. If we click on it, it automatically opens our App.</p>
+         
+        <figure><img src="UD10/images/ud10-2022-01-24-12-55-17.png" /><br><figcaption></figcaption></figure>
+        <br>
+        
+        <p>We can also change the notification icon for it in the AndroidManifest.xml we add the following lines. This is optional.</p>
+        
+        <section><pre><code class="language-xml">&lt;!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more. -->
+&lt;meta-data
+    android:name="com.google.firebase.messaging.default_notification_icon"
+    android:resource="@drawable/ic_stat_ic_notification" />
+&lt;!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+     notification message. See README(https://goo.gl/6BKBk7) for more. -->
+&lt;meta-data
+    android:name="com.google.firebase.messaging.default_notification_color"
+    android:resource="@color/colorAccent" /></code></pre>
+        </section><br><br>
+    
+        <p class="sub-section">Sending Unicast Notifications</p>
+        <p>If we want to send a notification to a single device, what we must do is the following.</p>
+        
+        <p>First we must obtain the user token (unique for each device) to send.</p>
+        
+
+        <section><pre><code class="language-kotlin">FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+    if (!task.isSuccessful) {
+        Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+        return@OnCompleteListener
+    }
+
+    // Get new FCM registration token
+    val token = task.result
+
+    // Log and toast
+    val msg = "${getString(R.string.msg_token_fmt)} $token"
+    Log.d(TAG, msg)
+    //Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+})</code></pre>
+        </section><br><br>
+
+    <p>We can copy it from the one we have sent to the console.</p>
+    
+
+    <figure><img src="UD10/images/ud10-2022-01-24-15-10-11.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+    <p>With this token we can send the notification to this device. We could, for example, save the Token in a database and relate it to the user and each time we want to send a notification, retrieve the Token.
+<br><br>
+    We are now going to send a new notification from the firebase console. We select new notification.</p>
+    
+
+    <figure><img src="UD10/images/ud10-2022-01-24-15-16-12.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+    <p>We follow the same steps as before but at point 1 we choose to send test messages.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-15-19-24.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+    <p>And in the Token field we add the Token that we have previously obtained. And click on Test.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-15-21-29.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+    <p>We already have the exclusive notification for this user (device).</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-24-15-31-31.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    
+    
+
+    <p class="sub-section">Sending Multicast</p>
+        
+        <p>If instead of wanting to send to all devices or to just one, we use the topics (Topics).
+        To subscribe a device to a topic is very simple, we just have to execute the following command.</p>
+        
+        <section><pre><code class="language-kotlin">FirebaseMessaging.getInstance().subscribeToTopic("DAM2122")</code></pre>
+        </section><br><br>
+
+        <p>And to send them is very simple. We first start up two devices that subscribe to the same topic.</p>
+        
+        <figure><img src="UD10/images/ud10-2022-01-24-16-16-05.png" /><br><figcaption></figcaption></figure>
+        <br>
+                
+        <p>We go to the Firebase console and send the same message, but in step 2 (Target) we select the Topic.
+        We see that it already recognizes it for us because when launching the application we have registered it.</p>
+        
+        <figure><img src="UD10/images/ud10-2022-01-24-16-18-27.png" /><br><figcaption></figcaption></figure>
+        <br>
+        
+        <p>We review the message.</p>
+        
+        <figure><img src="UD10/images/ud10-2022-01-24-16-18-59.png" /><br><figcaption></figcaption></figure>
+        <br>
+        
+        <p>We launched it and it reaches us on both devices.</p>
+        
+        <figure><img src="UD10/images/ud10-2022-01-24-16-28-42.png" /><br><figcaption></figcaption></figure>
+        <br>
+        
+
+        <p class="sub-section">Foreground Notifications</p>
+        
+        <p>The notifications only arrive if it is in the background, to handle these notifications we will do it from the service that we created in the first point.
+        We must override the <span class="r-word">onMessageReceived()</span>  operation.</p>
+        
+
+        <p>For example we will launch a Toast with the title of the message.</p>
+        
+<section><pre><code class="language-kotlin">override fun onMessageReceived(remoteMessage: RemoteMessage) {
+    super.onMessageReceived(remoteMessage)
+
+    CoroutineScope(Dispatchers.Default).launch {
+        sendMessage(remoteMessage.notification?.title?:"No message")
+    }
+}
+
+private suspend fun sendMessage(text:String) = withContext(Dispatchers.Main){
+    Toast.makeText(baseContext, text,Toast.LENGTH_SHORT).show()
+}</code></pre>
+</section><br><br>
+
+<p>Notice that we launch it from a coroutine with <span class="negrita">Dispatcher.Main</span> .</p>
+
+
+    <figure><img src="UD10/images/ud10-2022-01-24-17-04-23.png" /><br><figcaption></figcaption></figure>
+        <br>
+        
+    <p class="sub-section">Send information in the notification</p>
+    
+    <p>To do this, we launch the notification as we have done so far, but we stop at the last option, Additional options.
+        We see that we can write a key-value pair, we put for example the url of the notes.</p>
+    
+
+    <figure><img src="UD10/images/ud10-2022-01-24-17-11-52.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+    <p>Now we retrieve it from the notification.</p>
+    
+    <section><pre><code class="language-kotlin">//Receive info from notification
+val url = intent.getStringExtra("url")
+url?.let{
+    println("We've received this url $it in the notification")
+}</code></pre>
+</section><br><br>
+
+
+    <p>Nos llega la notificación</p>
+    <figure><img src="UD10/images/ud10-2022-01-24-17-15-28.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>And by clicking on it we retrieve the information.</p>
+    
+
+    <figure><img src="UD10/images/ud10-2022-01-24-17-17-08.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>So far what we will see regarding notifications, but remember that the normal thing is to send notifications from a server or through firebase functions.
+    There is documentation on the firebase website to integrate notifications into our server, as well as the use of firebase functions.</p>
+    
+    
+
+
+
+
+
+        
+        
+        </section><!-- End section -->
+
+    <!--***************************************************************Crashlytics***************************************************************-->
+    <section class="section">
+        <a name="sCrashlytics"></a>
+        <h2>Google Crashlytics</h2>
+        
+        
+        
+        </section><!-- End section -->
+
+    <!--*********************************************************Database***********************************************************-->
+    <section class="apartado">
+    <a name="sDataBase"></a>
+    <h2>Database</h2>
+    
+    
+    
+    </section><!-- End section -->
+
+    <!--*********************************************************Storage***********************************************************-->
+    <section class="apartado">
+    <a name="sStorage"></a>
+    <h2>Storage</h2>
+    
+    
+    
+    </section><!-- End section -->
+
+    
+
+    <!--*********************************************************Webgraphy***********************************************************-->
+    <section class="apartado">
+    <a name="sWebgraphy"></a>
+    <h2>Webgraphy</h2>
+    
+    
+    
+    </section><!-- End section -->
+    
+
+    <script src="../script/prism.js"></script>
+</body>
+</html>
