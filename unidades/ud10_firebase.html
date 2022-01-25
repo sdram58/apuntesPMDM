@@ -914,7 +914,38 @@ Y finalmente, borramos los datos asociados a email.
 <figure><img src="./UD10/images/UD10_delete_firestore.gif" /><br><figcaption></figcaption></figure>
 
     <h3>Realtime Database</h3>
+    Ahora vamos a usar RealTime database. Para ello desde la consola de Firebase creamos una nueva base de datos.
+
+    <figure><img src="UD10/images/ud10-2022-01-25-11-35-52.png" /><br><figcaption></figcaption></figure>
+    <br>
     
+    Al igual que en Firestore, indicamos la ubicación de la base de datos.
+    <figure><img src="UD10/images/ud10-2022-01-25-11-36-45.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    Y las reglas de seguridad sobre esta base de datos. Como siempre te recomiendo que leas la documentación.
+
+    <figure><img src="UD10/images/ud10-2022-01-25-12-12-41.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+    En este caso vamos a importar un fichero json para poblar nuestra base de datos con usuarios ficticios.
+
+    <figure><img src="UD10/images/UD10_import_realtime.gif" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p class="sub-section">Configurando la App</p>
+    
+    Como siempre añadimos la dependencia necesaria en el build.gradle:app. Recuerda sincronizar.
+    <section><pre><code class="language-kotlin">// Declare the dependency for the Realtime Database library
+// When using the BoM, you don't specify versions in Firebase library dependencies
+implementation 'com.google.firebase:firebase-database-ktx'</code></pre>
+    </section><br><br>
+
+    Creamos la referencia a nuestra base de datos de Real Time.
+    <section><pre><code class="language-kotlin">val dbRealTime = Firebase.database</code></pre>
+    </section><br><br>
+
+
     
     
     </section><!-- End section -->
