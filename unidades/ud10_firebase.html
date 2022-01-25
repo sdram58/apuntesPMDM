@@ -17,7 +17,8 @@
         <a href="#sIntroduction">Introduction</a><a
         href="#sLogin">Autentication</a><a
         href="#sPush">Push Notifications</a><a
-        href="#crashlytics">Google Analytics</a><a            
+        href="#sCrashlytics">Crashlytics</a><a            
+        href="#sRemoteConfig">Firebase Remote Config</a><a            
            href="#sDataBase">Database</a><a
            href="#sStorage">Storage</a><a
            href="#sWebgraphy">Webgraphy</a>
@@ -421,38 +422,68 @@ launcher.launch(signInIntent)</code></pre>
     </section><!-- End section -->
 
     <!--*************************************************** ***********Push Notifications***************************************** **********************-->
-    <section class="section oculto">
+    <section class="apartado">
         <a name="sPush"></a>
         <h2>Push Notifications</h2>
+
+        <p class="sub-section">Configure the App for notifications</p>
+    
+    <p>First, in the <span class="inline-file">gradle:app</span> file we add the corresponding dependency</p>
+    <section><pre><code class="language-kotlin">//Cloud Messaging
+implementation 'com.google.firebase:firebase-messaging'</code></pre>
+    </section><br><br>
+
+    <p>We add in the <span class="inline-file">AndroidManifest.xml</span> the one in charge of attending the notifications when we do not have the App in the foreground.</p>
+    
+    <section><pre><code class="language-xml">&lt;service
+    android:name=".MyFirebaseMessagingService"
+    android:exported="false">
+    &lt;intent-filter>
+        &lt;action android:name="com.google.firebase.MESSAGING_EVENT" />
+    &lt;/intent-filter>
+&lt;/service></code></pre>
+    </section><br><br>
+    
+
+    <p>We create the class <span class="r-word">MyFirebaseMessagingService</span> that will extend from <span class="r-word">FirebaseMessagingService</span> </p>
+    <section><pre><code class="language-kotlin">class MyFirebaseMessagingService: FirebaseMessagingService() {
+}</code></pre>
+    </section><br><br>
+
+    <p class="sub-section">Sending notifications from the firebase console</p>
+    
         
-        Primero accedemos a la consola de firebase y accedemos al servicio de notificaciones que tiene por nombre Cloud Messaging.
+        <p>First we access the firebase console and access the notification service called <span class="negrita">Cloud Messaging</span> .</p>
+        
 
         <figure><img src="UD10/images/ud10-2022-01-24-12-32-30.png" /><br><figcaption>Cloud Messaging</figcaption></figure>
         <br>
         
-        Configurando la App. 
-
-        Enviando el primer mensaje.
+        <p>Click on send the first message.</p>        
 
         <figure><img src="UD10/images/ud10-2022-01-24-12-46-25.png" /><br><figcaption>Send your first message</figcaption></figure>
         <br>
 
-        Rellenamos los campos de la notificación. Pulsamos siguiente.
+        <p>We fill in the fields of the notification. We press next.</p>
+        
 
         <figure><img src="UD10/images/ud10-2022-01-24-12-48-42.png" /><br><figcaption></figcaption></figure>
         <br>
         
-        En el punto dos seleccionamos los destinatarios. Seleccionamos todos los dispositivos android que tengan la apliacación.
+        <p>In point two we select the recipients. We select all android devices that have the application.</p>
+        
         <figure><img src="UD10/images/ud10-2022-01-24-12-51-07.png" /><br><figcaption></figcaption></figure>
         <br>
 
-        El siguiente punto es indicar cuando queremos enviarla, elegimos ahora, pero podríamos programar una fecha y una hora.
+        <p>The next point is to indicate when we want to send it, we choose now, but we could program a date and time.</p>
+        
         <figure><img src="UD10/images/ud10-2022-01-24-12-52-16.png" /><br><figcaption></figcaption></figure>
         <br>
 
-        Dejamos eventos de conversión y otras opciones en blanco, ya que son configuraciones más avanzadas. Finalmente podemos guardarlo o revisarlo.
-        Pulsamos en revisar.
-        Y pulsamos sobre Publish. 
+        <p>We leave conversion events and other options blank as these are more advanced settings. Finally we can save or review it. <br>
+        We click on review. <br>
+        And click on Publish.</p>
+        
         <figure><img src="UD10/images/ud10-2022-01-24-12-53-56.png" /><br><figcaption></figcaption></figure><br>
 
         <p>And we see that the notification arrives on our device. If we click on it, it automatically opens our App.</p>
@@ -460,7 +491,7 @@ launcher.launch(signInIntent)</code></pre>
         <figure><img src="UD10/images/ud10-2022-01-24-12-55-17.png" /><br><figcaption></figcaption></figure>
         <br>
         
-        <p>We can also change the notification icon for it in the AndroidManifest.xml we add the following lines. This is optional.</p>
+        <p>We can also change the notification icon for it in the <span class="inline-file">AndroidManifest.xml</span> we add the following lines. This is optional.</p>
         
         <section><pre><code class="language-xml">&lt;!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
      See README(https://goo.gl/l4GJaQ) for more. -->
@@ -474,10 +505,10 @@ launcher.launch(signInIntent)</code></pre>
     android:resource="@color/colorAccent" /></code></pre>
         </section><br><br>
     
-        <p class="sub-section">Sending Unicast Notifications</p>
-        <p>If we want to send a notification to a single device, what we must do is the following.</p>
-        
-        <p>First we must obtain the user token (unique for each device) to send.</p>
+    <p class="sub-section">Sending Unicast Notifications</p>
+    <p>If we want to send a notification to a single device, what we must do is the following.</p>
+    
+    <p>First we must obtain the user token (unique for each device) to send.</p>
         
 
         <section><pre><code class="language-kotlin">FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -561,7 +592,7 @@ launcher.launch(signInIntent)</code></pre>
         <p class="sub-section">Foreground Notifications</p>
         
         <p>The notifications only arrive if it is in the background, to handle these notifications we will do it from the service that we created in the first point.
-        We must override the <span class="r-word">onMessageReceived()</span>  operation.</p>
+        We must override the <span class="r-word">onMessageReceived()</span>  operation on our <span class="inline-file">MyFirebaseMessagingService</span> class .</p>
         
 
         <p>For example we will launch a Toast with the title of the message.</p>
@@ -617,29 +648,272 @@ url?.let{
     <p>So far what we will see regarding notifications, but remember that the normal thing is to send notifications from a server or through firebase functions.
     There is documentation on the firebase website to integrate notifications into our server, as well as the use of firebase functions.</p>
     
-    
-
-
-
-
-
-        
-        
+            
         </section><!-- End section -->
 
     <!--***************************************************************Crashlytics***************************************************************-->
-    <section class="section">
+    <section class="apartado">
         <a name="sCrashlytics"></a>
         <h2>Google Crashlytics</h2>
-        
-        
+
+       <p>It will allow us to obtain information and statistics of our errors or bugs to be able to solve them.</p>
+       
+
+       <p>To activate it, go to the Release & Monitor section and select <span class="r-word">Crashlytics</span> .</p>
+       
+
+    <figure><img src="UD10/images/ud10-2022-01-24-23-56-46.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+   <p>Once this is done, we must follow the steps of integrating crashlytics in our application.</p>
+   
+    
+    <p>We open the <span class="inline-file">build.gradle:app</span> of our project and add the dependency.</p>
+    
+    <section><pre><code class="language-kotlin">implementation 'com.google.firebase:firebase-crashlytics'</code></pre>
+    </section><br><br>
+    <span class="inline-file">We also add the plugin</span>
+    <section><pre><code class="language-kotlin">id 'com.google.firebase.crashlytics'</code></pre>
+    </section><br><br>
+
+    <p>In this case we also open the <span class="inline-file">build.gradle:project</span> and add the corresponding plugin to Crashlytics. We press sync now</p>
+    
+
+    <section><pre><code class="language-kotlin">classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'</code></pre>
+    </section><br><br>
+
+    <p>We run our app and check in the console that the integration has been successful.
+    Here we can select the operating system of the App in our Android case, and start seeing the information it provides us.
+    We can filter by the type of errors of our App, by default it shows those of the blocking type, which are the worst errors they can give us, since the user experience is impaired.
+    They are unexpected closures when executing certain code. It will help us to detect errors in users who have downloaded and installed our App and that we have not been able to detect when doing it.</p>
+    
+
+    <p>We have a failure statistic.</p>
+     
+
+    <p>At the bottom we will see the list of errors. Let's force a bug to test crashlytics. To do this, we will first create a forced error button.
+    By pressing this button we launch an uncontrolled exception that will make the App stop.</p>
+    
+
+    <section><pre><code class="language-kotlin">binding.btnForceError.setOnClickListener {
+            //Error forcing
+            throw RuntimeException("Forcing Error")
+        }</code></pre>
+    </section><br><br>
+
+    <p>If we launch the application and force the error, it stops.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-25-01-05-43.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+
+    <p>Crashlytics nos indica hasta que fichero y línea ha fallado.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-25-01-03-47.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+
+    <p>We can add information about the user who was logged in when the error occurred, as well as some extra information, in this case the provider the user was using.</p>
+    
+    <section><pre><code class="language-kotlin">//we send the user that is getting the error.
+FirebaseCrashlytics.getInstance().setUserId(email)
+
+//We can set customs key. In this case we can know which is the user provider when the app crashes
+FirebaseCrashlytics.getInstance().setCustomKey(PROVIDER,provider)</code></pre>
+    </section><br><br>
+
+    <figure><img src="UD10/images/ud10-2022-01-25-01-06-42.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    
+    <p>We can use the user's information to notify you that the App is already operational, apologize for the inconvenience, etc.</p>
+    <figure><img src="UD10/images/ud10-2022-01-25-01-01-56.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+
+    <p>We can also use crashlytics as a log, to send information about what caused the error.</p>
+    
+    <section><pre><code class="language-kotlin">FirebaseCrashlytics.getInstance().log("ForceError Button has been pressed")</code></pre>
+    </section><br><br>
+
+
+    
         
         </section><!-- End section -->
+
+    
+    <!--*********************************************************Firebase Remote Config***********************************************************-->
+    <section class="apartado">
+    <a name="sRemoteConfig"></a>
+    <h2>Firebase Remote Config</h2>
+    <p>Many times making changes to our apps forces us to deploy a new version in the store.
+    We are going to see how to save different configuration parameters in the cloud on a remote server in a very simple and, above all, free way.
+    This service that will allow us to save and update different values ​​of different parameters in the cloud, being able to consult those values ​​
+    from our app without having to upload a new update to the app store</p>
+    
+
+    <p>We are going to activate it from Remote Config in the side menu of the firebase console.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-25-01-16-40.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>With the remote configuration, we are going to do, for example, change the text of the force error button, decide if we want it to be shown or not.
+    We could also define urls or even save json files, etc.</p>
+    
+    
+    <p>Let's go to the console to define these configurations, which will be key-value</p>
+    
+
+    <figure><img src="UD10/images/ud10-2022-01-25-01-28-58.png" /><br><figcaption></figcaption></figure>
+    <br>
+    <p>The other parameter will be the button text. Finally we give you to publish changes.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-25-01-32-00.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>Once the remote configuration is created, we are going to use it in our App.
+    To do this, the first thing we will do is add the dependency in <span class="inline-file">build.gradle:app</span>.</p>
+    
+
+    <section><pre><code class="language-kotlin">//Remote config
+implementation 'com.google.firebase:firebase-config'</code></pre>
+    </section><br><br>
+
+    <p>Now in the main activity (<span class="negrita">AuthActivity</span>) we will create the configuration, this will be a default configuration, in case our App is not able to connect to the Internet.
+    We can also set how often we want to refresh this configuration. By default they are every 12 hours.</p>
+    
+
+    <section><pre><code class="language-kotlin">//Remote config
+val fireRemoteConfig = FirebaseRemoteConfig.getInstance()
+val configSettings = FirebaseRemoteConfigSettings.Builder()
+    .setMinimumFetchIntervalInSeconds(60)
+    .build()
+
+fireRemoteConfig.setConfigSettingsAsync(configSettings)
+
+//We're setting our defaults settings with the same key that firebase console.
+fireRemoteConfig.setDefaultsAsync(mapOf("show_error_button" to false, "error_button_text" to "Force Error"))</code></pre>
+    </section><br><br>
+
+    <p>We already have the default configuration, now we are going to recover the remote values. We will do this in our (<span class="negrita">HomeActivity</span>) .</p>
+    
+<section><pre><code class="language-kotlin">//Remote config
+binding.btnForceError.visibility = View.GONE
+
+FirebaseRemoteConfig.getInstance().fetchAndActivate().addOnCompleteListener { task ->
+    if(task.isSuccessful){
+        val showErrorButton:Boolean = FirebaseRemoteConfig.getInstance().getBoolean("show_error_button")
+        val errorButtonText:String = FirebaseRemoteConfig.getInstance().getString("error_button_text")
+
+        if(showErrorButton){
+            binding.btnForceError.visibility = View.VISIBLE
+        }
+        binding.btnForceError.text = errorButtonText
+
+    }
+}</code></pre>
+</section><br><br>
+
+    <p>If we launch our App, the default setting make that the button is hidden.</p>
+    
+<figure><img src="UD10/images/ud10-2022-01-25-01-57-02.png" /><br><figcaption></figcaption></figure>
+<br>
+
+    <p>Now we change our settings to display. Remember to publish changes.</p>
+    
+    <figure><img src="UD10/images/ud10-2022-01-25-01-56-37.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>We launch the application again and it is already shown to us with the new text.</p>
+    
+
+    <figure><img src="UD10/images/ud10-2022-01-25-01-57-51.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    
+    
+
+
+    </section><!-- End section -->
 
     <!--*********************************************************Database***********************************************************-->
     <section class="apartado">
     <a name="sDataBase"></a>
     <h2>Database</h2>
+    Disponemos de dos bases de datos, la moderna Firestore Database, más optimizada y la clásica Realtime Database, no por ser más vieja significa que no funcione bien.
+    ¿Cuál elegir entre ambas? Desde la propia página de firebase nos dan las claves para elegir una u otra, incluso una pequeña encuesta para ayudar a decidirnos.
+    <a class="enlace" target="_blank" href="https://firebase.google.com/docs/database/rtdb-vs-firestore?authuser=0">https://firebase.google.com/docs/database/rtdb-vs-firestore?authuser=0</a> 
+
+    <h3>Cloud Firestore Database</h3>
+    Creamos nuestra base de datos.
+    <figure><img src="UD10/images/ud10-2022-01-25-02-26-48.png" /><br><figcaption></figcaption></figure>
+    <br>
+    Elegimos la regla de acceso predeterminada que usaremos, en este caso la de modo prueba que nos da 30 días para hacer lo que queramos. Recomiendo reviséis la documentación de las reglas.
+    <a class="enlace" target="_blank" href="https://firebase.google.com/docs/firestore/security/get-started?authuser=0">https://firebase.google.com/docs/firestore/security/get-started?authuser=0</a> 
+    <figure><img src="UD10/images/ud10-2022-01-25-02-27-45.png" /><br><figcaption></figcaption></figure>
+    <br>
+    Elegimos dónde se encontrará físicamente nuestra base de datos y pulsamos habilitar.
+    <figure><img src="UD10/images/ud10-2022-01-25-02-29-11.png" /><br><figcaption></figcaption></figure>
+    <br>
+    Desde aquí podríamos crear la coleción y los documentos pero lo haremos desde código en nuestra App.
+    <figure><img src="UD10/images/ud10-2022-01-25-02-30-36.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+
+    Como nuestra App estamos usando usuarios vamos a crear una base de datos que almacene usuarios. Podríamos añadirlos y modificarlos directamente desde la consola de firebase.
+
+    Primero añadiremos los campos dirección y telefono en nuestro activity_home.xml y además tres botones que nos permitirán guardar, recuperar y eliminar usuarios.
+
+    Ahora añadimos la dependencia en build.gradle:app. 
+    <section><pre><code class="language-kotlin">implementation 'com.google.firebase:firebase-firestore-ktx'</code></pre>
+    </section><br><br>
+
+    Obtenemos la referencia a la Base de Datos como propiedad de la clase HomeActivity.
+    <section><pre><code class="language-kotlin">val db = Firebase.firestore</code></pre>
+    </section><br><br>
+
+    Añadimos el manejador del botón guardar. Podemos ver que obtenemos de la colección "users" el documento de clave primaria email, si no existe lo crea, sinó lo actualiza.
+    <section><pre><code class="language-kotlin">binding.btnSave.setOnClickListener {
+    //Collection name is "users" and add or update a document with email as primary key
+    db.collection("users").document(email).set(
+        hashMapOf(
+            "provider" to provider,
+            "address" to binding.etAddress.text.toString(),
+            "phone" to binding.etPhone.text.toString()
+        )
+    )
+}</code></pre>
+    </section><br><br>
+
+    Probamos a guardar y vemos como se actualiza la base de datos creando el documento. 
+    <figure><img src="./UD10/images/UD10_save_firestore.gif" /><br><figcaption></figcaption></figure>
+    <br>
+
+    Si guardamos otra vez sobre el mismo usuario, se actualiza el documento.
+
+    <figure><img src="./UD10/images/UD10_save_firestore_2.gif" /><br><figcaption></figcaption></figure>
+
+    Ahora es el turno de recuperar el documento asociado a el email. En este caso lanzamos el listener addOnSuccessListener, que nos devolverá los datos devueltos en la consulta.
+    Simplemente los añadimos a los EditText
+<section><pre><code class="language-kotlin">binding.btnGet.setOnClickListener {
+    db.collection("users").document(email).get().addOnSuccessListener {
+        binding.etAddress.setText(it.get("address") as String?)
+        binding.etPhone.setText(it.get("phone") as String?)
+    }
+}</code></pre>
+</section><br><br>
+
+Si lanzamos la App y le damos a get, cargamos los datos en los EditText.
+<figure><img src="./UD10/images/UD10_get_firestore.gif" /><br><figcaption></figcaption></figure>
+
+Y finalmente, borramos los datos asociados a email.
+<section><pre><code class="language-kotlin">binding.btnDelete.setOnClickListener {
+    db.collection("users").document(email).delete()
+}</code></pre>
+</section><br><br>
+<figure><img src="./UD10/images/UD10_delete_firestore.gif" /><br><figcaption></figcaption></figure>
+
+    <h3>Realtime Database</h3>
     
     
     
@@ -660,6 +934,13 @@ url?.let{
     <section class="apartado">
     <a name="sWebgraphy"></a>
     <h2>Webgraphy</h2>
+
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
     
     
     
