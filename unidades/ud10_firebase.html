@@ -20,7 +20,6 @@
         href="#sCrashlytics">Crashlytics</a><a            
         href="#sRemoteConfig">Firebase Remote Config</a><a            
            href="#sDataBase">Database</a><a
-           href="#sStorage">Storage</a><a
            href="#sWebgraphy">Webgraphy</a>
     </div>
 
@@ -945,18 +944,132 @@ implementation 'com.google.firebase:firebase-database-ktx'</code></pre>
     <section><pre><code class="language-kotlin">val dbRealTime = Firebase.database</code></pre>
     </section><br><br>
 
+    Si estamos es una zona distinta a la que se configuró, es mejor poner la ruta completa a nuestra base de datos, la podemos obtener de la propia consola de firebase.
 
-    
-    
-    </section><!-- End section -->
+    <figure><img src="UD10/images/ud10-2022-01-26-16-06-05.png" /><br><figcaption></figcaption></figure>
+    <br>
+    Así pues el código anterior quedaría así. 
+    <section><pre><code class="language-kotlin">val dbRealTime = Firebase.database(" https://dam2example-default-rtdb.europe-west1.firebasedatabase.app")</code></pre>
+    </section><br><br>
 
-    <!--*********************************************************Storage***********************************************************-->
-    <section class="apartado">
-    <a name="sStorage"></a>
-    <h2>Storage</h2>
+    El siguiente paso es obtener una referencia a nuestra colección. 
+
+    En este punto no está de más que las base de datos firebase son noSQL es decir, no son las clásicas relacionales, sino que están compuestas por colecciones y documentos. 
+    Todo en formato json
+
+    <section><pre><code class="language-kotlin">//Reference to our data
+val myRef = dbRealTime.getReference("users")</code></pre>
+    </section><br><br>
+
+    Como se puede observar, hacemos referencia a la colección users, que coincide con la que pusimos en la base de datos.
+
+    <figure><img src="UD10/images/ud10-2022-01-26-16-08-57.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+
+    Para traer todos los datos por primera vez, podemos añadir un listener addValueEventListener, que nos devolvería toda la colección. 
+    Y dentro de este sobreescribimos las funciones onDataChange y onCancelled.
+    <section><pre><code class="language-kotlin">myRef.addValueEventListener(object : ValueEventListener {
+    override fun onDataChange(dataSnapshot: DataSnapshot) {
+        // This method is called once with the initial value and again
+        // whenever data at this location is updated.
+        val usersListType: GenericTypeIndicator&lt;MutableList&lt;Users>> =
+            object : GenericTypeIndicator&lt;MutableList&lt;Users>>() {}
+         val userList = dataSnapshot.getValue(usersListType)
+
+         //Here we have the list of users in memory and we can do with it what ever we want
+
+    }</code></pre>
+</section><br><br>
+
+    Notar el uso de GenericTypeIndicator para indicar de qué tipo de dato es lo que vamos a recibir.
+
+    Esto se ejecutará una única vez al inicio, si lo que queremos es estar permanentemente escuchando la base de datos debemos añadir otro escuchador, addChildEventListener e implementar sus correspondientes métodos.
+
+    <section><pre><code class="language-kotlin">myRef.addChildEventListener(object : ChildEventListener{
+    override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+        val user = snapshot.getValue(Users::class.java)
+        //here we have a new user. Note that it is also called for the first time, so it gets the Users that were in database before.
+    }
+
+    override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+        val user = snapshot.getValue(Users::class.java)
+    }
+
+    override fun onChildRemoved(snapshot: DataSnapshot) {
+        val user = snapshot.getValue(Users::class.java)
+    }
+
+    override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onCancelled(error: DatabaseError) {
+        TODO("Not yet implemented")
+    }
+
+})</code></pre>
+    </section><br><br>
+    
+    Los nombres de los métodos son bastante descriptivos y no hace falta muchos comentarios de lo que hace cada uno de ellos. Veamos algunos ejemplos.
+
+    Borramos el usuario 2 de la base de datos.
+    <figure><img src="./UD10/images/UD10_deleting_realtime.gif" /><br><figcaption></figcaption></figure>
+    <br>
+
+    Actualizando datos de los usuarios.
+    <figure><img src="./UD10/images/UD10_updating_realtime.gif" /><br><figcaption></figcaption></figure>
+    <br>
+
+    Creating new User.
+    <figure><img src="./UD10/images/UD10_adding_realtime.gif" /><br><figcaption></figcaption></figure>
+    <br>
+
+    En este punto cabe destacar, que se ha creado un recyclerview para mostrar los usuarios con realtime database. 
+    También observad que hay un FloatingActionButton, que al lanzarlo se crea un usuario fijo (es decir, sus datos son fijos y está hechoa  modo de ejemplo, lo normal es que nos llevara a un formulario de creación de usuarios)
+
+    <p class="sub-section">Añadiendo elementos</p>
+
+    Para añadir elementos tenemos dos opciones: Que nos genere una clave aleatoria o ponerla nosotros. 
+    En el caso anterior como ves la clave que le pusimos es id y corresponde al siguiente código.
+    
+    <section><pre><code class="language-kotlin"> binding.fabAdd.setOnClickListener {
+    val user = Users("id", "newuser@gmail.com","BASIC","Home of new User", "999 99 99 99")
+    myRef.child("id").setValue(user) //We add our own path (key/name)
+        .addOnSuccessListener(OnSuccessListener&lt;Void?> {
+            //Writing ok
+        })
+        .addOnFailureListener(OnFailureListener {
+            //Writing KO
+        })
+}</code></pre>
+    </section><br><br>
+
+    Si queremos que nos cree una clave única que podremos usar como "clave primaria" usamos el método push
+
+    <section><pre><code class="language-kotlin">binding.fabAdd.setOnClickListener {
+    val user = Users("id", "newuser@gmail.com","BASIC","Home of new User", "999 99 99 99")
+    myRef.push().setValue(user) //firebase creates the key
+        .addOnSuccessListener(OnSuccessListener<Void?> {
+            //Writing ok
+        })
+        .addOnFailureListener(OnFailureListener {
+            //Writing KO
+        })
+}</code></pre>
+    </section><br><br>
+
+    Luego la podremos recuperar con la propiedad key del snapshot
+    <section><pre><code class="language-kotlin">val user = snapshot.getValue(Users::class.java)
+                user?.id = snapshot.key?:"-1"</code></pre>
+    </section><br><br>
+
+    <figure><img src="UD10/images/ud10-2022-01-26-16-47-16.png" /><br><figcaption></figcaption></figure>
+    <br>
     
     
-    
+
+
     </section><!-- End section -->
 
     
@@ -967,10 +1080,7 @@ implementation 'com.google.firebase:firebase-database-ktx'</code></pre>
     <h2>Webgraphy</h2>
 
     <ul>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
+        <li><a class="enlace" target="_blank" href="https://firebase.google.com/">https://firebase.google.com/</a> </li>
     </ul>
     
     
