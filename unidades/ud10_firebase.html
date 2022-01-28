@@ -15,7 +15,7 @@
 
     <div class="main-menu">
         <a href="#sIntroduction">Introduction</a><a
-        href="#sLogin">Autentication</a><a
+        href="#sLogin">Authentication</a><a
         href="#sPush">Push Notifications</a><a
         href="#sCrashlytics">Crashlytics</a><a            
         href="#sRemoteConfig">Firebase Remote Config</a><a            
@@ -181,7 +181,10 @@ val bundle=Bundle().apply {
 }
 analytics.logEvent("InitScreen",bundle)</code></pre>
 </section><br><br>
-Luego dentro de Analytics en la sección de eventos podemos ver estos eventos en detalle.
+
+
+<p>Then, within Analytics in the events section we can see these events in detail.</p>
+
     
 
     
@@ -190,7 +193,7 @@ Luego dentro de Analytics en la sección de eventos podemos ver estos eventos en
     <!--*********************************************************Authentication***********************************************************-->
     <section class="apartado">
     <a name="sLogin"></a>
-    <h2>Autentication</h2>
+    <h2>Authentication</h2>
 
     <p>Within the authentication service we can see that we have different options to do it, such as username and password, Google, Facebook, etc...</p>
     
@@ -634,7 +637,7 @@ url?.let{
 </section><br><br>
 
 
-    <p>Nos llega la notificación</p>
+    <p>We get the notification</p>
     <figure><img src="UD10/images/ud10-2022-01-24-17-15-28.png" /><br><figcaption></figcaption></figure>
     <br>
     
@@ -839,39 +842,60 @@ FirebaseRemoteConfig.getInstance().fetchAndActivate().addOnCompleteListener { ta
     <section class="apartado">
     <a name="sDataBase"></a>
     <h2>Database</h2>
-    Disponemos de dos bases de datos, la moderna Firestore Database, más optimizada y la clásica Realtime Database, no por ser más vieja significa que no funcione bien.
-    ¿Cuál elegir entre ambas? Desde la propia página de firebase nos dan las claves para elegir una u otra, incluso una pequeña encuesta para ayudar a decidirnos.
-    <a class="enlace" target="_blank" href="https://firebase.google.com/docs/database/rtdb-vs-firestore?authuser=0">https://firebase.google.com/docs/database/rtdb-vs-firestore?authuser=0</a> 
+    <p>We have two databases, the modern <span class="r-word">Firestore Database</span>, 
+    more optimized and the classic <span class="r-word">Realtime Database</span>, 
+    not because it is older means that it does not work well.
+    Which one to choose between the two? 
+    From the firebase page itself they give us the keys to choose one or the other, including a small 
+    <a class="enlace" target="_blank" href="https://firebase.google.com/docs/database/rtdb-vs-firestore?authuser=0">survey</a> to help us decide.</p>
+    
+    
 
     <h3>Cloud Firestore Database</h3>
-    Creamos nuestra base de datos.
+    <p>We create our database.</p>
+    
     <figure><img src="UD10/images/ud10-2022-01-25-02-26-48.png" /><br><figcaption></figcaption></figure>
     <br>
-    Elegimos la regla de acceso predeterminada que usaremos, en este caso la de modo prueba que nos da 30 días para hacer lo que queramos. Recomiendo reviséis la documentación de las reglas.
+    <p>We choose the default access rule that we will use, 
+        in this case the test mode that gives us 30 days to do what we want. 
+        I recommend you to review the rules documentation.</p>
+    
     <a class="enlace" target="_blank" href="https://firebase.google.com/docs/firestore/security/get-started?authuser=0">https://firebase.google.com/docs/firestore/security/get-started?authuser=0</a> 
     <figure><img src="UD10/images/ud10-2022-01-25-02-27-45.png" /><br><figcaption></figcaption></figure>
     <br>
-    Elegimos dónde se encontrará físicamente nuestra base de datos y pulsamos habilitar.
+    <p>We choose where our database will be physically located and press enable.</p>
+    
     <figure><img src="UD10/images/ud10-2022-01-25-02-29-11.png" /><br><figcaption></figcaption></figure>
     <br>
-    Desde aquí podríamos crear la coleción y los documentos pero lo haremos desde código en nuestra App.
+    <p>From here we could create the collection and the documents but we will do it from code in our App.</p>
+    
     <figure><img src="UD10/images/ud10-2022-01-25-02-30-36.png" /><br><figcaption></figcaption></figure>
     <br>
     
 
-    Como nuestra App estamos usando usuarios vamos a crear una base de datos que almacene usuarios. Podríamos añadirlos y modificarlos directamente desde la consola de firebase.
+    <p>As our App we are using users we are going to create a database that stores users. 
+        We could add and modify them directly from the firebase console.</p>
+    
 
-    Primero añadiremos los campos dirección y telefono en nuestro activity_home.xml y además tres botones que nos permitirán guardar, recuperar y eliminar usuarios.
+    <p>First we will add the address and phone fields in our <span class="inline-file">activity_home.xml</span>
+         and also three buttons that will allow us to save, retrieve and delete users.</p>
+    
 
-    Ahora añadimos la dependencia en build.gradle:app. 
+    <p>Now we add the dependency in <span class="inline-file">build.gradle:app.</span></p>
+    
     <section><pre><code class="language-kotlin">implementation 'com.google.firebase:firebase-firestore-ktx'</code></pre>
     </section><br><br>
 
-    Obtenemos la referencia a la Base de Datos como propiedad de la clase HomeActivity.
+    <p>We get the reference to the <span class="negrita">Database</span>  as a property of the 
+        <span class="inline-file">HomeActivity.kt</span> class.</p>
+    
     <section><pre><code class="language-kotlin">val db = Firebase.firestore</code></pre>
     </section><br><br>
 
-    Añadimos el manejador del botón guardar. Podemos ver que obtenemos de la colección "users" el documento de clave primaria email, si no existe lo crea, sinó lo actualiza.
+    <p>We add the save button handler. We can see that we get from the "<span class="negrita">users</span>" 
+        collection the email "<span class="cursiva">primary key</span>" document, 
+        if it doesn't exist it creates it, otherwise it updates it.</p>
+    
     <section><pre><code class="language-kotlin">binding.btnSave.setOnClickListener {
     //Collection name is "users" and add or update a document with email as primary key
     db.collection("users").document(email).set(
@@ -884,16 +908,20 @@ FirebaseRemoteConfig.getInstance().fetchAndActivate().addOnCompleteListener { ta
 }</code></pre>
     </section><br><br>
 
-    Probamos a guardar y vemos como se actualiza la base de datos creando el documento. 
+    <p>We try to save and see how the database is updated creating the document.</p>
+     
     <figure><img src="./UD10/images/UD10_save_firestore.gif" /><br><figcaption></figcaption></figure>
     <br>
 
-    Si guardamos otra vez sobre el mismo usuario, se actualiza el documento.
+    <p>If we save again on the same user, the document is updated.</p>
+    
 
     <figure><img src="./UD10/images/UD10_save_firestore_2.gif" /><br><figcaption></figcaption></figure>
 
-    Ahora es el turno de recuperar el documento asociado a el email. En este caso lanzamos el listener addOnSuccessListener, que nos devolverá los datos devueltos en la consulta.
-    Simplemente los añadimos a los EditText
+    <p>Now it's time to retrieve the document associated with the email. 
+        In this case we launch the <span class="r-word">addOnSuccessListener</span>  listener, which will return the data returned in the query.
+    We simply add them to the <span class="d-word">EditText</span> </p>
+    
 <section><pre><code class="language-kotlin">binding.btnGet.setOnClickListener {
     db.collection("users").document(email).get().addOnSuccessListener {
         binding.etAddress.setText(it.get("address") as String?)
@@ -902,10 +930,12 @@ FirebaseRemoteConfig.getInstance().fetchAndActivate().addOnCompleteListener { ta
 }</code></pre>
 </section><br><br>
 
-Si lanzamos la App y le damos a get, cargamos los datos en los EditText.
+<p>If we launch the App and hit get, we load the data into the <span class="d-word">EditText</span> .</p>
+
 <figure><img src="./UD10/images/UD10_get_firestore.gif" /><br><figcaption></figcaption></figure>
 
-Y finalmente, borramos los datos asociados a email.
+<p>And finally, we delete the data associated with email.</p>
+
 <section><pre><code class="language-kotlin">binding.btnDelete.setOnClickListener {
     db.collection("users").document(email).delete()
 }</code></pre>
@@ -913,62 +943,79 @@ Y finalmente, borramos los datos asociados a email.
 <figure><img src="./UD10/images/UD10_delete_firestore.gif" /><br><figcaption></figcaption></figure>
 
     <h3>Realtime Database</h3>
-    Ahora vamos a usar RealTime database. Para ello desde la consola de Firebase creamos una nueva base de datos.
+    
+    <p>Now we are going to use RealTime database. To do this from the <span class="negrita">firebase</span>  console we create a new database.</p>
+    
 
     <figure><img src="UD10/images/ud10-2022-01-25-11-35-52.png" /><br><figcaption></figcaption></figure>
     <br>
     
-    Al igual que en Firestore, indicamos la ubicación de la base de datos.
+    <p>As in Firestore, we indicate the location of the database.</p>
+    
     <figure><img src="UD10/images/ud10-2022-01-25-11-36-45.png" /><br><figcaption></figcaption></figure>
     <br>
     
-    Y las reglas de seguridad sobre esta base de datos. Como siempre te recomiendo que leas la documentación.
+    <p>And the security rules on this database. 
+        As always I recommend you to read the documentation.</p>
+    
 
     <figure><img src="UD10/images/ud10-2022-01-25-12-12-41.png" /><br><figcaption></figcaption></figure>
     <br>
 
-    En este caso vamos a importar un fichero json para poblar nuestra base de datos con usuarios ficticios.
+    <p>In this case we are going to import a json file to populate our database with fictitious users.</p>
+     
 
     <figure><img src="UD10/images/UD10_import_realtime.gif" /><br><figcaption></figcaption></figure>
     <br>
     
-    <p class="sub-section">Configurando la App</p>
+    <p class="sub-section">Configuring the App</p>
     
-    Como siempre añadimos la dependencia necesaria en el build.gradle:app. Recuerda sincronizar.
+    <p>As always we add the necessary dependency in the build.gradle:app . Remember to sync.</p>
+    
     <section><pre><code class="language-kotlin">// Declare the dependency for the Realtime Database library
 // When using the BoM, you don't specify versions in Firebase library dependencies
 implementation 'com.google.firebase:firebase-database-ktx'</code></pre>
     </section><br><br>
 
-    Creamos la referencia a nuestra base de datos de Real Time.
+    <p>We create the reference to our Real Time database.</p>
+    
     <section><pre><code class="language-kotlin">val dbRealTime = Firebase.database</code></pre>
     </section><br><br>
 
-    Si estamos es una zona distinta a la que se configuró, es mejor poner la ruta completa a nuestra base de datos, la podemos obtener de la propia consola de firebase.
+    <p>If we are in a different zone than the one configured, it is better to put the full path to our database, 
+        we can get it from the firebase console itself.</p>
+    
 
     <figure><img src="UD10/images/ud10-2022-01-26-16-06-05.png" /><br><figcaption></figcaption></figure>
     <br>
-    Así pues el código anterior quedaría así. 
+    <p>So the previous code would look like this.</p>
+    
     <section><pre><code class="language-kotlin">val dbRealTime = Firebase.database(" https://dam2example-default-rtdb.europe-west1.firebasedatabase.app")</code></pre>
     </section><br><br>
 
-    El siguiente paso es obtener una referencia a nuestra colección. 
+    <p>The next step is to get a reference to our collection.</p>
+    
 
-    En este punto no está de más que las base de datos firebase son noSQL es decir, no son las clásicas relacionales, sino que están compuestas por colecciones y documentos. 
-    Todo en formato json
+    <p>At this point, it is worth noting that firebase databases are <span class="negrita">noSQL</span>, 
+        that is, they are not the classic relational ones, but are made up of collections and documents.
+    All in json format</p>
+    
 
     <section><pre><code class="language-kotlin">//Reference to our data
 val myRef = dbRealTime.getReference("users")</code></pre>
     </section><br><br>
 
-    Como se puede observar, hacemos referencia a la colección users, que coincide con la que pusimos en la base de datos.
+    <p>As you can see, we reference the users collection, which matches the one we put in the database.</p>
+    
 
     <figure><img src="UD10/images/ud10-2022-01-26-16-08-57.png" /><br><figcaption></figcaption></figure>
     <br>
     
 
-    Para traer todos los datos por primera vez, podemos añadir un listener addValueEventListener, que nos devolvería toda la colección. 
-    Y dentro de este sobreescribimos las funciones onDataChange y onCancelled.
+    <p>To fetch all the data for the first time, we can add an <span class="r-word">addValueEventListener</span> listener, 
+        which would return the entire collection.
+    And inside this we override the <span class="r-word">onDataChange</span> and <span class="r-word">onCancelled</span> functions.</p>
+    
     <section><pre><code class="language-kotlin">myRef.addValueEventListener(object : ValueEventListener {
     override fun onDataChange(dataSnapshot: DataSnapshot) {
         // This method is called once with the initial value and again
@@ -982,9 +1029,12 @@ val myRef = dbRealTime.getReference("users")</code></pre>
     }</code></pre>
 </section><br><br>
 
-    Notar el uso de GenericTypeIndicator para indicar de qué tipo de dato es lo que vamos a recibir.
+    <p>Note the use of <span class="negrita">GenericTypeIndicator</span>  to indicate what type of data we are going to receive.</p>
+    
 
-    Esto se ejecutará una única vez al inicio, si lo que queremos es estar permanentemente escuchando la base de datos debemos añadir otro escuchador, addChildEventListener e implementar sus correspondientes métodos.
+    <p>This will be executed only once at the beginning, if what we want is to be permanently listening 
+        to the database we must add another listener, <span class="r-word">addChildEventListener</span> and implement its corresponding methods.</p>
+    
 
     <section><pre><code class="language-kotlin">myRef.addChildEventListener(object : ChildEventListener{
     override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -1011,27 +1061,35 @@ val myRef = dbRealTime.getReference("users")</code></pre>
 })</code></pre>
     </section><br><br>
     
-    Los nombres de los métodos son bastante descriptivos y no hace falta muchos comentarios de lo que hace cada uno de ellos. Veamos algunos ejemplos.
+    <p>The names of the methods are quite descriptive and do not need many comments on what each of them does. Let's look at some examples.</p>
+    
 
-    Borramos el usuario 2 de la base de datos.
+    <p>We delete user #2 from the database.</p>
+    
     <figure><img src="./UD10/images/UD10_deleting_realtime.gif" /><br><figcaption></figcaption></figure>
     <br>
 
-    Actualizando datos de los usuarios.
+    <p>Updating user data.</p>
+    
     <figure><img src="./UD10/images/UD10_updating_realtime.gif" /><br><figcaption></figcaption></figure>
     <br>
 
-    Creating new User.
+    <p>Creating new User.</p>
+    
     <figure><img src="./UD10/images/UD10_adding_realtime.gif" /><br><figcaption></figcaption></figure>
     <br>
 
-    En este punto cabe destacar, que se ha creado un recyclerview para mostrar los usuarios con realtime database. 
-    También observad que hay un FloatingActionButton, que al lanzarlo se crea un usuario fijo (es decir, sus datos son fijos y está hechoa  modo de ejemplo, lo normal es que nos llevara a un formulario de creación de usuarios)
+    <p>At this point it should be noted that a recyclerview has been created to show the users with the realtime database.
+    Also note that there is a <span class="negrita">FloatingActionButton</span>,
+    which when launched creates a fixed user (that is, its data is fixed 
+    and it is done as an example, normally it will take us to a user creation form)</p>
+    
 
-    <p class="sub-section">Añadiendo elementos</p>
+    <p class="sub-section">Adding elements</p>
 
-    Para añadir elementos tenemos dos opciones: Que nos genere una clave aleatoria o ponerla nosotros. 
-    En el caso anterior como ves la clave que le pusimos es id y corresponde al siguiente código.
+    <p>To add elements we have two options: Generate a random key or put it ourselves.
+    In the previous case, as you can see, the key that we put is id and corresponds to the following code.</p>
+    
     
     <section><pre><code class="language-kotlin"> binding.fabAdd.setOnClickListener {
     val user = Users("id", "newuser@gmail.com","BASIC","Home of new User", "999 99 99 99")
@@ -1045,7 +1103,7 @@ val myRef = dbRealTime.getReference("users")</code></pre>
 }</code></pre>
     </section><br><br>
 
-    Si queremos que nos cree una clave única que podremos usar como "clave primaria" usamos el método push
+    <p>If we want it to create a unique key that we can use as "primary key" we use the push method</p>
 
     <section><pre><code class="language-kotlin">binding.fabAdd.setOnClickListener {
     val user = Users("id", "newuser@gmail.com","BASIC","Home of new User", "999 99 99 99")
@@ -1059,7 +1117,8 @@ val myRef = dbRealTime.getReference("users")</code></pre>
 }</code></pre>
     </section><br><br>
 
-    Luego la podremos recuperar con la propiedad key del snapshot
+    <p>Then we can recover it with the key property of the <span class="negrita">snapshot</span> </p>
+    
     <section><pre><code class="language-kotlin">val user = snapshot.getValue(Users::class.java)
                 user?.id = snapshot.key?:"-1"</code></pre>
     </section><br><br>
