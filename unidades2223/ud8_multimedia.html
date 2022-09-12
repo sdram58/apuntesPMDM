@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multimedia</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/prism.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <script src="../script/script.js"></script>
+</head>
+<body class="line-numbers">
+    <h1>Multimedia</h1>
+    <div class="main-menu">
+        <a href="#sAudioVideo">Audio and Video</a><a
+           href="#sCamera">Camera</a><a 
+           href="#sAnimations">Animations</a><a
+           href="#sMaps">Maps</a><a
+           href="#sPractice">Practice</a><a
+           href="#sWebgraphy">Webgraphy</a>
+    </div>
+
+    
+
+
+
+    <!--*********************************************************Audio and Video***********************************************************-->
+    <section class="apartado">
+    <a name="sAudioVideo"></a>
+    <h2>Audio and Video</h2>
+    <p>The Android multimedia framework includes support for playing variety of common media types, so that you can easily integrate audio, video and images 
+        into your applications. You can play audio or video from media files stored in your application's resources(raw resources), 
+        from standalone files in the filesystem, or from a data stream arriving over a network connection, all using <span class="r-word">MediaPlayer</span>  APIs.</p>
+    
+    <p>The following classes are used to play sound and video in the Android framework:</p>
+    <ul>
+        <li><span class="r-word">MediaPlayer</span> 
+            <ul>
+                <li>This class is the primary API for playing sound and video.</li>
+            </ul>
+        </li>
+        <li><span class="r-word">AudioManager</span> 
+            <ul>
+                <li>This class manages audio sources and audio output on a device.</li>
+            </ul>
+        </li>
+    </ul>
+
+
+    <p class="sub-section">Permissions</p>
+    <p>Before starting development on your application using MediaPlayer, make sure your manifest has the appropriate declarations to allow use of related features on the <span class="inline-file">Manifest.xml</span>.
+        <ul>
+            <li> <span class="negrita">Internet Permission </span>- If you are using MediaPlayer to stream network-based content, your application must request network access.</li>
+            <section><pre><code class="language-xml">&lt;uses-permission android:name="android.permission.INTERNET" /></code></pre>
+            </section><br><br>
+            <li><span class="negrita">Wake Lock Permission</span>  - If your player application needs to keep the screen from dimming or the processor from sleeping, or uses the 
+                <span class="r-word">MediaPlayer.setScreenOnWhilePlaying()</span>  or <span class="r-word">MediaPlayer.setWakeMode()</span>  methods, you must request this permission.
+            <section><pre><code class="language-xml">&lt;uses-permission android:name="android.permission.WAKE_LOCK" /></code></pre>
+            </section><br><br></li>
+        </ul>
+</p>
+    
+    
+    <h3>Audio</h3>
+    <p>We will use <span class="r-word">MediaPlayer</span>  class for play our audios</p>
+    <p>In this section we're going to implement a basic audio player with 3 buttons <span class="cursiva">play</span> , <span class="cursiva">pause</span>  and <span class="cursiva">stop</span> 
+         like you can see in the image below.</p>
+        
+    <figure><img src="UD8/images/ud8-2022-01-10-12-40-23.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+    <p>The first thing we are going to do is create the raw directory inside res and save the audio or audios that we want to play. 
+        In our case you can download it from  <a class="enlace" target="_blank" href="./UD8/assets/bola_drac_intro.mp3">here</a> .</p>
+    
+
+    <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/MediaPlayerExample">MediaPlayer Example</a> 
+    
+    
+    <h3>Video</h3>
+
+    <p class="sub-section">Play video from local resource</p>
+
+    <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/VideoFromLocal">Play video from Raw resource</a> 
+    
+    <p class="sub-section">Play video from url</p>
+
+    <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/VideoFromInternet">Play video from Internet URL</a> 
+    
+    <p class="sub-section">Play youtube video</p>
+
+    <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/YotubeWithoutAPI">Play youtube video without its API</a> 
+     <br><br><br>
+    
+    <div class="tarea">Exercise. Create an audio or video player with your own buttons. You will have to play 4 or 5 audios / videos. We will have a button to:
+        <ul>
+            <li>Play/Pause: Iniciará o pausará la reproducción según el caso.</li>
+            <li>Stop: Para la reproducción</li>
+            <li>Track ahead: Go to the next track if there is more</li>
+            <li>Track back: Move to the previous track if it is not the first</li>
+            <li>Fast Forward: Fast forward 10 seconds, if it remains more than 10sec, the track</li>
+            <li>Fast Rewind: Rewinds 10 seconds, if there are less than 10 seconds it goes to the beginning.</li>
+            <li>Seek bar: It will indicate at all moment, the progress of the audio or video being 0 the begining of the track and max its duration. 
+                If we change seek bar's poition the audio or video will seek to this position.</li>
+        </ul>
+    </div> 
+    </section><!-- End section -->
+
+    <!--*********************************************************Camera***********************************************************-->
+    <section class="apartado">
+        <a name="sCamera"></a>
+        <h2>Camera</h2>
+
+        <p>We're going to use <span class="r-word">CameraX</span>. <span class="r-word">CameraX</span>  is a <span class="negrita">Jetpack</span> 
+            support library, built to help you make camera app development <span class="cursiva">"easier"</span>.
+            It provides a consistent and <span class="subrayado">easy-to-use API surface</span> that works across most Android devices, with backward-compatibility to Android 5.0(API level 21).</p>
+
+        
+        <p>Follow the next <a class="enlace" target="_blank" href="https://developer.android.com/codelabs/camerax-getting-started#0">link</a>  and do and study the codelab about camerax</p>
+
+        <p><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/CameraXExample">Here</a> you have the complete code</p>
+        
+            
+
+
+
+        <h3>Scanning barcodes</h3>
+        
+        <p>You can use this QR for testing you app</p>
+        <figure><img src="UD8/images/ud8-2022-01-11-01-52-03.png" /><br><figcaption></figcaption></figure>
+        <br>
+        
+        <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/QR_Reader">QR and barcode reader</a> 
+        
+        </section><!-- End section -->
+
+    <!--*********************************************************Animations***********************************************************-->
+    <section class="apartado">
+    <a name="sAnimations"></a>
+    <h2>Animations</h2>
+
+<!------------------------------------------    <h3>Automatic animations</h3>
+
+    <h3>Drawable animations</h3>
+
+    <h3>Crossfade animation</h3>
+
+    <h3>Transitions between Activities</h3>------------------------------------------------->
+
+
+    <h3>Lottie animations</h3>
+
+    <p>Lottie is an open source animation file format that’s tiny, high quality, interactive, and can be manipulated at runtime.</p>
+    
+    <p>You have to get a <span class="negrita">json</span> file and save it into <span class="inline-folder">asset dir</span>  or <span class="inline-folder">raw dir</span> <br>
+    You can get it from <a class="enlace" target="_blank" href="https://lottiefiles.com/">https://lottiefiles.com/</a>. Here there are a lot of animations and many of them are free. </p>
+    
+
+    <p>You need to add Lottie's dependency in the <span class="inline-file">gradle:app</span></p>
+    <section><pre><code class="language-kotlin">def lottieVersion = "4.2.2"
+implementation "com.airbnb.android:lottie:$lottieVersion"</code></pre>
+    </section><br><br>
+
+    <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/LottieAnimations">Lottie Animations Example</a> 
+    
+    <!------------------------------------------<h3>Shared element animations</h3>------------------------------------------------->
+    
+    <br><br><br>
+    <div class="tarea">
+        Exercise: Starting from the cameraX application, save it to disk and when taking a new photo and if everything goes well, a Lottie animation will be played.
+        Find and choose an animation of your liking. <br>
+        In addition, the your Activity will have a button and an ImageView. By clicking on the button you will see the photo saved in the ImageView.
+        To achieve this you can use <span class="negrita">BitmapDescriptory.decodeFile (pathName: String)</span> with returns you a Bitmap that you can use in the ImageView
+    </div>
+    
+    </section><!-- End section -->
+
+    <!--*********************************************************Maps***********************************************************-->
+    <section class="apartado">
+    <a name="sMaps"></a>
+    <h2>Maps</h2>
+
+    <h3>Introduction</h3>
+
+    <p>We are going to start working with the <span class="r-word">Google Maps API</span>, we can work with this API without using real-time location, 
+        for example, for an App that simply shows places of interest, we could even calculate the distance between them, makes it clear that what is “beautiful” is App's that 
+        integrate said location. Consequently, first of all, comment that there are basically two ways to acquire location data, 
+        the <span class="negrita">obsolete</span>  but <span class="d-word">simple android.location</span>, and the <span class="d-word">Google Location Services API</span>. 
+        The first is not recommended by even Google, as can be seen in the following screenshot.</p>
+    
+
+    <figure><img src="UD8/images/ud8-2022-01-12-11-25-17.png" /><br><figcaption></figcaption></figure>
+    <br>
+        
+    <p>We will then use the second, for which we will require <span class="negrita">Google Play Services</span>, 
+        which is a huge set of common services or utilities, including location</p>
+    
+     <p>Therefore, it installs in the Android Studio <span class="negrita">Google Play Services</span>. Go to <span class="negrita">Tools> SDK Manager> Android SDK menu></span> 
+<span class="negrita">SDK Tools</span>  tab, select the <span class="subrayado">Google Play Services</span>  CheckBox and OK.</p>        
+    
+
+    
+    <figure><img src="UD8/images/ud8-2022-01-11-20-46-33.png" /><br><figcaption>Adding Google Play services</figcaption></figure>
+    <br>
+
+
+    <!------------------------------------------ Google Maps API ------------------------------------------------->
+    <h3> Google Maps API </h3>
+
+    <p>We are going to study the following points practicing at the same time, therefore it is recommended to try each one of them. 
+        Create a App choosing Google Maps Activity as a template, we call it myMaps. We use Kotlin and leave the minimum API at 23 
+      (it will NOT work on versions lower than Android 6 Marshmallow), not legacy. 
+        The reason for using this version is that, from this API, to use the localization and other services, 
+        it is required to ask for permissions at runtime, we will see what this means later</p>
+
+    <figure><img src="UD8/images/ud8-2022-01-12-11-31-54.png" /><br><figcaption>Google Maps Activity</figcaption></figure>
+    <br>
+    
+    <p>If we now run the App on our real device, although the App opens, we will see that it does not work and that the screen <span class="subrayado">appears blank</span>. 
+        This is because we have not yet incorporated an <span class="d-word">API KEY</span> to the project to use the <span class="negrita">Google Maps API</span>.
+        This, we must insert it into a <span class="negrita">meta-data tag</span>  in the <span class="inline-file">AndroidManifest.xml</span>, as seen below, it is already prepared.</p>
+    
+    <figure><img src="UD8/images/ud8-2022-01-12-11-34-03.png" /><br><figcaption>AndroidManifest.xml meta-data </figcaption></figure>
+    <br>
+    
+
+    <p>On the other hand, we can see that the <span class="negrita">android: value</span>  attribute is actually pointing to a string type resource with <span class="d-word">name = "google_maps_key"</span>,
+        since its value is actually <span class="d-word">@ String / google_maps_key</span>, this resource is inside the <span class="inline-file">google_maps_api file.xml</span>,
+         inside <span class="inline-folder">*\values</span></p>
+    
+    <p>To get this <span class="negrita">KEY</span>, we will need two things, one is the <span class="d-word">package name</span>(which we know), 
+        and the other is the unique <span class="d-word">signature key</span> that Google gives to each Android developer, we have already consulted the default signature, 
+        and that is the one that we are going to use since the template has been prepared for it. In the <span class="inline-file">google_maps_api.xml</span> file, 
+        they already give us all this information.</p>
+
+    <p>We can also access it through the gradle option located to the right of Android Studio by executing <span class="negrita">gradle signingReport</span> </p>
+    
+    <p>The easiest way to obtain the API KEY is to use the help provided by the template that we have created, since it shows us the name of the package and the 
+        signature key by default, open <span class="inline-file">google_maps_api.xml</span>, you will see both data there, compare the key shown with the one obtained 
+        before via command. As you can see in the first link of the previous file, our default signature key and the name of our package are 
+        already found in the URL query string, therefore, if we follow that link, we already send the server said data to provide us with the
+         <span class="d-word">Google Maps API KEY</span>  for our project.</p>
+    
+         
+    
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">google_maps_api.xml </span>
+        </section>
+    <section class="marco-b">
+            <section><pre class="line-numbers" data-line="7, 12, 15" data-line-offset="3"><code class="language-xml">&lt;resources>
+    &lt;!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r5E:3B:C5:F8:7A:E4:XXXXXXX....XXX:AC:41:C3:99:6A%3Bcom.catata.googlemapsexample
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    com.catata.googlemapsexample
+
+    SHA-1 certificate fingerprint:
+    5E:3B:C5:F8:7A:E4:XXXXXXX....XXX:AC:41:C3:99:6A
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key(it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    &lt;string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">YOUR_KEY_HERE&lt;/string>
+&lt;/resources></code></pre>
+            </section><br><br>
+    </section>
+
+    <p>In <span class="negrita">line 7</span>  we see the URL that will help us to create the <span class="d-word">API KEY</span> </p>
+    <p>In <span class="negrita">line 8</span>   our <span class="negrita">package name</span> </p>
+    <p>In <span class="negrita">line 15</span>  our <span class="d-word">debug KEY SHA-1</span>. Remember that yoy can also can obtain your SHA-1 key executing <span class="d-word">gradle signingReport</span>  in the gradle option on the rigth side of Android Studio
+    <figure><img src="UD8/images/UD8_getting_sha1.gif" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    you can also use AS terminal with the same command. 
+    <section class="marco-t warn">
+        <span class="icono warning"> </span> Remember to add gradle to the pathName if you haven't done so before
+        </section>
+    <section class="marco-b">
+            
+    </section>
+    
+
+
+    <figure><img src="UD8/images/ud8-2022-01-18-11-23-19.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    </p>
+    
+
+    <p>Through the URL we access the console where we will have to <span class="cursiva">select</span>  or <span class="cursiva">create a new</span>  project. In our case it will be to create a one.</p>
+    
+    <figure><img src="UD8/images/ud8-2022-01-11-23-10-56.png" /><br><figcaption>Google console</figcaption></figure>
+    <br>
+
+    <p>We select a project.</p>    
+    
+    <figure><img src="UD8/images/ud8-2022-01-11-23-11-34.png" /><br><figcaption>project</figcaption></figure>
+    <br>
+
+    <p>We choose the name of the project and the organization if we want to have it organized. And we give you to create the project</p>    
+    
+    <figure><img src="UD8/images/ud8-2022-01-11-23-13-22.png" /><br><figcaption>Project Name</figcaption></figure>
+    <br>
+
+    <p>Once the project is created, we select it and click the next button</p>
+    
+    
+    <figure><img src="UD8/images/ud8-2022-01-11-23-14-11.png" /><br><figcaption>Select created project</figcaption></figure>
+    <br>
+    
+    <p>Click on the enable button</p>    
+    <figure><img src="UD8/images/ud8-2022-01-11-23-14-54.png" /><br><figcaption>Enable Maps SDK</figcaption></figure>
+    <br>
+
+    <p>Click on the button to create the API KEY</p>
+    
+    <figure><img src="UD8/images/ud8-2022-01-11-23-15-54.png" /><br><figcaption>Create API KEY</figcaption></figure>
+    <br>
+
+    <p>We already have the API Key created, now we must copy it into the <span class="negrita">google_maps_key</span>  field of the String tag in 
+        <span class="inline-file">google_maps_api.xml</span> file</p>
+    
+        
+    <figure><img src="UD8/images/ud8-2022-01-11-23-17-44.png" /><br><figcaption>API KEY created</figcaption></figure>
+    <br>
+
+    <figure><img src="UD8/images/ud8-2022-01-12-11-57-11.png" /><br><figcaption>Set your API Key here</figcaption></figure>
+    <br>
+    
+    <p>If we run now it should work.(it does not require locating activated at the moment)</p>    
+
+    <figure><img src="UD8/images/ud8-2022-01-12-11-58-01.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p><span class="negrita">NOTE</span> : When using location it is recommended to use real devices. 
+        However, if simulation is required in Android Emulator, you must have a machine created with an image that has <span class="negrita">Google APIs.</span> </p>
+    
+    <figure><img src="UD8/images/ud8-2022-01-12-12-00-59.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>On the other hand, the locations are generated manually, in the extended controls</p>
+    
+    <figure><img src="UD8/images/ud8-2022-01-12-12-02-57.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>We are now going to review two aspects of the generated template, first the functionality, and secondly the initially generated code</p>
+    
+    <p>As for functionality, we immediately see the marker(permanently pointing to Sydney, southeast of Australia), and a Google icon in the lower left. 
+        If we click on the marker, it will show us a title with the name of the place(in this case “Marker in Sydney”), 
+        and two icons will appear at the bottom right, the first is for GO(navigate to the place), and the second to show location</p>
+
+    <figure><img src="UD8/images/ud8-2022-01-12-12-04-59.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>If we double-click on any place on the map repeatedly it is enlarged, using the events of two fingers we can also enlarge, reduce or rotate, 
+        in the latter case, an icon in the form of a compass appears on the upper left, which we allows to return the center to the north.</p>
+    
+    <figure><img src="UD8/images/ud8-2022-01-12-12-05-52.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+
+    <p>As for the code, we are going to review the important thing next</p>ç
+
+    <p>Add dependency to the build gradle:app</p>
+    
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">build-gradle(: app)</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-kotlin">implementation 'com.google.android.gms:play-services-location:19.0.1'</code></pre>
+            </section>
+    </section>
+    
+    <p>In <span class="inline-file">AndroidManifest.xml </span> file we've already set our <span class="d-word">API Key</span>  and also is set 
+        <span class="negrita">location Permissions</span> </p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">AndroidManifest.xml </span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-xml">&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /></code></pre>
+            </section>
+    </section>
+    <p>If we wanted to use the fuzzy location permission, which is the one obtained as a consequence of using the signal from the mobile phone or WiFi antennas, 
+        we would use the <span class="negrita">ACCESS_COARSE_LOCATION</span>  permission, obviously this permission is essential for indoors. We also realize that 
+        the activity that is initially launched thanks to the <span class="cursiva">intent-filter</span>  is <span class="negrita">MapsActivity</span> </p>
+    
+    <p>Regarding <span class="inline-file">activity_maps.xml</span>, just note that it is a <span class="negrita">fragment</span> , with id <span class="d-word">android:id="@+id/map</span> ".</p>
+
+    <p>And to finish, in <span class="inline-file">MapsActivity.kt</span> we visualize the initial code.</p>
+    
+    <section><pre><code class="language-kotlin">class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+
+    private lateinit var mMap: GoogleMap
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityMapsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+
+        // Add a marker in Sydney and move the camera
+        val sydney = LatLng(-34.0, 151.0)
+        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney)   
+    }
+}</code></pre>
+    </section><br><br>
+    
+    <p>Obviously a lot of code is missing here, due to the complexity of Maps everything works through libraries. It then extends the <span class="negrita">AppCompatActivity</span> 
+         class, and implements the <span class="negrita">OnMapReadyCallback</span>  interface(since java does not support multiple inheritance). 
+        Inside the class create the reference for the mMap object of the <span class="negrita">GoogleMap</span>  class, which will be our base object to work with. In the 
+        <span class="cursiva">onCreate()</span>  use <span class="cursiva">setContentView()</span> to relate to the layout <span class="negrita">activity_maps</span>, 
+        and then manage the fragment with id map, asynchronously loading the map into the fragment.</p>
+    
+    <p>By means of the <span class="d-word">onMapReady()</span> response function, when it is ready, it loads the data into mMap, and from here on, we can use it.
+In line 32, we see how he creates an object with a fixed location using <span class="negrita">LatLng(,)</span> , using latitude -34 and longitude 151, in the following lines, 
+add a marker in that place using <span class="d-word">addMarker()</span>  whose title is "Marker in Sydney ", and move the camera to that point using <span class="d-word">moveCamara()</span>.
+<br>
+Would it cost you a lot to modify it, so that the LatLng object is called torrent, and that the intersection of parallel 39.4295152 with the meridian -0.4660814 is shown on the map, also with the title "IES Serra Perenxisa"?</p>
+    
+<p>I don't think so, but, for now, surely you have had to expand the location manually. 
+    The time has come to expand our knowledge of the options we have available to tune our project with Google Maps.</p>
+
+<p>Before continuing, change the title that appears under the App icon, go to <span class="negrita">strings.xml</span>  and change the text of title_activity_maps to 
+    &lt;string name="title_activity_maps"> myMaps </string>.</p>
+
+<p class="sub-section">Map Options</p>
+
+<p>We are going to see some of the most important options on the map</p>
+
+<p><span class="d-word">LatLng()</span>  => .LatLng(double latitude, double longitude); // Create a locate point <br>
+    <ul>
+        <li>Example: LatLng torrent = LatLng(40, 0);</li>
+    </ul>
+    <br>
+
+<span class="d-word">AddMarker()</span>  => .addMarker(MarkerOptions().Position().Title());// Add bookmark with title
+
+<ul>
+    <li>Example: mMap.addMarker(MarkerOptions(). Position(torrent) .title("Meridian Park"));</li>
+    <li>Other options: <span class="negrita">.snippet</span>("Inhabitants: 180000") // Add extra information below the title</li>
+</ul>
+</p>
+<figure><img src="UD8/images/ud8-2022-01-12-12-50-25.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>It is possible to show or hide the title / snippet by code(without pressing the Marker), it would be like this.</p>
+<p>To show it would be <span class="negrita">marker.showInfoWindow()</span> <br> To hide it would be <span class="negrita">marker.hideInfoWindow()</span> </p>
+
+<p>It is also possible to assign an event to the title/snippet, so that when we click on them we do some action. 
+    To achieve this effect, first we must also implement the <span class="negrita">GoogleMap.OnInfoWindowClickListener</span>  in our class, therefore, 
+    now the double implementation will be like this(separated by commas):<span class="negrita"> OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener</span> 
+Next we add in <span class="negrita">onMapReady()</span>  the line <span class="negrita">mMap.setOnInfoWindowClickListener(this)</span>, 
+and outside of onMapReady() we insert a response function <span class="negrita">onInfoWindowClickListener()</span> :</p>
+
+
+<section><pre><code class="language-kotlin">override fun onInfoWindowClick(marker: Marker?) {
+    Toast.makeText(this, "Marker pressed on: \ n $ {marker? .Tag}($ {marker? .Position? .Latitude}" +
+            "$ {marker? .position? .longitude})", Toast.LENGTH_SHORT) .show();
+}</code></pre>
+</section><br><br>
+
+<section><pre><code class="language-kotlin">override fun onMapReady(googleMap: GoogleMap) {
+    mMap = googleMap
+
+    ..........
+
+    mMap.setOnInfoWindowClickListener(this)
+}</code></pre>
+</section><br><br>
+
+<p>Notice how it reads the fixed position with <span class="negrita">marker.getPosition()</span> . Latitude and <span class="negrita">marker.getPosition()</span>. 
+    Longitude, it also supports other interesting information like title with <span class="negrita">marker.title</span> .</p>
+
+<p>Instead of reading the location or the title as in the previous photo, it could be interesting, 
+    to have previously saved some information or <span class="negrita">Tag</span>(not visible) in the Marker and read it now by pressing. 
+    To save a non-visible label in the marker we must obtain a reference to it when creating it, and then use it to add the label through .setTag("mytag"), 
+    then it would be read through .getTag(), let's see an example:</p>
+
+
+    <section><pre><code class="language-kotlin">marker.tag ="city"
+...
+...
+marker.tag // I could read it later in onInfoWindowClick()</code></pre>
+    </section><br><br>
+
+    <p>Notice how a click counter could easily be made, since after reading it we could save it again with +1, <span class="negrita">marker.setTag(marker.getTag() + 1)</span> 
+        , it would also be valid to act in one way or another depending on the type of Marker, that is, it would be worth to be able to identify it.</p>
+
+    <p><span class="d-word">.icon()</span>  //Allows you to tune the Marker icon, for example change the color, or make it an image </p>
+<section><pre><code class="language-kotlin">.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)) // Blue color
+.icon(BitmapDescriptorFactory.fromResource(R.mipmap.busmarker)) // Image from resource</code></pre>
+</section><br><br>
+    
+<figure><img src="UD8/images/ud8-2022-01-12-13-01-08.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Example with everything so far:</p>
+
+<section><pre><code class="language-kotlin">val marker = mMap.addMarker(MarkerOptions().Position(LatLng(40, 0)).Title("Park")
+.snippet("from the meridian").icon(BitmapDescriptorFactory.fromResource(R.mipmap.park)));
+marker.setTag("parks");</code></pre>
+</section><br><br>
+
+<p>We can also add an event listener to the Marker itself, for example.</p>
+<section><pre><code class="language-kotlin">mMap.setOnMarkerClickListener {
+    marker ->
+    Toast.makeText(this, "Click on Marker", Toast.LENGTH_SHORT) .show()
+    return @ setOnMarkerClickListener true
+}</code></pre>
+</section><br><br>
+
+    <p><span class="d-word">.clear()</span>  => Reset the map, removing all markers. Example: <span class="cursiva">mMap.clear()</span> </p>
+    
+
+    <p><span class="d-word">Marker.remove()</span> => Delete a specific marker. It is possible to get reference to a marker to remove it. <br>Example:</p>
+    <section><pre><code class="language-kotlin">val mMarker = mMap.addMarker(MarkerOptions(). Position(LatLng(mLatitude, mLongitude)). Title("My position"));
+mMarker.remove();</code></pre>
+    </section><br><br>
+
+<p><span class="d-word">.moveCamera()</span>  => .moveCamara(location | zoom) // Coordinates where the center of the screen will be located
+Example:</p>
+<section><pre><code class="language-kotlin">mMap.moveCamera(CameraUpdateFactory.newLatLng(castellon))</code></pre>
+</section><br><br>
+    <p><span class="negrita">Other options</span>: mMap.moveCamera(CameraUpdateFactory.zoomTo(15)); // Change the zoom(0 by default, range 0-21, floats are described by an f, 
+        example 6.5f.). Relationship between the zoom and what is expected to be displayed: 1-World 5- Continent 10-City 15-Streets 20-Buildings.</p>
+    
+    <p>We can generate a coordinate grid, that is, an area, and automatically calculate the center, to place the camera there, with a specific zoom. <br>Example:</p>
+    <section><pre><code class="language-kotlin">val MyAREA = LatLngBounds(LatLng(37.5, -3.0), LatLng(41.5, 2.0))
+mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MyAREA.center, 7.5f))</code></pre>
+</section><br><br>
+
+<p>It is possible to consult and set the minimum and maximum accepted zoom, as well as the current one.</p>
+
+<section><pre><code class="language-kotlin">mMap.setMinZoomPreference(8.0f)
+mMap.setMaxZoomPreference(16.0f)
+Toast.makeText(this, "Zoom min:" + mMap.getMinZoomLevel(), Toast.LENGTH_SHORT) .show()
+Toast.makeText(this, "Zoom max:" + mMap.getMaxZoomLevel(), Toast.LENGTH_SHORT) .show()
+Toast.makeText(this, "Current Zoom:" + mMap.getCameraPosition().Zoom, Toast.LENGTH_SHORT).show()</code></pre>
+</section><br><br>
+
+
+<p><span class="d-word">.SetOnCameraIdleListener ()</span> => Assign a listener to the camera movement, ideal for saving the zoom.</p>
+
+<section><pre><code class="language-kotlin">mMap.setOnCameraIdleListener {
+    Toast.makeText(this,
+        "Zoom changed to: " + mMap.cameraPosition.zoom,
+        Toast.LENGTH_SHORT).show()
+}</code></pre>
+</section><br><br>
+<figure><img src="UD8/images/ud8-2022-01-12-13-13-38.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>.setMapType() => .setMapType(cteTipodemapa) //Configures map type <br>
+Example:</p>
+<section><pre><code class="language-kotlin">mMap.mapType = GoogleMap.MAP_TYPE_HYBRID</code></pre>
+</section><br><br>
+<p>Type can be:</p>
+<figure><img src="UD8/images/ud8-2022-01-12-13-15-40.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p><span class="d-word">.getUiSettings () </span> => Allows you to configure various graphic aspects.
+    <ul><li>Example 1: <span class = "bold"> mMap.getUiSettings (). SetZoomControlsEnabled (true) </span>
+        Activates +/- controls at the bottom right that allow you to zoom in or out. Having touch gestures seems trivial, but it could be ideal for people with reduced mobility. </p>
+        <figure><img src="UD8/images/ud8-2022-01-12-13-18-17.png" /><br><figcaption></figcaption></figure>
+        <br>
+        
+    </li>
+    <li>Example 2: <span class="negrita">mMap.getUiSettings().SetCompassEnabled (false)</span>
+        Uninhibit the compass icon that appeared when rotating the map.
+    <figure><img src="UD8/images/ud8-2022-01-12-13-18-35.png" /><br><figcaption></figcaption></figure>
+    <br>
+    </li>
+    <li>Example 3: <span class = "negrita"> mMap.getUiSettings (). SetRotateGesturesEnabled (false) </span>
+        Prohibits the ability to rotate the map with touch gestures.</li>
+    
+    
+    <li>
+        Example 4: <span class="negrita">mMap.getUiSettings().SetMapToolbarEnabled(false)</span>
+Uninhibit the icons on the bottom right that appeared when pressing a marker.
+        <figure><img src="UD8/images/ud8-2022-01-12-13-18-59.png" /><br><figcaption></figcaption></figure>
+        <br>
+        
+    </li>
+    
+    </ul>
+
+
+    <br>
+    <p><span class="d-word">.setOnMapClickListener ()</span>  => Assign an onClick listener to the map itself. <br> Example.</p>
+    <section><pre><code class="language-kotlin">mMap.setOnMapClickListener {latlng ->
+    Toast.makeText(this,
+        "Map clicked on lat: ${latlng.latitude}, long: ${latlng.longitude}",
+        Toast.LENGTH_SHORT).show()
+}</code></pre>
+    </section><br><br>
+
+<p><span class="d-word">.animateCamera()</span>  => Allows you to create animations while positioning the camera.
+Example: Simulates “flying” between one point and another (-_-)</p>
+
+<section><pre><code class="language-kotlin">val SYDNEY = LatLng(-33.88,151.21)
+val MOUNTAIN_VIEW = LatLng(37.4, -122.1)
+mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 15f)) //Starts with zoom of 15 zoom
+mMap.animateCamera(CameraUpdateFactory.zoomIn())
+mMap.animateCamera(CameraUpdateFactory.zoomTo(10f), 5000, null) //5 seconds
+val cameraPosition = CameraPosition.Builder()
+    .target(MOUNTAIN_VIEW) //final destination
+        .zoom(17f) //new final zoom
+        .bearing(90f) //camera orientation to the east
+        .tilt(30f) //camera to 30 degrees
+        .build();
+mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))</code></pre>
+</section><br><br>
+
+<p><span class="d-word">.setMapStyle()</span>  => Allows importing custom map styles (Custom map) from <span class="negrita">JSON</span>  or <span class="negrita">XML</span>. 
+    We need to create the raw folder, from <span class="negrita">App> New> Android resource directory</span> </p>
+
+<p>We copy inside <span class="negrita">style_json.json</span> , it can be moved directly by dragging (then open the json with its own
+Android Studio to study it). <a class="enlace" target="_blank" href="./UD8/assets/style_json.json">style_json.json</a> </p>
+
+<p>To use it. <br>
+    <section><pre><code class="language-kotlin">mMap.setMapStyle (MapStyleOptions.loadRawResourceStyle (this, R.raw.style_json))</code></pre>
+    </section><br><br>
+</p>
+
+<figure><img src="UD8/images/ud8-2022-01-12-13-26-37.png" /><br><figcaption></figcaption></figure>
+<br>
+<p><span class="negrita">Url</span> : json styles reference <br> <a class="enlace" target="_blank" href="https://developers.google.com/maps/documentation/android-sdk/style-reference">https://developers.google.com/maps/documentation/android-sdk/style-reference</a> </p>
+
+<p><span class="negrita">Url</span> : Easy to use online style editor (allows you to create a style and export it directly to JSON). Note that there is a new tool for editing styles <br>
+<a class="enlace" target="_blank" href="https://mapstyle.withgoogle.com/">https://mapstyle.withgoogle.com/</a> </p>
+
+<figure><img src="UD8/images/ud8-2022-01-12-13-27-08.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<figure><img src="UD8/images/ud8-2022-01-12-13-30-32.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p><span class="d-word">.setMyLocationEnabled(true)</span> => Activates an icon in the upper right part, which when pressed allows the Google Maps API to find us, 
+    and place the camera at that point (requires having the active location). 
+    But it has a problem, this option requires making sure before its execution, and unequivocally, that our App has the location permission activated, 
+    otherwise, the App will do what is known as a “crash”.</p>
+
+<figure><img src="UD8/images/ud8-2022-01-12-13-31-33.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p><span class="negrita">NOTE</span>: We are not referring to having the location active on the device, we are talking about express permission to the specific 
+    App to access the location. </p>
+
+    <p>Formerly these permissions were granted by the user when installing the App, but since Android 6.0 (API
+23) is no longer like that. The philosophy since then is that the permissions considered high risk, such as location, the user has to allow them at runtime from 
+the App itself, at least the first time that service is used. </p>
+
+
+<p><span class="negrita">NOTE</span> : Once the App is installed, as you know, you can also go to <span class="negrita">Settings > Applications > our App</span>  and grant it the permission manually from there.</p>
+
+    <!------------------------------------------Google Geolocation Services API------------------------------------------------->
+    <h3>Google Geolocation Services API</h3>
+
+    <p>It is time to activate real-time location with other means, which will require a greater effort on our part, but we will have greater control. To obtain it there are several ways, remember that instead
+         of using android.location we are going to use the Google Location Services API.
+          Therefore, we are no longer going to use the icon that we just activated using <span class="negrita">setMyLocationEnabled()</span> .</p>
+
+        <p>We have already made sure before having the Google SDK tool installed in Android Studio Play Services. 
+            Now we need to add it to our project. Do the following and sync the gradle. </p>
+    
+    <p></p>Now add these services in our project, in the <span class="inline-file">build.gradle (:app)</span> put: </p>
+
+<section><pre><code class="language-kotlin">implementation 'com.google.android.gms: play-services-location: 19.0.1'</code></pre>
+</section><br><br>
+
+<p>We continue with the code on <span class="inline-file">MapsActivity.kt</span>. Add at the beginning of the class the references:</p>
+<section><pre><code class="language-kotlin">private lateinit var mMap: GoogleMap
+private lateinit var binding: ActivityMapsBinding
+
+private lateinit var mFusedLocationClient: FusedLocationProviderClient
+private var mLatitude = 0.0
+private var mLongitude = 0.0
+private lateinit var locationRequest: LocationRequest
+private lateinit var locationCallback: LocationCallback</code></pre>
+</section><br><br>
+
+<p>Then expand the <span class="r-word">onCreate()</span> :</p>
+<section><pre><code class="language-kotlin">mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+locationRequest = LocationRequest.create()
+locationRequest !!. priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+locationRequest !!. interval = 16000 // 16seconds
+locationRequest !!. fastestInterval = 8000 // 8seconds
+locationRequest.smallestDisplacement = 0f
+
+
+locationCallback = object: LocationCallback(){
+    override fun onLocationResult(locationResult: LocationResult){
+        super.onLocationResult(locationResult)
+        for(location in locationResult.locations){
+            if(location! = null){
+                mLatitude = location.latitude
+                mLongitude = location.longitude
+                Toast.makeText(this@MapsActivity, "Lat:" + mLatitude + "Lon:" +
+                        mLongitude, Toast.LENGTH_LONG) .show();
+            }
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<p>And create at the end, but inside the class the methods:</p>
+
+<section><pre><code class="language-kotlin">private fun requestLocations() {
+    if (ActivityCompat.checkSelfPermission(this@MapsActivity,
+            android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+            this@MapsActivity,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+    ) {
+        ActivityCompat.requestPermissions(this@MapsActivity,
+            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION),
+            REQUEST_PERSMISSION_CODE)
+    } else {
+        mFusedLocationClient!!.requestLocationUpdates(locationRequest!!,
+            locationCallback!!, Looper.getMainLooper())
+    }
+}
+
+private fun removeLocations() {
+    mFusedLocationClient!!.removeLocationUpdates(locationCallback!!)
+}</code></pre>
+</section><br><br>
+
+<p>Notice that a location update interval has been set. From now on, when you want to activate the location, call:
+<br>
+    <span class="negrita">requestLocations()</span>  <br> <br>
+And to stop the location updates: <br>
+<span class="negrita">removeLocations()</span> </p>
+
+<p>The result is (note that at the moment we only show the coordinates through a <span class="negrita">Toast</span>,once we have them, we can place a marker with our photo in it, place the camera there, send them to another App through an Intent, save them, etc. ):</p>
+
+<figure><img src="UD8/images/ud8-2022-01-12-14-54-21.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p><span class="negrita">NOTE</span> : Because the precise location consumes a lot, a balanced consumption has been chosen, 
+    this is configurable through <span class="negrita">LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY</span> , the available ones are:</p>
+<figure><img src="UD8/images/ud8-2022-01-12-14-57-01.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD8/images/ud8-2022-01-12-14-57-12.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p><span class="negrita">NOTE</span> : In addition to latitude and longitude, through location we can also obtain other data, such as altitude, speed and precision.</p>
+
+<p>Another interesting option for location is to be able to calculate the distance between the current location, and another that we send as 
+    a parameter, <span class="negrita">location.distanteTo(Location des)</span>. Example:</p>
+<section><pre><code class="language-kotlin">val destinationLocation: Location = Location("destinationLocation") 
+destinationLocation.latitude = 40.0 
+destinationLocation.longitude = 0.0
+Toast.makeText(this@MapsActivity,
+    "Distancia: " + java.lang.String.format("%.2f",
+        location.distanceTo(destinationLocation) / 1000) + " Km",
+    Toast.LENGTH_LONG).show()</code></pre>
+</section><br><br>
+
+<p>The above code provides us with the distance between our current location and other location.</p>
+
+<figure><img src="UD8/images/ud8-2022-01-12-15-02-42.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p><span class="negrita">Url</span> : Location and context overview <br>
+<a class="enlace" target="_blank" href="https://developer.android.com/training/location?hl=es-419">https://developer.android.com/training/location?hl=es-419</a> </p>
+
+    
+    <!------------------------------------------XML data reading------------------------------------------------->
+    <h3>XML data reading</h3>
+    <p>In practice, we are going to import location data from an XML file that we will put as a resource in the project itself, 
+        so that by selecting an option from the side menu we fill the map with markers, which will indicate the locations stored in the file. 
+        This document will be called locations.xml, and we will place it inside the raw folder, along with the map style json previously seen in this topic. 
+        The XML format will be as in the following example:</p>
+
+        <section class="marco-t file-">
+            <span class="icono file"> </span> <span class="negrita">locations.xml</span>
+            </section>
+        <section class="marco-b">
+            <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;locations>
+    &lt;location>
+        &lt;title>Cardenal RAM&lt;/title>
+        &lt;fragment>https://hotelcardenalram.com/&lt;/fragment>
+        &lt;tag>hotel&lt;/tag>
+        &lt;latitude>40.6181083&lt;/latitude>
+        &lt;longitude>-0.1036815&lt;/longitude>
+    &lt;/location>
+    &lt;location>
+        &lt;title>Palau dels Osset&lt;/title>
+        &lt;fragment>https://palaudelsosset.com/&lt;/fragment>
+        &lt;tag>hotel&lt;/tag>
+        &lt;latitude>40.6453629&lt;/latitude>
+        &lt;longitude>-0.1992183&lt;/longitude>
+    &lt;/location>
+    &lt;location>
+        &lt;title>Turismo Morella&lt;/title>
+        &lt;fragment>964173032&lt;/fragment>
+        &lt;tag>ciudad&lt;/tag>
+        &lt;latitude>40.6214498&lt;/latitude>
+        &lt;longitude>-0.1012665&lt;/longitude>
+    &lt;/location>
+    &lt;location>
+        &lt;title>El Forcall&lt;/title>
+        &lt;fragment>964171290&lt;/fragment>
+        &lt;tag>ciudad&lt;/tag>
+        &lt;latitude>40.6460531&lt;/latitude>
+        &lt;longitude>-0.2002412&lt;/longitude>
+    &lt;/location>
+&lt;/locations></code></pre>
+                 </section>
+        </section>
+        
+    <br><br>
+    
+    <p>As can be seen, there are two types of locations, hotel and city, the first have the URL of their website as a fragment, 
+        and the second the local tourist telephone number, this will be used later in practice to give it some functionality. 
+        To read the XML we are going to use the W3C DOM methods. </p>
+
+    <p>We will need to create the data model, for which we will create a new class, inside the java folder, we go to our package, and we right <span class="negrita">click > New > kotlin Class </span> </p>
+    
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">Location.kt</span>
+    </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">package com.catata.googlemapsexample
+
+import android.content.Context
+
+import org.w3c.dom.Document
+import org.w3c.dom.Element
+import org.w3c.dom.Node
+import org.w3c.dom.NodeList
+import org.xml.sax.SAXException
+import java.io.IOException
+import java.lang.reflect.Constructor
+import javax.xml.parsers.DocumentBuilder
+import javax.xml.parsers.DocumentBuilderFactory
+import javax.xml.parsers.ParserConfigurationException
+
+
+data class Location(
+    var title: String,
+    var fragment: String,
+    var tag: String,
+    var latitude: Double,
+    var longitude: Double,
+
+) {
+    constructor():this("","","",0.0,0.0){
+
+    }
+
+
+    companion object {
+        fun readLocations(context: Context): List&lt;Location> {
+            val locations = mutableListOf&lt;Location>()
+
+            try {
+                val factory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
+                val builder: DocumentBuilder = factory.newDocumentBuilder()
+                val doc: Document =
+                    builder.parse(context.resources.openRawResource(R.raw.locations))
+                val root: Element = doc.documentElement
+                val items: NodeList = root.getElementsByTagName("location")
+                for (i in 0 until items.length) { //go through all elements
+                    val locationNode: Node = items.item(i)
+                    val location = Location()
+                    for (j in 0 until locationNode.childNodes.length) { //go through children
+                        val currentNode: Node = locationNode.childNodes.item(j)
+                        //check if is an element
+                        if (currentNode.nodeType === Node.ELEMENT_NODE) {
+                            when (currentNode.nodeName.uppercase()) {
+                                "TITLE" -> location.title = currentNode.childNodes.item(0).nodeValue
+                                "FRAGMENT" -> location.fragment =
+                                    currentNode.childNodes.item(0).nodeValue
+                                "TAG" -> location.tag = currentNode.childNodes.item(0).nodeValue
+                                "LATITUDE" -> location.latitude =
+                                    currentNode.childNodes.item(0).nodeValue.toDouble()
+                                "LONGITUDE" -> location.longitude =
+                                    currentNode.childNodes.item(0).nodeValue.toDouble()
+                            }
+                        }
+
+                    } //end for 2 (children)
+                    locations.add(location)
+                } //end for 1 (elementos)
+            } catch (e: ParserConfigurationException) {
+                e.printStackTrace()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            } catch (e: SAXException) {
+                e.printStackTrace()
+            }
+
+
+            return locations
+        }
+    }
+}</code></pre>
+            </section> 
+</section>
+
+    <br><br>
+
+    <p>To test it now, we can put the following Toast in the first option of the side menu. </p>
+
+<section><pre><code class="language-kotlin">Toast.makeText(MapsActivity.this, "Tit(1):" + readLocations().get(1).getTitle(), Toast.LENGTH_SHORT).show()</code></pre>
+</section><br><br>
+
+<p>When testing we see how the title of the second item is displayed:</p>
+
+<figure><img src="UD8/images/ud8-2022-01-12-15-11-00.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Normally we will need to receive the entire List&lt;> first, and then go through it, it could be like this:</p>
+<section><pre><code class="language-kotlin">var titles:String = ""
+        val locations = Location.readLocations(this)
+        for (location:Location in locations){
+            titles += "- " + location.title + " "
+        }
+        Toast.makeText(this, "Titles: $titles", Toast.LENGTH_SHORT).show()</code></pre>
+</section><br><br>
+<p>
+    <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/GoogleMapsExample">Here </a> you have GoogleMaps app with some snippets of code. 
+</p>
+
+    </section> <!-- End Section-->
+    
+    <!------------------------------------------Practice------------------------------------------------->
+    <section class = "apartado">
+        <a name="sPractice"> </a>
+        <h2> Practice </h2>
+        <div class="tarea">
+
+    <p>Let's start from the base already created after following the previous point, <span class="negrita">DO NOT CHANGE</span>  the package name
+Neither of the App, you would have problems with the KEY, or just create a new API Key, simply, for safety, save a copy of the folder before starting. 
+Therefore, we should already have the myMaps project created, when opening it you should see the map perfectly.</p>
+    
+
+<p>For this example, I have used the hotel and city location types, which are placed in the XML tag called precisely "tag", the values ​​of said tag after 
+    reading them from the file we will put them later in the Tag of each marker (which will be invisible). 
+    Now you have to devise two different types of locations, that are to your liking but different from these, you have to get <span class="negrita">at least five 
+    locations</span>  of each, and modify <span class="inline-file">locations.xml</span> so that those ten locations appear at least, the order does
+     not matter but put them interspersed better. Just like in my example, in the <span class="negrita">fragment</span> tag, 
+     those of a type they will have the <span class="negrita">URL of its website</span> ,      and those of another will have <span class="negrita">its phone</span>. 
+     To get its exact latitudes/longitudes you can use the google Maps URL as shown below, it appears when you click on its marker. Look for places not too far away 
+     so they look good on the map.</p>
+
+    <figure><img src="UD8/images/ud8-2022-01-12-15-17-31.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>The intended functionality will be the following:</p>
+    <p>
+        <ol>
+            <li>
+                As soon as you enter myMaps, the camera should be focused on the town hall of your town, with a zoom between 5.0f and 12.0f as you see that it is better. 
+                You don't have to see any marker. You also don't have to see the top right icon of my location. It would be ideal that the locations you choose are all 
+                within that visible area, although it is not mandatory. Rotation with two fingers <span class="subrayado">must be prohibited</span>. Zoom icons +/- must be hidden.
+            </li> <br>
+            <li>
+                Regarding the style of the map, you have to edit one through the online style editor website
+                 <a class="enlace" target="_blank" href="https://mapstyle.withgoogle.com/">https://mapstyle.withgoogle.com/</a> ,
+                  do it to your liking, import it into the project in JSON and make that style be displayed, mine has stayed like this (focused on the city of Valencia):
+                  <figure><img src="UD8/images/ud8-2022-01-12-15-20-25.png" /><br><figcaption></figcaption></figure>
+                  <br>
+                  
+            </li>
+            <li>
+                Put an icon consistent with the functionality of the App, and different from mine. 
+                Overwrite the ic_launcher with the Image Asset, but don't delete the ic_launcher_round. Create it in legacy only and landscape mode. Mine is the following:
+                <figure><img src="UD8/images/ud8-2022-01-12-15-24-41.png" /><br><figcaption></figcaption></figure>
+                <br>
+                
+            </li>
+
+            <li>
+                Configure the side menu as in the following image, it will have the same icon as the background photo. 
+                But beware, in the icon leave the ic_launcher_round with the image of the Android robot's face
+                <figure><img src="UD8/images/ud8-2022-01-12-15-24-59.png" /><br><figcaption></figcaption></figure>
+                <br>
+                Notice that there are two separators, the three main options (see) are primary, that's why they look darker, 
+                and the rest are secondary. Remember that in your practice it will not be hotels and cities
+            </li> <br>
+            <li>
+                Give functionality to the last two options, Close menu and Exit App, since they are the simplest
+            </li> <br>
+            <li>
+                Now we will make the code for the first option <span class="negrita">See my location</span>. 
+                To achieve it use the <span class="negrita">Google Location Services API</span>  as it is in the notes, therefore to activate the location is as 
+                simple as calling <span class="negrita">requestLocations()</span>. Once the coordinates have been calculated, you have to show a marker in that position,
+                 <span class="negrita">requestLocations ()</span>  then place the camera there, <span class="subrayado">the marker will be a passport-size photo of us</span>. 
+                 When you press the marker, you must see the title "My location", it also adds the label myposition to the marker using <span class="negrita"><span class="cursiva">marker.tag = "myposition"</span></span>.
+                  In addition, the marker and the camera have to move periodically if we move, this really only comes out since in the example of the notes the location was already
+                  updated due to using a setInterval, so every time the location is updated we should will create a new marker. 
+                  To do this, you could create in the class a new attribute private <span class="cursiva negrita">List&lt;Marker> mPosiciones = List&lt;>()</span> ,
+                   and then in <span class="cursiva negrita">onLocationResult</span>, go putting in that vector the markers, 
+                   <span class="cursiva negrita">mPosiciones.add(mMap.addMarker(xxx)</span> , and then move the camera.
+
+                <figure><img src="UD8/images/ud8-2022-01-12-15-34-12.png" /><br><figcaption></figcaption></figure> <br>              
+                Expand the code so that, if we click on the title of our marker, our current coordinates appear in an AlertDialog, 
+                configured as in the following image. Note that for this, you have to first use <span class="negrita">setOnInfoWindowClickListener</span>  to activate the event, 
+                and then <span class="negrita">onInfoWindowClick</span>  to manage it, the coordinates are obtained from the reference to the marker object itself, 
+                which is created and automatically sent to <span class="negrita">onInfoWindowClick(marker:Marker)</span>  when clicking on the title, 
+                so you should use <span class="negrita">getPosition</span>  in the marker. You must send the information in the form of String to
+                 the <span class="negrita">AlertDialog</span> . The <span class="negrita">CANCEL</span>  button does not have to appear
+
+                 <figure><img src="UD8/images/ud8-2022-01-12-15-36-22.png" /><br><figcaption></figcaption></figure>
+                 
+                 
+            </li> <br>
+
+            <li>
+                Now program the second option "Hide my location", which has to stop updating the location and delete all the markers. 
+                To stop the location is as simple as calling removeLocations (). However, to delete the markers, keep in mind that they have been added to a vector, 
+                therefore, we must go through it and delete the markers one by one. It would be something like this:
+                <section><pre><code class="language-kotlin">for(marker in mPositions){
+    marker.remove()
+}</code></pre>
+                </section>
+            </li> <br>
+            <li>
+                The <span class="d-word">See hotels</span>  option has some things (remember that in your practice they will not be hotels). 
+                We must read through <span class="cursiva negrita">readLocations()</span>  all the XML, then we go through the List&lt;> vector, and for 
+                all the elements that have the label set to hotel (in your case the label will be another), 
+                we will have to place them on the map by means of a marker with their corresponding coordinates. In addition, in each marker we will 
+                add the title, the snippet, and the Tag that come in the same XML as title, fragment and tag respectively. On the other hand, you have to put 
+                an icon consistent with the type of place to be pointed out, in my case a hotel, I call the resource a hotel. It is recommended to create a method 
+                for this section, for example <span class="negrita">seeHotels()</span>
+            </li>
+            <br>
+
+            <li>
+                With the option <span class="d-word">See cities</span>  (remember that yours will not be cities), obviously we intend the same as in the previous point, 
+                but with the locations that have the label city. To differentiate the icon it will be different, in my case I call the icon resource city. 
+                For this purpose, you can do another method <span class="cursiva negrita">seeCities()</span> .
+                 I propose better to modify the previous method so that it accepts a String, and call it <span class="cursiva negrita">seeMarkers(tag:String)</span> , 
+                 in this way the same method can be used for both types, that is, the call would be <span class = "cursiva negrita">seeMarkers("hotel")</span>
+                  or <span class = "cursiva negrita">seeMarkers("city")</span>, 
+                 precisely when the hotel or city icons are called, which is precisely the label, the method is easy, even so we could require an if 
+                 to add one icon or another, depending on the label. 
+                  <br> <br>
+                  We see the result (we can see the title and the snippet added to the markers)
+                  <figure><img src="UD8/images/ud8-2022-01-12-15-47-02.png" /><br><figcaption></figcaption></figure>
+                  <br>
+                  
+            </li>
+            <br>
+
+            <li>
+                Make clicking on <span class="negrita">Hide all</span>  delete all the markers, including those of our location if it is active. 
+                Just in case location is on, turn it off too. Look at the notes, the map has a method to clean it completely.
+            </li><br>
+
+            <li>
+                To finish, click on the title of the bookmark to open the corresponding activity, if it is a url it will show us the web page and if it is a phone it will open the call application.
+                For this you must read the marker label and depending on this do one thing or another.
+
+                <section><pre><code class="language-kotlin">override fun onInfoWindowClick(marker: Marker?) {
+    when(marker?.tag){
+        "hotel" -> ....
+        "citie" -> ....
+        "myPosition" ->...
+
+    }
+....</code></pre>
+                </section><br><br>
+
+                <figure><img src="UD8/images/ud8-2022-01-12-15-52-17.png" /><br><figcaption></figcaption></figure>
+                <br>
+                <figure><img src="UD8/images/ud8-2022-01-12-15-52-29.png" /><br><figcaption></figcaption></figure>
+                <br>
+                
+            </li>
+
+        </ol>
+
+
+    </p>
+
+    <p>This time you must deliver the complete project folder compressed in <span class="negrita">*.zip</span>  and add the <span class="negrita">*.APK</span> too. 
+        (Remember to do a clean Project before). <span class="subrayado">The id of your project must be as always com.xxyyzz.mymaps</span>  (xx, the first two letters of the first name, yy, the first two 
+        letters of the first last name, zz the first two letters of the second last name</p>
+    
+    </div>
+
+    </section><!-- End section -->
+
+    <!--*********************************************************Webgraphy***********************************************************-->
+    <section class="apartado">
+        <a name="sWebgraphy"></a>
+        <h2>Webgraphy</h2>
+        
+        <ul>
+            <li><a class="enlace" target="_blank" href="https://developer.android.com/guide/topics/media/mediaplayer">MediaPlayer</a> </li>
+
+            <li><a class="enlace" target="_blank" href="https://airbnb.design/lottie/">https://airbnb.design/lottie/</a> </li>
+            <li><a class="enlace" target="_blank" href="https://lottiefiles.com/">https://lottiefiles.com/</a> </li>
+            <li><a class="enlace" target="_blank" href="https://github.com/yuriy-budiyev/code-scanner">code-scanner</a> </li>
+            <li>Cefire Android course of Marcos Leiros </li>
+    
+        </ul>
+        
+        
+        </section><!-- End section -->
+
+
+
+    <script src="../script/prism.js"></script>
+</body>
+</html>
+

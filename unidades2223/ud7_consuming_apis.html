@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UD7.- Accessing Internet</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/prism.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <script src="../script/script.js"></script>
+</head>
+<body>
+    <h1>UD7.- Accessing Internet</h1>
+    <div class="main-menu">
+        <a href="#sIntroduction">Introduction</a><a 
+           href="#sGlide">Glide</a><a 
+           href="#sHttpUrlConnection">HttpUrlConnection</a><a 
+           href="#sRetrofit">Retrofit2</a><a
+           href="#sVolley">Volley</a><a
+           href="#sPractice6">Practice6</a><a
+           href="#sWebgraphy">Webgraphy</a>
+    </div>
+
+    <!--*********************************************************Introduction***********************************************************-->
+    <section class="apartado">
+    <a name="sIntroduction"></a>
+    <h2>Introduction</h2>
+    In this topic we will see how to obtain / send information from / to the Internet. For this we will use REST services
+    <h3>What is an API Rest?</h3>
+    <p>We could define REST API as a service that provides us with the functions we need to be able to obtain information from an external client, 
+        such as a database hosted anywhere in the world from within our own application.</p>
+    <p>Let's think about Instagram, an application with millions of users. It is not feasible to have the information of each user within the application, right? 
+        Well, to solve the problem they use REST API services. The first thing we do when entering the app is a login, this would be the first of the services, 
+        since we send the server the <span class="negrita">username</span>  and <span class="negrita">password</span>  and this would return the information that we 
+        must show in the app.</p>
+
+    <p>We have four different types of requests as a general rule.</p>
+    <ul>
+        <li><span class="negrita">Get</span>: These are the simplest requests, <span class="subrayado">they only return information</span>. 
+            If we need to pass a parameter to the request, it will be through the url. That is, if, for example, we have to make a request that depends on an id 
+            (eg the user's identification), the url would be formed like this https://example.com/information/1, with 1 being the parameter that we pass to it. 
+            The problem with this is that it is not very secure to pass sensitive information.</li>
+        <li><span class="negrita">Post</span>: Similar to <span class="r-word">Get</span> but the parameters are not passed by url, so it is safer to send information.</li>
+        <li><span class="negrita">Put</span>: It is usually used to <span class="subrayado">create</span>  the entity, that is, if we think of a service as access to a database, 
+            this would create the user for example.</li>
+        <li><span class="negrita">Delete</span>: It would be the last of the four that would allow us to <span class="subrayado">delete</span>  the records from the database</li>
+    </ul>
+        
+    <p>The information usually comes in two different formats, <span class="negrita">XML</span>  or <span class="negrita">JSON</span>. 
+        In order not to get too deeply into the subject, we will only talk about <span class="negrita">JSON</span>, which is the most common format and with which 
+        we are going to work.</p>
+    
+    <p class="sub-section">JSON format</p>
+    <p><span class="r-word">Json</span>  is a simple text format, it is the acronym for <span class="negrita">JavaScript Object Notation</span>. 
+        It is one of the standards for the transfer of information between platforms, it has a very legible form that allows us to understand its content without problem. 
+        A simple example would be this.</p>
+
+    <section><pre><code class="language-json">{
+  "employees": [
+    {
+    "id": "1",
+    "firstName": "Tom",
+    "lastName": "Cruise",
+    "photo": "https://jsonformatter.org/img/tom-cruise.jpg"
+    },
+    {
+    "id": "2",
+    "firstName": "Maria",
+    "lastName": "Sharapova",
+    "photo": "https://jsonformatter.org/img/Maria-Sharapova.jpg"
+    },
+    {
+    "id": "3",
+    "firstName": "Robert",
+    "lastName": "Downey Jr.",
+    "photo": "https://jsonformatter.org/img/Robert-Downey-Jr.jpg"
+    }
+]
+}</code></pre>
+    </section><br><br>
+
+    <p>Every Json format begins and ends with braces and has a key-value. The employees key contains in turn a list of employee (note that instead of braces it has brackets), 
+        which stores id, firstName, lastName and photo. Thus we can pass a large amount of information from one platform to another with some standards that help us 
+        simplify the process.</p>
+    
+    <p>If it is still difficult for you to read these files at the beginning, we can make use of a multitude of websites that simplify the way of seeing it, such as 
+        <a class="enlace" target="_blank" href="https://jsoneditoronline.org/">JsonEditOnline</a>.</p>
+    
+    <figure><img src="UD7/images/ud7-2021-12-13-12-00-34.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+    <figure><img src="UD7/images/ud7-2021-12-13-12-01-13.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>There are many free APIs (some of them with registration) that we can make use of. It is enough to do a search in Google and find almost the theme that we are looking for.</p>
+    
+    <p>Here is a small list of APIs</p>
+    
+    
+    <ul>
+        <li><a class="enlace" target="_blank" href="https://www.themoviedb.org/movie?language=es-ES">API about movies</a> </li>
+        <li><a class="enlace" target="_blank" href="https://swapi.dev/">API about StarWars</a> </li>
+        <li><a class="enlace" target="_blank" href="https://developer.marvel.com/">API about Marvel</a> </li>
+        <li><a class="enlace" target="_blank" href="https://www.weatherapi.com/">API about weather</a> </li>
+    </ul>
+    
+    </section><!-- End section -->
+
+    <!--*******************************************************Glide*************************************************************-->
+    <section class="apartado">
+    <a name="sGlide"></a>
+    <h2>GLIDE</h2>
+    <p>Before starting to see how to access REST services, let's see how to obtain images from the internet with their URL and set it into an ImageView.
+    Before continuing, remember that if you want to use an image you must be authorized and respect the copyrights &copy; if you have them.
+    Remember that by default, if not indicated otherwise, the resource is protected by copy right &copy;</p>
+
+    <p>We have to do two fundamental things:</p>
+    <ul>
+       <li>Add Glide dependency. You can see last versión <a class="enlace" target="_blank" href="https://github.com/bumptech/glide#download">here</a>            
+           <section class="marco-t file-">
+               <span class="icono file"> </span> <span class="negrita">Gradle app</span>
+               </section>
+           <section class="marco-b">
+                   <section><pre><code class="language-kotlin">dependencies {
+..............
+  implementation 'com.github.bumptech.glide:glide:4.12.0'
+}</code></pre>
+                   </section>
+           </section>
+           
+       </li>
+       <li>Grant Internet access permissions to the application.
+           <section class="marco-t file-">
+               <span class="icono file"> </span> <span class="negrita">Manifest.xml</span>
+               </section>
+           <section class="marco-b">
+                   <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.catata.glideexample">
+
+    &lt;uses-permission android:name="android.permission.INTERNET" />
+    
+    &lt;application
+    ............. 
+</code></pre>
+                   </section>
+           </section>
+           
+       </li>
+</ul>
+
+    <p>To show a basic example of using Glide, we will implement a simple application that will load images when the button is pressed.</p>
+    
+    <figure><img src="./UD7/images/UD7-Glide_app.gif" /><br><figcaption>Using glide</figcaption></figure>
+    <br>
+
+    Every time we press the button, the application will make a call via Glide to the page <a class="enlace" target="_blank" href="https://picsum.photos/">https://picsum.photos/</a> .
+    This website offers us a random image of a certain size.
+
+    <p>So what we will do is add the listener to the button:</p>
+    
+    <section><pre><code class="language-kotlin">override fun onViewCreated (view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated (view, savedInstanceState)
+
+    binding.btnChangeImage.setOnClickListener {
+        changeImage ()
+    }
+}</code></pre>
+    </section><br><br>
+
+    <p>Create the <span class="d-word">changeImage</span>  function</p>
+     
+
+    <section><pre><code class="language-kotlin">private fun changeImage() {
+    val url = "https://picsum.photos/200?rand=" + Random.nextInt()
+    Glide.with(requireContext())
+        .load(url) //Image that we want to show
+        .placeholder(getDrawable(requireContext(),R.drawable.loading)) //Image that will be displayed while loading the image to be displayed
+        .error(ERROR_IMAGE) //Image that we will show if something goes wrong. it is typically use a drawable image stored
+        .into(binding.ivImage) //ImageView that will contain the image
+}</code></pre>
+</section><br><br>
+
+    <p>As you can see, we have added a random parameter to the url, this is simply so that it interprets that it is a different url and not take it from the cache.</p>
+     
+    
+    <p>To use Glide we use its methods:</p>
+    <ul>
+        <li><span class="negrita">with</span> , to which the context is passed.</li>
+        <li><span class="negrita">load</span>  the location of the image to be loaded, it does not have to be a url on the internet.</li>
+        <li><span class="negrita">Placeholder</span>  tells us which image to display while the image is loading.</li>
+        <li><span class="negrita">error</span>  tells us which image to show in case the image cannot be loaded</li>
+        <li><span class = "bold"> into </span> tells us where to load that image.</li>
+    </ul>
+    
+    <p>Mandatory are only the <span class="r-word">with</span> , the <span class="r-word">load</span>  and the <span class="r-word">into</span> .</p>
+
+    
+    
+    <p>Alternatively we can add how we want the image to be displayed inside the ImageView using methods like <span class="r-word">centerCrop()</span>, 
+        <span class="r-word">centerInside()</span> , <span class="r-word">fitCenter()</span>. I encourage you to try them.</p>
+
+    
+    <p><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/GlideExample">Here</a> you can see the complete example</p>
+
+    <h3>Picasso</h3>
+
+   <p>Also comment that there is another fantastic library to obtain images from the Internet called
+ <a class="enlace" target="_blank" href="https://square.github.io/picasso/">Picasso</a> . I also recommend that you take a look at it.
+    A basic use would be this.</p>
+   
+    <section><pre><code class="language-kotlin">Picasso.get().load(url).into (imageView)</code></pre>
+    </section><br><br>
+
+    <p>As you can see, it is very similar to using Glide.</p>
+    
+        
+    </section><!-- End section -->
+
+
+    <!--*********************************************************sHttpUrlConnection***********************************************************-->
+    <section class="apartado">
+    <a name="sHttpUrlConnection"></a>
+    <h2>HttpUrlConnection</h2>
+    
+    <p>To make Http connections manually in Android we can make use of the <span class="d-word">HttpURLConnection</span>  object.</p>
+    
+
+   <p>Next we are going to see an example of how to perform a <span class="negrita">GET</span>  with parameters and a <span class="negrita">POST</span>  with parameters.</p>
+   
+
+    <h3>GET con parámetros</h3>
+    
+    <section><pre><code class="language-kotlin">fun sendGetRequest(userName:String, password:String) {
+
+    var reqParam = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8")
+    reqParam += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8")
+
+    val mURL = URL("&lt;Yout API Link>?"+reqParam)
+
+    with(mURL.openConnection() as HttpURLConnection) {
+        // optional default is GET
+        requestMethod = "GET"
+
+        println("URL : $url")
+        println("Response Code : $responseCode")
+
+        BufferedReader(InputStreamReader(inputStream)).use {
+            val response = StringBuffer()
+
+            var inputLine = it.readLine()
+            while (inputLine != null) {
+                response.append(inputLine)
+                inputLine = it.readLine()
+            }
+            it.close()
+            println("Response : $response")
+        }
+    }
+}</code></pre>
+    </section><br><br>
+
+
+    <h3>POST con parámetros</h3>
+    <section><pre><code class="language-kotlin">fun sendPostRequest(userName:String, password:String) {
+
+    var reqParam = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8")
+    reqParam += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8")
+    val mURL = URL("&lt;Your API Link>")
+
+    with(mURL.openConnection() as HttpURLConnection) {
+        // optional default is GET
+        requestMethod = "POST"
+
+        val wr = OutputStreamWriter(getOutputStream());
+        wr.write(reqParam);
+        wr.flush();
+
+        println("URL : $url")
+        println("Response Code : $responseCode")
+
+        BufferedReader(InputStreamReader(inputStream)).use {
+            val response = StringBuffer()
+
+            var inputLine = it.readLine()
+            while (inputLine != null) {
+                response.append(inputLine)
+                inputLine = it.readLine()
+            }
+            println("Response : $response")
+        }
+    }
+}</code></pre>
+    </section><br><br>
+
+
+    <p>In the following sections we will use two of the most popular libraries to perform <span class="negrita">Http</span>  requests on <span class="negrita">Android</span>. 
+        These are <span class="r-word">Retrofit</span>  and <span class="r-word">Volley</span> .</p>
+    
+    <p>However, there are other libraries for Kotlin (not just Android) that facilitate and speed up the development of Http calls. <br>
+    Here you have an example of two good libraries:
+    <ul>
+        <li><a class="enlace" target="_blank" href="https://ktor.io/docs/client.html">Ktor</a> </li>
+        <li><a class="enlace" target="_blank" href="https://www.http4k.org/">http4k</a> </li>
+    </ul>
+</p>
+    
+    </section><!-- End section -->
+
+    <!--*********************************************************Retrofit 2***********************************************************-->
+    <section class="apartado">
+        <a name="sRetrofit"></a>
+        <h2>Retrofit 2</h2>
+        
+        <p>In this section we are going to create a complete app, it is a dog finder. 
+            That is, in the search engine we are going to put a breed of dog (in English) and we will retrieve images of that breed that we will show in a RecyclerView,
+             that is, we will access the internet to show images that our app does not have.</p>
+        
+        <p>The API, that we will use, will be <a class="enlace" target="_blank" href="https://dog.ceo/dog-api/">Dog API</a> , it is completely free and has a simple and 
+            practical documentation. If we go to documentation we can see all the types of call that there are, we will be interested in only one <span class="negrita">By breed</span>.</p>
+
+        <p>The call will be as follows:</p>
+        
+        <section><pre><code class="language-kotlin">https://dog.ceo/api/breed/hound/images</code></pre>
+        </section><br><br>
+
+        <p>Note that if you open it in the browser itself, a <span class="negrita">JSON</span>  similar to this one will appear</p>
+
+        <section><pre><code class="language-kotlin">// 20211215104051
+// https://dog.ceo/api/breed/hound/images
+{
+    "message": [
+        "https://images.dog.ceo/breeds/hound-afghan/n02088094_1003.jpg",
+        "https://images.dog.ceo/breeds/hound-afghan/n02088094_1007.jpg",
+        "https://images.dog.ceo/breeds/hound-afghan/n02088094_1023.jpg",
+        "https://images.dog.ceo/breeds/hound-afghan/n02088094_10263.jpg",
+        .......
+        ],
+  "status": "success"
+}</code></pre>
+        </section><br><br>
+    
+    <p>And this is basically what our app will do. 
+        You will access the internet, make a request similar to this to retrieve the information, and then modify it so that our application can understand and paint it.
+    </p>
+    
+    <p>The first thing we will do is create a new project called, for instance, <span class="negrita">DogList</span>.</p>
+    
+    <p>Once we have our project created we will have to request internet access, since our app will connect to consume the API that we discussed earlier.</p>
+    
+    <p>For this we go to the <span class="inline-file">AndroidManifest.xml</span> file of our project and at the top we add the necessary permission.</p>
+
+    <section><pre><code class="language-xml">&lt;uses-permission android:name="android.permission.INTERNET"/></code></pre>
+    </section><br><br>
+
+    <p>The next step will be to import the necessary libraries that we will use in our app. 
+        As always all these libraries are added in the <span class="negrita">build.gradle</span>  file of the app module</p>
+
+    <p>The libraries that we are going to import are the following:</p>
+    
+    <ul>
+        <li><span class="negrita">Picasso</span>: This library will allow us to transform those urls into images.</li>
+        <li><span class="negrita">Retrofit 2</span> : Library in charge of API consumption.</li>
+        <li><span class="negrita">Retrofit 2 Converter Gson</span>: This tool will be a complement to the previous one and will simplify the process of passing a JSON 
+            to a Data Class, which is what we will work with in our project.</li>
+        <li><span class="negrita">Coroutines</span> : Among many other things, it will allow us to make <span class="d-word">Retrofit</span> requests in the <span class="negrita">background</span>
+             so as not to block the user interface.</li>
+    </ul>
+    
+    <p>As you know, the libraries are being updated, worse today the latest versions are the ones that I am going to put here</p>
+    
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">gradle app</span>
+        </section>
+    <section class="marco-b">
+<section><pre><code class="language-kotlin">..............
+    buildFeatures{
+        viewBinding  true
+    }
+}
+
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    //PICASSO
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //RETROFIT
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+
+    //Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1")
+}</code></pre>
+            </section>
+    </section> <br><br>
+    
+    <p>Don't forget to enable the <span class="negrita">viewBinding</span> and sync up </p>
+    
+    <p>Now it is time to go to our <span class="d-word">MainActivity</span> and we will finish implementing the <span class="negrita">View Binding</span>.</p>
+    
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">MainActivity</span>
+        </section>
+    <section class="marco-b">
+           <section><pre><code class="language-kotlin">class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+    
+}</code></pre>
+           </section><br><br> 
+    </section>
+    
+    <p>The next thing will be to create the view. We are going to <span class="inline-file">activity_main.xml</span> and we will add two components, 
+        a <span class="r-word">RecyclerView</span>  that we already know and a <span class="r-word">SearchView</span>, a very simple component that will allow us to implement a 
+        quick search engine.</p>
+    
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">activity_main.xml</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/viewRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    &lt;androidx.appcompat.widget.SearchView
+        android:id="@+id/svDogs"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    &lt;androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDogs"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/svDogs"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout></code></pre>
+            </section>
+    </section>
+    
+    <h3>From Json to Data Class</h3>
+
+    <p>We already have almost all the visual part of the app in a moment, but now we have to move on to our data model. 
+        That is, remember that <span class="subrayado">the API will return a <span class="negrita">JSON</span> </span>  to us and we have to convert it 
+        into a <span class="negrita">Data class</span> .</p>
+    
+    <p>For this we have to look at the <span class="negrita">JSON structure</span>  of our API, in this case it is quite simple. 
+        To begin we have a message field that is basically a <span class="subrayado">list of <span class="cursiva">Strings</span> </span> , they are image urls but they are only text 
+        and we also have the status field that will contain the success value if everything has gone well so it will be another <span class="cursiva">String</span> .</p>
+
+    <p>We are going to create a new class, in the same directory where we have the <span class="r-word">MainActivity</span>  we right click <span class="d-word">New> Kotlin File / Class</span> 
+         and we will call it <span class="d-word">DogsResponse</span>. Before push enter make sure to select <span class="cursiva">Class</span> </p>
+    
+    <figure><img src="UD7/images/ud7-2021-12-15-16-41-50.png" /><br><figcaption>Creating our Data Class</figcaption></figure>
+    <br>
+    
+    <p>To convert our class into a data class we will only have to add the reserved word <span class="negrita">data</span>  before <span class="negrita">class</span> 
+         and we will get an error because we will have to remove the curly braces and it must have at least one parameter, 
+         in this case we will put the two that we've mentioned above.</p>
+    
+    <section><pre><code class="language-kotlin">data class DogsResponse(var status: String, var message: List&lt;String>)</code></pre>
+    </section><br><br>
+    <p>This is how our class would look, notice that the name of the fields is exactly the same as that of the JSON, it is mandatory to be able to retrieve the information from the JSON and pass it to our data model.</p>
+    
+    <p>But here I see a problem and that is that I do not like this name <span class="negrita">message</span>  since it does not seem descriptive, 
+        but as I have commented, the name has to be <span class="subrayado"><span class="negrita">exactly the same as the JSON</span></span>. 
+        Obviously there is a solution to this dilemma and that is to use the <span class="r-word">SerializedName</span>  annotation, this annotation will make us a "bridge" 
+        between the <span class="negrita">required name</span>  and <span class="negrita">the name we want to use</span> .</p>
+    
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">DogResponse.kt</span>
+        </section>
+    <section class="marco-b">
+        <section><pre><code class="language-kotlin">import com.google.gson.annotations.SerializedName
+
+data class DogResponse(
+    @SerializedName("status") var status: String,
+    @SerializedName("message") var images: List&lt;String>)</code></pre>
+        </section><br><br>
+    </section>
+    
+    <p>Look what we have done, before defining each variable I have used <span class="r-word">@SerializedName</span>  and in parentheses we have put the <span class="negrita">exact name</span> 
+        that appears in the JSON, so with that we can call our variable as we want, in this case we have called <span class="negrita">message</span> as  <span class="negrita">images</span>.
+        We will put this annotation whenever we work with <span class="r-word">Retrofit</span> .</p>
+    
+    <h3>APIService</h3>
+
+    <p>The next thing we will do is create the contract that defines the Retrofit call, that is, we will create an interface that will define the type of 
+        API consumption and what it will return.</p>
+    
+    <p>We will create an interface in the same way that we create a class, <span class="negrita">New Kotlin File / Class</span> , we will select 
+        <span class="negrita">interface</span>  and we will call it <span class="negrita">APIService</span> .</p>
+
+    <p>In this interface we are only going to define the method that Retrofit will use and its configuration.</p>
+    
+    <section><pre><code class="language-kotlin">interface APIService {
+    @GET
+    suspend fun getDogsByBreeds (@Url url: String): Response&lt;DogsResponse>
+}</code></pre>
+    </section><br><br>
+
+    <p>Let's analyze the previous code, to begin with we are going to select the type of call that it is (remember at the beginning of the chapter that there were four types
+         GET, POST, PUT and DELETE). In this case it will be of type <span class="negrita">GET</span>  and for this we use the tag <span class="r-word">@GET</span>.</p>
+
+    <p>Notice that before the word <span class="negrita">fun</span>  there is a reserved word called <span class="r-word">suspend</span>,
+       remember this will be necessary to work with <span class="negrita">coroutines</span>, that is, whenever we want to make calls in the background using coroutines we will have to add 
+        it for our code to work.</p>
+    
+    <p>Before continuing I want you to remember the url of the API that we are going to use.</p>
+    
+    <section><pre><code class="language-kotlin">https://dog.ceo/api/breed/hound/images</code></pre>
+    </section><br><br>
+
+    <p>If we look a little more we can see that there are <span class="subrayado">two parts</span>  in this url, the first would be <span class="negrita">https://dog.ceo/api/breed/</span> 
+         which is the <span class="negrita">immutable part</span> , that is, this part will always be fixed. Then you have to pass dog breed followed by /images, so we could say that <span class="negrita">hound/images</span> 
+          is the <span class="negrita">mutable part</span> . Why am I emphasizing this? Well, because the second part of the url "breed_of_dog/images" we will have to pass as a parameter, 
+          and even if it is a <span class="cursiva">String</span>  we have to put the tag <span class="cursiva">@Url</span>  at the beginning.</p>
+
+    <p>We already understand almost all the function we have written, we are missing the answer. 
+        Everything that comes from <span class="negrita">Retrofit</span>  will be captured through the <span class="negrita">Response</span>  class, which is why we will 
+        always return a <span class="negrita">Response&lt;OurDataModel></span> , in this case <span class="d-word">Response&lt;DogsResponse></span> </p>
+    
+    <h3>Installing Retrofit 2</h3>
+    <p>The complicated part is over, but obviously we are not using Retrofit yet, so for that we go back to our <span class="d-word">MainActivity</span>. 
+        This <span class="negrita">Retrofit</span>  instance that we are going to create will be the one with the rest of the endpoint url, 
+        it will be in charge of converting the JSON to <span class="r-word">DogResponse</span>  and it will have all the configuration to make the API call.</p>
+
+        <section class="marco-t file-">
+            <span class="icono file"> </span> <span class="negrita">MainActivity</span>
+            </section>
+        <section class="marco-b">
+    <section> <pre> <code class = "language-kotlin"> //Creates an instance of Retrofit
+private fun getRetrofit ():Retrofit {
+    return Retrofit.Builder ()
+        .baseUrl ("https://dog.ceo/api/breed/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+} </code> </pre>
+        </section>
+        </section><br><br>
+        
+    <p>Our <span class="d-word">getRetrofit()</span> function will return a <span class="negrita">Retrofit</span> instance. 
+        To configure it, notice that we call the <span class="r-word">.Builder ()</span> function and once we have done it we will add the <span class="d-word">baseUrl</span> 
+         (which is the fixed part of our API) and then add <span class="r-word">.addConverterFactory (GsonConverterFactory.create ()</span>,
+         this line will implement the library of the principle that will do all the work of retrieving the JSON and passing it to <span class="d-word">DogsResponse</span>.
+         For all this to apply we end up with <span class="r-word">.build ()</span> </p>
+    
+    <h3>Thread handling with coroutines</h3>
+    
+    <p>Within our coroutine, we create a variable called <span class="d-word">call</span>  that will be in charge of calling the method that <span class="negrita">Retrofit</span>
+        returns (the one we created before) and that <span class="negrita">Retrofit</span>  instance we will have to call the <span class="r-word">create ()</span> function,
+        which will receive the interface we want (we can have multiple interfaces to retrofit) and doing that will allow us to call the <span class="d-word">getDogsByBreeds()</span> 
+         function.</p>
+    
+         <section class="marco-t file-">
+            <span class="icono file"> </span> <span class="negrita">MainActivity</span>
+            </section>
+        <section class="marco-b">
+    <section><pre><code class="language-kotlin">private fun searchByName(query:String){
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = getRetrofit().create(APIService::class.java).getDogsByBreeds("$query/images")
+        }
+    }</code></pre>
+    </section>
+    </section><br><br>
+
+    <p>Look at the text that we're passing to the <span class="d-word">getDogsByBreeds ()</span>  function, 
+        if you look earlier when creating Retrofit we put the fixed route of the API, but we were missing "<span class="negrita">dogBreed/images</span>"
+         that's just what we sent, the <span class="d-word">query</span>  variable will contain the race and we have to put it together with the final part of the <span class="negrita">/images</span>  call.</p>
+    
+    <p>Now our <span class="d-word">call</span>  variable will contain a <span class="d-word">Response&lt;DogsResponse></span> , notice that it is like our data class but 
+        with a Response on the outside, since it is what our method returned in the Retrofit interface.</p>
+
+    <p>This response object can be very useful, since calling <span class="r-word">call.isSuccessful()</span>  will tell us if the call has gone well, and then to retrieve
+         the real <span class="negrita">DogsResponse</span>  object, we just have to call <span class="r-word">call.body()</span> .</p>
+    
+         <section class="marco-t file-">
+            <span class="icono file"> </span> <span class="negrita">MainActivity</span>
+            </section>
+        <section class="marco-b">
+    <section><pre><code class="language-kotlin">private fun searchByName(query:String){
+    CoroutineScope(Dispatchers.IO).launch {
+        val call = getRetrofit().create(APIService::class.java).getDogsByBreeds("$query/images")
+        val puppies = call.body()
+            if(call.isSuccessful){
+                //show Recyclerview
+            }else{
+                //show error
+            }
+        }
+    }
+}</code></pre>
+</section>
+    </section><br><br>
+    
+<p>Our function would look like this for now, the only thing I have added since I showed the code is the creation of the variable <span class="negrita">puppies</span> 
+     that should contain our <span class="negrita">DogsResponse</span> and an unfinished <span class="negrita">if</span>  that will check if the call has worked correctly. 
+     If it went well we will create a <span class="cursiva">RecyclerView</span> , otherwise we will show an error.</p>
+
+     <h3>RecyclerView</h3>
+
+     <p>As you already know, a RecyclerView consists of 3 parts, the Adapter, the item_View and the ViewHolder, the first thing we will do is create the item_view, 
+         that is, the design. Inside <span class="negrita">res> layout</span>  we will create a layout called <span class="inline-file">item_dog.xml</span></p>
+
+         <p class="sub-section">Item View</p>
+         
+     <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="16dp"
+    android:background="@color/black"
+    android:layout_margin="16dp"
+    android:layout_height="320dp">
+    &lt;ImageView
+        android:id="@+id/ivDog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+&lt;/androidx.cardview.widget.CardView></code></pre>
+     </section><br><br>
+     <p>As you can see, the design is very simple, it is just a CardView that contains an image, which will be where the image of the searched dog is loaded.</p>
+     
+
+     <p class="sub-section">ViewHolder</p>
+     <p>Now that we have the view done, it is the ViewHolder's turn, so we will create a new class that we will call <span class="inline-file">DogViewHolder.kt</span></p>
+     
+     <section><pre><code class="language-kotlin">class DogViewHolder(view: View):RecyclerView.ViewHolder(view) {
+    private val binding = ItemDogBinding.bind(view)
+    fun bind (image:String) {
+        Picasso.get().Load(image).into(binding.ivDog)
+    }
+}</code></pre>
+     </section><br><br>
+
+     <p>This class is very simple, all it has is a <span class="d-word">bind ()</span>  function that will be called from the adapter and it will
+         pass a url in <span class="cursiva">String</span>  format, once inside we will use the <span class="negrita">Picasso</span> library to load that URL into our <span class="d-word">iVDog</span>.</p>
+
+
+    <p class="sub-section">Adapter</p>
+    <p>Now we would only have to create a simple adapter, which will receive a list of images (the photos of the dogs). We will call it <span class="inline-file">DogAdapter</span>.</p>
+    
+    <section><pre><code class="language-kotlin">class DogAdapter(private val images: List&lt;String>) : RecyclerView.Adapter&lt;DogViewHolder>() {
+    
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        return DogViewHolder(layoutInflater.inflate(R.layout.item_dog, parent, false))
+    }
+    override fun getItemCount(): Int = images.size
+    override fun onBindViewHolder(holder: DogViewHolder, position: Int) {
+        val item = images[position]
+        holder.bind(item)
+    }
+}</code></pre>
+    </section><br><br>
+
+    <p>We will return to our <span class="d-word">MainActivity</span>  to finish configuring the <span class="cursiva">RecyclerView</span>, 
+        but first I want you to notice that at the time of creating the activity we do not have images but to create our adapter we need to pass it a list of images, 
+        also that list has to vary when changing search, so the data in the <span class="cursiva">RecyclerView</span>  has to be able to vary. 
+        For this we go to the top of the class (outside of any method) and we will create an adapter with the <span class="negrita">lateinit</span>  function, that is, 
+        we will initialize it later, we will also create a variable called <span class="d-word">dogImages</span>  that will be a <span class="cursiva">mutableList of Strings</span>.</p>
+    
+        <section><pre><code class="language-kotlin">private lateinit var adapter:DogAdapter
+private val dogImages = mutableListOf&lt;String>()</code></pre>
+        </section><br><br>
+
+    <p>We have created this list of Strings for two reasons, the first one, begins as an empty list and is the one that we will use to create our <span class="cursiva">RecyclerView</span>, 
+        but we will modify the items once the user has searched for a breed of dog and thus we can change the images that are shown in the listing.</p>
+    
+    <p>Now we can create our <span class="d-word">initRecyclerView ()</span>  function.</p>
+    
+
+    <section><pre><code class="language-kotlin"> private fun initRecyclerView() {
+    adapter = DogAdapter(dogImages)
+    binding.rvDogs.layoutManager = LinearLayoutManager(this)
+    binding.rvDogs.adapter = adapter
+}</code></pre>
+    </section><br><br>
+
+    This method will be called in the <span class="negrita">onCreate()</span>  function.
+
+    <section><pre><code class="language-kotlin">override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    binding = ActivityMainBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    initRecyclerView()
+}</code></pre>
+    </section><br><br>
+
+<p>Although we already have the RecyclerView created, we still do not add data to it at any time. We return to the <span class="d-word">searchByName()</span>  method that we had left halfway.</p>
+
+<p>When we stopped we had to complete the <span class="cursiva">if()</span> , since if everything had gone well we had to update the images and if there was something wrong we had to show a Toast. 
+    But if you think about it, both actions are visual, that is, they are interface and that means that you have to do it in the main thread and we are inside a coroutine. 
+    In order to get out of that coroutine we will use <span class="negrita">runOnUiThread{}</span>  and everything between those braces will be done in the <span class="negrita">main thread</span> 
+     even if it is inside a coroutine.</p>
+
+<p>We add the previous code and put the if inside it.</p>
+
+<section><pre><code class="language-kotlin">private fun searchByName(query:String){
+    CoroutineScope(Dispatchers.IO).launch {
+        val call = getRetrofit().create(APIService::class.java).getDogsByBreeds("$query/images")
+        val puppies = call.body()
+        runOnUiThread {
+            if(call.isSuccessful){
+                //show recyclerview
+            }else{
+                //show error
+            }
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<p>Now we will fill in the <span class="cursiva">if</span> , starting if everything went well. 
+    In order to update the adapter we will have to modify the list of images that the <span class="negrita">dogImages</span>  variable receives, 
+    so what we have to do is add the new images in that variable.</p>
+
+    <section><pre><code class="language-kotlin">val images = puppies?.images ?: emptyList()
+dogImages.clear()
+dogImages.addAll(images)
+adapter.notifyDataSetChanged()</code></pre>
+    </section><br><br>
+
+<p>The first line creates a new variable called <span class="d-word">images</span> , the images are inside the <span class="d-word">puppies</span> variable and this variable 
+    is <span class="negrita">nullable</span>, that means it can be null and can cause an error, so we have to access the images with a question mark first, Well, 
+    we are saying that there may be a list of Strings or there may be a null. 
+    To solve it we will use the <span class="negrita">elvis Operator</span>  <span class="cursiva">?:</span>  which will act to control that it is <span class="cursiva">null</span>  
+    and if it is it will return an <span class="cursiva">emptyList()</span>  so our images variable can be a <span class="cursiva">list of strings</span> 
+    or an empty list but it will never be <span class="cursiva">null</span> .</p>
+
+<p>Then we call our variable <span class="negrita">dogImages</span>  and clean it so that it does not have any images and now that it is empty we use <span class="negrita">addAll()</span> 
+     to put all the new images in it. In order for the images to be reloaded in the <span class="cursiva">RecyclerView</span> we will have to call the adapter and its
+     <span class="r-word">notifyDataSetChanged()</span>  function.</p>
+
+<p>Now we have to call the <span class="d-word">showError()</span>  function (which we have not yet created) if instead of entering through the if, enters through the else.</p>
+
+<section><pre><code class="language-kotlin">private fun showError() {
+    Toast.makeText(this, "An error occurred", Toast.LENGTH_SHORT) .show()
+}</code></pre>
+</section><br><br>
+
+<p>As you can see, it is a simple <span class="negrita">Toast</span> in case something should fail.</p>
+
+<p>Our entire method would look like this.</p>
+
+<section><pre><code class="language-kotlin">private fun searchByName(query:String){
+    CoroutineScope(Dispatchers.IO).launch {
+        val call = getRetrofit().create(APIService::class.java).getDogsByBreeds("$query/images")
+        val puppies = call.body()
+        runOnUiThread {
+            if(call.isSuccessful){
+                val images = puppies?.images ?: emptyList()
+                dogImages.clear()
+                dogImages.addAll(images)
+                adapter.notifyDataSetChanged()
+            }else{
+                showError()
+            }
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<h3>Configuring our search engine</h3>
+<p>Now we only have to configure the search engine to be able to make all the mechanism work.</p>
+
+<p>What do we do when we want to capture that a button has been pressed? We put a <span class="cursiva">listener</span> on it, right? 
+    Well here we will do the same in a similar way.</p>
+
+<p>In the first line of the <span class="inline-file">MainActivity</span>, after <span class="r-word">AppCompatActivity ()</span>  we will 
+    add the <span class="negrita">SearchView.OnQueryTextListener</span>  <span class="cursiva">listener</span> .</p>
+
+<section><pre><code class="language-kotlin">class MainActivity:AppCompatActivity(), SearchView.OnQueryTextListener{
+    .....
+</code></pre>
+</section><br><br>
+
+<p>With that line we are telling you that our class is going to implement the <span class="negrita">SearchView</span>  <span class="cursiva">listeners</span>, 
+    but since we have not yet implemented them, we will get an error at the beginning of the class. 
+    <span class="negrita">To solve</span>  it we will have to <span class="negrita">implement two methods</span>  in our class.</p>
+<section><pre><code class="language-kotlin">override fun onQueryTextChange(newText:String?):Boolean {
+    return true
+}</code></pre>
+</section><br><br>
+
+<p>This is the first of the search engine methods, it will notify us of the character that is added to the search engine, but we do not need that, 
+    we only need it to notify us when the user has finished writing so we leave it as it is and do nothing.</p>
+
+<p>The following method will be quite similar but it will be called when the user presses on enter when finishing searching and that is when we will have the text that we 
+    have written and we will pass it to retrofit so that it makes the request to the internet.</p>
+
+<section><pre><code class="language-kotlin">override fun onQueryTextSubmit(query: String?):Boolean {
+    if(!query.isNullOrEmpty()){
+        searchByName(query.lowercase())
+    }
+    return true
+}</code></pre>
+</section><br><br>
+
+<p>This function returns a parameter called query which is the text that the user has written and if you look it can also be <span class="cursiva">null</span>, 
+    so we check if the query is <span class="cursiva">null</span>  or <span class="cursiva">empty</span>  and if it is not we will call <span class="d-word">searchByName ()</span> 
+    passing it the search. Attention that before passing the query we call <span class="negrita">toLowerCase()</span>  function,, this function passes all the <span class="cursiva">String</span> 
+    to lowercase in case our API does not know how to work with uppercase.</p>
+
+<p>We end up going back to the <span class="r-word">onCreate ()</span>  function and we implement this listener that we have created for our <span class="negrita">SearchView</span>.</p>
+
+<section><pre><code class="language-kotlin">binding.svDogs.setOnQueryTextListener(this)</code></pre>
+</section><br><br>
+
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/RetrofitSample">Here</a>  you can see the content of the entire application</p>
+
+<p>App looks something like this:</p>
+
+
+<figure><img src="./UD7/images/UD7-Retrofit_app.gif" /><br><figcaption></figcaption></figure>
+<br>
+
+        </section><!-- End section -->
+
+
+    <!--*********************************************************Volley***********************************************************-->
+    <section class="apartado">
+    <a name="sVolley"></a>
+    <h2>Volley</h2>
+    
+    <h3>Add Volley to the project</h3>
+    <p>
+        We simply add the dependency to the gradle
+    </p>
+
+    <section><pre><code class="language-kotlin">dependencies {
+
+    ..............
+
+    //Volley
+    implementation("com.android.volley:volley:1.2.1")
+
+}</code></pre>
+    </section><br><br>
+    <p>Remember to add the internet permission in the <span class="inline-file">AndroidManifest.xml</span>, otherwise we will be able to make few internet calls</p>
+
+    <section><pre><code class="language-kotlin">&lt;uses-permission android:name="android.permission.INTERNET" /></code></pre>
+    </section><br><br>
+
+<!------------------------------------------GET String------------------------------------------------->
+
+<h3>GET call that returns a String</h3>
+<p>If we want to make a request to a URL and it returns only a text <span class="cursiva">string</span> , we have to do the following.</p>
+
+<p>The first thing we must do is create <span class="subrayado">an instance of the Volley's request queue</span> </p>
+<section><pre><code class="language-kotlin">var queue = Volley.newRequestQueue(this)</code></pre>
+</section><br><br>
+
+
+<p>We create a variable that will be our request, this will be an object of the <span class="r-word">StringRequest</span> class. 
+We pass the <span class="negrita">URL</span>  to which we are going to make the call as the <span class="subrayado">first parameter</span> .
+The next two parameters will be interfaces that will return the result or the error.
+In the result we will have a <span class="d-word">response</span>  variable, which is the <span class="cursiva">String</span> that our call returns.</p>
+
+<section><pre><code class="language-kotlin">val stringRequest = StringRequest(
+    url,
+    { response ->
+        Log.i(RESPONSE_TAG, "Response is: ${response}")
+    },
+    { error -> error.printStackTrace() }
+)</code></pre>
+</section><br><br>
+
+<p>Finally we add our request to the Volley queue.</p>
+
+<section><pre><code class="language-kotlin">queue.add(stringRequest)</code></pre>
+</section><br><br>
+
+<p>So, the complete code would look something like this.</p>
+
+<section><pre><code class="language-kotlin">fun getStringVolley(){
+    //Create an instances of Volley's queue
+    var queue = Volley.newRequestQueue(this)
+
+    //URL
+    val url = "https:/url_that_returns_us/a_string"
+
+    //String Request
+    val stringRequest = StringRequest(
+        url,
+        { response ->
+            //Response is the String retrieved from de URL
+            Log.i(RESPONSE_TAG, "Response is: ${response}")
+        },
+        { error -> error.printStackTrace() }
+    )
+
+    //Adding our request to the Volley's queue
+    queue.add(stringRequest)
+
+}</code></pre>
+</section><br><br>
+
+
+<!------------------------------------------GET JSONObject------------------------------------------------->
+
+<h3>GET call that returns a JSONObject</h3>
+
+<p>If we want to make a request to a URL and it returns a <span class="r-word">JSONObject</span>  we have to do the following.</p>
+
+
+<p>The first thing we must do is create an instance of the <span class="negrita">Volley</span>  request queue</p>
+<section><pre><code class="language-kotlin">var queue = Volley.newRequestQueue(this)</code></pre>
+</section><br><br>
+
+
+<p>We create a variable that will be our request, this will be an object of the <span class="r-word">JsonObjectRequest</span>  class.
+The first parameter that we pass is the method in our case a <span class="negrita">GET</span> .
+The second parameter is the <span class="negrita">Url</span> to which we are going to make the call.</p>
+
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> The call must return a <span class="d-word">jsonObject</span> , if it returns something else it will fail and enter the error.
+    </section>
+<section class="marco-b">
+        
+</section>
+
+<p>The next parameter we can pass a <span class="d-word">jsonObject</span> , but since our call is a <span class="negrita">GET</span>  we must pass a null. 
+    (Remember that in a GET call, the parameters are passed in the URL)</p>
+
+
+<p>The next two parameters will be interfaces that will return the result or the error.
+In the one of the result we will have a response variable, which is the <span class="negrita">JSONObject</span>  that our call returns.</p>
+
+<section><pre><code class="language-kotlin">val jsonObjectRequest = JsonObjectRequest(
+    Request.Method.GET,
+    url,
+    null,
+    { response ->
+        //Response is the jsonObject retrieved from de URL
+        Log.i(RESPONSE_TAG, "Response is: ${response}")
+    },
+    { error -> error.printStackTrace() }
+)</code></pre>
+</section><br><br>
+
+<p>Finally we add our request to the Volley queue.</p>
+
+<section><pre><code class="language-kotlin">queue.add(jsonObjectRequest)</code></pre>
+</section><br><br>
+
+<p>So, the complete code would look something like this.</p>
+
+<section><pre><code class="language-kotlin">fun getJSONObjectVolley(){
+    //Create an instances of Volley's queue
+    var queue = Volley.newRequestQueue(this)
+
+    //URL
+    val url = "https:/url_that_returns_us/a_json_object"
+
+    //jsonObject Request
+    val jsonObjectRequest = JsonObjectRequest(
+        Request.Method.GET,
+        url,
+        null,
+        { response ->
+            //Response is the jsonObject retrieved from de URL
+            Log.i(RESPONSE_TAG, "Response is: ${response}")
+        },
+        { error -> error.printStackTrace() }
+    )
+
+    //Adding our request to the Volley's queue
+    queue.add(jsonObjectRequest)
+
+}</code></pre>
+</section><br><br>
+
+    
+<!------------------------------------------POST JSONObject------------------------------------------------->
+
+<h3>POST call to send and receive a JSONObject</h3>
+
+<p>If we want to make a request to a <span class="negrita">Url</span>  and it returns a <span class="r-word">JSONObject</span>  and send a <span class="r-word">JSONObject</span>  we have to do a <span class="negrita">POST</span> .</p>
+
+
+<p>The first thing we must do is create an instance of the <span class="negrita">Volley</span>  request queue</p>
+<section><pre><code class="language-kotlin">var queue = Volley.newRequestQueue(this)</code></pre>
+</section><br><br>
+
+
+<p>We create a variable that will be our request, this will be an object of the <span class="r-word">JsonObjectRequest</span>  class.
+As the first parameter we pass the method to use, in this case a <span class="r-word">POST</span> .
+As the second parameter, the <span class="r-word">Url</span>  to which we are going to make the call.</p> 
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> The call must return a <span class="d-word">jsonObject</span> , if it returns something else it will fail and enter the error.
+    </section>
+<section class="marco-b">
+        
+</section>
+
+<p>The third parameter is the <span class="negrita">jsonObject</span>  that we send to the server.</p>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> Warning. A <span class="d-word">jsonObject</span> , it is not worth something else such as a <span class="d-word">jsonArray</span> 
+    </section>
+<section class="marco-b">
+        
+</section>
+
+
+<p>The next parameter we can pass a <span class="d-word">jsonObject</span> , but for our call to be a <span class="r-word">GET</span>  we must pass a <span class="cursiva">null</span> .</p>
+
+
+<p>The next two parameters will be interfaces that will return the result or the error.
+In the result we will have a response variable, which is the JSONObject that our call returns.</p>
+
+<section><pre><code class="language-kotlin">val jsonObjectRequest = JsonObjectRequest(
+    Request.Method.POST,
+    url,
+    jsonObject,
+    { response ->
+        //Response is the jsonObject retrieved from de URL
+        Log.i(RESPONSE_TAG, "Response is: ${response}")
+    },
+    { error -> error.printStackTrace() }
+)</code></pre>
+</section><br><br>
+
+<p>Finally we add our request to the Volley queue.</p>
+
+<section><pre><code class="language-kotlin">queue.add(jsonObjectRequest)</code></pre>
+</section><br><br>
+
+<p>So, the complete code would look something like this.</p>
+
+<section><pre><code class="language-kotlin">fun postJSONObjectVolley(){
+    //Create an instances of Volley's queue
+    var queue = Volley.newRequestQueue(this)
+
+    //URL
+    val url = "https:/url_that_returns_us/a_json_object"
+
+    val jsonObject = JSONObject() //The jsonObject sent
+    jsonObject.put("name","Gandalf")
+    jsonObject.put("class","Wizard")
+
+    //jsonObject Request
+    val jsonObjectRequest = JsonObjectRequest(
+        Request.Method.POST,
+        url,
+        jsonObject,
+        { response ->
+            //Response is the jsonObject retrieved from de URL
+            Log.i(RESPONSE_TAG, "Response is: ${response}")
+        },
+        { error -> error.printStackTrace() }
+    )
+
+    //Adding our request to the Volley's queue
+    queue.add(jsonObjectRequest)
+
+}</code></pre>
+</section><br><br>
+
+<!------------------------------------------GET Json Array------------------------------------------------->
+<p>In the case of wanting to receive a <span class="d-word">jsonArray</span>  by means of <span class="r-word">GET</span>,
+    the code would be similar to the previous one but changing the type of request for a <span class="r-word">JsonArrayRequest</span> </p>
+
+<section><pre><code class="language-kotlin">fun getJSONArrayVolley(){
+    //Create an instances of Volley's queue
+    var queue = Volley.newRequestQueue(this)
+
+    //URL
+    val url = "https:/url_that_returns_us/a_json_array"
+
+    //jsonArrayRequest Request
+    val jsonArrayRequest = JsonArrayRequest(
+        Request.Method.GET,
+        url,
+        null,
+        { response ->
+            //Response is the jsonArray retrieved from de URL
+            Log.i(RESPONSE_TAG, "Response is: ${response}")
+        },
+        { error -> error.printStackTrace() }
+    )
+
+    //Adding our request to the Volley's queue
+    queue.add(jsonArrayRequest)
+
+}</code></pre>
+</section><br><br>
+
+<!------------------------------------------POST Json Array------------------------------------------------->
+<p>In the case of wanting to send a <span class="d-word">jsonArray</span>  via <span class="r-word">POST</span>, 
+    the code would be similar to the previous one but changing the request type for a <span class="r-word">JsonArrayRequest</span> </p>
+
+<section><pre><code class="language-kotlin">fun postJSONArrayVolley(){
+    //Create an instances of Volley's queue
+    var queue = Volley.newRequestQueue(this)
+
+    //URL
+    val url = "https:/url_that_returns_us/a_json_object"
+    
+    val jsonArray = JSONArray()
+    jsonArray.put(JSONObject().put("name", "Gandalf").put("class", "Wizard"))
+    jsonArray.put(JSONObject().put("name", "Frodo").put("class", "Hobbit"))
+
+    //jsonArrayRequest Request
+    val jsonArrayRequest = JsonArrayRequest(
+        Request.Method.POST,
+        url,
+        jsonArray,
+        { response ->
+            //Response is the jsonArray retrieved from de URL
+            Log.i(RESPONSE_TAG, "Response is: ${response}")
+        },
+        { error -> error.printStackTrace() }
+    )
+
+    //Adding our request to the Volley's queue
+    queue.add(jsonArrayRequest)</code></pre>
+</section><br><br>
+    
+<p>You can see the example code in this <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/blob/master/VolleyCode/app/src/main/java/com/catata/volleycode/MainActivity.kt">GitHub link</a></p>
+
+<p><span class="negrita">Note:</span> If your API or your images are accessed through the <span class="d-word">http</span> protocol and not http<span class="negrita">s</span>, 
+    it may not work for you, that is, the image is not downloaded or the API does not respond. This is because for some versions, Android by default limits network connections
+     in clear, that is, they are not encrypted such as https. To solve it we have several ways, the simplest is to add the following directive in the <span class="inline-file">AndroidManifest.xml</span></p>
+
+<section><pre><code class="language-kotlin">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;manifest ...>
+    &lt;uses-permission android:name="android.permission.INTERNET" />
+    &lt;application
+        ...
+        android:usesCleartextTraffic="true"
+        ...>
+        ...
+    &lt;/application>
+&lt;/manifest></code></pre>
+</section><br><br>
+
+
+</section>
+
+<!--*********************************************************Practice 6***********************************************************-->
+<section class="apartado">
+<a name="sPractice6"></a>
+<h2>Practice 6</h2>
+<p class="sub-section">P6 Consuming Internet API Rest</p>
+
+<p>This practice consists of developing a free application that:</p>
+<ol>
+    <li>
+        <span class="negrita">Use a Rest API.</span>. (1pts)
+        <p>You can use the API you want, there are many free although some of them ask to register. Others are free up to a maximum number of requests.
+            There are APIs about the weather, movies, books, subway schedules, translators, etc ...
+            Remember that some APIs need an API_KEY that usually goes along with the URL. <br>
+            Here you have some websites to get some ideas. <br>
+            <ul>
+                <li><a class="enlace" target="_blank" href="https://rapidapi.com/collection/list-of-free-apis">https://rapidapi.com/collection/list-of-free-apis</a> </li>
+                <li><a class="enlace" target="_blank" href="https://github.com/public-apis/public-apis">https://github.com/public-apis/public-apis</a> </li>
+            </ul>
+        </p>
+    </li>
+    <li><span class="negrita">Request with GET method to REST API service</span>. (4pts)
+        <ul>
+            <li>Using Retrofit2: (3pts)</li>
+            <li>Using Volley: (4pts)</li>
+        </ul>
+    </li>
+    <li><span class="negrita">The API must have at least 1 field with an URL Image</span>. (2pts)
+        <p>Use an error and a placeholder image that must be related to the theme of your app. You can choose one of the two libraries bellow
+        <ul>
+            <li>Using Glide (2ptos)</li>
+            <li>Using Picasso (1.5ptos)</li>
+        </ul></p>
+    </li>
+
+    <li><span class="negrita">Others:</span> 3(pts)
+    <ul>
+        <li>ViewModel Pattern and coroutines. (1pt)</li>
+        <li>Appearance and styling of the application. Use recyclerView, make images look good, use appropriate margins, use appropriate colors,etc. (1.25pts) </li>
+        <li>Directory structure. (0.25pts)</li>
+        <li>Comments and Clean Code. (0.5pts)</li>
+    </ul>
+    </li>
+
+    <li><span class="negrita">Extra Point</span> (+2pt)
+        <p>Use POST method to upload your data to the server. The API must allow this operation and you should build a kind of form</p>
+    </li>
+</ol>
+
+</section><!-- End section -->
+
+    </section><!-- End section -->
+
+    
+
+    <!--*********************************************************Webgraphy***********************************************************-->
+    <section class="apartado">
+    <a name="sWebgraphy"></a>
+    <h2>Webgraphy</h2>
+    
+    <ul>
+        <li><a class="enlace" target="_blank" href="https://github.com/bumptech/glide">Glide</a> </li>
+        <li><a class="enlace" target="_blank" href="https://developer.android.com/training/volley">Volley</a> </li>
+        <li><a class="enlace" target="_blank" href="https://square.github.io/retrofit/">Retrofit</a> </li>
+        <li><a class="enlace" target="_blank" href="https://developer.android.com/reference/java/net/HttpURLConnection">HttpURLConnection</a> </li>
+        <li>
+            <a class="enlace" target="_blank" href="https://cursokotlin.com/tutorial-retrofit-2-en-kotlin-con-corrutinas-consumiendo-api-capitulo-20-v2/">Retrofit tutorial</a> 
+        </li>
+
+    </ul>
+    
+    
+    </section><!-- End section -->
+
+    <script src="../script/prism.js"></script>
+</body>
+</html>

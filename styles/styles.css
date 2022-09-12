@@ -166,27 +166,33 @@ span.icono{
     color:blue;
 }
 
+.main-menu .fila{
+    display: flex;
+    min-height: 80px;
+    margin-top: 20px;
+}
 
 .main-menu, .main-menu>li{
     list-style: none;    
 }
 
-.main-menu>a{
-    display: inline-block;
-    min-height: 75px;
-    line-height: 75px;
-    overflow: hidden;
-    width: 31.33%;
+.main-menu a{    
     padding: 10px;
-    margin: 10px 1%;
+    margin: 0 1%;
     border: 2px solid rgb(16, 190, 68);
     border-radius: 7px;
     background-color:rgba(158, 253, 171, 0.5);
     color:rgba(53, 78, 64, 0.7);
     text-align: center;
     box-sizing: border-box;
-
+    flex: 1 1 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
 }
+
+
 .main-menu a{
     text-decoration: none;
 }
@@ -201,6 +207,8 @@ body h1{
     border-radius: 9px;
     background-color: rgba(0,90, 255, 0.7);
 }
+
+
 
 html body .oculto{
     display: none !important;

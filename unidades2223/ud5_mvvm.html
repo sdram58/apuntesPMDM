@@ -1,0 +1,2164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coroutines - MVVM - Live Data</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/prism.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <script src="../script/script.js"></script>
+</head>
+<body>
+    <h1>UD5.- Coroutines - MVVM - Live Data</h1>
+    <div class="main-menu">
+        <a href="#sMVVM">MVVM</a><a 
+           href="#sLiveData">Live Data</a><a 
+           href="#sCoroutines">Introduction to Coroutines</a><a
+           href="#sWebGraphy">WebGraphy</a>
+    </div>
+
+    
+
+
+    <!--*********************************************************MODEL - VIEW - VIEWMODEL (MVVM)***********************************************************-->
+    <section class="apartado">
+    <a name="sMVVM"></a>
+    <h2>MODEL - VIEW - VIEWMODEL (MVVM)</h2>
+    
+    <p>This practice is the first start with the <span class="r-word">Model-View-ViewModel</span>  architecture, recommended for developing apps.</p>
+
+    <p>We will explore the benefits this architecture provides, and the problems it solves.</p>
+    
+    <p>We will use the <span class="r-word">ViewModel</span>  and <span class="r-word">LiveData</span>  classes.</p>
+    
+    <p>We will develop an app that consists of a <span class="d-word">Body Mass Index Calculator</span> </p>
+
+    <figure><img src="UD5/mvvm/images/UD5-running_app_calculator.gif" /><br><figcaption>Running App</figcaption></figure>
+    <br>
+
+    <h3>Creating the project</h3>
+    
+ <ul>
+     <li>Select <span class="negrita">Empty Activity</span>  as the template.</li>
+     <li><span class="subrayado">Add dependencies</span>  for ViewModel and LiveData support; also for Navigation and Coroutines.
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita"> build.gradle (Module: app)</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-kotlin"> def viewModelVersion ="2.4.0"
+implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewModelVersion"
+implementation "androidx.lifecycle:lifecycle-livedata-ktx:$viewModelVersion"
+
+def navigationVersion = "2.3.5"
+implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+
+implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")</code></pre>
+            </section>
+    </section>
+    </li>
+
+    <li>Enable ViewBinding
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita"> build.gradle (Module: app)</span>
+        </section>
+    <section class="marco-b">
+          <section><pre><code class="language-kotlin">android {
+    // ...
+
+    buildFeatures {
+        viewBinding true
+    }
+}</code></pre>
+          </section>
+    </section>
+    </li>
+
+    <li>Create the Navigation Graph <span class="inline-file">res/navigation/nav_graph.xml</span>
+    <br><br>Add <span class="r-word">NavHostFragment</span>  to the <span class="r-word">MainActivity</span> layout:
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">res/layout/activity_main.xml</span>
+        </section>
+    <section class="marco-b">
+          <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    &lt;androidx.fragment.app.FragmentContainerView
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:id="@+id/nav_host_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout></code></pre>
+          </section>
+    </section>
+    </li>
+
+    <li>Create a destination on the <span class="inline-file">nav_graph.xml</span> called <span class="d-word">BMIFragment</span>
+    
+    <br><br>Configure <span class="r-word">ViewBinding</span> :
+    
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">BMIFragment.kt</span>
+        </section>
+    <section class="marco-b">
+        <section><pre><code class="language-kotlin">class BMIFragment : Fragment() {
+    
+        private lateinit var binding: FragmentBMIBinding
+    
+    
+        override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            // Inflate the layout for this fragment
+            return FragmentBMIBinding
+                .inflate(inflater, container, false)
+                    .also { binding = it }.root
+    
+        }
+    
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+        }
+    }</code></pre>
+        </section>
+        
+    </section>
+</li>
+    <li>Add the following Views to the Layout
+        <section class="marco-t file-">
+            <span class="icono file"> </span> <span class="negrita">res/layout/fragment_b_m_i.xml</span>
+            </section>
+        <section class="marco-b">
+             <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    &lt;LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        &lt;EditText
+            android:id="@+id/etWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Weight in Kg" />
+
+        &lt;EditText
+            android:id="@+id/etHeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Height in cm" />
+
+        &lt;Button
+            android:id="@+id/btnCalculate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="calculate body mass index" />
+
+        &lt;TextView
+            android:id="@+id/tvBMI"
+            android:textSize="26sp"
+            android:textColor="@color/purple_500"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        &lt;ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            &lt;TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris finibus nibh a pretium mattis. Nulla facilisi. Aliquam volutpat tincidunt orci ac volutpat. Donec sit amet aliquam nisl, sed sollicitudin nibh. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas velit nunc, tempus vitae lectus ut, pellentesque dapibus libero. Etiam laoreet quam sem, sit amet pharetra elit rhoncus quis. Sed hendrerit ac enim vel eleifend. Suspendisse potenti. Nullam eleifend, augue id condimentum bibendum, enim nibh accumsan diam, eu gravida odio turpis rutrum mi. Integer ullamcorper enim diam, vitae pharetra ex ultricies vel. Vivamus lacinia non mauris id blandit. Donec varius rhoncus mauris, vel luctus nibh volutpat at. Morbi turpis dolor, scelerisque vel quam sit amet, ultricies mattis eros. Etiam nisl risus, imperdiet vitae vestibulum faucibus, vehicula eu mauris. Vestibulum bibendum luctus ipsum at rhoncus. Nam sodales metus at turpis porttitor efficitur. Sed dui nisl, viverra in massa vitae, vestibulum bibendum tellus. Phasellus suscipit risus est, vitae hendrerit nunc rhoncus ut. Aenean commodo venenatis lacinia. Nunc fermentum felis ligula, ut placerat metus vulputate ullamcorper. Donec metus diam, aliquet vitae nulla nec, blandit placerat sem. Cras tempus tincidunt velit in pulvinar. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent nec risus eget augue viverra sollicitudin. Maecenas volutpat nunc vel orci rutrum, ac mollis elit sollicitudin. Nulla eget tempor turpis. Curabitur bibendum dapibus metus, sit amet viverra justo imperdiet ac. Duis facilisis sem libero, ut rutrum ipsum pellentesque laoreet." />
+        &lt;/ScrollView>
+    &lt;/LinearLayout>
+
+    &lt;ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout></code></pre>
+             </section><br><br>   
+        </section>
+
+        <figure><img src="UD5/mvvm/images/ud5-2021-11-08-12-51-20.png" /><br><figcaption></figcaption></figure>
+        
+    </li>
+
+ </ul>
+
+    <h3>BMI Calculator</h3>
+    <p>The app that we are going to develop consists of the user entering a weight in kg and a height in cm. The app will determine what your body mass index is.</p>
+    
+    <p>This funcionality is implemented by <span class="d-word">BMICalculator</span>  class</p>
+    
+    <p>The <span class="d-word">BMICalculator</span>  class has the calculate method that receives as a parameter a 
+        <span class="d-word">Request</span>  object with the requested <span class="d-word">weight</span>  and <span class="d-word">height</span>
+        fields, and calculates the <span class="negrita">bmi (Body Mass Index)</span>. Weight/Height<sup>2</sup></p>
+    <p>A pause (<span class="r-word">sleep ()</span> ) has been added to simulate obtaining the imc through a long operation, such as accessing a database, a server, etc.</p>
+    
+    <p>Create this class:</p>
+    
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">BMICalculator.kt</span>
+        </section>
+    <section class="marco-b">
+       <section><pre><code class="language-kotlin">class BMICalculator{
+
+    data class Request(
+        val weight:Double,
+        val height:Double
+    )
+
+    private fun calcMBI(weight: Double, height: Double):Double = weight/ (height/100).pow(2)
+
+    fun calculate(request:Request):Double{
+
+        Thread.sleep(5000)
+        println(Thread.currentThread().name)
+
+        return calcMBI(request.weight, request.height)
+        
+    }
+}</code></pre>
+    </section></section>
+
+
+    <h3>Crashes, Data Loss, and Memory Leaks</h3>
+
+<p>When developing an Android app, a common mistake is writing all the code in an Activity or Fragment.</p>
+
+<p>For example, in theres    method of the <span class="inline-file">BMIFragment</span> class we might be tempted to do the following:</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">BMIFragment.kt</span>
+    </section>
+<section class="marco-b">
+       <section><pre><code class="language-kotlin"> override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    binding.btnCalculate.setOnClickListener {
+
+
+        binding.progressCircular.visibility = View.VISIBLE
+
+        val bmiCalculator = BMICalculator()
+        val mHeight = binding.etHeight.text.toString().toDouble()
+        val mWeight = binding.etWeight.text.toString().toDouble()
+
+        val bmi = bmiCalculator.calculate(BMICalculator.Request(mWeight, mHeight))
+        val dec = DecimalFormat("#,###.00")
+
+        binding.tvBMI.text = dec.format(bmi).toString()
+
+        binding.progressCircular.visibility = View.GONE
+    }
+}</code></pre>
+    </section>
+</section>
+
+<p>In code above we can see that when we push the button <span class="d-word">btnCalculate</span> we obtain the <span class="negrita">weight</span> 
+    and the <span class="negrita">height</span> introduced by the user. Then calls <span class="d-word">calculate</span> method from <span class="d-word">BMICalculator</span>  and then set de bmi on the 
+<span class="r-word">textView</span>  </p>
+
+<p class="sub-section">Blocking</p>
+
+<p>If you run the app, it may appear to be working properly. However there are several problems.</p>
+
+<p>The first is that the User Interface (View) has been blocked for as long as the <span class="d-word"> calculate()</span> method has been executing.</p>
+
+<figure><img src="UD5/mvvm/images/ud5-2021-11-08-13-21-31.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Due to the UI crash, we would not have been able to show, for example, a progress bar, or scroll our scroll view, or perhaps give the user the option to 
+    cancel the operation... What's more, if the operation takes more than 5 seconds and the user tries After interacting with the User Interface in the meantime, 
+    the Android system will show you the infamous "<span class="cursiva">
+        <a class="enlace" target="_blank" href="https://developer.android.com/training/articles/perf-anr">application is not responding</a></span> " dialog.</p>
+
+<section class="marco-t err">
+    <span class="icono error"> </span> Long-lived operations should not be performed on the UI thread.
+    </section>
+<section class="marco-b">
+        
+</section>
+
+<p>One solution that was widely used for some time was the use of the <span class="r-word">AsyncTask</span> java class, to run long-running tasks in the background.
+    It used to be something like this:</p>
+
+<section><pre><code class="language-kotlin"> private class DownloadFilesTask extends AsyncTask&lt;URL, Integer, Long> {
+     protected Long doInBackground(URL... urls) {
+         int count = urls.length;
+         long totalSize = 0;
+         for (int i = 0; i &lt; count; i++) {
+             totalSize += Downloader.downloadFile(urls[i]);
+             publishProgress((int) ((i / (float) count) * 100));
+             // Escape early if cancel() is called
+             if (isCancelled()) break;
+         }
+         return totalSize;
+     }
+
+     protected void onProgressUpdate(Integer... progress) {
+         setProgressPercent(progress[0]);
+     }
+
+     protected void onPostExecute(Long result) {
+         showDialog("Downloaded " + result + " bytes");
+     }
+ }</code></pre>
+</section>
+
+<p>Once created, a task is executed very simply:</p>
+
+<section><pre><code class="language-kotlin"> new DownloadFilesTask().execute(url1, url2, url3);</code></pre>
+</section>
+
+<p><a class="enlace" target="_blank" href="https://developer.android.com/reference/android/os/AsyncTask">More Info about AsyncTask</a></p>
+ 
+<p>The intention of using <span class="r-word">AsyncTask</span>  is to run the <span class="d-word">calculate()</span>  method on a background task, and update the <span class="r-word">TextView</span>  with the quota obtained when the task ends.</p>
+
+<figure><img src="UD5/mvvm/images/ud5-2021-11-08-13-32-25.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>This prevents blocking of the user interface. If you run the app now, you'll see that the UI is still responding even when the long-running
+     <span class="d-word">calculate()</span>  task is running.</p>
+<p>But this solution doesn't solve all problems either.</p>
+
+<p class="sub-section">Data loss</p>
+
+<p>A characteristic behavior of <span class="negrita">Android</span> is that when the user rotates the mobile screen, <span class="subrayado">the system destroys the running <span class="r-word">Activity</span> </span>,
+    and creates a new one with the new screen configuration. With this, all added views (<span class="r-word">Fragments</span> , widgets, etc.) and all variables of the destroyed <span class="r-word">Activity</span>  
+    instance are also lost. Furthermore, the layout of the <span class="r-word">Activity</span>  returns to the starting point, as defined in the xml.</p>
+
+<p>So because of this, neither of the above two solutions solves the data loss problem.</p>
+
+<ul>
+    <li>
+        
+<span class="subrayado"><span class="negrita">Without AsyncTask</span></span>  : although the app has survived the crash and the quota has been shown in the <span class="negrita">&lt;TextView></span>,
+ if the user then rotates the mobile, the <span class="d-word">bmi</span>  disappears from the <span class="negrita">&lt;TextView></span>, when Android destroys the <span class="r-word">Activity</span>  and creates a new one.
+
+ <figure><img src="UD5/mvvm/images/ud5-2021-11-08-13-39-45.png" /><br><figcaption></figcaption></figure>
+ <br>
+ 
+    </li>
+
+    <li>
+        <span class="subrayado"><span class="negrita">With AsyncTask</span></span>: even if the app has not crashed during the calculation, 
+        the data is still lost if the user rotates the screen.
+
+        <figure><img src="UD5/mvvm/images/ud5-2021-11-08-13-40-53.png" /><br><figcaption></figcaption></figure>
+        <br>
+        
+    </li>
+</ul>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> You must consider that the <span class="negrita">User Interface does not belong to you</span>  and that the android system can do with it whatever it deems appropriate.
+    </section>
+<section class="marco-b">
+        
+</section>
+
+<p class="sub-section">Memory Leaks</p>
+<p>We now go to the case that the user rotates the screen just when the calculation is being carried out.</p>
+
+<p>With the program without <span class="r-word">AsyncTask</span>, the behavior of the app will be erratic, since <span class="r-word">Android</span>  cannot destroy the <span class="r-word">Activity</span> 
+     or create a new one until the <span class="d-word">calculate()</span>  task has finished.</p>
+
+     <figure><img src="UD5/mvvm/images/ud5-2021-11-08-13-50-03.png" /><br><figcaption></figcaption></figure>
+     <br>
+     
+<p>With the program with <span class="r-word">AsyncTask</span> , the following happens: when the screen is rotated in the middle of executing the <span class="r-word">AsyncTask</span>, 
+    <span class="negrita">Android</span>  will try to destroy the running <span class="d-word">MainActivity</span> (keep in mind that the <span class="d-word">BMIFragment</span>
+    fragment is inside the <span class="d-word">MainActivity</span>). However, it will not be able to do so since the <span class="r-word">AsyncTask</span> 
+     maintains a reference to the variable <span class="d-word">binding.tvBMI</span>  that belongs to the <span class="d-word">MainActivity</span>. So <span class="negrita">Android</span> 
+      will create a new <span class="d-word">MainActivity</span>  without being able to destroy the previous one, which will unnecessarily occupy the system's ram memory. 
+      This is a <span class="negrita">Memory Leak</span>.</p>
+
+<p>In addition, when the <span class="d-word">AsyncTask</span> finishes, it will put the resulting <span class="d-word">BMI</span>  in the TextView of the 
+     that should have been destroyed and that has been lost in memory, and therefore, it will never be shown in the <span class="r-word">TextView</span>  of the new 
+     <span class="d-word">MainActivity</span>  in execution.</p>
+
+<figure><img src="UD5/mvvm/images/ud5-2021-11-08-13-55-39.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> We have not keep references to UI elements in background tasks.
+    </section>
+<section class="marco-b">
+        
+</section>
+
+<p>To alleviate these problems, different procedures have been constantly appearing that involved static <span class="r-word">AsyncTasks</span> , <span class="r-word">WeakReferences</span>,
+    overrides of life cycle methods, etc, all of them with their advantages and disadvantages. Currently, it seems that the most accepted solution is to implement the 
+    <span class="negrita">MVVM architecture</span>  that we will see below.</p>
+
+<h3>MVVM architecture</h3>
+
+<p>The <span class="r-word">Model-View-ViewModel</span> architecture is based on the Separation of Interests principle, dividing the app code into three categories:</p>
+
+<ul>
+    <li><span class="r-word">View</span> : It is in charge of the interaction with the user.</li>
+    <li><span class="r-word">Model</span> : It is in charge of carrying out the actions on the data.</li>
+    <li><span class="r-word">ViewModel</span> : Acts as a link between the Model and the View.</li>
+</ul>
+
+<p>When the View has to perform any action on the data (calculation, query, modification, etc ...) it does not do so directly on the <span class="r-word">Model</span> , but uses the <span class="r-word">ViewModel</span>
+    as an intermediary. The <span class="r-word">ViewModel</span> transfers the action to the <span class="r-word">Model</span>. The <span class="r-word">Model</span> 
+    responds to the <span class="r-word">ViewModel</span>  with the result of the action (data or errors), and the <span class="r-word">ViewModel</span> passes it back to the View. 
+    In Android apps we will implement the <span class="r-word">ViewModel</span>  using the <span class="r-word">AndroidViewModel</span> class.</p>
+
+<p>The key point for decoupling the View from the rest of the app's components, and thus avoiding the problems seen in the previous point, 
+    is that the <span class="r-word">ViewModel</span> does not directly transfer the result of the actions to the View, but rather the View is the who observes the result. 
+    The watch mechanism implies that the ViewModel reports the result to the View, <span class="negrita">only if the View is running</span>. 
+    To implement the observation we will use the <span class="r-word">LiveData</span>  class.</p>
+
+<figure><img src="UD5/mvvm/images/ud5-2021-11-08-14-25-58.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Thus, the communication between these components is usually like this:</p>
+
+<ul>
+    <li>The <span class="negrita">View</span>  calls methods of the <span class="negrita">ViewModel</span> to perform actions on the data, and watches the 
+        <span class="negrita">LiveData</span> to obtain the result.</li>
+    
+    <li>The <span class="negrita">ViewModel</span>  transfers the actions to the <span class="negrita">Model</span> through method calls (usually in the background), 
+        and saves the resulting data in the <span class="negrita">LiveData</span> .</li>
+
+    <li>The <span class="negrita">Model</span> performs the actions on the data and returns the result to the <span class="negrita">ViewModel</span> (with return or through callbacks).</li>
+</ul>
+
+<p>Another key aspect is that the <span class="r-word">ViewModel</span> survives screen rotation, so the data stored in the <span class="r-word">ViewModel</span> is not lost when
+    <span class="negrita">Android</span>  destroys the View and recreates it.</p>
+
+<figure><img src="UD5/mvvm/images/ud5-2021-11-08-14-29-35.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>MVVM implementation</h3>
+
+<p>To implement a <span class="negrita">ViewModel</span>  in Android you have to create a class and make it extend from the <span class="r-word">AndroidViewModel</span> class.</p>
+
+<p>In this app we will call this class <span class="d-word">BMICalculatorViewModel</span> . In it we do the following:</p>
+
+<ul>
+    <li>We declare the variable <span class="d-word">bmi</span>  of type Double wrapped in the <span class="d-word">MutableLiveData</span> class (Mutable allows changing the value of the variable).</li>
+    <li>In the class constructor we initialize the Model (<span class="r-word">BMICalculator.kt</span>).</li>
+    <li>We define the <span class="d-word">calculate()</span>  method that will be called by the View, and which, in turn, calls the Model's <span class="d-word">calculate()</span> 
+        method in the background.</li>
+</ul>
+<br>
+
+<p>This method receives the data from the View (weight and height), and transforms it into a <span class="d-word">BMICalculator.Request</span>  object to send to the 
+    <span class="d-word">Model</span>.</p>
+
+<p>The <span class="d-word">calculate()</span> method of the <span class="negrita">Model</span> is called in the background, and the result 
+    bmi is saved in the variable <span class="d-word">bmi</span>  (to change the value of a <span class="r-word">MutableLiveData</span>  within a background task, use the 
+    <span class="negrita">postValue()</span>  method).</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">BMICalculatorViewModel.kt</span>
+    </section>
+<section class="marco-b">
+        
+</section>
+
+<section><pre><code class="language-kotlin">class BMICalculatorViewModel: ViewModel() {
+
+    private val bmiCalculator: BMICalculator = BMICalculator()
+
+
+    val bmi : MutableLiveData&lt;Double> = MutableLiveData()
+
+
+
+    private fun calculate(weight: Double, height: Double) {
+        //Using coroutine
+        CoroutineScope(Dispatchers.IO).launch { //This run in background coroutine
+            val bmiResult = bmiCalculator.calculateWithFunctions(BMICalculator.Request(weight, height))
+
+            bmi.postValue(bmiResult)
+
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<p>The View (BMIFragment) for its part does the following:</p>
+
+<ul>
+    <li>Gets an instance of the <span class="d-word">BMICalculatorViewModel</span>. To obtain an instance of a <span class="r-word">ViewModel</span> , 
+        use the <span class="r-word">ViewModelProvider</span> , passing it the class .class of the <span class="r-word">ViewModel</span>  that you want to obtain.</li>
+    <li>When the user clicks the button, the data entered is obtained and the <span class="r-word">ViewModel</span>  is called to execute the <span class="d-word">calculate()</span>
+         action with that data.</li>
+    <li>The variable <span class="d-word">bmi</span>  (the <span class="negrita">LiveData</span> ) of the <span class="negrita">ViewModel</span>  is observed. 
+        When the value of the quota variable changes (that is, the result is set), the <span class="r-word">LiveData</span>  will call the <span class="r-word">onChanged()</span> 
+         method, reporting the value of the variable in the <span class="d-word">newBMI</span>  parameter. The only thing that is done is to set this value in the &lt;TextView>.</li>
+</ul>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">BMIFragment.kt</span>
+    </section>
+<section class="marco-b">
+<section><pre><code class="language-kotlin">class BMIFragment : Fragment() {
+
+    private lateinit var binding: FragmentBMIBinding
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return FragmentBMIBinding
+            .inflate(inflater, container, false)
+                .also { binding = it }.root
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        //Obtaining a reference to our ViewModel
+        val bmiCalculatorViewModel:BMICalculatorViewModel = ViewModelProvider(this)[BMICalculatorViewModel::class.java]
+
+        binding.btnCalculate.setOnClickListener {
+
+            closeKeyBoard(it) //closing soft keyboard
+
+
+            var mHeight = 0.0
+            var mWeight = 0.0
+
+            mHeight = binding.etHeight.text.toString().toDouble()
+            mWeight = binding.etWeight.text.toString().toDouble()
+
+            bmiCalculatorViewModel.calculateBMI(mWeight,mHeight)          
+
+        }
+
+        //keep observing change on bmi from viewModel
+        bmiCalculatorViewModel.bmi.observe(viewLifecycleOwner){ newBMI ->
+            val dec = DecimalFormat("#,###.00")
+
+            binding.tvBMI.text = dec.format(newBMI).toString()
+
+        }
+    }
+
+    private fun closeKeyBoard(view:View){
+            (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
+                hideSoftInputFromWindow(view.windowToken, 0)
+            }
+    }
+
+}</code></pre>
+</section></section>
+
+<p>The following diagram illustrates the communication between the 3 components of the app:</p>
+
+<figure><img src="UD5/mvvm/images/ud5-2021-11-08-15-34-40.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>The key to why the <span class="r-word">ViewModel</span>  solves the screen rotation problem is in the <span class="r-word">ViewLifecycleOwner</span> parameter passed 
+    to the <span class="r-word">observe</span>  method, which ensures that the notification of the result (through the call to <span class="negrita">onChanged()</span> , lambda), will only be made if the View ( the fragment) 
+    is still running when the result is obtained.</p>
+
+<p>Suppose that the user presses the calculate button with the mobile vertically, and while the calculation is being carried out rotates the mobile. 
+    The fragment that originally performed the <span class="d-word">calculate()</span>  action and <span class="negrita">observed</span> the result will no longer be 
+    running and will not be notified of the result. However, the <span class="subrayado">new fragment that has been created</span> and that also <span class="negrita">observes</span> 
+     the result will be notified.</p>
+<figure><img src="UD5/mvvm/images/ud5-2021-11-08-15-28-37.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p class="sub-section">Callbacks</p>
+
+<p>The callback mechanism consists in that when a method is called, it is passed an object in which the methods that it has to call to return the result are defined. 
+    In the methods of that object you define what to do with the result.</p>
+
+
+<p>Communication between the <span class="r-word">ViewModel</span>  and the <span class="r-word">Model</span>  is done through calls and <span class="negrita">callbacks</span>.
+    On return calls, the result is reported as well as progress and errors. The <span class="r-word">ViewModel</span>  notifies the <span class="r-word">View</span>  via <span class="r-word">LiveData</span> 
+     variables.</p>
+
+
+<p>In this case we're going to the same using callbacks, functions or sealed class. Notice that callbacks introduce more boling code</p>
+
+<p>Change the <span class="d-word">BMICalculator</span>  class so that it communicates the result through a callback, functions and sealed class:</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">BMICalculator.kt</span>
+    </section>
+<section class="marco-b">
+<section><pre><code class="language-kotlin">package com.cartatar.body_mass_index.model
+
+
+import java.lang.Exception
+import kotlin.math.pow
+
+
+typealias OnWrongHeight = (error:String)->Unit
+typealias OnWrongWeight = (error:String)->Unit
+typealias onError = (error:String)->Unit
+typealias OnSuccess = (bmi:Double)->Unit
+typealias OnLoading = (loading:Boolean)->Unit
+
+
+class BMICalculator{
+
+    data class Request(
+        val weight:Double,
+        val height:Double
+    )
+
+    private fun calcMBI(weight: Double, height: Double):Double = weight/ (height/100).pow(2)
+
+    /***************WITH FUNCTIONS***********************************/
+    //Long calculating function
+    fun calculateWithFunctions(request:Request,onSuccess: OnSuccess, onError: onError, onLoading: OnLoading, onWrongWeight: OnWrongWeight?, onWrongHeight: OnWrongHeight?){
+
+        onLoading(true)
+        val minHeight= 50
+        val minWeight = 10
+
+        var error = false
+
+        Thread.sleep(5000)
+        println(Thread.currentThread().name)
+
+        //If height is lower than minHeight call ourCallback
+        if(minHeight > request.height){
+            onWrongHeight?.let {
+                it.invoke("Height should be bigger")
+                error = true
+            }
+        }
+        if(minWeight > request.weight){
+            onWrongHeight?.let {
+                it.invoke("Weight should be bigger")
+                error = true
+            }
+        }
+
+        if(!error){
+            //All works fine
+            try{
+                val bmi = calcMBI(request.weight, request.height)
+                onSuccess(bmi)
+            }catch (e:Exception){
+                onError(e.toString())
+            }
+        }
+            onLoading(false)
+
+
+
+    }
+
+
+    /***************WITH SEALED CLASS***********************************/
+
+    sealed class Response{
+        class OKResult(val result:Double):Response()
+        class WrongWeight(val error:String):Response()
+        class WrongHeight(val error:String):Response()
+    }
+
+
+    //Long calculating function with Sealed class
+    fun calculateWithSealed(request:Request,onLoading: OnLoading?):Response{
+        onLoading?.invoke(true)
+        val minHeight= 50
+        val minWeight = 10
+
+        if(minWeight > request.weight) return ( Response.WrongWeight("Weight should be bigger"))
+        if(minHeight > request.height) return ( Response.WrongHeight("Height should be bigger"))
+
+
+
+
+        Thread.sleep(5000)
+        println("${Thread.currentThread().name}")
+
+        //All works fine
+        onLoading?.invoke(false)
+        return Response.OKResult(calcMBI(request.weight, request.height))
+
+    }
+
+
+
+
+    /***************WITH CALLBACK INTERFACE***********************************/
+
+    interface BMIResponse{
+        fun onSuccess(result:Double)
+        fun onHeightError(error:String)
+        fun onWeightError(error:String)
+        fun onError(error:String)
+        fun onLoading(loading: Boolean)
+    }
+
+    fun calculateWithCallback(request: Request, bmiResponse: BMIResponse){
+        bmiResponse.onLoading(true)
+        val minHeight= 50
+        val minWeight = 10
+
+        var error = false
+
+        Thread.sleep(5000)
+        println(Thread.currentThread().name)
+
+        //If height is lower than minHeight call ourCallback
+        if(minHeight > request.height){
+            bmiResponse.onHeightError("Height should be bigger")
+            error = true
+        }
+        if(minWeight > request.weight){
+            bmiResponse.onWeightError("Weight should be bigger")
+            error = true
+        }
+
+        if(!error){
+            //All works fine
+            try{
+                val bmi = calcMBI(request.weight, request.height)
+                bmiResponse.onSuccess(bmi)
+            }catch (e:Exception){
+                bmiResponse.onError(e.toString())
+            }
+        }
+        bmiResponse.onLoading(false)
+    }
+
+}</code></pre>
+</section></section>
+
+<p>Using callbacks we use an interface like this:
+</p>
+
+<section><pre><code class="language-kotlin">interface BMIResponse{
+    fun onSuccess(result:Double)
+    fun onHeightError(error:String)
+    fun onWeightError(error:String)
+    fun onError(error:String)
+    fun onLoading(loading: Boolean)
+}</code></pre>
+</section><br><br>
+
+<p>Using functions we have define some <span class="r-word">typealias</span> </p>
+
+<section><pre><code class="language-kotlin">typealias OnWrongHeight = (error:String)->Unit
+typealias OnWrongWeight = (error:String)->Unit
+typealias onError = (error:String)->Unit
+typealias OnSuccess = (bmi:Double)->Unit
+typealias OnLoading = (loading:Boolean)->Unit</code></pre>
+</section><br><br>
+
+<p>Using <span class="r-word">sealed classes</span>  we have defined it</p>
+
+<section><pre><code class="language-kotlin">sealed class Response{
+    class OKResult(val result:Double):Response()
+    class WrongWeight(val error:String):Response()
+    class WrongHeight(val error:String):Response()
+}</code></pre>
+</section><br><br>
+
+<p>Notice that we have added some extra function in order to control (in the backend side) some errors concerning the weight and height that they have a min value in this case.
+    Also look at the loading it is to indicate <span class="r-word">ViewModel</span>  when we have started and stopped </p>
+
+<p>Now let's see how our ViewModel looks. Depending on the case, we have to pass a callback, or implementing functions, o getting the resulted sealed class.</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">BMICalculatorViewModel.kt</span>
+    </section>
+<section class="marco-b">
+<section><pre><code class="language-kotlin">package com.cartatar.body_mass_index.viewmodel
+
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.cartatar.body_mass_index.model.BMICalculator
+import com.cartatar.body_mass_index.model.BMICalculator.BMIResponse
+import kotlinx.coroutines.*
+
+class BMICalculatorViewModel: ViewModel() {
+
+    private val bmiCalculator: BMICalculator = BMICalculator()
+
+
+    val bmi : MutableLiveData&lt;Double> = MutableLiveData()
+    val heightError : MutableLiveData&lt;String> = MutableLiveData()
+    val weightError : MutableLiveData&lt;String> = MutableLiveData()
+    val error : MutableLiveData&lt;String> = MutableLiveData()
+    val loading : MutableLiveData&lt;Boolean> = MutableLiveData()
+
+
+
+    //Choose which of the three methods you want to use
+    fun calculateBMI(weight:Double,height:Double){
+        
+        //calculateBMIFunctions(weight,height)
+        calculateBMICallBack(weight,height)
+        //calculateBMISealed(weight,height)
+
+    }
+
+    /**********WITH FUNCTIONS *************************/
+    private fun calculateBMIFunctions(weight: Double, height: Double) {
+        //Using coroutine
+        CoroutineScope(Dispatchers.IO).launch {
+            //Using callbacks
+            bmiCalculator.calculateWithFunctions(BMICalculator.Request(weight, height),
+                onSuccess = { mBMI->
+                    bmi.postValue(mBMI)
+                    heightError.postValue("")
+                    weightError.postValue("")
+                    error.postValue("")
+                },
+                onError = {
+                        e -> error.postValue(e)
+                },
+                onLoading = {
+                        isLoading -> loading.postValue(isLoading)
+                },
+                onWrongWeight = {
+                        e -> weightError.postValue(e)
+                }, null)
+
+        }
+    }
+
+    /******************WITH CALLBACK*************************************/
+    private fun calculateBMICallBack(weight: Double, height: Double) {
+
+
+        CoroutineScope(Dispatchers.IO).launch {
+            bmiCalculator.calculateWithCallback(
+                BMICalculator.Request(weight,height),
+                object:BMIResponse{
+                    override fun onSuccess(result: Double) {
+                        bmi.postValue(result)
+                        error.postValue("")
+                        heightError.postValue("")
+                        weightError.postValue("")
+                    }
+
+                    override fun onHeightError(error: String) {
+                        heightError.postValue(error)
+                    }
+
+                    override fun onWeightError(error: String) {
+                        weightError.postValue(error)
+                    }
+
+                    override fun onError(mError: String) {
+                        error.postValue(mError)
+                    }
+
+                    override fun onLoading(mLoading: Boolean) {
+                        loading.postValue(mLoading)
+                    }
+
+                })
+
+
+        }
+    }
+
+
+    /******************WITH SEALED***************************************/
+
+    private fun calculateBMISealed(weight: Double, height: Double) {
+
+        //viewModelScope.launch {
+            CoroutineScope(Dispatchers.IO).launch {
+            loading.postValue(true)
+            bmiCalculator.calculateWithSealed(BMICalculator.Request(weight, height),null).also{ res ->
+                when(res){
+                    is BMICalculator.Response.OKResult -> {
+                        bmi.postValue(res.result)
+                        heightError.postValue("")
+                        weightError.postValue("")
+                        error.postValue("") }
+                    is BMICalculator.Response.WrongHeight ->{
+                        heightError.postValue(res.error)
+                    }
+                    is BMICalculator.Response.WrongWeight ->{
+                        weightError.postValue(res.error)
+                    }
+                }
+
+            }
+            loading.postValue(false)
+        }
+    }
+
+
+
+
+}</code></pre>
+</section>
+</section>
+<p>As you can see the process is almost the same in the three variations. Make de call to our Model, 
+    then through <span class="negrita">callback</span> , <span class="negrita">function</span> , or <span class="negrita">returned sealed class</span> 
+     to set the data (bmi, errors, loading) into our LiveData with postValue()</p>
+    
+     <p>We've added some LiveData more</p>
+
+     <section><pre><code class="language-kotlin">val bmi : MutableLiveData&lt;Double> = MutableLiveData()
+val heightError : MutableLiveData&lt;String> = MutableLiveData()
+val weightError : MutableLiveData&lt;String> = MutableLiveData()
+val error : MutableLiveData&lt;String> = MutableLiveData()
+val loading : MutableLiveData&lt;Boolean> = MutableLiveData()</code></pre>
+    </section><br><br>
+
+
+<p>Now, we have to observe all this LiveData in our View (Fragment).</p>
+<p>Notice that we've added some extra checks in our views such us height or weight are not of double type. This kind of checks are usefull doing in the view side</p>
+
+<section><pre><code class="language-kotlin">try {
+    mHeight = binding.etHeight.text.toString().toDouble()
+}catch (e : Exception){
+    binding.etHeight.error = "You should insert a number"
+    error = true
+}</code></pre>
+</section><br><br>
+
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">BMIFragment.kt</span>
+    </section>
+<section class="marco-b">
+
+
+<section><pre><code class="language-kotlin">package com.cartatar.body_mass_index
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import com.cartatar.body_mass_index.databinding.FragmentBMIBinding
+import com.cartatar.body_mass_index.model.BMICalculator
+import com.cartatar.body_mass_index.viewmodel.BMICalculatorViewModel
+import java.text.DecimalFormat
+import android.app.Activity
+import android.view.inputmethod.InputMethodManager
+
+
+class BMIFragment : Fragment() {
+
+    private lateinit var binding: FragmentBMIBinding
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return FragmentBMIBinding
+            .inflate(inflater, container, false)
+                .also { binding = it }.root
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        /*binding.btnCalculate.setOnClickListener {
+
+
+            binding.progressCircular.visibility = View.VISIBLE
+
+            val bmiCalculator = BMICalculator()
+            val mHeight = binding.etHeight.text.toString().toDouble()
+            val mWeight = binding.etWeight.text.toString().toDouble()
+
+            val bmi = bmiCalculator.calculate(BMICalculator.Request(mWeight, mHeight))
+            val dec = DecimalFormat("#,###.00")
+
+            binding.tvBMI.text = dec.format(bmi).toString()
+            binding.progressCircular.visibility = View.GONE
+        }*/
+
+        //Obtaining a reference to our ViewModel
+        val bmiCalculatorViewModel:BMICalculatorViewModel = ViewModelProvider(this)[BMICalculatorViewModel::class.java]
+        binding.btnCalculate.setOnClickListener {
+
+            closeKeyBoard(it) //Closing soft keyboard
+
+            var error = false
+            var mHeight = 0.0
+            var mWeight = 0.0
+
+            binding.etHeight.error = null
+            binding.etWeight.error = null
+            try {
+                mHeight = binding.etHeight.text.toString().toDouble()
+            }catch (e : Exception){
+                binding.etHeight.error = "You should insert a number"
+                error = true
+            }
+
+            try {
+                mWeight = binding.etWeight.text.toString().toDouble()
+            }catch (e : Exception){
+                binding.etWeight.error = "You should insert a number"
+                error = true
+            }
+
+            if(!error){
+                //Call to calculator viewModel
+                bmiCalculatorViewModel.calculateBMI(mWeight,mHeight)
+            }
+
+
+        }
+
+        //keep observing change on mbi from viewModel
+        bmiCalculatorViewModel.bmi.observe(viewLifecycleOwner){ newBMI ->
+            val dec = DecimalFormat("#,###.00")
+
+            binding.tvBMI.text = dec.format(newBMI).toString()
+            binding.etWeight.error = null
+            binding.etHeight.error = null
+        }
+
+        bmiCalculatorViewModel.weightError.observe(viewLifecycleOwner){ error ->
+            if(error != "") {
+                binding.tvBMI.text  = ""
+                binding.etWeight.error = error
+            }else
+                binding.etWeight.error = null
+
+        }
+        bmiCalculatorViewModel.heightError.observe(viewLifecycleOwner){ error ->
+
+            if(error != "") {
+                binding.tvBMI.text  = ""
+                binding.etHeight.error = error
+            }else
+                binding.etHeight.error = null
+
+
+
+
+        }
+        bmiCalculatorViewModel.error.observe(viewLifecycleOwner){ error ->
+            if(error != "")
+                 binding.tvBMI.text = error
+
+
+        }
+
+        bmiCalculatorViewModel.loading.observe(viewLifecycleOwner){ isLoading ->
+            if(isLoading)
+                binding.progressCircular.visibility =  View.VISIBLE
+            else
+                binding.progressCircular.visibility =  View.GONE
+        }
+    }
+
+    private fun closeKeyBoard(view:View){
+            (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
+                hideSoftInputFromWindow(view.windowToken, 0)
+            }
+    }
+
+}</code></pre>
+</section>        
+</section>
+
+<p>Github <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/CalculatorBMI">link</a> to the code</p>
+
+<div class="tarea">
+    <p><span class="negrita">Exercise</span> </p>
+    
+<p>You implement a View that performs an action on a Model. For example a Mortgage calculator. Formula: capital*interest/12/(1-Math.pow(1+(interes/12),-returnPeriod*12)) where interest can be an arbitrary value (0.01605) or even an other field </p>
+<p>The View has to get data from the user, and the Model has to use it to perform the action.</p>
+<p>The Model must impose some kind of restriction on the data. Term (minimun number of months), capital (Max and min capital borrowed) </p>
+<p>The View should show the result of the action, and report errors and progress.</p>
+
+</div>
+
+    </section><!-- End section -->
+
+    <!--*********************************************************LIVE DATA***********************************************************-->
+    <section class="apartado">
+    <a name="sLiveData"></a>
+    <h2>LIVE DATA</h2>
+    
+
+    <p><span class="r-word">LiveData</span>  is a class to hold <span class="negrita">observable</span>  data.</p>
+    
+<p>It is specifically designed to be used in Activities, Fragments or Services, so that it only notifies the observers if the Activity, Fragment or Service is running.</p>
+
+<p>Android provides <span class="r-word">LiveData</span>  and <span class="r-word">MutableLiveData</span> classes that allow you to store any type of data, 
+    and observe its changes.</p>
+
+<p>We will develop an app that consists of a <span class="d-word">Gymnastics Trainer</span>.</p>
+
+    <figure><img src="UD5/livedata/images/UD5_running.gif" /><br><figcaption>Running App: Trainer</figcaption></figure>
+    <br>
+    
+    <h3>Creating the proyect</h3>
+
+    <ol>
+        <li>Select <span class="negrita">Empty Activity</span>  template</li>
+        <li>Add the following dependencies</li>
+
+        <section class="marco-t file-">
+            <span class="icono file"> </span> <span class="negrita">build.gradle (Module: app)</span>
+            </section>
+        <section class="marco-b">
+            <section><pre><code class="language-kotlin">dependencies {
+    // ...
+
+    def liveDataVersion ="2.4.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$liveDataVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$liveDataVersion"
+
+    def navigationVersion = "2.3.5"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+
+}</code></pre>
+            </section>
+        </section>
+
+        <li>Activate View Binding</li>
+
+        <section class="marco-t file-">
+            <span class="icono file"> </span> <span class="negrita">build.gradle (Module: app)</span>
+            </section>
+        <section class="marco-b">
+                <section><pre><code class="language-kotlin">android {
+    // ...
+
+    buildFeatures {
+        viewBinding true
+    }
+}</code></pre>
+                </section>
+        </section>
+        
+    <li>Create Navigation Graph: <span class="inline-file">res/navigation/nav_graph.xml</span>
+         <br>
+         Add the <span class="r-word">NavHostFragment</span>  to the <span class="negrita">MainActivity</span> 's layout
+
+         <section class="marco-t file-">
+             <span class="icono file"> </span> <span class="negrita">res/layout/activity_main.xml</span>
+             </section>
+         <section class="marco-b">
+                 <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    &lt;androidx.fragment.app.FragmentContainerView
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:id="@+id/nav_host_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout></code></pre>
+                 </section>
+         </section>
+         
+    </li>
+
+    <li>Add a destination in the <span class="inline-file">nav_graph.xml</span> called <span class="d-word">TrainerFragment</span>
+    <br>
+    Configure the <span class="negrita">ViewBinding</span>
+        <section class="marco-t file-">
+            <span class="icono file"> </span> <span class="negrita">TrainerFragment.kt</span>
+            </section>
+        <section class="marco-b">
+             <section><pre><code class="language-kotlin">import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.cartatar.livedatatrainer.databinding.FragmentTrainerBinding
+
+
+class TrainerFragment : Fragment() {
+
+    private lateinit var binding:FragmentTrainerBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return FragmentTrainerBinding.inflate(inflater, container, false)
+            .also { binding = it }
+            .root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+
+}</code></pre>
+             </section>
+        </section>
+        
+</li>
+
+<li>
+    Add the following Views to the Layout:
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">res/layout/fragment_trainer.xml</span>
+        </section>
+    <section class="marco-b">
+        <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="TrainerFragment">
+
+    &lt;ImageView
+        android:id="@+id/ivExercise"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    &lt;TextView
+        android:id="@+id/tvRepetition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="48sp"/>
+    &lt;TextView
+        android:id="@+id/tvChange"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ddee44"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:text="Change"
+        android:gravity="center"
+        android:textSize="48sp"/>
+&lt;/FrameLayout></code></pre>
+        </section>
+    </section>
+    
+</li>
+
+<li>Download the gif images from 
+    <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/LiveDataTrainer/app/src/main/res/drawable-v24">here</a>
+and drag them to the <span class="inline-folder">res/drawable</span> folder </li>
+        
+    </ol>
+
+
+    <h3>Trainer</h3>
+
+    <p>The following class implements the <span class="d-word">Trainer</span>. Its function is to give orders, which consist of what exercise to do and the number of repetitions. 
+        When the repetition number reaches 0, it warns of the change and changes the exercise.</p>
+
+    
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">Trainer.kt</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-kotlin">package com.cartatar.livedatatrainer.model
+
+import androidx.lifecycle.LiveData
+import kotlinx.coroutines.*
+
+import java.util.*
+import androidx.lifecycle.MutableLiveData
+
+
+
+
+typealias  OnOrder = (order:String) -> Unit
+
+class Trainer {
+    val random:Random = Random()
+
+    var training:Job? = null
+
+    var exercise = 0
+    var repetitions = -1
+
+
+    fun startTraining(onOrder: OnOrder) {
+        if (training == null || training!!.isCancelled || training!!.isCompleted) {
+            training = CoroutineScope(Dispatchers.IO).launch {
+
+                while (true) {
+                    if (repetitions &lt; 0) {
+                        repetitions = random.nextInt(3) + 3
+                        exercise = random.nextInt(5) + 1
+                    }
+                    onOrder("EXERCISE" + exercise + ":" + if (repetitions == 0) "CHANGE" else repetitions)
+                    repetitions--
+
+                    delay(1000)
+                }
+
+            }
+        }
+    }
+
+    fun stopTraining() {
+        training?.let {
+            if(it.isActive)
+                it.cancel()
+        }
+        exercise = 0
+        repetitions = -1
+
+    }
+}</code></pre>
+            </section>
+
+            <p>If it all works fine and in an console enviroment we could get an exit like this:</p>
+
+            <section><pre><code class="language-xml">Start
+EXERCISE2:3
+EXERCISE2:2
+EXERCISE2:1
+EXERCISE2:CHANGE
+EXERCISE1:3
+EXERCISE1:2
+EXERCISE1:1
+EXERCISE1:CHANGE
+EXERCISE4:3
+EXERCISE4:2
+EXERCISE4:1
+EXERCISE4:CHANGE
+EXERCISE3:6
+EXERCISE3:5
+EXERCISE3:4
+stop
+</code></pre>
+            </section><br><br>
+            
+    </section>
+
+    <section class="marco-t warn">
+        <span class="icono warning"> </span>Please, Note that our app still shows <span class="negrita">nothing</span> 
+        </section>
+    <section class="marco-b">
+            
+    </section>
+    
+    
+
+    <h3>LiveData</h3>
+
+    <p>There are two ways to use <span class="r-word">LiveData</span> : instantiating the <span class="r-word">MutableLiveData</span>  class 
+        or extending the <span class="r-word">LiveData</span>  class.</p>
+    
+    <p class="sub-section">MutableLiveData</p>
+    
+    <p>To instantiate a <span class="r-word">MutableLiveData</span>  class object, you must put the type of data it is going to store in the diamond &lt;>. 
+        For example to create a <span class="r-word">MutableLiveData</span> of type <span class="r-word">Integer</span>:</p>
+
+        <section><pre><code class="language-kotlin">val integerNumberLiveData = MutableLiveData&lt;Int>()</code></pre>
+        </section><br><br>  
+
+    <p>In the construtor, you can pass the initial value as argument:</p>
+
+    <section><pre><code class="language-kotlin">val integerNumberLiveData = MutableLiveData(2400)</code></pre>
+    </section><br><br>
+
+    <p>To change the value that a <span class="r-word">MutableLiveData</span> contains, two methods are provided:</p>
+
+    <ul>
+        <li><span class="r-word">setValue()</span>: allows you to change the value <span class="negrita">from the main thread</span> </li>
+        <li><span class="r-word">postValue()</span>: allows changing the value <span class="negrita">from a background thread</span> </li>
+</ul>
+
+<section><pre><code class="language-kotlin">integerNumberLiveData.setValue(-500);    // it can only be done from Main Thread
+integerNumberLiveData.postValue(7802);</code></pre>
+</section><br><br>
+
+<p>Both methods cause observers to be notified of the value change.</p>
+
+<p>To observe a <span class="r-word">LiveData</span>  or <span class="r-word">MutableLiveData</span>  object, the <span class="r-word">observe()</span> 
+     method must be called. This method must be passed the <span class="negrita">Activity</span>  or the <span class="negrita">Fragment</span> 
+      from which it is observed, and the <span class="d-word">Observer</span> callback which will be called to notify the value changes. 
+      Notifications of value changes will only be made if the Activity or the Fragment is running.</p>
+
+<p>To get the Fragment or Activity and pass it to the <span class="r-word">observe()</span>  method, you can use the <span class="r-word">viewLifecycleOwner</span>  getter method.</p>
+
+<p>The following code illustrates how to begin observing a <span class="r-word">LiveData</span>  object:</p>
+
+    <section><pre><code class="language-kotlin">integerNumberLiveData.observe(viewLifecycleOwner, object : Observer<Int?>() {
+    fun onChanged(@Nullable value: Int?) {
+        // update UI with the new value
+    }
+})</code></pre>
+    </section><br><br>
+
+    or even better or more redable version
+
+    <section><pre><code class="language-kotlin">integerNumberLiveData.observe(viewLifecycleOwner) { value ->
+    // update UI with the new value
+}
+</code></pre>
+    </section><br><br>
+    
+<p class="sub-section">LiveData</p>
+
+<p>In the case of a <span class="r-word">MutableLiveData</span> object, it is an external entity that calls the <span class="r-word">setValue()</span> 
+     or <span class="r-word">postValue()</span>  methods to change the value.</p>
+
+<p>It is possible to extend the <span class="r-word">LiveData</span> class to make the object itself change its value. 
+    When the <span class="r-word">LiveData</span>  class is extended there are two methods that need to be overridden:</p>
+
+    <ol>
+        <li><span class="r-word">onActive()</span>: This method is executed when you have an active observer.</li>
+        <li><span class="r-word">onInactive()</span>: This method is executed when you no longer have any active observers.</li>
+    </ol>
+
+    <p>The <span class="r-word">setValue()</span>  method updates the value and notifies the active observers.</p>
+
+
+    <p class="sub-section">Conclusion</p>
+
+    <p>To change the value of a <span class="r-word">MutableLiveData</span> , you have to call the <span class="r-word">setValue()</span> 
+         or <span class="r-word">postValue()</span>  method, from an external entity.</p>
+    
+    <p>To change the value of a <span class="r-word">LiveData</span> , <span class="r-word">LiveData</span>  itself calls the <span class="r-word">setValue()</span>  or <span class="r-word">postValue()</span> 
+         method.</p>
+    
+    <figure><img src="UD5/livedata/images/ud5-2021-11-07-20-43-34.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+
+    <h3>Implemention LiveData</h3>
+    
+    <p>In the case of the <span class="d-word">Trainer</span>  class, it is very useful to extend the <span class="r-word">LiveData</span>  class. 
+            Since in this way it will be the <span class="d-word">Trainer</span>  himself who will change his exercise on his own without anyone having to tell him.</p>
+        
+    
+<p>It is important to understand that the <span class="d-word">trainer</span>  should only be sending exercises if there is an active observer, that is, if the fragment is running.</p>
+            
+<p>The <span class="r-word">LiveData</span>  implementation would look like this:</p>
+
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">Trainer.kt</span>
+    </section>
+<section class="marco-b">
+     <section><pre><code class="language-kotlin">....... 
+val orderLiveData:LiveData&lt;String> = object:LiveData&lt;String>(){
+    override fun onActive() {
+        super.onActive()
+        startTraining { 
+            order -> postValue(order)
+        }
+    }
+
+    override fun onInactive() {
+        super.onInactive()
+        stopTraining()
+    }
+}
+...........</code></pre>
+     </section>  
+</section>
+
+<p>Now,  when there is an observer for the variable <span class="d-word">orderLiveData</span> , the <span class="r-word">onActive()</span>  method will be called and 
+    the trainer will begin training and will change the value of the <span class="d-word">order</span> , notifying the observers of the new <span class="negrita">order</span> .</p>
+
+<figure><img src="UD5/livedata/images/ud5-2021-11-07-21-12-43.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>When there is no observer (that is, when the fragment is closed), the trainer will stop training.</p>
+
+
+<h3>Transformations</h3>
+
+<p>At this point we already have the variable <span class="d-word">orderLiveData</span>  that is emitting the exercise orders.</p>
+
+<p>It might seem that from the View we can already observe this variable and use its value to show the user the image of the corresponding exercise, thus dispensing with the <span class="r-word">ViewModel</span>.
+     However, the <span class="r-word">ViewModel</span>  fulfills another function, which is to <span class="negrita">transform</span>  the data from Model into the data that the view needs.</p>
+
+<p>In this case, the model (the trainer) sends the orders in <span class="negrita">String</span> format, separating the exercise to be done and the repetition with a colon 
+    <span class="d-word">(EXERCISE: 5)</span> . The View, for its part, needs to know separately which <span class="subrayado">image to display and the repetition number</span> . 
+    It will then be the <span class="r-word">ViewModel</span>  that will transform the String emitted by <span class="r-word">LiveData</span> 
+    order into the two different data that the View needs.</p>
+
+<p>Two transformations must be made:</p>
+
+<ul>
+    <li>In one, the <span class="d-word">orderLiveData</span>  will be observed and it will be transformed into another LiveData <span class="d-word">exerciseLiveData</span>
+     that only contains the image to be displayed, and that only changes, when the exercise changes (not the repetition).</li>
+     <li>In the other, <span class="d-word">orderLiveData</span>  will be observed and it will be transformed into the LiveData <span class="d-word">repetitionLiveData</span>  that contains the repetition.</li>
+</ul>
+<br>
+
+<figure><img src="UD5/livedata/images/ud5-2021-11-07-21-30-07.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>To transform one <span class="r-word">LiveData</span>  into another, Android provides the <span class="negrita">Transformations</span> class. 
+    This class has the <span class="r-word">switchMap()</span>  method that allows observing a <span class="r-word">LiveData</span>  and returning a different <span class="r-word">LiveData</span>.</p>
+
+    <section><pre><code class="language-kotlin">transformedLiveData : LiveData = Transformations.switchMap(originalLiveData){
+    //Transformation method
+}</code></pre>
+    </section><br><br>
+
+<p>The implementation of the <span class="d-word">TrainerViewModel</span>  looks like this:</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">TrainerViewModel.kt</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">package com.cartatar.livedatatrainer.viewmodel
+
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import com.cartatar.livedatatrainer.model.Trainer
+import androidx.lifecycle.MutableLiveData
+import com.cartatar.livedatatrainer.R
+
+
+class TrainerViewModel(application: Application) :AndroidViewModel(application) {
+    private var trainer: Trainer = Trainer()
+
+
+    var exerciseLiveData :LiveData&lt;Int>
+    var repetitionLiveData :LiveData&lt;String>
+
+    private var previousExercise:String =""
+
+
+    init {
+
+        exerciseLiveData = Transformations.switchMap(trainer.orderLiveData,){
+                exercise ->
+            val mExercise = exercise.split(":")[0]
+            if(mExercise != previousExercise){
+                previousExercise = mExercise
+
+                var imageID:Int = when(mExercise){
+                    "EXERCISE1" -> R.drawable.e1
+                    "EXERCISE2" -> R.drawable.e2
+                    "EXERCISE3" -> R.drawable.e3
+                    "EXERCISE4" -> R.drawable.e4
+                    else -> R.drawable.e1
+
+                }
+                return@switchMap MutableLiveData&lt;Int>(imageID)
+            }
+
+            return@switchMap null
+        }
+
+        repetitionLiveData = Transformations.switchMap(trainer.orderLiveData) { exercise ->
+            return@switchMap MutableLiveData&lt;String>(exercise.split(":")[1])
+        }
+
+
+
+    }
+}</code></pre>
+        </section><br><br>
+</section>
+
+
+<p>To transform the <span class="negrita">order</span>  into the <span class="negrita">exercise</span> , we save the previous exercise, so that we only return a new <span class="r-word">LiveData</span>  with the corresponding image 
+    if the exercise has changed with respect to the previous order. If it is the same exercise as the previous one, we return <span class="cursiva"><span class="negrita">null</span></span> 
+    , and in that case <span class="subrayado">the transformation is not applied, and the observer is not notified</span>.</p>
+
+<p>To transform the <span class="negrita">order</span>  into <span class="negrita">repetition</span> , you just have to stick with what is after the colon. 
+    In this case, the previous order must not be taken into account, since the repetition always changes.</p>
+
+
+    <h3>Updating the View</h3>
+
+    <p>The last step is only for the view to observe the <span class="cursiva">exercise</span>  and the <span class="cursiva">repetition</span> and to show them to the user.</p>
+    
+
+    <p>The implementation of the view looks like this:</p>
+    
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">TrainerFragment.kt</span>
+        </section>
+    <section class="marco-b">
+           <section><pre><code class="language-kotlin">package com.cartatar.livedatatrainer
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import com.cartatar.livedatatrainer.databinding.FragmentTrainerBinding
+import com.cartatar.livedatatrainer.viewmodel.TrainerViewModel
+
+
+class TrainerFragment : Fragment() {
+
+    private lateinit var binding:FragmentTrainerBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return FragmentTrainerBinding.inflate(inflater, container, false)
+            .also { binding = it }
+            .root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val trainerViewModel = ViewModelProvider(this)[TrainerViewModel::class.java]
+
+        trainerViewModel.exerciseLiveData.observe(viewLifecycleOwner){ imageID ->
+            binding.ivExercise.setImageResource(imageID)
+        }
+
+        trainerViewModel.repetitionLiveData.observe(viewLifecycleOwner) { repetition ->
+            if (repetition.equals("CHANGE")) {
+                binding.tvChange.visibility = View.VISIBLE
+            } else {
+                binding.tvChange.visibility = View.GONE
+            }
+            binding.tvRepetition.text = repetition
+        }
+
+    }
+
+
+}</code></pre>
+           </section>
+    </section>
+    
+    <p>If we run the app it works changing all values and images but... One moment! we download a GIF image but there is no movement in the images. It's due to Android
+        doesn't support natively Gif images.
+    </p>
+    <p>We have some solutions such us using some librearies like Glide or Picasso but we will see them in the next chapter. Now we're using this
+        <a class="enlace" target="_blank" href="https://github.com/koral--/android-gif-drawable">dependecies</a>. So let's add it on our <span class="inline-file">gradle module app</span></p>
+
+    <section><pre><code class="language-kotlin">dependencies {
+
+    .......
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.23'
+
+}</code></pre>
+    </section><br><br>
+
+    <p>Now we have to make a little change on <span class="inline-file">fragment_trainer.xml</span>. We should replace <span class="r-word">ImageView</span> 
+        for <span class="r-word">pl.droidsonroids.gif.GifImageView</span> </p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">fragment_trainer.xml</span>
+        </section>
+    <section class="marco-b">
+    <section><pre><code class="language-xml">
+......
+&lt;pl.droidsonroids.gif.GifImageView
+    android:id="@+id/ivExercise"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+......</code></pre>
+</section>
+    </section>
+    
+    <p><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/LiveDataTrainer">Here</a> you have the whole code </p>
+
+
+    <a name="PR4" class="tarea" target="_blank" href="#">
+        <p>PRACTISE</p>
+        <p>You have to implement a <span class="negrita">Model</span>  with a <span class="negrita">LiveData</span> variable that emits data when it is observed.</p>
+        <p>Implement a <span class="negrita">ViewModel</span>  that transforms the <span class="negrita">Model</span>  data into another <span class="negrita">LiveData</span> .</p>
+        <p>Implement a <span class="negrita">View</span>  that observes the <span class="negrita">LiveData</span>  of the <span class="negrita">ViewModel</span>  and shows it to the user with images.</p>
+        <p>For instance:</p>
+        <ol>
+            <li>The LiveData of the model can emit a String every second that says: "sun", "clouds", "rain", "wind"</li>
+            <li>The ViewModel can transform that String into an image identifier like R.drawable.sun, etc.</li>
+            <li>The View shows the corresponding image.</li>
+        </ol>
+    </a> 
+
+
+    </section><!-- End section -->
+
+    <!--*********************************************************COROUTINES***********************************************************-->
+    <section class="apartado">
+        <a name="sCoroutines"></a>
+        <h2>INTRODUCTION TO COROUTINES</h2>
+    
+        <h3>Introduction</h3>
+        
+        <p>       
+In Android, <span class="negrita">all UI tasks</span>  are performed on the <span class="d-word">main thread</span> , which is why it is not a good practice to perform heavy or long-running tasks on the main thread. 
+If we block the main thread performing these tasks, the user interface will stop updating at 60fps and we will get an unsatisfactory user experience.
+        </p>
+    
+        <p> To solve this, we can use execution threads, and create its own execution thread for each of these tasks. But this has a number of downsides.
+            <ul>
+                <li>Threads are blockqued and context switching is very heavy and slow</li>
+                <li>Threads are difficult to handle and debug. We don't have much control over them</li>
+                <li>We have a limitation on the number of threads until they affect performance</li>
+            </ul>
+        </p>
+        <p>One solution that was widely used for some time was the use of the AsyncTask class, to run long-running tasks in the background. We have seen it a bit in the MVVM part</p>
+        
+    <!------------------------------------------Suspend functions------------------------------------------------->
+      
+    <h3>Suspend functions</h3>
+    
+        <p><span class="d-word">Suspend function</span>  is a function that could be <span class="negrita">started</span>, <span class="negrita">paused</span>, and 
+            <span class="negrita">resume</span>. One of the most important points to remember about the 
+            suspend functions is that <span class="subrayado">they are only allowed to be called from a coroutine or another suspend function</span>. An example is given below, 
+            in which we have tried to call the <span class="r-word">delay()</span> function from outside of the coroutine.</p>
+        
+        <section><pre><code class="language-kotlin">// sample kotlin program to show use of delay function
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+          
+        // will throw a error
+        delay(1000L)
+          
+        GlobalScope.launch{
+         // delay function (a suspend function) must called within coroutine
+         // or another suspend function
+        } 
+    }
+}</code></pre>
+        </section><br><br>
+
+
+    <p>As we have called the delay function from outside of the coroutine, it will throw the error as below:</p>
+    <figure><img src="UD5/mvvm/images/ud5-2021-11-08-16-21-37.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p class="sub-section">Delay Function</p>
+    
+    <p>It is represented as <span class="r-word">delay()</span> , It is a suspend function which delays coroutine for a given time without blocking a thread, 
+        and resumes it after a specified time. When we add the suspend keyword in the function, all the cooperations are automatically done for us.
+        We don’t have to use when or switch cases in order to switch from one function to another. Let’s take an example of suspend function as:</p>
+    
+    <section><pre><code class="language-kotlin">// arbitrary do task function for explanation
+suspend fun dotask(request: Request): Response
+{
+  // perform the task
+}</code></pre>
+    </section><br><br>
+
+    <p>Though it seems that only one argument has passed to <span class="r-word">dotask()</span>  function, but internally there are two arguments. 
+        Internally, it gets converted by the compiler to another function without the suspend keyword with an extra parameter of the type Continuation&lt;T> like below:</p>
+    
+    <section><pre><code class="language-kotlin">// Continuation interface structure
+public interface Continuation<in T>
+{
+  public val context: CoroutineContext
+  public fun resumeWith(result: Result<T>)
+}</code></pre>
+    </section><br><br>
+    
+    <ul>
+        <li><span class="negrita">context</span>  will be the CoroutineContext to be used in that continuation.</li>
+        <li><span class="negrita">resumeWith</span> resumes execution of the coroutine with a Result, that can contain either a value which is the result of the computation that caused the suspension or an exception.</li>
+    </ul>
+    <p>The two extension functions of <span class="negrita">resumeWith</span>  are given by:</p>
+    
+    <section><pre><code class="language-kotlin">fun &lt;T> Continuation&lt;T>.resume(value: T)
+fun &lt;T> Continuation&lt;T>.resumeWithException(exception: Throwable)</code></pre>
+    </section><br><br>
+
+    <p>We can see the two extension function that they can be used to resume the coroutines with a return value or with an exception if an error had occurred while 
+        the function was suspended. This way, a function could be started, paused, and resume with the help of <span class="r-word">Continuation</span>. 
+        We just have to use the <span class="r-word">suspend</span>  keyword.</p>
+    
+<section><pre><code class="language-kotlin">
+// Kotlin Program to demonstrate use of suspend function
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+          
+          GlobalScope.launch{
+            val networkCallAnswer==doNetworkCall()
+            Log.d("Main-Activity,networkCallAnswer)
+        } 
+    }
+      
+    suspend fun doNetworkCall():String {
+        delay(2000L);
+        return "Network Call Answer"
+    }               
+}</code></pre>
+</section><br><br>
+
+<p>We get the Log output after a delay of 2 seconds, since we have called <span class="negrita">doNetworkCall()</span> 
+    from a coroutine, we have to make <span class="negrita">doNetworkCall()</span> function as <span class="r-word">suspend</span> .</p>
+        
+        <h3>Coroutines</h3>
+        <p>
+            A coroutine is a concurrency design pattern that you can use on Android to simplify code that executes asynchronously. 
+            Coroutines were added to Kotlin in version 1.3 and are based on established concepts from other languages.
+        </p>
+    
+        <p>
+            On Android, coroutines help to manage long-running tasks that might otherwise block the main thread and cause your app 
+            to become unresponsive. Over 50% of professional developers who use coroutines have reported seeing increased productivity. 
+            This topic describes how you can use Kotlin coroutines to address these problems, enabling you to write cleaner and more concise app code.
+        </p>
+    
+        
+        <p class="sub-section">Features</p>
+        <p>Coroutines is our recommended solution for asynchronous programming on Android. Noteworthy features include the following:</p>
+        <ul>
+            <li><span class="d-word">Lightweight</span>: You can run many coroutines on a single thread due to support for suspension, 
+                which doesn't block the thread where the coroutine is running. 
+                Suspending saves memory over blocking while supporting many concurrent operations.</li>
+            <li><span class="d-word">Fewer memory leaks</span>: Use structured concurrency to run operations within a scope.</li>
+            <li>
+                <span class="d-word">Built-in cancellation support</span>: Cancellation is propagated automatically through the running coroutine hierarchy.
+            </li>
+            <li><span class="d-word">Jetpack integration</span>: Many Jetpack libraries include extensions that provide full coroutines support. 
+                Some libraries also provide their own coroutine scope that you can use for structured concurrency.</li>
+        </ul>
+
+        <p class="sub-section">Kotlin Coroutines vs Threads</p>
+<p><ul>
+<li>Fetching the data from one thread and passing it to another thread takes a lot of time. It also introduces lots of callbacks, leading to less readability of code. On the other hand, coroutines eliminate callbacks.</li>
+<li>Creating and stopping a thread is an expensive job, as it involves creating their own stacks.,whereas creating coroutines is very cheap when compared to the performance it offers. coroutines do not have their own stack.</li>
+<li>Threads are blocking, whereas coroutines are suspendable. By blocking it means that when a thread sleeps for some duration, the entire threads get blocked, it cannot do any other operation, whereas since coroutines are suspendable, so when they are delayed for some seconds, they can perform any other work.</li>
+<li>Coroutines offer a very high level of concurrency as compared to threads, as multiple threads involve blocking and context switching. Context switching with threads is slower as compared to coroutines, as with threads context can only be switched when the job of 1 thread gets over, but with coroutines, they can change context any time, as they are suspendable.</li>
+<li>Coroutines are light and super fast. Coroutines are faster than threads, as threads are managed by Operating System, whereas coroutines are managed by users. Having thousands of coroutines working together are much better than having tens of threads working together.</li>
+</ul></p>
+    
+    <p class="sub-section">Kotlin Coroutines Dependencies</p>
+    
+    <p>Add these dependencies in <span class="inline-file">build.gradle app-level</span> file.</p>
+     
+    <section><pre><code class="language-kotlin">// dependencies to import in project 
+dependencies 
+{
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:x.x.x"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:x.x.x"
+}</code></pre>
+    </section><br><br>
+
+<section class="marco-t inf">
+    <span class="icono info"> </span> Note: x.x.x is the version of the coroutine. For instance you could set 1.3.9
+    </section>
+<section class="marco-b">
+        
+</section>
+    
+<p class="sub-section">Kotlin Coroutines Example</p>
+<p>Let’s say we want to fetch some users from the database and show it on the screen. 
+    For fetching the data from the database we have to perform the network call, fetch the user from the database, and show it on the screen. 
+    Fetching the user can be done by using either by using <span class="negrita">callbacks</span>  or <span class="negrita">coroutines</span> .</p>
+
+
+<section><pre><code class="language-kotlin">//pseudo kotlin code for demonstration using callbacks
+// involves a series of callbacks from fetchAndShowUser 
+// to fetchUser and then to showUser
+fun fetchAndShowUser() 
+{
+    fetchUser 
+    {
+    user -> showUser(user)
+    }
+}
+
+//pseudo kotlin code for demonstration using coroutines
+suspend fun fetchAndShowUser() 
+{
+  // fetch on IO thread
+  val user = fetchUser() 
+  // back on UI thread
+  showUser(user)
+}</code></pre>
+</section><br><br>
+
+<p>As discussed above using callbacks will decrease the code readability, so using coroutines is much better to use in terms of readability and performance as well. 
+    As discussed above <span class="r-word">Coroutines</span>  has many advantages apart from not having callbacks, like they are <span class="negrita">nonblocking</span> 
+    , <span class="negrita">easy</span> , and <span class="negrita">nonexpensive to create.</span>   </p>
+
+<h3>Launch vs Async vs withContext in Kotlin Coroutines</h3>
+<p>There are mainly three functions in Kotlin to start the coroutines. </p>
+
+<ul>
+    <li><span class="negrita">launch</span> { }</li>
+     <li><span class="negrita">async</span> { }</li>
+     <li><span class="negrita">withContext</span> { }</li>
+</ul>
+
+<p class="sub-section">Launch Function</p>
+
+<p>The launch will not block the main thread, but on the other hand, the execution of the rest part of the code will not wait for the launch result since launch is not a 
+    suspend call. Following is a Kotlin Program Using Launch:</p>
+<section><pre><code class="language-kotlin">// Kotlin Program For better understanding of launch
+fun GFG()
+{
+  var resultOne = "Android"
+  var resultTwo = "Kotlin"
+  Log.i("Launch", "Before")
+  launch(Dispatchers.IO) { resultOne = function1() }
+  launch(Dispatchers.IO) { resultTwo = function2() }
+  Log.i("Launch", "After")
+  val resultText = resultOne + resultTwo
+  Log.i("Launch", resultText)
+}
+ 
+suspend fun function1(): String
+{
+  delay(1000L)
+  val message = "function1"
+  Log.i("Launch", message)
+  return message
+}
+ 
+suspend fun function2(): String
+{
+  delay(100L)
+  val message = "function2"
+  Log.i("Launch", message)
+  return message
+}</code></pre>
+</section><br><br>
+
+<p>When you will run the code in <span class="r-word">Android IDE</span> , the log result will be:</p>
+<figure><img src="UD5/mvvm/images/ud5-2021-11-08-16-41-24.png" /><br><figcaption>Launch Result</figcaption></figure>
+<br>
+<p class="sub-section">When to Use Launch?</p>
+<p>Launch can be used at places where users do not want to use the returned result, which is later used in performing some other work. For example, 
+    It can be used at places involving tasks like update or changing a color, as in this case returned information would be of no use.</p>
+
+<p class="sub-section">Async Function</p>
+
+<p><span class="r-word">Async</span>  is also used to start the coroutines, but it blocks the main thread at the entry point of the <span class="r-word">await()</span> 
+     function in the program. Following is a Kotlin Program Using Async:</p>
+
+<section><pre><code class="language-kotlin">// kotlin program for demonstration of async
+fun GFG
+{
+  Log.i("Async", "Before")
+  val resultOne = Async(Dispatchers.IO) { function1() }
+  val resultTwo = Async(Dispatchers.IO) { function2() }
+  Log.i("Async", "After")
+  val resultText = resultOne.await() + resultTwo.await()
+  Log.i("Async", resultText)
+}
+ 
+suspend fun function1(): String
+{
+  delay(1000L)
+  val message = "function1"
+  Log.i("Async", message)
+  return message
+}
+ 
+suspend fun function2(): String
+{
+  delay(100L)
+  val message = "function2"
+  Log.i("Async", message)
+  return message
+}</code></pre>
+</section><br><br>
+
+<p>One important point to note is that Async makes both of the networks call for result1 and result2 in parallel, whereas with launch parallel function calls are not made. 
+    When you will run the code in Android IDE, the log result will be:</p>
+
+    <figure><img src="UD5/mvvm/images/ud5-2021-11-08-16-44-47.png" /><br><figcaption>Async</figcaption></figure>
+    <br>
+    
+
+<p class="sub-section">When to Use Async?</p>
+
+<p>When making two or more network call in parallel, but you need to wait for the answers before computing the output, ie use async for results from multiple tasks 
+    that run in parallel. If you use async and do not wait for the result, it will work exactly the same as launch.</p>
+
+
+<p class="sub-section">WithContext</p>
+
+<section><pre><code class="language-kotlin">
+// kotlin program for demonstration of withContext
+fun testWithContext {
+    var resultOne = "Android"
+    var resultTwo = "Kotlin"
+    Log.i("withContext", "Before")
+    resultOne = withContext(Dispatchers.IO) { function1() }
+    resultTwo = withContext(Dispatchers.IO) { function2() }
+    Log.i("withContext", "After")
+    val resultText = resultOne + resultTwo
+    Log.i("withContext", resultText)
+}
+
+suspend fun function1(): String {
+    delay(1000L)
+    val message = "function1"
+    Log.i("withContext", message)
+    return message
+}
+
+suspend fun function2(): String {
+    delay(100L)
+    val message = "function2"
+    Log.i("withContext", message)
+    return message
+}</code></pre>
+</section><br><br>
+
+<p>Function 2 executes faster than 1. But <span class="r-word">withContext</span> is a <span class="negrita">suspend call</span>, so it won't go to the next line until it finished.</p>
+<p>But the good point is that your UI thread is free to run while the IO thread executes <span class="negrita">function1</span>  and <span class="negrita">function2</span> .</p>
+
+<p>When you run, the log result would be:</p>
+
+<section><pre><code class="language-kotlin">withContext: Before
+withContext: function1
+withContext: function2
+withContext: After
+withContext: function1function2</code></pre>
+</section><br><br>
+
+<p class="sub-section">When to use</p>
+
+<p>when you need to use the answer from the method called, <span class="r-word">withContext</span>  will wait for it result and <span class="subrayado">don't block the main thread</span> .</p>
+
+
+<h3>Job</h3>
+
+<p>Every time we create a <span class="r-word">coroutine</span> , a <span class="r-word">Job</span>  is associated with it. According to the official documentation -
+     <span class="subrayado">An instance of a Job in the coroutineContext represents the coroutine itself</span>-. A Job is a reference to the coroutine with which we can 
+     perform different actions. Among the most common are:</p>
+
+<ol>
+    <li>
+        <span class="r-word">isActive</span>: Allows you to verify if the coroutine is running. Returns <span class="cursiva">true</span>  if it is active, <span class="cursiva">false</span> otherwise.</li>
+        <li><span class="r-word">isCancelled</span>: Allows you to check if the coroutine was canceled. 
+            Returns <span class="cursiva">true</span>  if it was canceled, <span class="cursiva">false</span>  otherwise.</li>
+        <li><span class="r-word">isCompleted</span>: Allows you to verify if the coroutine finished its execution successfully.
+            Returns <span class="cursiva">true</span>  if it was completed, <span class="cursiva">false</span>  otherwise.</li>
+        <li><span class="r-word">join()</span>: Suspend the thread that makes the call to this function until the coroutine to which the Job is associated finishes its execution.</li>
+        <li><span class="r-word">cancel()</span>: Cancels the execution of the coroutine. <span class="subrayado">Canceling a Job cancels all the Jobs within the Scope of the canceled Job</span>.
+            That is, a call to the <span class="cursiva">cancel</span>  function of a Job, cancels the Jobs of the coroutines created within the Scope "parent" as long as the Job of the coroutine "daughter" is "child" of the canceled Job.</li>
+    </ol>
+
+<p>Let's do a test using the <span class="cursiva">launch</span> constructor.</p>
+
+<section><pre><code class="language-kotlin">import kotlinx.coroutines.*
+import kotlin.system.measureTimeMillis
+
+fun log(message: String) {
+    println("[${Thread.currentThread().name}] : $message")
+}
+
+fun log(character: Char) {
+    print("$character")
+}
+
+fun main() {
+    log("Start")
+
+    runBlocking {
+        val job = launch {
+            repeat(3) {
+                log("Launch rep #$it : I'm active")
+                delay(1000)
+            }
+            log("Launch : I'm finishing.")
+        }
+
+        delay(100)
+        while(job.isActive) {
+            log("RunBlocking : Job is active")
+            delay(1000)
+        }
+
+        log("RunBlocking : Job is not active")
+    }
+
+    log("End")
+}</code></pre>
+</section><br><br>
+
+<p>The exit would be something like this:</p>
+<section><pre><code class="language-kotlin">[main] : Start
+[main @coroutine#2] : Launch rep #0 : I'm active
+[main @coroutine#1] : RunBlocking : Job is active
+[main @coroutine#2] : Launch rep #1 : I'm active
+[main @coroutine#1] : RunBlocking : Job is active
+[main @coroutine#2] : Launch rep #2 : I'm active
+[main @coroutine#1] : RunBlocking : Job is active
+[main @coroutine#2] : Launch : I'm finishing.
+[main @coroutine#1] : RunBlocking : Job is not active
+[main] : End</code></pre>
+</section><br><br>
+
+<p>In the previous code we create a coroutine with the <span class="r-word">runBlocking</span>  constructor and inside it we use the <span class="cursiva">launch</span>
+     constructor to create another coroutine. The <span class="cursiva">launch</span>  constructor returns an object of type <span class="r-word">Job</span> 
+      when creating the coroutine. We use the object to verify that it is active, repeating the cycle until the coroutine finishes its execution, 
+      thus leaving the Job in a completed state. Once completed, the <span class="negrita">job.isActive</span>  condition ceases to be met, 
+      thus continuing the execution of the coroutine created with the <span class="r-word">runBlocking</span>  constructor.</p>
+
+
+<p class="sub-section">Job lifecycle</p>
+
+<figure><img src="UD5/coroutines/images/ud5-2021-11-10-10-00-09.png" /><br><figcaption>Job LifeCycle</figcaption></figure>
+<br>
+
+
+     
+
+        </section><!-- End section -->
+
+    <!--*********************************************************WebGraphy***********************************************************-->
+    <section class="apartado">
+    <a name="sWebGraphy"></a>
+    <h2>WebGraphy</h2>
+
+    <ul>
+        <li>
+            <a class="enlace" target="_blank" href="https://developer.android.com/reference/androidx/lifecycle/LiveData">https://developer.android.com/reference/androidx/lifecycle/LiveData</a> 
+        </li>
+        <li><a class="enlace" target="_blank" href="https://github.com/koral--/android-gif-drawable">https://github.com/koral--/android-gif-drawable</a> </li>
+        <li><a class="enlace" target="_blank" href="https://gerardfp.github.io/livedata/">Gerard's notes</a> </li>
+        <li><a class="enlace" target="_blank" href="https://www.geeksforgeeks.org/suspend-function-in-kotlin-coroutines/?ref=lbp">Suspend function</a> </li>
+        <li><a class="enlace" target="_blank" href="https://www.geeksforgeeks.org/launch-vs-async-in-kotlin-coroutines/">Launch vs Async</a> </li>
+        <li><a class="enlace" target="_blank" href="https://canato.medium.com/withcontext-async-or-launch-inside-coroutine-kotlin-17c332854a08">Launch vs Async vs withContext</a> </li>
+        <li><a class="enlace" target="_blank" href="https://medium.com/kotlin-en-android/coroutines-con-kotlin-job-860db9237b86">Coroutines (Spanish)</a> </li>
+    </ul>
+    
+   
+    </section><!-- End section -->
+
+    <script src="../script/prism.js"></script>
+</body>
+</html>

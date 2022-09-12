@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broadcast Receiver and notifications</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/prism.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <script src="../script/script.js"></script>
+</head>
+<body>
+    <h1>Broadcast Receiver and notifications</h1>
+    <div class="main-menu">
+        <a href="#sNotifications">Notifications</a><a
+           href="#sBroadcastReceiver">BroadcastReceiver</a><a            
+           href="#sPractice">Practice</a><a
+           href="#sWebgraphy">Webgraphy</a>
+    </div>
+
+    <!--*********************************************************Notifications***********************************************************-->
+    <section class="apartado">
+    <a name="sNotifications"></a>
+    <h2>Notifications</h2>
+     <h3>Introduction</h3>
+     <p>A <span class="d-word">notification</span>  is a message that Android displays outside of the app's UI to provide the user with reminders, 
+        messages from other people, and other timely information about the app. Users can tap the notification to open the app or perform an action directly from the notification.</p>
+
+    <p>Las notificaciones se muestran a los usuarios en diferentes ubicaciones y formatos (por ejemplo, como un ícono en la barra de estado, una entrada más detallada en el panel lateral de notificaciones o un distintivo en el ícono de la app), así como en wearables sincronizados automáticamente.</p>
+
+    <h3>Notification anatomy</h3>
+
+    <p>The design of a notification is determined by system templates—your app simply defines the contents for each portion of the template. 
+        Some details of the notification appear only in the expanded view.</p>
+    
+     <figure><img src="UD9/images/ud9-2022-01-17-11-00-03.png" /><br><figcaption>A notification with basic details</figcaption></figure>
+     <br>
+     
+    <p>The most common parts of a notification are indicated in figure 7 as follows:</p>
+    <p>
+        <ol>
+            <li><span class="d-word">Small icon</span>: This is required and set with <span class="negrita">setSmallIcon()</span></li>
+            <li><span class="d-word">App name</span> : This is provided by the system.</li>
+            <li><span class="d-word">Time stamp</span> : This is provided by the system but you can override with <span class="negrita">setWhen()</span>  or hide it with <span class="negrita">setShowWhen(false)</span>.</li>
+            <li><span class="d-word">Large icon</span> : This is optional (usually used only for contact photos; do not use it for your app icon) and set with <span class="negrita">setLargeIcon()</span> .</li>
+            <li><span class="d-word">Title</span> : This is optional and set with <span class="negrita">setContentTitle()</span> </li>
+            <li><span class="d-word">Text</span> : This is optional and set with <span class="negrita">setContentText()</span> </li>
+        </ol>
+    </p>
+
+    <h3>Creating Notifications</h3>
+
+    <p>To create notifications we use the following code first we have to create the builder.
+    As you can see, a notification channel is passed to it. We see this later.</p>
+    
+
+    <section><pre><code class="language-kotlin">var builder = NotificationCompat.Builder(this, CHANNEL_ID)</code></pre>
+    </section><br><br>
+
+    <p>Once the builder is created, we add the options we need. Among others we can find the following:</p>
+    
+
+    <p>We can add the notification icon.</p>
+    <section><pre><code class="language-kotlin">builder.setSmallIcon(R.drawable.notification_icon)</code></pre>
+    </section><br><br>
+
+    <p>A title</p>
+    
+    <section><pre><code class="language-kotlin">builder.setContentTitle("My notification")</code></pre>
+    </section><br><br>
+
+    <p>A short text that will be displayed when the notification is collapsed.</p>
+    <section><pre><code class="language-kotlin">builder.setContentText("Much longer text that cannot fit one line...")</code></pre>
+    </section><br><br>
+
+    <p>If we need more lines we can add a long text.</p>
+    <section><pre><code class="language-kotlin">builder.setStyle(NotificationCompat.BigTextStyle()
+    .bigText("Much longer text that cannot fit one line..."))</code></pre>
+    </section><br><br>
+
+    <p>The priority of the notification. Remember that your application should not be very invasive.</p>
+    <section><pre><code class="language-kotlin">builder.setPriority(NotificationCompat.PRIORITY_DEFAULT)</code></pre>
+    </section><br><br>
+
+    <p>We indicate the color of the notification.</p>
+    <section><pre><code class="language-kotlin">builder.color = Color.RED</code></pre>
+    </section><br><br>
+
+    <p>We can manage the vibration of the notification</p>
+    <section><pre><code class="language-kotlin">//1 sec on 1 sec off 1 sec on 1 sec off
+builder.setVibrate(longArrayOf(1000, 1000, 1000, 1000))</code></pre>
+    </section><br><br>
+
+    <p>The sound you will use. It is recommended not to be intrusive and use the default user options.</p>
+    <section><pre><code class="language-kotlin">//builder.setSound(Uri)
+builder.setDefaults(Notification.DEFAULT_SOUND)</code></pre>
+    </section><br><br>
+
+    <p>We can also indicate how the flashing LED will look if the mobile has it, as well as the vibration of the mobile.</p>
+    <section><pre><code class="language-kotlin">//1 sec on 1 sec off
+builder.setLights(Color.MAGENTA, 1000, 1000)
+</code></pre>
+    </section><br><br>
+
+    <p>We can indicate which activity will be opened when the user clicks on the notification.
+    To do this, you have to pass a <span class="r-word">PendingIntent</span>, which is nothing more than an encapsulated <span class="r-word">intent</span>  but tells the application to launch it, typically the system, which must be launched with our application's permissions.</p>
+    <section><pre><code class="language-kotlin">builder.setContentIntent(pendingIntent)</code></pre>
+    </section><br><br>
+    
+    
+    <p class="sub-section">PendingIntent</p>
+    <p>To create a PendingIntent we have several options:</p>
+
+    <ul>
+        <li>Add it to the stackbuilder, and we have the option to indicate who will be its parent in the manifest, so the back arrow will appear.
+            <section><pre><code class="language-kotlin">//That is the real intent
+    val intent = Intent(this, YesActivity::class.java).apply {
+        putExtra(YES_EXTRA_KEY, "This text goes to Yes Activity")
+    }
+
+
+    //This makes the stack builder with the parent activity (optional)
+    //If we don't set it when we press back button the app will exit
+    val stackBuilder = TaskStackBuilder.create(this)
+    stackBuilder.addParentStack(YesActivity::class.java)
+    stackBuilder.addNextIntent(intent)
+
+    return stackBuilder.getPendingIntent(PENDING_REQUEST,
+        PendingIntent.FLAG_UPDATE_CURRENT)
+}</code></pre>
+    </section><br><br>
+
+    We have to indicate who is the parent of this activity in the <span class="inline-file">AndroidManifest.xml</span>
+
+        <section><pre><code class="language-xml">&lt;activity
+            android:name=".YesActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" /></code></pre>
+        </section><br><br>
+
+        <figure><img src="ud9/images/UD9_notifications_yes.gif" /><br><figcaption>When we press the back button, the application closes</figcaption></figure>
+    <br>
+        </li>
+        <li>We can also make use of <span class="r-word">getActivity()</span>  function without flags.
+            <section><pre><code class="language-kotlin">private fun makePendingIntent():PendingIntent {
+    val intent = Intent(this, NotificationActivity::class.java)
+
+    return PendingIntent.getActivity(this, PENDING_REQUEST, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+}</code></pre>
+            </section>
+            In this case, we return to the previous activity if it is created when pressing back, but the return arrow does not generate
+            <br><br>
+            <figure><img src="ud9/images/UD9_notifications_not.gif" /><br><figcaption>When we press the back button, the application closes</figcaption></figure>
+    <br>
+
+        </li>
+        <li>Using getActivity with flags to open an activity that cannot be accessed from the normal flow of the application. That is, we will only use it to attend to the notification, if we press the back button, it exits the application.
+            <section><pre><code class="language-kotlin">private fun makePendingIntentNo():PendingIntent {
+    //This activity is only accessed by notifications, and what we want later is to close the app
+    //So system creates a new task just for this activity instead of adding it to the stack
+    val intent = Intent(this, NoActivity::class.java).apply {
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    }
+
+
+    return PendingIntent.getActivity(this, 0, intent, 0)
+}</code></pre>
+            </section><br><br>
+
+            <figure><img src="ud9/images/UD9_notifications_no.gif" /><br><figcaption>When we press the back button, the application closes</figcaption></figure>
+    <br>
+        </li>
+    </ul>
+    
+    
+    <p>We can also add response actions to the notification</p>
+    
+
+    <p>And if we want them to occupy the entire width of the notification, we will use the following option.</p>
+    
+
+    <p>Finally, we can say that the notification is canceled (closed) when clicking on it.</p>
+    <section><pre><code class="language-kotlin">builder.setAutoCancel(true)</code></pre>
+    </section><br><br>
+
+    <p>Or that it closes after a while.</p>
+
+
+    <p>Next, to fire the notification, we need to call the <span class="negrita">notify()</span> method of the NotificationManager. You have to pass the identifier of the notification to later be able to reference it.</p>
+    
+    <section><pre><code class="language-kotlin">with(NotificationManagerCompat.from(this)) {
+    // notificationId is a unique int for each notification that you must define
+    notify(notificationId, builder.build())
+}</code></pre>
+    </section><br><br>
+
+    <p>Notification creation example</p>
+    <section><pre><code class="language-kotlin">private fun makeNotificaton() {
+    val builder: NotificationCompat.Builder =
+        NotificationCompat.Builder(this, CHANNEL_ID)
+
+
+    with(builder){
+        setSmallIcon(R.drawable.ic_baseline_access_alarm)
+        setContentTitle("Notification Example")
+        setContentText("This is my notification")
+        setStyle(NotificationCompat.BigTextStyle()
+            .bigText("This is a long text that can't it into a single line. This is a long text that can't it into a single line. This is a long text that can't it into a single line. This is a long text that can't it into a single line"))
+
+
+        color = Color.RED
+        priority = NotificationCompat.PRIORITY_DEFAULT
+
+        //1 sec on 1 sec off
+        setLights(Color.MAGENTA, 1000, 1000)
+
+        //1 sec on 1 sec off 1 sec on 1 sec off
+        setVibrate(longArrayOf(1000, 1000, 1000, 1000))
+
+        //setSound()
+        setDefaults(Notification.DEFAULT_SOUND)
+
+        //When we click on the notification
+        setContentIntent(pendingIntent)
+
+        setVisibility(VISIBILITY_PUBLIC)
+
+        addAction(R.drawable.ic_yes, "Yes", pendingIntentYes)
+        addAction(R.drawable.ic_no, "No", pendingIntentNo)
+
+
+        setFullScreenIntent(pendingIntent, true)
+
+        //setTimeoutAfter(5000L) //cancels notification after 5 sec
+        setAutoCancel(true)
+    }
+
+    val notificationManagerCompat = NotificationManagerCompat.from(
+        Este)
+
+    //Launch the notification
+    notificationManagerCompat.notify(NOTIFICATION_ID , builder.build())
+}</code></pre>
+    </section><br><br>
+
+    <p class="sub-section">Cancel notifications from another activity</p>
+    <p>If we want to cancel, delete a notification from the notification bar, we must cancel it using the <span class="r-word">cancel()</span> method and the ID of the notification.</p>
+    <section><pre><code class="language-kotlin">NotificationManagerCompat.from(this).apply {
+    cancel(NOTIFICATION_ID)
+}</code></pre>
+    </section><br><br>
+
+    
+
+    <p class="sub-section">Notification Channel</p>
+    
+    <p>Starting from version 8 of Android, (Oreo) we can create different types of notifications for our application.</p>
+    
+    <p>In order to manage them and configure their parameters we need to create a <span class="negrita">notification channel</span> . We will do it in the following way.</p>
+    <section><pre><code class="language-kotlin">val notificationChannel = NotificationChannel(CHANNEL_ID,
+    CHANNEL_NAME,
+    NotificationManager.IMPORTANCE_DEFAULT)</code></pre>
+</section><br><br>
+
+    <p>As you can see, we pass a Channel_ID, a Channel_Description, among others...</p> 
+
+    <p>Thus, the user, from application settings and notifications, was able to choose whether to mute one channel and not another.</p>
+    
+    <section class="marco-t inf">
+        <span class="icono info"> </span> Note: For Android versions 8 and later if the notification does not have a notification channel, the notification will not be displayed.
+        </section>
+    <section class="marco-b">
+            
+    </section>
+        
+
+    <p>Notification channel creation example.</p>
+
+    <section><pre><code class="language-kotlin">private fun createNotificationChannel() {
+    //Notifications channels are just available from Oreo version and above.
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        //Features of channel
+        val notificationChannel = NotificationChannel(CHANNEL_ID,
+            CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_DEFAULT)
+
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        //Notification is visible on the App's icon
+        notificationChannel.setShowBadge(true)
+
+        //Creates the notification
+        notificationManager.createNotificationChannel(notificationChannel)
+    }
+}</code></pre>
+    </section><br><br>
+    
+
+    <h3>Sample App working with notifications</h3>
+    
+
+    <p><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/NotificationsExample">Here</a> you have the Notifications Example </p>
+    
+    </section><!-- End section -->
+
+    <!--*********************************************************Broadcast Receiver***********************************************************-->
+    <section class="apartado">
+    <a name="sBroadcastReceiver"></a>
+    <h2>Broadcast Receiver</h2>
+
+    <h3>Introduction</h3>
+
+    <p>Android apps can send or receive broadcast messages from the Android system and other Android apps.</p>
+    <p>These broadcasts are sent when an event of interest occurs. For example, the Android system sends broadcasts when different system events occur, 
+        such as when the system <span class="cursiva">starts up</span>  or when the <span class="cursiva">device starts to charge</span>. 
+        Apps can also send custom broadcasts, for example to notify other apps of something they might be interested in (like when some new data was downloaded)</p>
+    
+    <p>Apps can register to receive specific broadcasts. When a broadcast is sent, the system automatically redirects broadcasts to apps that have subscribed to receive 
+        that particular type of broadcast.</p>
+
+    <p>Broadcasts can generally be used as a messaging system between apps and outside of the normal user flow. 
+        However, you should be careful not to abuse the opportunity to respond to broadcasts and run background tasks that <span class="subrayado">can contribute to slow system performance</span>.</p>
+    
+    <p class="sub-section">About system emissions</p>
+    <p>The system automatically sends broadcasts when various system events occur, such as when the system turns airplane mode on or off. 
+        System broadcasts are sent to all apps that have subscribed to receive the event.</p>
+
+    <p>The broadcast message itself is wrapped in an <span class="r-word">Intent</span> object whose action string identifies the event that occurred
+         (for example, <span class="r-word">android.intent.action.AIRPLANE_MODE</span> )</p>
+
+    <p>The intent can also contain additional information included in its additional field. 
+        For example, the airplane mode intent includes an additional boolean value indicating whether or not the mode is on.</p>
+    
+    <p>For a complete list of system broadcast actions, see the <span class="inline-file">BROADCAST_ACTIONS.TXT</span> file in the Android SDK inside 
+        <span class="inline-folder">\platforms\<span class="cursiva negrita">VERSION</span>\data</span>.</p>
+
+    <p>Each issue action has an associated constant field. 
+        For example, the value of the <span class="negrita">ACTION_AIRPLANE_MODE_CHANGED</span>  constant is <span class="negrita">android.intent.action.AIRPLANE_MODE</span>. 
+        Documentation of each issue action is available in its associated constant field.</p>
+    
+    
+    <p class="sub-section">Changes in system emissions</p>
+    
+    <p>As the Android platform evolves, the behavior of system broadcasts changes periodically. 
+        Please note the following changes if your app targets Android 7.0 (API level 24) or higher, or is installed on devices running Android 7.0 or higher.</p>
+    
+    <h3>How to receive broadcasts</h3>
+
+    <p>Apps can receive broadcasts in two ways: 
+        <ol>
+            <li>through listeners declared in the manifest</li>
+            <li>through listeners registered in the context</li>
+        </ol>
+    </p>
+    
+    <p class="sub-section">Receivers declared in the manifest</p>
+    <p>If you declare a broadcast receiver in your manifest, the system launches the app (if it's not already running) when the broadcast is sent.</p>
+
+    <section class="marco-t warn">
+        <span class="icono warning"> </span> Note: If your app targets API level 26 or higher, you cannot use the manifest to declare a listener for implicit broadcasts 
+        (broadcasts that are not specifically targeted to your app), except for some implicit broadcasts that are exempt from that restriction. 
+        In most cases, you can use scheduled tasks instead.
+        </section>
+    <section class="marco-b">
+            
+    </section>
+
+    <p>To declare a broadcast receiver in the manifest, perform the following steps</p>
+    
+    <ol>
+        <li>Specify the <span class="d-word">&lt;receiver></span> element in your app's manifest. <span class="inline-file">AndroidManifest.xml</span>
+            <section><pre><code class="language-xml">
+....
+&lt;receiver android:name=".MyBroadcastReceiver"  android:exported="true">
+    &lt;intent-filter>
+        &lt;action android:name="android.intent.action.BOOT_COMPLETED"/>
+        &lt;action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
+    &lt;/intent-filter>
+&lt;/receiver>
+....</code></pre>
+            </section><br><br>
+            Intent filters specify the broadcast actions that your listener subscribes to.
+        </li>
+        <li>
+            Create the <span class="negrita">BroadcastReceiver</span>  subclass, and then implement <span class="negrita">onReceive(Context, Intent)</span>. 
+            The broadcast receiver in the following example logs and displays the content of the broadcast:
+            <section><pre><code class="language-kotlin">private const val TAG = "MyBroadcastReceiver"
+
+class MyBroadcastReceiver : BroadcastReceiver() {
+
+    override fun onReceive(context: Context, intent: Intent) {
+        StringBuilder().apply {
+            append("Action: ${intent.action}\n")
+            append("URI: ${intent.toUri(Intent.URI_INTENT_SCHEME)}\n")
+            toString().also { log ->
+                Log.d(TAG, log)
+                Toast.makeText(context, log, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+}</code></pre>
+            </section><br><br>
+        </li>
+    </ol>
+    
+    <p>The system package manager registers the receiver when the app is installed. 
+        The receiver then becomes an entry point to your standalone app, meaning that the system can launch the app and deliver the stream if the app is not running.</p>
+    
+    <p>The system then creates a new <span class="negrita">BroadcastReceiver</span> component object to handle each broadcast it receives. 
+        This object is valid only during the call to onReceive(Context, Intent). Once this method returns your code, the system considers the component to be no longer active.</p>
+    
+    
+    <p class="sub-section">Receivers registered in the context</p>
+    <p>To register a listener with a context, perform the following steps:</p>
+    
+    <ol>
+        <li>
+            Create an instance of <span class="negrita">BroadcastReceiver</span> .
+            <section><pre><code class="language-kotlin">val br: BroadcastReceiver = MyBroadcastReceiver()</code></pre>
+            </section><br><br>
+        </li>
+        <li>
+            Create an <span class="negrita">IntentFilter</span>  and register the receiver by calling <span class="negrita">registerReceiver(BroadcastReceiver, IntentFilter)</span> 
+
+            <section><pre><code class="language-kotlin">val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION).apply {
+    addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)
+}
+registerReceiver(br, filter)</code></pre>
+            </section><br><br>
+
+            <section class="marco-t inf">
+                <span class="icono info"> </span> Note: To register to receive local broadcasts, call <span class="negrita">LocalBroadcastManager</span>.registerReceiver(BroadcastReceiver, IntentFilter) instead.
+                </section>
+            <section class="marco-b">
+                    
+            </section>
+            Receivers registered to the context receive broadcasts <span class="subrayado">as long as their registration context is valid</span>. 
+            For example, if you register in an Activity context, you will receive broadcasts as long as the activity is not removed. 
+            If you register with the <span class="negrita">application context</span>, you will receive broadcasts <span class="subrayado">while the app is running</span> .
+                
+        </li>
+
+        <li>
+            To stop receiving broadcasts, call <span class="d-word">unregisterReceiver(android.content.BroadcastReceiver)</span>. 
+            Be sure to <span class="negrita">unregister the receiver when you no longer need it</span>  or the context is no longer valid.
+        </li>
+    </ol>
+    
+
+    <h3>How to submit broadcasts</h3>
+    <p>Android offers three ways for apps to send broadcasts:</p>
+    <ol>
+        <li>The <span class="negrita">sendOrderedBroadcast(Intent, String)</span>  method sends broadcasts to one receiver at a time. 
+            Because one listener is executed at a time, the listener can either propagate a result to the next, 
+            or it can abort broadcast altogether so that it is not transmitted to others. 
+            The order in which listeners are executed can be controlled with the <span class="d-word">android:priority</span> attribute of the matching intent filter; 
+            receivers with the same priority will be executed in random order.</li>
+        <li>The <span class="negrita">sendBroadcast(Intent)</span>  method sends broadcasts to all receivers in an unspecified order, 
+            which is called a normal broadcast. This method is more efficient, but it means that the receivers cannot read the results of other receivers, 
+            propagate the data received from the broadcast, or abort the broadcast.</li>
+        <li>The <span class="negrita">LocalBroadcastManager.sendBroadcast</span>  method sends broadcasts to receivers that are in the same app as the sender. 
+            If you don't need to send broadcasts between apps, use local broadcasts. The implementation is much more efficient (inter-process communication is not required) 
+            and you don't have to worry about any security issues related to other apps that may receive or send broadcasts.</li>
+    </ol>
+
+    <p>The following code snippet shows how to send a broadcast by creating an intent and calling <span class="negrita">sendBroadcast(Intent)</span>.</p>
+    <section><pre><code class="language-kotlin">Intent().also { intent ->
+    intent.setAction("com.example.broadcast.MY_NOTIFICATION")
+    intent.putExtra("data", "Notice me senpai!")
+    sendBroadcast(intent)
+}</code></pre>
+</section><br><br>
+
+<p>The broadcast message is wrapped in an <span class="d-word">Intent</span>  object. 
+    The intent's action string must provide the app's Java package name syntax and also uniquely identify the emitting event. 
+    You can attach additional information to the intent with <span class="negrita">putExtra(String, Bundle)</span>. 
+    You can also limit a broadcast to a set of apps in the same organization by calling setPackage(String) on ​​the intent</p>
+
+<h3>How to restrict emissions with permissions</h3>
+
+<p>Permissions allow you to restrict broadcasts to a set of apps that have specific permissions. You can apply restrictions on both the sender and receiver of a broadcast.</p>
+ 
+<p class="sub-section">How to Submit Emissions with permissions</p>
+
+<p>When you call <span class="negrita">sendBroadcast(Intent, String)</span>  or <span class="negrita">sendOrderedBroadcast(Intent, String, BroadcastReceiver, Handler, int, String, Bundle)</span>, 
+    you can specify a permission parameter. Only receivers who requested that permission with the tag in their manifest (and who were later granted the permission 
+    if it's dangerous) can receive the broadcast. For example, the following code sends a broadcast:</p>
+
+<section><pre><code class="language-kotlin">sendBroadcast(Intent("com.example.NOTIFY"), Manifest.permission.SEND_SMS)</code></pre>
+</section><br><br>
+    
+<p>To receive the broadcast, the receiving app must request permission as follows:</p>
+
+<section><pre><code class="language-xml">&lt;uses-permission android:name="android.permission.SEND_SMS"/></code></pre>
+</section><br><br>
+
+<p>You can specify an existing system permission like <span class="negrita">SEND_SMS</span> 
+     or define a custom permission with the <span class="cursiva negrita">&lt;permission></span>  element.</p>
+
+
+<p class="sub-section">How to Receive Emissions with Permissions</p>
+
+<p>If you specify a permissions parameter when registering a broadcast receiver (either with <span class="negrita">registerReceiver(BroadcastReceiver, IntentFilter, String, Handler)</span> 
+     or in the <span class="negrita">&lt;receiver></span>  tag in your manifest), only broadcasters that requested the permission with the <span class="negrita">&lt;uses tag -permission></span> 
+      in your manifest (and those subsequently granted the permission if it's dangerous) can send an intent to the receiver.</p>
+
+<p>For example, suppose your receiving app has a receiver declared in the manifest as shown below:</p>
+    
+<section><pre><code class="language-xml">&lt;receiver android:name=".MyBroadcastReceiver"
+            android:permission="android.permission.SEND_SMS">
+    &lt;intent-filter>
+        &lt;action android:name="android.intent.action.AIRPLANE_MODE"/>
+    &lt;/intent-filter>
+&lt;/receiver></code></pre>
+</section><br><br>
+
+<p>Or the receiving app has a registered listener in the context, as follows:</p>
+
+<section><pre><code class="language-kotlin">var filter = IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED)
+registerReceiver(receiver, filter, Manifest.permission.SEND_SMS, null )</code></pre>
+</section><br><br>
+
+<p>Then, in order to send broadcasts to those receivers, the sending app must request permission as follows:</p>
+
+<section><pre><code class="language-xml">&lt;uses-permission android:name="android.permission.SEND_SMS"/></code></pre>
+</section><br><br>
+
+
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/BroadcastReceiver">Here</a> you have the Broadcast Example </p >
+
+
+<div class="tarea">
+    <p>
+        Exercise: Create an application that has a broadcast receiver (With an action other than the example on Github) that causes a notification to be fired
+    </p>
+</div>
+
+
+    </section><!-- End section -->
+
+    <!--*********************************************************Practice***********************************************************-->
+    <section class="apartado">
+    <a name="sPractice"></a>
+    <div class="tarea">
+        <h2>Practice Chat with Notifications & Broadcast Receiver</h2>
+    <h3>Introduction</h3>
+    
+    <p>The goal of this practice is to create a chat between two of our applications.
+    As an application it doesn't make much sense since sending a chat message to another application installed on our same device isn't useful at all.
+    But it will allow us to practice the concepts seen in this unit, such as notifications and broadcast receivers.</p>
+    
+
+    <h3>Functioning.</h3>
+    
+
+    <p>Once the two applications are installed and running, when a message is sent in one of them, it will be done so that the recipient of the other captures it and vice versa.
+    To do this, remember that the actions that are text strings must be the same.</p>
+    
+    <p class="sub-section">Messages: <span class="negrita">4pts</span> </p>
+    <ol>
+        <li>All messages in the session should appear, that is, until the apps are closed.</li>
+        <li>The date and time of arrival will be added to each message.</li>
+        <li>Each message will be aligned to the left or right depending on the sender, which can be: the application itself or the other application.</li>
+        <li>You can send as many messages as you want.</li>
+    </ol>
+    
+    
+    <p class="sub-section">Notifications: <span class="negrita">3.5pts</span> </p>
+    <ol>
+        <li>Every time an application (your receiver) detects a new message, it will launch a notification.</li>
+        <li>The title of the notification will be the sender of the message (the other application) and the content of the message sent by the other application.</li>
+        <li>If we click on the notification, it will show us the main screen with the messages.
+            Be careful, if your PendingIntent has an intent and you don't use the proper flags, it will fire the MainActivity again, going into the onCreate and clearing the previous messages.
+            To do this, one of the possible solutions is to launch MainActivity as a single instance. This is that if the App is active it does not create a new one, but rather opens the one it has in memory.
+            From the <span class="inline-file">AndrodiManifest.xml</span> file you can add the following directive.
+
+            <section><pre><code class="language-xml">&lt;activity
+    android:name=".MainActivity"
+    android:launchMode="singleInstance"
+    android:exported="true">
+    &lt;intent-filter></code></pre>
+    </section><br><br>
+        </li>
+        <li>Our messages and those sent to us should appear</li>
+        <li>Each app will have a different color and message icon.</li>
+    </ol>
+     
+    <h3>Others: <span class="negrita">2.5pts</span> </h3>
+    <ol>
+        <li>Organize the code into folders.</li>
+        <li>Use the MVVM pattern.</li>
+        <li>Comment the code</li>
+        <li>Use clean code</li>
+    </ol>
+  
+    <h3>Delivery:</h3>
+    <p>You will upload the two applications in a compressed ZIP folder. Remember to clean your project. You will also make a video of less than a minute where you will demonstrate all the proposed functionalities.</p>
+
+
+    <p>In the following GIF you can see an approximation to the required application</p>
+
+    <figure><img src="./UD9/images/UD9_practice_demo.gif" /><br><figcaption>Practice Demo</figcaption></figure>
+    <br>
+    
+    </div>
+    
+
+    
+    
+    
+    
+    </section><!-- End section -->
+
+    <!--*********************************************************Webgraphy***********************************************************-->
+    <section class="apartado">
+    <a name="sWebgraphy"></a>
+    <h2>Webgraphy</h2>
+    
+    <ul>
+        <li><a class="enlace" target="_blank" href="https://developer.android.com/guide/topics/ui/notifiers/notifications">Notifications.</a> </li>
+        <li><a class="enlace" target="_blank" href="https://developer.android.com/training/notify-user/build-notification?hl=es-419">Create notifications</a> </li>
+        <li><a class="enlace" target="_blank" href="https://developer.android.com/training/notify-user/expanded?hl=es-419">Create advanced notifications</a> </li>
+        <li><a class="enlace" target="_blank" href="https://developer.android.com/guide/components/broadcasts">BroadcastReceiver</a> </li>
+    </ul>
+    
+    </section><!-- End section -->
+    
+    <script src="../script/prism.js"></script>
+</body>
+</html>
