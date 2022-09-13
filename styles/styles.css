@@ -192,6 +192,14 @@ span.icono{
     flex-direction: row;
 }
 
+.main-menu a.relleno{
+    visibility: hidden;
+}
+
+.main-menu a:hover{
+    background-color:rgba(158, 253, 171, 0.8);
+}
+
 
 .main-menu a{
     text-decoration: none;
