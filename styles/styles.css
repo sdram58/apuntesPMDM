@@ -22,12 +22,15 @@ body{
     background-repeat: no-repeat;
     background-size: contain;
 }
+
 .logos div:nth-child(1){
     background-image: url(../imagenes/logo_ies.png);
 }
+
 .logos div:nth-child(2){
     background-image: url(../imagenes/logo_con.jpg);
 }
+
 .logos div:nth-child(3){
     background-image: url(../imagenes/logo_fons.png);
 }
