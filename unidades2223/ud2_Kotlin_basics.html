@@ -31,7 +31,7 @@
        href="#sFunciones">Functions</a>
       <a 
        href="#sClasses">Classes and Objects</a><a 
-       href="#sLateinit">Initialization with lateinit vs lazy</a>
+       href="#sLateinit">Initialization with lateinit vs lazy (delegation)</a>
     </div>
     <div class="fila">
       <a 
@@ -2054,7 +2054,7 @@ sealed class Intention {
   <!--*********************************************************Initialization with lateinit vs lazy***********************************************************-->
   <section class="apartado">
   <a name="sLateinit"></a>
-  <h2>Initialization with lateinit vs lazy</h2>
+  <h2>Initialization with lateinit vs lazy (Delegation)</h2>
 
   <p>Normally, those variables that are not declared null must be initialized in the constructor. 
     However, this is often not the best option. In case we don't want to initialize a property in the constructor, we have two alternatives, <span class="d-word">lateinit</span> 
