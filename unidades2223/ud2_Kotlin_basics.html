@@ -21,20 +21,24 @@
     </div>
     <div class="fila">
       <a 
-       href="#s3">Conditionals</a><a 
-       href="#sloops">Loops</a><a 
-       href="#sFunciones">Functions</a>
+       href="#s3">Conditionals</a>
+       <a href="#collections">Collections</a>
+       <a 
+       href="#sloops">Loops</a>
     </div>
     <div class="fila">
       <a 
+       href="#sFunciones">Functions</a>
+      <a 
        href="#sClasses">Classes and Objects</a><a 
-       href="#sLateinit">Initialization with lateinit vs lazy</a><a 
-       href="#sModismos">Scope Functions: Let, run, also, apply, with</a>
+       href="#sLateinit">Initialization with lateinit vs lazy</a>
     </div>
     <div class="fila">
+      <a 
+       href="#sModismos">Scope Functions: Let, run, also, apply, with</a>
       <a
        href="#sExercises">Interactive exercises from Kotlinlang</a>
-       <a href="" class="relleno"></a><a href="" class="relleno"></a>
+       <a href="" class="relleno"></a>
     </div>
     
 
@@ -47,7 +51,9 @@
 <h2>Why Kotlin?</h2>
 <p>Kotlin is a modern programming language than make developers happier…</p>
 
-<img style="width:100%" src="./imagenes/ud1/Imagen1.png" alt="Kotlin's uses" title="Kotlin's uses" />
+<figure><img src="UD2/images/ud2-2022-09-22-11-31-08.png" /><br><figcaption>Kotlin's uses</figcaption></figure>
+<br>
+
 <br><br>
 <a class="enlace" target="_blank" href="https://kotlinlang.org/">https://kotlinlang.org/</a> 
 
@@ -518,6 +524,179 @@ println(answerString)
     println("b es $b")
   </code></pre></section><br><br>
 </section>
+
+<!--*********************************************************collections***********************************************************-->
+<section class="apartado">
+<a name="collections"></a>
+<h2>Collections</h2>
+
+<p>A collection usually contains a number of objects (this number may also be zero) of the same type. Objects in a collection are called elements or items. 
+  For example, all the students in a department form a collection that can be used to calculate their average age.</p>
+
+<p>The following collection types are relevant for Kotlin:</p>
+<ul>
+  <li><span class="d-word">List</span>  is an ordered collection with access to elements by indices – integer numbers that reflect their position. Elements can occur more than once in a list. 
+    An example of a list is a telephone number: it's a group of digits, their order is important, and they can repeat.</li>
+  <li><span class="d-word">Set</span>  is a collection of unique elements. It reflects the mathematical abstraction of set: a group of objects without repetitions. Generally,
+     the order of set elements has no significance. For example, the numbers on lottery tickets form a set: they are unique, and their order is not important.</li>
+  <li><span class="d-word">Map</span>  (or dictionary) is a set of key-value pairs. Keys are unique, and each of them maps to exactly one value. The values can be duplicates. 
+    Maps are useful for storing logical connections between objects, for example, an employee's ID and their position.</li>
+</ul>
+
+
+<h3">Collection types</h3>
+
+<p>The Kotlin Standard Library provides implementations for basic collection types: <span class="negrita">sets, lists,</span> and <span class="negrita">maps</span> . A pair of interfaces represent each collection type:</p>
+
+<ul>
+  <li>A <span class="negrita">read-only</span>   interface that provides operations for accessing collection elements.</li>
+  <li>A <span class="negrita">mutable</span>   interface that extends the corresponding read-only interface with write operations: 
+    adding, removing, and updating its elements.</li>
+</ul>
+
+<p>Note that altering a mutable collection doesn't require it to be a <span class="r-word">var</span> : write operations modify the 
+  same mutable collection object, so the reference doesn't change. Although, 
+  if you try to reassign a <span class="r-word">val</span> collection, you'll get a compilation error.</p>
+
+  <section><pre><code class="language-kotlin">val numbers = mutableListOf("one", "two", "three", "four")
+numbers.add("five")   // this is OK
+println(numbers)
+//numbers = mutableListOf("six", "seven")      // compilation error</code></pre>
+  </section><br><br>
+
+  
+
+<figure><img src="UD2/images/ud2-2022-09-22-12-49-13.png" /><br><figcaption>diagram of the Kotlin collection interfaces</figcaption></figure>
+<br>
+
+
+<p class="sub-section">Collection</p>
+
+<p><span class="r-word">Collection&lt;T></span>  is the root of the collection hierarchy. 
+  This interface represents the common behavior of a read-only collection: retrieving size, checking item membership, and so on. 
+  <span class="r-word">Collection</span>  inherits from the Iterable&lt;T> interface that defines the operations for iterating elements. 
+  You can use Collection as a parameter of a function that applies to different collection types.
+   For more specific cases, use the Collection's inheritors: <span class="r-word">List</span>  and <span class="r-word">Set</span> .</p>
+
+
+<section><pre><code class="language-kotlin">fun printAll(strings: Collection<String>) {
+    for(s in strings) print("$s ")
+    println()
+}
+    
+fun main() {
+    val stringList = listOf("one", "two", "one")
+    printAll(stringList)
+    
+    val stringSet = setOf("one", "two", "three")
+    printAll(stringSet)
+}</code></pre>
+</section><br><br>
+
+<p><span class="d-word">MutableCollection&lt;T></span>  is a Collection with write operations, such as add and remove.</p>
+
+<section><pre><code class="language-kotlin">fun List<String>.getShortWordsTo(shortWords: MutableList<String>, maxLength: Int) {
+  this.filterTo(shortWords) { it.length &lt;= maxLength }
+  // throwing away the articles
+  val articles = setOf("a", "A", "an", "An", "the", "The")
+  shortWords -= articles
+}
+
+fun main() {
+  val words = "A long time ago in a galaxy far far away".split(" ")
+  val shortWords = mutableListOf&lt;String>()
+  words.getShortWordsTo(shortWords, 3)
+  println(shortWords)
+}</code></pre>
+</section><br><br>
+
+<p class="sub-section">List</p>
+<p>List&lt;T> stores elements in a specified order and provides indexed access to them. 
+  Indices start from zero – the index of the first element – and go to lastIndex which is the (list.size - 1).</p>
+
+<section><pre><code class="language-kotlin">val numbers = listOf("one", "two", "three", "four")
+println("Number of elements: ${numbers.size}")
+println("Third element: ${numbers.get(2)}")
+println("Fourth element: ${numbers[3]}")
+println("Index of element \"two\" ${numbers.indexOf("two")}")</code></pre>
+</section><br><br>
+
+<p>List elements (including nulls) <span class="subrayado">can duplicate</span> : a list can contain any number of equal objects or occurrences of a single object. 
+  Two lists are considered equal if they have the same sizes and structurally equal elements at the same positions.</p>
+
+<section><pre><code class="language-kotlin">val bob = Person("Bob", 31)
+val people = listOf(Person("Adam", 20), bob, bob)
+val people2 = listOf(Person("Adam", 20), Person("Bob", 31), bob)
+println(people == people2)
+bob.age = 32
+println(people == people2)</code></pre>
+</section><br><br>
+
+<p><span class="r-word">MutableList&lt;T></span>  is a <span class="d-word">List</span>  with list-specific write operations, for example, 
+  to add or remove an element at a specific position.</p>
+
+  <section><pre><code class="language-kotlin">val numbers = mutableListOf(1, 2, 3, 4)
+numbers.add(5)
+numbers.removeAt(1)
+numbers[0] = 0
+numbers.shuffle()
+println(numbers) //[5, 0, 3, 4]</code></pre>
+  </section><br><br>
+
+
+ <p class="sub-section">Set</p>
+
+ <p><span class="r-word">Set&lt;T></span>  stores unique elements; their order is generally undefined. null elements are unique as well: 
+  a <span class="d-word">Set</span>  can contain only one null. 
+  Two sets are equal if they have the same size, and for each element of a set there is an equal element in the other set.</p>
+
+<section><pre><code class="language-kotlin">val numbers = setOf(1, 2, 3, 4)
+println("Number of elements: ${numbers.size}")
+if (numbers.contains(1)) println("1 is in the set")
+
+val numbersBackwards = setOf(4, 3, 2, 1)
+println("The sets are equal: ${numbers == numbersBackwards}")</code></pre>
+</section><br><br>
+
+
+ <p class="sub-section">Map</p>
+ 
+ <p><span class="r-word">Map&lt;K, V></span>  is not an inheritor of the <span class="d-word">Collection</span>  interface;
+   however, it's a Kotlin collection type as well. A Map stores <i>key-value</i> pairs (or entries); keys are unique, 
+   but different keys can be paired with equal values. The Map interface provides specific functions, such as access to value by key, 
+   searching keys and values, and so on.</p>
+
+
+<section><pre><code class="language-kotlin">val numbersMap = mapOf("key1" to 1, "key2" to 2, "key3" to 3, "key4" to 1)
+
+println("All keys: ${numbersMap.keys}")
+println("All values: ${numbersMap.values}")
+if ("key2" in numbersMap) println("Value by key \"key2\": ${numbersMap["key2"]}")    
+if (1 in numbersMap.values) println("The value 1 is in the map")
+if (numbersMap.containsValue(1)) println("The value 1 is in the map") // same as previous</code></pre>
+</section><br><br>
+
+<p>Two maps containing the equal pairs are equal regardless of the pair order.</p>
+
+<section><pre><code class="language-kotlin">val numbersMap = mapOf("key1" to 1, "key2" to 2, "key3" to 3, "key4" to 1)    
+val anotherMap = mapOf("key2" to 2, "key1" to 1, "key4" to 1, "key3" to 3)
+
+println("The maps are equal: ${numbersMap == anotherMap}") //The maps are equal: true</code></pre>
+</section><br><br>
+
+<p><span class="d-word">MutableMap</span>  is a <span class="r-word">Map</span>  with map write operations, for example, 
+  you can add a <span class="negrita">new</span>  key-value pair or <span class="negrita">update</span>  the value associated with the given key.</p>
+
+<section><pre><code class="language-kotlin">val numbersMap = mutableMapOf("one" to 1, "two" to 2)
+numbersMap.put("three", 3)
+numbersMap["one"] = 11
+
+println(numbersMap) //{one=11, two=2, three=3}</code></pre>
+</section><br><br>
+
+
+
+</section><!-- End section -->
 
   <!--**********************LOOPS**************************************-->
   <section class="apartado">
