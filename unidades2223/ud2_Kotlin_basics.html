@@ -111,7 +111,7 @@ count = 15
   </p>
 
   <section><pre><code class="language-kotlin">  val languageName = "Kotlin"
-  val upperCaseName = languageName.toUpperCase()
+  val upperCaseName = languageName.uppercase()
   </code></pre></section><br><br>
 
 
@@ -125,7 +125,7 @@ count = 15
   </section>
   
 
-  <p><span class="cursiva">toUpperCase()</span>  is a function that can only be called on variables of type <span class="cursiva">String</span> . Because the Kotlin compiler has inferred <span class="cursiva">languageName</span>  as a String, you can safely call <span class="cursiva">toUpperCase(). inc()</span> , however, is an <span class="r-word">Int</span>  operator function, so it can’t be called on a <span class="cursiva">String</span> . Kotlin’s approach to type inference gives you both conciseness and type-safety.</p>
+  <p><span class="cursiva">uppercase()</span>  is a function that can only be called on variables of type <span class="cursiva">String</span> . Because the Kotlin compiler has inferred <span class="cursiva">languageName</span>  as a String, you can safely call <span class="cursiva">uppercase(). inc()</span> , however, is an <span class="r-word">Int</span>  operator function, so it can’t be called on a <span class="cursiva">String</span> . Kotlin’s approach to type inference gives you both conciseness and type-safety.</p>
 
   <h3>Know values in compilation time</h3>
 
@@ -178,7 +178,7 @@ saludoNullable = null //Compiles
 
 <section><pre><code class="language-kotlin">val nameNullable: String? = "Juan"
 if (nobreNullable != null) {
-    println("Hola, ${nameNullable.toUpperCase()}.")
+    println("Hola, ${nameNullable.uppercase()}.")
     println("Tu name tiene ${nameNullable.length} caracteres.")
 } else {
     println("Hola, invitado")
@@ -203,12 +203,12 @@ print(s.length) // Compile Error
 <p>The above check is simple, but requires a lot of code to do it. Kotlin offers us the <span class="d-word">?</span>  operator in order to reduce that code, 
   so that we can have the null check and the method call on the same line. Thus, the following code:</p>
 
-<section><pre><code class="language-kotlin">name?.toUpperCase()
+<section><pre><code class="language-kotlin">name?.uppercase()
 
 //it is equivalent to
 	
 if (name != null)
-     name.toUpperCase()
+     name.uppercase()
 else null
 </code></pre></section><br><br>
 
@@ -237,7 +237,7 @@ else "unknown"
 
   <p>One of the most common uses of this operator is to <span class="negrita">return a default value</span> distinct to <span class="d-word">null</span>  when a method or property is <span class="d-word">null</span> :</p>
 
-<section><pre><code class="language-kotlin">val nameMayuscula = name?.toUpperCase() ?: "DESCONOCIDO"
+<section><pre><code class="language-kotlin">val nameMayuscula = name?.uppercase() ?: "DESCONOCIDO"
 val ciudadActual = usuario?.direccion?.ciudad ?: "desconocida"
 </code></pre></section><br><br>
 
@@ -265,7 +265,7 @@ val ciudadActual = usuario?.direccion?.ciudad ?: "desconocida"
 </p>
 
 <section><pre><code class="language-kotlin">val name: String? = null
-name!!.toUpperCase() // NullPointerException
+name!!.uppercase() // NullPointerException
 </code></pre></section><br><br>
 
 <p>It is used on those occasions when we as programmers <span class="negrita">are sure</span>  that a variable <span class="negrita">is not going to be null</span>
@@ -1477,7 +1477,7 @@ return result
 <p>We can also declare properties and initialize them from parameters. The following class has three properties: <span class="cursiva">Name, Age, and PersonKey</span> :</p>
 
 <section><pre><code class="language-kotlin">class Persona(name: String, var age: Int) {
-   val personKey = name.toUpperCase()
+   val personKey = name.uppercase()
 }
 </code></pre></section><br><br>
 <p>If we need to add instructions to initialize the object we can use an <span class="d-word">init block</span> . 
@@ -1534,7 +1534,7 @@ var s = p.name
 
 <section><pre><code class="language-kotlin">class Persona {
    var name: String = ""
-      get() = field.toUpperCase()
+      get() = field.uppercase()
       set(value) {
          if (value=="Carlos Tarazona") regalarJamon()
          field = value
