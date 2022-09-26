@@ -2152,8 +2152,12 @@ println("strLength is $strLength") //prints strLength is 20
   <section><pre><code class="language-kotlin">var a = 1
 var b= 2
 
-a = a.let { it + 2 }.let { val i = it + b
-        i}
+a = a.let { 
+    it + 2 
+  }.let { 
+      val i = it + b
+      i
+    }
 println(a) //5
   </code></pre></section><br><br>
 
