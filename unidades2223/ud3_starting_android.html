@@ -55,6 +55,8 @@
         <span class="icono info"> </span> <span class="negrita">If you haven't opened a project yet, on the <span class="negrita">welcome screen</span>, click 
         <span class="d-word">New  project</span> :</span>
         </section>
+
+        
     <section class="marco-b">
         <figure><img src="imagenes/ud3-2021-09-25-13-06-29.png" /><br><figcaption></figcaption></figure>        
     </section>
@@ -72,12 +74,12 @@
     <br>
     <p>Choose the template for the <span class="negrita">main Activity</span>  of the App. For this practice choose <span class="d-word">Empty Activity</span> .</p>
 
-    <figure><img src="imagenes/ud3-2021-09-25-13-17-15.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD3/images/ud3-2022-09-29-11-12-41.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p>Fill the fields on the next screen. Remember in package name field to set your data, that is com.XXYYZZ.appname where XXYYZZ stands for two first letters of your name and surnames. For instance, some one named "Pedro García Marquez" should set <span class="cursiva">com.pegama.appName</span> </p>
 
-    <figure><img src="imagenes/ud3-2021-09-25-13-31-53.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD3/images/ud3-2022-09-29-11-18-47.png" /><br><figcaption></figcaption></figure>
     <br>
 
     <section class="marco-t inf">
@@ -673,40 +675,35 @@ binding.increaseCounter</code></pre>
 </section>
  </section><!-- End section -->
 
- <!--*********************************************************MultiCounter Practice***********************************************************-->
+ <!--*********************************************************Converter Practice***********************************************************-->
  <section class="apartado">
  <a name="sPractice"></a>
- <h2>MultiCounter Practice</h2>
+ <h2>Converter Practice</h2>
  
- <a class="tarea" target="_blank" href="#sPractice">Develop an app named <span class="d-word">P1_MultiCounter</span>  that functions as a people counter</a> 
- <figure><img src="imagenes/ud3-2021-09-26-19-23-22.png" /><br><figcaption>Multicounter</figcaption></figure>
+ <a class="tarea" target="_blank" href="#sPractice">Develop an app named <span class="d-word">P1_Converter</span>  that functions as binary-decimal converter</a> 
+ <figure><img src="UD3/images/ud3-2022-09-29-11-32-20.png" /><br><figcaption>Converter</figcaption></figure>
  <br>
  
+<p>You must create a converter calculator from binary to decimal and vice versa</p>
 
- <p>The app must have <span class="negrita">4 independent counters</span>  and a <span class="negrita">global counter</span>  (that takes the sum of the 4 counters).</p>
- <p>There should be a <span class="negrita">reset button</span>  for each counter and a global reset button that resets all 4 counters at the same time.</p>
- <p>There should also be a <span class="negrita">deacrease button</span> , but de careful that its counter doesn't drop below 0</p>
- <p>You can use the following app as a model for the multiconductor</p>
-<figure><img src="imagenes/ud3_P1runningExample.gif" /><br><figcaption>Running sample</figcaption></figure>
+<p>The calculator will only have <span class="negrita">10 binary digits.</span> You have to control this </p>
+<p>It will have two text fields, one for the binary value and one for the decimal value.</p>
+<p>For simplicity the calculator will only work with natural numbers (without decimals and positives). 
+    You have to control this. If we try to pass a too large number to binary, we will indicate the overflow in the same field of the result.</p>
+
+<p>You can use one button to convert from decimal to binary and another from binary to decimal </p>
+<p>or you can use a switch widget <img style="vertical-align: baseline"  src="UD3/images/ud3-2022-09-29-11-47-55.png" /> and a button</p>
+
+<p>Control constraints so it looks good both vertically and horizontally</p>
+<p>This image could be an image of what it looks like</p>
+
+<figure><img src="UD3/images/ud3-2022-09-29-11-58-37.png" /><br><figcaption>Example</figcaption></figure>
 <br>
 
 
- <p>
-    In the following image you can see the <span class="negrita">constraints</span>  that have been defined in the layout:</p>
-
-    
-
-    <figure><img src="imagenes/ud3-2021-10-01-17-05-52.png" /><br><figcaption>Defined Constraints</figcaption></figure>
-    <br>
-
-    
-
-<p><span class="negrita">Validate</span>  the layout of the elements in the <span class="r-word">ConstraintLayout</span>  using the <span class="d-word">"Layout Validator"</span>:</p>
- <figure><img src="imagenes/ud3-2021-09-26-20-31-47.png" /><br><figcaption>Layout Inspector</figcaption></figure>
- <br>
  
  <section class="marco-t inf">
-    <span class="icono info"> </span> Use <span class="r-word"><span class="negrita">android:backgroundTint</span> </span> property to change background color of buttons
+    <span class="icono info"> </span> Use <span class="r-word"><span class="negrita">android:backgroundTint</span></span> or <span class="r-word"><span class="negrita">android:background</span></span> property to change background color of buttons
     </section>
 <section class="marco-b">
         
