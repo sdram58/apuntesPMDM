@@ -233,7 +233,7 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".Activity2">
+            tools:context=".MainActivity">
         
             &lt;TextView
                 android:id="@+id/tvGreeting"
@@ -251,7 +251,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="56dp"
-                android:text="@string/go"
+                android:text="@string/btn_go_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvGreeting" />
@@ -263,7 +263,17 @@
         
     </section>
 
-    <p><span class="cursiva">Actitivy2</span> layout will have the next code below with a <span class="cursiva">TextView</span> , <span class="cursiva">EditText</span>  and a <span class="cursiva">Button</span>  to go back. For now we're not using them</p>
+    <section class="marco-t warn">
+        <span class="icono warning"> </span>Remember not to use hardcoded text. <br>Make sure to add the string resource <span class="d-word">@string/btn_go_text</span> to the <span class="inline-file">strings.xml</span> file
+        </section>
+    <section class="marco-b">
+        <section><pre><code class="language-xml">&lt;string name="btn_go_text">Go next Activity&lt;/string></code></pre>
+        </section>
+    </section>
+    
+
+    <p><span class="cursiva">Actitivy2</span> layout will have the next code below with a <span class="cursiva">TextView</span> , 
+        <span class="cursiva">EditText</span>  and a <span class="cursiva">Button</span>  to go back. For now we're not using them</p>
     <section class="marco-t file-">
         <span class="icono file"> </span> <span class="negrita">activity_2.xml</span>
         </section>
@@ -303,7 +313,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        android:text="@string/back"
+        android:text="@string/back_btn_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etName" />
@@ -315,10 +325,19 @@
     
     </section>
 
+    <section class="marco-t warn">
+        <span class="icono warning"> </span> Remember to add all the strings resources you need such as <span class="d-word">@string/back_btn_text</span> 
+        to the <span class="inline-file">strings.xml</span> file
+        </section>
+    <section class="marco-b">
+        <section><pre><code class="language-xml">&lt;string name="back_btn_text">Back&lt;/string></code></pre>
+        </section><br><br>
+    </section>
+
     <p>For create an <span class="r-word">Intent</span>  that goes to another of our actitities we should use its constructor. It accepts at least two params, 
         the first one is the <span class="negrita">context</span> , that is where and who is going to call the function. The second one is the <span class="negrita">destination activity class</span> .</p>
     <section><pre><code class="language-kotlin">val intent = Intent(this, Activity2::class.java)</code></pre>
-    </section><br><br>
+    </section>
     
 
     <p>Then in the MainActivity.kt we should add a listener for the button that starts the new activity with the created Intent</p>
@@ -438,18 +457,34 @@ private fun openActivity2() {
     binding = Activity2Binding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    var myText:String? = null
+    retrieveMainActivityData()
+
+    //..............
+}
+
+private fun retrieveMainActivityData() {
+    var name:String? = null
 
     if(intent.hasExtra(KEY_EXTRA_NAME))
-        myText = "${intent.getStringExtra(KEY_EXTRA_NAME).toString()}"
+        name = "${intent.getStringExtra(KEY_EXTRA_NAME).toString()}"
 
     if(intent.hasExtra(KEY_EXTRA_SURNAME))
-        myText = "${myText?:""} ${intent.getStringExtra(KEY_EXTRA_SURNAME).toString()}"
+        name = "${name?:""} ${intent.getStringExtra(KEY_EXTRA_SURNAME).toString()}"
 
-    binding.tvTop.text = myText?:"No user"
-    //......
-}</code></pre>
+    binding.tvTop.text = name ?: "No user"
+}
+</code></pre>
 </section><br><br>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> Remember import <span class="d-word">KEY_EXTRA_NAME</span> and <span class="d-word">KEY_EXTRA_SURNAME</span> from companion object on MainActivity
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-kotlin">import com.catata.intentstwoactivities.MainActivity.Companion.KEY_EXTRA_NAME
+import com.catata.intentstwoactivities.MainActivity.Companion.KEY_EXTRA_SURNAME</code></pre>
+        </section><br><br>
+</section>
+
 
 <p>Now we are going to make the called activity return data, we could do as in the previous one and put it in the Intent and call <span class="r-word">startActivity()</span> ,
         but as we've seen before, this push more activities into the task stack. To perform this type of actions we use <span class="r-word">registerForActivityResult()</span></p>
@@ -535,12 +570,17 @@ resultLauncher.launch(intent)</code></pre>
     <span class="icono file"> </span> <span class="negrita">Activity2.kt</span>
     </section>
 <section class="marco-b">
-     <section><pre><code class="language-kotlin">binding.btnBack.setOnClickListener{
+     <section><pre><code class="language-kotlin">//.......onCreate
+    binding.btnBack.setOnClickListener{
+        sendBackName()
+    }
+}
 
+private fun sendBackName() {
     val text = binding.etName.text.toString()
     val returnIntent = Intent().apply {
         putExtra(KEY_EXTRA_RESULT, text)
-    }   //Creates a new Intent with editText content as extra
+    }   //Creates a new Intent with editText content as an extra
 
     if(text != "")
         setResult(RESULT_OK, returnIntent) //The action went ok.
@@ -548,7 +588,6 @@ resultLauncher.launch(intent)</code></pre>
         setResult(RESULT_CANCELED, returnIntent)
 
     finish() //Finish and close this activity
-
 }</code></pre>
      </section><br><br>   
 </section>
@@ -556,6 +595,7 @@ resultLauncher.launch(intent)</code></pre>
 <figure><img src="imagenes/ud4-sampleReturnData.gif"/><br><figcaption></figcaption></figure>
 <br>
 
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD4/IntentsTwoActivities">Here</a> is the whole example </p>
 
 <p class="sub-section">Parcelable objects</p>
 
