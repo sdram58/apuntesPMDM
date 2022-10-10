@@ -89,7 +89,7 @@
 
 
     
-    <h3>Live cicle.</h3>
+    <h3>Activities' Live cycle.</h3>
 
     <p>
         As a user navigates through, out of, and back to your app, the <span class="r-word">Activity</span> instances in your app transition through different states
@@ -181,7 +181,10 @@
     <p>This callback is the final one that the activity receives <span class="r-word">onDestroy()</span>  is usually implemented to 
         ensure that all of an activity’s resources are released when the activity, or the process containing it, is destroyed.</p>
 
-
+        <div class="tarea">Test Activity Lifecycle
+            <p>Build a two activities app and catch all states of both activities according activity life cycle, onResume, onStart, onCreate, onDestroy, onRestart, onStop... in each one just call super and add a Log.i("ACTIVITYNAME", "STATE (onResume, onStart...)")</p>
+            <p>Once done, start the App, navigate between activities, hide the app, and study which callbacks are running and in what order</p>
+        </div> 
 
     
 
@@ -482,7 +485,7 @@ private fun retrieveMainActivityData() {
 <section class="marco-b">
         <section><pre><code class="language-kotlin">import com.catata.intentstwoactivities.MainActivity.Companion.KEY_EXTRA_NAME
 import com.catata.intentstwoactivities.MainActivity.Companion.KEY_EXTRA_SURNAME</code></pre>
-        </section><br><br>
+        </section>
 </section>
 
 
@@ -595,7 +598,6 @@ private fun sendBackName() {
 <figure><img src="imagenes/ud4-sampleReturnData.gif"/><br><figcaption></figcaption></figure>
 <br>
 
-<p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD4/IntentsTwoActivities">Here</a> is the whole example </p>
 
 <p class="sub-section">Parcelable objects</p>
 
@@ -679,7 +681,7 @@ private fun sendParcelablePerson() {
     <section><pre><code class="language-kotlin">var myText:String? = null
 
 if(intent.hasExtra(KEY_EXTRA_RESULT_PARCELABLE)){
-    val person = intent.getParcelableExtra<Person>(KEY_EXTRA_RESULT_PARCELABLE)
+    val person = intent.getParcelableExtra&lt;Person>(KEY_EXTRA_RESULT_PARCELABLE)
     person.let{person ->
         myText = "${person?.name} ${person?.surname}"
     }
@@ -688,7 +690,7 @@ if(intent.hasExtra(KEY_EXTRA_RESULT_PARCELABLE)){
 binding.tvTop.text = myText?:"No user"</code></pre>
         </section>
 </section><br><br>
-<p>Github examples <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/IntentActivitySameApp">here</a> </p>
+<p>Github examples <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD4/IntentsTwoActivities">here</a> </p>
 
 
 
@@ -902,9 +904,9 @@ private fun sendShared() {
         type = "text/plain"
     }
 
-    val shareIntent = Intent.createChooser(//Selector that allow us choose destination app according the action and intent-filter
+    val shareIntent = Intent.createChooser(//Selector that allow us to choose destination app according the action and intent-filter
         sendIntent,
-        "Hey choose an app to uppercase") //Title of selector window
+        "Hey choose an app to uppercase") //Title ofS selector window
     myResultLauncher.launch(shareIntent)
 }</code></pre>
             </section><br><br>
@@ -949,8 +951,13 @@ private fun sendShared() {
         }
     }
 }</code></pre>
-        </section><br><br>
+        </section>
+
     </section>
+    <p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD4/SharedActivitiesCaller">Caller App</a> <br>
+
+    <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD4/SharedActivitiesReceiver">Receiver App</a> 
+</p>
 
     <p class="sub-section">Some examples of common intents</p>
 
@@ -980,7 +987,7 @@ private fun sendShared() {
 }</code></pre>
     </section><br><br>
     <section class="marco-t inf">
-        <span class="icono info"> </span> Do not forget give <span class="r-word">CALL_PHONE</span>  permission
+        <span class="icono info"> </span> Do not forget give <span class="r-word">CALL_PHONE</span>  permission in the <span class="inline-file">AndroidManifest.xml</span> file
         </section>
     <section class="marco-b">
             <section><pre><code class="language-xml">&lt;uses-permission android:name="android.permission.CALL_PHONE" /></code></pre>
@@ -1126,10 +1133,13 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
 }</code></pre>
 </section><br><br>
 
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD4/CommonIntentExamples">Here</a> you have some examples </p>
 
-    <div class="tarea">Test Activity Lifecycle
-        <p>Build a two activities app and catch all states of both activities according activity life cycle, onResume, onStart, onCreate, onDestroy, onRestart, onStop... in each one just call super and add a Log.i("ACTIVITYNAME", "STATE (onResume, onStart...)")</p>
-        <p>Once done, start the App, navigate between activities, hide the app, and study which callbacks are running and in what order</p>
+
+    <div class="tarea">Communicating Apps
+        <p>
+            Create an application that passes 2 numbers to another application and an operation. <br>
+            The second application will have a "Calculate" button and return the result of applying the operation to both numbers</p>
     </div> 
     
     
