@@ -1337,7 +1337,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
     </section><br><br>
 
     <p>Now that we have the two fragments created we are going to go back to our <span class="d-word">MainActivity</span> 
-         and go to its layout, called <span class="negrita">activity_main</span>. Once inside we edit it and leave it like that.</p>
+         and go to its layout, called <span class="negrita">activity_main</span>. Once inside we edit it and set it like that.</p>
     
     <section class="marco-t file-">
         <span class="icono file"> </span> <span class="negrita">activity_main.xml</span>
@@ -1465,12 +1465,12 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
          <span class="cursiva">interface</span>.</p>
 
     <section><pre><code class="language-kotlin">interface OnFragmentActionsListener {
-    fun onClickFragmentButton()
+    fun onClickFragmentButton(text: String)
 }</code></pre>
     </section><br><br>
 
 
-    <p>We have added a function called <span class="d-word">onClickFragmentButton()</span>  that does not take parameters or return anything. 
+    <p>We have added a function called <span class="d-word">onClickFragmentButton(text: String)</span>  that take a parameter that we will send from the fragments, it returns nothing. 
         Now we will implement this interface in the <span class="d-word">MainActivity</span>  class. For this we will add it in the first line, leaving our activity like this.
     </p>
 
@@ -1497,7 +1497,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
     
     <p>Once we have accepted, we see how a new function is added to our class.</p>
     
-    <section><pre><code class="language-kotlin">override fun onClickFragmentButton() {
+    <section><pre><code class="language-kotlin">override fun onClickFragmentButton(text: String) {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }</code></pre>
     </section><br><br>
@@ -1507,8 +1507,8 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
     
     <p>Within this method we will add a <span class="r-word">Toast</span> , which is a message that will appear at the bottom of the screen when the method is called.</p>
 
-    <section><pre><code class="language-kotlin">override fun onClickFragmentButton() {
-    Toast.makeText(this, "Button has been pushed", Toast.LENGTH_SHORT).show()    
+    <section><pre><code class="language-kotlin">override fun onClickFragmentButton(text: String) {
+    Toast.makeText(this, text, Toast.LENGTH_SHORT).show()    
 }</code></pre>
     </section><br><br>
 
@@ -1628,7 +1628,7 @@ class BlueFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val myButton: Button = view.findViewById(R.id.btnPlus)
 
-        myButton.setOnClickListener { listener?.onClickFragmentButton() }
+        myButton.setOnClickListener { listener?.onClickFragmentButton("Hi from Blue Fragment") }
     }
 
     override fun onDetach() {
@@ -1656,8 +1656,42 @@ class BlueFragment : Fragment() {
             }
     }
 }</code></pre>
-            </section><br><br>
+            </section>
     </section>
+
+
+    <p>If we want to use <span class="d-word">view binding</span> we have to create the variable in the fragment</p>
+
+    <section><pre><code class="language-kotlin">private var _binding: FragmentBlueBinding? = null
+// This property is only valid between onCreateView and
+// onDestroyView.
+private val binding get() = _binding!!</code></pre>
+    </section><br><br>
+
+    <p>And the modify <span class="r-word">onCreateView</span> function</p>
+
+<section><pre><code class="language-kotlin">override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?,
+    savedInstanceState: Bundle?,
+): View? {
+    // Inflate the layout for this fragment
+    _binding = FragmentBlueBinding.inflate(inflater,container, false)
+
+    return binding.root
+}</code></pre>
+</section><br><br>
+
+<p>Then we can use this binding variable to access to the views</p>
+
+<section><pre><code class="language-kotlin">override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+
+    binding.btnPlus.setOnClickListener {
+        listener?.onClickFragmentButton("Hi from Blue Fragment")
+    }
+    
+}</code></pre>
+</section><br><br>
 
     <p>We have to do the same with <span class="d-word">RedFragment</span> </p>
     
@@ -1719,7 +1753,7 @@ class RedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val myButton: Button = view.findViewById(R.id.btnPlus)
 
-        myButton.setOnClickListener { listener?.onClickFragmentButton() }
+        myButton.setOnClickListener { listener?.onClickFragmentButton("Hi from Red Fragment") }
     }
 
     override fun onDetach() {
@@ -1747,14 +1781,14 @@ class RedFragment : Fragment() {
             }
     }
 }</code></pre>
-            </section><br><br>
+            </section>
     </section>
 
 
-<figure><img src="./imagenes/ud4-fragment_layout.gif" /><br><figcaption></figcaption></figure>
+<figure><img src="./UD4/images/FuncionamientoFragments1.gif" /><br><figcaption></figcaption></figure>
 <br>
 <br>
-<a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/FragmentExample">https://github.com/sdram58/PMDM2021/tree/master/FragmentExample</a> 
+<p>You can see the example <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD4/Fragments1">here</a> </p>
 
     <h3>Using fragments programmatically</h3>
     <p>With the previous example we have managed to add <span class="cursiva">fragments</span>  with the xml layout, 
@@ -1784,7 +1818,7 @@ class RedFragment : Fragment() {
         android:padding="8dp"
         android:layout_margin="5dp"
         android:background="@color/red"
-        android:text="Fragment rojo" />
+        android:text="Fragment red" />
 
     &lt;Button
         android:id="@+id/btnBlue"
@@ -1794,7 +1828,7 @@ class RedFragment : Fragment() {
         android:layout_gravity="center_horizontal"
         android:layout_margin="5dp"
         android:background="@color/blue"
-        android:text="Fragment azul" />
+        android:text="Fragment blue" />
 
     &lt;FrameLayout
         android:id="@+id/fragmentContainer"
@@ -1858,7 +1892,7 @@ binding.btnBlue.setOnClickListener { loadFragment(BlueFragment()) }</code></pre>
 <p>The first thing we have done is to rename it, since it no longer adds <span class="cursiva">fragments</span> , but replaces them. 
     This time the <span class="r-word">fragmentTransaction</span>  object does not call the <span class="r-word">add()</span>  
     function, but rather <span class="r-word">replace()</span>. To finish before doing the <span class="r-word">commit()</span>,
-    we have added <span class="r-word">addToBackStack(null)</span> , which this we're telling the system to allow going back in the stack.
+    we have added <span class="r-word">addToBackStack(null)</span> , with this we're telling the system to allow going back in the stack.
 </p>
 
 <p>If we run the complete example above and open a couple of <span class="cursiva">fragments</span> , pressing return will take us to the <span class="cursiva">previous fragment</span> .</p>
@@ -1866,7 +1900,8 @@ binding.btnBlue.setOnClickListener { loadFragment(BlueFragment()) }</code></pre>
 <figure><img src="./imagenes/ud4-fragment_prog.gif" /><br><figcaption></figcaption></figure>
 <br>
 <br>
-<a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/FragmentsProgrammatically">https://github.com/sdram58/PMDM2021/tree/master/FragmentsProgrammatically</a> 
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD4/Fragment2">Here</a> you can find the full example </p>
+
 
 
 
@@ -1919,10 +1954,12 @@ binding.btnBlue.setOnClickListener { loadFragment(BlueFragment()) }</code></pre>
 
     <p>We see that it contains a single container for Fragments, to which we put an ID to be able to reference it. </p>
     <p>Now it's time to create the Landscape version. We can do it in several ways, but the easiest is from the editor itself in design view. 
-        We press the rotate view button <img style="vertical-align: baseline"  src="imagenes/ud4-2021-10-11-17-08-23.png" /> and select the option to create a Landscape variant. You could also create a version for a tablet, etc ...</p>
+        We press the rotate view button <img style="vertical-align: baseline"  src="UD4/images/ud4-2022-10-13-12-31-16.png" /> and select the option to create a Landscape variant. You could also create a version for a tablet, etc ...</p>
 
 
-    <figure><img src="./imagenes/ud4-landscape.gif" /><br><figcaption></figcaption></figure>
+        
+
+    <figure><img src="./UD4/images/master_detail_landscape.gif" /><br><figcaption></figcaption></figure>
     <br>
 
    <p>Notice that it has created the activity_main directory, with the two layouts. The suffix (land) has been added to Landscape</p>
@@ -2093,8 +2130,8 @@ binding.btnBlue.setOnClickListener { loadFragment(BlueFragment()) }</code></pre>
     var description:String
 ){
     companion object{
-        var listSuper:MutableList<Superhero> = ArrayList()
-        fun getSuperheros(): MutableList<Superhero>{
+        var listSuper:MutableList&lt;Superhero> = ArrayList()
+        fun getSuperheros(): MutableList&lt;Superhero>{
             listSuper.clear()
             listSuper.add(Superhero(1,"Spiderman", "Marvel", "Peter Parker", "spiderman.jpg",LoremIpsum().values.first()))
             listSuper.add(Superhero(2,"Daredevil", "Marvel", "Matthew Michael Murdock", "daredevil.jpg",LoremIpsum().values.first()))
@@ -2397,7 +2434,7 @@ val inputStream =context.resources.openRawResource(id)
     </section>
 <section class="marco-b">
         <section><pre><code class="language-kotlin">class MyItemRecyclerViewAdapter(
-    private val superHeroList: List<Superhero>,
+    private val superHeroList: List&lt;Superhero>,
     private val listener:OnItemClick?
 ) : RecyclerView.Adapter&lt;MyItemRecyclerViewAdapter.ViewHolder>() {
 
