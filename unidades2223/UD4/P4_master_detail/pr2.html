@@ -45,7 +45,7 @@
     <br>
     
     <p>Copy the file <a class="enlace" target="_blank" href="datos_json.json">datos_json.json</a> inside the <span class="inline-folder">raw</span> 
-      folder inside <span class="inline-folder">res</span></p>
+      folder inside <span class="inline-folder">res</span> directory</p>
 
     <section class="marco-t file-">
         <span class="icono file"> </span> <span class="negrita">datos_json.json</span>
@@ -314,7 +314,16 @@
         </section><br><br>
     </section>
 
-    <p>Copy the <a class="enlace" target="_blank" href="./images.zip">images</a>  inside the <span class="inline-folder">drawable</span> folder</p>
+    <p>Copy the <a class="enlace" target="_blank" href="./images.zip">images</a> (unzip them first)  inside the <span class="inline-folder">drawable</span> folder</p>
+
+    <section class="marco-t inf">
+      <span class="icono info"> </span> Notice that the file name of the resources cannot contain capital letters, spaces and strange characters except underscore character <span class="r-word"> - </span> 
+      </section>
+    <section class="marco-b">
+        
+    </section>
+      
+    
     </section><!-- End section -->
 
     <!--*********************************************************BookItem class In Java***********************************************************-->
@@ -413,16 +422,16 @@
     </section><br><br>
     
     <p>In our case, to read the <span class="cursiva">data_json.json</span>  file that we have stored in the <span class="inline-folder">raw</span> 
-        folder inside <span class="inline-folder">res</span> and since our json file contains an array of json objects [{....},{....},{.....}] we can read it like this</p>
+        folder inside <span class="inline-folder">res</span> folder and since our <span class="negrita">json file</span>  contains an <span class="negrita">array of json objects</span>  [{....},{....},{.....}] we can read it like this</p>
 
         <section><pre><code class="language-kotlin">var serieList:MutableList&lt;Serie> = null
-val raw = context.resources.openRawResource(raw.datos_json)
+val raw = context.resources.openRawResource(raw.datos_json)  //Be aware that we need the activity context
 val rd = BufferedReader(InputStreamReader(raw))
 
-val listType: Type = object : TypeToken<MutableList<Serie?>?>() {}.type
+val listType: Type = object : TypeToken&lt;MutableList&lt;Serie?>?>() {}.type
 
 val gson = Gson()
-serieList.clear()
+
 serieList.addAll(gson.fromJson(rd, listType))</code></pre>
         </section><br><br>
     
@@ -431,19 +440,19 @@ serieList.addAll(gson.fromJson(rd, listType))</code></pre>
     <!--*********************************************************Image from drawable to ImageView***********************************************************-->
     <section class="apartado">
     <a name="s"></a>
-    <h2>Image from drawable to ImageView</h2>
+    <h2>Images: from string to drawable to ImageView</h2>
 
-    <p>We have downloaded our pictures inside <span class="inline-folder">drawable</span> folder, and we only have its name through <span class="d-word">url_image</span> 
-         property so we can fit those pictures inside an ImageView using the below code</p>
+    <p>We have downloaded our images inside the <span class="inline-folder">drawable</span> folder, and we only know its name through <span class="d-word">image</span> 
+         field in the JSON file, so we can fit those images inside an <span class="r-word">ImageView</span>  from the <span class="r-word">String</span>  using the below code</p>
 
-    <section><pre><code class="language-kotlin">val imageName = "imagename" //name of pictures without extension "jpg" , "png"...
-val context: Context = imageView.getContext()
+    <section><pre><code class="language-kotlin">val imageName = "imagename" //name of pictures without extension "jpg" , "png"...  so arrow.jpg should be just arrow
+val context: Context = imageView.getContext() //Again we need de context
 val id = context.resources.getIdentifier(
     imageName,
     "drawable",
     context.packageName
-)
-imageView.setImageResource(id)</code></pre>
+) //This returns the ID of the drawable resource named imageName
+imageView.setImageResource(id) //This set the drawable in the ImageView with the Id got before</code></pre>
     </section><br><br>
         
     </section><!-- End section -->
@@ -453,34 +462,86 @@ imageView.setImageResource(id)</code></pre>
     <a name="s"></a>
     <h2>App requirements</h2>
 
-    <p>Initially, no items will appear in the list. It will be when we press the <span class="r-word">FloatingActionButton</span>  (you must have the add icon
-         with background gray #AAAAAA), when pressed <span class="r-word">FloatingActionButton</span>  a <span class="r-word">SnackBar</span>  will appear. It will give us an action
-         to load all <span class="d-word">BookItems</span>  into the <span class="r-word">RecyclerView</span> .</p>
-    
-    <figure><img src="imagenes/ud4-2021-10-13-11-38-22.png" /><br><figcaption>Just launched</figcaption></figure>
-    <br>
-    
-    <figure><img src="imagenes/ud4-2021-10-13-11-39-27.png" /><br><figcaption>Snackbar with load actionp</figcaption></figure>
-    <br>
-    <p>Once clicked, the books will be loaded into the list reading them from the JSON file</p>
+    <p>Initially the app should load the list of Series from the JSON to an array and display them in the <span class="r-word">recyclerview</span></p>
 
-    <p><span class="cursiva">banlibros.jog</span>  should be added to the <span class="d-word">actionBar</span> </p>
+    <figure><img src="images/ud4-2022-10-18-09-08-57.png" /><br><figcaption></figcaption></figure>
+    <br>
 
-    <figure><img src="imagenes/ud4-2021-10-13-11-45-26.png" /><br><figcaption></figcaption></figure>
+    <p>Each item of the list should show the image, the title, the language and the rating (Use widget <span class="r-word">RatingBar</span>)</p>
+
+    <figure><img src="images/ud4-2022-10-18-09-14-11.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+    <p>Notice also that there are some items in a color and other items in other color. It depends on the <span class="d-word">status</span> field of the JSON,
+      whether its value is <span class="negrita">Ended</span>  it should be darker than if it's <span class="negrita">Running</span> </p>
+        
+
+    <figure><img src="images/ud4-2022-10-18-10-13-43.png" /><br><figcaption></figcaption></figure>
     <br>
     
+    <section class="marco-t inf">
+      <span class="icono info"> </span> To implement this, please check <span class="r-word">getItemViewType</span> function of your <span class="r-word">RecyclerView Adapter</span> 
+      </section>
+    <section class="marco-b">
+        
+    </section>
+      
+        
     <p>If we push on an Item then item's detail will be shown</p>
 
-    <p>Clicking on the <span class="d-word">FloatingActionButton</span>  will show a <span class="d-word">snackbar</span>  with the publication date.</p>
+<figure><img src="images/ud4-2022-10-18-09-46-41.png" /><br><figcaption></figcaption></figure>
+<br>
 
-    <figure><img src="imagenes/ud4-2021-10-13-12-03-11.png" /><br><figcaption></figcaption></figure>
-    <br>
+<p>By default it should only appear:</p>
+<p><ul>
+  <li>The serie's image in the CollapsingToolbarLayout</li>
+  <li>The serie's name in the CollapsingToolbarLayout</li>
+  <li>A floatting Action button with the info ICON</li>
+  <li>The serie's summary</li>
+</ul></p>
+   
     
+    <p>Clicking on the <span class="d-word">FloatingActionButton</span>  will show a <span class="d-word">snackbar</span>  asking for show or hide extra info</p>
 
-    <p>In the tablet version, both fragments will be displayed on the same screen as shown in the image below.</p>
+<figure><img src="images/ud4-2022-10-18-09-57-26.png" /><br><figcaption></figcaption></figure>
+<br>
 
-    <figure><img src="imagenes/ud4-2021-10-13-12-14-48.png" /><br><figcaption>Tablet Version</figcaption></figure>
-    <br>
+<p>If you want to know how implement the snackbar, please take a look <a class="enlace" target="_blank" href="https://developer.android.com/training/snackbar/action?hl=es-419">here</a> </p>
+
+<section><pre><code class="language-kotlin">val mySnackbar = Snackbar.make(findViewById(R.id.myCoordinatorLayout),
+                                   R.string.email_archived, Snackbar.LENGTH_SHORT)
+mySnackbar.setAction(R.string.undo_string, MyUndoListener())
+mySnackbar.show()</code></pre>
+</section><br><br>
+
+<p>The extra info contains:</p>
+<p><ul>
+  <li>Genres</li>
+  <li>Language</li>
+  <li>Premiered time</li>
+  <li>The official site</li>
+</ul></p>
+
+<figure><img src="images/ud4-2022-10-18-10-08-00.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>If we accept the snackbar, then if the extra info is hidden we'll show it and whether is visible we'll hide it</p>
+
+<p>If we press on the URL then the app should to take us to official site on the web browser. <span class="negrita">Note</span>:
+   <span class="cursiva">Some links are broken, please don't mind</span> </p>
+
+<figure><img src="images/ud4-2022-10-18-10-11-43.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+
+<p>In the tablet version, both fragments will be displayed on the same screen as shown in the image below.</p>
+
+<figure><img src="images/ud4-2022-10-18-10-22-44.png" /><br><figcaption>Tablet version</figcaption></figure>
+<br>
+
+
     
 
     <!--*********************************************************Demonstration***********************************************************-->
@@ -510,13 +571,13 @@ imageView.setImageResource(id)</code></pre>
     <a name="s"></a>
     <h2>Delivery</h2>
 
-    <p>Upload the project's container folder in a compressed <span class="inline-file">zip file</span>.</p>
+    <p>Upload the project's container folder in a compressed <span class="inline-file">P2_master_detail_series.ZIP</span>.</p>
     <p><ul>
       <li>You don't forget to run "<span class="d-word">Build -> Clean Project</span>".</li>
       <li>Use proper comments</li>
       <li>Use functions to reuse code whenever possible.</li>
       <li>The application must be as close as possible to the one in the example.</li>
-      <li>The template generates unused code, you should study it but also remove it from your project as far as possible</li>
+      <li>The template generates some unused code, you should study it but also remove it from your project as far as possible</li>
     </ul>
       </p>
     
