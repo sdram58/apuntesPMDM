@@ -2731,8 +2731,8 @@ superHero = Superhero.getSuperHeroById(superHeroId)</code></pre>
                 <span class="icono file"> </span> <span class="negrita">build.gradle (Module: app)</span>
                 </section>
             <section class="marco-b">
-                <section><pre><code class="language-kotlin">implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'</code></pre>
+                <section><pre><code class="language-kotlin">implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
+implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'</code></pre>
 </section>
 </section>                    
                 <section class="marco-t inf">
@@ -2822,7 +2822,7 @@ implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'</code></pre>
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph" />
+        app:navGraph="@navigation/my_nav_graph" />
 
 &lt;/androidx.constraintlayout.widget.ConstraintLayout></code></pre>
     </section><br><br>
@@ -2938,6 +2938,13 @@ implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'</code></pre>
 
 &lt;/androidx.constraintlayout.widget.ConstraintLayout></code></pre>
         </section><br><br>
+</section>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> String resources <span class="d-word">@string/xxxxx</span> 
+    </section>
+<section class="marco-b">
+        Note that those layouts are using some string resources, please give them a value.
 </section>
 
 
@@ -3117,6 +3124,14 @@ implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'</code></pre>
 }</code></pre>
 </section><br><br>
 
+<section class="marco-t warn">
+    <span class="icono warning"> </span> ViewBinding
+    </section>
+<section class="marco-b">
+        Note, that we're using view binding, please ensure you have added it to the module <span class="inline-file">buld.gradle</span> file
+</section>
+
+
 <p>This <span class="r-word">onCreateView()</span>  method is similar to the call to setContentView () that we saw in previous section with activities.
     Its function is to establish the layout file for the Fragment, that is, what will be seen when this fragment is loaded.</p>
 
@@ -3197,7 +3212,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
         //We obtain the NavController through findNavigation
         //navController is  defined as member variable of the fragment
-        navController = findNavController()
+        navController = findNavController(view)
 
     binding.btnLoginNext.setOnClickListener{
         //Navigates to InfoFragment
@@ -3236,17 +3251,19 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        navController = findNavController()
+        navController = findNavController(view)
 
         binding.btnInfoNext.setOnClickListener{
             
             navController?.navigate(R.id.action_infoFragment_to_homeFragment)
         }
     }
-}</code></pre></section><br><br>
+}</code></pre></section>
 
-<p>In this moment you can test the navigtion</p>
+
 </section>
+
+<br><p>In this moment you can test the navigation</p>
 
  <p>But... one moment!. What about passing info between fragments. If you see the layout, we have some <span class="r-word">EditText</span>, we need to retrieve info and pass
 it to the other fragments. </p>
@@ -3315,11 +3332,10 @@ navController?.navigate(R.id.action_infoFragment_to_homeFragment, bundle)
     <span class="icono file"> </span> <span class="negrita">Build.gradle (project)</span>
     </section>
 <section class="marco-b">
-    <section><pre><code class="language-kotlin">dependencies {
+    <section><pre><code class="language-kotlin">plugins {
     .....
 
-    def nav_version = "2.3.5"
-    classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+    id 'androidx.navigation.safeargs' version '2.5.2' apply false
 
     ....
     
@@ -3332,11 +3348,11 @@ navController?.navigate(R.id.action_infoFragment_to_homeFragment, bundle)
     <span class="icono file"> </span> <span class="negrita">build.gradle (module app)</span>
     </section>
 <section class="marco-b">
-        <section><pre><code class="language-kotlin">dependencies {
+        <section><pre><code class="language-kotlin">plugins {
 
     ....
 
-    apply plugin: "androidx.navigation.safeargs"
+    id 'androidx.navigation.safeargs'
 
 }
         </code></pre></section><br><br>
@@ -3395,7 +3411,7 @@ navController?.navigate(R.id.action_infoFragment_to_homeFragment, bundle)
             android:name="login_info"
             app:argType="com.cartatar.navgraph.Login" />
     &lt;/fragment>
-&lt;/navigation></code></pre></section><br><br>
+&lt;/navigation></code></pre></section>
 </section>
 
 <p>As you see, <span class="d-word">&lt;argument></span>  has two properties the <span class="r-word">name</span>  and the <span class="r-word">argType</span>.</p>
@@ -3404,7 +3420,14 @@ navController?.navigate(R.id.action_infoFragment_to_homeFragment, bundle)
 <section><pre><code class="language-xml">&lt;argument
         android:name="login_info"
         app:argType="com.cartatar.navgraph.Login" />
-</code></pre></section><br><br>
+</code></pre></section>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> Change <span class="d-word">com.cartatar.navgraph.Login</span> by your class
+    </section>
+<section class="marco-b">
+        
+</section>
 
 
 <p>if we want to do it by UI...</p>
@@ -3621,12 +3644,12 @@ navController?.navigate(action)</code></pre></section><br><br>
         super.onViewCreated(view, savedInstanceState)
         binding.tvInfo.text = "Welcome:\n\nUser: ${args.loginInfo.usr}\nPass: ${args.loginInfo.pass}\nEmail: ${args.loginInfo.email}\nBirth date: ${args.loginInfo.birthDate}\n"
     }
-}</code></pre></section><br><br>
-<p class="tarea">Open and do <a class="enlace" target="_blank" href="./pr2_master_detail/pr2.html">Practice2: Master/Detail</a>. Remember upload in time the resulting App to "Aules"</p>
-<br><br>
+}</code></pre></section>
+
 
 </section>
-
+<p class="tarea">Open and do <a class="enlace" target="_blank" href="./UD4/P4_master_detail/pr2.html">Practice2: Master/Detail</a>. Remember upload in time the resulting App to "Aules"</p>
+<br><br>
 
 
 
