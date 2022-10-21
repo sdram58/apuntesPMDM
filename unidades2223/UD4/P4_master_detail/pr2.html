@@ -337,7 +337,7 @@
     public final int id;
     public final String name;
     public final String language;
-    public final Array&lt;<String> genres;
+    public final Array&lt;String> genres;
     public final String status;
     public final String premiered;
     public final String officialSite;
@@ -386,11 +386,11 @@
     </section><br><br>    
     <p>Now to create a Gson object add:</p>
 
-    <section><pre><code class="language-kotlin">Gson gson = new Gson();</code></pre>
+    <section><pre><code class="language-kotlin">val gson:Gson = Gson();</code></pre>
     </section><br><br>
 
     <p>To use it and serialize it, if we had a model with the data whose class we have
-        called Serie, and a String with the JSON string called <span class="d-word">STRING_JSON</span> , we can
+        called Serie, and a String with contains the JSON string called <span class="d-word">STRING_JSON</span> , we can
         create an object coding something like this:</p>
     
     <section><pre><code class="language-kotlin">val serie: Serie = gson.fromJson(STRING_JSON,Serie::class.java)</code></pre>
@@ -399,7 +399,7 @@
     <p>However, if we have an object and we want a JSON, that is, deserialize,
         our class to extract the JSON document from its data, we would use:</p>
 
-    <section><pre><code class="language-kotlin">val json = gson.toJson(Serie)</code></pre>
+    <section><pre><code class="language-kotlin">val json = gson.toJson(serie)</code></pre>
     </section><br><br>
 
     <p>In code above <span class="cursiva">json</span>  variable would content an String more or less like this:</p>
@@ -424,7 +424,7 @@
     <p>In our case, to read the <span class="cursiva">data_json.json</span>  file that we have stored in the <span class="inline-folder">raw</span> 
         folder inside <span class="inline-folder">res</span> folder and since our <span class="negrita">json file</span>  contains an <span class="negrita">array of json objects</span>  [{....},{....},{.....}] we can read it like this</p>
 
-        <section><pre><code class="language-kotlin">var serieList:MutableList&lt;Serie> = null
+        <section><pre><code class="language-kotlin">val serieList:MutableList&lt;Serie> = mutableListOf()
 val raw = context.resources.openRawResource(raw.datos_json)  //Be aware that we need the activity context
 val rd = BufferedReader(InputStreamReader(raw))
 
