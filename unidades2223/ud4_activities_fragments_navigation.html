@@ -3212,7 +3212,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
         //We obtain the NavController through findNavigation
         //navController is  defined as member variable of the fragment
-        navController = findNavController(view)
+        navController = findNavController()
 
     binding.btnLoginNext.setOnClickListener{
         //Navigates to InfoFragment
@@ -3251,7 +3251,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        navController = findNavController(view)
+        navController = findNavController()
 
         binding.btnInfoNext.setOnClickListener{
             
