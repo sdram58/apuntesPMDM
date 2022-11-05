@@ -27,7 +27,76 @@
     </div>
 
 
+<!--*********************************************************What are coroutines and what problem do they solve?***********************************************************-->
+<section class="apartado">
+<a name="sIntro"></a>
+<h2>What are coroutines and what problem do they solve?</h2>
 
+Las corrutinas son una de las funcionalidades más interesantes de Kotlin, es por ello que le hemos dedicado un tema a parte.
+Las corrutinas nos permiten ejecutar funcionalidades asíncronas de una forma eficiente.
+Antes de ver como implementarlas veamos, además de la asíncronía que problemas resuelven.
+
+Imaginemos que tenemos una clase UserService que se encarga de realizar una conexión de un usuario. 
+Para ello tenemos por una parte la data class User que podría tener el siguiente aspecto.
+
+<section><pre><code class="language-kotlin">data class User(
+    val name: String,
+    val friends: List&lt;User> = emptyList()
+)</code></pre>
+</section><br>
+
+La clase LoginService tendrá las siguientes funciones:
+doLogin
+requestCurrentFriends
+requestSuggestedFriends
+
+La clase tendría el siguiente aspecto
+
+<section><pre><code class="language-kotlin">class UserService{
+
+    //Given a username and pass, it retrieves a user
+    fun doLogin(user:String, pass:String):User{
+        //Request user, accessing a DataBase or remote API
+        return User("Carlos")
+    }
+
+    //Given a user, it retrieves a list of Users which are current friends
+    fun requestCurrentFriends(user:User): List<User>{
+        //Request current friends, accessing a DataBase or remote API
+        return listOf(User("John"), User("Anna"))
+    }
+
+    //Given a user, it retrieves a list of Users which are suggested friends
+    fun requestSuggestedFriends(user:User): List<User>{
+        //Request suggested friends, accessing a DataBase or remote API
+        return listOf(User("Jane"), User("Mike"))
+    }
+}
+</code></pre>
+</section><br>
+
+Para usarlo haríamos algo así:
+
+<section><pre><code class="language-kotlin">val userService = UserService()
+
+    val user = userService.doLogin("Carlos","1234")
+
+    val currentFriends = userService.requestCurrentFriends(user)
+    val suggestedFriends = userService.requestSuggestedFriends(user)
+
+    val userWithFriends = user.copy(friends = currentFriends + suggestedFriends)</code></pre>
+</section><br><br>
+
+El código de arriba sería lo más lógico e intuitivo que podríamos hacer, recuperar el usuario, y con ese usuario recuperar su lista de amigos para añadirlo al usuario.
+Pero este código tiene un par de problemas.
+Primero, si ejecutamos el código en el hilo principal, al ser peticiones que pueden ser costosas podríamos bloquear el hilo principal y por tanto la UI, cosa que es muy mala idea.
+El segundo es que estamos es que para recibir los amigos sugeridos primero han de llegar los amigos actuales, cosa que en este caso también es una pérdida de tiempo.
+
+Para resolver el primer problema, una posible solución sería usar tareas en segundo plano o hilos. Pero... ¿cómo sabemos cuando a terminado de llegar el usuario para hacer la petición de amigos?
+Una solución a este problema sería hacer uso de callbacks. Veamos cómo lo implementaríamos. 
+
+
+</section><!-- End section -->
 
 
 
