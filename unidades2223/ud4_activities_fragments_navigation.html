@@ -5082,12 +5082,13 @@ so our themes.xml looks like This
     </section>
 <section class="marco-b">
         <section><pre><code class="language-kotlin">class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun onCreate(savedInstanceState: Bundle?) {       
         //Here our app is ready
         //Set before setContentView
+        
         setTheme(R.style.Theme_SplashScreen)
+
+        super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
     }
