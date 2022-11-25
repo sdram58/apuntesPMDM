@@ -11,12 +11,18 @@
     <script src="../script/script.js"></script>
 </head>
 <body>
-    <h1>UD5.- Coroutines - MVVM - Live Data</h1>
+    <h1>UD6.- MVVM - Live Data - Flows</h1>
     <div class="main-menu">
-        <a href="#sMVVM">MVVM</a><a 
-           href="#sLiveData">Live Data</a><a 
-           href="#sCoroutines">Introduction to Coroutines</a><a
-           href="#sWebGraphy">WebGraphy</a>
+        <div class="fila">
+            <a href="#sMVVM">MVVM</a><a 
+            href="#sLiveData">Live Data</a><a 
+            href="#sFlows">Introduction to Coroutines</a>
+        </div>
+        <div class="fila">
+            <a href="#sWebGraphy">WebGraphy</a>
+            <a class="relleno"></a>
+            <a class="relleno"></a>
+        </div>
     </div>
 
     
@@ -27,15 +33,15 @@
     <a name="sMVVM"></a>
     <h2>MODEL - VIEW - VIEWMODEL (MVVM)</h2>
     
-    <p>This practice is the first start with the <span class="r-word">Model-View-ViewModel</span>  architecture, recommended for developing apps.</p>
+    <p>This practice is the first start or contact with the <span class="r-word">Model-View-ViewModel</span>  architecture, recommended for developing apps.</p>
 
     <p>We will explore the benefits this architecture provides, and the problems it solves.</p>
     
-    <p>We will use the <span class="r-word">ViewModel</span>  and <span class="r-word">LiveData</span>  classes.</p>
+    <p>We will use the <span class="r-word">ViewModel</span>  and <span class="r-word">LiveData</span> classes.</p>
     
     <p>We will develop an app that consists of a <span class="d-word">Body Mass Index Calculator</span> </p>
 
-    <figure><img src="UD5/mvvm/images/UD5-running_app_calculator.gif" /><br><figcaption>Running App</figcaption></figure>
+    <figure><img src="UD6/mvvm/images/ud6_running_app_calculator.gif" /><br><figcaption>Running App</figcaption></figure>
     <br>
 
     <h3>Creating the project</h3>
@@ -47,15 +53,16 @@
         <span class="icono file"> </span> <span class="negrita"> build.gradle (Module: app)</span>
         </section>
     <section class="marco-b">
-            <section><pre><code class="language-kotlin"> def viewModelVersion ="2.4.0"
+            <section><pre><code class="language-kotlin">def viewModelVersion ="2.5.1"
+def navVersion = "2.5.3"
+implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+
+
 implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewModelVersion"
 implementation "androidx.lifecycle:lifecycle-livedata-ktx:$viewModelVersion"
 
-def navigationVersion = "2.3.5"
-implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
-implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
-
-implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")</code></pre>
+implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"</code></pre>
             </section>
     </section>
     </li>
@@ -201,7 +208,7 @@ implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")</code><
              </section><br><br>   
         </section>
 
-        <figure><img src="UD5/mvvm/images/ud5-2021-11-08-12-51-20.png" /><br><figcaption></figcaption></figure>
+        <figure><img src="UD6/mvvm/images/ud6_2021-11-08-12-51-20.png" /><br><figcaption></figcaption></figure>
         
     </li>
 
@@ -286,7 +293,7 @@ implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")</code><
 
 <p>The first is that the User Interface (View) has been blocked for as long as the <span class="d-word"> calculate()</span> method has been executing.</p>
 
-<figure><img src="UD5/mvvm/images/ud5-2021-11-08-13-21-31.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/mvvm/images/ud6_2021-11-08-13-21-31.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p>Due to the UI crash, we would not have been able to show, for example, a progress bar, or scroll our scroll view, or perhaps give the user the option to 
@@ -336,7 +343,7 @@ implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")</code><
  
 <p>The intention of using <span class="r-word">AsyncTask</span>  is to run the <span class="d-word">calculate()</span>  method on a background task, and update the <span class="r-word">TextView</span>  with the quota obtained when the task ends.</p>
 
-<figure><img src="UD5/mvvm/images/ud5-2021-11-08-13-32-25.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/mvvm/images/ud6_2021-11-08-13-32-25.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p>This prevents blocking of the user interface. If you run the app now, you'll see that the UI is still responding even when the long-running
@@ -357,7 +364,7 @@ implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")</code><
 <span class="subrayado"><span class="negrita">Without AsyncTask</span></span>  : although the app has survived the crash and the quota has been shown in the <span class="negrita">&lt;TextView></span>,
  if the user then rotates the mobile, the <span class="d-word">bmi</span>  disappears from the <span class="negrita">&lt;TextView></span>, when Android destroys the <span class="r-word">Activity</span>  and creates a new one.
 
- <figure><img src="UD5/mvvm/images/ud5-2021-11-08-13-39-45.png" /><br><figcaption></figcaption></figure>
+ <figure><img src="UD6/mvvm/images/ud6_2021-11-08-13-39-45.png" /><br><figcaption></figcaption></figure>
  <br>
  
     </li>
@@ -366,7 +373,7 @@ implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")</code><
         <span class="subrayado"><span class="negrita">With AsyncTask</span></span>: even if the app has not crashed during the calculation, 
         the data is still lost if the user rotates the screen.
 
-        <figure><img src="UD5/mvvm/images/ud5-2021-11-08-13-40-53.png" /><br><figcaption></figcaption></figure>
+        <figure><img src="UD6/mvvm/images/ud6_2021-11-08-13-40-53.png" /><br><figcaption></figcaption></figure>
         <br>
         
     </li>
@@ -385,7 +392,7 @@ implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")</code><
 <p>With the program without <span class="r-word">AsyncTask</span>, the behavior of the app will be erratic, since <span class="r-word">Android</span>  cannot destroy the <span class="r-word">Activity</span> 
      or create a new one until the <span class="d-word">calculate()</span>  task has finished.</p>
 
-     <figure><img src="UD5/mvvm/images/ud5-2021-11-08-13-50-03.png" /><br><figcaption></figcaption></figure>
+     <figure><img src="UD6/mvvm/images/ud6_2021-11-08-13-50-03.png" /><br><figcaption></figcaption></figure>
      <br>
      
 <p>With the program with <span class="r-word">AsyncTask</span> , the following happens: when the screen is rotated in the middle of executing the <span class="r-word">AsyncTask</span>, 
@@ -399,7 +406,7 @@ implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")</code><
      that should have been destroyed and that has been lost in memory, and therefore, it will never be shown in the <span class="r-word">TextView</span>  of the new 
      <span class="d-word">MainActivity</span>  in execution.</p>
 
-<figure><img src="UD5/mvvm/images/ud5-2021-11-08-13-55-39.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/mvvm/images/ud6_2021-11-08-13-55-39.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <section class="marco-t warn">
@@ -433,7 +440,7 @@ implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")</code><
     The watch mechanism implies that the ViewModel reports the result to the View, <span class="negrita">only if the View is running</span>. 
     To implement the observation we will use the <span class="r-word">LiveData</span>  class.</p>
 
-<figure><img src="UD5/mvvm/images/ud5-2021-11-08-14-25-58.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/mvvm/images/ud6_2021-11-08-14-25-58.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p>Thus, the communication between these components is usually like this:</p>
@@ -451,7 +458,7 @@ implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")</code><
 <p>Another key aspect is that the <span class="r-word">ViewModel</span> survives screen rotation, so the data stored in the <span class="r-word">ViewModel</span> is not lost when
     <span class="negrita">Android</span>  destroys the View and recreates it.</p>
 
-<figure><img src="UD5/mvvm/images/ud5-2021-11-08-14-29-35.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/mvvm/images/ud6_2021-11-08-14-29-35.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <h3>MVVM implementation</h3>
@@ -576,7 +583,7 @@ implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")</code><
 
 <p>The following diagram illustrates the communication between the 3 components of the app:</p>
 
-<figure><img src="UD5/mvvm/images/ud5-2021-11-08-15-34-40.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/mvvm/images/ud6_2021-11-08-15-34-40.png" /><br><figcaption></figcaption></figure>
 <br>
 
 
@@ -588,7 +595,7 @@ implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")</code><
     The fragment that originally performed the <span class="d-word">calculate()</span>  action and <span class="negrita">observed</span> the result will no longer be 
     running and will not be notified of the result. However, the <span class="subrayado">new fragment that has been created</span> and that also <span class="negrita">observes</span> 
      the result will be notified.</p>
-<figure><img src="UD5/mvvm/images/ud5-2021-11-08-15-28-37.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/mvvm/images/ud6_2021-11-08-15-28-37.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p class="sub-section">Callbacks</p>
@@ -1118,7 +1125,7 @@ class BMIFragment : Fragment() {
 
 <p>We will develop an app that consists of a <span class="d-word">Gymnastics Trainer</span>.</p>
 
-    <figure><img src="UD5/livedata/images/UD5_running.gif" /><br><figcaption>Running App: Trainer</figcaption></figure>
+    <figure><img src="UD6/livedata/images/UD6_running.gif" /><br><figcaption>Running App: Trainer</figcaption></figure>
     <br>
     
     <h3>Creating the proyect</h3>
@@ -1451,7 +1458,7 @@ integerNumberLiveData.postValue(7802);</code></pre>
     <p>To change the value of a <span class="r-word">LiveData</span> , <span class="r-word">LiveData</span>  itself calls the <span class="r-word">setValue()</span>  or <span class="r-word">postValue()</span> 
          method.</p>
     
-    <figure><img src="UD5/livedata/images/ud5-2021-11-07-20-43-34.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD6/livedata/images/ud6_2021-11-07-20-43-34.png" /><br><figcaption></figcaption></figure>
     <br>
     
 
@@ -1491,7 +1498,7 @@ val orderLiveData:LiveData&lt;String> = object:LiveData&lt;String>(){
 <p>Now,  when there is an observer for the variable <span class="d-word">orderLiveData</span> , the <span class="r-word">onActive()</span>  method will be called and 
     the trainer will begin training and will change the value of the <span class="d-word">order</span> , notifying the observers of the new <span class="negrita">order</span> .</p>
 
-<figure><img src="UD5/livedata/images/ud5-2021-11-07-21-12-43.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/livedata/images/ud6_2021-11-07-21-12-43.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p>When there is no observer (that is, when the fragment is closed), the trainer will stop training.</p>
@@ -1518,7 +1525,7 @@ val orderLiveData:LiveData&lt;String> = object:LiveData&lt;String>(){
 </ul>
 <br>
 
-<figure><img src="UD5/livedata/images/ud5-2021-11-07-21-30-07.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/livedata/images/ud6_2021-11-07-21-30-07.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p>To transform one <span class="r-word">LiveData</span>  into another, Android provides the <span class="negrita">Transformations</span> class. 
@@ -1713,8 +1720,8 @@ class TrainerFragment : Fragment() {
 
     <!--*********************************************************COROUTINES***********************************************************-->
     <section class="apartado">
-        <a name="sCoroutines"></a>
-        <h2>INTRODUCTION TO COROUTINES</h2>
+        <a name="sFlows"></a>
+        <h2>INTRODUCTION TO FLOWS</h2>
     
         <h3>Introduction</h3>
         
@@ -1760,7 +1767,7 @@ class MainActivity : AppCompatActivity() {
 
 
     <p>As we have called the delay function from outside of the coroutine, it will throw the error as below:</p>
-    <figure><img src="UD5/mvvm/images/ud5-2021-11-08-16-21-37.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD6/mvvm/images/ud6_2021-11-08-16-21-37.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p class="sub-section">Delay Function</p>
@@ -1954,7 +1961,7 @@ suspend fun function2(): String
 </section><br><br>
 
 <p>When you will run the code in <span class="r-word">Android IDE</span> , the log result will be:</p>
-<figure><img src="UD5/mvvm/images/ud5-2021-11-08-16-41-24.png" /><br><figcaption>Launch Result</figcaption></figure>
+<figure><img src="UD6/mvvm/images/ud6_2021-11-08-16-41-24.png" /><br><figcaption>Launch Result</figcaption></figure>
 <br>
 <p class="sub-section">When to Use Launch?</p>
 <p>Launch can be used at places where users do not want to use the returned result, which is later used in performing some other work. For example, 
@@ -1996,7 +2003,7 @@ suspend fun function2(): String
 <p>One important point to note is that Async makes both of the networks call for result1 and result2 in parallel, whereas with launch parallel function calls are not made. 
     When you will run the code in Android IDE, the log result will be:</p>
 
-    <figure><img src="UD5/mvvm/images/ud5-2021-11-08-16-44-47.png" /><br><figcaption>Async</figcaption></figure>
+    <figure><img src="UD6/mvvm/images/ud6_2021-11-08-16-44-47.png" /><br><figcaption>Async</figcaption></figure>
     <br>
     
 
@@ -2131,7 +2138,7 @@ fun main() {
 
 <p class="sub-section">Job lifecycle</p>
 
-<figure><img src="UD5/coroutines/images/ud5-2021-11-10-10-00-09.png" /><br><figcaption>Job LifeCycle</figcaption></figure>
+<figure><img src="UD6/coroutines/images/ud6_2021-11-10-10-00-09.png" /><br><figcaption>Job LifeCycle</figcaption></figure>
 <br>
 
 
