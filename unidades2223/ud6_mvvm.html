@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coroutines - MVVM - Live Data</title>
+    <title>MVVM - Live Data - Flows</title>
     <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/prism.css">
     <link rel="stylesheet" href="../styles/styles.css">
     <script src="../script/script.js"></script>
 </head>
-<body>
+<body class="line-numbers">
     <h1>UD6.- MVVM - Live Data - Flows</h1>
     <div class="main-menu">
         <div class="fila">
             <a href="#sMVVM">MVVM</a><a 
             href="#sLiveData">Live Data</a><a 
-            href="#sFlows">Introduction to Coroutines</a>
+            href="#sFlows">Flows</a>
         </div>
         <div class="fila">
             <a href="#sWebGraphy">WebGraphy</a>
@@ -219,7 +219,7 @@ implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"</code></
     
     <p>This funcionality is implemented by <span class="d-word">BMICalculator</span>  class</p>
     
-    <p>The <span class="d-word">BMICalculator</span>  class has the calculate method that receives as a parameter a 
+    <p>The <span class="d-word">BMICalculator</span>  class contains the calculate method that receives as a parameter a 
         <span class="d-word">Request</span>  object with the requested <span class="d-word">weight</span>  and <span class="d-word">height</span>
         fields, and calculates the <span class="negrita">bmi (Body Mass Index)</span>. Weight/Height<sup>2</sup></p>
     <p>A pause (<span class="r-word">sleep ()</span> ) has been added to simulate obtaining the imc through a long operation, such as accessing a database, a server, etc.</p>
@@ -255,7 +255,7 @@ implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"</code></
 
 <p>When developing an Android app, a common mistake is writing all the code in an Activity or Fragment.</p>
 
-<p>For example, in theres    method of the <span class="inline-file">BMIFragment</span> class we might be tempted to do the following:</p>
+<p>For example, in this method of the <span class="inline-file">BMIFragment</span> class we might be tempted to do the following:</p>
 
 <section class="marco-t file-">
     <span class="icono file"> </span> <span class="negrita">BMIFragment.kt</span>
@@ -293,13 +293,13 @@ implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"</code></
 
 <p>The first is that the User Interface (View) has been blocked for as long as the <span class="d-word"> calculate()</span> method has been executing.</p>
 
-<figure><img src="UD6/mvvm/images/ud6_2021-11-08-13-21-31.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/mvvm/images/ud6-2021-11-08-13-21-31.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p>Due to the UI crash, we would not have been able to show, for example, a progress bar, or scroll our scroll view, or perhaps give the user the option to 
     cancel the operation... What's more, if the operation takes more than 5 seconds and the user tries After interacting with the User Interface in the meantime, 
     the Android system will show you the infamous "<span class="cursiva">
-        <a class="enlace" target="_blank" href="https://developer.android.com/training/articles/perf-anr">application is not responding</a></span> " dialog.</p>
+        <a class="enlace" target="_blank" href="https://developer.android.com/training/articles/perf-anr">application is not responding</a></span>" dialog.</p>
 
 <section class="marco-t err">
     <span class="icono error"> </span> Long-lived operations should not be performed on the UI thread.
@@ -343,7 +343,7 @@ implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"</code></
  
 <p>The intention of using <span class="r-word">AsyncTask</span>  is to run the <span class="d-word">calculate()</span>  method on a background task, and update the <span class="r-word">TextView</span>  with the quota obtained when the task ends.</p>
 
-<figure><img src="UD6/mvvm/images/ud6_2021-11-08-13-32-25.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/mvvm/images/ud6-2021-11-08-13-32-25.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p>This prevents blocking of the user interface. If you run the app now, you'll see that the UI is still responding even when the long-running
@@ -364,7 +364,7 @@ implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"</code></
 <span class="subrayado"><span class="negrita">Without AsyncTask</span></span>  : although the app has survived the crash and the quota has been shown in the <span class="negrita">&lt;TextView></span>,
  if the user then rotates the mobile, the <span class="d-word">bmi</span>  disappears from the <span class="negrita">&lt;TextView></span>, when Android destroys the <span class="r-word">Activity</span>  and creates a new one.
 
- <figure><img src="UD6/mvvm/images/ud6_2021-11-08-13-39-45.png" /><br><figcaption></figcaption></figure>
+ <figure><img src="UD6/mvvm/images/ud6-2021-11-08-13-39-45.png" /><br><figcaption></figcaption></figure>
  <br>
  
     </li>
@@ -373,7 +373,7 @@ implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"</code></
         <span class="subrayado"><span class="negrita">With AsyncTask</span></span>: even if the app has not crashed during the calculation, 
         the data is still lost if the user rotates the screen.
 
-        <figure><img src="UD6/mvvm/images/ud6_2021-11-08-13-40-53.png" /><br><figcaption></figcaption></figure>
+        <figure><img src="UD6/mvvm/images/ud6-2021-11-08-13-40-53.png" /><br><figcaption></figcaption></figure>
         <br>
         
     </li>
@@ -392,7 +392,7 @@ implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"</code></
 <p>With the program without <span class="r-word">AsyncTask</span>, the behavior of the app will be erratic, since <span class="r-word">Android</span>  cannot destroy the <span class="r-word">Activity</span> 
      or create a new one until the <span class="d-word">calculate()</span>  task has finished.</p>
 
-     <figure><img src="UD6/mvvm/images/ud6_2021-11-08-13-50-03.png" /><br><figcaption></figcaption></figure>
+     <figure><img src="UD6/mvvm/images/ud6-2021-11-08-13-50-03.png" /><br><figcaption></figcaption></figure>
      <br>
      
 <p>With the program with <span class="r-word">AsyncTask</span> , the following happens: when the screen is rotated in the middle of executing the <span class="r-word">AsyncTask</span>, 
@@ -406,7 +406,7 @@ implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"</code></
      that should have been destroyed and that has been lost in memory, and therefore, it will never be shown in the <span class="r-word">TextView</span>  of the new 
      <span class="d-word">MainActivity</span>  in execution.</p>
 
-<figure><img src="UD6/mvvm/images/ud6_2021-11-08-13-55-39.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/mvvm/images/ud6-2021-11-08-13-55-39.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <section class="marco-t warn">
@@ -435,12 +435,12 @@ implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"</code></
     responds to the <span class="r-word">ViewModel</span>  with the result of the action (data or errors), and the <span class="r-word">ViewModel</span> passes it back to the View. 
     In Android apps we will implement the <span class="r-word">ViewModel</span>  using the <span class="r-word">AndroidViewModel</span> class.</p>
 
-<p>The key point for decoupling the View from the rest of the app's components, and thus avoiding the problems seen in the previous point, 
+<p>The key point for decoupling the View from the rest of the app's components, and avoiding so the problems seen in the previous point, 
     is that the <span class="r-word">ViewModel</span> does not directly transfer the result of the actions to the View, but rather the View is the who observes the result. 
     The watch mechanism implies that the ViewModel reports the result to the View, <span class="negrita">only if the View is running</span>. 
     To implement the observation we will use the <span class="r-word">LiveData</span>  class.</p>
 
-<figure><img src="UD6/mvvm/images/ud6_2021-11-08-14-25-58.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/mvvm/images/ud6-2021-11-08-14-25-58.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p>Thus, the communication between these components is usually like this:</p>
@@ -458,7 +458,7 @@ implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"</code></
 <p>Another key aspect is that the <span class="r-word">ViewModel</span> survives screen rotation, so the data stored in the <span class="r-word">ViewModel</span> is not lost when
     <span class="negrita">Android</span>  destroys the View and recreates it.</p>
 
-<figure><img src="UD6/mvvm/images/ud6_2021-11-08-14-29-35.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/mvvm/images/ud6-2021-11-08-14-29-35.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <h3>MVVM implementation</h3>
@@ -583,7 +583,7 @@ implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"</code></
 
 <p>The following diagram illustrates the communication between the 3 components of the app:</p>
 
-<figure><img src="UD6/mvvm/images/ud6_2021-11-08-15-34-40.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/mvvm/images/ud6-2021-11-08-15-34-40.png" /><br><figcaption></figcaption></figure>
 <br>
 
 
@@ -595,7 +595,7 @@ implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"</code></
     The fragment that originally performed the <span class="d-word">calculate()</span>  action and <span class="negrita">observed</span> the result will no longer be 
     running and will not be notified of the result. However, the <span class="subrayado">new fragment that has been created</span> and that also <span class="negrita">observes</span> 
      the result will be notified.</p>
-<figure><img src="UD6/mvvm/images/ud6_2021-11-08-15-28-37.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/mvvm/images/ud6-2021-11-08-15-28-37.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p class="sub-section">Callbacks</p>
@@ -1096,7 +1096,7 @@ class BMIFragment : Fragment() {
 </section>        
 </section>
 
-<p>Github <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/CalculatorBMI">link</a> to the code</p>
+<p>Github <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD6/BodyMassIndexCalculator">link</a> to the code</p>
 
 <div class="tarea">
     <p><span class="negrita">Exercise</span> </p>
@@ -1125,7 +1125,7 @@ class BMIFragment : Fragment() {
 
 <p>We will develop an app that consists of a <span class="d-word">Gymnastics Trainer</span>.</p>
 
-    <figure><img src="UD6/livedata/images/UD6_running.gif" /><br><figcaption>Running App: Trainer</figcaption></figure>
+    <figure><img src="UD6/livedata/images/ud6_running.gif" /><br><figcaption>Running App: Trainer</figcaption></figure>
     <br>
     
     <h3>Creating the proyect</h3>
@@ -1141,11 +1141,11 @@ class BMIFragment : Fragment() {
             <section><pre><code class="language-kotlin">dependencies {
     // ...
 
-    def liveDataVersion ="2.4.0"
+    def liveDataVersion ="2.5.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$liveDataVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$liveDataVersion"
 
-    def navigationVersion = "2.3.5"
+    def navigationVersion = "2.5.3"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
@@ -1277,7 +1277,7 @@ class TrainerFragment : Fragment() {
 </li>
 
 <li>Download the gif images from 
-    <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/LiveDataTrainer/app/src/main/res/drawable-v24">here</a>
+    <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/blob/master/UD6/GymnasticsTrainer/app/src/main/res/raw/images.zip">here</a>
 and drag them to the <span class="inline-folder">res/drawable</span> folder </li>
         
     </ol>
@@ -1426,7 +1426,7 @@ integerNumberLiveData.postValue(7802);</code></pre>
 })</code></pre>
     </section><br><br>
 
-    or even better or more redable version
+    or even better or more readable version
 
     <section><pre><code class="language-kotlin">integerNumberLiveData.observe(viewLifecycleOwner) { value ->
     // update UI with the new value
@@ -1458,7 +1458,7 @@ integerNumberLiveData.postValue(7802);</code></pre>
     <p>To change the value of a <span class="r-word">LiveData</span> , <span class="r-word">LiveData</span>  itself calls the <span class="r-word">setValue()</span>  or <span class="r-word">postValue()</span> 
          method.</p>
     
-    <figure><img src="UD6/livedata/images/ud6_2021-11-07-20-43-34.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD6/livedata/images/ud6-2021-11-07-20-43-34.png" /><br><figcaption></figcaption></figure>
     <br>
     
 
@@ -1498,7 +1498,7 @@ val orderLiveData:LiveData&lt;String> = object:LiveData&lt;String>(){
 <p>Now,  when there is an observer for the variable <span class="d-word">orderLiveData</span> , the <span class="r-word">onActive()</span>  method will be called and 
     the trainer will begin training and will change the value of the <span class="d-word">order</span> , notifying the observers of the new <span class="negrita">order</span> .</p>
 
-<figure><img src="UD6/livedata/images/ud6_2021-11-07-21-12-43.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/livedata/images/ud6-2021-11-07-21-12-43.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p>When there is no observer (that is, when the fragment is closed), the trainer will stop training.</p>
@@ -1525,7 +1525,7 @@ val orderLiveData:LiveData&lt;String> = object:LiveData&lt;String>(){
 </ul>
 <br>
 
-<figure><img src="UD6/livedata/images/ud6_2021-11-07-21-30-07.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD6/livedata/images/ud6-2021-11-07-21-30-07.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p>To transform one <span class="r-word">LiveData</span>  into another, Android provides the <span class="negrita">Transformations</span> class. 
@@ -1671,12 +1671,12 @@ class TrainerFragment : Fragment() {
         doesn't support natively Gif images.
     </p>
     <p>We have some solutions such us using some librearies like Glide or Picasso but we will see them in the next chapter. Now we're using this
-        <a class="enlace" target="_blank" href="https://github.com/koral--/android-gif-drawable">dependecies</a>. So let's add it on our <span class="inline-file">gradle module app</span></p>
+        <a class="enlace" target="_blank" href="https://github.com/koral--/android-gif-drawable">dependencies</a>. So let's add it on our <span class="inline-file">gradle module app</span></p>
 
     <section><pre><code class="language-kotlin">dependencies {
 
     .......
-    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.23'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.25'
 
 }</code></pre>
     </section><br><br>
@@ -1699,11 +1699,11 @@ class TrainerFragment : Fragment() {
 </section>
     </section>
     
-    <p><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/LiveDataTrainer">Here</a> you have the whole code </p>
+    <p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD6/GymnasticsTrainer">Here</a> you have the whole code </p>
 
 
     <a name="PR4" class="tarea" target="_blank" href="#">
-        <p>PRACTISE</p>
+        <p>PRACTICE</p>
         <p>You have to implement a <span class="negrita">Model</span>  with a <span class="negrita">LiveData</span> variable that emits data when it is observed.</p>
         <p>Implement a <span class="negrita">ViewModel</span>  that transforms the <span class="negrita">Model</span>  data into another <span class="negrita">LiveData</span> .</p>
         <p>Implement a <span class="negrita">View</span>  that observes the <span class="negrita">LiveData</span>  of the <span class="negrita">ViewModel</span>  and shows it to the user with images.</p>
@@ -1718,433 +1718,189 @@ class TrainerFragment : Fragment() {
 
     </section><!-- End section -->
 
-    <!--*********************************************************COROUTINES***********************************************************-->
+    <!--*********************************************************FLOWS***********************************************************-->
     <section class="apartado">
         <a name="sFlows"></a>
         <h2>INTRODUCTION TO FLOWS</h2>
     
         <h3>Introduction</h3>
+
+        <p>Flow is a component of the coroutine library that allows us to implement reactive programming. </p>
+
+
+        <p>It is the natural substitute for RxJava, since the vast majority of things that can be done are here, generally simpler, 
+            since they are based on concepts that we already know about <span class="d-word">coroutines</span> , <span class="d-word">sequences</span> , 
+            and <span class="d-word">collections</span>  to give us a very easy solution.</p>
         
-        <p>       
-In Android, <span class="negrita">all UI tasks</span>  are performed on the <span class="d-word">main thread</span> , which is why it is not a good practice to perform heavy or long-running tasks on the main thread. 
-If we block the main thread performing these tasks, the user interface will stop updating at 60fps and we will get an unsatisfactory user experience.
-        </p>
-    
-        <p> To solve this, we can use execution threads, and create its own execution thread for each of these tasks. But this has a number of downsides.
-            <ul>
-                <li>Threads are blockqued and context switching is very heavy and slow</li>
-                <li>Threads are difficult to handle and debug. We don't have much control over them</li>
-                <li>We have a limitation on the number of threads until they affect performance</li>
-            </ul>
-        </p>
-        <p>One solution that was widely used for some time was the use of the AsyncTask class, to run long-running tasks in the background. We have seen it a bit in the MVVM part</p>
+        <h3>What are the Flows?</h3>
+
+        <p>Flows are asynchronous sequences.</p>
         
-    <!------------------------------------------Suspend functions------------------------------------------------->
-      
-    <h3>Suspend functions</h3>
-    
-        <p><span class="d-word">Suspend function</span>  is a function that could be <span class="negrita">started</span>, <span class="negrita">paused</span>, and 
-            <span class="negrita">resume</span>. One of the most important points to remember about the 
-            suspend functions is that <span class="subrayado">they are only allowed to be called from a coroutine or another suspend function</span>. An example is given below, 
-            in which we have tried to call the <span class="r-word">delay()</span> function from outside of the coroutine.</p>
+        <p class="sub-section">The Flows are lazy</p>
         
-        <section><pre><code class="language-kotlin">// sample kotlin program to show use of delay function
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-          
-        // will throw a error
-        delay(1000L)
-          
-        GlobalScope.launch{
-         // delay function (a suspend function) must called within coroutine
-         // or another suspend function
-        } 
+        <p>Like sequences, Flows are lazy, which means that until someone requests the Flow's values, the operations on them are not executed. </p>
+        <p>This causes them to be called <span class="negrita">cold streams</span>, because they will not start providing data until someone asks to collect them. 
+            Also, if another element connects to the Flow, it starts from the first value of the flow.</p>
+        <p>It is important to understand this, because <span class="negrita">if a Flow performs heavy operations, 
+            they will be repeated every time someone collects its values</span>.</p>
+
+        
+        
+        <p class="sub-section">Flows are asynchronous</p>
+        
+        <p>Unlike sequences, which are processed one element after another, in Flow this is not necessarily the case. It can take a long time between one value and the next.</p>
+
+        <p>That's why we won't normally run them on the main thread.</p>
+
+        <p>Since all this happens in a coroutine context, think that the thread management is going to be very easy to manage.</p>
+
+
+        <p class="sub-section">Flows are sequential</p>
+        
+        <p>This means that if a Flow is going to generate x elements, and these consist of heavy processing, they will be executed one after the other: 
+            until the previous one finishes, the next one will not start.</p>
+        
+        <p>This, which is often an advantage, can sometimes be a disadvantage. 
+            Imagine that you have to make 10 requests to servers and that each one is independent of the previous one. Even so, 
+            you would have to wait for the previous one to finish to launch the next one.</p>
+
+        <p>This can be modified, and we'll see later. But keep in mind that they work like this by default</p>
+            
+        
+
+        <h3>Flow Builders</h3>
+
+        <p>We have 3 ways to build a Flow:</p>
+        
+        <p class="sub-section">asFlow()</p>
+        
+        <p>Perhaps this is the easiest way to generate a Flow. All collections, including sequences, can be converted to a Flow using this function</p>
+        
+        <section><pre><code class="language-kotlin">val flow = listOf(1, 2, 3, 4).asFlow()</code></pre>
+        </section><br><br>
+        
+        <p class="sub-section">flowOf()</p>
+        
+        <p>A Flow is generated with a sequence of predefined values, the equivalent of <span class="d-word">listOf()</span> 
+            or <span class="d-word">sequenceOf()</span> </p>
+
+            <section><pre><code class="language-kotlin">val flow = flowOf(1, 2, 3, 4)</code></pre>
+            </section><br><br>
+
+        <p class="sub-section">flow { }</p>
+        
+        <p>The most versatile of all, and the one you will surely use most often. </p>
+        <p>We create a <span class="negrita">flow { }</span>  block and add values ​​with the <span class="negrita">emit()</span> function.</p>
+
+        <p>Also, here we add the advantage that this block receives a coroutine context, so we can call suspend functions without any problem within it.</p>
+        
+        <section><pre><code class="language-kotlin">flow {
+    for (i in (0..3)) {
+        delay(200)
+        emit(i)
     }
 }</code></pre>
         </section><br><br>
 
+    <h3>Types of operators</h3>
 
-    <p>As we have called the delay function from outside of the coroutine, it will throw the error as below:</p>
-    <figure><img src="UD6/mvvm/images/ud6_2021-11-08-16-21-37.png" /><br><figcaption></figcaption></figure>
-    <br>
-    
-    <p class="sub-section">Delay Function</p>
-    
-    <p>It is represented as <span class="r-word">delay()</span> , It is a suspend function which delays coroutine for a given time without blocking a thread, 
-        and resumes it after a specified time. When we add the suspend keyword in the function, all the cooperations are automatically done for us.
-        We don’t have to use when or switch cases in order to switch from one function to another. Let’s take an example of suspend function as:</p>
-    
-    <section><pre><code class="language-kotlin">// arbitrary do task function for explanation
-suspend fun dotask(request: Request): Response
-{
-  // perform the task
-}</code></pre>
-    </section><br><br>
+    <p>Flows can be transformed just like collections, making them very easy to use.</p>
 
-    <p>Though it seems that only one argument has passed to <span class="r-word">dotask()</span>  function, but internally there are two arguments. 
-        Internally, it gets converted by the compiler to another function without the suspend keyword with an extra parameter of the type Continuation&lt;T> like below:</p>
+    <p>We can filter, map, combine, transform... and a large number of operations that allow you to adapt these flows to the needs you have in the place where you use them.</p>
     
-    <section><pre><code class="language-kotlin">// Continuation interface structure
-public interface Continuation<in T>
-{
-  public val context: CoroutineContext
-  public fun resumeWith(result: Result<T>)
-}</code></pre>
-    </section><br><br>
+    <p>As with sequences, there are two types of operators</p>
     
-    <ul>
-        <li><span class="negrita">context</span>  will be the CoroutineContext to be used in that continuation.</li>
-        <li><span class="negrita">resumeWith</span> resumes execution of the coroutine with a Result, that can contain either a value which is the result of the computation that caused the suspension or an exception.</li>
-    </ul>
-    <p>The two extension functions of <span class="negrita">resumeWith</span>  are given by:</p>
-    
-    <section><pre><code class="language-kotlin">fun &lt;T> Continuation&lt;T>.resume(value: T)
-fun &lt;T> Continuation&lt;T>.resumeWithException(exception: Throwable)</code></pre>
-    </section><br><br>
-
-    <p>We can see the two extension function that they can be used to resume the coroutines with a return value or with an exception if an error had occurred while 
-        the function was suspended. This way, a function could be started, paused, and resume with the help of <span class="r-word">Continuation</span>. 
-        We just have to use the <span class="r-word">suspend</span>  keyword.</p>
-    
-<section><pre><code class="language-kotlin">
-// Kotlin Program to demonstrate use of suspend function
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-          
-          GlobalScope.launch{
-            val networkCallAnswer==doNetworkCall()
-            Log.d("Main-Activity,networkCallAnswer)
-        } 
-    }
-      
-    suspend fun doNetworkCall():String {
-        delay(2000L);
-        return "Network Call Answer"
-    }               
-}</code></pre>
-</section><br><br>
-
-<p>We get the Log output after a delay of 2 seconds, since we have called <span class="negrita">doNetworkCall()</span> 
-    from a coroutine, we have to make <span class="negrita">doNetworkCall()</span> function as <span class="r-word">suspend</span> .</p>
-        
-        <h3>Coroutines</h3>
-        <p>
-            A coroutine is a concurrency design pattern that you can use on Android to simplify code that executes asynchronously. 
-            Coroutines were added to Kotlin in version 1.3 and are based on established concepts from other languages.
-        </p>
-    
-        <p>
-            On Android, coroutines help to manage long-running tasks that might otherwise block the main thread and cause your app 
-            to become unresponsive. Over 50% of professional developers who use coroutines have reported seeing increased productivity. 
-            This topic describes how you can use Kotlin coroutines to address these problems, enabling you to write cleaner and more concise app code.
-        </p>
-    
-        
-        <p class="sub-section">Features</p>
-        <p>Coroutines is our recommended solution for asynchronous programming on Android. Noteworthy features include the following:</p>
-        <ul>
-            <li><span class="d-word">Lightweight</span>: You can run many coroutines on a single thread due to support for suspension, 
-                which doesn't block the thread where the coroutine is running. 
-                Suspending saves memory over blocking while supporting many concurrent operations.</li>
-            <li><span class="d-word">Fewer memory leaks</span>: Use structured concurrency to run operations within a scope.</li>
-            <li>
-                <span class="d-word">Built-in cancellation support</span>: Cancellation is propagated automatically through the running coroutine hierarchy.
-            </li>
-            <li><span class="d-word">Jetpack integration</span>: Many Jetpack libraries include extensions that provide full coroutines support. 
-                Some libraries also provide their own coroutine scope that you can use for structured concurrency.</li>
-        </ul>
-
-        <p class="sub-section">Kotlin Coroutines vs Threads</p>
-<p><ul>
-<li>Fetching the data from one thread and passing it to another thread takes a lot of time. It also introduces lots of callbacks, leading to less readability of code. On the other hand, coroutines eliminate callbacks.</li>
-<li>Creating and stopping a thread is an expensive job, as it involves creating their own stacks.,whereas creating coroutines is very cheap when compared to the performance it offers. coroutines do not have their own stack.</li>
-<li>Threads are blocking, whereas coroutines are suspendable. By blocking it means that when a thread sleeps for some duration, the entire threads get blocked, it cannot do any other operation, whereas since coroutines are suspendable, so when they are delayed for some seconds, they can perform any other work.</li>
-<li>Coroutines offer a very high level of concurrency as compared to threads, as multiple threads involve blocking and context switching. Context switching with threads is slower as compared to coroutines, as with threads context can only be switched when the job of 1 thread gets over, but with coroutines, they can change context any time, as they are suspendable.</li>
-<li>Coroutines are light and super fast. Coroutines are faster than threads, as threads are managed by Operating System, whereas coroutines are managed by users. Having thousands of coroutines working together are much better than having tens of threads working together.</li>
-</ul></p>
-    
-    <p class="sub-section">Kotlin Coroutines Dependencies</p>
-    
-    <p>Add these dependencies in <span class="inline-file">build.gradle app-level</span> file.</p>
+     <p class="sub-section">Intermediate operators</p>
      
-    <section><pre><code class="language-kotlin">// dependencies to import in project 
-dependencies 
-{
-  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:x.x.x"
-  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:x.x.x"
+     <p>They are operators that do not launch any operation, regardless of their complexity. What they do is return a <span class="negrita">new Flow</span> that is
+         the combination of the previous one with the new operation.</p>
+
+    
+    <p>For example, we can use the filter() operation:</p>
+
+    <section><pre><code class="language-kotlin">makeFlow()
+    .filter { it % 2 == 0 }</code></pre>
+    </section><br><br>
+     
+    <p>And then do a map() to transform the results:</p>
+    <section><pre><code class="language-kotlin">makeFlow()
+    .filter { it % 2 == 0 }
+    .map { "Value is $it" }</code></pre>
+    </section><br><br>
+
+    <p>But there is a particularly interesting operator, which is <span class="negrita">transform()</span> , and which allows us to make as complex transformations 
+        as we need. All we have to do is call <span class="negrita">emit()</span>  with the values ​​we want to return:</p>
+
+
+    <p>You can also combine multiple Flows with operations like <span class="negrita">zip()</span>  or <span class="negrita">combine()</span> :</p>
+    
+    <section><pre><code class="language-kotlin">val flow1 = flowOf(1, 2, 3, 4)
+val flow2 = flowOf("1", "2", "3", "4")
+flow1.zip(flow2) { a, b -> "$a -> $b" }</code></pre>
+    </section><br><br>
+
+    <section><pre><code class="language-kotlin">val flow1 = flowOf(1, 2, 3, 4)
+val flow2 = flowOf("1", "2", "3", "4", "5")
+flow1.combine(flow2) { a, b -> "$a -> $b" }.collect(){
+    println(it)
 }</code></pre>
     </section><br><br>
 
-<section class="marco-t inf">
-    <span class="icono info"> </span> Note: x.x.x is the version of the coroutine. For instance you could set 1.3.9
-    </section>
-<section class="marco-b">
-        
-</section>
-    
-<p class="sub-section">Kotlin Coroutines Example</p>
-<p>Let’s say we want to fetch some users from the database and show it on the screen. 
-    For fetching the data from the database we have to perform the network call, fetch the user from the database, and show it on the screen. 
-    Fetching the user can be done by using either by using <span class="negrita">callbacks</span>  or <span class="negrita">coroutines</span> .</p>
-
-
-<section><pre><code class="language-kotlin">//pseudo kotlin code for demonstration using callbacks
-// involves a series of callbacks from fetchAndShowUser 
-// to fetchUser and then to showUser
-fun fetchAndShowUser() 
-{
-    fetchUser 
-    {
-    user -> showUser(user)
-    }
-}
-
-//pseudo kotlin code for demonstration using coroutines
-suspend fun fetchAndShowUser() 
-{
-  // fetch on IO thread
-  val user = fetchUser() 
-  // back on UI thread
-  showUser(user)
-}</code></pre>
-</section><br><br>
-
-<p>As discussed above using callbacks will decrease the code readability, so using coroutines is much better to use in terms of readability and performance as well. 
-    As discussed above <span class="r-word">Coroutines</span>  has many advantages apart from not having callbacks, like they are <span class="negrita">nonblocking</span> 
-    , <span class="negrita">easy</span> , and <span class="negrita">nonexpensive to create.</span>   </p>
-
-<h3>Launch vs Async vs withContext in Kotlin Coroutines</h3>
-<p>There are mainly three functions in Kotlin to start the coroutines. </p>
-
-<ul>
-    <li><span class="negrita">launch</span> { }</li>
-     <li><span class="negrita">async</span> { }</li>
-     <li><span class="negrita">withContext</span> { }</li>
-</ul>
-
-<p class="sub-section">Launch Function</p>
-
-<p>The launch will not block the main thread, but on the other hand, the execution of the rest part of the code will not wait for the launch result since launch is not a 
-    suspend call. Following is a Kotlin Program Using Launch:</p>
-<section><pre><code class="language-kotlin">// Kotlin Program For better understanding of launch
-fun GFG()
-{
-  var resultOne = "Android"
-  var resultTwo = "Kotlin"
-  Log.i("Launch", "Before")
-  launch(Dispatchers.IO) { resultOne = function1() }
-  launch(Dispatchers.IO) { resultTwo = function2() }
-  Log.i("Launch", "After")
-  val resultText = resultOne + resultTwo
-  Log.i("Launch", resultText)
-}
- 
-suspend fun function1(): String
-{
-  delay(1000L)
-  val message = "function1"
-  Log.i("Launch", message)
-  return message
-}
- 
-suspend fun function2(): String
-{
-  delay(100L)
-  val message = "function2"
-  Log.i("Launch", message)
-  return message
-}</code></pre>
-</section><br><br>
-
-<p>When you will run the code in <span class="r-word">Android IDE</span> , the log result will be:</p>
-<figure><img src="UD6/mvvm/images/ud6_2021-11-08-16-41-24.png" /><br><figcaption>Launch Result</figcaption></figure>
-<br>
-<p class="sub-section">When to Use Launch?</p>
-<p>Launch can be used at places where users do not want to use the returned result, which is later used in performing some other work. For example, 
-    It can be used at places involving tasks like update or changing a color, as in this case returned information would be of no use.</p>
-
-<p class="sub-section">Async Function</p>
-
-<p><span class="r-word">Async</span>  is also used to start the coroutines, but it blocks the main thread at the entry point of the <span class="r-word">await()</span> 
-     function in the program. Following is a Kotlin Program Using Async:</p>
-
-<section><pre><code class="language-kotlin">// kotlin program for demonstration of async
-fun GFG
-{
-  Log.i("Async", "Before")
-  val resultOne = Async(Dispatchers.IO) { function1() }
-  val resultTwo = Async(Dispatchers.IO) { function2() }
-  Log.i("Async", "After")
-  val resultText = resultOne.await() + resultTwo.await()
-  Log.i("Async", resultText)
-}
- 
-suspend fun function1(): String
-{
-  delay(1000L)
-  val message = "function1"
-  Log.i("Async", message)
-  return message
-}
- 
-suspend fun function2(): String
-{
-  delay(100L)
-  val message = "function2"
-  Log.i("Async", message)
-  return message
-}</code></pre>
-</section><br><br>
-
-<p>One important point to note is that Async makes both of the networks call for result1 and result2 in parallel, whereas with launch parallel function calls are not made. 
-    When you will run the code in Android IDE, the log result will be:</p>
-
-    <figure><img src="UD6/mvvm/images/ud6_2021-11-08-16-44-47.png" /><br><figcaption>Async</figcaption></figure>
-    <br>
+    <p>Remember that all of these operators can have suspend functions inside them, 
+        so those operations can be as simple as addition or as complex as calling a server and saving the result to a database.</p>
     
 
-<p class="sub-section">When to Use Async?</p>
+    <p class="sub-section">Terminal operators</p>
+    
+    <p>These do launch the execution and cause the production of values begins and these to be emitted.</p>
 
-<p>When making two or more network call in parallel, but you need to wait for the answers before computing the output, ie use async for results from multiple tasks 
-    that run in parallel. If you use async and do not wait for the result, it will work exactly the same as launch.</p>
+    <p>The most common terminal operator is <span class="negrita">collect()</span> , 
+        which tells Flow that there is already someone on the other side (the collector) waiting for results, and that it can start emitting them.</p>
+    
+    <section><pre><code class="language-kotlin">makeFlow()
+    .collect { print(it) }</code></pre>
+        </section><br><br>
 
-
-<p class="sub-section">WithContext</p>
-
-<section><pre><code class="language-kotlin">
-// kotlin program for demonstration of withContext
-fun testWithContext {
-    var resultOne = "Android"
-    var resultTwo = "Kotlin"
-    Log.i("withContext", "Before")
-    resultOne = withContext(Dispatchers.IO) { function1() }
-    resultTwo = withContext(Dispatchers.IO) { function2() }
-    Log.i("withContext", "After")
-    val resultText = resultOne + resultTwo
-    Log.i("withContext", resultText)
-}
-
-suspend fun function1(): String {
-    delay(1000L)
-    val message = "function1"
-    Log.i("withContext", message)
-    return message
-}
-
-suspend fun function2(): String {
-    delay(100L)
-    val message = "function2"
-    Log.i("withContext", message)
-    return message
-}</code></pre>
-</section><br><br>
-
-<p>Function 2 executes faster than 1. But <span class="r-word">withContext</span> is a <span class="negrita">suspend call</span>, so it won't go to the next line until it finished.</p>
-<p>But the good point is that your UI thread is free to run while the IO thread executes <span class="negrita">function1</span>  and <span class="negrita">function2</span> .</p>
-
-<p>When you run, the log result would be:</p>
-
-<section><pre><code class="language-kotlin">withContext: Before
-withContext: function1
-withContext: function2
-withContext: After
-withContext: function1function2</code></pre>
-</section><br><br>
-
-<p class="sub-section">When to use</p>
-
-<p>when you need to use the answer from the method called, <span class="r-word">withContext</span>  will wait for it result and <span class="subrayado">don't block the main thread</span> .</p>
-
-
-<h3>Job</h3>
-
-<p>Every time we create a <span class="r-word">coroutine</span> , a <span class="r-word">Job</span>  is associated with it. According to the official documentation -
-     <span class="subrayado">An instance of a Job in the coroutineContext represents the coroutine itself</span>-. A Job is a reference to the coroutine with which we can 
-     perform different actions. Among the most common are:</p>
-
-<ol>
-    <li>
-        <span class="r-word">isActive</span>: Allows you to verify if the coroutine is running. Returns <span class="cursiva">true</span>  if it is active, <span class="cursiva">false</span> otherwise.</li>
-        <li><span class="r-word">isCancelled</span>: Allows you to check if the coroutine was canceled. 
-            Returns <span class="cursiva">true</span>  if it was canceled, <span class="cursiva">false</span>  otherwise.</li>
-        <li><span class="r-word">isCompleted</span>: Allows you to verify if the coroutine finished its execution successfully.
-            Returns <span class="cursiva">true</span>  if it was completed, <span class="cursiva">false</span>  otherwise.</li>
-        <li><span class="r-word">join()</span>: Suspend the thread that makes the call to this function until the coroutine to which the Job is associated finishes its execution.</li>
-        <li><span class="r-word">cancel()</span>: Cancels the execution of the coroutine. <span class="subrayado">Canceling a Job cancels all the Jobs within the Scope of the canceled Job</span>.
-            That is, a call to the <span class="cursiva">cancel</span>  function of a Job, cancels the Jobs of the coroutines created within the Scope "parent" as long as the Job of the coroutine "daughter" is "child" of the canceled Job.</li>
-    </ol>
-
-<p>Let's do a test using the <span class="cursiva">launch</span> constructor.</p>
-
-<section><pre><code class="language-kotlin">import kotlinx.coroutines.*
-import kotlin.system.measureTimeMillis
-
-fun log(message: String) {
-    println("[${Thread.currentThread().name}] : $message")
-}
-
-fun log(character: Char) {
-    print("$character")
-}
-
-fun main() {
-    log("Start")
-
-    runBlocking {
-        val job = launch {
-            repeat(3) {
-                log("Launch rep #$it : I'm active")
-                delay(1000)
-            }
-            log("Launch : I'm finishing.")
+    <p>But there is not only this one, we have several more like <span class="negrita">toList(), toSet(), first(), single(), reduce()</span>  or <span class="negrita">fold()</span> .</p>
+    
+    <h3>Constraints on contexts and exceptions</h3>
+    <p>Flow has some restrictions, to make the whole system work properly.</p>
+    
+    <p>The first is that we cannot switch context within the code of a flow. If we do this, we'll get an exception:</p>
+    
+    <section><pre><code class="language-kotlin">fun makeFlow() = flow {
+    withContext(Dispatchers.IO) {
+        for (i in (0..3)) {
+            delay(200)
+            emit(i)
         }
-
-        delay(100)
-        while(job.isActive) {
-            log("RunBlocking : Job is active")
-            delay(1000)
-        }
-
-        log("RunBlocking : Job is not active")
     }
-
-    log("End")
 }</code></pre>
-</section><br><br>
+    </section><br><br>
 
-<p>The exit would be something like this:</p>
-<section><pre><code class="language-kotlin">[main] : Start
-[main @coroutine#2] : Launch rep #0 : I'm active
-[main @coroutine#1] : RunBlocking : Job is active
-[main @coroutine#2] : Launch rep #1 : I'm active
-[main @coroutine#1] : RunBlocking : Job is active
-[main @coroutine#2] : Launch rep #2 : I'm active
-[main @coroutine#1] : RunBlocking : Job is active
-[main @coroutine#2] : Launch : I'm finishing.
-[main @coroutine#1] : RunBlocking : Job is not active
-[main] : End</code></pre>
-</section><br><br>
+<p>Flow will always run in the context of the coroutine that launched it. 
+    But many times it won't be what we want, how do we then change the execution context? We can use the <span class="negrita">flowOn()</span> function:</p>
 
-<p>In the previous code we create a coroutine with the <span class="r-word">runBlocking</span>  constructor and inside it we use the <span class="cursiva">launch</span>
-     constructor to create another coroutine. The <span class="cursiva">launch</span>  constructor returns an object of type <span class="r-word">Job</span> 
-      when creating the coroutine. We use the object to verify that it is active, repeating the cycle until the coroutine finishes its execution, 
-      thus leaving the Job in a completed state. Once completed, the <span class="negrita">job.isActive</span>  condition ceases to be met, 
-      thus continuing the execution of the coroutine created with the <span class="r-word">runBlocking</span>  constructor.</p>
+    <section><pre><code class="language-kotlin">makeFlow()
+    .flowOn(Dispatchers.IO)
+    .collect { print(it) }</code></pre>
+    </section><br><br>
 
+    <p>With respect to exceptions, it happens a bit the same. Exceptions should not be caught within the flows, 
+        so as not to hide them and the rest of the code does not find out. There is a special function for this:</p>
+    
 
-<p class="sub-section">Job lifecycle</p>
+    <section><pre><code class="language-kotlin">makeFlow()
+    .catch { throwable -> println(throwable.message) }
+    .collect { print(it) }
+}</code></pre>
+    </section><br><br>
 
-<figure><img src="UD6/coroutines/images/ud6_2021-11-10-10-00-09.png" /><br><figcaption>Job LifeCycle</figcaption></figure>
-<br>
+<p>If we don't catch the exception, it will continue to propagate normally, as it happens with the rest of the coroutine components.</p>
 
 
-     
 
-        </section><!-- End section -->
+    </section><!-- End section -->
 
     <!--*********************************************************WebGraphy***********************************************************-->
     <section class="apartado">
@@ -2157,10 +1913,7 @@ fun main() {
         </li>
         <li><a class="enlace" target="_blank" href="https://github.com/koral--/android-gif-drawable">https://github.com/koral--/android-gif-drawable</a> </li>
         <li><a class="enlace" target="_blank" href="https://gerardfp.github.io/livedata/">Gerard's notes</a> </li>
-        <li><a class="enlace" target="_blank" href="https://www.geeksforgeeks.org/suspend-function-in-kotlin-coroutines/?ref=lbp">Suspend function</a> </li>
-        <li><a class="enlace" target="_blank" href="https://www.geeksforgeeks.org/launch-vs-async-in-kotlin-coroutines/">Launch vs Async</a> </li>
-        <li><a class="enlace" target="_blank" href="https://canato.medium.com/withcontext-async-or-launch-inside-coroutine-kotlin-17c332854a08">Launch vs Async vs withContext</a> </li>
-        <li><a class="enlace" target="_blank" href="https://medium.com/kotlin-en-android/coroutines-con-kotlin-job-860db9237b86">Coroutines (Spanish)</a> </li>
+        <li><a class="enlace" target="_blank" href="https://devexperto.com/flows-kotlin/">Flows</a> </li>
     </ul>
     
    
