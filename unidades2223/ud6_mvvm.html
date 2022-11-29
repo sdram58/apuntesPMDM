@@ -1816,35 +1816,85 @@ class TrainerFragment : Fragment() {
          the combination of the previous one with the new operation.</p>
 
     
-    <p>For example, we can use the filter() operation:</p>
+    <p>For example, we can use the <span class="negrita"><span class="r-word">filter()</span> </span> operation:</p>
 
-    <section><pre><code class="language-kotlin">makeFlow()
-    .filter { it % 2 == 0 }</code></pre>
+    <section><pre><code class="language-kotlin">makeFlow() //user function that returns a flow
+    .filter { it % 2 == 0 }  //Only emit the even elements of the flow</code></pre>
     </section><br><br>
      
-    <p>And then do a map() to transform the results:</p>
+    <p>And then do a <span class="negrita"><span class="r-word">map()</span> </span>  to transform the results:</p>
     <section><pre><code class="language-kotlin">makeFlow()
     .filter { it % 2 == 0 }
-    .map { "Value is $it" }</code></pre>
+    .map { "Value is $it" } //Emits the even elements and maps them to a String</code></pre>
     </section><br><br>
 
-    <p>But there is a particularly interesting operator, which is <span class="negrita">transform()</span> , and which allows us to make as complex transformations 
+
+    <p>But there is a particularly interesting operator, which is <span class="negrita"><span class="r-word">transform()</span></span> , and which allows us to make as complex transformations 
         as we need. All we have to do is call <span class="negrita">emit()</span>  with the values ​​we want to return:</p>
 
+        <section><pre><code class="language-kotlin">flowOf(1,2,3,4,5).transform{
+        if(it % 2 ==0 ) emit("Value -> $it")
+    }.collect(){
+        println("$it")
+   }</code></pre>
+        </section>
 
-    <p>You can also combine multiple Flows with operations like <span class="negrita">zip()</span>  or <span class="negrita">combine()</span> :</p>
+    <p>Result:</p>
+
+    <section><pre><code class="language-kotlin">Value -> 2
+Value -> 4</code></pre>
+    </section><br><br>
+
+
+
+    <p>You can also combine multiple Flows with operations like <span class="negrita"><span class="r-word">zip()</span> </span>  or <span class="negrita"><span class="r-word">combine()</span> </span> :</p>
     
     <section><pre><code class="language-kotlin">val flow1 = flowOf(1, 2, 3, 4)
 val flow2 = flowOf("1", "2", "3", "4")
 flow1.zip(flow2) { a, b -> "$a -> $b" }</code></pre>
     </section><br><br>
 
+
     <section><pre><code class="language-kotlin">val flow1 = flowOf(1, 2, 3, 4)
 val flow2 = flowOf("1", "2", "3", "4", "5")
 flow1.combine(flow2) { a, b -> "$a -> $b" }.collect(){
     println(it)
 }</code></pre>
+    </section>
+
+    <p>Result</p>
+    <section><pre><code class="language-kotlin">1 -> 1
+2 -> 2
+3 -> 3
+4 -> 4
+4 -> 5</code></pre>
     </section><br><br>
+
+
+    <p>We can apply some action to each of the flow elements with <span class="negrita"><span class="r-word">onEach()</span> </span></p>
+
+    <section><pre><code class="language-kotlin">val f1 = flowOf(1,2,3,4,5).onEach { delay(300) }
+val f2 = flowOf("a", "b", "c", "d").onEach { delay(500) }
+
+f1.combine(f2){f1, f2 ->
+    "$f1 -> $f2"
+}.collect(){
+    println("$it")
+}</code></pre>
+</section>
+
+    <p>Result</p>
+    <section><pre><code class="language-kotlin">1 -> a
+2 -> a
+3 -> a
+3 -> b
+4 -> b
+4 -> c
+5 -> c
+5 -> d</code></pre>
+    </section><br><br>
+    
+    
 
     <p>Remember that all of these operators can have suspend functions inside them, 
         so those operations can be as simple as addition or as complex as calling a server and saving the result to a database.</p>
@@ -1854,14 +1904,31 @@ flow1.combine(flow2) { a, b -> "$a -> $b" }.collect(){
     
     <p>These do launch the execution and cause the production of values begins and these to be emitted.</p>
 
-    <p>The most common terminal operator is <span class="negrita">collect()</span> , 
+    <p>The most common terminal operator is <span class="negrita"><span class="r-word">collect()</span> </span> , 
         which tells Flow that there is already someone on the other side (the collector) waiting for results, and that it can start emitting them.</p>
     
-    <section><pre><code class="language-kotlin">makeFlow()
-    .collect { print(it) }</code></pre>
+    <section><pre><code class="language-kotlin">val flow= flowOf(1,2,3,4,5,6)
+    
+flow.collect(){
+    println(it)
+}</code></pre>
         </section><br><br>
 
-    <p>But there is not only this one, we have several more like <span class="negrita">toList(), toSet(), first(), single(), reduce()</span>  or <span class="negrita">fold()</span> .</p>
+    <p>Another interesting terminal function is <span class="negrita"><span class="r-word">toList()</span></span> . It will wait for the entire flow to finish emitting and turn it into a list.</p>
+    <p>In this example we are going to take a previous flow and convert it into a list and print its result.</p>
+    <section><pre><code class="language-kotlin">val flow1 = flowOf(1, 2, 3, 4)
+val flow2 = flowOf("1", "2", "3", "4", "5")
+
+println(
+    flow1.combine(flow2) { a, b -> "$a -> $b" }.toList()
+)</code></pre>
+    </section>
+    <p>Result:</p>
+    <section><pre><code class="language-kotlin">[1 -> 1, 2 -> 2, 3 -> 3, 4 -> 4, 4 -> 5]</code></pre>
+    </section><br><br>
+    
+
+    <p>But there is not only this one, we have several more like <span class="negrita">toSet(), first(), single(), reduce()</span>  or <span class="negrita">fold()</span> .</p>
     
     <h3>Constraints on contexts and exceptions</h3>
     <p>Flow has some restrictions, to make the whole system work properly.</p>
@@ -1881,8 +1948,9 @@ flow1.combine(flow2) { a, b -> "$a -> $b" }.collect(){
 <p>Flow will always run in the context of the coroutine that launched it. 
     But many times it won't be what we want, how do we then change the execution context? We can use the <span class="negrita">flowOn()</span> function:</p>
 
-    <section><pre><code class="language-kotlin">makeFlow()
-    .flowOn(Dispatchers.IO)
+    <section><pre><code class="language-kotlin">val flow = flowOf(1,2,3,4)
+
+flow.flowOn(Dispatchers.IO)
     .collect { print(it) }</code></pre>
     </section><br><br>
 
@@ -1897,6 +1965,90 @@ flow1.combine(flow2) { a, b -> "$a -> $b" }.collect(){
     </section><br><br>
 
 <p>If we don't catch the exception, it will continue to propagate normally, as it happens with the rest of the coroutine components.</p>
+
+<br><br>
+    <h3>Types or specializations of FLows</h3>
+
+    <p>So far we have seen the general behavior of the flows and the main characteristics. 
+        Now we will see some types of flow specialization that can be interesting for certain cases.</p>
+    
+    <p class="sub-section">StateFlow</p>
+    
+    <p>Remember that we said that generic flows were <span class="cursiva">cold streams</span> , that is, until someone starts collecting their values, 
+        the flow doesn't start emitting.</p>
+    
+    <p>The <span class="d-word">StateFlows</span>  are <span class="cursiva">hot streams</span> , that is, whether there is someone listening or not, they are going to emit values.
+    If we connect to a <span class="d-word">Stateflow</span> , it will give us the last value, it will not start with the first one.</p>
+    
+
+    <p><span class="d-word">StateFlows</span>  are especially interesting for saving the state of the UI, when we connect to it, it will tell us what the last state the UI should be in is.
+        From there if the state changes, the UI will receive the new state. <br>
+        As you have seen, this would be the equivalent of <span class="d-word">LiveData</span> .
+    </p>
+
+    <p>Let's do an example in which we simulate a use case in which the UI is going to be updated (in this case the console), we will update the UI every second by passing it a new <span class="negrita">note</span> .
+    For this, we will use a <span class="r-word">MutableStateFlow</span>  that will be of the <span class="negrita">note</span>  type.</p>
+    
+    <section><pre><code class="language-kotlin">data class Note(
+    val title:String,
+    val description:String
+)
+
+class ViewModel(){ //It would simulate a ViewModel but for this example is a simple class
+
+    var state: MutableStateFlow&lt;Note> = MutableStateFlow(Note("Title 1", "Description 1"))
+
+    suspend fun update(){
+        var counter = 1
+        while(true){
+            state.value = Note("Title $counter", "Description $counter")
+            counter++
+            delay(1000)
+        }
+    }
+}
+
+fun main():Unit = runBlocking {
+
+    val viewModel = ViewModel()
+    launch {
+        viewModel.update()
+    }
+    viewModel.state.collect(){
+        println(it)
+    }
+
+}</code></pre>
+    </section><br><br>
+    
+    <p>Note that to update the value of the <span class="d-word">StateFlow</span> , the new value is passed through the <span class="r-word">value</span>  property of the <span class="d-word">status</span> variable. 
+        Notice that to start the value of the StateFlow we pass a note in the constructor.</p>
+    
+
+    <section class="marco-t inf">
+        <span class="icono info"> </span> Since the <span class="negrita">println</span>  function receives the same arguments that the <span class="negrita">lambda</span> passes, 
+        we can abbreviate it using the function reference (::)
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-kotlin">viewModel.state.collect(::println)</code></pre>
+            </section>
+    </section>
+        
+    <p>The code above has a problem and that is that from the UI we could change the value of the state flow by doing this.</p>
+    
+    <section><pre><code class="language-kotlin">viewModel.state.value = Note("Fake title", "Fake description")</code></pre>
+    </section><br>
+
+    <p>That is, it is poorly encapsulated. To avoid that we must make the property that is accessed from outside read-only. Let's see how we could do it.</p>
+    
+    <section><pre><code class="language-kotlin">private val _state: MutableStateFlow<Note> = MutableStateFlow(Note("Title 1", "Description 1"))
+val state:StateFlow<Note> = _state.asStateFlow()</code></pre>
+    </section><br>
+
+    <p>We see that our MutableStateFlow variable is private and offer a public one that cannot be changed, nor can the value property be modified.
+        This is called <span class="cursiva">backing property</span>  </p>
+    
+
 
 
 
