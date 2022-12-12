@@ -313,16 +313,19 @@ class MainActivity : AppCompatActivity() {
     <section class="apartado">
     <a name="sFileSystem"></a>
     <h2>File System</h2>
+
+    <h3>Introduction</h3>
     
-    <p>Android uses a file system that's similar to disk-based file systems on other platforms. The system provides several options for you to save your app data:</p>
+    
+    <p>Android uses a file system which is imilar to disk-based file systems on other platforms. The system provides several options for you to save your app data:</p>
     <p>
     <ul>
-        <li><span class="negrita">App-specific storage</span> : Store files that are meant for your app's use only, either in dedicated directories within an 
-            <span class="subrayado">internal storage</span>  volume or different dedicated directories within <span class="subrayado">external storage</span>. 
-            <span class="negrita"><span class="subrayado">Use the directories within internal storage to save sensitive information that other apps shouldn't access.</span> </span> </li>
-        <li><span class="negrita">Shared storage</span>: Store files that your app intends to share with other apps, including media, documents, and other files.</li>
-        <li><span class="negrita">Preferences</span>: Store private, primitive data in key-value pairs.</li>
-        <li><span class="negrita">Databases</span>: Store structured data in a private database using the Room persistence library.</li>
+        <li><span class="d-word"><span class="negrita">App-specific storage</span> </span>: Store files that are meant for your app's use only, either in dedicated directories within an 
+            <span class="negrita"><span class="subrayado">internal storage</span></span> volume or different dedicated directories within <span class="negrita"><span class="subrayado">external storage</span></span>   . 
+            <span class="subrayado">Use the directories within internal storage to save sensitive information that other apps shouldn't access.</span></li>
+        <li><span class="d-word"><span class="negrita">Shared storage</span></span>: Store files that your app intends to share with other apps, including media, documents, and other files.</li>
+        <li><span class="d-word"><span class="negrita">Preferences</span></span>: Store private, primitive data in key-value pairs.</li>
+        <li><span class="d-word"><span class="negrita">Databases</span></span>: Store structured data in a private database using the Room persistence library.</li>
     </ul>
 </p>    
 <p>The characteristics of these options are summarized in the following table:</p>
@@ -361,7 +364,7 @@ class MainActivity : AppCompatActivity() {
 
 <p>
     <ul>
-        <li><span class="negrita">Internal storage directories</span>: These directories include both a dedicated location for storing persistent files, 
+        <li><span class="negrita">Internal storage directories</span>: These directories include both: a dedicated location for storing persistent files, 
             and another location for storing cache data. The system prevents other apps from accessing these locations, and on <span class="negrita">Android 10 (API level 29)</span> 
             and higher, these locations are encrypted. These characteristics make these locations a good place to store sensitive data that only your app itself can access.</li>
         <li>
@@ -396,7 +399,7 @@ val availableBytes: Long =
 if (availableBytes >= NUM_BYTES_NEEDED_FOR_MY_APP) {
     storageManager.allocateBytes(
         appSpecificInternalDirUuid, NUM_BYTES_NEEDED_FOR_MY_APP)
-} else {
+} else { //We don't have enough space we ask for removing something
     val storageIntent=Intent().apply {
         // To request that the user remove all app cache files instead, set
         // "action" to ACTION_CLEAR_APP_CACHE.
@@ -427,11 +430,17 @@ val fileContents="Hello world!"
 context.openFileOutput(filename, Context.MODE_PRIVATE).use {
         it.write(fileContents.toByteArray())
 }</code></pre>
-</section><br><br>
+</section><br>
+
+<p>We can see the file created in the <span class="negrita">Android Studio Device File Explorer</span> </p>
+
+<figure><img src="./UD7/images/ud7_file_manager.gif" /><br><figcaption>Android Studio Device File Explorer</figcaption></figure>
+<br>
+
 
 <section class="marco-t warn">
     <span class="icono warning"> </span> Caution: On devices that run Android 7.0 (API level 24) or higher, unless you pass the <span class="negrita">Context.MODE_PRIVATE</span> 
-     file mode into <span class="negrita">openFileOutput()</span> , a <span class="subrayado">SecurityException occurs</span> .
+     file mode into <span class="negrita">openFileOutput()</span> , a <span class="subrayado">SecurityException will be thrown</span> .
     </section>
 <section class="marco-b">
         
@@ -475,7 +484,7 @@ context.openFileOutput(filename, Context.MODE_PRIVATE).use {
 
 
 <p class="sub-section">Create cache files</p>
-<p>f you need to store sensitive data only temporarily, you should use the app's designated cache directory within internal storage to save the data. 
+<p>If you need to store sensitive data only temporarily, you should use the app's designated cache directory within internal storage to save the data. 
     As is the case for all app-specific storage, the files stored in this directory are removed when the user uninstalls your app, although the files in this directory 
     might be removed sooner.</p>
 
@@ -550,8 +559,7 @@ fun isExternalStorageReadable(): Boolean {
      return Environment.getExternalStorageState() in
         setOf(Environment.MEDIA_MOUNTED, Environment.MEDIA_MOUNTED_READ_ONLY)
 }</code></pre>
-</section><br><br>
-
+</section><br>
 
 <p class="sub-section">Select a physical storage location</p>
 
@@ -565,7 +573,25 @@ fun isExternalStorageReadable(): Boolean {
 <section><pre><code class="language-kotlin">val externalStorageVolumes: Array<out File> =
         ContextCompat.getExternalFilesDirs(applicationContext, null)
 val primaryExternalStorage=externalStorageVolumes[0]</code></pre>
-</section><br><br>
+</section><br>
+
+<p>if we print the path, it would be</p>
+
+<section><pre><code class="language-kotlin">println(primaryExternalStorage.absolutePath)</code></pre>
+</section><br>
+
+<section><pre><code class="language-kotlin">/storage/emulated/0/Android/data/com.catata.filesexample/files</code></pre>
+</section><br>
+
+<p>If our device has a memory card and also HD, <span class="negrita">externalStorageVolumes[1]</span> probably be the SD card and its path woul be something like this</p>
+
+<section><pre><code class="language-kotlin">val secondaryExternalStorage=externalStorageVolumes[1] //be careful because the card may have been removed and throw a NullPointerException
+println(secondaryExternalStorage.absolutePath)
+
+...
+//OUTPUT
+/storage/11EA-1213/Android/data/com.catata.filesexample/files</code></pre>
+</section><br>
 
 <p class="sub-section">Access persistent files</p>
 
@@ -575,8 +601,12 @@ val primaryExternalStorage=externalStorageVolumes[0]</code></pre>
 
 <p>The following code snippet demonstrates how to call <span class="negrita">getExternalFilesDir()</span>:</p>
 
-<section><pre><code class="language-kotlin">val appSpecificExternalDir=File(context.getExternalFilesDir(null), filename)</code></pre>
-</section><br><br>
+<section><pre><code class="language-kotlin">val appSpecificExternalDir=File(context.getExternalFilesDir(null), filename)
+
+//PATH
+/storage/emulated/0/Android/data/com.catata.filesexample/files/my_file
+</code></pre>
+</section><br>
 
 <section class="marco-t inf">
     <span class="icono info"> </span> On Android 11 (API level 30) and higher, apps cannot create their own app-specific directory on external storage.
@@ -621,7 +651,7 @@ val primaryExternalStorage=externalStorageVolumes[0]</code></pre>
 
 
 
-    <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/DirectoriesFiles">Example of usage with directories and files on Github</a> 
+    <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD7/DirectoriesFiles">Example of usage with directories and files on Github</a> 
 
 
     </section><!-- End section -->
@@ -647,49 +677,49 @@ val primaryExternalStorage=externalStorageVolumes[0]</code></pre>
         </section>
     <section class="marco-b">
             <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
-&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns: android="http://schemas.android.com/apk/res/android"
-    xmlns: app="http://schemas.android.com/apk/res-auto"
-    xmlns: tools="http://schemas.android.com/tools"
-    android: layout_width="match_parent"
-    android: layout_height="match_parent"
-    tools: context=".MainActivity">
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
    &lt;TextView
-        android: id="@+id/tvName"
-        android: layout_width="wrap_content"
-        android: layout_height="wrap_content"
-        app: layout_constraintBottom_toBottomOf="parent"
-        app: layout_constraintLeft_toLeftOf="parent"
-        app: layout_constraintRight_toRightOf="parent"
-        app: layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
    &lt;EditText
-        android: id="@+id/etName"
-        android: layout_width="wrap_content"
-        android: layout_height="wrap_content"
-        android: hint="Write your name"
-        app: layout_constraintBottom_toBottomOf="parent"
-        app: layout_constraintLeft_toLeftOf="parent"
-        app: layout_constraintRight_toRightOf="parent"
-        app: layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/etName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Write your name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
    &lt;Button
-        android: id="@+id/btnDeleteValue"
-        android: layout_width="wrap_content"
-        android: layout_height="wrap_content"
-        android: text="Delete"
-        app: layout_constraintBottom_toBottomOf="parent"
-        app: layout_constraintLeft_toLeftOf="parent"
-        app: layout_constraintRight_toRightOf="parent" />
+        android:id="@+id/btnDeleteValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
    &lt;Button
-        android: id="@+id/btnSaveValue"
-        android: layout_width="wrap_content"
-        android: layout_height="wrap_content"
-        android: text="Save"
-        app: layout_constraintBottom_toBottomOf="parent"
-        app: layout_constraintLeft_toLeftOf="parent"
-        app: layout_constraintRight_toRightOf="parent" />
+        android:id="@+id/btnSaveValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 &lt;/androidx.constraintlayout.widget.ConstraintLayout></code></pre>
             </section>
@@ -705,13 +735,16 @@ val primaryExternalStorage=externalStorageVolumes[0]</code></pre>
         <span class="icono file"> </span> <span class="negrita">Prefs.kt</span>
         </section>
     <section class="marco-b">
-            <section><pre><code class="language-kotlin">class Prefs (context: Context) {
-    val PREFS_NAME="com.cartatar.sharedpreferencesexample"
-    val SHARED_NAME="shared_name"
-    val prefs: SharedPreferences=context.getSharedPreferences (PREFS_NAME, Context.MODE_PRIVATE)
+<section><pre><code class="language-kotlin">class Prefs (context: Context) {
+    val prefs: SharedPreferences =context.getSharedPreferences (PREFS_NAME, Context.MODE_PRIVATE)
     var name: String
-        get ()=prefs.getString(SHARED_NAME, "") !!
-        set (value)=prefs.edit(). putString (SHARED_NAME, value) .apply ()
+        get ()=prefs.getString(SHARED_NAME, "") ?: ""
+        set (value)=prefs.edit().putString (SHARED_NAME, value).apply ()
+
+    companion object {
+        const val PREFS_NAME="com.catata.sharedpreferencesexample"
+        const val SHARED_NAME="shared_name"
+    }
 }</code></pre>
             </section>
     </section>
@@ -755,7 +788,7 @@ val primaryExternalStorage=externalStorageVolumes[0]</code></pre>
          that means that it will be instantiated later, in this example in the <span class="r-word">onCreate()</span>  method of this class.</p>
     
     <p>Remember that for this class to be launched when opening the app we must go to <span class="inline-file">AndroidManifest.xml</span> and add 
-        <section><pre><code class="language-xml">android: name=". SharedApp"</code></pre>
+        <section><pre><code class="language-xml">android: name=".SharedApp"</code></pre>
         </section><br><br> inside the&lt;Application> open tag</p>
 
     <p>Now we will go to our <span class="d-word">MainActivity</span>  to develop some logic.</p>
@@ -874,14 +907,21 @@ class MainActivity: AppCompatActivity () {
 <br>
 
 
+<p>Here is where the shared preference is saved in xml file. Note the name of the file (<span class="negrita">com.catata.sharedpreferencesexample.xml</span>)
+     and the name of the SharedPreference (<span class="negrita">shared_name</span>)</p>
 
-<p>Here's a <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/MySharedPreferences"> link </a> to Github with another example of using <span class="negrita">Shared Preferences</span>.
+<figure><img src="./UD7/images/ud7_shared_preferences_path.gif" /><br><figcaption>Shared Preferences</figcaption></figure>
+<br>
+
+
+
+<p>Here's a <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD7/SharedPreferences"> link </a> to Github with another example of using <span class="negrita">Shared Preferences</span>.
     Notice that we have two methods to access the SharedPreferences. On the one hand we have <span class="r-word">getPreferences</span> , which obtains the normal and global 
     preferences and on the other hand we have, <span class="r-word">getSharedPreferences</span>  method to which we give a name of the preferences file, in case we want to have several files and separate the information</p>
 
 
 <br><br>
-<p>Here is another <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/DirectoriesFilesSharedDao"> link </a> to Github with an example 
+<p>Here is another <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD7/DirectoriesFilesSharedDao"> link </a> to Github with an example 
     where we implement the <span class="negrita">DAO pattern</span> and also with <span class="negrita">ViewModel pattern</span> to access the saved data by means of a file through SharedPreferences.</p>
 
 
@@ -893,16 +933,12 @@ class MainActivity: AppCompatActivity () {
 
     <p>The first thing we will do is add the dependencies, remember to also enable the <span class="negrita">viewBinding</span> .</p>
     
-    <section><pre><code class="language-kotlin">def nav_version="2.3.5"
-
-// Kotlin
+    <section><pre><code class="language-kotlin">def nav_version="2.5.3"
 implementation ("androidx.navigation:navigation-fragment-ktx:$nav_version")
 implementation ("androidx.navigation:navigation-ui-ktx:$nav_version")
 
 // Preferences
-def preference_version="1.1.1"
-
-// Kotlin
+def preference_version="1.2.0"
 implementation ("androidx.preference:preference-ktx:$preference_version")</code></pre>
     </section><br><br>
 
@@ -1040,6 +1076,9 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
 }</code></pre>
             </section>
     </section>
+
+    <p>Notice we haven't created the <span class="negrita">SettingsActivity</span> yet</p>
+    
     
     <p>Now what we will do is add in <span class="d-word">MainFragment</span>  a listener of the <span class="r-word">SharedPreferences</span> 
          so that it reacts when they are modified, in our case the only thing we will do is show it in a TextView. So <span class="inline-file">MainFragment</span> would look like this</p>
@@ -1047,6 +1086,8 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
     <section><pre><code class="language-kotlin">class MainFragment:Fragment() {
 
     private lateinit var binding: FragmentMainBinding
+
+    //listener is listening for every change on the SharedPreferences
     private lateinit var listener: SharedPreferences.OnSharedPreferenceChangeListener
 
     override fun onCreateView (
@@ -1068,13 +1109,18 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val sharedPreferences: SharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(requireContext()/* Activity context */)
 
+        //Making the callback of the listener
         listener=SharedPreferences.OnSharedPreferenceChangeListener {prefs, key ->
+            //Array with all the preferences
             val preferences=prefs.all
+            
+            //The key contains the name of the changed preference
             val s=preferences [key] .toString ()
             //Write the changed shared into TextView
             binding.tvInfo.text=s
         }
 
+        //we register the listener
         sharedPreferences.registerOnSharedPreferenceChangeListener (listener)
 
     }
@@ -1216,7 +1262,7 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
     </section><br><br>
 
     
-<a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/SharedSettings">Here</a>  you can see the whole code of the example.
+<a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD7/SettingScreen">Here</a>  you can see the whole code of the example.
  <br><br>
 
 <div class="tarea">
@@ -1226,7 +1272,8 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
 </div>
 
 <br><br>
-<div><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/ChangeColorsSettings">Here</a>  you have a possible solution. Please, try to do it yourself before</div>
+<div><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD7/ChangeColorsSettings">Here</a>  you have a possible solution. 
+    Please, try to do it by yourself before</div>
 
 
     </section><!-- End section -->
