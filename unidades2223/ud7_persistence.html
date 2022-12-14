@@ -1279,7 +1279,7 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
     </section><!-- End section -->
 
     <!--*********************************************************Room***********************************************************-->
-    <section class="oculto apartado">
+    <section class="apartado">
     <a name="sRoom"></a>
     <h2>Room</h2>
     
@@ -1339,19 +1339,20 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
         <span class="icono file"> </span> <span class="negrita">Gradle Module App</span>
         </section>
     <section class="marco-b">
-            <section><pre><code class="language-kotlin">implementation "com.google.android.material:material:$material_version"
+            <section><pre><code class="language-kotlin">//RecycleView
+def recycler_version="1.2.1"
+implementation "androidx.recyclerview:recyclerview:$recycler_version"
 
-    //RecycleView
-    implementation("androidx.recyclerview:recyclerview:$recycler_version")
+//Room
+def room_version="2.4.3"
+implementation "androidx.room:room-runtime:$room_version"
+kapt "androidx.room:room-compiler:$room_version"
+implementation "androidx.room:room-ktx:$room_version"
 
-    //Room
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
-
-    // Lifecycle libraries
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"</code></pre>
+// Lifecycle libraries
+def lifecycle_version="2.5.1"
+implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"</code></pre>
             </section>
     </section>
     
@@ -1383,21 +1384,22 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
         </section>
     <section class="marco-b">
             <section><pre><code class="language-kotlin">buildscript {
-    ext{
-        room_version = '2.3.0'
+    ext {
+        room_version = '2.4.3'
         recycler_version = '1.2.1'
-        material_version = '1.4.0'
-        lifecycle_version = '2.4.0'
+        lifecycle_version = '2.5.1'
     }
+}
 
-    .........
-</code></pre>
+plugins {
+    .......
+}</code></pre>
             </section>
     </section>
 
     <h3>Directory structure</h3>
     
-    <p>Next we are going to create some files, so as not to lose sight of where we are and to be more organized we are going to create the necessary packages.</p>
+    <p>Next we are going to create some files, so as keep an eye on of where we are and to be more organized we are going to create the necessary packages.</p>
     
 
     <figure><img src="UD7/images/ud7-2021-12-02-15-28-31.png" /><br><figcaption>Dir structure</figcaption></figure>
@@ -1405,7 +1407,7 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
     
     <p>Note that <span class="d-word">MainActivity</span>  we have included it within a package called <span class="negrita">ui</span> , since it takes care of the view.
     We also have a package with everything related to data. We have the entities package, where we will define our model.
-    We also have created two interfaces to implement the <span class="negrita">Damage</span>  and <span class="d-word">TaskDatabase</span>  pattern with the 
+    We also have created two interfaces to implement the <span class="negrita">DAO</span>  and <span class="d-word">TaskDatabase</span>  pattern with the 
     creation and definition of the <span class="negrita">Room Database</span> .
     We have an adapters package where we will have the <span class="negrita">RecyclerView</span>  adapter and finally the viewmodel package where we will have our <span class="negrita">ViewModel</span> .</p>
     
@@ -1441,7 +1443,7 @@ data class TaskEntity (
     <p class="sub-section">Dao Pattern (Data Access Object)</p>
     
     <p>Now we are going to create the Dao pattern. Room defines its own <span class="negrita">Dao pattern</span> <span class="subrayado"> through decorators</span>, 
-        but we will create a more generic interface in case we want to use definition another form of persistence such us Files. In this interface we will define the methods that we can use.</p>
+        but we will create a more generic interface in case we want to use another type of persistence such us Files. In this interface we will define the methods that we can use.</p>
     
 
     <section class="marco-t file-">
@@ -1577,6 +1579,41 @@ class TasksAdapter(
     <p>As we can see in the constructor, we pass it a <span class="negrita">list of tasks</span>  and <span class="negrita">two callbacks</span> , one for when we click on the
          <span class="cursiva">Check box</span>  for the task performed and another for when we click on the entire element,
     in which case we would delete said task. In this case we create within the <span class="r-word">ViewHolder</span>  the bind function that does all this task.</p>
+
+
+    <p>As you know, now we have to make tha layout for every item in the RecyclerView <span class="inline-file">item_task.xml</span> in the <span class="inline-folder">layout</span> dir, this layout could looks like this</p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">item_task.xml</span>
+        </section>
+    <section class="marco-b">
+               
+    <section><pre><code class="language-kotlin">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_margin="10dp">
+
+    &lt;CheckBox
+        android:id="@+id/cbIsDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp" />
+
+    &lt;TextView
+        android:id="@+id/tvTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        tools:text="Test"/>
+
+&lt;/LinearLayout></code></pre>
+    </section>
+    </section>
     
 
     <p>Before seeing how the MainActivity implementation would be, let's see how to implement the Database with Room.</p>
@@ -1694,12 +1731,12 @@ For that, the version is used, together with a migration file that tells the pro
 
 <p>We must also make sure that our class extends from <span class="r-word">RoomDatabase()</span>  which is a class that we have thanks to importing the <span class="negrita">Room</span> 
     dependency in our gradle.
-Finally, it has a single function that refers to the <span class="negrita">Damage</span>  that we have created previously, if we had more Dao's then we would have to 
+Finally, it has a single function that refers to the <span class="negrita">DAO</span>  that we have created previously, if we had more Dao's then we would have to 
 implement them there as well.</p>
 
 
 <p>The database instance will need three parameters, the <span class="negrita">context</span>  (<span class="d-word">this</span> ), <span class="negrita">the class</span> 
-     of our database (<span class="d-word">TasksDatabase</span> ) and the <span class="negrita">yam</span>  that we will give it, in this case we have called it "<span class="d-word">trasks-db</span>".</p>
+     of our database (<span class="d-word">TasksDatabase</span> ) and the <span class="negrita">database name</span>  that we will give it, in this case we have called it "<span class="d-word">trasks-db</span>".</p>
 
 
 
@@ -1710,11 +1747,11 @@ implement them there as well.</p>
 These methods will give responses to the requests of the View (MainActivity + RecyclerView)</p>
 
 
-<section><pre><code class="language-kotlin">val taskListLD:MutableLiveData<MutableList<TaskEntity>> = MutableLiveData()
-    val updateTaskLD:MutableLiveData<TaskEntity?> = MutableLiveData()
-    val deleteTaskLD:MutableLiveData<Int> = MutableLiveData()
-    val insertTaskLD:MutableLiveData<TaskEntity> = MutableLiveData()</code></pre>
-</section><br><br>
+<section><pre><code class="language-kotlin">val taskListLD:MutableLiveData&lt;MutableList&lt;TaskEntity>> = MutableLiveData()
+val updateTaskLD:MutableLiveData&lt;TaskEntity?> = MutableLiveData()
+val deleteTaskLD:MutableLiveData&lt;Int> = MutableLiveData()
+val insertTaskLD:MutableLiveData&lt;TaskEntity> = MutableLiveData()</code></pre>
+</section><br>
 
 <p>We have also added a <span class="d-word">myDao</span>  variable which is what we will use to implement the <span class="negrita">Dao pattern</span>. 
     In this case, we initialize it directly to the <span class="d-word">TaskDao</span>  of our <span class="d-word">TaskDatabase</span> .</p>
@@ -1728,13 +1765,13 @@ These methods will give responses to the requests of the View (MainActivity + Re
 
 
 <section><pre><code class="language-kotlin">fun getAllTasks(){
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
             taskListLD.postValue(myDao.getAllTasks())
         }
 
     }
     fun add(task:String) {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val id = myDao.addTask(TaskEntity(name = task))
             val recoveryTask = myDao.getTaskById(id)
             insertTaskLD.postValue(recoveryTask)
@@ -1742,7 +1779,7 @@ These methods will give responses to the requests of the View (MainActivity + Re
     }
 
     fun delete(task:TaskEntity){
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
 
             val res = myDao.deleteTask(task)
             if(res>0)
@@ -1756,7 +1793,7 @@ These methods will give responses to the requests of the View (MainActivity + Re
     }
 
     fun update(task:TaskEntity){
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
             task.isDone = !task.isDone
             val res = myDao.updateTask(task)
             if(res>0)
@@ -1765,7 +1802,9 @@ These methods will give responses to the requests of the View (MainActivity + Re
                 updateTaskLD.postValue(null)
         }
     }</code></pre>
-</section><br><br>
+</section><br>
+
+<p>Note that the scope of the coroutine is viewModelScope since we are inside the viewmodel, so the coroutine will live, at most, as long as the viewmodel is alive.</p>
 
 <p>The TaskViewModel class would look like this:</p>
 
@@ -1795,13 +1834,13 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
 
 
     fun getAllTasks(){
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
             taskListLD.postValue(myDao.getAllTasks())
         }
 
     }
     fun add(task:String) {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val id = myDao.addTask(TaskEntity(name = task))
             val recoveryTask = myDao.getTaskById(id)
             insertTaskLD.postValue(recoveryTask)
@@ -1809,7 +1848,7 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun delete(task:TaskEntity){
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
 
             val res = myDao.deleteTask(task)
             if(res>0)
@@ -1823,7 +1862,7 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun update(task:TaskEntity){
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
             task.isDone = !task.isDone
             val res = myDao.updateTask(task)
             if(res>0)
@@ -2037,11 +2076,11 @@ class MainActivity : AppCompatActivity() {
 
 <br><br>
 
-You can get all the code in the following <a class="link" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/TaskNotesRoom"> Github </a> link  
+You can get all the code in the following <a class="link" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD7/RoomExample"> Github </a> link  
 
 <br><br>
 
-<div class="tarea">
+<div class="oculto tarea">
     <span class="negrita">PRACTICE:</span> <br>
     
 You have to implement a shopping list as indicated in the following <a class="enlace" target="_blank" href="./UD7/Practise5_ShoppingList.pdf">document</a> . Remember that you have to use the Room library to save the elements, in addition to using the Dao and MVVM patterns
