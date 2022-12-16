@@ -467,7 +467,7 @@ context.openFileOutput(filename, Context.MODE_PRIVATE).use {
 <p class="sub-section">View list of files</p>
 <p>You can get an array containing the names of all files within the <span class="r-word">filesDir</span>  directory by calling <span class="r-word">fileList()</span>, 
     as shown in the following code snippet:</p>
-<section><pre><code class="language-kotlin">var files: Array<String>=context.fileList()</code></pre>
+<section><pre><code class="language-kotlin">var files: Array&lt;String>=context.fileList()</code></pre>
 </section><br><br>
 
 <p class="sub-section">Create nested directories</p>
@@ -570,7 +570,7 @@ fun isExternalStorageReadable(): Boolean {
 <p>To access the different locations, call <span class="negrita">ContextCompat.getExternalFilesDirs()</span> . As shown in the code snippet, the first element 
     in the returned array is considered the primary external storage volume. Use this volume unless it's full or unavailable.</p>
 
-<section><pre><code class="language-kotlin">val externalStorageVolumes: Array<out File> =
+<section><pre><code class="language-kotlin">val externalStorageVolumes: Array&lt;out File> =
         ContextCompat.getExternalFilesDirs(applicationContext, null)
 val primaryExternalStorage=externalStorageVolumes[0]</code></pre>
 </section><br>
