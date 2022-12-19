@@ -2078,14 +2078,28 @@ class MainActivity : AppCompatActivity() {
 
 <br><br>
 
-You can get all the code in the following <a class="link" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD7/RoomExample"> Github </a> link  
+<p>You can get all the code in the following <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD7/RoomExample"> Github </a> link  </p>
 
-<br><br>
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD7/RoomExampleLiveData">Here</a> you have the same example using <span class="negrita">Clean Architecture</span> 
+     and <span class="d-word">LiveData</span>  directly from <span class="d-word">ROOM</span> </p>
 
-<div class="oculto tarea">
+<section><pre><code class="language-kotlin">@Query("SELECT * FROM task_entity")
+fun getAllTasks(): LiveData&lt;List&lt;TaskEntity>></code></pre>
+</section><br>
+
+<p>And <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD7/RoomExampleFlows">here</a>  you have the same example using 
+    <span class="negrita">Clean Architecture</span>  and <span class="d-word">Flows</span>  directly from <span class="d-word">ROOM</span> </p>
+
+<section><pre><code class="language-kotlin">@Query("SELECT * FROM task_entity")
+    fun getAllTasks(): Flow&lt;List&lt;TaskEntity>></code></pre>
+    </section><br>
+
+
+
+<div class="tarea">
     <span class="negrita">PRACTICE:</span> <br>
     
-You have to implement a shopping list as indicated in the following <a class="enlace" target="_blank" href="./UD7/Practise5_ShoppingList.pdf">document</a> . Remember that you have to use the Room library to save the elements, in addition to using the Dao and MVVM patterns
+You have to implement a shopping list as indicated in the following <a class="enlace" name="practice5" target="_blank" href="./UD7/Practice5_Shopping_List.pdf">document</a> . Remember that you have to use the Room library to save the elements, in addition to using the Dao and MVVM patterns, LiveData and Coroutines
 
 </div>
     </section><!-- End section -->
