@@ -4,22 +4,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UD7.- Accessing Internet</title>
+    <title>UD8.- Accessing Internet</title>
     <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/prism.css">
     <link rel="stylesheet" href="../styles/styles.css">
     <script src="../script/script.js"></script>
 </head>
-<body>
-    <h1>UD7.- Accessing Internet</h1>
+<body  class="line-numbers">
+    <div class="logos">
+        <div></div><div></div><div></div>
+    </div>
+    <h1>UD8.- Accessing Internet</h1>
     <div class="main-menu">
-        <a href="#sIntroduction">Introduction</a><a 
+        <div class="fila">
+            <a href="#sIntroduction">Introduction</a><a 
            href="#sGlide">Glide</a><a 
-           href="#sHttpUrlConnection">HttpUrlConnection</a><a 
+           href="#sHttpUrlConnection">HttpUrlConnection</a>
+        </div>
+        <div class="fila">
+            <a 
            href="#sRetrofit">Retrofit2</a><a
            href="#sVolley">Volley</a><a
-           href="#sPractice6">Practice6</a><a
-           href="#sWebgraphy">Webgraphy</a>
+           href="#sPractice6">Practice 6</a>
+        </div>
+        <div class="fila">
+            <a
+            href="#sWebgraphy">Webgraphy</a>
+            <a href="" class="relleno"></a><a href="" class="relleno"></a>
+        </div>
+        
     </div>
 
     <!--*********************************************************Introduction***********************************************************-->
@@ -87,10 +100,10 @@
     <p>If it is still difficult for you to read these files at the beginning, we can make use of a multitude of websites that simplify the way of seeing it, such as 
         <a class="enlace" target="_blank" href="https://jsoneditoronline.org/">JsonEditOnline</a>.</p>
     
-    <figure><img src="UD7/images/ud7-2021-12-13-12-00-34.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD8/images/ud8-2021-12-13-12-00-34.png" /><br><figcaption></figcaption></figure>
     <br>
 
-    <figure><img src="UD7/images/ud7-2021-12-13-12-01-13.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD8/images/ud8-2021-12-13-12-01-13.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p>There are many free APIs (some of them with registration) that we can make use of. It is enough to do a search in Google and find almost the theme that we are looking for.</p>
@@ -124,7 +137,7 @@
            <section class="marco-b">
                    <section><pre><code class="language-kotlin">dependencies {
 ..............
-  implementation 'com.github.bumptech.glide:glide:4.12.0'
+  implementation 'com.github.bumptech.glide:glide:4.14.2'
 }</code></pre>
                    </section>
            </section>
@@ -152,7 +165,7 @@
 
     <p>To show a basic example of using Glide, we will implement a simple application that will load images when the button is pressed.</p>
     
-    <figure><img src="./UD7/images/UD7-Glide_app.gif" /><br><figcaption>Using glide</figcaption></figure>
+    <figure><img src="./UD8/images/UD8-Glide_app.gif" /><br><figcaption>Using glide</figcaption></figure>
     <br>
 
     Every time we press the button, the application will make a call via Glide to the page <a class="enlace" target="_blank" href="https://picsum.photos/">https://picsum.photos/</a> .
@@ -160,11 +173,21 @@
 
     <p>So what we will do is add the listener to the button:</p>
     
-    <section><pre><code class="language-kotlin">override fun onViewCreated (view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated (view, savedInstanceState)
+    <section><pre><code class="language-kotlin">const val ERROR_IMAGE = "https://bigseoagency.com/wp-content/uploads/2018/03/error-404-foxplay.png"
 
-    binding.btnChangeImage.setOnClickListener {
-        changeImage ()
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(ActivityMainBinding.inflate(layoutInflater).also { binding = it }.root)
+
+        binding.btnChangeImage.setOnClickListener {
+            changeImage ()
+        }
+
     }
 }</code></pre>
     </section><br><br>
@@ -174,9 +197,9 @@
 
     <section><pre><code class="language-kotlin">private fun changeImage() {
     val url = "https://picsum.photos/200?rand=" + Random.nextInt()
-    Glide.with(requireContext())
+    Glide.with(context)
         .load(url) //Image that we want to show
-        .placeholder(getDrawable(requireContext(),R.drawable.loading)) //Image that will be displayed while loading the image to be displayed
+        .placeholder(getDrawable(context,R.drawable.loading)) //Image that will be displayed while loading the image to be displayed
         .error(ERROR_IMAGE) //Image that we will show if something goes wrong. it is typically use a drawable image stored
         .into(binding.ivImage) //ImageView that will contain the image
 }</code></pre>
@@ -202,7 +225,7 @@
         <span class="r-word">centerInside()</span> , <span class="r-word">fitCenter()</span>. I encourage you to try them.</p>
 
     
-    <p><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/GlideExample">Here</a> you can see the complete example</p>
+    <p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD8/GlideExample">Here</a> you can see the complete example</p>
 
     <h3>Picasso</h3>
 
@@ -273,9 +296,9 @@
         // optional default is GET
         requestMethod = "POST"
 
-        val wr = OutputStreamWriter(getOutputStream());
-        wr.write(reqParam);
-        wr.flush();
+        val wr = OutputStreamWriter(getOutputStream())
+        wr.write(reqParam)
+        wr.flush()
 
         println("URL : $url")
         println("Response Code : $responseCode")
@@ -294,6 +317,8 @@
 }</code></pre>
     </section><br><br>
 
+    <p>You can see the code of the running example in this github <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD8/HttpURLConnection">link</a> </p>
+
 
     <p>In the following sections we will use two of the most popular libraries to perform <span class="negrita">Http</span>  requests on <span class="negrita">Android</span>. 
         These are <span class="r-word">Retrofit</span>  and <span class="r-word">Volley</span> .</p>
@@ -301,8 +326,8 @@
     <p>However, there are other libraries for Kotlin (not just Android) that facilitate and speed up the development of Http calls. <br>
     Here you have an example of two good libraries:
     <ul>
-        <li><a class="enlace" target="_blank" href="https://ktor.io/docs/client.html">Ktor</a> </li>
-        <li><a class="enlace" target="_blank" href="https://www.http4k.org/">http4k</a> </li>
+        <li><a class="enlace" target="_blank" href="https://ktor.io/docs/create-client.html">Ktor</a> </li>
+        <li><a class="enlace" target="_blank" href="https://www.http4k.org">http4k</a> </li>
     </ul>
 </p>
     
@@ -393,14 +418,14 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //PICASSO
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.squareup.picasso:picasso:2.8'
 
     //RETROFIT
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 
     //Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1")
+    //implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1")
 }</code></pre>
             </section>
     </section> <br><br>
@@ -478,7 +503,7 @@ dependencies {
     <p>We are going to create a new class, in the same directory where we have the <span class="r-word">MainActivity</span>  we right click <span class="d-word">New> Kotlin File / Class</span> 
          and we will call it <span class="d-word">DogsResponse</span>. Before push enter make sure to select <span class="cursiva">Class</span> </p>
     
-    <figure><img src="UD7/images/ud7-2021-12-15-16-41-50.png" /><br><figcaption>Creating our Data Class</figcaption></figure>
+    <figure><img src="UD8/images/ud8-2021-12-15-16-41-50.png" /><br><figcaption>Creating our Data Class</figcaption></figure>
     <br>
     
     <p>To convert our class into a data class we will only have to add the reserved word <span class="negrita">data</span>  before <span class="negrita">class</span> 
@@ -535,7 +560,7 @@ data class DogResponse(
     
     <p>Before continuing I want you to remember the url of the API that we are going to use.</p>
     
-    <section><pre><code class="language-kotlin">https://dog.ceo/api/breed/hound/images</code></pre>
+    <section><pre><code class="language-kotlin">1</code></pre>
     </section><br><br>
 
     <p>If we look a little more we can see that there are <span class="subrayado">two parts</span>  in this url, the first would be <span class="negrita">https://dog.ceo/api/breed/</span> 
@@ -839,7 +864,7 @@ adapter.notifyDataSetChanged()</code></pre>
 <p>App looks something like this:</p>
 
 
-<figure><img src="./UD7/images/UD7-Retrofit_app.gif" /><br><figcaption></figcaption></figure>
+<figure><img src="./UD8/images/UD8-Retrofit_app.gif" /><br><figcaption></figcaption></figure>
 <br>
 
         </section><!-- End section -->
