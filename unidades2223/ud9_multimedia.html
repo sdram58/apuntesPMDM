@@ -323,12 +323,14 @@
     
     <p class="sub-section">Play video from url</p>
 
-    Lo primero que debemos hacer es darle permisos de Internet a la aplicación en el AndroidManifest.xml 
+    <p>The first thing we need to do is give the app Internet permissions in the <span class="inline-file">AndroidManifest.xml</span></p>
+     
 
     <section><pre><code class="language-xml">&lt;uses-permission android:name="android.permission.INTERNET" /></code></pre>
     </section><br>
 
-    Añadimos la vista VideoView a nuestro layout
+    <p>We add the VideoView view to our layout</p>
+    
     <section><pre><code class="language-xml">&lt;VideoView
     android:id="@+id/vvVideo"
     android:layout_width="match_parent"
@@ -337,13 +339,83 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" /></code></pre>
+    </section><br>
+
+    <p>We're going to playback the video allocated <a class="enlace" target="_blank" href="https://sdram58.github.io/apuntesPMDM/unidades2223/UD9/assets/bola_drac.mp4">here</a>.</p>
+
+    <section><pre><code class="language-kotlin">val urlVideo = "https://sdram58.github.io/apuntesPMDM/unidades2223/UD9/assets/bola_drac.mp4"</code></pre>
+    </section><br>
+
+    <p>We parse the url</p>
+    
+    <section><pre><code class="language-kotlin">val uri: Uri = Uri.parse(urlVideo)</code></pre>
+    </section><br>
+
+    <p>We add the URIs to the VideoView.</p>
+    
+    <section><pre><code class="language-kotlin">setVideoURI(uri)</code></pre>
+    </section><br>
+
+    <p>We use the properties and methods that we have used before, looking like that</p>
+    
+    .
+    <section><pre><code class="language-kotlin">with(binding.vvVideo){
+    setMediaController(MediaController(this@MainActivity))
+    setVideoURI(uri)
+    requestFocus()
+    setOnPreparedListener { mp ->
+        mp.isLooping = true
+        binding.vvVideo.start()
+    }
+}</code></pre>
     </section><br><br>
 
-    <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/VideoFromInternet">Play video from Internet URL</a> 
+    <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD9/VideoFromInternet">Play video from Internet URL</a> 
     
     <p class="sub-section">Play youtube video</p>
 
-    <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/YotubeWithoutAPI">Play youtube video without its API</a> 
+    <p>In this section we will use a little workaround to get videos from youtube without using its own API. For it:</p>
+    
+
+    <p>We will use <span class="r-word">WebView</span>  views, which will be the elements of the RecyclerView.</p>
+    
+
+    <section><pre><code class="language-xml">&lt;WebView
+    android:id="@+id/wvVideo"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"></WebView></code></pre>
+</section><br>
+
+    <p>Let's create the html iframe that will contain embedded youtube videos.</p>
+    
+
+    <section><pre><code class="language-kotlin">%lt;iframe width="100%" height="100%" src="https://www.youtube.com/embed/eWEF1Zrmdow" frameborder="0" allowfullscreen>&lt;/iframe></code></pre>
+    </section><br>
+
+    <p>We create several and add them to the adapter list of the RecyclerView</p>
+    
+
+    <section><pre><code class="language-kotlin"> youtubeVideos.add(YouTubeVideos("&lt;iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/eWEF1Zrmdow\" frameborder=\"0\" allowfullscreen>&lt;/iframe>"))
+youtubeVideos.add(YouTubeVideos("&lt;iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/KyJ71G2UxTQ\" frameborder=\"0\" allowfullscreen>&lt;/iframe>"))
+youtubeVideos.add(YouTubeVideos("&lt;iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/y8Rr39jKFKU\" frameborder=\"0\" allowfullscreen>&lt;/iframe>"))
+youtubeVideos.add(YouTubeVideos("&lt;iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/8Hg1tqIwIfI\" frameborder=\"0\" allowfullscreen>&lt;/iframe>"))
+youtubeVideos.add(YouTubeVideos("&lt;iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/uhQ7mh_o_cM\" frameborder=\"0\" allowfullscreen>&lt;/iframe>"))</code></pre>
+    </section><br>
+
+<p>We add them in adapter to each WebView</p>
+
+<section><pre><code class="language-kotlin">holder.videoWeb.loadData(youtubeVideoList?.get(position)?.videoUrl?:"", "text/html" , "utf-8" )</code></pre>
+</section><br>
+
+Debemos también habilitar javascript de cada webview y añadir quien será el cliente.
+
+<section><pre><code class="language-kotlin">videoWeb.getSettings().setJavaScriptEnabled(true)
+videoWeb.setWebChromeClient(object : WebChromeClient() {})</code></pre>
+</section><br><br>
+
+
+
+    <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD9/YotubeWithoutAPI">Play youtube video without its API</a> 
      <br><br><br>
     
     <div class="tarea">Exercise. Create an audio or video player with your own buttons. You will have to play 4 or 5 audios / videos. We will have a button to:
