@@ -408,7 +408,7 @@ class MainActivity : AppCompatActivity() {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
@@ -423,9 +423,7 @@ dependencies {
     //RETROFIT
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
-
-    //Coroutines
-    //implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1")
+    
 }</code></pre>
             </section>
     </section> <br><br>
@@ -525,7 +523,7 @@ dependencies {
     <section class="marco-b">
         <section><pre><code class="language-kotlin">import com.google.gson.annotations.SerializedName
 
-data class DogResponse(
+data class DogsResponse(
     @SerializedName("status") var status: String,
     @SerializedName("message") var images: List&lt;String>)</code></pre>
         </section><br><br>
@@ -549,7 +547,16 @@ data class DogResponse(
     @GET
     suspend fun getDogsByBreeds (@Url url: String): Response&lt;DogsResponse>
 }</code></pre>
-    </section><br><br>
+    </section><br>
+
+    <section class="marco-t warn">
+        <span class="icono warning"> </span> Make sure you do the correct import of the <span class="r-word">Response</span>  class, in this case it belongs to the
+        <span class="r-word">Retrofit2</span> package
+        </section>
+    <section class="marco-b">
+            
+    </section>
+    
 
     <p>Let's analyze the previous code, to begin with we are going to select the type of call that it is (remember at the beginning of the chapter that there were four types
          GET, POST, PUT and DELETE). In this case it will be of type <span class="negrita">GET</span>  and for this we use the tag <span class="r-word">@GET</span>.</p>
@@ -560,11 +567,12 @@ data class DogResponse(
     
     <p>Before continuing I want you to remember the url of the API that we are going to use.</p>
     
-    <section><pre><code class="language-kotlin">1</code></pre>
+    <section><pre><code class="language-kotlin">https://dog.ceo/api/breed/hound/images</code></pre>
     </section><br><br>
 
-    <p>If we look a little more we can see that there are <span class="subrayado">two parts</span>  in this url, the first would be <span class="negrita">https://dog.ceo/api/breed/</span> 
-         which is the <span class="negrita">immutable part</span> , that is, this part will always be fixed. Then you have to pass dog breed followed by /images, so we could say that <span class="negrita">hound/images</span> 
+    <p>If we look a little more, we can see that there are <span class="subrayado">two parts</span>  in this url, the first would be <span class="negrita">https://dog.ceo/api/breed/</span> 
+         which is the <span class="negrita">immutable part</span> , that is, this part will always be fixed. Then you have to pass <span class="negrita">dog breed</span> 
+         followed by <span class="negrita">/images</span>, so we could say that <span class="negrita">hound/images</span> 
           is the <span class="negrita">mutable part</span> . Why am I emphasizing this? Well, because the second part of the url "breed_of_dog/images" we will have to pass as a parameter, 
           and even if it is a <span class="cursiva">String</span>  we have to put the tag <span class="cursiva">@Url</span>  at the beginning.</p>
 
@@ -680,7 +688,7 @@ private fun getRetrofit ():Retrofit {
      <section><pre><code class="language-kotlin">class DogViewHolder(view: View):RecyclerView.ViewHolder(view) {
     private val binding = ItemDogBinding.bind(view)
     fun bind (image:String) {
-        Picasso.get().Load(image).into(binding.ivDog)
+        Picasso.get().load(image).into(binding.ivDog)
     }
 }</code></pre>
      </section><br><br>
@@ -744,7 +752,7 @@ private val dogImages = mutableListOf&lt;String>()</code></pre>
 <p>When we stopped we had to complete the <span class="cursiva">if()</span> , since if everything had gone well we had to update the images and if there was something wrong we had to show a Toast. 
     But if you think about it, both actions are visual, that is, they are interface and that means that you have to do it in the main thread and we are inside a coroutine. 
     In order to get out of that coroutine we will use <span class="negrita">runOnUiThread{}</span>  and everything between those braces will be done in the <span class="negrita">main thread</span> 
-     even if it is inside a coroutine.</p>
+     even if it is inside a coroutine. Of course, we can also have called a <span class="cursiva">suspend function</span>  with the <span class="cursiva">Main Context</span> </p>
 
 <p>We add the previous code and put the if inside it.</p>
 
@@ -859,7 +867,7 @@ adapter.notifyDataSetChanged()</code></pre>
 <section><pre><code class="language-kotlin">binding.svDogs.setOnQueryTextListener(this)</code></pre>
 </section><br><br>
 
-<p><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/RetrofitSample">Here</a>  you can see the content of the entire application</p>
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD8/Retrofit2Example">Here</a>  you can see the content of the entire application</p>
 
 <p>App looks something like this:</p>
 

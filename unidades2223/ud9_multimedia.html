@@ -4,21 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multimedia</title>
+    <title>UD9 Multimedia</title>
     <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/prism.css">
     <link rel="stylesheet" href="../styles/styles.css">
     <script src="../script/script.js"></script>
 </head>
 <body class="line-numbers">
-    <h1>Multimedia</h1>
+    <h1>UD9 Multimedia</h1>
     <div class="main-menu">
-        <a href="#sAudioVideo">Audio and Video</a><a
+        <div class="fila">
+            <a href="#sAudioVideo">Audio and Video</a><a
            href="#sCamera">Camera</a><a 
-           href="#sAnimations">Animations</a><a
-           href="#sMaps">Maps</a><a
-           href="#sPractice">Practice</a><a
-           href="#sWebgraphy">Webgraphy</a>
+           href="#sAnimations">Animations</a>
+        </div>
+        <div class="fila"><a
+            href="#sMaps">Maps</a><a
+            href="#sPractice">Practice</a><a
+            href="#sWebgraphy">Webgraphy</a></div>
+        
     </div>
 
     
@@ -67,23 +71,273 @@
     <p>In this section we're going to implement a basic audio player with 3 buttons <span class="cursiva">play</span> , <span class="cursiva">pause</span>  and <span class="cursiva">stop</span> 
          like you can see in the image below.</p>
         
-    <figure><img src="UD8/images/ud8-2022-01-10-12-40-23.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-10-12-40-23.png" /><br><figcaption></figcaption></figure>
     <br>
 
-    <p>The first thing we are going to do is create the raw directory inside res and save the audio or audios that we want to play. 
-        In our case you can download it from  <a class="enlace" target="_blank" href="./UD8/assets/bola_drac_intro.mp3">here</a> .</p>
+    <p>The first thing we are going to do is create the <span class="inline-folder">raw</span> directory inside <span class="inline-folder">res</span> and save the audio or audios that we want to play. 
+        In our case you can download it from  <a class="enlace" target="_blank" href="./UD9/assets/bola_drac_intro.mp3">here</a>.</p>
     
 
-    <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/MediaPlayerExample">MediaPlayer Example</a> 
+    <p>To continue, we create the layout of the <span class="d-word">MainActivity</span> </p>
+    
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">activity_main.xml</span>
+        </section>
+    <section class="marco-b">
+<section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:padding="16dp">
+
+    &lt;TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MediaPlayer Demo"
+        android:layout_centerHorizontal="true"
+        android:textSize="32sp"
+        android:textColor="@android:color/holo_blue_dark"/>
+
+    &lt;LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerVertical="true">
+
+        &lt;Button
+            android:id="@+id/btnPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="Play"
+            android:onClick="music"/>
+
+        &lt;Button
+            android:id="@+id/btnPause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="Pause"
+            android:onClick="music"/>
+
+        &lt;Button
+            android:id="@+id/btnStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="Stop"
+            android:onClick="music"/>
+    &lt;/LinearLayout>
+&lt;/RelativeLayout></code></pre>
+                </section>          
+    </section>
+    <p>As you can see, in this case the three buttons already have the <span class="d-word">onClick</span> event attached.</p>
+      
+    <section><pre><code class="language-xml">android:onClick="music"</code></pre>
+    </section><br><br>
+
+    <p>We create a variable of type <span class="r-word">MediaPlayer</span> that will be the one that controls the audio.</p>
+    
+    <section><pre><code class="language-kotlin">var mediaPlayer: MediaPlayer</code></pre>
+    </section><br>
+
+    <p>With this object we can:</p>
+    <ul>
+        <li>Create it and link it with an audio file.
+            <section><pre><code class="language-kotlin">mediaPlayer = MediaPlayer.create(this, R.raw.ball_drac_intro)</code></pre>
+            </section>
+        </li>
+    
+    
+   
+    <li>Start playback
+    
+        <section><pre><code class="language-kotlin">mediaPlayer.start()</code></pre>
+        </section></li>
+    <li>Pause playback
+    
+        <section><pre><code class="language-kotlin">mediaPlayer.pause()</code></pre>
+        </section></li>
+    <li>Stop playback
+    
+        <section><pre><code class="language-kotlin">mediaPlayer.stop()</code></pre>
+        </section></li>
+    <li>Release the media to free memory
+    
+        <section><pre><code class="language-kotlin">mediaPlayer.release()</code></pre>
+        </section></li>
+
+    <li>We can add event handlers to it, for example for what to do when the playback ends.
+    
+
+        <section><pre><code class="language-kotlin">//Register OnCompletionListener that calls a user supplied callback method onCompletion() when
+    // looping mode was set to false to indicate playback is completed.
+    mediaPlayer.setOnCompletionListener { // Here, call a method to release the MediaPlayer object and to set it to null.
+        stopMusic() //or start again...
+    }</code></pre>
+        </section></li>
+
+    </ul>
+    <br><br>
+
+    <p>I encourage you to investigate the other options of the MediaPlayer class.</p> <br>
+    
+    
+    <p>The complete code of MainActivity could look like this.</p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">MainActivity</span>
+        </section>
+    <section class="marco-b">
+        <section><pre><code class="language-kotlin">class MainActivity : AppCompatActivity() {
+    lateinit var binding: ActivityMainBinding
+    var mediaPlayer: MediaPlayer? =null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(ActivityMainBinding.inflate(layoutInflater).also { binding = it }.root)
+    }
+
+    fun music(view: View) {
+        when (view.id) {
+            R.id.btnPlay -> {
+                // Check if mediaPlayer is null. If true, we'll instantiate the MediaPlayer object
+                if (mediaPlayer == null) {
+                    mediaPlayer = MediaPlayer.create(this, R.raw.drac_ball_intro)
+                }
+                // Then, register OnCompletionListener that calls a user supplied callback method onCompletion() when
+                // looping mode was set to false to indicate playback is completed.
+                mediaPlayer?.setOnCompletionListener { // Here, call a method to release the MediaPlayer object and to set it to null.
+                    stopMusic()
+                }
+                // Next, call start() method on mediaPlayer to start playing the music.
+
+                mediaPlayer?.start()
+            }
+            R.id.btnPause -> if (mediaPlayer != null) {
+                // Here, call pause() method on mediaPlayer to pause the music.
+                mediaPlayer?.pause()
+            }
+            R.id.btnStop -> if (mediaPlayer != null) {
+                // Here, call stop() method on mediaPlayer to stop the music.
+                mediaPlayer?.stop()
+                // Call stopMusic() method
+                stopMusic()
+            }
+        }
+    }
+
+    private fun stopMusic() {
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
+    // Call stopMusic() in onStop() overridden method as well.
+    override fun onStop() {
+        super.onStop()
+        stopMusic()
+    }
+}</code></pre>
+            </section>     
+    </section>
+    
+    <section class="marco-t warn">
+        <span class="icono warning"> </span> We can use coroutines to emit in the background
+        </section>
+    <section class="marco-b">
+            
+    </section>
+    
+    
+    <br><br>
+    
+
+    <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD9/MediaPlayerExample">MediaPlayer Example</a> 
     
     
     <h3>Video</h3>
 
+    <p>Please review the following commented examples. Implement them, modify them, change them, ultimately play with them.</p>
+    
     <p class="sub-section">Play video from local resource</p>
 
-    <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/VideoFromLocal">Play video from Raw resource</a> 
+    <p>We need a <span class="r-word">VideoView</span>  view</p>
+    
+
+    <section><pre><code class="language-xml">&lt;VideoView
+    android:id="@+id/vvVideo"
+    android:layout_width="match_parent"
+    android:layout_height="400dp" /></code></pre>
+    </section><br>
+
+    <p>We create a MediaController object to show us the play, pause, time, etc. buttons.</p>
+     
+    <section><pre><code class="language-kotlin">val mediaController:MediaController by lazy { MediaController(this) }</code></pre>
+    </section><br><br>
+
+    <p>We create the path to the local video </p>
+    
+    <section><pre><code class="language-kotlin">val path = "android.resource://" + packageName + "/" + R.raw.drac_ball</code></pre>
+    </section><br>
+
+    <p>We anchor the controller to the view where they will be displayed.</p>
+        
+    <section><pre><code class="language-kotlin">mediaController.setAnchorView(binding.vvVideo)</code></pre>
+    </section><br>
+
+    <p>We bind the controller to the view</p>
+    
+    <section><pre><code class="language-kotlin">binding.vvVideo.setMediaController(mediaController)</code></pre>
+    </section><br>
+
+    <p>We indicate to the VideoView the path where the resource is located</p>
+    
+    <section><pre><code class="language-kotlin">binding.vvVideo.setVideoPath(path)</code></pre>
+    </section><br>
+
+    <p>
+        We indicate what to do when you are ready. This returns an object of type <span class="r-word">MediaPlayer</span> . 
+        In this case, we tell it that activate the looping and that it starts as soon as it is ready.
+    </p>
+    
+    <section><pre><code class="language-kotlin">binding.vvVideo.setOnPreparedListener { mp ->
+    mp.isLooping = true
+    mp.start()
+}</code></pre>
+    </section><br>
+
+    <p>We can also start reproducing the video from the VideoView methods.</p>
+    
+    <section><pre><code class="language-kotlin">binding.vvVideo.start()</code></pre>
+    </section><br><br>
+
+
+    <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD9/VideoFromLocal">Play video from Raw resource</a> 
     
     <p class="sub-section">Play video from url</p>
+
+    Lo primero que debemos hacer es darle permisos de Internet a la aplicación en el AndroidManifest.xml 
+
+    <section><pre><code class="language-xml">&lt;uses-permission android:name="android.permission.INTERNET" /></code></pre>
+    </section><br>
+
+    Añadimos la vista VideoView a nuestro layout
+    <section><pre><code class="language-xml">&lt;VideoView
+    android:id="@+id/vvVideo"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" /></code></pre>
+    </section><br><br>
 
     <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/VideoFromInternet">Play video from Internet URL</a> 
     
@@ -94,14 +348,14 @@
     
     <div class="tarea">Exercise. Create an audio or video player with your own buttons. You will have to play 4 or 5 audios / videos. We will have a button to:
         <ul>
-            <li>Play/Pause: Iniciará o pausará la reproducción según el caso.</li>
-            <li>Stop: Para la reproducción</li>
+            <li>Play/Pause: It will start or pause the playback according to the case.</li>
+            <li>Stop: for reproduction</li>
             <li>Track ahead: Go to the next track if there is more</li>
             <li>Track back: Move to the previous track if it is not the first</li>
             <li>Fast Forward: Fast forward 10 seconds, if it remains more than 10sec, the track</li>
             <li>Fast Rewind: Rewinds 10 seconds, if there are less than 10 seconds it goes to the beginning.</li>
             <li>Seek bar: It will indicate at all moment, the progress of the audio or video being 0 the begining of the track and max its duration. 
-                If we change seek bar's poition the audio or video will seek to this position.</li>
+                If we change seek bar's position the audio or video will seek to this position.</li>
         </ul>
     </div> 
     </section><!-- End section -->
@@ -127,7 +381,7 @@
         <h3>Scanning barcodes</h3>
         
         <p>You can use this QR for testing you app</p>
-        <figure><img src="UD8/images/ud8-2022-01-11-01-52-03.png" /><br><figcaption></figcaption></figure>
+        <figure><img src="UD9/images/ud9-2022-01-11-01-52-03.png" /><br><figcaption></figcaption></figure>
         <br>
         
         <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/QR_Reader">QR and barcode reader</a> 
@@ -189,7 +443,7 @@ implementation "com.airbnb.android:lottie:$lottieVersion"</code></pre>
         The first is not recommended by even Google, as can be seen in the following screenshot.</p>
     
 
-    <figure><img src="UD8/images/ud8-2022-01-12-11-25-17.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-12-11-25-17.png" /><br><figcaption></figcaption></figure>
     <br>
         
     <p>We will then use the second, for which we will require <span class="negrita">Google Play Services</span>, 
@@ -200,7 +454,7 @@ implementation "com.airbnb.android:lottie:$lottieVersion"</code></pre>
     
 
     
-    <figure><img src="UD8/images/ud8-2022-01-11-20-46-33.png" /><br><figcaption>Adding Google Play services</figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-11-20-46-33.png" /><br><figcaption>Adding Google Play services</figcaption></figure>
     <br>
 
 
@@ -213,14 +467,14 @@ implementation "com.airbnb.android:lottie:$lottieVersion"</code></pre>
         The reason for using this version is that, from this API, to use the localization and other services, 
         it is required to ask for permissions at runtime, we will see what this means later</p>
 
-    <figure><img src="UD8/images/ud8-2022-01-12-11-31-54.png" /><br><figcaption>Google Maps Activity</figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-12-11-31-54.png" /><br><figcaption>Google Maps Activity</figcaption></figure>
     <br>
     
     <p>If we now run the App on our real device, although the App opens, we will see that it does not work and that the screen <span class="subrayado">appears blank</span>. 
         This is because we have not yet incorporated an <span class="d-word">API KEY</span> to the project to use the <span class="negrita">Google Maps API</span>.
         This, we must insert it into a <span class="negrita">meta-data tag</span>  in the <span class="inline-file">AndroidManifest.xml</span>, as seen below, it is already prepared.</p>
     
-    <figure><img src="UD8/images/ud8-2022-01-12-11-34-03.png" /><br><figcaption>AndroidManifest.xml meta-data </figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-12-11-34-03.png" /><br><figcaption>AndroidManifest.xml meta-data </figcaption></figure>
     <br>
     
 
@@ -277,7 +531,7 @@ implementation "com.airbnb.android:lottie:$lottieVersion"</code></pre>
     <p>In <span class="negrita">line 7</span>  we see the URL that will help us to create the <span class="d-word">API KEY</span> </p>
     <p>In <span class="negrita">line 8</span>   our <span class="negrita">package name</span> </p>
     <p>In <span class="negrita">line 15</span>  our <span class="d-word">debug KEY SHA-1</span>. Remember that yoy can also can obtain your SHA-1 key executing <span class="d-word">gradle signingReport</span>  in the gradle option on the rigth side of Android Studio
-    <figure><img src="UD8/images/UD8_getting_sha1.gif" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD9/images/UD8_getting_sha1.gif" /><br><figcaption></figcaption></figure>
     <br>
     
     you can also use AS terminal with the same command. 
@@ -290,7 +544,7 @@ implementation "com.airbnb.android:lottie:$lottieVersion"</code></pre>
     
 
 
-    <figure><img src="UD8/images/ud8-2022-01-18-11-23-19.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-18-11-23-19.png" /><br><figcaption></figcaption></figure>
     <br>
     
     </p>
@@ -298,58 +552,58 @@ implementation "com.airbnb.android:lottie:$lottieVersion"</code></pre>
 
     <p>Through the URL we access the console where we will have to <span class="cursiva">select</span>  or <span class="cursiva">create a new</span>  project. In our case it will be to create a one.</p>
     
-    <figure><img src="UD8/images/ud8-2022-01-11-23-10-56.png" /><br><figcaption>Google console</figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-11-23-10-56.png" /><br><figcaption>Google console</figcaption></figure>
     <br>
 
     <p>We select a project.</p>    
     
-    <figure><img src="UD8/images/ud8-2022-01-11-23-11-34.png" /><br><figcaption>project</figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-11-23-11-34.png" /><br><figcaption>project</figcaption></figure>
     <br>
 
     <p>We choose the name of the project and the organization if we want to have it organized. And we give you to create the project</p>    
     
-    <figure><img src="UD8/images/ud8-2022-01-11-23-13-22.png" /><br><figcaption>Project Name</figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-11-23-13-22.png" /><br><figcaption>Project Name</figcaption></figure>
     <br>
 
     <p>Once the project is created, we select it and click the next button</p>
     
     
-    <figure><img src="UD8/images/ud8-2022-01-11-23-14-11.png" /><br><figcaption>Select created project</figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-11-23-14-11.png" /><br><figcaption>Select created project</figcaption></figure>
     <br>
     
     <p>Click on the enable button</p>    
-    <figure><img src="UD8/images/ud8-2022-01-11-23-14-54.png" /><br><figcaption>Enable Maps SDK</figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-11-23-14-54.png" /><br><figcaption>Enable Maps SDK</figcaption></figure>
     <br>
 
     <p>Click on the button to create the API KEY</p>
     
-    <figure><img src="UD8/images/ud8-2022-01-11-23-15-54.png" /><br><figcaption>Create API KEY</figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-11-23-15-54.png" /><br><figcaption>Create API KEY</figcaption></figure>
     <br>
 
     <p>We already have the API Key created, now we must copy it into the <span class="negrita">google_maps_key</span>  field of the String tag in 
         <span class="inline-file">google_maps_api.xml</span> file</p>
     
         
-    <figure><img src="UD8/images/ud8-2022-01-11-23-17-44.png" /><br><figcaption>API KEY created</figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-11-23-17-44.png" /><br><figcaption>API KEY created</figcaption></figure>
     <br>
 
-    <figure><img src="UD8/images/ud8-2022-01-12-11-57-11.png" /><br><figcaption>Set your API Key here</figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-12-11-57-11.png" /><br><figcaption>Set your API Key here</figcaption></figure>
     <br>
     
     <p>If we run now it should work.(it does not require locating activated at the moment)</p>    
 
-    <figure><img src="UD8/images/ud8-2022-01-12-11-58-01.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-12-11-58-01.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p><span class="negrita">NOTE</span> : When using location it is recommended to use real devices. 
         However, if simulation is required in Android Emulator, you must have a machine created with an image that has <span class="negrita">Google APIs.</span> </p>
     
-    <figure><img src="UD8/images/ud8-2022-01-12-12-00-59.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-12-12-00-59.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p>On the other hand, the locations are generated manually, in the extended controls</p>
     
-    <figure><img src="UD8/images/ud8-2022-01-12-12-02-57.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-12-12-02-57.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p>We are now going to review two aspects of the generated template, first the functionality, and secondly the initially generated code</p>
@@ -358,13 +612,13 @@ implementation "com.airbnb.android:lottie:$lottieVersion"</code></pre>
         If we click on the marker, it will show us a title with the name of the place(in this case “Marker in Sydney”), 
         and two icons will appear at the bottom right, the first is for GO(navigate to the place), and the second to show location</p>
 
-    <figure><img src="UD8/images/ud8-2022-01-12-12-04-59.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-12-12-04-59.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p>If we double-click on any place on the map repeatedly it is enlarged, using the events of two fingers we can also enlarge, reduce or rotate, 
         in the latter case, an icon in the form of a compass appears on the upper left, which we allows to return the center to the north.</p>
     
-    <figure><img src="UD8/images/ud8-2022-01-12-12-05-52.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-12-12-05-52.png" /><br><figcaption></figcaption></figure>
     <br>
     
 
@@ -471,7 +725,7 @@ Would it cost you a lot to modify it, so that the LatLng object is called torren
     <li>Other options: <span class="negrita">.snippet</span>("Inhabitants: 180000") // Add extra information below the title</li>
 </ul>
 </p>
-<figure><img src="UD8/images/ud8-2022-01-12-12-50-25.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2022-01-12-12-50-25.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p>It is possible to show or hide the title / snippet by code(without pressing the Marker), it would be like this.</p>
@@ -522,7 +776,7 @@ marker.tag // I could read it later in onInfoWindowClick()</code></pre>
 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.busmarker)) // Image from resource</code></pre>
 </section><br><br>
     
-<figure><img src="UD8/images/ud8-2022-01-12-13-01-08.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2022-01-12-13-01-08.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p>Example with everything so far:</p>
@@ -578,7 +832,7 @@ Toast.makeText(this, "Current Zoom:" + mMap.getCameraPosition().Zoom, Toast.LENG
         Toast.LENGTH_SHORT).show()
 }</code></pre>
 </section><br><br>
-<figure><img src="UD8/images/ud8-2022-01-12-13-13-38.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2022-01-12-13-13-38.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p>.setMapType() => .setMapType(cteTipodemapa) //Configures map type <br>
@@ -586,19 +840,19 @@ Example:</p>
 <section><pre><code class="language-kotlin">mMap.mapType = GoogleMap.MAP_TYPE_HYBRID</code></pre>
 </section><br><br>
 <p>Type can be:</p>
-<figure><img src="UD8/images/ud8-2022-01-12-13-15-40.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2022-01-12-13-15-40.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p><span class="d-word">.getUiSettings () </span> => Allows you to configure various graphic aspects.
     <ul><li>Example 1: <span class = "bold"> mMap.getUiSettings (). SetZoomControlsEnabled (true) </span>
         Activates +/- controls at the bottom right that allow you to zoom in or out. Having touch gestures seems trivial, but it could be ideal for people with reduced mobility. </p>
-        <figure><img src="UD8/images/ud8-2022-01-12-13-18-17.png" /><br><figcaption></figcaption></figure>
+        <figure><img src="UD9/images/ud9-2022-01-12-13-18-17.png" /><br><figcaption></figcaption></figure>
         <br>
         
     </li>
     <li>Example 2: <span class="negrita">mMap.getUiSettings().SetCompassEnabled (false)</span>
         Uninhibit the compass icon that appeared when rotating the map.
-    <figure><img src="UD8/images/ud8-2022-01-12-13-18-35.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-12-13-18-35.png" /><br><figcaption></figcaption></figure>
     <br>
     </li>
     <li>Example 3: <span class = "negrita"> mMap.getUiSettings (). SetRotateGesturesEnabled (false) </span>
@@ -608,7 +862,7 @@ Example:</p>
     <li>
         Example 4: <span class="negrita">mMap.getUiSettings().SetMapToolbarEnabled(false)</span>
 Uninhibit the icons on the bottom right that appeared when pressing a marker.
-        <figure><img src="UD8/images/ud8-2022-01-12-13-18-59.png" /><br><figcaption></figcaption></figure>
+        <figure><img src="UD9/images/ud9-2022-01-12-13-18-59.png" /><br><figcaption></figcaption></figure>
         <br>
         
     </li>
@@ -646,24 +900,24 @@ mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))</code>
     We need to create the raw folder, from <span class="negrita">App> New> Android resource directory</span> </p>
 
 <p>We copy inside <span class="negrita">style_json.json</span> , it can be moved directly by dragging (then open the json with its own
-Android Studio to study it). <a class="enlace" target="_blank" href="./UD8/assets/style_json.json">style_json.json</a> </p>
+Android Studio to study it). <a class="enlace" target="_blank" href="./UD9/assets/style_json.json">style_json.json</a> </p>
 
 <p>To use it. <br>
     <section><pre><code class="language-kotlin">mMap.setMapStyle (MapStyleOptions.loadRawResourceStyle (this, R.raw.style_json))</code></pre>
     </section><br><br>
 </p>
 
-<figure><img src="UD8/images/ud8-2022-01-12-13-26-37.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2022-01-12-13-26-37.png" /><br><figcaption></figcaption></figure>
 <br>
 <p><span class="negrita">Url</span> : json styles reference <br> <a class="enlace" target="_blank" href="https://developers.google.com/maps/documentation/android-sdk/style-reference">https://developers.google.com/maps/documentation/android-sdk/style-reference</a> </p>
 
 <p><span class="negrita">Url</span> : Easy to use online style editor (allows you to create a style and export it directly to JSON). Note that there is a new tool for editing styles <br>
 <a class="enlace" target="_blank" href="https://mapstyle.withgoogle.com/">https://mapstyle.withgoogle.com/</a> </p>
 
-<figure><img src="UD8/images/ud8-2022-01-12-13-27-08.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2022-01-12-13-27-08.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<figure><img src="UD8/images/ud8-2022-01-12-13-30-32.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2022-01-12-13-30-32.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p><span class="d-word">.setMyLocationEnabled(true)</span> => Activates an icon in the upper right part, which when pressed allows the Google Maps API to find us, 
@@ -671,7 +925,7 @@ Android Studio to study it). <a class="enlace" target="_blank" href="./UD8/asset
     But it has a problem, this option requires making sure before its execution, and unequivocally, that our App has the location permission activated, 
     otherwise, the App will do what is known as a “crash”.</p>
 
-<figure><img src="UD8/images/ud8-2022-01-12-13-31-33.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2022-01-12-13-31-33.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p><span class="negrita">NOTE</span>: We are not referring to having the location active on the device, we are talking about express permission to the specific 
@@ -766,14 +1020,14 @@ And to stop the location updates: <br>
 
 <p>The result is (note that at the moment we only show the coordinates through a <span class="negrita">Toast</span>,once we have them, we can place a marker with our photo in it, place the camera there, send them to another App through an Intent, save them, etc. ):</p>
 
-<figure><img src="UD8/images/ud8-2022-01-12-14-54-21.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2022-01-12-14-54-21.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p><span class="negrita">NOTE</span> : Because the precise location consumes a lot, a balanced consumption has been chosen, 
     this is configurable through <span class="negrita">LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY</span> , the available ones are:</p>
-<figure><img src="UD8/images/ud8-2022-01-12-14-57-01.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2022-01-12-14-57-01.png" /><br><figcaption></figcaption></figure>
 <br>
-<figure><img src="UD8/images/ud8-2022-01-12-14-57-12.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2022-01-12-14-57-12.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p><span class="negrita">NOTE</span> : In addition to latitude and longitude, through location we can also obtain other data, such as altitude, speed and precision.</p>
@@ -791,7 +1045,7 @@ Toast.makeText(this@MapsActivity,
 
 <p>The above code provides us with the distance between our current location and other location.</p>
 
-<figure><img src="UD8/images/ud8-2022-01-12-15-02-42.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2022-01-12-15-02-42.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p><span class="negrita">Url</span> : Location and context overview <br>
@@ -942,7 +1196,7 @@ data class Location(
 
 <p>When testing we see how the title of the second item is displayed:</p>
 
-<figure><img src="UD8/images/ud8-2022-01-12-15-11-00.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2022-01-12-15-11-00.png" /><br><figcaption></figcaption></figure>
 <br>
 <p>Normally we will need to receive the entire List&lt;> first, and then go through it, it could be like this:</p>
 <section><pre><code class="language-kotlin">var titles:String = ""
@@ -978,7 +1232,7 @@ Therefore, we should already have the myMaps project created, when opening it yo
      To get its exact latitudes/longitudes you can use the google Maps URL as shown below, it appears when you click on its marker. Look for places not too far away 
      so they look good on the map.</p>
 
-    <figure><img src="UD8/images/ud8-2022-01-12-15-17-31.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD9/images/ud9-2022-01-12-15-17-31.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p>The intended functionality will be the following:</p>
@@ -993,14 +1247,14 @@ Therefore, we should already have the myMaps project created, when opening it yo
                 Regarding the style of the map, you have to edit one through the online style editor website
                  <a class="enlace" target="_blank" href="https://mapstyle.withgoogle.com/">https://mapstyle.withgoogle.com/</a> ,
                   do it to your liking, import it into the project in JSON and make that style be displayed, mine has stayed like this (focused on the city of Valencia):
-                  <figure><img src="UD8/images/ud8-2022-01-12-15-20-25.png" /><br><figcaption></figcaption></figure>
+                  <figure><img src="UD9/images/ud9-2022-01-12-15-20-25.png" /><br><figcaption></figcaption></figure>
                   <br>
                   
             </li>
             <li>
                 Put an icon consistent with the functionality of the App, and different from mine. 
                 Overwrite the ic_launcher with the Image Asset, but don't delete the ic_launcher_round. Create it in legacy only and landscape mode. Mine is the following:
-                <figure><img src="UD8/images/ud8-2022-01-12-15-24-41.png" /><br><figcaption></figcaption></figure>
+                <figure><img src="UD9/images/ud9-2022-01-12-15-24-41.png" /><br><figcaption></figcaption></figure>
                 <br>
                 
             </li>
@@ -1008,7 +1262,7 @@ Therefore, we should already have the myMaps project created, when opening it yo
             <li>
                 Configure the side menu as in the following image, it will have the same icon as the background photo. 
                 But beware, in the icon leave the ic_launcher_round with the image of the Android robot's face
-                <figure><img src="UD8/images/ud8-2022-01-12-15-24-59.png" /><br><figcaption></figcaption></figure>
+                <figure><img src="UD9/images/ud9-2022-01-12-15-24-59.png" /><br><figcaption></figcaption></figure>
                 <br>
                 Notice that there are two separators, the three main options (see) are primary, that's why they look darker, 
                 and the rest are secondary. Remember that in your practice it will not be hotels and cities
@@ -1028,7 +1282,7 @@ Therefore, we should already have the myMaps project created, when opening it yo
                    and then in <span class="cursiva negrita">onLocationResult</span>, go putting in that vector the markers, 
                    <span class="cursiva negrita">mPosiciones.add(mMap.addMarker(xxx)</span> , and then move the camera.
 
-                <figure><img src="UD8/images/ud8-2022-01-12-15-34-12.png" /><br><figcaption></figcaption></figure> <br>              
+                <figure><img src="UD9/images/ud9-2022-01-12-15-34-12.png" /><br><figcaption></figcaption></figure> <br>              
                 Expand the code so that, if we click on the title of our marker, our current coordinates appear in an AlertDialog, 
                 configured as in the following image. Note that for this, you have to first use <span class="negrita">setOnInfoWindowClickListener</span>  to activate the event, 
                 and then <span class="negrita">onInfoWindowClick</span>  to manage it, the coordinates are obtained from the reference to the marker object itself, 
@@ -1036,7 +1290,7 @@ Therefore, we should already have the myMaps project created, when opening it yo
                 so you should use <span class="negrita">getPosition</span>  in the marker. You must send the information in the form of String to
                  the <span class="negrita">AlertDialog</span> . The <span class="negrita">CANCEL</span>  button does not have to appear
 
-                 <figure><img src="UD8/images/ud8-2022-01-12-15-36-22.png" /><br><figcaption></figcaption></figure>
+                 <figure><img src="UD9/images/ud9-2022-01-12-15-36-22.png" /><br><figcaption></figcaption></figure>
                  
                  
             </li> <br>
@@ -1072,7 +1326,7 @@ Therefore, we should already have the myMaps project created, when opening it yo
                  to add one icon or another, depending on the label. 
                   <br> <br>
                   We see the result (we can see the title and the snippet added to the markers)
-                  <figure><img src="UD8/images/ud8-2022-01-12-15-47-02.png" /><br><figcaption></figcaption></figure>
+                  <figure><img src="UD9/images/ud9-2022-01-12-15-47-02.png" /><br><figcaption></figcaption></figure>
                   <br>
                   
             </li>
@@ -1097,9 +1351,9 @@ Therefore, we should already have the myMaps project created, when opening it yo
 ....</code></pre>
                 </section><br><br>
 
-                <figure><img src="UD8/images/ud8-2022-01-12-15-52-17.png" /><br><figcaption></figcaption></figure>
+                <figure><img src="UD9/images/ud9-2022-01-12-15-52-17.png" /><br><figcaption></figcaption></figure>
                 <br>
-                <figure><img src="UD8/images/ud8-2022-01-12-15-52-29.png" /><br><figcaption></figcaption></figure>
+                <figure><img src="UD9/images/ud9-2022-01-12-15-52-29.png" /><br><figcaption></figcaption></figure>
                 <br>
                 
             </li>
