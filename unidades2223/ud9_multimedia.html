@@ -446,7 +446,7 @@ videoWeb.setWebChromeClient(object : WebChromeClient() {})</code></pre>
         
         <p>Follow the next <a class="enlace" target="_blank" href="https://developer.android.com/codelabs/camerax-getting-started#0">link</a>  and do and study the codelab about camerax</p>
 
-        <p><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/CameraXExample">Here</a> you have the complete code</p>
+        <p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD9/CameraX">Here</a> you have the complete code</p>
         
             
 
@@ -457,8 +457,172 @@ videoWeb.setWebChromeClient(object : WebChromeClient() {})</code></pre>
         <p>You can use this QR for testing you app</p>
         <figure><img src="UD9/images/ud9-2022-01-11-01-52-03.png" /><br><figcaption></figcaption></figure>
         <br>
+
+        <p><a class="enlace" target="_blank" href="https://github.com/yuriy-budiyev/code-scanner">Here </a>  is the dependency documentation on github</p>
+
+        <p>To begin we will add the dependency in our <span class="inline-file">module:app</span> of the gradle.</p>
         
-        <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/QR_Reader">QR and barcode reader</a> 
+        <section><pre><code class="language-kotlin">implementation 'com.github.yuriy-budiyev:code-scanner:2.3.2'</code></pre>
+        </section><br>
+
+        <p>In order for it to find this dependency, we must tell it where to look for it. To do this, in the <span class="inline-file">settings.graddle</span>
+             file we add the repository.</p>
+        
+
+        <section><pre><code class="language-kotlin">dependencyResolutionManagement {
+
+    repositories {
+        .......
+        //Add this line
+        maven { url 'https://jitpack.io' }
+    }
+}</code></pre>
+        </section><br>
+
+        <p>Since we are going to use the camera we must give it permissions to use it in the <span class="inline-file">AndroidManifest.xml</span></p>
+        
+
+        <section><pre><code class="language-xml">&lt;uses-permission android:name="android.permission.CAMERA"/></code></pre>
+        </section><br>
+
+        <p>Don't forget about dynamic permissions on API >= 23</p>
+        
+        <p>To do this we check if we have CAMERA permission.</p>
+        
+        <section><pre><code class="language-kotlin">val permission: Int = ContextCompat.checkSelfPermission(this,
+    android.Manifest.permission.CAMERA)
+
+if(permission != PackageManager.PERMISSION_GRANTED){
+    requestPermission()
+}</code></pre>
+        </section><br>
+
+        <p>As we can see, if we do not have camera permission, we ask for it.</p>
+        
+
+    <section><pre><code class="language-kotlin">ActivityCompat.requestPermissions(this,
+    arrayOf(android.Manifest.permission.CAMERA),
+    CAMERA_REQUEST_CODE)</code></pre>
+    </section><br>
+
+    <p>We check if the user has granted us the permissions. If not, we show user a message. To do this we override <span class="r-word">onRequestPermissionsResult</span> </p>
+    
+
+    <section><pre><code class="language-kotlin">override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode){
+            CAMERA_REQUEST_CODE ->{
+                if(grantResults.isEmpty() || grantResults[0]!= PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(this, "You need the camera permission if you want use the app", Toast.LENGTH_SHORT).show()
+                }else{
+                    //Success
+                }
+            }
+        }
+    }</code></pre>
+    </section><br>
+
+    <section class="marco-t warn">
+        <span class="icono warning"> </span> Note that we must create the permission request code.
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-kotlin">private const val CAMERA_REQUEST_CODE = 110</code></pre>
+            </section>
+    </section>
+
+    <p>We add in the layout the view of type <span class="d-word">com.budiyev.android.codescanner.CodeScannerView</span> where we want.</p>
+    
+    <section><pre><code class="language-xml">&lt;com.budiyev.android.codescanner.CodeScannerView
+        android:id="@+id/scanner_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/></code></pre>
+    </section><br>
+
+    <p>We can also use the following properties:</p>    
+
+<section><pre><code class="language-kotlin">maskColor
+maskVisible
+frameColor
+frameVisible
+frameThickness
+frameCornersSize
+frameCornersRadius
+frameCornersCapRounded
+frameAspectRatioWidth
+frameAspectRatioHeight
+frameSize
+frameVerticalBias
+autoFocusButtonColor
+autoFocusButtonVisible
+autoFocusButtonPaddingHorizontal
+autoFocusButtonPaddingVertical
+autoFocusButtonOnIcon
+autoFocusButtonOffIcon
+autoFocusButtonPosition
+flashButtonColor
+flashButtonVisible
+flashButtonPaddingHorizontal
+flashButtonPaddingVertical
+flashButtonOnIcon
+flashButtonOffIcon
+flashButtonPosition</code></pre>
+</section><br>
+        
+    
+<p>We create an instance of <span class="r-word">CodeScannerView</span> </p>
+
+
+<section><pre><code class="language-kotlin">codeScanner = CodeScanner(this, scannerView)</code></pre>
+</section><br>
+
+<p>We can initialize some of the above parameters by code. In this case we put them to their default values. Find out more about these options.</p>
+
+<section><pre><code class="language-kotlin">// Parameters (default values)
+codeScanner.camera = CodeScanner.CAMERA_BACK // or CAMERA_FRONT or specific camera id
+codeScanner.formats = CodeScanner.ALL_FORMATS // list of type BarcodeFormat,
+// ex. listOf(BarcodeFormat.QR_CODE)
+codeScanner.autoFocusMode = AutoFocusMode.SAFE // or CONTINUOUS
+codeScanner.scanMode = ScanMode.SINGLE // or CONTINUOUS or PREVIEW
+codeScanner.isAutoFocusEnabled = true // Whether to enable auto focus or not
+codeScanner.isFlashEnabled = false // Whether to enable flash or not</code></pre>
+</section><br>
+
+<p>We create the callbacks that will get the decoding text or an error if the camera could not be opened.</p>
+
+
+<section><pre><code class="language-kotlin">// Callbacks
+codeScanner.decodeCallback = DecodeCallback {
+    runOnUiThread {
+        Toast.makeText(this, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
+    }
+}
+codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
+    runOnUiThread {
+        Toast.makeText(this, "Camera initialization error: ${it.message}",
+            Toast.LENGTH_LONG).show()
+    }
+}</code></pre>
+</section><br>
+
+<p>We initialize the preview.</p>
+
+<section><pre><code class="language-kotlin">scannerView.setOnClickListener {
+            codeScanner.startPreview()
+        }</code></pre>
+</section><br>
+
+        
+
+
+        
+        
+        
+        <p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD9/QR_Reader">QR and barcode reader example</a> </p>
+        
         
         </section><!-- End section -->
 
@@ -478,16 +642,30 @@ videoWeb.setWebChromeClient(object : WebChromeClient() {})</code></pre>
 
     <h3>Lottie animations</h3>
 
-    <p>Lottie is an open source animation file format that’s tiny, high quality, interactive, and can be manipulated at runtime.</p>
+    <p>Lottie is an open source animation file format that's tiny, high quality, interactive, and can be manipulated at runtime.</p>
     
     <p>You have to get a <span class="negrita">json</span> file and save it into <span class="inline-folder">asset dir</span>  or <span class="inline-folder">raw dir</span> <br>
-    You can get it from <a class="enlace" target="_blank" href="https://lottiefiles.com/">https://lottiefiles.com/</a>. Here there are a lot of animations and many of them are free. </p>
+    You can get it from <a class="enlace" target="_blank" href="https://lottiefiles.com/">https://lottiefiles.com/</a>. Here there are a lot of animations and many of them are free. 
+
+    You can choose the one you want to download the <span class="negrita">json file</span> and leave it in the <span class="inline-folder">assets</span> or <span class="inline-folder">raw</span> directory of your application
+</p>
     
 
     <p>You need to add Lottie's dependency in the <span class="inline-file">gradle:app</span></p>
-    <section><pre><code class="language-kotlin">def lottieVersion = "4.2.2"
+    <section><pre><code class="language-kotlin">def lottieVersion = "5.2.0"
 implementation "com.airbnb.android:lottie:$lottieVersion"</code></pre>
-    </section><br><br>
+    </section><br>
+
+    <section class="marco-t inf">
+        <span class="icono info"> </span> You can see the latest version <a class="enlace" target="_blank" href="https://github.com/airbnb/lottie-android">here</a> 
+        </section>
+    <section class="marco-b">
+            
+    </section>
+
+    <p>Open the app, run it, read the comments and try to play it.</p>
+    
+        
 
     <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/LottieAnimations">Lottie Animations Example</a> 
     
@@ -495,10 +673,10 @@ implementation "com.airbnb.android:lottie:$lottieVersion"</code></pre>
     
     <br><br><br>
     <div class="tarea">
-        Exercise: Starting from the cameraX application, save it to disk and when taking a new photo and if everything goes well, a Lottie animation will be played.
-        Find and choose an animation of your liking. <br>
-        In addition, the your Activity will have a button and an ImageView. By clicking on the button you will see the photo saved in the ImageView.
-        To achieve this you can use <span class="negrita">BitmapDescriptory.decodeFile (pathName: String)</span> with returns you a Bitmap that you can use in the ImageView
+        <span class="negrita">Exercise</span>: Starting from the cameraX application, save it to disk and when taking a new photo and if everything goes well, a Lottie animation will be played.
+        Find and choose an animation that you want. <br>
+        In addition, in your Activity will have a button and an ImageView. By clicking on the button you will see the photo saved in the ImageView.
+        To achieve this you can use <span class="negrita">BitmapDescriptory.decodeFile(pathName: String)</span> with returns you a Bitmap that you can use in the ImageView
     </div>
     
     </section><!-- End section -->
@@ -513,7 +691,7 @@ implementation "com.airbnb.android:lottie:$lottieVersion"</code></pre>
     <p>We are going to start working with the <span class="r-word">Google Maps API</span>, we can work with this API without using real-time location, 
         for example, for an App that simply shows places of interest, we could even calculate the distance between them, makes it clear that what is “beautiful” is App's that 
         integrate said location. Consequently, first of all, comment that there are basically two ways to acquire location data, 
-        the <span class="negrita">obsolete</span>  but <span class="d-word">simple android.location</span>, and the <span class="d-word">Google Location Services API</span>. 
+        the <span class="negrita">obsolete</span>  but <span class="negrita">simple</span>  <span class="d-word"> android.location</span>, and the <span class="d-word">Google Location Services API</span>. 
         The first is not recommended by even Google, as can be seen in the following screenshot.</p>
     
 
