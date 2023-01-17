@@ -14,13 +14,21 @@
     <h1>Firebase</h1>
 
     <div class="main-menu">
-        <a href="#sIntroduction">Introduction</a><a
+        <div class="fila">
+            <a href="#sIntroduction">Introduction</a><a
         href="#sLogin">Authentication</a><a
-        href="#sPush">Push Notifications</a><a
-        href="#sCrashlytics">Crashlytics</a><a            
+        href="#sPush">Push Notifications</a>
+        </div>
+        <div class="fila">
+            <a href="#sCrashlytics">Crashlytics</a><a            
         href="#sRemoteConfig">Firebase Remote Config</a><a            
-           href="#sDataBase">Database</a><a
-           href="#sWebgraphy">Webgraphy</a>
+           href="#sDataBase">Database</a>
+        </div>
+        <div class="fila">
+            <a href="#sWebgraphy">Webgraphy</a>
+            <a href="" class="relleno"></a><a href="" class="relleno"></a>
+        </div>
+        
     </div>
 
     <!--*********************************************************Introduction***********************************************************-->
@@ -35,7 +43,7 @@
         
     <p>This platform will provide us with different services, such as authentication (Google, Twitter, Apple, own users), analytics services, cloud storage, hosting, databases, etc.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-24-00-47-46.png" /><br><figcaption>Google firebase services</figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-00-47-46.png" /><br><figcaption>Google firebase services</figcaption></figure>
     <br>
 
     <p>One of the main features of firebase is that initially everything is free, that is, we can use its services for free up to a certain limit.
@@ -43,7 +51,7 @@
     You can get more information about their prices <a class="enlace" target="_blank" href="https://firebase.google.com/pricing">here</a>  </p>
     
     
-    <figure><img src="UD10/images/ud10-2022-01-24-00-50-23.png" /><br><figcaption>Pricing</figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-00-50-23.png" /><br><figcaption>Pricing</figcaption></figure>
     <br>
     <p>For example, we can see that in Authentication we can log 10,000 users per month. At the time we spend we will pay for use.</p>
       
@@ -51,63 +59,63 @@
     <p>On the other hand, in the documentation section (<a class="enlace" target="_blank" href="https://firebase.google.com/docs/guides">https://firebase.google.com/docs/guides</a> ), 
         which is very good, it gives us information on how to integrate it into the various platforms.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-24-00-58-20.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-00-58-20.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p class="sub-section">Accessing firebase</p>
 
     <p>To access firebase, we will have to log in with our <span class="negrita">Google</span>  account and press go to console.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-24-01-01-12.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-01-01-12.png" /><br><figcaption></figcaption></figure>
     <br>
     <p>We can also access directly from <a class="enlace" target="_blank" href="https://console.firebase.google.com/">https://console.firebase.google.com/</a> </p>
     
 
     <p>Once we are in the console we will create a new project and follow each of the instructions.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-24-01-02-55.png" /><br><figcaption>Add project</figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-01-02-55.png" /><br><figcaption>Add project</figcaption></figure>
     <br>
     <p>We give it a name to identify the project, if it already exists it will create another name for us. We press continue.</p>
     
 
-    <figure><img src="UD10/images/ud10-2022-01-24-01-04-08.png" /><br><figcaption>Project Name</figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-01-04-08.png" /><br><figcaption>Project Name</figcaption></figure>
     <br>
     
     <p>On the next screen it tells us if we want to leave the analytics enabled, in this case we say yes and press continue.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-24-01-06-24.png" /><br><figcaption>Enable Google Analytics</figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-01-06-24.png" /><br><figcaption>Enable Google Analytics</figcaption></figure>
     <br>
     <p>On the next screen we create a new account for analytics. And we fill in the location data and accept the terms and conditions. Click on create project.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-24-01-08-56.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-01-08-56.png" /><br><figcaption></figcaption></figure>
     <br>
 
-    <figure><img src="UD10/images/ud10-2022-01-24-01-10-59.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-01-10-59.png" /><br><figcaption></figcaption></figure>
     <br>
     <p>We wait a few seconds for our project to be created.</p>    
-    <figure><img src="UD10/images/ud10-2022-01-24-01-11-15.png" /><br><figcaption>Creating Project</figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-01-11-15.png" /><br><figcaption>Creating Project</figcaption></figure>
     <br>
     
     <p>We press continue and we already have our console ready.
     On the left, the main services that we will have to integrate one by one and on the central screen, our project.</p>
-    <figure><img src="UD10/images/ud10-2022-01-24-01-13-03.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-01-13-03.png" /><br><figcaption></figcaption></figure>
     <br>
     
     
     <h3>Integrating Firebase to our App</h3>
     <p>Once our App is created in Android Studio, we go to the Firebase console and add an app to get started. In our case it will be an Android App.</p>
-    <figure><img src="UD10/images/ud10-2022-01-24-01-26-54.png" /><br><figcaption>Adding App to Firebase</figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-01-26-54.png" /><br><figcaption>Adding App to Firebase</figcaption></figure>
     <br>
     
     <p>As we did with the maps, it asks us for the name of the package, and the <span class="negrita">SHA-1</span>. 
         Remember that you can get the SHA-1 using the <span class="negrita">signingReport</span>  gradle command</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-24-01-29-59.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-01-29-59.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p>We fill in the data and press to register the App.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-24-01-31-01.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-01-31-01.png" /><br><figcaption></figcaption></figure>
     <br>
 
     <p>This will generate a JSON file called <span class="inline-file">google-services.json</span> that we must save inside the <span class="inline-folder">apps</span>
@@ -115,14 +123,14 @@
     To make it better switch Android Studio to Project view. Once saved, click next.</p>
     
 
-    <figure><img src="UD10/images/ud10-2022-01-24-01-32-40.png" /><br><figcaption>google-services.json</figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-01-32-40.png" /><br><figcaption>google-services.json</figcaption></figure>
     <br>
 
     <p>The next step is to add the firebase dependencies. For this we follow the instructions.
     First in the project gradle we check that we have the <span class="negrita">Google()</span>  repository and add the dependency to google services.</p>
     
 
-    <figure><img src="UD10/images/ud10-2022-01-24-01-37-09.png" /><br><figcaption>Build.gradle Project</figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-01-37-09.png" /><br><figcaption>Build.gradle Project</figcaption></figure>
     <br>
     <p>Now it's the turn of the App module's <span class="inline-file">gradle:app</span> file.
     We must add the google services plugin and the dependencies that it indicates</p>
@@ -197,12 +205,12 @@ analytics.logEvent("InitScreen",bundle)</code></pre>
 
     <p>Within the authentication service we can see that we have different options to do it, such as username and password, Google, Facebook, etc...</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-24-02-06-41.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-02-06-41.png" /><br><figcaption></figcaption></figure>
     <br>
 
     <p>If we click on the Users tab, we will see the users that we have authenticated, in this case it is empty.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-24-02-11-08.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-02-11-08.png" /><br><figcaption></figcaption></figure>
     <br>
     
 
@@ -216,12 +224,12 @@ analytics.logEvent("InitScreen",bundle)</code></pre>
     <h3>Email and Password</h3>
     <p>The first thing we will do is enable the email and password provider.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-24-02-13-08.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-02-13-08.png" /><br><figcaption></figcaption></figure>
     <br>
     <p>We enable it. We see that we also have the option to enable email without a password. We press save and we already have the creator provider.</p>
     
 
-    <figure><img src="UD10/images/ud10-2022-01-24-02-15-25.png" /><br><figcaption>Email/Password provider</figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-02-15-25.png" /><br><figcaption>Email/Password provider</figcaption></figure>
     <br>
     <p>So far everything we have to do in the firebase console. Let's go back to Android Studio.</p>
     
@@ -265,7 +273,7 @@ implementation 'com.google.firebase:firebase-auth'</code></pre>
 
     <p>Once registered, we can see the access from the firebase console.</p>
      
-    <figure><img src="UD10/images/ud10-2022-01-24-11-16-43.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-11-16-43.png" /><br><figcaption></figcaption></figure>
     <br>
     <p>As you can see we can also add users from the firebase console.</p>
     
@@ -294,13 +302,13 @@ implementation 'com.google.firebase:firebase-auth'</code></pre>
     <h3>Using Google Account</h3>  
     <p>To add access with Google, we must add a new <span class="d-word">Authentication Provider</span>. Remember for this provider we require the <span class="negrita">SHA-1</span>  in until now it was optional.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-24-11-42-03.png" /><br><figcaption>/figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-11-42-03.png" /><br><figcaption>/figcaption></figure>
     <br>
     
 
     <p>Click on Google and give it to enable and save. Additionally we can add a support email.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-24-03-11-48.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-03-11-48.png" /><br><figcaption></figcaption></figure>
     <br>
     <p>So far everything we have to do in the firebase console. Let's go back to Android Studio.</p>
     
@@ -404,13 +412,13 @@ launcher.launch(signInIntent)</code></pre>
 <p>Now we can access with a Google account.</p>
 
 
-<figure><img src="UD10/images/UD10_google_login.gif" /><br><figcaption></figcaption></figure>
+<figure><img src="UD11/images/UD11_google_login.gif" /><br><figcaption></figcaption></figure>
 <br>
 
 <p>We check that we have accessed with that account in the firebase console.</p>
 
 
-    <figure><img src="UD10/images/ud10-2022-01-24-11-17-23.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-11-17-23.png" /><br><figcaption></figcaption></figure>
     <br>
     
 
@@ -458,39 +466,39 @@ implementation 'com.google.firebase:firebase-messaging'</code></pre>
         <p>First we access the firebase console and access the notification service called <span class="negrita">Cloud Messaging</span> .</p>
         
 
-        <figure><img src="UD10/images/ud10-2022-01-24-12-32-30.png" /><br><figcaption>Cloud Messaging</figcaption></figure>
+        <figure><img src="UD11/images/ud11-2022-01-24-12-32-30.png" /><br><figcaption>Cloud Messaging</figcaption></figure>
         <br>
         
         <p>Click on send the first message.</p>        
 
-        <figure><img src="UD10/images/ud10-2022-01-24-12-46-25.png" /><br><figcaption>Send your first message</figcaption></figure>
+        <figure><img src="UD11/images/ud11-2022-01-24-12-46-25.png" /><br><figcaption>Send your first message</figcaption></figure>
         <br>
 
         <p>We fill in the fields of the notification. We press next.</p>
         
 
-        <figure><img src="UD10/images/ud10-2022-01-24-12-48-42.png" /><br><figcaption></figcaption></figure>
+        <figure><img src="UD11/images/ud11-2022-01-24-12-48-42.png" /><br><figcaption></figcaption></figure>
         <br>
         
         <p>In point two we select the recipients. We select all android devices that have the application.</p>
         
-        <figure><img src="UD10/images/ud10-2022-01-24-12-51-07.png" /><br><figcaption></figcaption></figure>
+        <figure><img src="UD11/images/ud11-2022-01-24-12-51-07.png" /><br><figcaption></figcaption></figure>
         <br>
 
         <p>The next point is to indicate when we want to send it, we choose now, but we could program a date and time.</p>
         
-        <figure><img src="UD10/images/ud10-2022-01-24-12-52-16.png" /><br><figcaption></figcaption></figure>
+        <figure><img src="UD11/images/ud11-2022-01-24-12-52-16.png" /><br><figcaption></figcaption></figure>
         <br>
 
         <p>We leave conversion events and other options blank as these are more advanced settings. Finally we can save or review it. <br>
         We click on review. <br>
         And click on Publish.</p>
         
-        <figure><img src="UD10/images/ud10-2022-01-24-12-53-56.png" /><br><figcaption></figcaption></figure><br>
+        <figure><img src="UD11/images/ud11-2022-01-24-12-53-56.png" /><br><figcaption></figcaption></figure><br>
 
         <p>And we see that the notification arrives on our device. If we click on it, it automatically opens our App.</p>
          
-        <figure><img src="UD10/images/ud10-2022-01-24-12-55-17.png" /><br><figcaption></figcaption></figure>
+        <figure><img src="UD11/images/ud11-2022-01-24-12-55-17.png" /><br><figcaption></figcaption></figure>
         <br>
         
         <p>We can also change the notification icon for it in the <span class="inline-file">AndroidManifest.xml</span> we add the following lines. This is optional.</p>
@@ -532,7 +540,7 @@ implementation 'com.google.firebase:firebase-messaging'</code></pre>
     <p>We can copy it from the one we have sent to the console.</p>
     
 
-    <figure><img src="UD10/images/ud10-2022-01-24-15-10-11.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-15-10-11.png" /><br><figcaption></figcaption></figure>
     <br>
 
     <p>With this token we can send the notification to this device. We could, for example, save the Token in a database and relate it to the user and each time we want to send a notification, retrieve the Token.
@@ -540,22 +548,22 @@ implementation 'com.google.firebase:firebase-messaging'</code></pre>
     We are now going to send a new notification from the firebase console. We select new notification.</p>
     
 
-    <figure><img src="UD10/images/ud10-2022-01-24-15-16-12.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-15-16-12.png" /><br><figcaption></figcaption></figure>
     <br>
 
     <p>We follow the same steps as before but at point 1 we choose to send test messages.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-24-15-19-24.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-15-19-24.png" /><br><figcaption></figcaption></figure>
     <br>
 
     <p>And in the Token field we add the Token that we have previously obtained. And click on Test.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-24-15-21-29.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-15-21-29.png" /><br><figcaption></figcaption></figure>
     <br>
 
     <p>We already have the exclusive notification for this user (device).</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-24-15-31-31.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-15-31-31.png" /><br><figcaption></figcaption></figure>
     <br>
     
     
@@ -571,23 +579,23 @@ implementation 'com.google.firebase:firebase-messaging'</code></pre>
 
         <p>And to send them is very simple. We first start up two devices that subscribe to the same topic.</p>
         
-        <figure><img src="UD10/images/ud10-2022-01-24-16-16-05.png" /><br><figcaption></figcaption></figure>
+        <figure><img src="UD11/images/ud11-2022-01-24-16-16-05.png" /><br><figcaption></figcaption></figure>
         <br>
                 
         <p>We go to the Firebase console and send the same message, but in step 2 (Target) we select the Topic.
         We see that it already recognizes it for us because when launching the application we have registered it.</p>
         
-        <figure><img src="UD10/images/ud10-2022-01-24-16-18-27.png" /><br><figcaption></figcaption></figure>
+        <figure><img src="UD11/images/ud11-2022-01-24-16-18-27.png" /><br><figcaption></figcaption></figure>
         <br>
         
         <p>We review the message.</p>
         
-        <figure><img src="UD10/images/ud10-2022-01-24-16-18-59.png" /><br><figcaption></figcaption></figure>
+        <figure><img src="UD11/images/ud11-2022-01-24-16-18-59.png" /><br><figcaption></figcaption></figure>
         <br>
         
         <p>We launched it and it reaches us on both devices.</p>
         
-        <figure><img src="UD10/images/ud10-2022-01-24-16-28-42.png" /><br><figcaption></figcaption></figure>
+        <figure><img src="UD11/images/ud11-2022-01-24-16-28-42.png" /><br><figcaption></figcaption></figure>
         <br>
         
 
@@ -615,7 +623,7 @@ private suspend fun sendMessage(text:String) = withContext(Dispatchers.Main){
 <p>Notice that we launch it from a coroutine with <span class="negrita">Dispatcher.Main</span> .</p>
 
 
-    <figure><img src="UD10/images/ud10-2022-01-24-17-04-23.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-17-04-23.png" /><br><figcaption></figcaption></figure>
         <br>
         
     <p class="sub-section">Send information in the notification</p>
@@ -624,7 +632,7 @@ private suspend fun sendMessage(text:String) = withContext(Dispatchers.Main){
         We see that we can write a key-value pair, we put for example the url of the notes.</p>
     
 
-    <figure><img src="UD10/images/ud10-2022-01-24-17-11-52.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-17-11-52.png" /><br><figcaption></figcaption></figure>
     <br>
 
     <p>Now we retrieve it from the notification.</p>
@@ -638,13 +646,13 @@ url?.let{
 
 
     <p>We get the notification</p>
-    <figure><img src="UD10/images/ud10-2022-01-24-17-15-28.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-17-15-28.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p>And by clicking on it we retrieve the information.</p>
     
 
-    <figure><img src="UD10/images/ud10-2022-01-24-17-17-08.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-17-17-08.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p>So far what we will see regarding notifications, but remember that the normal thing is to send notifications from a server or through firebase functions.
@@ -664,7 +672,7 @@ url?.let{
        <p>To activate it, go to the Release & Monitor section and select <span class="r-word">Crashlytics</span> .</p>
        
 
-    <figure><img src="UD10/images/ud10-2022-01-24-23-56-46.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-24-23-56-46.png" /><br><figcaption></figcaption></figure>
     <br>
     
    <p>Once this is done, we must follow the steps of integrating crashlytics in our application.</p>
@@ -705,13 +713,13 @@ url?.let{
 
     <p>If we launch the application and force the error, it stops.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-25-01-05-43.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-25-01-05-43.png" /><br><figcaption></figcaption></figure>
     <br>
     
 
     <p>Crashlytics nos indica hasta que fichero y línea ha fallado.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-25-01-03-47.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-25-01-03-47.png" /><br><figcaption></figcaption></figure>
     <br>
     
 
@@ -724,12 +732,12 @@ FirebaseCrashlytics.getInstance().setUserId(email)
 FirebaseCrashlytics.getInstance().setCustomKey(PROVIDER,provider)</code></pre>
     </section><br><br>
 
-    <figure><img src="UD10/images/ud10-2022-01-25-01-06-42.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-25-01-06-42.png" /><br><figcaption></figcaption></figure>
     <br>
     
     
     <p>We can use the user's information to notify you that the App is already operational, apologize for the inconvenience, etc.</p>
-    <figure><img src="UD10/images/ud10-2022-01-25-01-01-56.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-25-01-01-56.png" /><br><figcaption></figcaption></figure>
     <br>
     
 
@@ -756,7 +764,7 @@ FirebaseCrashlytics.getInstance().setCustomKey(PROVIDER,provider)</code></pre>
 
     <p>We are going to activate it from Remote Config in the side menu of the firebase console.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-25-01-16-40.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-25-01-16-40.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p>With the remote configuration, we are going to do, for example, change the text of the force error button, decide if we want it to be shown or not.
@@ -766,11 +774,11 @@ FirebaseCrashlytics.getInstance().setCustomKey(PROVIDER,provider)</code></pre>
     <p>Let's go to the console to define these configurations, which will be key-value</p>
     
 
-    <figure><img src="UD10/images/ud10-2022-01-25-01-28-58.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-25-01-28-58.png" /><br><figcaption></figcaption></figure>
     <br>
     <p>The other parameter will be the button text. Finally we give you to publish changes.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-25-01-32-00.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-25-01-32-00.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p>Once the remote configuration is created, we are going to use it in our App.
@@ -818,18 +826,18 @@ FirebaseRemoteConfig.getInstance().fetchAndActivate().addOnCompleteListener { ta
 
     <p>If we launch our App, the default setting make that the button is hidden.</p>
     
-<figure><img src="UD10/images/ud10-2022-01-25-01-57-02.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD11/images/ud11-2022-01-25-01-57-02.png" /><br><figcaption></figcaption></figure>
 <br>
 
     <p>Now we change our settings to display. Remember to publish changes.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-25-01-56-37.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-25-01-56-37.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p>We launch the application again and it is already shown to us with the new text.</p>
     
 
-    <figure><img src="UD10/images/ud10-2022-01-25-01-57-51.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-25-01-57-51.png" /><br><figcaption></figcaption></figure>
     <br>
     
     
@@ -854,22 +862,22 @@ FirebaseRemoteConfig.getInstance().fetchAndActivate().addOnCompleteListener { ta
     <h3>Cloud Firestore Database</h3>
     <p>We create our database.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-25-02-26-48.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-25-02-26-48.png" /><br><figcaption></figcaption></figure>
     <br>
     <p>We choose the default access rule that we will use, 
         in this case the test mode that gives us 30 days to do what we want. 
         I recommend you to review the rules documentation.</p>
     
     <a class="enlace" target="_blank" href="https://firebase.google.com/docs/firestore/security/get-started?authuser=0">https://firebase.google.com/docs/firestore/security/get-started?authuser=0</a> 
-    <figure><img src="UD10/images/ud10-2022-01-25-02-27-45.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-25-02-27-45.png" /><br><figcaption></figcaption></figure>
     <br>
     <p>We choose where our database will be physically located and press enable.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-25-02-29-11.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-25-02-29-11.png" /><br><figcaption></figcaption></figure>
     <br>
     <p>From here we could create the collection and the documents but we will do it from code in our App.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-25-02-30-36.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-25-02-30-36.png" /><br><figcaption></figcaption></figure>
     <br>
     
 
@@ -910,13 +918,13 @@ FirebaseRemoteConfig.getInstance().fetchAndActivate().addOnCompleteListener { ta
 
     <p>We try to save and see how the database is updated creating the document.</p>
      
-    <figure><img src="./UD10/images/UD10_save_firestore.gif" /><br><figcaption></figcaption></figure>
+    <figure><img src="./UD11/images/UD11_save_firestore.gif" /><br><figcaption></figcaption></figure>
     <br>
 
     <p>If we save again on the same user, the document is updated.</p>
     
 
-    <figure><img src="./UD10/images/UD10_save_firestore_2.gif" /><br><figcaption></figcaption></figure>
+    <figure><img src="./UD11/images/UD11_save_firestore_2.gif" /><br><figcaption></figcaption></figure>
 
     <p>Now it's time to retrieve the document associated with the email. 
         In this case we launch the <span class="r-word">addOnSuccessListener</span>  listener, which will return the data returned in the query.
@@ -932,7 +940,7 @@ FirebaseRemoteConfig.getInstance().fetchAndActivate().addOnCompleteListener { ta
 
 <p>If we launch the App and hit get, we load the data into the <span class="d-word">EditText</span> .</p>
 
-<figure><img src="./UD10/images/UD10_get_firestore.gif" /><br><figcaption></figcaption></figure>
+<figure><img src="./UD11/images/UD11_get_firestore.gif" /><br><figcaption></figcaption></figure>
 
 <p>And finally, we delete the data associated with email.</p>
 
@@ -940,32 +948,32 @@ FirebaseRemoteConfig.getInstance().fetchAndActivate().addOnCompleteListener { ta
     db.collection("users").document(email).delete()
 }</code></pre>
 </section><br><br>
-<figure><img src="./UD10/images/UD10_delete_firestore.gif" /><br><figcaption></figcaption></figure>
+<figure><img src="./UD11/images/UD11_delete_firestore.gif" /><br><figcaption></figcaption></figure>
 
     <h3>Realtime Database</h3>
     
     <p>Now we are going to use RealTime database. To do this from the <span class="negrita">firebase</span>  console we create a new database.</p>
     
 
-    <figure><img src="UD10/images/ud10-2022-01-25-11-35-52.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-25-11-35-52.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p>As in Firestore, we indicate the location of the database.</p>
     
-    <figure><img src="UD10/images/ud10-2022-01-25-11-36-45.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-25-11-36-45.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p>And the security rules on this database. 
         As always I recommend you to read the documentation.</p>
     
 
-    <figure><img src="UD10/images/ud10-2022-01-25-12-12-41.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-25-12-12-41.png" /><br><figcaption></figcaption></figure>
     <br>
 
     <p>In this case we are going to import a json file to populate our database with fictitious users.</p>
      
 
-    <figure><img src="UD10/images/UD10_import_realtime.gif" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/UD11_import_realtime.gif" /><br><figcaption></figcaption></figure>
     <br>
     
     <p class="sub-section">Configuring the App</p>
@@ -986,7 +994,7 @@ implementation 'com.google.firebase:firebase-database-ktx'</code></pre>
         we can get it from the firebase console itself.</p>
     
 
-    <figure><img src="UD10/images/ud10-2022-01-26-16-06-05.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-26-16-06-05.png" /><br><figcaption></figcaption></figure>
     <br>
     <p>So the previous code would look like this.</p>
     
@@ -1008,7 +1016,7 @@ val myRef = dbRealTime.getReference("users")</code></pre>
     <p>As you can see, we reference the users collection, which matches the one we put in the database.</p>
     
 
-    <figure><img src="UD10/images/ud10-2022-01-26-16-08-57.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-26-16-08-57.png" /><br><figcaption></figcaption></figure>
     <br>
     
 
@@ -1066,17 +1074,17 @@ val myRef = dbRealTime.getReference("users")</code></pre>
 
     <p>We delete user #2 from the database.</p>
     
-    <figure><img src="./UD10/images/UD10_deleting_realtime.gif" /><br><figcaption></figcaption></figure>
+    <figure><img src="./UD11/images/UD11_deleting_realtime.gif" /><br><figcaption></figcaption></figure>
     <br>
 
     <p>Updating user data.</p>
     
-    <figure><img src="./UD10/images/UD10_updating_realtime.gif" /><br><figcaption></figcaption></figure>
+    <figure><img src="./UD11/images/UD11_updating_realtime.gif" /><br><figcaption></figcaption></figure>
     <br>
 
     <p>Creating new User.</p>
     
-    <figure><img src="./UD10/images/UD10_adding_realtime.gif" /><br><figcaption></figcaption></figure>
+    <figure><img src="./UD11/images/UD11_adding_realtime.gif" /><br><figcaption></figcaption></figure>
     <br>
 
     <p>At this point it should be noted that a recyclerview has been created to show the users with the realtime database.
@@ -1123,7 +1131,7 @@ val myRef = dbRealTime.getReference("users")</code></pre>
                 user?.id = snapshot.key?:"-1"</code></pre>
     </section><br><br>
 
-    <figure><img src="UD10/images/ud10-2022-01-26-16-47-16.png" /><br><figcaption></figcaption></figure>
+    <figure><img src="UD11/images/ud11-2022-01-26-16-47-16.png" /><br><figcaption></figcaption></figure>
     <br>
     
     <p><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/FirebaseExample">Link Github's sample</a> </p>
