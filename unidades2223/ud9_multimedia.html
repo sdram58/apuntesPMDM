@@ -726,67 +726,58 @@ implementation "com.airbnb.android:lottie:$lottieVersion"</code></pre>
         This is because we have not yet incorporated an <span class="d-word">API KEY</span> to the project to use the <span class="negrita">Google Maps API</span>.
         This, we must insert it into a <span class="negrita">meta-data tag</span>  in the <span class="inline-file">AndroidManifest.xml</span>, as seen below, it is already prepared.</p>
     
-    <figure><img src="UD9/images/ud9-2022-01-12-11-34-03.png" /><br><figcaption>AndroidManifest.xml meta-data </figcaption></figure>
-    <br>
-    
+<figure><img src="UD9/images/ud9-2023-01-23-12-19-22.png" /><br><figcaption>AndroidManifest.xml meta-data </figcaption></figure>
+<br>
 
-    <p>On the other hand, we can see that the <span class="negrita">android: value</span>  attribute is actually pointing to a string type resource with <span class="d-word">name = "google_maps_key"</span>,
-        since its value is actually <span class="d-word">@ String / google_maps_key</span>, this resource is inside the <span class="inline-file">google_maps_api file.xml</span>,
-         inside <span class="inline-folder">*\values</span></p>
-    
-    <p>To get this <span class="negrita">KEY</span>, we will need two things, one is the <span class="d-word">package name</span>(which we know), 
-        and the other is the unique <span class="d-word">signature key</span> that Google gives to each Android developer, we have already consulted the default signature, 
-        and that is the one that we are going to use since the template has been prepared for it. In the <span class="inline-file">google_maps_api.xml</span> file, 
-        they already give us all this information.</p>
-
-    <p>We can also access it through the gradle option located to the right of Android Studio by executing <span class="negrita">gradle signingReport</span> </p>
-    
-    <p>The easiest way to obtain the API KEY is to use the help provided by the template that we have created, since it shows us the name of the package and the 
-        signature key by default, open <span class="inline-file">google_maps_api.xml</span>, you will see both data there, compare the key shown with the one obtained 
-        before via command. As you can see in the first link of the previous file, our default signature key and the name of our package are 
-        already found in the URL query string, therefore, if we follow that link, we already send the server said data to provide us with the
-         <span class="d-word">Google Maps API KEY</span>  for our project.</p>
-    
-         
+<p>On the other hand, we must make the <span class="negrita">android:value</span>  attribute point to a variable created in our <span class="inline-file">local.properties</span>
+     file and create a variable there, the variable name would be for example <span class="d-word">MAPS_API_KEY</span>. Then use this variable from the <span class="inline-file">AndroidManifest</span> using
+     <span class="d-word">"${MAPS_API_KEY}"</span> </p>
     
     <section class="marco-t file-">
-        <span class="icono file"> </span> <span class="negrita">google_maps_api.xml </span>
+        <span class="icono file"> </span> <span class="negrita">local.properties</span>
         </section>
     <section class="marco-b">
-            <section><pre class="line-numbers" data-line="7, 12, 15" data-line-offset="3"><code class="language-xml">&lt;resources>
-    &lt;!--
-    TODO: Before you run your application, you need a Google Maps API key.
-
-    To get one, follow this link, follow the directions and press "Create" at the end:
-
-    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r5E:3B:C5:F8:7A:E4:XXXXXXX....XXX:AC:41:C3:99:6A%3Bcom.catata.googlemapsexample
-
-    You can also add your credentials to an existing key, using these values:
-
-    Package name:
-    com.catata.googlemapsexample
-
-    SHA-1 certificate fingerprint:
-    5E:3B:C5:F8:7A:E4:XXXXXXX....XXX:AC:41:C3:99:6A
-
-    Alternatively, follow the directions here:
-    https://developers.google.com/maps/documentation/android/start#get-key
-
-    Once you have your key(it starts with "AIza"), replace the "google_maps_key"
-    string in this file.
-    -->
-    &lt;string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">YOUR_KEY_HERE&lt;/string>
-&lt;/resources></code></pre>
-            </section><br><br>
+        <section><pre><code class="language-kotlin">sdk.dir=C\:\\Users\\username\\AppData\\Local\\Android\\Sdk
+MAPS_API_KEY=Aiza...</code></pre>
+        </section>
     </section>
 
-    <p>In <span class="negrita">line 7</span>  we see the URL that will help us to create the <span class="d-word">API KEY</span> </p>
-    <p>In <span class="negrita">line 8</span>   our <span class="negrita">package name</span> </p>
-    <p>In <span class="negrita">line 15</span>  our <span class="d-word">debug KEY SHA-1</span>. Remember that yoy can also can obtain your SHA-1 key executing <span class="d-word">gradle signingReport</span>  in the gradle option on the rigth side of Android Studio
-    <figure><img src="UD9/images/UD8_getting_sha1.gif" /><br><figcaption></figcaption></figure>
+    <section class="marco-t warn">
+        <span class="icono warning"> </span>Notice that we don't know the value of the MAPS_API_KEY variable yet.
+        </section>
+    <section class="marco-b">
+            
+    </section>
+
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">AndroidManifest.xml</span>
+        </section>
+    <section class="marco-b">
+            <section><pre><code class="language-xml">&lt;meta-data
+    android:name="com.google.android.geo.API_KEY"
+    android:value="${MAPS_API_KEY}" /></code></pre>
+            </section><br><br>
+    </section>
+     
+
+         
+    <p>To get this <span class="negrita">KEY</span>, we will need two things: <ul>
+        <li>One is the <span class="d-word">package name</span>(which we know)</li>
+        <li>The other is the unique <span class="d-word">signature key</span> (SHA-1 fingerprint) that Google gives to each Android developer, we have already consulted the default signature,
+            and that is the one that we are going to use since the template has been prepared for it</li>
+    </ul>
+        <br>In <a class="enlace" target="_blank" href="https://developers.google.com/maps/documentation/android-sdk/get-api-key">https://developers.google.com/maps/documentation/android-sdk/get-api-key</a>
+        we have more information for getting the API_KEY.</p> <br>
+
+
+    <p>To obtain our SHA-1 fingerprint, we can also access it through the gradle option located to the right of Android Studio by 
+        executing <span class="negrita">gradle signingReport</span>. You can also use AS terminal with the same command.</p>
+    
+    <figure><img src="UD9/images/UD9_getting_sha1.gif" /><br><figcaption></figcaption></figure>
     <br>
     
-    you can also use AS terminal with the same command. 
+     
     <section class="marco-t warn">
         <span class="icono warning"> </span> Remember to add gradle to the pathName if you haven't done so before
         </section>
@@ -799,7 +790,34 @@ implementation "com.airbnb.android:lottie:$lottieVersion"</code></pre>
     <figure><img src="UD9/images/ud9-2022-01-18-11-23-19.png" /><br><figcaption></figcaption></figure>
     <br>
     
-    </p>
+    
+    <p>Now that we have the two things we need, <span class="d-word">PACKAGENAME</span>  and <span class="d-word">SHA-1 fingerprint</span> .
+        We are going to register the new <span class="d-word">API_KEY</span> for our project.</p>
+    
+
+    <p>For this we go to the following link: 
+        <a class="enlace" target="_blank" href="https://developers.google.com/maps/documentation/android-sdk/get-api-key">https://developers.google.com/maps/documentation/android-sdk/get-api-key</a> </p>
+
+    <p>We enter the credentials page.</p>
+    
+    <figure><img src="UD9/images/ud9-2023-01-23-13-21-34.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+    
+    <section class="marco-t warn">
+        <span class="icono warning"> </span> Be careful, you must have a Google Cloud console account.
+        </section>
+    <section class="marco-b">
+            
+    </section>
+
+    <section class="marco-t warn">
+        <span class="icono warning"> </span> Now, Google cloud requires a billing account.
+        </section>
+    <section class="marco-b">
+            
+    </section>
+    
     
 
     <p>Through the URL we access the console where we will have to <span class="cursiva">select</span>  or <span class="cursiva">create a new</span>  project. In our case it will be to create a one.</p>
@@ -874,7 +892,7 @@ implementation "com.airbnb.android:lottie:$lottieVersion"</code></pre>
     <br>
     
 
-    <p>As for the code, we are going to review the important thing next</p>ç
+    <p>As for the code, we are going to review the important thing next</p>
 
     <p>Add dependency to the build gradle:app</p>
     
@@ -882,7 +900,7 @@ implementation "com.airbnb.android:lottie:$lottieVersion"</code></pre>
         <span class="icono file"> </span> <span class="negrita">build-gradle(: app)</span>
         </section>
     <section class="marco-b">
-            <section><pre><code class="language-kotlin">implementation 'com.google.android.gms:play-services-location:19.0.1'</code></pre>
+            <section><pre><code class="language-kotlin">implementation 'com.google.android.gms:play-services-location:21.0.1'</code></pre>
             </section>
     </section>
     
