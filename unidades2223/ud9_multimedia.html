@@ -729,6 +729,8 @@ implementation "com.airbnb.android:lottie:$lottieVersion"</code></pre>
 <figure><img src="UD9/images/ud9-2023-01-23-12-19-22.png" /><br><figcaption>AndroidManifest.xml meta-data </figcaption></figure>
 <br>
 
+
+
 <p>On the other hand, we must make the <span class="negrita">android:value</span>  attribute point to a variable created in our <span class="inline-file">local.properties</span>
      file and create a variable there, the variable name would be for example <span class="d-word">MAPS_API_KEY</span>. Then use this variable from the <span class="inline-file">AndroidManifest</span> using
      <span class="d-word">"${MAPS_API_KEY}"</span> </p>
@@ -820,7 +822,16 @@ MAPS_API_KEY=Aiza...</code></pre>
     
     
 
-    <p>Through the URL we access the console where we will have to <span class="cursiva">select</span>  or <span class="cursiva">create a new</span>  project. In our case it will be to create a one.</p>
+    <p>Through the URL we access the console where we will have to <span class="cursiva">select</span>  or <span class="cursiva">create a new</span>  project. 
+        In our case it will be to create a one.</p>
+
+        <section class="marco-t warn">
+            <span class="icono warning"> </span> May be the following steps are modified but practically it is the same.
+            </section>
+        <section class="marco-b">
+                
+        </section>
+        
     
     <figure><img src="UD9/images/ud9-2022-01-11-23-10-56.png" /><br><figcaption>Google console</figcaption></figure>
     <br>
@@ -900,7 +911,7 @@ MAPS_API_KEY=Aiza...</code></pre>
         <span class="icono file"> </span> <span class="negrita">build-gradle(: app)</span>
         </section>
     <section class="marco-b">
-            <section><pre><code class="language-kotlin">implementation 'com.google.android.gms:play-services-location:21.0.1'</code></pre>
+            <section><pre><code class="language-kotlin">implementation 'com.google.android.gms:play-services-maps:18.1.0'</code></pre>
             </section>
     </section>
     
@@ -982,16 +993,22 @@ Would it cost you a lot to modify it, so that the LatLng object is called torren
 
 <p>We are going to see some of the most important options on the map</p>
 
-<p><span class="d-word">LatLng()</span>  => .LatLng(double latitude, double longitude); // Create a locate point <br>
+<p><span class="d-word">LatLng()</span>  => <section><pre><code class="language-kotlin">.LatLng(double latitude, double longitude); // Create a locate point</code></pre>
+</section><br><br> <br>
     <ul>
-        <li>Example: LatLng torrent = LatLng(40, 0);</li>
+        <li>Example: 
+            <section><pre><code class="language-kotlin">val torrent = LatLng(40, 0)</code></pre>
+            </section><br><br>
+        </li>
     </ul>
     <br>
 
-<span class="d-word">AddMarker()</span>  => .addMarker(MarkerOptions().Position().Title());// Add bookmark with title
+<span class="d-word">AddMarker()</span>  => <section><pre><code class="language-kotlin">.addMarker(MarkerOptions().position().title());// Add bookmark with title</code></pre>
+</section><br><br>
 
 <ul>
-    <li>Example: mMap.addMarker(MarkerOptions(). Position(torrent) .title("Meridian Park"));</li>
+    <li>Example: <section><pre><code class="language-kotlin"> mMap.addMarker(MarkerOptions().position(torrent).title("Meridian Park"))</code></pre>
+    </section><br><br></li>
     <li>Other options: <span class="negrita">.snippet</span>("Inhabitants: 180000") // Add extra information below the title</li>
 </ul>
 </p>
@@ -1008,9 +1025,9 @@ Next we add in <span class="negrita">onMapReady()</span>  the line <span class="
 and outside of onMapReady() we insert a response function <span class="negrita">onInfoWindowClickListener()</span> :</p>
 
 
-<section><pre><code class="language-kotlin">override fun onInfoWindowClick(marker: Marker?) {
-    Toast.makeText(this, "Marker pressed on: \ n $ {marker? .Tag}($ {marker? .Position? .Latitude}" +
-            "$ {marker? .position? .longitude})", Toast.LENGTH_SHORT) .show();
+<section><pre><code class="language-kotlin">override fun onInfoWindowClick(marker: Marker) {
+    Toast.makeText(this, "Marker pressed on: \n ${marker.tag}(${marker.position.latitude}" +
+            "${marker.position.longitude})", Toast.LENGTH_SHORT).show();
 }</code></pre>
 </section><br><br>
 
@@ -1028,8 +1045,8 @@ and outside of onMapReady() we insert a response function <span class="negrita">
 
 <p>Instead of reading the location or the title as in the previous photo, it could be interesting, 
     to have previously saved some information or <span class="negrita">Tag</span>(not visible) in the Marker and read it now by pressing. 
-    To save a non-visible label in the marker we must obtain a reference to it when creating it, and then use it to add the label through .setTag("mytag"), 
-    then it would be read through .getTag(), let's see an example:</p>
+    To save a non-visible label in the marker we must obtain a reference to it when creating it, and then use it to add the label through <span class="negrita">.setTag("mytag")</span> , 
+    then it would be read through <span class="negrita">.getTag()</span> or just the property <span class="negrita">.tag</span> , let's see an example:</p>
 
 
     <section><pre><code class="language-kotlin">marker.tag ="city"
@@ -1038,7 +1055,7 @@ and outside of onMapReady() we insert a response function <span class="negrita">
 marker.tag // I could read it later in onInfoWindowClick()</code></pre>
     </section><br><br>
 
-    <p>Notice how a click counter could easily be made, since after reading it we could save it again with +1, <span class="negrita">marker.setTag(marker.getTag() + 1)</span> 
+    <p>Notice how a click counter could easily be made, since after reading it we could save it again with +1, <span class="negrita">marker.tag += 1</span> 
         , it would also be valid to act in one way or another depending on the type of Marker, that is, it would be worth to be able to identify it.</p>
 
     <p><span class="d-word">.icon()</span>  //Allows you to tune the Marker icon, for example change the color, or make it an image </p>
@@ -1051,7 +1068,7 @@ marker.tag // I could read it later in onInfoWindowClick()</code></pre>
 
 <p>Example with everything so far:</p>
 
-<section><pre><code class="language-kotlin">val marker = mMap.addMarker(MarkerOptions().Position(LatLng(40, 0)).Title("Park")
+<section><pre><code class="language-kotlin">val marker = mMap.addMarker(MarkerOptions().position(LatLng(40, 0)).title("Park")
 .snippet("from the meridian").icon(BitmapDescriptorFactory.fromResource(R.mipmap.park)));
 marker.setTag("parks");</code></pre>
 </section><br><br>
@@ -1060,7 +1077,7 @@ marker.setTag("parks");</code></pre>
 <section><pre><code class="language-kotlin">mMap.setOnMarkerClickListener {
     marker ->
     Toast.makeText(this, "Click on Marker", Toast.LENGTH_SHORT) .show()
-    return @ setOnMarkerClickListener true
+    return@setOnMarkerClickListener true
 }</code></pre>
 </section><br><br>
 
@@ -1068,7 +1085,7 @@ marker.setTag("parks");</code></pre>
     
 
     <p><span class="d-word">Marker.remove()</span> => Delete a specific marker. It is possible to get reference to a marker to remove it. <br>Example:</p>
-    <section><pre><code class="language-kotlin">val mMarker = mMap.addMarker(MarkerOptions(). Position(LatLng(mLatitude, mLongitude)). Title("My position"));
+    <section><pre><code class="language-kotlin">val mMarker = mMap.addMarker(MarkerOptions().position(LatLng(mLatitude, mLongitude)).title("My position"));
 mMarker.remove();</code></pre>
     </section><br><br>
 
@@ -1105,32 +1122,39 @@ Toast.makeText(this, "Current Zoom:" + mMap.getCameraPosition().Zoom, Toast.LENG
 <figure><img src="UD9/images/ud9-2022-01-12-13-13-38.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<p>.setMapType() => .setMapType(cteTipodemapa) //Configures map type <br>
+<p><span class="negrita">.setMapType()</span>  => <section><pre><code class="language-kotlin">.setMapType(TypeMapConstant) //Configures map type. Use better property</code></pre>
+</section><br><br> <br>
 Example:</p>
 <section><pre><code class="language-kotlin">mMap.mapType = GoogleMap.MAP_TYPE_HYBRID</code></pre>
 </section><br><br>
-<p>Type can be:</p>
-<figure><img src="UD9/images/ud9-2022-01-12-13-15-40.png" /><br><figcaption></figcaption></figure>
+<p>MapType can be:</p>
+
+<figure><img src="UD9/images/UD9-2023-01-25-08-45-21.png" /><br><figcaption>Google Map Types</figcaption></figure>
 <br>
 
-<p><span class="d-word">.getUiSettings () </span> => Allows you to configure various graphic aspects.
-    <ul><li>Example 1: <span class = "bold"> mMap.getUiSettings (). SetZoomControlsEnabled (true) </span>
+
+<p><span class="d-word">.uiSettings () </span> => Allows you to configure various graphic aspects.
+    <ul><li>Example 1: <section><pre><code class="language-kotlin">mMap.uiSettings.isZoomControlsEnabled = true</code></pre>
+    </section><br>
         Activates +/- controls at the bottom right that allow you to zoom in or out. Having touch gestures seems trivial, but it could be ideal for people with reduced mobility. </p>
         <figure><img src="UD9/images/ud9-2022-01-12-13-18-17.png" /><br><figcaption></figcaption></figure>
         <br>
         
     </li>
-    <li>Example 2: <span class="negrita">mMap.getUiSettings().SetCompassEnabled (false)</span>
+    <li>Example 2: <section><pre><code class="language-kotlin">mMap.uiSettings.isCompassEnabled = false</code></pre>
+    </section><br>
         Uninhibit the compass icon that appeared when rotating the map.
     <figure><img src="UD9/images/ud9-2022-01-12-13-18-35.png" /><br><figcaption></figcaption></figure>
     <br>
     </li>
-    <li>Example 3: <span class = "negrita"> mMap.getUiSettings (). SetRotateGesturesEnabled (false) </span>
+    <li>Example 3: <section><pre><code class="language-kotlin">mMap.uiSettings.isRotateGesturesEnabled = false</code></pre>
+    </section><br>
         Prohibits the ability to rotate the map with touch gestures.</li>
     
     
     <li>
-        Example 4: <span class="negrita">mMap.getUiSettings().SetMapToolbarEnabled(false)</span>
+        Example 4: <section><pre><code class="language-kotlin">mMap.uiSettings.isMapToolbarEnabled = false</code></pre>
+        </section><br>
 Uninhibit the icons on the bottom right that appeared when pressing a marker.
         <figure><img src="UD9/images/ud9-2022-01-12-13-18-59.png" /><br><figcaption></figcaption></figure>
         <br>
