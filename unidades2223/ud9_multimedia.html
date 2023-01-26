@@ -1261,11 +1261,11 @@ private lateinit var locationCallback: LocationCallback</code></pre>
 <p>Then expand the <span class="r-word">onCreate()</span> :</p>
 <section><pre><code class="language-kotlin">mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-locationRequest = LocationRequest.create()
-locationRequest !!. priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-locationRequest !!. interval = 16000 // 16seconds
-locationRequest !!. fastestInterval = 8000 // 8seconds
-locationRequest.smallestDisplacement = 0f
+val locationRequestBuilder = LocationRequest.Builder(16000)
+locationRequestBuilder.setDurationMillis(Long.MAX_VALUE)
+locationRequestBuilder.setQuality(LocationRequest.QUALITY_BALANCED_POWER_ACCURACY)        locationRequest.
+locationRequestBuilder.setMinUpdateDistanceMeters(0f)
+locationRequest = locationRequestBuilder.build()
 
 
 locationCallback = object: LocationCallback(){
