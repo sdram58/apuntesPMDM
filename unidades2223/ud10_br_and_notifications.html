@@ -4,19 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Broadcast Receiver and notifications</title>
+    <title>U10. Broadcast Receiver and notifications</title>
     <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/prism.css">
     <link rel="stylesheet" href="../styles/styles.css">
     <script src="../script/script.js"></script>
 </head>
 <body>
-    <h1>Broadcast Receiver and notifications</h1>
+    <h1>U10. Broadcast Receiver and notifications</h1>
     <div class="main-menu">
-        <a href="#sNotifications">Notifications</a><a
+        <div class="fila">
+            <a href="#sNotifications">Notifications</a><a
            href="#sBroadcastReceiver">BroadcastReceiver</a><a            
-           href="#sPractice">Practice</a><a
-           href="#sWebgraphy">Webgraphy</a>
+           href="#sPractice">Practice</a>
+        </div>
+        <div class="fila">
+            <a href="#sWebgraphy">Webgraphy</a><a href="" class="relleno"></a><a href="" class="relleno"></a>
+        </div>
+        
     </div>
 
     <!--*********************************************************Notifications***********************************************************-->
@@ -27,14 +32,15 @@
      <p>A <span class="d-word">notification</span>  is a message that Android displays outside of the app's UI to provide the user with reminders, 
         messages from other people, and other timely information about the app. Users can tap the notification to open the app or perform an action directly from the notification.</p>
 
-    <p>Las notificaciones se muestran a los usuarios en diferentes ubicaciones y formatos (por ejemplo, como un ícono en la barra de estado, una entrada más detallada en el panel lateral de notificaciones o un distintivo en el ícono de la app), así como en wearables sincronizados automáticamente.</p>
+    <p>Notifications are displayed to users in different locations and formats (for example, as an icon in the status bar, a more detailed entry in the notifications side panel,
+         or a badge on the app icon), as well as on wearables automatically synchronized.</p>
 
     <h3>Notification anatomy</h3>
 
     <p>The design of a notification is determined by system templates—your app simply defines the contents for each portion of the template. 
         Some details of the notification appear only in the expanded view.</p>
     
-     <figure><img src="UD9/images/ud9-2022-01-17-11-00-03.png" /><br><figcaption>A notification with basic details</figcaption></figure>
+     <figure><img src="UD10/images/ud10-2022-01-17-11-00-03.png" /><br><figcaption>A notification with basic details</figcaption></figure>
      <br>
      
     <p>The most common parts of a notification are indicated in figure 7 as follows:</p>
@@ -51,8 +57,8 @@
 
     <h3>Creating Notifications</h3>
 
-    <p>To create notifications we use the following code first we have to create the builder.
-    As you can see, a notification channel is passed to it. We see this later.</p>
+    <p>To create notifications we use the following code, first we have to create the builder.
+    As you can see, a notification channel param is passed. We'll see it later.</p>
     
 
     <section><pre><code class="language-kotlin">var builder = NotificationCompat.Builder(this, CHANNEL_ID)</code></pre>
@@ -71,7 +77,7 @@
     </section><br><br>
 
     <p>A short text that will be displayed when the notification is collapsed.</p>
-    <section><pre><code class="language-kotlin">builder.setContentText("Much longer text that cannot fit one line...")</code></pre>
+    <section><pre><code class="language-kotlin">builder.setContentText("Notification text that fits in one line...")</code></pre>
     </section><br><br>
 
     <p>If we need more lines we can add a long text.</p>
@@ -80,7 +86,7 @@
     </section><br><br>
 
     <p>The priority of the notification. Remember that your application should not be very invasive.</p>
-    <section><pre><code class="language-kotlin">builder.setPriority(NotificationCompat.PRIORITY_DEFAULT)</code></pre>
+    <section><pre><code class="language-kotlin">builder.priority = NotificationCompat.PRIORITY_DEFAULT</code></pre>
     </section><br><br>
 
     <p>We indicate the color of the notification.</p>
@@ -110,21 +116,25 @@ builder.setLights(Color.MAGENTA, 1000, 1000)
     
     
     <p class="sub-section">PendingIntent</p>
+
+    <p>A PendingIntent is a token that you give to a foreign application (e.g. NotificationManager, AlarmManager, Home Screen AppWidgetManager, 
+        or other 3rd party applications), which allows the foreign application to use your application's permissions to execute a predefined piece of code.</p>
+    
     <p>To create a PendingIntent we have several options:</p>
 
     <ul>
         <li>Add it to the stackbuilder, and we have the option to indicate who will be its parent in the manifest, so the back arrow will appear.
             <section><pre><code class="language-kotlin">//That is the real intent
-    val intent = Intent(this, YesActivity::class.java).apply {
-        putExtra(YES_EXTRA_KEY, "This text goes to Yes Activity")
-    }
+val intent = Intent(this, YesActivity::class.java).apply {
+    putExtra(YES_EXTRA_KEY, "This text goes to Yes Activity")
+}
 
 
-    //This makes the stack builder with the parent activity (optional)
-    //If we don't set it when we press back button the app will exit
-    val stackBuilder = TaskStackBuilder.create(this)
-    stackBuilder.addParentStack(YesActivity::class.java)
-    stackBuilder.addNextIntent(intent)
+//This makes the stack builder with the parent activity (optional)
+//If we don't set it when we press back button the app will exit
+val stackBuilder = TaskStackBuilder.create(this)
+stackBuilder.addParentStack(YesActivity::class.java)
+stackBuilder.addNextIntent(intent)
 
     return stackBuilder.getPendingIntent(PENDING_REQUEST,
         PendingIntent.FLAG_UPDATE_CURRENT)
@@ -139,7 +149,7 @@ builder.setLights(Color.MAGENTA, 1000, 1000)
             android:parentActivityName=".MainActivity" /></code></pre>
         </section><br><br>
 
-        <figure><img src="ud9/images/UD9_notifications_yes.gif" /><br><figcaption>When we press the back button, the application closes</figcaption></figure>
+        <figure><img src="ud10/images/UD10_notifications_yes.gif" /><br><figcaption>When we press the back button, the application closes</figcaption></figure>
     <br>
         </li>
         <li>We can also make use of <span class="r-word">getActivity()</span>  function without flags.
@@ -151,7 +161,7 @@ builder.setLights(Color.MAGENTA, 1000, 1000)
             </section>
             In this case, we return to the previous activity if it is created when pressing back, but the return arrow does not generate
             <br><br>
-            <figure><img src="ud9/images/UD9_notifications_not.gif" /><br><figcaption>When we press the back button, the application closes</figcaption></figure>
+            <figure><img src="ud10/images/UD10_notifications_not.gif" /><br><figcaption>When we press the back button, the application closes</figcaption></figure>
     <br>
 
         </li>
@@ -168,7 +178,7 @@ builder.setLights(Color.MAGENTA, 1000, 1000)
 }</code></pre>
             </section><br><br>
 
-            <figure><img src="ud9/images/UD9_notifications_no.gif" /><br><figcaption>When we press the back button, the application closes</figcaption></figure>
+            <figure><img src="ud10/images/UD10_notifications_no.gif" /><br><figcaption>When we press the back button, the application closes</figcaption></figure>
     <br>
         </li>
     </ul>
@@ -190,7 +200,7 @@ builder.setLights(Color.MAGENTA, 1000, 1000)
     <p>Next, to fire the notification, we need to call the <span class="negrita">notify()</span> method of the NotificationManager. You have to pass the identifier of the notification to later be able to reference it.</p>
     
     <section><pre><code class="language-kotlin">with(NotificationManagerCompat.from(this)) {
-    // notificationId is a unique int for each notification that you must define
+    //notificationId is a unique int for each notification that you must define
     notify(notificationId, builder.build())
 }</code></pre>
     </section><br><br>
@@ -236,8 +246,7 @@ builder.setLights(Color.MAGENTA, 1000, 1000)
         setAutoCancel(true)
     }
 
-    val notificationManagerCompat = NotificationManagerCompat.from(
-        Este)
+    val notificationManagerCompat = NotificationManagerCompat.from(this)
 
     //Launch the notification
     notificationManagerCompat.notify(NOTIFICATION_ID , builder.build())
@@ -295,12 +304,38 @@ builder.setLights(Color.MAGENTA, 1000, 1000)
     }
 }</code></pre>
     </section><br><br>
+
+
+    <p>Finally, we have to give <span class="r-word">android.permission.POST_NOTIFICATIONS</span> permission to the APP.</p>
+    
+    <p>So we set the permission in the <span class="inline-file">AndroidManifest.xml</span></p>
+    
+    <section><pre><code class="language-xml">&lt;uses-permission android:name="android.permission.POST_NOTIFICATIONS" /></code></pre>
+    </section><br><br>
+
+    <p>And for newer versions we have to grant the permission by code.</p>
+    
+    <section><pre><code class="language-kotlin">val notificationManagerCompat = NotificationManagerCompat.from(context)
+
+//Launch the notification
+if (ActivityCompat.checkSelfPermission(
+        context,
+        Manifest.permission.POST_NOTIFICATIONS
+    ) != PackageManager.PERMISSION_GRANTED
+) {
+    //TODO: RequestPermission
+    return
+}else{
+    //If we're granted then launch the notification
+    notificationManagerCompat.notify(NOTIFICATION_ID , builder.build())
+}</code></pre>
+    </section><br><br>
     
 
-    <h3>Sample App working with notifications</h3>
+    <h3>Example App working with notifications</h3>
     
 
-    <p><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/NotificationsExample">Here</a> you have the Notifications Example </p>
+    <p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD10/NotificationsExample">Here</a> you have the Notifications Example </p>
     
     </section><!-- End section -->
 
@@ -380,7 +415,9 @@ builder.setLights(Color.MAGENTA, 1000, 1000)
 &lt;/receiver>
 ....</code></pre>
             </section><br><br>
-            Intent filters specify the broadcast actions that your listener subscribes to.
+            <p>Intent filters specify the broadcast actions that your listener subscribes to.</p>
+            
+        <br>
         </li>
         <li>
             Create the <span class="negrita">BroadcastReceiver</span>  subclass, and then implement <span class="negrita">onReceive(Context, Intent)</span>. 
@@ -527,7 +564,7 @@ registerReceiver(receiver, filter, Manifest.permission.SEND_SMS, null )</code></
 </section><br><br>
 
 
-<p><a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/BroadcastReceiver">Here</a> you have the Broadcast Example </p >
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD10/BroadcastReceiverExample">Here</a> you have the Broadcast Example </p >
 
 
 <div class="tarea">
@@ -600,7 +637,7 @@ registerReceiver(receiver, filter, Manifest.permission.SEND_SMS, null )</code></
 
     <p>In the following GIF you can see an approximation to the required application</p>
 
-    <figure><img src="./UD9/images/UD9_practice_demo.gif" /><br><figcaption>Practice Demo</figcaption></figure>
+    <figure><img src="./UD10/images/UD10_practice_demo.gif" /><br><figcaption>Practice Demo</figcaption></figure>
     <br>
     
     </div>
