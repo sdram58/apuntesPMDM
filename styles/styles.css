@@ -6,7 +6,7 @@
 nav.main-menu-lateral{
     position: fixed;
     top: 10px;
-    left: 10px;
+    left: 5px;
     width:9%;
     
 }
@@ -18,8 +18,14 @@ nav.main-menu-lateral a{
     list-style: none; 
     text-decoration: none;
     background-color: rgb(203, 243, 238);
+    font-size: 0.8em;
+    color:rgb(148, 98, 241)
     
     
+}
+
+nav.main-menu-lateral a:visited{
+    color:rgb(148, 98, 241)
 }
 
 nav.main-menu-lateral a:hover{    
