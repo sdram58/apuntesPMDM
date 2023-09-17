@@ -51,13 +51,13 @@
 	"Destacada": {
 		"scope": "html",
 		"prefix": "des",
-		"body": ["<span class=\"d-word\">${CLIPBOARD:\"Destacada\"}</span> $0"],
+		"body": ["<span class=\"d-word\">${CLIPBOARD:\"Destacada\"}</span>$0"],
 		"description": "Palabra destacada"
 	},
 	"Reservada": {
 		"scope": "html",
 		"prefix": "res",
-		"body": ["<span class=\"r-word\">${CLIPBOARD:\"Reservada\"}</span> $0"],
+		"body": ["<span class=\"r-word\">${CLIPBOARD:\"Reservada\"}</span>$0"],
 		"description": "Palabra reservada"
 	},
 
@@ -71,20 +71,20 @@
 	"Cursiva": {
 		"scope": "html",
 		"prefix": "curs",
-		"body": ["<span class=\"cursiva\">${CLIPBOARD:\"Cursiva\"}</span> $0"],
+		"body": ["<span class=\"cursiva\">${CLIPBOARD:\"Cursiva\"}</span>$0"],
 		"description": "Palabra cursiva"
 	},
 
 	"negrita": {
 		"scope": "html",
 		"prefix": "neg",
-		"body": ["<span class=\"negrita\">${CLIPBOARD:\"Negrita\"}</span> $0"],
+		"body": ["<span class=\"negrita\">${CLIPBOARD:\"Negrita\"}</span>$0"],
 		"description": "Palabra negrita"
 	},
 	"subrayado": {
 		"scope": "html",
 		"prefix": "sb",
-		"body": ["<span class=\"subrayado\">${CLIPBOARD:\"Subrayado\"}</span> $0"],
+		"body": ["<span class=\"subrayado\">${CLIPBOARD:\"Subrayado\"}</span>$0"],
 		"description": "Palabra subrayado"
 	},
 	"Info": {
@@ -120,14 +120,14 @@
 	"Enlace": {
 		"scope": "html",
 		"prefix": "enlace-",
-		"body": ["<a class=\"enlace\" target=\"_blank\" href=\"${CLIPBOARD:\"https://\"}$1\">${CLIPBOARD:\"https://\"}$1</a> $0"],
+		"body": ["<a class=\"enlace\" target=\"_blank\" href=\"${CLIPBOARD:\"https://\"}$1\">${CLIPBOARD:\"https://\"}$1</a>$0"],
 		"description": "Links"
 	},
 
 	"Tarea": {
 		"scope": "html",
 		"prefix": "tarea-",
-		"body": ["<a class=\"tarea\" target=\"_blank\" href=\"${CLIPBOARD:\"https://\"}$1\">${CLIPBOARD:\"https://\"}$1</a> $0"],
+		"body": ["<a class=\"tarea\" target=\"_blank\" href=\"${CLIPBOARD:\"https://\"}$1\">${CLIPBOARD:\"https://\"}$1</a>$0"],
 		"description": "Links"
 	},
 

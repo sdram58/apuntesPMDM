@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UD2.-Introducción a Kotlin</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../styles/prism.css">
+  <link rel="stylesheet" href="../styles/styles.css">
+  <script src="../script/script.js"></script>
+</head>
+<body class="line-numbers">
+  <div class="logos">
+    <div></div><div></div><div></div>
+</div>
+
+  <nav id="menu-lateral" class="main-menu-lateral oculto">
+    <div class="fila">
+        <a href="#sFundamentos">1.- Fundamentos de Kotlin</a><a 
+        href="#sTypeOfApps">2.- Tipos de Apps</a><a 
+        href="#sAndroidFeatures">3.- Características de Android</a></div>
+    <div class="fila">
+        <a 
+       href="#sAndroidArchitecture">4.- Arquitectura de Android</a><a 
+       href="#sFragmentation">5.-Fragmentación</a><a 
+       href="#sAndroidStudio">6.- Android Studio</a>
+    </div>
+    <div class="fila">
+        <a 
+       href="#sAndroidEmulator">7.- Emulador Android (AVD)</a><a 
+       href="#sTestOnReal">8.- Pruebas en dispositivos reales</a><a 
+       href="#sThirdPartyEmulators">9.- Otros emuladores</a>
+    </div>
+    <div class="fila">
+        <a 
+       href="#sOtherSystems">10.- Otros Sistemas</a>
+    </div>
+    
+</nav>
+
+  <h1>UD2.-Introducción a Kotlin</h1>
+  
+  <div class="main-menu">
+    <div class="fila">
+      <a href="#sFundamentos">1.- Fundamentos de Kotlin</a><a 
+       href="#sNullSafety">2.- Null Safety</a><a 
+       href="#sExpresionesRegulares">3.- Expresiones Regulares</a>
+    </div>
+    <div class="fila">
+      <a 
+       href="#sControlFlujo">4.- Control de Flujo</a>
+       <a href="#sColecciones">5.- Colecciones</a>
+       <a href="#sFunciones">6.- Funciones</a>
+    </div>
+    <div class="fila">
+      <a 
+       href="#sPOO">7.- Programación orientada a objetos</a>
+      <a 
+       href="#sFuncionesExtension">8.- Funciones de extensión</a><a 
+       href="#sLateinit">Initialization with lateinit vs lazy (delegation)</a>
+    </div>
+    <div class="fila">
+      <a 
+       href="#sModismos">Scope Functions: Let, run, also, apply, with</a>
+      <a
+       href="#sExercises">Interactive exercises from Kotlinlang</a>
+       <a href="" class="relleno"></a>
+    </div>
+    
+
+</div>
+
+<!--*********************************************************1.- Fundamentos de Kotlin***********************************************************-->
+<section class="apartado">
+<a name="sFundamentos"></a>
+<h2>Fundamentos de Kotlin</h2>
+
+<h3>Introducción</h3>
+
+<p>
+  En un principio <span class="negrita">Java</span> fue el <span class="negrita">lenguaje de programación para Android</span>  pero 
+  en <span class="negrita">2017 Google</span>  nombró a <span class="negrita">Kotlin</span>  como el <span class="negrita">lenguaje oficial para Android</span>  equiparándolo con Java
+</p>
+<p>
+  Tiene soporte oficial de Google y se incorpora en Android Studio
+</p>
+
+<figure><img src="UD2/images/ud2-2023-09-15-13-17-05.png" /><br><figcaption>Kotlin features</figcaption></figure>
+<br>
+
+
+<p>Algunas de las características de Kotlin son: 
+  <ul>
+    <li>
+      Lenguaje <span class="negrita">multiplataforma y multipropósito</span>  se compila sobre JVM por lo que es totalmente compatible con Java y sus librerías (llamadas a Java desde desde Kotlin y viceversa).
+    </li>
+    <li>
+      Lenguaje orientado a objetos (<span class="negrita">POO</span>)
+    </li>
+    <li>
+      Es un <span class="negrita">lenguaje conciso</span>  evita código innecesario (hasta un 40% menos)</li>
+    <li>
+      Es <span class="d-word">Null Safety</span> gestiona los nudos de forma segura y evitando errores <span class="r-word">NullPointerException</span> </li>
+    <li>
+      Extraoficialmente se puede decir que es como Java pero el estilo de Python (sus ventajas)</li>
+  </ul>
+</p>
+
+<p>
+  En la documentación oficial se puede encontrar todo lo necesario sobre el lenguaje: <a class="enlace" target="_blank" href="https://kotlinlang.org/docs/basic-syntax.html">https://kotlinlang.org/docs/basic-syntax.html</a>
+  <br>
+  También está disponible una plataforma para aprender Kotlin mediante ejemplos: <a class="enlace" target="_blank" href="https://play.kotlinlang.org/byExample/overview">htts://play.kotlinlang.org/byExample/overview</a>
+</p>
+
+<p>
+  En el curso se usará <span class="negrita">Kotlin</span>  como lenguaje de programación para Android. 
+  Al ser Kotlin un lenguaje multipropósito se pueden desarrollar aplicaciones Android, de escritorio, web, para consola..</p>
+
+  <p>
+    En esta unidades se verán los <span class="negrita">fundamentos y la sintaxis de Kotlin</span> 
+    para más adelante poder usar el lenguaje dentro de <span class="d-word">Android Studio</span> y desarrollar aplicaciones móviles Android.
+    Así, si se quieren crear scripts Kotlin y probarlos se debe tener un JDK de Java instalado. 
+    Podriamos usar <a class="enlace" target="_blank" href="https://www.jetbrains.com/es-es/idea/">IntelliJ IDEA</a>  de JetBrains que es el IDE en el que se basa Android Studio.
+    
+  </p>
+
+  <figure><img src="UD2/images/ud2-2023-09-15-16-32-08.png" /><br><figcaption>IntelliJ IDEA</figcaption></figure>
+  <br>
+
+  <p>
+    o también se puede probar scripts de Kotlin de manera online en enlace oficial: <a class="enlace" target="_blank" href="https://play.kotlinlang.org/">https://play.kotlinlang.org/</a> 
+  </p>
+  
+  
+
+  <figure><img src="UD2/images/ud2-2023-09-15-16-31-13.png" /><br><figcaption>Play Kotlinlang</figcaption></figure>
+  <br>
+  
+  <p>
+    Pero como ya tenemos <span class="d-word">Android Studio</span> instalado, será esta la herramienta que utilizaremos tanto para desarrollar aplicaciones Android como para probar código Kotlin.
+    <br>
+    Para ello, tenemos varias opciones: 
+  </p>
+
+  <p>
+    Cogemos un proyecto nuevo (o reutilizamos alguno anterior, aunque ensuciaremos la estructura de ficheros y no es muy buena práctica) y creamos un fichero 
+    de Kotlin por ejemplo <span class="inline-file">Test.kt</span> y añadimos la función <span class="r-word">main</span> para nuestras pruebas.
+  </p>
+
+  <section class="marco-t inf">
+    <span class="icono info"> </span> Fíjate que el fichero Kotlin tiene la extensión <span class="negrita">.kt</span> 
+    </section>
+  <section class="marco-b">    
+  </section>
+
+  <figure><img src="UD2/images/test_code.gif" /><br><figcaption>Test File</figcaption></figure>
+  <br>
+    
+  <p>Veamos un ejemplo sencillo de lectura y escritura</p>
+
+  <section><pre><code class="language-kotlin">fun main(){
+    val variable:String
+    variable = readln()
+    println("Has escrito $variable")
+}</code></pre>
+  </section><br>
+
+  <p>Tras su ejecución espera a que escribamos algo y pulsemos intro, y lo escribe en pantalla.</p>
+
+  <figure><img src="UD2/images/Test_IO.gif" /><br><figcaption>Entrada/Salida</figcaption></figure>
+  <br>
+  
+
+  <section class="marco-t inf">
+    <span class="icono info"> </span>  Lectura y escritura
+    </section>
+  <section class="marco-b">
+      <span class="r-word">println()</span>  -> Escribe en salida estándar <br>
+      <span class="r-word">readln()</span>  -> Lee de entrada estándar (teclado)
+  </section>
+    
+
+  
+
+  <p>
+    Otra opción sería, también usando un proyecto, en nuestro caso el <span class="negrita">hello world</span>  inicial. 
+    Mediante el botón derecho sobre nuestra nuestro paquete podemos crear un nuevo <span class="d-word">fichero de Scratch</span>.
+
+  </p>
+
+  <figure><img src="UD2/images/ud2-2023-09-15-16-37-39.png" /><br><figcaption>Nuevo fichero de Scratch</figcaption></figure>
+  <br>
+
+  <p>
+    Seleccionamos el lenguaje de programación que queremos en nuestro caso Kotlin
+  </p>
+  <figure><img src="UD2/images/ud2-2023-09-15-16-38-39.png" /><br><figcaption>Seleccionand el lenguaje Kotlin</figcaption></figure>
+  <br>
+
+ 
+  <p>Veamos un ejemplo: <br>
+    En este caso utilizamos la función <span class="r-word">println()</span> y como vemos a la derecha nos muestra la salida por pantalla. 
+    Si creamos una variable nos indica de qué tipo es y si ponemos la variable nos indica qué valor tiene la variable en ese momento.
+    Hay que tener en cuenta qué un fichero scratch se ejecuta de arriba a abajo como podemos ver.</p>
+  
+
+ <figure><img src="UD2/images/Scratch_example.gif" /><br><figcaption></figcaption></figure>
+ <br>
+ 
+
+  <h3>Guía de estilo Kotlin</h3>
+
+    <p>En todo lenguaje de programación es importante que el <span class="negrita">código sea legible</span>. 
+      Las plataformas oficiales suelen crear <a class="enlace" target="_blank" href="guías de estilo">guías de estilo</a>  para que los desarrolladores las sigan y
+      es conveniente revisar dicha guía para desarrollar código correctamente. 
+      <br>
+      También se puede usar la opción <span class="negrita">Code -> Reformat Code (Ctrl+Alt+L)</span> del IDE para así que se formatee el código de manera ajustada
+      a las guías de estilo (siempre y cuando no se haya cambiado la configuración en el IDE).
+</p>
+    
+  <h3>Saludo en Kotlin</h3>
+  
+  <p>
+    Como ya se ha comentado los archivos en Kotlin tienen extensión <span class="negrita">.kt</span> y al contrario que en Java <span class="negrita">no requieren que todo sean clases</span> ,
+    puede existir funciones fuera de las clases, en concreto la función principal <span class="r-word">main</span> no es necesario que se encuentre dentro de una clase.
+    La función main puede recibir argumentos pero no es necesario. Tampoco es necesario indicar la visibilidad de la función (public/static).
+    La función <span class="r-word">println()</span> está disponible sin necesidad de usar el System.out de Java y 
+    la función <span class="r-word">readln()</span> captura como cadena lo introducido en consola por teclado
+    El ; Al final de cada instrucción es opcional pero <span class="negrita">por convenio no se debe utilizar</span> y
+    los comentarios tanto en línea como en bloques son como en Java <span class="r-word">//</span>  y <span class="r-word">/* */</span> 
+  </p>
+
+
+  <h3>Paquete e importaciones</h3>
+
+  <p>
+    Como en Java, el paquete que pertenece al archivo y las importaciones que se realicen se colocará en la parte superior del archivo
+  </p>
+
+  <figure><img src="UD2/images/ud2-2023-09-16-12-01-32.png" /><br><figcaption>Paquete e importaciones</figcaption></figure>
+  <br>
+
+  <h3>Tipos de datos en Kotlin</h3>
+  
+  <p class="sub-section">Numéricos</p>
+  
+  <p>Se indican con las palabras reservadas <span class="r-word">Int, Float, Long, Short, Byte y Double</span> 
+<ul>
+  <li>
+    Decimales:	<span class="negrita">Double</span>  (64 bits), <span class="negrita">Float</span>  (32 bits)
+  </li>
+  <li>
+    Enteros: 		<span class="negrita">Long</span>  (64 bits), <span class="negrita">Int</span>  (32 bits),
+     <span class="negrita">Short</span>  (18 bits), <span class="negrita">Byte</span>  (8 bits)
+  </li>
+</ul>
+<br>
+Ejemplos de literales:
+</p>
+  
+
+<figure><img src="UD2/images/ud2-2023-09-16-12-06-10.png" /><br><figcaption>Ejemplos literales numéricos</figcaption></figure>
+<br>
+
+
+<p>Kotlin permite el uso del <span class="negrita">carácter subrayado</span>  (guion bajo, _) en los <span class="negrita">literales numéricos</span> para facilitar la lectura de los mismos.
+ <br>
+Ejemplos de literales: <br>
+	<section><pre><code class="language-kotlin">2_000_000
+44_294_051
+6135_8442_0103_5610L</code></pre>
+  </section><br><br>
+</p>
+
+
+<p class="sub-section">Caracteres</p>
+
+
+<p>
+  Se indican con la palabra reservada <span class="r-word">Char</span> .
+</p>
+    
+<p>
+  Se utiliza la codificación UTF-16 por lo que los literales se pueden indicar con el carácter o con su representación UNICODE entre comillas simples.
+<br>
+Ejemplos de <span class="negrita">literales</span> :
+	<section><pre><code class="language-kotlin">'N'		->		'\u004E'
+'7'		->		'\u0037'</code></pre>
+  </section><br><br>
+
+No se pueden tratar como números.
+</p>
+<p>
+  Existen una serie de <span class="r-word">caracteres de escape</span> 
+  <ul>
+  <li>
+	\t&nbsp;&nbsp;&nbsp;Tabulación	
+</li>
+  <li>
+    \b&nbsp;&nbsp;&nbsp;Retroceso
+  </li>
+  <li>
+    	\r&nbsp;&nbsp;&nbsp;Retorno de carro
+  </li>
+  <li>
+    	\n&nbsp;&nbsp;&nbsp;Salto de línea
+  </li>
+  <li>
+    	\'&nbsp;&nbsp;&nbsp;Apostrofe
+  <li>
+    	\"&nbsp;&nbsp;&nbsp;Comilla doble
+  </li>
+  <li>
+    	\\&nbsp;&nbsp;&nbsp;Backslash
+  </li>
+  <li>
+    	\$&nbsp;&nbsp;&nbsp;Símbolo de dólar	
+  </li>
+  <li>
+    \u+XXXX&nbsp;&nbsp;&nbsp;Símbolo Unicode (4 dígitos hexadecimales)
+  </li>
+</ul>
+</p>
+
+
+<p class="sub-section">Booleanos</p>
+
+<p>Se indican con la palabra reservada <span class="r-word">Boolean</span>.
+  <br>
+Los valores posibles son <span class="cursiva">verdadero</span>  y <span class="cursiva">falso</span> y sus <span class="negrita">literales</span> :
+
+	<section><pre><code class="language-kotlin">true
+false</code></pre>
+  </section><br><br>
+
+</p>
+
+<p class="sub-section">Cadenas</p>
+
+<p>Se indican con la palabra reservada <span class="r-word">String</span> .
+
+  <br>
+
+Los literales de cadenas <span class="negrita"> se indican con comillas dobles:</span>
+<section><pre><code class="language-kotlin">"Hello there!"
+"Rick Sanchez"</code></pre>
+</section><br><br>
+</p>
+
+<p>
+  Con las <span class="negrita">triples comillas dobles</span> la cadena admite saltos de línea, se conocen como <span class="subrayado">raw strings</span>
+   (cadenas en crudo) en las que cuentan todos los caracteres englobados entre las comillas.
+  </p>
+
+  <section><pre><code class="language-kotlin">"""Esto es un texto
+    que ocupa varias líneas
+    o se muestra en varias
+    lineas"""
+</code></pre>
+  </section><br><br>
+
+  
+  <p>Se pueden eliminar los espacios en blanco del principio y del final y los márgenes de la izquierda.</p>
+  
+  <section><pre><code class="language-kotlin">"""|Esto es un texto
+    |que ocupa varias líneas
+    |o se muestra en varias
+    |lineas""".trimMargin()
+</code></pre>
+  </section><br><br>
+
+<p>Por defecto el carácter ' <span class="negrita">|</span> ' es el delimitador del margen pero se puede cambiar: <span class="r-word">trimMargin(">")</span> </p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-12-48-27.png" /><br><figcaption>trimMargin()</figcaption></figure>
+<br>
+
+<p>Los <span class="negrita">string templates</span> (plantillas de cadenas) permiten integrar las variables dentro de los strings, 
+  así usando el símbolo <span class="r-word">$</span> seguido del nombre de una variable, Kotlin lo sustituirá por el valor almacenado en la variable.
+
+Si la variable es un objeto o se quiere operar con ella se debe envolver en llaves <span class="negrita">{ }</span>.
+</p>
+
+<section><pre><code class="language-kotlin">"El descuento es un $discount %"
+"El precio es ${product.price} €"
+
+"""	|Libreta de cuadros $notebookPrice €
+  |Bolígrafo azul $penPrice €
+  |    Total: ${notebookPrice + penPrice}
+""".trimMargin()
+</code></pre>
+</section><br><br>
+
+<p>Se recomienda siempre el uso de <span class="negrita">string templates</span> y de <span class="negrita">raw strings</span>. 
+  Aunque se pueden concatenar cadenas con el carácter <span class="negrita">+</span> pero se debe evitar su uso. 
+  También se debe evitar el uso de varias instrucciones seguidas con println.
+</p>
+
+<p class="sub-section">Arrays</p>
+
+<p>Los arrays son <span class="negrita">estructuras de datos de longitud fija</span> que permiten almacenar varios valores del mismo tipo (números, caracteres, strings, booleanos, objetos).</p>
+
+<p>1 2 3 4 5 <br>
+	"Rick", "Morty", "Summer" 
+</p>
+
+<p>
+  Más adelante incidimos en ellos.
+</p>
+
+<h3>Declaración de variables</h3>
+
+<p>Mediante la palabra reservada <span class="r-word">var</span>  se declaran variables. <br>
+
+Las variables son como cajas que almacenan valores y estos valores pueden cambiar durante la ejecución del programa. <br>
+
+Kotlin es un lenguaje de tipado <span class="negrita">estático</span>, esto significa que cuando una variable es de un tipo, ese tipo no puede cambiar (como Java).
+
+Al declarar una variable se puede indicar o no el tipo de dato que se almacenara. <br>
+
+Si no se indica, Kotlin lo deducirá (inferred) dependiendo del tipo de dato que se asigne.
+</p>
+
+<p>Cuando se declara una variable obligatoriamente se debe realizar una de estas dos opciones:
+
+  <ul>
+    <li><span class="negrita">Indicar el tipo</span> de dato que se almacenará.</li>
+    <li><span class="negrita">Indicar el valor</span> que se almacenará (Kotlin deducirá el tipo de dato).</li>
+  </ul>
+<br>
+También se puede declarar una variable realizando las dos acciones:
+	indicar el tipo de dato y el valor que almacenará.
+</p>
+
+<p class="sub-section">Declaración de variables de tipos "simples"</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-12-58-32.png" /><br><figcaption>Declaración variables de tipos simples</figcaption></figure>
+<br>
+
+<p class="sub-section">Declaración de arrays</p>
+
+<p>Son objetos y se crean mediante la clase <span class="r-word">Array</span> , por ello disponen de los métodos <span class="r-word">get</span>  y <span class="r-word">set</span> 
+   pero por convenciones está disponible también el uso de corchetes <span class="negrita">[ ]</span>.</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-13-00-16.png" /><br><figcaption>Declarando Arrays</figcaption></figure>
+<br>
+
+<p>Se puede usar el constructor de la clase Array para indicar el tamaño e incluso una <span class="negrita">función lambda</span> para rellenar los elementos</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-13-01-35.png" /><br><figcaption>Usando función lambda</figcaption></figure>
+<br>
+
+<p>El código escrito entre llaves es una <span class="negrita">función lambda</span> (anónima), que se explicarán más adelante.
+
+En esta función lambda se dispone de la variable <span class="r-word">it</span>  que representa el número de iteración comenzando por cero.
+
+Como Android Studio por defecto tiene activadas las pistas en el código (hints), si se deja un salto de línea entre las llaves se mostrará esta información.
+</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-13-03-25.png" /><br><figcaption>Inicializando Arrays con función lambda</figcaption></figure>
+<br>
+
+<p>Creando un Array de los primeros 10 elementos pares</p>
+
+
+<section><pre><code class="language-kotlin">val a = Array(10){
+    it*2
+}
+
+for(b in a) print("$b ")</code></pre>
+</section><br><br>
+
+<p class="sub-section">Declaración de arrays multidimensionales</p>
+
+<p>Los <span class="negrita">arrays multidimensionales</span> son arrays en los que cada elemento es a su vez un array.
+
+Los más comunes son las matrices que se pueden representar como una tabla.
+
+Hay varias maneras de declarar un array multidimensional en Kotlin:
+</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-13-10-35.png" /><br><figcaption>Creando Arrays Multidimensionales</figcaption></figure>
+<br>
+
+<p>El <span class="negrita">acceso</span> a los elementos de la matriz se realiza <span class="negrita">con los índices de la fila y la columna.</span></p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-13-19-41.png" /><br><figcaption>Acceso a matriz</figcaption></figure>
+<br>
+
+<p class="sub-section">El tipo Any</p>
+
+<p>Todos los tipos de variables son clases y en la jerarquía de Kotlin tienen una superclase que es <span class="r-word">Any</span>  (en Java sería Object).
+
+
+Se puede declarar una variable indicando el tipo Any y luego asignar cualquier tipo de dato. Esta acción puede tener utilidad en algunos casos como se verá más adelante.
+</p>
+ 
+<figure><img src="UD2/images/ud2-2023-09-16-13-23-47.png" /><br><figcaption>Usando tipo Any</figcaption></figure>
+<br>
+
+<p>Para poder usar una variable esta debe almacenar un valor.
+
+Existe un tipo de dato que permite dejar vacía una variable  <span class="r-word">Unit</span>  (en Java sería void).
+
+Se puede declarar una variable indicando el tipo Any y luego asignar cualquier tipo de dato. Esta acción puede tener utilidad en algunos casos como se verá más adelante.
+</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-13-25-14.png" /><br><figcaption>Unit</figcaption></figure>
+<br>
+
+
+<p class="sub-section">Ámbito de las variables</p>
+
+<p>El ámbito de una variable es el lugar donde se puede utilizar.
+
+Como norma general una variable <span class="negrita">se podrá utilizar dentro de todo el bloque de código en el que se declare</span> que <span class="negrita">se delimita por las llaves { }</span>.
+<br>
+Una variable se podrá usar dentro de todo ese bloque, incluidos otros bloques que se contengan dentro.
+
+Si una variable <span class="negrita">se declara fuera de un bloque { }</span> se podrá utilizar en <span class="negrita">todos los archivos del proyecto</span>.
+</p>
+
+<h3>Conversión de tipos</h3>
+
+<p>Si se quiere realizar una conversión de tipo de dato siempre <span class="negrita">se deberá usar un método de la clase del tipo de dato a convertir</span>.
+
+Por ejemplo, para convertir un <span class="negrita">Double</span> a un <span class="negrita">Int</span>, se deberá usar sobre la variable decimal el método toInt de la clase Double.
+
+Esta acción además truncará el valor y se perderá la parte decimal.
+</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-13-29-00.png" /><br><figcaption>Conversión de tipos</figcaption></figure>
+<br>
+
+<p>Los métodos para la conversión de tipos suelen ir precedidos de to:
+
+<section><pre><code class="language-kotlin">toDouble()		toFloat()			toLong()			toInt()
+toChar()		toShort()			toByte()			toString()</code></pre>
+</section><br><br>
+
+
+Cuando se pide un dato por teclado este siempre es una cadena, así que si se pide un número se debe convertir a entero o decimal según convenga:
+</p>
+
+<section><pre><code class="language-kotlin">var number = readln().toInt()</code></pre>
+</section><br><br>
+
+<h3>Declaración de constantes</h3>
+<p>Se usa la palabra reservada <span class="r-word">val</span>  para declarar constantes. <br>
+
+Su uso es similar al de las variables declaradas con <span class="r-word">var</span>  con la excepción de que una vez asignado un valor ya no se podrá cambiar durante la ejecución.
+</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-13-32-06.png" /><br><figcaption>Error en compilación</figcaption></figure>
+<br>
+
+<p>Aunque sí que se pueden asignar durante la ejecución del programa por ejemplo tras pedir un dato al usuario. 
+  Justo después de definirla, con lo que deberíamos hacerlo en la misma línea</p>
+
+  <figure><img src="UD2/images/ud2-2023-09-16-13-36-11.png" /><br><figcaption>inicialización con val</figcaption></figure>
+  <br>
+  
+<p>Los array y todos los objetos se pueden declarar como <span class="negrita">val</span> y posteriormente cambiar los valores que almacenan.
+
+Esto es debido a que son objetos y como val no se podrá cambiar la referencia que almacena, aunque sí se podrán cambiar los valores del objeto.
+</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-13-37-37.png" /><br><figcaption>val con arrays</figcaption></figure>
+<br>
+
+<p>Se puede usar la palabra reservada <span class="r-word">const</span>  previamente a la declaración con <span class="negrita">val</span>
+   para declarar constantes de valores conocidos.</p>
+   
+<figure><img src="UD2/images/ud2-2023-09-16-13-38-47.png" /><br><figcaption>Constantes</figcaption></figure>
+<br>
+
+<p>Estas constantes no podrán ser asignadas en tiempo de ejecución por eso deben de estar fuera de las funciones.</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-13-39-29.png" /><br><figcaption>Error declarando constante</figcaption></figure>
+<br>
+
+<p>Las constantes con <span class="negrita">const</span> sí se pueden declarar dentro de <span class="negrita">objetos declarados como singleton</span>
+   (clase con una única instancia que se verán más adelante).</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-13-41-26.png" /><br><figcaption>const dentro de objetos</figcaption></figure>
+<br>
+
+
+<h3>Operadores</h3>
+
+<p>Permiten crear expresiones. Son similares a los de Java:
+
+  <ul>
+    <li>
+      De signo:		+    -
+      </li>
+    <li>
+      Aritméticos: 	+    -    *    /    %
+    </li>
+    <li>
+      Asignación:		=    +=    -=    *=    /=    %=
+      </li>
+    <li>
+      Incremento:	++    --    (puede ser pre-incremento o post-incremento)
+    </li>
+    <li>
+      Relacionales:	==    !=    &lt;    >    &lt;=    >=
+      </li>
+    <li>
+      Lógicos:			&&    ||    !
+    </li>
+    <li>
+      A nivel de bit:	and    or    xor    inv    shl (desplazamiento &lt;-)    shr (desplazamiento ->)
+    </li>
+  </ul>
+</p>
+
+</section> <!-- FIN SECCION-->
+
+<!--*********************************************************Null Safety***********************************************************-->
+<section class="apartado">
+<a name="sNullSafety"></a>
+<h2>Null Safety</h2>
+
+<p>Uno de los errores más comunes y temidos que puede producirse cuando se programa es el odiado <span class="negrita">NullPointerException</span>.</p>
+
+<p>Este error ocurre cuando el programador no inicializa un objeto o por alguna razón no se ha inicializado.</p>
+
+<p>Por defecto Kotlin no permite asignar <span class="r-word">null</span>  a las variables para evitar posibles errores.</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-13-47-37.png" /><br><figcaption>Error asignando null a una variable</figcaption></figure>
+<br>
+
+<p>Pero Kotlin sí que tiene soporte para el valor <span class="r-word">null</span>  de forma nativa.</p>
+
+<p>Para declarar variables que puedan almacenar <span class="r-word">null</span>  en la declaración se debe usar el símbolo <span class="r-word">?</span> 
+  detrás del tipo de dato de la variable.</p>
+
+  <figure><img src="UD2/images/ud2-2023-09-16-13-49-15.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+<p>Kotlin evitará realizar acciones que puedan dar error si la variable es null</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-13-49-54.png" /><br><figcaption>Nos previene de posibles nulos</figcaption></figure>
+<br>
+
+<p>Como en Java, para las variables que pueden almacenar null se puede hacer una comprobación previa antes de intentar acceder a ella.</p>
+<figure><img src="UD2/images/ud2-2023-09-16-13-50-59.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Con el operador <span class="r-word">?</span> también permite realizar las comprobaciones anteriores de una manera más sencilla y reduciendo código.</p>
+<figure><img src="UD2/images/ud2-2023-09-16-13-51-28.png" /><br><figcaption>Operador ?</figcaption></figure>
+<br>
+
+<p>Este operador permite comprobaciones simultaneas.</p>
+<figure><img src="UD2/images/ud2-2023-09-16-13-52-00.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Operador Elvis ?:</h3>
+<p>El operador Elvis <span class="r-word">?:</span>  permite ofrecer un valor por defecto cuando una variable almacene el valor nulo.</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-13-54-17.png" /><br><figcaption>Operador Elvis</figcaption></figure>
+<br>
+
+<p>El uso más común es conseguir un valor distinto de null cuando una propiedad es null o un método devuelve null.</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-13-54-54.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Este operador también se puede usar para <span class="negrita">lanzar</span> una excepción.</p>
+<figure><img src="UD2/images/ud2-2023-09-16-13-56-15.png" /><br><figcaption>Lanzando excepciones con el operador Elvis</figcaption></figure>
+<br>
+
+<p>Si se necesita ejecutar varias instrucciones tras el operador Elvis, estas se deberán incluir en un bloque de instrucciones tipo <span class="negrita">run { }</span> (se explicará con detalle más adelante).
+<br>
+Se debe tener en cuenta que la última instrucción del bloque debe ser el valor a asignar en el caso de que la variable sea null.
+</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-13-57-36.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>El operador !!</h3>
+<p>Cuando <span class="negrita">se esté muy seguro</span>de que una variable que <span class="negrita">puede almacenar null no lo almacena</span>,
+  se puede utilizar el operador <span class="r-word">!!</span>  para evitar la comprobación de Kotlin.
+
+En este caso si la variable almacena null se lanzará la excepción <span class="negrita">NullPointerException</span>
+
+<figure><img src="UD2/images/ud2-2023-09-16-14-04-53.png" /><br><figcaption></figcaption></figure>
+<br>
+Este operador suele aparecer en migraciones de Java a Kotlin.
+</p>
+
+<section class="marco-t warn">
+  <span class="icono warning"> </span> La filosofía de Kotlin es contraria a su uso. Es decir, ¡no se se recomienda usarlo!
+  </section>
+<section class="marco-b">
+    
+</section>
+
+</section> <!-- FIN SECCION Null Safety-->
+
+<!--*********************************************************Expressiones Regulares***********************************************************-->
+<section class="apartado">
+<a name="sExpresionesRegulares"></a>
+<h2>Expressiones Regulares</h2>
+
+<p>En todo lenguaje de programación es necesario comprobar si los valores introducidos por el usuario cumplen unas reglas específicas.
+
+Una acción muy típica es comprobar si el usuario ha introducido un valor y si ese valor es una cadena vacía o no.
+
+<figure><img src="UD2/images/ud2-2023-09-16-14-06-17.png" /><br><figcaption></figcaption></figure>
+<br>
+
+Estas comprobaciones en ocasiones pueden no ser suficientes para los requisitos del programa, en ese caso se deben usar <span class="negrita">expresiones regulares</span>.
+</p>
+
+<p>Las expresiones regulares son patrones de caracteres que permiten comprobar si una cadena de caracteres se ajusta al patrón o no.
+  <br>Ejemplos típicos de comprobaciones con expresiones regulares:
+  <ul>
+    <li>Que un nombre no tenga números.</li>
+    <li>Que tenga una longitud concreta.</li>
+    <li>Que se siga un orden en los caracteres (DNI -> 8 números y 1 letra).</li>
+    <li>Que sea un email.</li>
+    <li>...</li>
+  </ul>
+ <br>
+
+Las expresiones regulares existen en muchos lenguajes de programación así que es importante conocer su funcionamiento.
+</p>
+
+<p>Para crear una expresión regular en Kotlin se utiliza la clase Regex:
+
+	<section><pre><code class="language-kotlin">val checkDNI = Regex("expresión_regular")</code></pre>
+  </section><br><br>
+
+Se permite indicar modificadores a la expresión regular:
+
+	<section><pre><code class="language-kotlin">val check = Regex("expresión_regular", RegexOption.IGNORE_CASE)</code></pre>
+  </section><br><br>
+
+El diseño de expresiones regulares es una disciplina cuyo nivel de dificultad aumenta conforme se quieren comprobar patrones más complejos.
+A continuación, se verá una pequeña guía del uso de las expresiones regulares que servirá para aprender a utilizarlas de una manera básica. 
+</p>
+
+<p><span class="negrita">Agrupación</span>
+
+<ul>
+  <li>[ ]		[abc]	contiene cualquier carácter de entre los indicados.</li>
+  <li>[^ ]		[^abc]	contiene cualquier carácter que no sea de los indicados.	</li>
+  <li>[ - ]		[0-9]	contiene cualquier carácter que se encuentre en el rango.</li>
+  <li>[^ - ]		[^A-B]	contiene cualquier carácter que no esté en el rango.	</li>
+  <li>( | )		(x|y)	contiene uno de los caracteres (separador |).</li>
+</ul>
+	
+<br>
+<span class="negrita">Cantidad de caracteres</span>
+<ul>
+  <li>{ }		a{3}		contiene exactamente 3 'a' seguidas.</li>
+  <li>{ ,}		a{3,}		contiene 3 o más 'a' seguidas.</li>
+  <li>{ , }		a{3,5}		contiene 3, 4 o 5 'a' seguidas.</li>
+  <li>*		a*			contiene 0 o más 'a'.		Similar: a{0, }</li>
+  <li>+		a+			contiene 1 o más 'a'.		Similar: a{1, }</li>
+  <li>?			a?			contiene 0 o 1 'a'.			Similar: a{0,1}</li>
+</ul>
+
+</p>
+
+<p><span class="negrita">Inicio – fin</span>
+  <ul>
+    <li>^		^hola		empieza con "hola".	</li>
+    <li>$		hola$		acaba con "hola".</li>
+    <li>^ $		^hola$	exactamente "hola".</li>
+  </ul>
+
+
+
+
+<span class="negrita">Otros</span>
+<ul>
+  <li><span class="negrita">\\s</span>	el carácter espacio en blanco.</li>
+  <li><span class="negrita">\\S</span>	cualquier carácter que no sea espacio en blanco.</li>
+  <li><span class="negrita">\\w</span>	una letra.</li>
+  <li><span class="negrita">\\C</span>	no es una letra.</li>
+  <li><span class="negrita">\\d</span>	un dígito.				Similar: [0-9]</li>
+  <li><span class="negrita">\\D</span>	no es un dígito.		Similar: [^0-9]</li>
+</ul>
+
+</p>
+
+<p>Ejemplos de expresiones regulares en Kotlin</p>
+<section><pre><code class="language-kotlin">// tiene 4 minúsculas
+"[a-z]{4}"
+
+// tiene 8 caracteres: letras y/o números
+"[a-zA-Z0-9]{8}"
+
+// 7 u 8 dígitos seguidos de 1 letra (DNI)
+"^\d{7,8}\w{1}$"
+
+// conjunto de letras, seguidas de arroba seguida, seguidas de un
+// conjunto de letras, seguidas de un punto y seguido de 2 o 3
+// letras  patrón simple para un email: rick_sanchez@mail.com
+"^[a-z_.]+@[a-z]+\.[a-z]{2,3}$"
+</code></pre>
+</section><br><br>
+
+
+<p>Para comprobar si una variable cumple un patrón establecido en una expresión regular se pueden utilizar tanto métodos de la clase String como métodos de la clase <span class="r-word">Regex</span>:
+
+
+<figure><img src="UD2/images/ud2-2023-09-16-14-21-54.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+La clase Regex tiene más métodos con diferentes funcionalidades, entre ellos:
+	<ul>
+    <li>replace
+    </li>
+    <li>find</li>
+  </ul>	
+</p>
+
+<p>Para crear expresiones regulares se pueden consultar Cheat Sheets:
+	<a class="enlace" target="_blank" href="https://quickref.me/regex">https://quickref.me/regex</a>
+
+<br>
+También existen herramientas para comprobar el funcionamiento de una expresión regular:
+	<a class="enlace" target="_blank" href="https://regex101.com/">https://regex101.com/</a>
+</p>
+<figure><img src="UD2/images/ud2-2023-09-16-14-22-42.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Excepciones</h3>
+
+<p>Las excepciones se capturan con bloques <span class="r-word">try – catch</span>  de la misma manera que en Java.</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-14-23-34.png" /><br><figcaption>Try - catch</figcaption></figure>
+<br>
+
+</section> <!-- FIN SECCION Expresiones Regulares-->
+
+<!--*********************************************************Control de Flujo***********************************************************-->
+<section class="apartado">
+<a name="sControldeFlujo"></a>
+<h2>Control de Flujo</h2>
+<p>Son instrucciones que permiten alterar el flujo normal de las instrucciones del programa. Son muy similares a las de cualquier otro lenguaje.</p>
+
+<p>
+  <ul>
+    <li>if</li>
+    <li>if – else</li>
+    <li>if – else if – else</li>
+    <li>when</li>
+    <li>for</li>
+    <li>while</li>
+    <li>do – while</li>
+    <li>repeat</li>
+  </ul>
+</p>
+
+<p>Guía de estilo para las llaves <span class="negrita">{ }</span>:</p>
+
+<p>
+  <ul>
+    <li>
+      Las llaves <span class="negrita">no son necesarias</span> para ramas de <span class="r-word">when</span> ni expresiones de <span class="r-word">if</span> 
+       que no tengan más de una rama de <span class="r-word">else</span>  y <span class="negrita">que quepan en una sola línea</span>.
+      </li>
+    <li>
+      Las llaves <span class="negrita">son necesarias</span> para cualquier rama de <span class="r-word">if, for o when, do</span>,
+        y para sentencias y expresiones de <span class="r-word">while</span> , incluso cuando el cuerpo está vacío o contiene una sola instrucción.
+    </li>
+  </ul>
+</p>
+
+<h3>if, if-else y if-else if-else</h3>
+
+<p>Si se puede escribir en una sola línea no se ponen las llaves y es preferible escribirlo así.</p>
+
+<figure><img src="UD2/images/ud2-2023-09-16-23-59-05.png" /><br><figcaption>sentencias if - else</figcaption></figure>
+<br>
+
+<p class="sub-section">if como una expresión</p>
+
+<p>La instrucción <span class="negrita">if</span> se puede utilizar como una expresión, por ejemplo para asignar un valor a una variable como en el ejemplo ya visto:
+
+<figure><img src="UD2/images/ud2-2023-09-17-00-01-02.png" /><br><figcaption>if como expresión</figcaption></figure>
+<br>
+
+En este caso se puede escribirla expresión de la siguiente forma, siendo obligatorio incluir la rama del else.
+
+<figure><img src="UD2/images/ud2-2023-09-17-00-02-29.png" /><br><figcaption>if como expresión 2</figcaption></figure>
+<br>
+
+
+Si se usa como una expresión <span class="negrita">la rama de else es obligatoria</span>.
+</p>
+
+<p>Al usar la instrucción <span class="negrita">if</span> como expresión también se pueden utilizar las llaves para realizar varias instrucciones,
+   en este caso <span class="negrita">la última instrucción de las llaves debe ser el valor a asignar</span>.
+
+Si se usa como expresión y además, se usan bloques de código la última expresión debe ser el valor a asignar sin necesidad de igualar a la variable. 
+</p>
+
+<figure><img src="UD2/images/ud2-2023-09-17-00-04-00.png" /><br><figcaption>when. Una instrucción por rama</figcaption></figure>
+<br>
+
+<h3>when</h3>
+<p>Condición con múltiples ramas (similar a switch de Java):
+<figure><img src="UD2/images/ud2-2023-09-17-00-05-39.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+Si hay varias instrucciones en alguna rama, se debe poner las llaves a todas las ramas:
+<figure><img src="UD2/images/ud2-2023-09-17-00-06-05.png" /><br><figcaption>when. Varias instrucciones por rama</figcaption></figure>
+<br>
+</p>
+
+<p>Con when se pueden agrupar valores:
+<figure><img src="UD2/images/ud2-2023-09-17-00-07-21.png" /><br><figcaption></figcaption></figure>
+<br>
+
+También se pueden usar expresiones para evaluar:
+<figure><img src="UD2/images/ud2-2023-09-17-00-07-58.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</p>
+
+<p>Se puede usar <span class="r-word">in</span>  o <span class="r-word">!in</span>  para usar rangos y colecciones para evaluar:
+<figure><img src="UD2/images/ud2-2023-09-17-00-08-33.png" /><br><figcaption></figcaption></figure>
+<br>
+
+Se puede evaluar si la variable es de un tipo o no con <span class="r-word">is</span>  o <span class="r-word">!is</span> :
+<figure><img src="UD2/images/ud2-2023-09-17-00-08-53.png" /><br><figcaption></figcaption></figure>
+<br>
+</p>
+<p>Hay casos en los que <span class="subrayado">la rama else es obligatoria</span>, por ejemplo si el resultado de la expresión a evaluar es un <span class="negrita">booleano</span>:
+<figure><img src="UD2/images/ud2-2023-09-17-00-13-20.png" /><br><figcaption></figcaption></figure>
+<br>
+
+Si no se indica ninguna variable para evaluar when servirá para sustituir bloques if-else:
+<figure><img src="UD2/images/ud2-2023-09-17-00-13-46.png" /><br><figcaption></figcaption></figure>
+<br>
+</p>
+
+<p>Se puede usar como expresión, en ese caso la rama else es obligatoria a menos que el compilador pueda comprobar que se están cubriendo todas las opciones:
+
+  <figure><img src="UD2/images/ud2-2023-09-17-00-15-19.png" /><br><figcaption>Se necesita rama else</figcaption></figure>
+  <br>
+  <figure><img src="UD2/images/ud2-2023-09-17-00-15-40.png" /><br><figcaption>No se necesita rama else, el compilador sabe que no hay más opciones.</figcaption></figure>
+  <br>
+  
+</p>
+
+<h3>for</h3>
+<p>Los bucles for son un poco diferentes en Kotlin debido a que utilizan rangos, progresiones y colecciones para las iteraciones.
+
+<ul>
+  <li>
+    <span class="negrita">Rangos</span>: serie ascendente/descendente de Int, Long o Char.
+  </li>
+  <li>
+    <span class="negrita">Progresiones</span>: como un rango pero con un parámetro que indica el paso entre los elementos de la progresión.
+  </li>
+  <li>
+    <span class="negrita">Colecciones</span>: conjuntos de elementos como arrays.
+  </li>
+</ul>
+</p>
+
+
+<p class="sub-section">rangos y progresiones</p>
+<p>Existen diferentes maneras de crear rangos y progresiones. En la imagen de la izquierda se muestra cómo se crean, 
+  pero por defecto Android Studio tiene activadas las pistas en el código (hints). Una vez creado el rango se verá como en la imagen de la derecha mostrando más información.
+Todos los rangos se pueden usar como progresiones con paso 1 por defecto o se pueden convertir en progresiones indicando el paso explícitamente como en el último ejemplo.
+
+<figure><img src="UD2/images/ud2-2023-09-17-00-20-21.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</p>
+
+<p class="sub-section">bucles for para rangos, progresiones y colecciones</p>
+
+<p>Los bucles for utilizan <span class="negrita">rangos, progresiones y colecciones</span> y para recorrerlos se indica con la palabra <span class="r-word">in</span> .
+<figure><img src="UD2/images/ud2-2023-09-17-00-22-20.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</p>
+<p>También funciona con rangos de caracteres:
+  <figure><img src="UD2/images/ud2-2023-09-17-00-23-22.png" /><br><figcaption>For con rango de caracteres</figcaption></figure>
+  <br>
+  
+</p>
+
+<p>La instrucción for permite recorrer objetos que provean un <span class="negrita">iterator</span> como <span class="subrayado">strings, listas, arrays o colecciones.</span>
+<br>
+Se puede acceder a la posición de dos maneras.
+<figure><img src="UD2/images/ud2-2023-09-17-00-24-41.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</p>
+
+<h3>while y do-while</h3>
+<p>while: primero comprueba la condición, es posible que no se ejecute el cuerpo
+
+<figure><img src="UD2/images/ud2-2023-09-17-00-26-03.png" /><br><figcaption>while</figcaption></figure>
+<br>
+
+do-while: la condición se evalúa después de ejecutar el cuerpo, así el cuerpo se ejecuta al menos una vez.
+<figure><img src="UD2/images/ud2-2023-09-17-00-26-33.png" /><br><figcaption>do-while</figcaption></figure>
+<br>
+
+</p>
+
+
+<h3>repeat</h3>
+<p>La función <span class="r-word">repeat</span> sirve para repetir el código del cuerpo las veces indicadas, internamente ejecuta un bucle for.
+<figure><img src="UD2/images/ud2-2023-09-17-00-27-52.png" /><br><figcaption>repeat</figcaption></figure>
+<br>
+
+</p>
+
+<h3>break, continue y return</h3>
+
+<p>Kotlin dispone de las tres maneras típicas de romper el flujo de un bucle.
+
+  <ul>
+    <li><span class="negrita">return</span>: finaliza el bucle y la función donde se encuentre el mismo.</li>
+    <li><span class="negrita">break</span>: finaliza el bucle donde se encuentre.</li>
+    <li><span class="negrita">continue</span>: finaliza la iteración actual del bucle donde se encuentre.</li>
+  </ul>
+</p>
+<p>En Kotlin las instrucciones se pueden etiquetar mediante el carácter <span class="negrita">@</span> de la siguiente manera <span class="d-word">nombreEtiqueta@</span>
+   de esta manera se puede romper el flujo de cualquier serie de bucles anidados.
+<br>
+Asi, poniendo etiquetas, un break finalizará el bucle al que esté etiquetando.
+<figure><img src="UD2/images/ud2-2023-09-17-00-29-59.png" /><br><figcaption>break etiquetas</figcaption></figure>
+<br>
+
+</p>
+
+</section> <!-- FIN SECCION Control de Flujo-->
+
+<!--*********************************************************Colecciones***********************************************************-->
+<section class="apartado">
+<a name="sColecciones"></a>
+<h2>Colecciones</h2>
+
+<p>Las <span class="negrita">colecciones</span> son un tipo de dato que permiten almacenar un número variable de elementos, cero o más.
+
+Normalmente, en una colección se almacenarán elementos del mismo tipo de dato.
+
+Se pueden almacenar datos de diferente tipo pero en este caso se deberá tener especial cuidado cuando se use la colección.
+
+Además, las colecciones pueden almacenar el valor <span class="negrita">null</span> en alguno de sus elementos.
+Existen cuatro tipos de colecciones en Kotlin:
+<p><strong>Array</strong>:</p>
+<ul>
+<li>Colecci&oacute;n de elementos.</li>
+<li>Se accede a los elementos mediante el &iacute;ndice de su posici&oacute;n.</li>
+<li>Se pueden repetir elementos.</li>
+<li>Dos arrays no son iguales aunque contengan los mismos elementos en la misma posici&oacute;n</li>
+</ul>
+<p><strong>List</strong>:</p>
+<ul>
+<li>Colecci&oacute;n <strong>ordenada</strong> de elementos.</li>
+<li>Se accede a los elementos mediante el &iacute;ndice de su posici&oacute;n.</li>
+<li>Se pueden repetir elementos.</li>
+<li>Dos List son iguales si contienen los mismos elementos y en la misma posici&oacute;n.</li>
+</ul>
+<p><strong>Set</strong>:</p>
+<ul>
+<li>Colecci&oacute;n de elementos <strong>sin orden</strong>.</li>
+<li>No se pueden repetir elementos dentro de un Set.</li>
+<li>Dos Set son iguales si contienen los mismos elementos sin importar el orden.</li>
+</ul>
+<p><strong>Map</strong>:</p>
+<ul>
+<li>Tambi&eacute;n llamados diccionarios.</li>
+<li>Un Map es un conjunto de pares <span class="negrita">clave-valor</span> (key-value), no se puede repetir la clave.</li>
+<li>Dos Map son iguales si contienen los mismos pares clave-valor sin importar el orden.</li>
+</ul>
+</p>
+
+<p>Para las <span class="negrita">List, los Set y los Map</span>, Kotlin dispone de dos versiones.
+
+  <ul>
+    <li><span class="negrita">Immutable</span>:
+      <ul>
+        <li>No se permite ni añadir ni eliminar elementos a la colección.</li>
+        <li>No se permite modificar ningún elemento de la colección.</li>
+      </ul>
+    </li>
+  </ul>
+
+	<ul>
+    <li><span class="negrita">Mutable</span>:
+      <ul>
+        <li>Se permite añadir, eliminar y modificar los elementos de la colección.</li>        
+      </ul>
+    </li>
+  </ul>
+		
+  <br>		
+</p>
+
+
+<h3>List y MutableList</h3>
+<p>
+Sean mutables o no se pueden declarar tanto con <span class="r-word">val</span>  como con <span class="r-word">var</span>.
+
+Es su funcionamiento interno el que permite que se puedan modificar o no.
+<figure><img src="UD2/images/ud2-2023-09-17-00-41-49.png" /><br><figcaption>Creación de list</figcaption></figure>
+<br>
+<figure><img src="UD2/images/ud2-2023-09-17-00-42-14.png" /><br><figcaption>Creación de mutablelist</figcaption></figure>
+<br>
+
+</p>
+
+
+
+<p>Algunas operaciones sobre List y MutableList
+<section class="marco-t warn">
+  <span class="icono warning"> </span> Las operaciones que modifican solo son aplicables a MutableList
+  </section>
+<section class="marco-b">
+    
+</section>
+<figure><img src="UD2/images/ud2-2023-09-17-00-43-24.png" /><br><figcaption>Operaciones sobre list y mutablelist</figcaption></figure>
+<br>
+
+</p>
+
+<h3>Set y MutableSet</h3>
+<p class="sub-section">set</p>
+<figure><img src="UD2/images/ud2-2023-09-17-00-44-59.png" /><br><figcaption>set</figcaption></figure>
+<br>
+
+<p class="sub-section">MutableSet</p>
+<figure><img src="UD2/images/ud2-2023-09-17-00-45-22.png" /><br><figcaption>MutableSet</figcaption></figure>
+<br>
+
+<p>Algunas operaciones sobre Set y MutableSet
+<section class="marco-t warn">
+  <span class="icono warning"> </span> Las operaciones que modifican solo son aplicables a MutableSet
+  </section>
+<section class="marco-b">
+    
+</section>
+<figure><img src="UD2/images/ud2-2023-09-17-00-47-36.png" /><br><figcaption>Set y MutableSet</figcaption></figure>
+<br>
+
+</p>
+
+<h3>Map</h3>
+<p>Creación de Map</p>
+<figure><img src="UD2/images/ud2-2023-09-17-00-48-58.png" /><br><figcaption>Creación de Map</figcaption></figure>
+<br>
+
+<p>Creación de MutableMap</p>
+<figure><img src="UD2/images/ud2-2023-09-17-00-49-46.png" /><br><figcaption>Creación de MutableMap</figcaption></figure>
+<br>
+
+<p>Algunas operaciones sobre Map y MutableMap
+<section class="marco-t warn">
+  <span class="icono warning"> </span> Las operaciones que modifican solo son aplicables a MutableMap
+  </section>
+<section class="marco-b">
+    
+</section>
+<figure><img src="UD2/images/ud2-2023-09-17-00-50-37.png" /><br><figcaption>Operaciones sobre Map y MutableMap</figcaption></figure>
+<br>
+
+</p>
+
+<h3>Operaciones sobre colecciones</h3>
+
+
+<p>Algunas operaciones sobre colecciones devuelven un valor booleano que indica si la operación se ha realizado correctamente o no. 
+  Como por ejemplo <span class="negrita">add</span> y <span class="negrita">remove</span>.
+
+Si se quieren conocer todas las operaciones disponibles para <span class="negrita">List, Set y Map</span> ya sean mutables o solo lectura se debe consultar la documentación oficial.
+</p>
+
+<p>Existen operaciones sobre las colecciones que permiten realizar operaciones a todos los elementos de la colección y devuelven una nueva colección con los resultados.
+
+Se podría decir que "recorren" la colección.
+
+Estas operaciones admiten una <span class="negrita">función lambda</span> lo que significa que se deben usar llaves para delimitar las instrucciones. (En la declaración de arrays se vio también el uso de una función lambda, más adelante se explican por completo).
+
+Dentro de la función lambda estará disponible <span class="negrita">it</span> <span class="subrayado">como el elemento actual.</span>
+</p>
+
+<p class="sub-section">forEach</p>
+
+<p>Recorre todos los elementos de la colección pudiendo realizar acciones sobre ellos.
+  <figure><img src="UD2/images/ud2-2023-09-17-00-54-04.png" /><br><figcaption>forEach</figcaption></figure>
+  <br>
+</p>
+
+<p class="sub-section">filter</p>
+
+<p>Devuelve la colección con los elementos que cumplan la condición.
+  <figure><img src="UD2/images/ud2-2023-09-17-00-55-46.png" /><br><figcaption>filter</figcaption></figure>
+  <br>
+  
+</p>
+
+<p class="sub-section">map</p>
+
+<p>Devuelve la colección aplicando una transformación a cada elemento.
+  <figure><img src="UD2/images/ud2-2023-09-17-00-55-23.png" /><br><figcaption>map</figcaption></figure>
+  <br>
+  
+</p>
+
+<h3>Secuencias</h3>
+
+<p>Las secuencias permiten optimizar las operaciones sobre las colecciones.
+
+<figure><img src="UD2/images/ud2-2023-09-17-00-56-41.png" /><br><figcaption>Sin seccuencias</figcaption></figure>
+<br>
+
+En el ejemplo anterior las dos operaciones se realizan sobre todos los elementos de la lista generando listas intermedias que no desaparecen hasta acabar todas las operaciones.
+
+Este comportamiento cuando la colección tiene muchos elementos y/o se realizan muchas operaciones sobre la colección va a penalizar en el rendimiento de la aplicación.
+</p>
+<p>Para mejorar este comportamiento se puede convertir la colección a una secuencia, realizar todas las operaciones y finalmente volver a generar la colección.
+  La secuencia no genera colecciones intermedias.
+  <figure><img src="UD2/images/ud2-2023-09-17-00-58-03.png" /><br><figcaption>Secuencia</figcaption></figure>
+  <br>
+  
+</p>
+
+<p>Las secuencias solo generan sus elementos cuando se utilizan por ello permiten generar una cantidad de valores infinitos que posteriormente se pueden utilizar.
+Se debe tener cuidado porque se podría bloquear la aplicación esperando a que la secuencia finalice.
+<figure><img src="UD2/images/ud2-2023-09-17-00-59-57.png" /><br><figcaption>takeWhile</figcaption></figure>
+<br>
+
+</p>
+</section> <!-- Fin Sección Colecciones-->
+
+<!--*********************************************************Funciones***********************************************************-->
+<section class="apartado">
+<a name="sFunciones"></a>
+<h2>6. Funciones</h2>
+<h3>Funciones incluidas en el sistema</h3>
+<p>Como en todo lenguaje de programación, Kotlin incorpora una gran cantidad de funciones ya programadas listas para usar.
+
+Ya se han visto algunas anteriormente: <span class="negrita">println, toInt, toString</span>… <br>
+
+Por ejemplo, para arrays se tienen disponibles entre otras
+	<section><pre><code class="language-kotlin">min()			max()			isEmpty()			indexOf()
+sort()			sorted()		reverse()			reversedArray()</code></pre>
+  </section><br><br>
+
+En la documentación se pueden encontrar todas.
+</p>
+
+<h3>Funciones propias</h3>
+<p>En kotlin las funciones se declaran con la palabra <span class="r-word">fun</span> .
+
+A continuación, se muestra un ejemplo de una función y de su llamada.
+<figure><img src="UD2/images/ud2-2023-09-17-01-04-49.png" /><br><figcaption>Creación de función y llamada</figcaption></figure>
+<br>
+
+</p>
+
+
+<p>Las funciones pueden no recibir parámetros ni devolver valores.
+
+Si no se indica valor de retorno se devuelve el tipo <span class="r-word">Unit</span>  que es equivalente a <span class="negrita">void</span> de otros lenguajes de programación. 
+Si no se devuelve nada se puede omitir : Unit.
+<figure><img src="UD2/images/ud2-2023-09-17-01-06-10.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</p>
+<p>Los parámetros de entrada se separan por comas y se permite el uso de la llamada <span class="negrita">trailing comma</span> (coma final).
+<figure><img src="UD2/images/ud2-2023-09-17-01-08-13.png" /><br><figcaption>Trailing comma</figcaption></figure>
+<br>
+
+</p>
+<p><span class="subrayado">Los parámetros de entrada son inmutables</span>, no se puede cambiar su valor desde el cuerpo de la función, es como si se declararan con val.
+
+Para modificarlos se debe crear una copia.
+<figure><img src="UD2/images/ud2-2023-09-17-01-09-20.png" /><br><figcaption>Parametros de entrada inmutables</figcaption></figure>
+<br>
+
+</p>
+
+<p>Si la función se puede escribir en una sola línea se pueden <span class="negrita">quitar las llaves y añadir el símbolo =</span> antes del cuerpo.
+<figure><img src="UD2/images/ud2-2023-09-17-01-10-33.png" /><br><figcaption></figcaption></figure>
+<br>
+<br>
+Otras Funciones
+<figure><img src="UD2/images/ud2-2023-09-17-01-11-15.png" /><br><figcaption>Otras funciones</figcaption></figure>
+<br>
+
+</p>
+
+<p class="sub-section">Parámetros con nombre</p>
+
+
+<p>Se puede usar el nombre de los parámetros en las llamadas a la función y así cambiar el orden de los parámetros.
+
+Igual que con los intervalos Android Studio muestra las pistas en el código (hints) para indicar el nombre del parámetro.
+<figure><img src="UD2/images/ud2-2023-09-17-01-12-40.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</p>
+
+<p class="sub-section">Valor por defecto</p>
+
+<p>Se permite definir un valor por defecto a los parámetros de entrada y de este manera omitir esos parámetros si se quiere.
+  <figure><img src="UD2/images/ud2-2023-09-17-01-14-26.png" /><br><figcaption>Valor por defecto parámetros entrada</figcaption></figure>
+  <br>
+</p>
+
+<p>Si se usa valor por defecto en la definición de la función y nombres de parámetros en la llamada a la función, se pueden omitir parámetros intermedios en la llamada.
+
+  <figure><img src="UD2/images/ud2-2023-09-17-01-15-37.png" /><br><figcaption>Omitiendo parámetros intermedios</figcaption></figure>
+  <br>
+  
+</p>
+
+<p>Si se usan parámetros con y sin nombre en la llamada, los argumentos con nombre deben de ser los últimos a no ser que ocupen su lugar.
+  <figure><img src="UD2/images/ud2-2023-09-17-01-17-29.png" /><br><figcaption></figcaption></figure>
+  <br>
+</p>
+
+<h3>Número variable de parámetros</h3>
+<p>Es posible declarar un número variable de parámetros.
+
+Para ello se utiliza un parámetro con la palabra <span class="r-word">vararg</span> .
+
+Habitualmente suele ser el último parámetro. Si no es el último, los siguientes tendrán que pasarse usando su nombre.
+
+Con un <span class="negrita">intArray</span> o una <span class="negrita">colección que se pueda convertir a intArray</span> se puede usar <span class="negrita">*</span>
+ (operador spread) para pasarlo completamente como parámetro <span class="negrita">vararg</span>.
+ <figure><img src="UD2/images/ud2-2023-09-17-01-19-00.png" /><br><figcaption></figcaption></figure>
+ <br>
+ 
+</p>
+<h3>Sobrecarga de funciones</h3>
+
+<p>Kotlin permite la sobrecarga de funciones aunque estas no estén definidas en una clase.
+  <figure><img src="UD2/images/ud2-2023-09-17-01-20-14.png" /><br><figcaption>Sobrecarga de funcioness</figcaption></figure>
+  <br>
+  
+</p>
+
+<p>En ejemplos anteriores se ha creado la función <span class="negrita">max</span> que como ya existe se realiza sobrecarga, pudiendo ver la función propia y las del sistema.
+<figure><img src="UD2/images/ud2-2023-09-17-01-22-00.png" /><br><figcaption></figcaption></figure>
+<br>
+</p>
+
+<h3>Ámbito de las funciones</h3>
+<p>Igual que con las variables el ámbito de una función indica dónde se puede utilizar la función.
+
+En Kotlin existen los siguientes tipos de funciones:
+
+<ul>
+  <li><span class="negrita">Nivel superior</span> (top level)
+    </li>
+  <li>
+    <span class="negrita">Local</span>
+  </li>
+  <li>
+    <span class="negrita">Miembro</span>
+  </li>
+  <li>
+    <span class="negrita">De extensión</span>
+  </li>
+</ul>
+
+Según el tipo se podrá usar en una parte de código u otra.
+</p>
+
+<p class="sub-section">Nivel superior (top level)</p>
+
+
+<p>Se definen sin estar dentro de ningún bloque { } o clase.
+
+Su uso suele ser como biblioteca de funciones, en este caso en un archivo se incluyen varias funciones de nivel superior que se podrán utilizar en cualquier parte.
+
+Se podrán usar en todo el archivo propio y en el que se importe.
+<figure><img src="UD2/images/ud2-2023-09-17-01-24-51.png" /><br><figcaption>Top leve functions</figcaption></figure>
+<br>
+
+</p>
+
+<p class="sub-section">Local</p>
+
+<p>Se definen dentro de otra función y se podrá usar en todo el bloque { } de esa función, incluso desde otras funciones locales de la misma función padre.
+
+Debe estar definida antes de cualquier llamada a ella.
+
+Pueden usar las variables locales de la función padre.
+<figure><img src="UD2/images/ud2-2023-09-17-01-25-59.png" /><br><figcaption>Funcion Local</figcaption></figure>
+<br>
+
+</p>
+
+<p class="sub-section">Función Miembro</p>
+
+<p>
+
+Son las funciones que se definen dentro de las clases u objetos.
+Son lo que en la programación orientada a objetos se llaman <span class="negrita">métodos</span>.
+Se estudian en el punto siguiente <span class="negrita">POO</span> (Programación Orientada a Objetos).
+</p>
+
+<p class="sub-section">Funciones de extensión</p>
+
+<p>
+  Kotlin permite extender la funcionalidad de las clases añadiendo funciones a ellas.
+  Estas funciones solo existen en el ámbito en el que se definen.
+  <figure><img src="UD2/images/ud2-2023-09-17-01-27-55.png" /><br><figcaption>Funciones de extensión</figcaption></figure>
+  <br>
+    
+</p>
+</section><!-- End section Funciones-->
+
+<!--*********************************************************Programación Orientada a Objetos***********************************************************-->
+<section class="apartado">
+<a name="sPOO"></a>
+<h2>Programación Orientada a Objetos</h2>
+
+
+<p>Como se indicó al principio de la unidad, Kotlin busca ser conciso y evitar escribir demasiado código.
+Esta característica es muy visible cuando se desarrollan clases.
+Se va a estudiar tanto la manera más tradicional de codificar clases como en Java y la manera aconsejada por Kotlin.
+</p>
+
+<p>Para crear clases se usa la palabra reservada <span class="r-word">class</span>  como en Java.
+
+Kotlin permite que en un mismo archivo <span class="negrita">.kt</span> se definan más de una clase públicas (esto no se permite en Java).
+Si en un archivo <span class="negrita">.kt</span> solo se define una clase, entonces el <span class="subrayado">nombre del archivo debe ser el nombre de la clase</span>.
+Si en un archivo <span class="negrita">.kt</span> se definen varias clases, entonces se debe buscar un nombre representativo.
+</p>
+
+<p>En Kotlin todas las clases hereda de la clase <span class="r-word">Any</span>  (en Java es Object).
+
+La clase <span class="negrita">Any</span> define tres métodos que heredarán sus hijas:
+<ul>
+  <li><span class="negrita">equals</span> -> indica si un objeto es igual a otro</li>
+  <li><span class="negrita">hashCode</span> -> devuelve el código hash de un objeto</li>
+  <li><span class="negrita">toString</span> -> devuelve la representación en String de un objeto</li>
+</ul>
+	
+</p>
+
+<p>Ejemplo de definición de clase en Kotlin:
+
+<figure><img src="UD2/images/ud2-2023-09-17-13-14-35.png" /><br><figcaption>Defenición de clase</figcaption></figure>
+<br>
+
+Kotlin es tan conciso que una clase sin cuerpo se puede definir así:
+
+<figure><img src="UD2/images/ud2-2023-09-17-13-15-00.png" /><br><figcaption>Definición de clase concisa</figcaption></figure>
+<br>
+
+Aun sin cuerpo se puede instanciar un objeto de esta clase:
+<figure><img src="UD2/images/ud2-2023-09-17-13-15-39.png" /><br><figcaption>Instancia de clase sin cuerpo</figcaption></figure>
+<br>
+
+</p>
+
+<p>Se puede observar que la estructura de definición de una clase es similar a la usada en Java.
+
+Los <span class="negrita">getters</span> y <span class="negrita">setters</span> se deben definir tras cada propiedad.
+
+El constructor se define con la palabra constructor.
+<figure><img src="UD2/images/ud2-2023-09-17-13-17-34.png" /><br><figcaption>Getters, setters, constructor</figcaption></figure>
+<br>
+
+Su uso también es similar a Java:
+<figure><img src="UD2/images/ud2-2023-09-17-13-18-05.png" /><br><figcaption>Uso de cases</figcaption></figure>
+<br>
+
+</p>
+
+
+<p>Si no se indica lo contrario las clases, propiedades y métodos por defecto son públicas (<span class="negrita">public</span>).
+
+Existen los modificadores de visibilidad:
+<ul>
+  <li><span class="negrita">public</span></li>
+  <li><span class="negrita">private</span></li>
+  <li><span class="negrita">protected</span></li>
+  <li><span class="negrita">internal</span> -> visible en el mismo módulo (paquete)</li>
+</ul>
+	
+<figure><img src="UD2/images/ud2-2023-09-17-13-20-49.png" /><br><figcaption></figcaption></figure>
+<br>
+</p>
+
+<p>Kotlin permite ahorrar código usando funciones de expresión (en una línea):
+  <figure><img src="UD2/images/ud2-2023-09-17-13-21-58.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+</p>
+
+<p>Kotlin permite ahorrar código ya que los getters y setters son implícitos:
+  <figure><img src="UD2/images/ud2-2023-09-17-13-22-55.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+</p>
+
+<p>Kotlin permite ahorrar código incorporando las propiedades en la definición de la clase haciendo que el <span class="negrita">constructor sea implícito:</span>
+<figure><img src="UD2/images/ud2-2023-09-17-13-23-48.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</p>
+
+<h3>Constructores</h3>
+
+<p>Con esta estructura se tiene el constructor, los getters y los setters
+
+<figure><img src="UD2/images/ud2-2023-09-17-13-24-47.png" /><br><figcaption>Constructor primario</figcaption></figure>
+<br>
+<br>
+Si no se van a realizar acciones específicas en el constructor, los getters o los setters, esta sintaxis permite ahorrar mucho código.
+
+Utilizando esta sintaxis este constructor se denomina <span class="negrita">constructor primario</span>.
+</p>
+
+<p>Los constructores que se incluyen en el cuerpo de la clase se denominan <span class="negrita">constructores secundarios.</span>
+
+Los constructores se declaran con la palabra reservada <span class="r-word">constructor</span> .
+
+Existe la sobrecarga de métodos como se puede ver con el constructor.
+
+Si una propiedad no aparece en algún constructor <span class="subrayado">deberá tener un valor asignado por defecto.</span>
+
+<figure><img src="UD2/images/ud2-2023-09-17-13-35-03.png" /><br><figcaption>Constructores secundarios</figcaption></figure>
+<br>
+<figure><img src="UD2/images/ud2-2023-09-17-13-35-37.png" /><br><figcaption>Usando constructores secundarios</figcaption></figure>
+<br>
+
+</p>
+
+<p>Si se usan combinados el constructor primario con constructores secundarios, se debe usar la palabra <span class="r-word">this</span>  en los constructores secundarios.
+
+Mediante <span class="negrita">this</span> se llama al constructor primario (equivalente a super en Java).</p>
+
+<p>Puede no haber constructores.
+
+En ese caso en la declaración de las propiedades se debe asignar un valor.
+<figure><img src="UD2/images/ud2-2023-09-17-13-37-57.png" /><br><figcaption></figcaption></figure>
+<br>
+</p>
+
+<p>Si se usa el constructor primario pero se requiere realizar acciones sobre las propiedades se debe usar un bloque de instrucciones <span class="negrita">init</span>.
+<figure><img src="UD2/images/ud2-2023-09-17-13-38-59.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</p>
+
+<h3>Funciones miembro</h3>
+
+<p>Se pueden definir funciones miembro (métodos) en las clases.
+<figure><img src="UD2/images/ud2-2023-09-17-13-39-48.png" /><br><figcaption>Función miembro si cuerpo</figcaption></figure>
+<br>
+
+La misma función definida de manera extendida:
+<figure><img src="UD2/images/ud2-2023-09-17-13-40-20.png" /><br><figcaption>Función miembro con cuerpo</figcaption></figure>
+<br>
+</p>
+
+<p>Si se sobrescribe una función heredada (ya existe en la clase madre), se debe añadir la palabra <span class="r-word">override</span>  en la definición de la función.
+<figure><img src="UD2/images/ud2-2023-09-17-13-41-26.png" /><br><figcaption>Sobrecarga</figcaption></figure>
+<br>
+</p>
+
+<p>Evidentemente se puede combinar todo lo anterior:
+  <ul>
+    <li>Constructor primario</li>
+    <li>init para realizar acciones en el constructor primario</li>
+    <li>Constructor secundario</li>
+    <li>getters y setters implícitos</li>
+    <li>Sobrecarga de funciones heredadas</li>
+  </ul>
+
+  <figure><img src="UD2/images/ud2-2023-09-17-13-42-53.png" /><br><figcaption>Todo combinado</figcaption></figure>
+  <br>
+  
+</p>
+
+<p>Si se quiere cambiar el tipo de acceso de las propiedades de la clase simplemente se debe indicar delante de su declaración.
+  <figure><img src="UD2/images/ud2-2023-09-17-13-44-11.png" /><br><figcaption></figcaption></figure>
+  <br>
+</p>
+
+<p>Al ser implícitos, <span class="negrita">los getters y los setters</span> tendrán el mismo tipo de acceso que se defina para las propiedades, y esto solo se puede cambiar a más restrictivo.
+
+Este funcionamiento puede ser un problema ya que si se quiere dotar a las clases de la encapsulación (característica típica de la POO) no se tendrá acceso a las propiedades cuando se usen los objetos de la clase.
+
+<section><pre><code class="language-kotlin">fun main(){
+  val p1 = Producto(name= "Mesa")
+  println(p1.name) //No tenemos acceso lectura
+  p1.name = "Silla" //No tenemos acceso a escritura
+  println(p1.price) //Si deja acceder para lectura
+  p1.price = 20.0  //No deja escritura
+  println("Bye world")
+}
+
+class Producto(private var name: String){
+  var price:Double = 10.0
+      get() = field //En este caso no haría falta
+      private set
+
+  init{
+      name = name.uppercase()
+  }
+
+  constructor(name:String, price:Double):this(name){
+      this.price = price
+  }
+
+  override fun toString(): String {
+      return "$name: $price €"
+  }
+}</code></pre>
+</section><br><br>
+</p>
+
+<p>Para solucionar este problema se pueden crear métodos públicos para acceder a las propiedades privadas.
+
+<span class="negrita">Aunque esta solución va en contra de la filosofía de Kotlin de ahorrar código.</span>
+<figure><img src="UD2/images/ud2-2023-09-17-13-57-15.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</p>
+
+<p>Como ya se ha visto anteriormente, una vez declarada una clase su uso es igual que en Java.
+
+El acceso a las propiedades y las funciones se realiza mediante la notación de punto:
+<figure><img src="UD2/images/ud2-2023-09-17-13-59-24.png" /><br><figcaption>Notación de punto</figcaption></figure>
+<br>
+
+</p>
+
+<h3>Enum class en Kotlin</h3>
+<p>Las <span class="negrita">enum class</span> permiten definir un conjunto de constantes relacionadas entre sí.
+
+Es una manera segura de disponer de los valores sin temor a errores.
+<figure><img src="UD2/images/ud2-2023-09-17-14-01-18.png" /><br><figcaption>Enum Class</figcaption></figure>
+<br>
+</p>
+
+<h3>Data class en Kotlin</h3>
+<p>Las data class son una manera de modelar los datos y la finalidad de sus objetos es simplemente almacenar datos.
+
+<span class="negrita">Son clases muy simples que solo contienen atributos</span>.
+
+Se utilizan para interactuar con otras clases o con API's externas.
+
+Para declarar una clase de este tipo se usa la palabra data.
+<figure><img src="UD2/images/ud2-2023-09-17-14-03-01.png" /><br><figcaption>data class</figcaption></figure>
+<br>
+
+</p>
+
+<p>Kotlin provee a las data class de una serie de <span class="negrita">funciones de utilizad</span> o características:
+  <ul>
+    <li><span class="negrita">equals()</span>: permite comparar dos objetos de la clase. Compara el contenido de los atributos</li>
+    <li><span class="negrita">hashCode()</span>: código hash (este código se usa en la función anterior).</li>
+    <li><span class="negrita">copy()</span>: permite realizar una copia del objeto. Atributo a atributo pero son objetos distintos</li>
+    <li><span class="negrita">toString()</span>: genera un string legible con los datos del objeto. No muestra la referencia a memoria</li>
+    <li><span class="negrita">component1(), component2()</span>…: get a cada propiedad del objeto en su orden de declaración</li>
+  </ul>
+
+  <figure><img src="UD2/images/ud2-2023-09-17-14-06-34.png" /><br><figcaption>ejemplo uso data class</figcaption></figure>
+  <br>
+  
+</p>
+
+<p>Las propiedades que no aparezcan en el constructor primario no se beneficiarán de las características de las data class.
+Por ejemplo, al usar <span class="negrita">toString</span> solo aparecerán las propiedades que estén en el constructor primario.
+Mediante la función <span class="negrita">copy</span> se pueden copiar objetos completos y durante la copia se pueden cambiar valores de las propiedades.
+<figure><img src="UD2/images/ud2-2023-09-17-14-07-54.png" /><br><figcaption>copy data class</figcaption></figure>
+<br>
+
+</p>
+
+<p>Los objetos de una data class se pueden <span class="negrita">deconstruir</span> de manera que se puede extraer el valor de sus propiedades a variables.
+
+Si hay algún valor que no se quiera se debe poner el carácter <span class="d-word">_</span> en su lugar.
+
+Si los valores que no se quieren están al final de la lista basta con no ponerlos.
+<figure><img src="UD2/images/ud2-2023-09-17-14-08-48.png" /><br><figcaption>Deconstrucción de un data class</figcaption></figure>
+<br>
+
+</p>
+</section><!-- End section Programación Orientada a Objetos-->
+
+
+
+<!--*********************************************************Funciones de Extensión***********************************************************-->
+<section class="apartado">
+<a name="sFuncionesExtensión"></a>
+<h2>Funciones de Extensión</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</section><!-- End section Funciones de Extensión-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <script src="../script/prism.js"></script>
+</body>
+</html>

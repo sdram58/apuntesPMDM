@@ -108,9 +108,6 @@ span.icono{
 }
 
 
-
-
-
 .info, .warning, .folder, .file, .error{
     display: inline-block;
     width: 60px;
@@ -265,7 +262,7 @@ body h2{
     margin: 15px 0 30px 0;
     border: 2px solid rgb(12, 12, 243);
     border-radius: 9px;
-    background-color: rgba(156, 178, 218, 0.7);
+    background-color: rgba(209, 220, 240, 0.7);
 }
 
 body h3{
@@ -399,3 +396,28 @@ p.sub-section{
    background-repeat: no-repeat;
 }
 
+
+/*Contadores*/
+body {
+  counter-reset: section;
+}
+
+h2::before {
+  counter-increment: section;
+  content: counter(section) ".- ";
+}
+h2{
+    counter-reset: subsection;
+}
+h3{
+    counter-reset: subsubsection;
+}
+h3::before {
+    counter-increment: subsection;
+    content: counter(section)"."counter(subsection)".- ";
+  }
+
+.sub-section::before{
+    counter-increment: subsubsection;
+    content: counter(section)"."counter(subsection)"."counter(subsubsection) ".- ";
+}
