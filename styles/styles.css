@@ -310,7 +310,7 @@ p ul,p ul li{
 }
 
 figure{
-    width: 100%;
+    width: 97%;
     text-align: center;
     padding: 10px;
     background-color: rgba(100,100,100,0.3);
@@ -420,4 +420,20 @@ h3::before {
 .sub-section::before{
     counter-increment: subsubsection;
     content: counter(section)"."counter(subsection)"."counter(subsubsection) ".- ";
+}
+
+
+/*Tablas*/
+thead tr{
+    background-color: rgb(60, 64, 112);
+    color:white;
+}
+tbody tr:nth-child(2n){
+    background-color: rgb(117, 119, 143);
+    color:white;
+}
+
+tbody tr:nth-child(2n + 1){
+    background-color: rgb(245, 188, 242);
+    color:white;
 }

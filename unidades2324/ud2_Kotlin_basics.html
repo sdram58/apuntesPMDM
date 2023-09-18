@@ -17,24 +17,27 @@
 
   <nav id="menu-lateral" class="main-menu-lateral oculto">
     <div class="fila">
-        <a href="#sFundamentos">1.- Fundamentos de Kotlin</a><a 
-        href="#sTypeOfApps">2.- Tipos de Apps</a><a 
-        href="#sAndroidFeatures">3.- Características de Android</a></div>
-    <div class="fila">
-        <a 
-       href="#sAndroidArchitecture">4.- Arquitectura de Android</a><a 
-       href="#sFragmentation">5.-Fragmentación</a><a 
-       href="#sAndroidStudio">6.- Android Studio</a>
+      <a href="#sFundamentos">1.- Fundamentos de Kotlin</a><a 
+       href="#sNullSafety">2.- Null Safety</a><a 
+       href="#sExpresionesRegulares">3.- Expresiones Regulares</a>
     </div>
     <div class="fila">
-        <a 
-       href="#sAndroidEmulator">7.- Emulador Android (AVD)</a><a 
-       href="#sTestOnReal">8.- Pruebas en dispositivos reales</a><a 
-       href="#sThirdPartyEmulators">9.- Otros emuladores</a>
+      <a 
+       href="#sControlFlujo">4.- Control de Flujo</a>
+       <a href="#sColecciones">5.- Colecciones</a>
+       <a href="#sFunciones">6.- Funciones</a>
     </div>
     <div class="fila">
-        <a 
-       href="#sOtherSystems">10.- Otros Sistemas</a>
+      <a 
+       href="#sPOO">7.- Programación orientada a objetos</a><a 
+       href="#sFuncionesExtension">8.- Funciones de extensión</a><a 
+       href="#sSingleton">9.- Singleton</a>
+    </div>
+    <div class="fila">
+      <a 
+       href="#sHerencia">10.- Herencia</a><a
+       href="#sFuncionesdealcance">11.- Funciones de alcance</a><a 
+       href="sFuncionesLambda" class="">12.- Funciones Lambda</a>
     </div>
     
 </nav>
@@ -48,28 +51,23 @@
        href="#sExpresionesRegulares">3.- Expresiones Regulares</a>
     </div>
     <div class="fila">
-      <a 
-       href="#sControlFlujo">4.- Control de Flujo</a>
-       <a href="#sColecciones">5.- Colecciones</a>
-       <a href="#sFunciones">6.- Funciones</a>
+      <a href="#sControlFlujo">4.- Control de Flujo</a><a 
+      href="#sColecciones">5.- Colecciones</a><a 
+      href="#sFunciones">6.- Funciones</a>
     </div>
     <div class="fila">
       <a 
-       href="#sPOO">7.- Programación orientada a objetos</a>
-      <a 
+       href="#sPOO">7.- Programación orientada a objetos</a><a 
        href="#sFuncionesExtension">8.- Funciones de extensión</a><a 
-       href="#sLateinit">Initialization with lateinit vs lazy (delegation)</a>
+       href="#sSingleton">9.- Singleton</a>
     </div>
     <div class="fila">
       <a 
-       href="#sModismos">Scope Functions: Let, run, also, apply, with</a>
-      <a
-       href="#sExercises">Interactive exercises from Kotlinlang</a>
-       <a href="" class="relleno"></a>
+       href="#sHerencia">10.- Herencia</a><a
+       href="#sFuncionesdealcance">11.- Funciones de alcance</a><a 
+       href="sFuncionesLambda" class="">12.- Funciones Lambda</a>
     </div>
-    
-
-</div>
+  </div>
 
 <!--*********************************************************1.- Fundamentos de Kotlin***********************************************************-->
 <section class="apartado">
@@ -615,6 +613,10 @@ Esto es debido a que son objetos y como val no se podrá cambiar la referencia q
   </ul>
 </p>
 
+<h3>Ejercicios</h3>
+
+<a class="tarea" target="_blank" href="UD2/exercises/PrimerosProgramasKotlin.pdf">Ejercicios</a>
+
 </section> <!-- FIN SECCION-->
 
 <!--*********************************************************Null Safety***********************************************************-->
@@ -837,6 +839,10 @@ También existen herramientas para comprobar el funcionamiento de una expresión
 <figure><img src="UD2/images/ud2-2023-09-16-14-23-34.png" /><br><figcaption>Try - catch</figcaption></figure>
 <br>
 
+<h3>Ejercicios</h3>
+
+<a class="tarea" target="_blank" href="UD2/exercises/ValidandoDatos.pdf">Ejercicios</a>
+
 </section> <!-- FIN SECCION Expresiones Regulares-->
 
 <!--*********************************************************Control de Flujo***********************************************************-->
@@ -1038,6 +1044,10 @@ Asi, poniendo etiquetas, un break finalizará el bucle al que esté etiquetando.
 <br>
 
 </p>
+
+<h3>Ejercicios</h3>
+
+<a class="tarea" target="_blank" href="UD2/exercises/ControlFlujoKotlin.pdf">Ejercicios</a>
 
 </section> <!-- FIN SECCION Control de Flujo-->
 
@@ -1243,7 +1253,7 @@ Se debe tener cuidado porque se podría bloquear la aplicación esperando a que 
 <!--*********************************************************Funciones***********************************************************-->
 <section class="apartado">
 <a name="sFunciones"></a>
-<h2>6. Funciones</h2>
+<h2>Funciones</h2>
 <h3>Funciones incluidas en el sistema</h3>
 <p>Como en todo lenguaje de programación, Kotlin incorpora una gran cantidad de funciones ya programadas listas para usar.
 
@@ -1702,36 +1712,499 @@ Si los valores que no se quieren están al final de la lista basta con no ponerl
 <a name="sFuncionesExtensión"></a>
 <h2>Funciones de Extensión</h2>
 
+<p>Kotlin permite <span class="negrita">extender la funcionalidad</span> de las clases existentes 
+  ya sean del sistema o propias sin uso de la herencia incluso si la clase existente es final. </p>
 
+  <p>
+Las <span class="negrita">funciones de extensión</span> se definen fuera de la definición de la clase por ello <span class="negrita">solo se podrán utilizar en el ámbito en el que se definan</span>.
+</p>
+<p>
+Aunque la función de extensión se define fuera de la clase es como si se hubiera definido desde dentro comportándose como un método más de la clase, pudiendo hacer uso tanto de las propiedades y los métodos si los hay aunque sean privados.
 
+En el apartado de las funciones ya se vio un ejemplo:
+<figure><img src="UD2/images/ud2-2023-09-17-19-13-20.png" /><br><figcaption>Funciones de Extensión</figcaption></figure>
+<br></p>
 
+<p>Estas funciones se definen como otras funciones pero usando el nombre de la clase que se quiere extender.
 
+Función de extensión de una clase existente:
 
+<figure><img src="UD2/images/ud2-2023-09-17-19-14-20.png" /><br><figcaption></figcaption></figure>
+<br>
+Función de extensión de una clase propia
+<figure><img src="UD2/images/ud2-2023-09-17-19-14-41.png" /><br><figcaption></figcaption></figure>
+<br>
+</p>
 
+<p>Un uso típico de las funciones de extensión se da con las colecciones.
 
+Gracias a una función de extensión se puede realizar una acción sobre cada uno de los elementos de la colección.
+<figure><img src="UD2/images/ud2-2023-09-17-19-16-48.png" /><br><figcaption></figcaption>
+</figcaption></figure>
+<br>
+<br>cuya salida sería:
+<figure><img src="UD2/images/ud2-2023-09-17-19-17-16.png" /><br><figcaption></figcaption></figure>
+<br>
+</p>
+<p>Una función de extensión no puede sobre escribir a una función miembro.
 
+Una función de extensión sí que puede sobrecargar a una función miembro.
 
-
-
+Aunque no se muestre un error, si se intenta sobrescribir una función miembro mediante una función de extensión, en ejecución siempre se llamará a la función miembro.
+<figure><img src="UD2/images/ud2-2023-09-17-19-19-01.png" /><br><figcaption></figcaption></figure>
+<br>
+</p>
 
 </section><!-- End section Funciones de Extensión-->
 
+<!--*********************************************************Singleton***********************************************************-->
+<section class="apartado">
+<a name="sSingleton"></a>
+<h2>Singleton</h2>
+<p>En Kotlin se pueden crear singleton que son objetos únicos en su clase, esto significa que no podrá haber más instancias de esa clase.
+
+<section><pre><code class="language-kotlin">object Author{
+    var name = "Carlos Tarazona"
+    var company = "2DAM"
+    var date = Date()
+
+    override fun toString(): String {
+        return """$name ($company)
+            |$date""".trimMargin()
+    }
+}</code></pre>
+</section><br><br>
+
+Se le pueden añadir funciones de extensión como con cualquier otra clase.
+
+Si se declaran de manera global en el archivo .kt se podrán añadir funciones de extensión como con cualquier otra clase.
+</p>
+
+
+</section><!-- End section -->
+
+<!--*********************************************************Herencia***********************************************************-->
+<section class="apartado">
+<a name="sHerencia"></a>
+<h2>Herencia</h2>
+<p>En <span class="negrita">Kotlin por defecto todas las clases son finales</span>, lo cual significa que no puede haber herencia si no se indica explícitamente.
+
+Para indicar que una clase puede ser súper clase se debe usar la palabra reservada <span class="negrita">open</span>.
+
+Si se usa el constructor primario y los getters y setters por defecto:
+
+<figure><img src="UD2/images/ud2-2023-09-17-19-31-58.png" /><br><figcaption>Herencia</figcaption></figure>
+<br>
 
 
 
+Con este código se tiene:
+<ul>
+  <li>La clase Product con el constructor, los getter y los setters</li>
+  <li>La clase Monitor con su constructor que llama al constructor de la clase padre, y hereda los getter y los setters de la clase padre.</li>
+</ul>
+</p>
+
+<p>Se pueden añadir propiedades y métodos nuevos.
+  <figure><img src="UD2/images/ud2-2023-09-17-19-32-52.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+</p>
+
+<p>En la clase hija automáticamente se crea el <span class="negrita">constructor primario que llamará al constructor de la clase madre</span>.
+
+Además, se ha creado un constructor secundario que mediante <span class="negrita">this</span> llamará al constructor primario.
+</p>
+
+<h3>Clases abstractas</h3>
+
+<p>Para declarar una clase abstracta se usa la palabra <span class="r-word">abstract</span>  delante de la palabra <span class="r-word">class</span> .
+
+De una clase abstracta no se pueden instanciar objetos.
+<figure><img src="UD2/images/ud2-2023-09-17-19-35-01.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</p>
+</section><!-- End section Herencia-->
+
+<!--*********************************************************Funciones de alcance***********************************************************-->
+<section class="apartado">
+<a name="sFuncionesdealcance"></a>
+<h2>Funciones de alcance</h2>
+<p>Kotlin ofrece las llamadas <span class="negrita">Scope functions</span> que permiten ejecutar un bloque de código <span class="negrita">en el contexto del objeto que las llama</span>.
+
+Al ejecutarse en el contexto del objeto que las llama, dentro del cuerpo de la función está disponible dicho objeto.
+
+Existen cinco funciones de alcance:
+<ul>
+  <li>let</li>
+  <li>run</li>
+  <li>with</li>
+  <li>apply</li>
+  <li>also</li>
+</ul>
+<br>
+Estas funciones devuelven un valor pero no es necesario capturarlo (guardarlo) en ninguna variable.
+
+<table>
+    <thead>
+        <tr>
+            <td>Funci&oacute;n
+            </td>
+            <td>Uso
+            </td>
+            <td>Contexto
+            </td>
+            <td>Devuelve
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>let
+            </td>
+            <td>
+              Ejecutar bloque de código asegurándose de que el objeto no es null.
+            </td>
+            <td>
+              Propio objeto accesible con <span class="negrita">it</span>
+            </td>
+            <td>Resultado de la &uacute;ltima instrucci&oacute;n
+            </td>
+        </tr>
+        <tr>
+            <td>apply
+            </td>
+            <td>Configuraci&oacute;n de un objeto.
+            </td>
+            <td>
+              Propio objeto accesible con <span class="negrita">this</span>
+            </td>
+            <td>
+              Propio objeto
+            </td>
+        </tr>
+        <tr>
+            <td>
+              run
+            </td>
+            <td>Configuraci&oacute;n de un objeto y ejecuci&oacute;n de instrucciones sobre &eacute;l.
+            </td>
+            <td>
+              Propio objeto accesible con <span class="negrita">this</span>
+            </td>
+            <td>Resultado de la &uacute;ltima instrucci&oacute;n
+            </td>
+        </tr>
+        <tr>
+            <td>run
+            </td>
+            <td>Ejecutar instrucciones cuando se requiere una expresi&oacute;n, se usa sin que sea llamada desde un objeto.
+            </td>
+            <td>-
+            </td>
+            <td>Resultado de la &uacute;ltima instrucci&oacute;n
+            </td>
+        </tr>
+        <tr>
+            <td>also
+            </td>
+            <td>Seguir realizando instrucciones sobre el objeto.
+            </td>
+            <td>it
+            </td>
+            <td>Propio objeto
+            </td>
+        </tr>
+        <tr>
+            <td>with
+            </td>
+            <td>Agrupar llamadas a funciones de un objeto.
+            </td>
+            <td>this
+            </td>
+            <td>Resultado de la &uacute;ltima instrucci&oacute;n
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</p>
+
+<p>Todas las funciones de alcance se utilizan con un bloque de llaves <span class="negrita">{ } (función lambda).</span>
+
+Android Studio muestra las pistas en el código (hints) para ayudar a entender cómo funciona cada una de ellas.
+
+<figure><img src="UD2/images/ud2-2023-09-18-09-07-47.png" /><br><figcaption>Funciones de alcance. Hints</figcaption></figure>
+<br>
+
+</p>
+
+<h3>let</h3>
+<p>
+<ul>
+  <li><span class="negrita">Contexto</span>: el objeto desde el cual se llama, accesible con it.</li>
+  <li><span class="negrita">Devuelve</span>: el resultado de la última instrucción.</li>
+</ul>
+ <br>
+
+<figure><img src="UD2/images/ud2-2023-09-18-09-09-47.png" /><br><figcaption>let</figcaption></figure>
+<br>
+
+</p>
+
+<p>El uso de <span class="negrita">let</span> asegura que el objeto no será <span class="negrita">null</span> antes de ejecutar las instrucciones.
+<figure><img src="UD2/images/ud2-2023-09-18-09-10-40.png" /><br><figcaption>let 2</figcaption></figure>
+<br><br>
+En el <span class="negrita">caso de que el objeto producto sea null el bloque let no se ejecutará</span>.
+</p>
+
+<h3>run</h3>
+<p>Tiene dos usos: <br>
+  <ol>
+    <li>Llamada desde un objeto como let, pero no controla si la variable es null.
+      <ul>
+        <li>El <span class="negrita">contexto</span>: el objeto desde el cual se llama, accesible con <span class="negrita">this</span>. No es necesario poner <span class="negrita">this</span>. para acceder a las propiedades.</li>
+        <li><span class="negrita">Devuelve</span>: el resultado de la última instrucción.</li>
+      </ul>
+      <figure><img src="UD2/images/ud2-2023-09-18-09-14-08.png" /><br><figcaption>run 1</figcaption></figure>
+      <br>      
+    </li>
+    <li>Llamada sin usar objeto.
+      <ul>
+        <li>El <span class="negrita">contexto</span>: no hay contexto.
+        </li>
+        <li><span class="negrita">Devuelve</span>: el resultado de la última instrucción.
+        </li>
+      </ul>
+      <figure><img src="UD2/images/ud2-2023-09-18-09-15-08.png" /><br><figcaption></figcaption></figure>
+      <br>
+    </li>
+  </ol>
+</p>
+
+<h3>also</h3>
+<p>Permite realizar acciones extra (also = además) sobre el objeto que la llama.
+  <ul>
+    <li>El <span class="negrita">contexto</span>: el objeto desde el cual se llama, accesible con <span class="r-word">it</span> .</li>
+    <li><span class="negrita">Devuelve</span>: el propio objeto (se hace automáticamente).</li>
+  </ul>
+
+<figure><img src="UD2/images/ud2-2023-09-18-09-25-36.png" /><br><figcaption>also</figcaption></figure>
+<br>
+
+</p>
 
 
+<h3>apply</h3>
+<p>Se utiliza para configurar (asignar valores) a un objeto.
+  <ul>
+    <li>El <span class="negrita">contexto</span>: el objeto desde el cual se llama, accesible con <span class="r-word">this</span> .</li>
+    <li><span class="negrita">Devuelve</span>: el propio objeto (se hace automáticamente).</li>
+  </ul>
+<figure><img src="UD2/images/ud2-2023-09-18-09-27-00.png" /><br><figcaption>apply</figcaption></figure>
+<br>
+</p>
+
+<h3>with</h3>
+<p>Permite agrupar acciones sobre un objeto.
+  <ul>
+    <li>El <span class="negrita">contexto</span>: el objeto desde el cual se llama, accesible con <span class="r-word">this</span> .</li>
+    <li><span class="negrita">Devuelve</span>: el resultado de la última instrucción.</li>
+  </ul>
+<figure><img src="UD2/images/ud2-2023-09-18-09-28-10.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD2/images/ud2-2023-09-18-09-29-03.png" /><br><figcaption>Devuelve el resultado de la última instrucción</figcaption></figure>
+<br>
+
+</p>
 
 
+</section><!-- End section Funciones de alcance-->
+
+<!--*********************************************************Funciones Lambda***********************************************************-->
+<section class="apartado">
+<a name="sFuncionesLambda"></a>
+<h2>Funciones Lambda</h2>
+
+<p>Como norma general una función se debe declarar y se le debe asignar un identificador para poder usarse:
+
+<figure><img src="UD2/images/ud2-2023-09-18-09-31-08.png" /><br><figcaption></figcaption></figure>
+<br>
+
+Las funciones <span class="negrita">lambda</span>, también llamadas funciones anónimas o funciones flecha son funciones que <span class="negrita">no están declaradas</span> (no tienen identificador) 
+y <span class="negrita">se utilizan como una expresión</span>.
+</p>
+
+<p>Las funciones lambda se escriben <span class="negrita">entre llaves { }</span>, pueden tener parámetros o no y deben tener un cuerpo.
+
+Si no tiene parámetros se deben poner directamente las instrucciones.
+
+El <span class="negrita">resultado de la última instrucción de una lambda se devolverá (SIN RETURN)</span>, 
+si la función tiene varias instrucciones Android Studio lo indica con las pistas en el código (hints).
+<figure><img src="UD2/images/ud2-2023-09-18-09-33-22.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</p>
+<p>Si no aparecen las pistas de código (hints) en Android Studio se pueden activar desde la configuración File  Settings (CTRL+ALT+S):
+  <figure><img src="UD2/images/ud2-2023-09-18-09-35-18.png" /><br><figcaption>inline hints</figcaption></figure>
+  <br>
+</p>
+
+<p>Si tiene parámetros, para separarlos del cuerpo se utilizan los caracteres <span class="r-word">-></span>  de ahí que se les conozca también como funciones flecha.
+<figure><img src="UD2/images/ud2-2023-09-18-09-36-08.png" /><br><figcaption></figcaption></figure>
+<br>
+</p>
+
+<p>En las lambdas escritas anteriormente es Kotlin quien deduce los tipos de datos.
+Se pueden indicar explícitamente los tipos de datos:
+<figure><img src="UD2/images/ud2-2023-09-18-09-37-56.png" /><br><figcaption></figcaption></figure>
+<br>
+En este caso si la lambda solo tiene un parámetro se puede omitir y utilizar <span class="negrita">it</span>:
+<figure><img src="UD2/images/ud2-2023-09-18-09-37-19.png" /><br><figcaption></figcaption></figure>
+<br>
+</p>
+
+<p>Las funciones lambda se utilizan como una expresión, esto significa que deben de estar asignadas a algún elemento.
+
+Si se asigna una lambda a una variable su uso es el mismo que con una función normal.
+
+Esto no aporta ninguna funcionalidad nueva.
+<figure><img src="UD2/images/ud2-2023-09-18-09-42-30.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</p>
+<p>Las funciones lambda <span class="negrita">se pueden pasar como parámetros a otras funciones</span>.
+
+Esto sí que aporta una funcionalidad no vista hasta ahora y es una práctica muy extendida actualmente en muchos lenguajes de programación y frameworks.
+
+Gracias al paso de lambdas como parámetro en funciones se puede:
+<ul>
+  <li>Crear funciones callback.</li>
+  <li>Devolver diferentes respuestas desde una función.</li>
+  <li>Ofrecer al programador que introduzca su propia lógica.</li>
+</ul>
+</p>
+
+<p>Sintaxis de paso de función lambda como parámetro de una función:
+
+	<section><pre><code class="language-kotlin">fun nameOfFun(parameter1: Type, lambdaName: (Type1, Type2…) -> TypeReturn) { … }</code></pre>
+  </section><br><br>
+
+En el caso de que la lambda no reciba parámetros:
+
+	<section><pre><code class="language-kotlin">fun nameOfFun(parameter1: Type, lambdaName: () -> TypeReturn) { … }</code></pre>
+  </section><br><br>
+
+En el caso de que la lambda no devuelva nada:
+
+	<section><pre><code class="language-kotlin">fun nameOfFun(parameter1: Type, lambdaName: (Type1, Type2…) -> Unit) { … }</code></pre>
+  </section><br><br>
+
+En el caso de que la lambda no reciba parámetros ni devuelva nada:
+
+	<section><pre><code class="language-kotlin">fun nameOfFun(parameter1: Type, lambdaName: () -> Unit) { … }</code></pre>
+  </section><br><br>
+</p>
+
+<h3>Crear funciones callback</h3>
+
+<p>Las funciones callback permiten <span class="subrayado">asegurarse que un conjunto de instrucciones se ejecuta después de una instrucción concreta</span>. 
+  Su uso es muy típico cuando existe <span class="negrita">ejecución asíncrona</span> de instrucciones, hilos…
+<br>
+Las siguientes funciones sobrecargadas reciben una función lambda que se ejecuta al final de todo el cuerpo de la función <span class="cursiva">doLogin</span>:
+<figure><img src="UD2/images/ud2-2023-09-18-09-45-54.png" /><br><figcaption>callback</figcaption></figure>
+<br>
+
+</p>
+
+<p>La función duguin anterior se puede llamar de la siguiente manera
+  <figure><img src="UD2/images/ud2-2023-09-18-10-04-58.png" /><br><figcaption>Llamada a una función de orden superior (contiene lambda)</figcaption></figure>
+  <br>
+</p>
+
+<p>Si la función lambda es el <span class="negrita">último parámetro</span> se puede sacar fuera de los paréntesis:
+  <figure><img src="UD2/images/ud2-2023-09-18-10-05-57.png" /><br><figcaption>Función lambda último parámetro</figcaption></figure>
+  <br>
+  
+</p>
+<p>Si la función lambda es el <span class="negrita">único parámetro</span> se puede quitar los paréntesis de la llamada.
+  <figure><img src="UD2/images/ud2-2023-09-18-10-07-29.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+</p>
+
+<h3>Devolver diferentes respuestas desde una función</h3>
+
+<p>A una función se le pueden pasar tantos parámetros como se quiera y todos/varios de esos parámetros pueden ser una función lambda.
+
+De esta manera se puede ejecutar una u otra función lambda según se necesite.
+<figure><img src="UD2/images/ud2-2023-09-18-10-27-11.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</p>
+ <p>
+  Un posible uso, con su salida sería el siguiente:
+  <figure><img src="UD2/images/ud2-2023-09-18-10-29-25.png" /><br><figcaption>Usando varias lambdas</figcaption></figure>
+  <br>
+  
+ </p>
+ <p>Dependiendo del cuerpo de la función lambda se podrán ejecutar una o varias de estas funciones.
+
+En el ejemplo anterior, tanto en la función <span class="d-word">correct</span> como en la función <span class="d-word">error</span> se guarda el resultado obtenido devuelto 
+por lo que solo tendrá efecto última llamada a las funciones lambda sea cual sea.
+</p>
+
+<p>Dependiendo del cuerpo de la función lambda se podrán ejecutar una o varias de estas funciones.
+
+Ahora se ha cambiado el cuerpo de las funciones <span class="d-word">correct</span> y <span class="d-word">error</span> para que muestren el resultado obtenido:
+<figure><img src="UD2/images/ud2-2023-09-18-10-32-10.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</p>
+
+<p>Si se quiere <span class="negrita">definir un parámetro tipo función lambda como opcional</span> se debe indicar con los caracteres <span class="negrita">= {}</span>.
+<figure><img src="UD2/images/ud2-2023-09-18-10-33-51.png" /><br><figcaption></figcaption></figure>
+<br>
+</p>
+
+ <h3>Ofrecer al programador que introduzca su propia lógica</h3>
+
+ <p>Si la función <span class="d-word">calculate</span> estuviera en una librería externa al usarla se da la opción al programador de incorporar todas las instrucciones que quiera.
+  <figure><img src="UD2/images/ud2-2023-09-18-10-35-04.png" /><br><figcaption></figcaption></figure>
+  <br>
+  </p>
+
+  <h3>Lambdas vistas anteriormente</h3>
+ <p>Anteriormente ya se ha hecho uso de funciones lambda como parámetros de otras funciones, exactamente como último parámetro de la función:
+<ul>
+  <li>En la creación de arrays:
+    <figure><img src="UD2/images/ud2-2023-09-18-10-36-49.png" /><br><figcaption>Lambdas en creación de arrays</figcaption></figure>
+    <br>
+    
+  </li>
+  <li>En las funciones forEach, filter y map:
+    <figure><img src="UD2/images/ud2-2023-09-18-10-37-31.png" /><br><figcaption>Lambdas en forEach</figcaption></figure>
+    <br>
+    
+  </li>
+  <li>En las funciones de alcance:
+    <figure><img src="UD2/images/ud2-2023-09-18-10-37-57.png" /><br><figcaption>Lambdas en funciones de alcance</figcaption></figure>
+    <br>
+  </li>
+</ul>
+</p>
+ 
+<h3>Uso de lambdas en Android</h3>
+<p>El uso de funciones lambda es muy importante en el desarrollo de aplicaciones móviles Android.
+Sobre todo al usar <span class="negrita">Jetpack Compose</span> como se verá en el tema siguiente.
+<figure><img src="UD2/images/ud2-2023-09-18-10-39-22.png" /><br><figcaption>Usando lambdas en Jetpack Compose</figcaption></figure>
+<br>
+
+</p>
 
 
-
-
-
-
-
-
-
+</section><!-- End section Funciones Lambda-->
 
 
 
