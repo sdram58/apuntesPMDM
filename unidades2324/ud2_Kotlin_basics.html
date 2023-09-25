@@ -39,6 +39,10 @@
        href="#sFuncionesdealcance">11.- Funciones de alcance</a><a 
        href="sFuncionesLambda" class="">12.- Funciones Lambda</a>
     </div>
+
+    <div class="fila">
+      <a href="#sEjerciciosInteractivos">13.- Ejercicios Interactivos en Kotlin</a>
+    </div>
     
 </nav>
 
@@ -66,6 +70,11 @@
        href="#sHerencia">10.- Herencia</a><a
        href="#sFuncionesdealcance">11.- Funciones de alcance</a><a 
        href="sFuncionesLambda" class="">12.- Funciones Lambda</a>
+    </div>
+
+    <div class="fila">
+      <a href="#sEjerciciosInteractivos">13.- Ejercicios Interactivos en Kotlin</a>
+      <a href="" class="relleno"></a><a href="" class="relleno"></a>
     </div>
   </div>
 
@@ -1429,7 +1438,34 @@ Se estudian en el punto siguiente <span class="negrita">POO</span> (Programació
   <br>
     
 </p>
-</section><!-- End section Funciones-->
+
+
+<h3>Funciones inline</h3>
+<p>En una función normal, su código se almacena una vez en la memoria. Cada vez que se invoca, los parámetros se agregan a la pila y se invoca.</p>
+
+<p>En una función <span class="d-word">en línea</span> no se realiza esta invocación, sino que se inserta el código de la función cada vez que se utiliza.</p>
+
+<p>En teoría, una función en línea tiene un mejor rendimiento en comparación con las normales, 
+  porque evitan usar la pila para pasar parámetros y evitar instrucciones de salto y retorno. 
+  Esta declaración dependerá de cómo se compila el código. 
+  Por ejemplo, en la máquina virtual Java, incluso utiliza la pila para ejecutar instrucciones en código de máquina. 
+  Dado que el código debe "copiarse" cada vez que se llama a esa función, 
+  el tamaño del ejecutable aumentará a medida que crezca el tamaño de la función en línea.</p>
+
+  <section><pre><code class="language-kotlin">inline fun suma(a: Int, b: Int) = a + b
+valor c = suma(2, 2)</code></pre>
+  </section><br><br>
+
+  <p>La verdadera ventaja de las funciones en línea aparece cuando se aplican a funciones de orden superior. 
+    Las funciones de orden superior tienen alguna penalización en el rendimiento (tanto en tiempo como en memoria). 
+    Para llamar al parámetro Lambda se crea un nuevo objeto en memoria que contiene un método con los parámetros indicados en el Lambda.</p>
+
+  
+    <h3>Ejercicios</h3>
+
+    <a class="tarea" target="_blank" href="UD2/exercises/Actividades Reutilizar código.pdf">Ejercicios</a>
+
+  </section><!-- End section Funciones-->
 
 <!--*********************************************************Programación Orientada a Objetos***********************************************************-->
 <section class="apartado">
@@ -1703,13 +1739,309 @@ Si los valores que no se quieren están al final de la lista basta con no ponerl
 <br>
 
 </p>
+
+<h3>Clases selladas</h3>
+
+<p>Las clases selladas se utilizan para representar una jerarquía de clases que heredan de una clase principal, 
+  de modo que tanto la clase principal como las clases anidadas se definen juntas en el mismo archivo.
+</p>
+
+<p>Imaginemos que queremos definir la clase padre <span class="d-word">figura</span> de la cual se extienden 
+  las subclases <span class="d-word">Triangulo</span>, <span class="d-word">cuadrado</span> y <span class="d-word">Circulo</span>. 
+  Como puedes ver, es una técnica para hacer polimorfismo.</p>
+
+<section><pre><code class="language-kotlin">sealed class Figura {
+   class Triangulo(val lado1:Int, val lado2:Int, val lado3:Int) : Figura()
+   class Cuadrado(val lado:Int) : Figura()
+   class Circulo(val radio:Int) : Figura()
+}</code></pre>
+</section><br><br>
+
+<p>Desde Kotlin 1.1 ya no es necesario que las clases secundarias estén anidadas dentro de la clase principal:</p>
+
+<section><pre><code class="language-kotlin">sealed class Figura
+class Triangulo(val lado1:Int, val lado2:Int, val lado3:Int) : Figura()
+class Cuadrado(val lado:Int) : Figura()
+class Circulo(val radio:Int) : Figura()</code></pre>
+</section><br><br>
+
+
+<p>Una clase sellada se declara como abstracta, cuando creamos instancias de esta clase nos vemos obligados a utilizar uno de sus hijos. 
+  Además, una clase sellada debe definirse en un único archivo, por lo que el número de clases secundarias no se puede ampliar en el futuro. 
+  Lo que significa que no podremos ampliar el tipo de figuras. Por este motivo se les conoce como sellados.</p>
+<p>
+Gracias a esto, cuando los usemos con una expresión <span class="r-word">cuando</span>, como se puede comprobar que todos los casos están cubiertos, 
+no será necesario añadir la cláusula <span class="r-word">demás</span>.</p>
+
+<section><pre><code class="language-kotlin">val figura: Figura = Triangulo()
+val texto = cuando (figura) {
+   es Triangulo -> "triangulo"
+   es Cuadrado -> "cuadrado"
+   es Circulo -> "circulo"
+   else -> "sin definir"
+}</code></pre>
+</section><br><br>
+
+<p class="sub-section">Object</p>
+
+
+<p>En caso de que estemos interesados ​​en considerar la posibilidad de que una figura no esté definida,
+  o incluso un tipo de figura que no requiera almacenar un estado, 
+  agregamos elementos object a nuestra clase sellada:</p>
+
+<section><pre><code class="language-kotlin">sealed class Figura
+clase Triangulo(val lado1:Int, val lado2:Int, val lado3:Int) : Figura()
+…
+objeto Punto : Figura()
+objeto SinDefinir : Figura()</code></pre>
+</section><br><br>
+
+<p>tendremos que incorporar estas opciones al bloque <span class="negrita">when</span>:</p>
+
+<section><pre><code class="language-kotlin">val texto = cuando (figura) {
+   es Triangulo -> "triangulo"
+   …
+   Punto -> "punto"
+   SinDefinir -> "sin definir"
+}</code></pre>
+</section><br><br>
+
+
+<p>Tenga en cuenta que las nuevas opciones no son clases, por lo que no las usaremos en la comparación.</p>
+
+<p>Para comprender la diferencia entre clase y objeto, veamos cómo funciona internamente.</p>
+
+<p>Cuando sea una Figura tipo <span class="cursiva">Triangulo, Cuadrado o Circulo </span>funcionará con normalidad. 
+  Es decir, se creará un nuevo objeto en memoria con todas sus propiedades.</p>
+
+<p>Pero cuando sea <span class="cursiva">Punto</span> o <span class="cursiva">SinDefinir</span>, funcionará diferente. 
+  La primera vez que sea necesario, se creará una instancia del objeto. 
+  Estos objetos sólo se crean una vez en la memoria. La segunda vez que se necesita una variable con este valor, no se creará un nuevo objeto, 
+  sino que esta variable será una referencia al objeto creado anteriormente. 
+  Este comportamiento es el mismo que los enumerados. 
+  Un objeto no puede ampliar la clase con nuevas propiedades, pero puede sobrescribir sus funciones.</p>
+
+  <p>Veámoslo con un ejemplo:</p>
+<section><pre><code class="language-kotlin">sealed class Figura(open var color:Int=0) {
+   abstract fun area(): Int
+
+   class Cuadrado (override color var: Int,
+          val lado: Int) : Figura(color) {
+      override fun area() = lado * lado
+   }
+   object Punto : Figura(1) {
+      overide fun area() = 0
+      init {imprimir("Punto Creado, ")}
+   }
+}</code></pre>
+</section><br><br>
+
+<section><pre><code class="language-kotlin">fun main(){
+  val p1 = Figura.Punto
+  val p2 = Figura.Punto
+  val c = Figura.Cuadrado(2,8)
+
+  p1.color = 3
+  imprimir("color c=${c.color}, ")
+  imprimir("color p2=${p2.color}")
+}</code></pre>
+</section><br><br>
+
+
+<div class="tarea">
+  <p>Con el código de arriba</p>
+  <ol>
+    <li>¿Cuál es la salida?</li>
+    <li>¿Cómo se explica que "Punto creado aparece" una sola vez?</li>
+    <li>¿Por qué el color de p2 es 3, si lo que hemos cambiado es el color de p1?</li>
+    <li>¿Por qué el color de c sigue siendo 2?</li>
+    <li>¿Cómo podemos conseguir que cada punto tenga su propio color?</li>
+  </ol>
+</div>
+
+<section class="marco-t inf">
+  <span class="icono info"> </span> Solución
+  </section>
+<section class="marco-b">
+    <p>
+      Cuando se crea la clase <span class="d-word">figura</span>, se crea una instancia para cada elemento del objeto. 
+        El ejemplo creará el objeto <span class="d-word">punto</span>. La creación de las variables p1 y p2 no implicará la creación de nuevos objetos, 
+        ambos serán referencias al objeto anterior. 
+        La inicialización de <span class="negrita">c</span> supondrá la creación de un nuevo objeto en memoria, con sus dos propiedades.
+        En la siguiente instrucción se modifica el color de <span class="negrita">p1</span>, pero como solo hay un color, 
+        también se modifica el color de <span class="negrita">p2</span>.
+      <ol>
+        <li>Sólo se crea un objeto <span class="d-word">Punto</span>.
+          </li>
+        <li>Las variables <span class="cursiva">p1</span> y <span class="cursiva">p2</span> apuntan al mismo objeto.
+          </li>
+        <li>La variable <span class="cursiva">c</span> es un objeto independiente.
+          </li>
+        <li>Usaríamos la clase <span class="d-word">Punto</span> en lugar del objeto <span class="d-word">punto</span>.</li>
+      </ol>
+      </p>
+</section>
+  
+<p>El ejemplo anterior definió tipos de formas. Sin embargo, no es necesario que las distintas subclases estén relacionadas entre sí.</p>
+
+<p>Podemos usar una clase sellada para representar una variable que puede tomar valores de diferentes tipos, aunque estos tipos no tengan relación entre sí.</p>
+
+<p>Por ejemplo, una solicitud HTTP podría devolver una <span class="negrita">pagina web</span> o un <span class="negrita">código de error</span>:</p>
+
+<section><pre><code class="language-kotlin">sealed class RespuestaHTTP 
+data class Correcta(val contenido: String) : RespuestaHTTP()
+data class Error(val codigo: Int, val mesaje: String) : RespuestaHTTP()
+
+fun getUrl(url: String): RespuestaHTTP {
+   val valido = …
+   if (valido) return Correcta("Contenido…")
+   else        return Error(404, "No encontrada")
+}
+
+val respuesta = getUrl("/")
+when (respuesta) {
+   is Correcta -> println(respuesta.contenido)
+   is Error -> println(respuesta.mesaje)
+} 
+</code></pre>
+</section><br><br>
+
+<h3>Inicialización con lateinit vs lazy (Delegacion)</h3>
+
+<p>Normalmente, aquellas variables que no se declaran nulas deben inicializarse en el constructor. 
+  Sin embargo, muchas veces ésta no es la mejor opción. 
+  En caso de que no queramos inicializar una propiedad en el constructor, tenemos dos alternativas, <span class="r-word">lateinit</span> y <span class="r-word">lazy</span>. 
+  Mediante <span class="r-word">lateinit</span> lo que conseguimos es una inicialización tardía, 
+  indicando al compilador que dicha inicialización se realizará más adelante en el código. Si intentamos acceder a una variable antes de su inicialización, 
+  obtendremos un error del tipo <span class="negrita">Causado por</span>:</p>
+
+<section class="marco-t err">
+  <span class="icono error"> </span>  kotlin.UninitializedPropertyAccessException: lateinit property test has not been initialized.
+  </section>
+<section class="marco-b">
+    
+</section>
+
+<section><pre><code class="language-kotlin">lateinit var text: String
+fun doSomething() {
+   text = "a value"
+   println("Length is "+text.length)
+   texto = "Another value"
+} </code></pre>
+</section><br><br>
+
+<p>El modificador <span class="r-word">lateinit</span> solo se puede usar en variables mutables (var) declaradas en el cuerpo de una clase (no en el constructor principal), 
+  y solo cuando esa variable no tiene un <span class="negrita">adquiridor</span> o <span class="negrita">setter</span> personalizado.</p>
+
+<p>Mediante <span class="r-word">lazy</span> lo que obtenemos es una inicialización diferida, 
+  por lo que una variable no se inicializará a menos que se use en nuestro código. 
+  Se inicializará solo una vez y luego mantendrá el valor.</p>
+
+  <section><pre><code class="language-kotlin">public class Example{
+   val name: String by lazy { "Rosa López" }
+
+   if(condition) print("${name.length}") //Initialization takes place here
+} 
+</code></pre>
+  </section><br><br>
+
+<p>En el ejemplo anterior, tanto la primera llamada como las siguientes para nombrar devolverán "Rosa López".</p>
+
+<p>Una vez que sabemos qué hace cada una de estas funciones, ¿cuándo debemos usar cada una?</p>
+<p><ul>
+    <li><span class="d-word">lazy</span> solo se puede usar para variables <span class="d-word">val</span> inmutables, mientras que
+      <span class="d-word">lateinit</span> solo se puede aplicar a variables mutables,
+      ya que no se puede garantizar la inmutabilidad de esa variable porque no se puede compilar como <span class="d-word">final</span> </li>
+    <li> Una variable de tipo <span class="d-word">lateinit</span> se puede inicializar en cualquier parte del objeto donde sea visible.
+      Si necesitamos que nuestra variable sea inicializada desde fuera, de forma desconocida previamente, tendremos que usar <span class="d-word">lateinit</span> </li>
+  </ul></p>
+
+
+<div class="tarea">
+  <p>En este ejercicio, vamos a crear un sistema de gestión de empleados utilizando programación orientada a objetos con herencia, polimorfismo y sobrecarga de funciones y constructores. 
+  El sistema contendrá tres tipos de empleados: <span class="negrita">Empleado</span>, <span class="negrita">Gerente</span> y <span class="negrita">Técnico</span>. 
+  Cada tipo de empleado tendrá propiedades y comportamientos específicos.</p>
+  
+
+<p>Definición de Clases</p>
+
+<p>Crea una clase base llamada Empleado con las siguientes propiedades y métodos:</p>
+ <p>
+  <ul>
+    <li><span class="negrita">Propiedades</span>: nombre (String), edad (Int), salario (Double).</li>
+    <li><span class="negrita">Métodos</span>: calcularPagoMensual(), que calcula el pago mensual del empleado.</li>
+  </ul>
+ </p>
+
+<p>Crea una clase Gerente que hereda de la clase Empleado con las siguientes propiedades y métodos adicionales:</p>
+<p>
+  <ul>
+    <li><span class="negrita">Propiedades</span>: departamento (String), bono (Double).</li>
+    <li><span class="negrita">Métodos</span>: calcularPagoMensual(), que sobrecarga el método de la clase base para calcular el pago mensual de un gerente, incluyendo el bono.</li>
+  </ul>
+</p>
+
+<p>Crea una clase Técnico que hereda de la clase Empleado con las siguientes propiedades y métodos adicionales:</p>
+<p>
+  <ul>
+    <li><span class="negrita">Propiedades</span>: nivel (String), horasExtra (Int).</li>
+    <li><span class="negrita">Métodos</span>: calcularPagoMensual(), que sobrecarga el método de la clase base para calcular el pago mensual de un técnico, considerando las horas extra.</li>
+  </ul>
+</p>
+</div>
+
+
+<section class="marco-t inf">
+  <span class="icono info"> </span> Solución:
+  </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">open class Empleado(val nombre: String, val edad: Int, val salario: Double) {
+    open fun calcularPagoMensual(): Double {
+        return salario
+    }
+}
+
+class Gerente(nombre: String, edad: Int, salario: Double, val departamento: String, val bono: Double) : Empleado(nombre, edad, salario) {
+    override fun calcularPagoMensual(): Double {
+        return salario + bono
+    }
+}
+
+class Técnico(nombre: String, edad: Int, salario: Double, val nivel: String, val horasExtra: Int) : Empleado(nombre, edad, salario) {
+    override fun calcularPagoMensual(): Double {
+        val salarioBase = salario
+        val pagoHorasExtra = horasExtra * 10.0 // Supongamos que se paga $10 por hora extra.
+        return salarioBase + pagoHorasExtra
+    }
+}
+
+fun main() {
+    val empleado1 = Empleado("Juan Pérez", 30, 3000.0)
+    val gerente1 = Gerente("Ana López", 35, 5000.0, "Ventas", 1000.0)
+    val técnico1 = Técnico("Luis García", 25, 2500.0, "Junior", 20)
+
+    val empleados = listOf(empleado1, gerente1, técnico1)
+
+    for (empleado in empleados) {
+        println("Nombre: ${empleado.nombre}, Pago Mensual: ${empleado.calcularPagoMensual()}")
+    }
+}
+</code></pre>
+    </section><br><br>
+    <p>En este ejercicio, hemos creado una jerarquía de clases que incluye la clase base Empleado,
+       y dos clases derivadas, Gerente y Técnico. 
+       Cada clase tiene su propio método calcularPagoMensual(), que se sobrecarga para calcular el pago mensual específico de cada tipo de empleado. 
+       Luego, en la función main(), creamos instancias de cada tipo de empleado y calculamos sus pagos mensuales.</p>
+    
+</section>
+  
 </section><!-- End section Programación Orientada a Objetos-->
 
 
 
 <!--*********************************************************Funciones de Extensión***********************************************************-->
 <section class="apartado">
-<a name="sFuncionesExtensión"></a>
+<a name="sFuncionesExtension"></a>
 <h2>Funciones de Extensión</h2>
 
 <p>Kotlin permite <span class="negrita">extender la funcionalidad</span> de las clases existentes 
@@ -2206,7 +2538,17 @@ Sobre todo al usar <span class="negrita">Jetpack Compose</span> como se verá en
 
 </section><!-- End section Funciones Lambda-->
 
+<!--*********************************************************Ejercicios Interactivos en Kotlin***********************************************************-->
+<section class="apartado">
+<a name="sEjerciciosInteractivos"></a>
+<h2>Ejercicios Interactivos en Kotlin</h2>
+<div class="" style="width: 100%;">
+  <p>Practica con estos ejercicios de <a class="enlace" target="_blank" href="https://kotlinlang.org/">https://kotlinlang.org/</a> </p> <br>
+  <iframe src="https://play.kotlinlang.org/koans/Introduction/Hello,%20world!/Task.kt" frameborder="1" style="width: 100%;height: 1500px;"></iframe>
+</div>
 
+
+</section><!-- End section Ejercicios Interactivos en Kotlin-->
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
   <script src="../script/prism.js"></script>
