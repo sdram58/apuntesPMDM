@@ -14,15 +14,15 @@ nav.main-menu-lateral{
 nav.main-menu-lateral a{    
     display:block;
     border:1px solid black;
-    border: 1px 2px;
+    border-collapse: collapse;
     padding: 5px;
     list-style: none; 
     text-decoration: none;
     background-color: rgb(203, 243, 238);
     font-size: 0.8em;
-    color:rgb(148, 98, 241)
-    
-    
+    color:rgb(148, 98, 241);
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 nav.main-menu-lateral a:visited{
