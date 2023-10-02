@@ -1739,6 +1739,258 @@ Si los valores que no se quieren están al final de la lista basta con no ponerl
 
 </p>
 
+<h3>Inicialización con lateinit vs lazy (Delegacion)</h3>
+
+<p>Normalmente, aquellas variables que no se declaran nulas deben inicializarse en el constructor. 
+  Sin embargo, muchas veces ésta no es la mejor opción. 
+  En caso de que no queramos inicializar una propiedad en el constructor, tenemos dos alternativas, <span class="r-word">lateinit</span> y <span class="r-word">lazy</span>. 
+  Mediante <span class="r-word">lateinit</span> lo que conseguimos es una inicialización tardía, 
+  indicando al compilador que dicha inicialización se realizará más adelante en el código. Si intentamos acceder a una variable antes de su inicialización, 
+  obtendremos un error del tipo <span class="negrita">Causado por</span>:</p>
+
+<section class="marco-t err">
+  <span class="icono error"> </span>  kotlin.UninitializedPropertyAccessException: lateinit property test has not been initialized.
+  </section>
+<section class="marco-b">
+    
+</section>
+
+<section><pre><code class="language-kotlin">lateinit var text: String
+fun doSomething() {
+   text = "a value"
+   println("Length is "+text.length)
+   texto = "Another value"
+} </code></pre>
+</section><br><br>
+
+<p>El modificador <span class="r-word">lateinit</span> solo se puede usar en variables mutables (var) declaradas en el cuerpo de una clase (no en el constructor principal), 
+  y solo cuando esa variable no tiene un <span class="negrita">adquiridor</span> o <span class="negrita">setter</span> personalizado.</p>
+
+<p>Mediante <span class="r-word">lazy</span> lo que obtenemos es una inicialización diferida, 
+  por lo que una variable no se inicializará a menos que se use en nuestro código. 
+  Se inicializará solo una vez y luego mantendrá el valor.</p>
+
+  <section><pre><code class="language-kotlin">public class Example{
+   val name: String by lazy { "Rosa López" }
+
+   if(condition) print("${name.length}") //Initialization takes place here
+} 
+</code></pre>
+  </section><br><br>
+
+<p>En el ejemplo anterior, tanto la primera llamada como las siguientes para nombrar devolverán "Rosa López".</p>
+
+<p>Una vez que sabemos qué hace cada una de estas funciones, ¿cuándo debemos usar cada una?</p>
+<p><ul>
+    <li><span class="d-word">lazy</span> solo se puede usar para variables <span class="d-word">val</span> inmutables, mientras que
+      <span class="d-word">lateinit</span> solo se puede aplicar a variables mutables,
+      ya que no se puede garantizar la inmutabilidad de esa variable porque no se puede compilar como <span class="d-word">final</span> </li>
+    <li> Una variable de tipo <span class="d-word">lateinit</span> se puede inicializar en cualquier parte del objeto donde sea visible.
+      Si necesitamos que nuestra variable sea inicializada desde fuera, de forma desconocida previamente, tendremos que usar <span class="d-word">lateinit</span> </li>
+  </ul></p>
+
+  
+</section><!-- End section Programación Orientada a Objetos-->
+
+
+
+<!--*********************************************************Funciones de Extensión***********************************************************-->
+<section class="apartado">
+<a name="sFuncionesExtension"></a>
+<h2>Funciones de Extensión</h2>
+
+<p>Kotlin permite <span class="negrita">extender la funcionalidad</span> de las clases existentes 
+  ya sean del sistema o propias sin uso de la herencia incluso si la clase existente es final. </p>
+
+  <p>
+Las <span class="negrita">funciones de extensión</span> se definen fuera de la definición de la clase por ello <span class="negrita">solo se podrán utilizar en el ámbito en el que se definan</span>.
+</p>
+<p>
+Aunque la función de extensión se define fuera de la clase es como si se hubiera definido desde dentro comportándose como un método más de la clase, pudiendo hacer uso tanto de las propiedades y los métodos si los hay aunque sean privados.
+
+En el apartado de las funciones ya se vio un ejemplo:
+<figure><img src="UD2/images/ud2-2023-09-17-19-13-20.png" /><br><figcaption>Funciones de Extensión</figcaption></figure>
+<br></p>
+
+<p>Estas funciones se definen como otras funciones pero usando el nombre de la clase que se quiere extender.
+
+Función de extensión de una clase existente:
+
+<figure><img src="UD2/images/ud2-2023-09-17-19-14-20.png" /><br><figcaption></figcaption></figure>
+<br>
+Función de extensión de una clase propia
+<figure><img src="UD2/images/ud2-2023-09-17-19-14-41.png" /><br><figcaption></figcaption></figure>
+<br>
+</p>
+
+<p>Un uso típico de las funciones de extensión se da con las colecciones.
+
+Gracias a una función de extensión se puede realizar una acción sobre cada uno de los elementos de la colección.
+<figure><img src="UD2/images/ud2-2023-09-17-19-16-48.png" /><br><figcaption></figcaption>
+</figcaption></figure>
+<br>
+<br>cuya salida sería:
+<figure><img src="UD2/images/ud2-2023-09-17-19-17-16.png" /><br><figcaption></figcaption></figure>
+<br>
+</p>
+<p>Una función de extensión no puede sobre escribir a una función miembro.
+
+Una función de extensión sí que puede sobrecargar a una función miembro.
+
+Aunque no se muestre un error, si se intenta sobrescribir una función miembro mediante una función de extensión, en ejecución siempre se llamará a la función miembro.
+<figure><img src="UD2/images/ud2-2023-09-17-19-19-01.png" /><br><figcaption></figcaption></figure>
+<br>
+</p>
+
+</section><!-- End section Funciones de Extensión-->
+
+<!--*********************************************************Singleton***********************************************************-->
+<section class="apartado">
+<a name="sSingleton"></a>
+<h2>Singleton</h2>
+<p>En Kotlin se pueden crear singleton que son objetos únicos en su clase, esto significa que no podrá haber más instancias de esa clase.
+
+<section><pre><code class="language-kotlin">object Author{
+    var name = "Carlos Tarazona"
+    var company = "2DAM"
+    var date = Date()
+
+    override fun toString(): String {
+        return """$name ($company)
+            |$date""".trimMargin()
+    }
+}</code></pre>
+</section><br><br>
+
+Se le pueden añadir funciones de extensión como con cualquier otra clase.
+
+Si se declaran de manera global en el archivo .kt se podrán añadir funciones de extensión como con cualquier otra clase.
+</p>
+
+
+</section><!-- End section -->
+
+<!--*********************************************************Herencia***********************************************************-->
+<section class="apartado">
+<a name="sHerencia"></a>
+<h2>Herencia</h2>
+<p>En <span class="negrita">Kotlin por defecto todas las clases son finales</span>, lo cual significa que no puede haber herencia si no se indica explícitamente.
+
+Para indicar que una clase puede ser súper clase se debe usar la palabra reservada <span class="negrita">open</span>.
+
+Si se usa el constructor primario y los getters y setters por defecto:
+
+<figure><img src="UD2/images/ud2-2023-09-17-19-31-58.png" /><br><figcaption>Herencia</figcaption></figure>
+<br>
+
+
+
+Con este código se tiene:
+<ul>
+  <li>La clase Product con el constructor, los getter y los setters</li>
+  <li>La clase Monitor con su constructor que llama al constructor de la clase padre, y hereda los getter y los setters de la clase padre.</li>
+</ul>
+</p>
+
+<p>Se pueden añadir propiedades y métodos nuevos.
+  <figure><img src="UD2/images/ud2-2023-09-17-19-32-52.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+</p>
+
+<p>En la clase hija automáticamente se crea el <span class="negrita">constructor primario que llamará al constructor de la clase madre</span>.
+
+Además, se ha creado un constructor secundario que mediante <span class="negrita">this</span> llamará al constructor primario.
+</p>
+
+<h3>Clases abstractas</h3>
+
+<p>Para declarar una clase abstracta se usa la palabra <span class="r-word">abstract</span>  delante de la palabra <span class="r-word">class</span> .
+
+De una clase abstracta no se pueden instanciar objetos.
+<figure><img src="UD2/images/ud2-2023-09-17-19-35-01.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</p>
+
+<div class="tarea">
+  <p>En este ejercicio, vamos a crear un sistema de gestión de empleados utilizando programación orientada a objetos con herencia, polimorfismo y sobrecarga de funciones y constructores. 
+  El sistema contendrá tres tipos de empleados: <span class="negrita">Empleado</span>, <span class="negrita">Gerente</span> y <span class="negrita">Técnico</span>. 
+  Cada tipo de empleado tendrá propiedades y comportamientos específicos.</p>
+  
+
+<p>Definición de Clases</p>
+
+<p>Crea una clase base llamada Empleado con las siguientes propiedades y métodos:</p>
+ <p>
+  <ul>
+    <li><span class="negrita">Propiedades</span>: nombre (String), edad (Int), salario (Double).</li>
+    <li><span class="negrita">Métodos</span>: calcularPagoMensual(), que calcula el pago mensual del empleado.</li>
+  </ul>
+ </p>
+
+<p>Crea una clase Gerente que hereda de la clase Empleado con las siguientes propiedades y métodos adicionales:</p>
+<p>
+  <ul>
+    <li><span class="negrita">Propiedades</span>: departamento (String), bono (Double).</li>
+    <li><span class="negrita">Métodos</span>: calcularPagoMensual(), que sobrecarga el método de la clase base para calcular el pago mensual de un gerente, incluyendo el bono.</li>
+  </ul>
+</p>
+
+<p>Crea una clase Técnico que hereda de la clase Empleado con las siguientes propiedades y métodos adicionales:</p>
+<p>
+  <ul>
+    <li><span class="negrita">Propiedades</span>: nivel (String), horasExtra (Int).</li>
+    <li><span class="negrita">Métodos</span>: calcularPagoMensual(), que sobrecarga el método de la clase base para calcular el pago mensual de un técnico, considerando las horas extra.</li>
+  </ul>
+</p>
+</div>
+
+
+<section class="marco-t inf">
+  <span class="icono info"> </span> Solución:
+  </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">open class Empleado(val nombre: String, val edad: Int, val salario: Double) {
+    open fun calcularPagoMensual(): Double {
+        return salario
+    }
+}
+
+class Gerente(nombre: String, edad: Int, salario: Double, val departamento: String, val bono: Double) : Empleado(nombre, edad, salario) {
+    override fun calcularPagoMensual(): Double {
+        return salario + bono
+    }
+}
+
+class Tecnico(nombre: String, edad: Int, salario: Double, val nivel: String, val horasExtra: Int) : Empleado(nombre, edad, salario) {
+    override fun calcularPagoMensual(): Double {
+        val salarioBase = salario
+        val pagoHorasExtra = horasExtra * 10.0 // Supongamos que se paga $10 por hora extra.
+        return salarioBase + pagoHorasExtra
+    }
+}
+
+fun main() {
+    val empleado1 = Empleado("Juan Pérez", 30, 3000.0)
+    val gerente1 = Gerente("Ana López", 35, 5000.0, "Ventas", 1000.0)
+    val tecnico1 = Tecnico("Luis García", 25, 2500.0, "Junior", 20)
+
+    val empleados = listOf(empleado1, gerente1, técnico1)
+
+    for (empleado in empleados) {
+        println("Nombre: ${empleado.nombre}, Pago Mensual: ${empleado.calcularPagoMensual()}")
+    }
+}
+</code></pre>
+    </section><br><br>
+    <p>En este ejercicio, hemos creado una jerarquía de clases que incluye la clase base Empleado,
+       y dos clases derivadas, Gerente y Técnico. 
+       Cada clase tiene su propio método calcularPagoMensual(), que se sobrecarga para calcular el pago mensual específico de cada tipo de empleado. 
+       Luego, en la función main(), creamos instancias de cada tipo de empleado y calculamos sus pagos mensuales.</p>
+    
+</section>
+
 <h3>Clases selladas</h3>
 
 <p>Las clases selladas se utilizan para representar una jerarquía de clases que heredan de una clase principal, 
@@ -1904,257 +2156,6 @@ when (respuesta) {
 </code></pre>
 </section><br><br>
 
-<h3>Inicialización con lateinit vs lazy (Delegacion)</h3>
-
-<p>Normalmente, aquellas variables que no se declaran nulas deben inicializarse en el constructor. 
-  Sin embargo, muchas veces ésta no es la mejor opción. 
-  En caso de que no queramos inicializar una propiedad en el constructor, tenemos dos alternativas, <span class="r-word">lateinit</span> y <span class="r-word">lazy</span>. 
-  Mediante <span class="r-word">lateinit</span> lo que conseguimos es una inicialización tardía, 
-  indicando al compilador que dicha inicialización se realizará más adelante en el código. Si intentamos acceder a una variable antes de su inicialización, 
-  obtendremos un error del tipo <span class="negrita">Causado por</span>:</p>
-
-<section class="marco-t err">
-  <span class="icono error"> </span>  kotlin.UninitializedPropertyAccessException: lateinit property test has not been initialized.
-  </section>
-<section class="marco-b">
-    
-</section>
-
-<section><pre><code class="language-kotlin">lateinit var text: String
-fun doSomething() {
-   text = "a value"
-   println("Length is "+text.length)
-   texto = "Another value"
-} </code></pre>
-</section><br><br>
-
-<p>El modificador <span class="r-word">lateinit</span> solo se puede usar en variables mutables (var) declaradas en el cuerpo de una clase (no en el constructor principal), 
-  y solo cuando esa variable no tiene un <span class="negrita">adquiridor</span> o <span class="negrita">setter</span> personalizado.</p>
-
-<p>Mediante <span class="r-word">lazy</span> lo que obtenemos es una inicialización diferida, 
-  por lo que una variable no se inicializará a menos que se use en nuestro código. 
-  Se inicializará solo una vez y luego mantendrá el valor.</p>
-
-  <section><pre><code class="language-kotlin">public class Example{
-   val name: String by lazy { "Rosa López" }
-
-   if(condition) print("${name.length}") //Initialization takes place here
-} 
-</code></pre>
-  </section><br><br>
-
-<p>En el ejemplo anterior, tanto la primera llamada como las siguientes para nombrar devolverán "Rosa López".</p>
-
-<p>Una vez que sabemos qué hace cada una de estas funciones, ¿cuándo debemos usar cada una?</p>
-<p><ul>
-    <li><span class="d-word">lazy</span> solo se puede usar para variables <span class="d-word">val</span> inmutables, mientras que
-      <span class="d-word">lateinit</span> solo se puede aplicar a variables mutables,
-      ya que no se puede garantizar la inmutabilidad de esa variable porque no se puede compilar como <span class="d-word">final</span> </li>
-    <li> Una variable de tipo <span class="d-word">lateinit</span> se puede inicializar en cualquier parte del objeto donde sea visible.
-      Si necesitamos que nuestra variable sea inicializada desde fuera, de forma desconocida previamente, tendremos que usar <span class="d-word">lateinit</span> </li>
-  </ul></p>
-
-
-<div class="tarea">
-  <p>En este ejercicio, vamos a crear un sistema de gestión de empleados utilizando programación orientada a objetos con herencia, polimorfismo y sobrecarga de funciones y constructores. 
-  El sistema contendrá tres tipos de empleados: <span class="negrita">Empleado</span>, <span class="negrita">Gerente</span> y <span class="negrita">Técnico</span>. 
-  Cada tipo de empleado tendrá propiedades y comportamientos específicos.</p>
-  
-
-<p>Definición de Clases</p>
-
-<p>Crea una clase base llamada Empleado con las siguientes propiedades y métodos:</p>
- <p>
-  <ul>
-    <li><span class="negrita">Propiedades</span>: nombre (String), edad (Int), salario (Double).</li>
-    <li><span class="negrita">Métodos</span>: calcularPagoMensual(), que calcula el pago mensual del empleado.</li>
-  </ul>
- </p>
-
-<p>Crea una clase Gerente que hereda de la clase Empleado con las siguientes propiedades y métodos adicionales:</p>
-<p>
-  <ul>
-    <li><span class="negrita">Propiedades</span>: departamento (String), bono (Double).</li>
-    <li><span class="negrita">Métodos</span>: calcularPagoMensual(), que sobrecarga el método de la clase base para calcular el pago mensual de un gerente, incluyendo el bono.</li>
-  </ul>
-</p>
-
-<p>Crea una clase Técnico que hereda de la clase Empleado con las siguientes propiedades y métodos adicionales:</p>
-<p>
-  <ul>
-    <li><span class="negrita">Propiedades</span>: nivel (String), horasExtra (Int).</li>
-    <li><span class="negrita">Métodos</span>: calcularPagoMensual(), que sobrecarga el método de la clase base para calcular el pago mensual de un técnico, considerando las horas extra.</li>
-  </ul>
-</p>
-</div>
-
-
-<section class="marco-t inf">
-  <span class="icono info"> </span> Solución:
-  </section>
-<section class="marco-b">
-    <section><pre><code class="language-kotlin">open class Empleado(val nombre: String, val edad: Int, val salario: Double) {
-    open fun calcularPagoMensual(): Double {
-        return salario
-    }
-}
-
-class Gerente(nombre: String, edad: Int, salario: Double, val departamento: String, val bono: Double) : Empleado(nombre, edad, salario) {
-    override fun calcularPagoMensual(): Double {
-        return salario + bono
-    }
-}
-
-class Tecnico(nombre: String, edad: Int, salario: Double, val nivel: String, val horasExtra: Int) : Empleado(nombre, edad, salario) {
-    override fun calcularPagoMensual(): Double {
-        val salarioBase = salario
-        val pagoHorasExtra = horasExtra * 10.0 // Supongamos que se paga $10 por hora extra.
-        return salarioBase + pagoHorasExtra
-    }
-}
-
-fun main() {
-    val empleado1 = Empleado("Juan Pérez", 30, 3000.0)
-    val gerente1 = Gerente("Ana López", 35, 5000.0, "Ventas", 1000.0)
-    val tecnico1 = Tecnico("Luis García", 25, 2500.0, "Junior", 20)
-
-    val empleados = listOf(empleado1, gerente1, técnico1)
-
-    for (empleado in empleados) {
-        println("Nombre: ${empleado.nombre}, Pago Mensual: ${empleado.calcularPagoMensual()}")
-    }
-}
-</code></pre>
-    </section><br><br>
-    <p>En este ejercicio, hemos creado una jerarquía de clases que incluye la clase base Empleado,
-       y dos clases derivadas, Gerente y Técnico. 
-       Cada clase tiene su propio método calcularPagoMensual(), que se sobrecarga para calcular el pago mensual específico de cada tipo de empleado. 
-       Luego, en la función main(), creamos instancias de cada tipo de empleado y calculamos sus pagos mensuales.</p>
-    
-</section>
-  
-</section><!-- End section Programación Orientada a Objetos-->
-
-
-
-<!--*********************************************************Funciones de Extensión***********************************************************-->
-<section class="apartado">
-<a name="sFuncionesExtension"></a>
-<h2>Funciones de Extensión</h2>
-
-<p>Kotlin permite <span class="negrita">extender la funcionalidad</span> de las clases existentes 
-  ya sean del sistema o propias sin uso de la herencia incluso si la clase existente es final. </p>
-
-  <p>
-Las <span class="negrita">funciones de extensión</span> se definen fuera de la definición de la clase por ello <span class="negrita">solo se podrán utilizar en el ámbito en el que se definan</span>.
-</p>
-<p>
-Aunque la función de extensión se define fuera de la clase es como si se hubiera definido desde dentro comportándose como un método más de la clase, pudiendo hacer uso tanto de las propiedades y los métodos si los hay aunque sean privados.
-
-En el apartado de las funciones ya se vio un ejemplo:
-<figure><img src="UD2/images/ud2-2023-09-17-19-13-20.png" /><br><figcaption>Funciones de Extensión</figcaption></figure>
-<br></p>
-
-<p>Estas funciones se definen como otras funciones pero usando el nombre de la clase que se quiere extender.
-
-Función de extensión de una clase existente:
-
-<figure><img src="UD2/images/ud2-2023-09-17-19-14-20.png" /><br><figcaption></figcaption></figure>
-<br>
-Función de extensión de una clase propia
-<figure><img src="UD2/images/ud2-2023-09-17-19-14-41.png" /><br><figcaption></figcaption></figure>
-<br>
-</p>
-
-<p>Un uso típico de las funciones de extensión se da con las colecciones.
-
-Gracias a una función de extensión se puede realizar una acción sobre cada uno de los elementos de la colección.
-<figure><img src="UD2/images/ud2-2023-09-17-19-16-48.png" /><br><figcaption></figcaption>
-</figcaption></figure>
-<br>
-<br>cuya salida sería:
-<figure><img src="UD2/images/ud2-2023-09-17-19-17-16.png" /><br><figcaption></figcaption></figure>
-<br>
-</p>
-<p>Una función de extensión no puede sobre escribir a una función miembro.
-
-Una función de extensión sí que puede sobrecargar a una función miembro.
-
-Aunque no se muestre un error, si se intenta sobrescribir una función miembro mediante una función de extensión, en ejecución siempre se llamará a la función miembro.
-<figure><img src="UD2/images/ud2-2023-09-17-19-19-01.png" /><br><figcaption></figcaption></figure>
-<br>
-</p>
-
-</section><!-- End section Funciones de Extensión-->
-
-<!--*********************************************************Singleton***********************************************************-->
-<section class="apartado">
-<a name="sSingleton"></a>
-<h2>Singleton</h2>
-<p>En Kotlin se pueden crear singleton que son objetos únicos en su clase, esto significa que no podrá haber más instancias de esa clase.
-
-<section><pre><code class="language-kotlin">object Author{
-    var name = "Carlos Tarazona"
-    var company = "2DAM"
-    var date = Date()
-
-    override fun toString(): String {
-        return """$name ($company)
-            |$date""".trimMargin()
-    }
-}</code></pre>
-</section><br><br>
-
-Se le pueden añadir funciones de extensión como con cualquier otra clase.
-
-Si se declaran de manera global en el archivo .kt se podrán añadir funciones de extensión como con cualquier otra clase.
-</p>
-
-
-</section><!-- End section -->
-
-<!--*********************************************************Herencia***********************************************************-->
-<section class="apartado">
-<a name="sHerencia"></a>
-<h2>Herencia</h2>
-<p>En <span class="negrita">Kotlin por defecto todas las clases son finales</span>, lo cual significa que no puede haber herencia si no se indica explícitamente.
-
-Para indicar que una clase puede ser súper clase se debe usar la palabra reservada <span class="negrita">open</span>.
-
-Si se usa el constructor primario y los getters y setters por defecto:
-
-<figure><img src="UD2/images/ud2-2023-09-17-19-31-58.png" /><br><figcaption>Herencia</figcaption></figure>
-<br>
-
-
-
-Con este código se tiene:
-<ul>
-  <li>La clase Product con el constructor, los getter y los setters</li>
-  <li>La clase Monitor con su constructor que llama al constructor de la clase padre, y hereda los getter y los setters de la clase padre.</li>
-</ul>
-</p>
-
-<p>Se pueden añadir propiedades y métodos nuevos.
-  <figure><img src="UD2/images/ud2-2023-09-17-19-32-52.png" /><br><figcaption></figcaption></figure>
-  <br>
-  
-</p>
-
-<p>En la clase hija automáticamente se crea el <span class="negrita">constructor primario que llamará al constructor de la clase madre</span>.
-
-Además, se ha creado un constructor secundario que mediante <span class="negrita">this</span> llamará al constructor primario.
-</p>
-
-<h3>Clases abstractas</h3>
-
-<p>Para declarar una clase abstracta se usa la palabra <span class="r-word">abstract</span>  delante de la palabra <span class="r-word">class</span> .
-
-De una clase abstracta no se pueden instanciar objetos.
-<figure><img src="UD2/images/ud2-2023-09-17-19-35-01.png" /><br><figcaption></figcaption></figure>
-<br>
-
-</p>
 </section><!-- End section Herencia-->
 
 <!--*********************************************************Funciones de alcance***********************************************************-->
