@@ -1769,14 +1769,14 @@ class Circulo(val radio:Int) : Figura()</code></pre>
   Además, una clase sellada debe definirse en un único archivo, por lo que el número de clases secundarias no se puede ampliar en el futuro. 
   Lo que significa que no podremos ampliar el tipo de figuras. Por este motivo se les conoce como sellados.</p>
 <p>
-Gracias a esto, cuando los usemos con una expresión <span class="r-word">cuando</span>, como se puede comprobar que todos los casos están cubiertos, 
-no será necesario añadir la cláusula <span class="r-word">demás</span>.</p>
+Gracias a esto, cuando los usemos con una expresión <span class="r-word">when</span>, como se puede comprobar que todos los casos están cubiertos, 
+no será necesario añadir la cláusula <span class="r-word">else</span>.</p>
 
 <section><pre><code class="language-kotlin">val figura: Figura = Triangulo()
-val texto = cuando (figura) {
-   es Triangulo -> "triangulo"
-   es Cuadrado -> "cuadrado"
-   es Circulo -> "circulo"
+val texto = when (figura) {
+   is Triangulo -> "triangulo"
+   is Cuadrado -> "cuadrado"
+   is Circulo -> "circulo"
    else -> "sin definir"
 }</code></pre>
 </section><br><br>
@@ -1797,8 +1797,8 @@ objeto SinDefinir : Figura()</code></pre>
 
 <p>tendremos que incorporar estas opciones al bloque <span class="negrita">when</span>:</p>
 
-<section><pre><code class="language-kotlin">val texto = cuando (figura) {
-   es Triangulo -> "triangulo"
+<section><pre><code class="language-kotlin">val texto = when(figura) {
+   is Triangulo -> "triangulo"
    …
    Punto -> "punto"
    SinDefinir -> "sin definir"
@@ -1824,13 +1824,12 @@ objeto SinDefinir : Figura()</code></pre>
 <section><pre><code class="language-kotlin">sealed class Figura(open var color:Int=0) {
    abstract fun area(): Int
 
-   class Cuadrado (override color var: Int,
-          val lado: Int) : Figura(color) {
+   class Cuadrado (override var color: Int, val lado: Int) : Figura(color) {
       override fun area() = lado * lado
    }
    object Punto : Figura(1) {
-      overide fun area() = 0
-      init {imprimir("Punto Creado, ")}
+    override fun area() = 0
+      init {println("Punto Creado, ")}
    }
 }</code></pre>
 </section><br><br>
@@ -1841,8 +1840,8 @@ objeto SinDefinir : Figura()</code></pre>
   val c = Figura.Cuadrado(2,8)
 
   p1.color = 3
-  imprimir("color c=${c.color}, ")
-  imprimir("color p2=${p2.color}")
+  println("color c=${c.color}, ")
+  println("color p2=${p2.color}")
 }</code></pre>
 </section><br><br>
 
@@ -2006,7 +2005,7 @@ class Gerente(nombre: String, edad: Int, salario: Double, val departamento: Stri
     }
 }
 
-class Técnico(nombre: String, edad: Int, salario: Double, val nivel: String, val horasExtra: Int) : Empleado(nombre, edad, salario) {
+class Tecnico(nombre: String, edad: Int, salario: Double, val nivel: String, val horasExtra: Int) : Empleado(nombre, edad, salario) {
     override fun calcularPagoMensual(): Double {
         val salarioBase = salario
         val pagoHorasExtra = horasExtra * 10.0 // Supongamos que se paga $10 por hora extra.
@@ -2017,7 +2016,7 @@ class Técnico(nombre: String, edad: Int, salario: Double, val nivel: String, va
 fun main() {
     val empleado1 = Empleado("Juan Pérez", 30, 3000.0)
     val gerente1 = Gerente("Ana López", 35, 5000.0, "Ventas", 1000.0)
-    val técnico1 = Técnico("Luis García", 25, 2500.0, "Junior", 20)
+    val tecnico1 = Tecnico("Luis García", 25, 2500.0, "Junior", 20)
 
     val empleados = listOf(empleado1, gerente1, técnico1)
 
