@@ -33,8 +33,15 @@
            href="#sPrimeraaplicaciónAndroid_Contadordeclics">9.- Primera aplicación Android: Contador de clics</a>
         </div>
         <div class="fila">
-            <a 
-           href="#sOtherSystems">10.- Otros Sistemas</a>
+            <a href="#sCentralizarValoresenelproyecto">10.- Centralizar valores en el proyecto</a>
+            <a href="#sAplicacionMultiidioma">11.- Aplicación Multi idioma</a>
+            <a href="#sOrientacionesverticalyhorizontal">12.- Orientaciones vertical y horizontal</a>
+        </div>
+
+        <div class="fila">
+            <a href="#sValuesResourceFiles">13.- Values Resource Files</a>
+            <a href="#sDebug">14.- Debug</a>
+            <a href="#sActualizaciones">15.- Actualizaciones</a>
         </div>
         
     </nav>
@@ -43,25 +50,31 @@
 
     <div class="main-menu">
         <div class="fila">
-            <a href="#sIntroduction">1.- Introducción</a><a 
-            href="#sTypeOfApps">2.- Tipos de Apps</a><a 
-            href="#sAndroidFeatures">3.- Características de Android</a></div>
+            <a href="#sIntroduccion">1.- Introducción</a><a 
+            href="#sActivities">2.- Activities</a><a 
+            href="#sProgramacionImperativavsdeclarativa">3.- Programación imperativa vs declarativa</a></div>
         <div class="fila">
             <a 
-           href="#sAndroidArchitecture">4.- Arquitectura de Android</a><a 
-           href="#sFragmentation">5.-Fragmentación</a><a 
-           href="#sAndroidStudio">6.- Android Studio</a>
+           href="#sAplicacionesNativasenAndroid">4.- Aplicaciones Nativas en Android</a><a 
+           href="#sJetpackCompose">5.- Jetpack Compose</a><a 
+           href="#sCrearunproyectoenAndroid">6.- Crear un proyecto en Android</a>
         </div>
         <div class="fila">
             <a 
-           href="#sAndroidEmulator">7.- Emulador Android (AVD)</a><a 
-           href="#sTestOnReal">8.- Pruebas en dispositivos reales</a><a 
-           href="#sThirdPartyEmulators">9.- Otros emuladores</a>
+           href="#sEstructuradeUnproyectoenAndroid">7.- Estructura de un proyecto en Android</a><a 
+           href="#sUnidadesdeMedidaenAndroid">8.- Unidades de Medida en Android</a><a 
+           href="#sPrimeraaplicaciónAndroid_Contadordeclics">9.- Primera aplicación Android: Contador de clics</a>
         </div>
         <div class="fila">
-            <a 
-           href="#sOtherSystems">10.- Otros Sistemas</a>
-           <a class="relleno" href=""></a><a class="relleno" href=""></a>
+            <a href="#sCentralizarValoresenelproyecto">10.- Centralizar valores en el proyecto</a>
+            <a href="#sAplicacionMultiidioma">11.- Aplicación Multi idioma</a>
+            <a href="#sOrientacionesverticalyhorizontal">12.- Orientaciones vertical y horizontal</a>
+        </div>
+
+        <div class="fila">
+            <a href="#sValuesResourceFiles">13.- Values Resource Files</a>
+            <a href="#Debug">14. Debug</a>
+            <a href="#sActualizaciones">15. Actualizaciones</a>
         </div>
     </div>
 
@@ -895,6 +908,421 @@ fun content() {
     <a class="tarea" target="_blank" href="">Replica la aplicación "Contador de Clics" y añade un botón para resetar la cuenta</a>
 </section><!-- End section Primera aplicación Android: Contador de clics-->
 
+<!--*********************************************************Centralizar Valores en el proyecto.***********************************************************-->
+<section class="apartado">
+<a name="sCentralizarValoresenelproyecto"></a>
+<h2>Centralizar Valores en el proyecto.</h2>
+
+<p>En la aplicación se han utilizado <span class="negrita">literales</span> para los <span class="cursiva">Strings</span> y para los tamaños.</p>
+
+<section><pre><code class="language-kotlin">Text(
+    text = "¡PÚLSAME!",
+    fontSize = 30.sp,
+    modifier = Modifier.padding(16.dp)
+)</code></pre>
+</section><br>
+
+<p>A esta práctica se le denomina como <span class="negrita">Hardcoded values</span>. Y en general, esto <span class="subrayado">no es una buena práctica</span>:</p>
+<ul>
+    <li>¿Qué pasa si se decide que todos los botones tengan el mismo tamaño de texto y en un futuro se cambia este tamaño?</li>
+    <li>¿Qué se debe hacer si se quiere crear una aplicación multi idioma?</li>
+</ul>
+
+<p>En Android Studio se pueden centralizar valores (similar a crear variables) para poder utilizar esos valores en cualquier punto del proyecto.
+    De esta manera los cambios serán más sencillos de realizar.</p>
+
+<p><span class="negrita">Como buena práctica se deberán centralizar al menos todas las cadenas de texto.</span></p>
+
+<p>Por defecto Android Studio ya crea dos archivos para estas tareas:</p>
+<ul>
+    <li><span class="inline-file">colors.xml</span> -> centralizar colores</li>
+    <li><span class="inline-file">string.xml</span> -> centralizar cadenas</li>
+</ul>
+<br><br>
+<figure><img src="UD3/images/ud3-2023-10-04-09-29-17.png" /><br><figcaption>Ficheros de valores de colores y cadenas</figcaption></figure>
+<br>
+
+
+<p>A continuación, se verá cómo usarlo y como crear un archivo similar para las medidas y tamaños.</p>
+
+<p>Se pueden crear <span class="negrita">colores</span> y <span class="negrita">cadenas</span> añadiendo el código directamente a los archivos correspondientes, 
+    siguiendo el patrón ya establecido en ellos.</p>
+
+<section><pre><code class="language-xml">&lt;color name="nombre_color">#CODIGO_COLOR&lt;/color></code></pre>
+</section><br><br>
+
+<p>El código de color se puede representar mediante dos <span class="negrita">dígitos hexadecimales</span> para cada componente:</p>
+<p><ul>
+    <li><span class="d-word">Sin transparencia</span>: <span class="negrita">R</span>ed<span class="negrita">G</span>reen<span class="negrita">B</span>lue</li>
+	<li><span class="d-word">Con transparencia</span>: <span class="negrita">A</span>lpha<span class="negrita">R</span>ed<span class="negrita">G</span>reen<span class="negrita">B</span>lue</li>
+</ul></p>
+
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">colors.xml</span>
+    </section>
+<section class="marco-b">
+    <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+        &lt;resources>
+    &lt;color name="purple_200">#FFBB86FC&lt;/color>
+    &lt;color name="purple_500">#FF6200EE&lt;/color>
+    &lt;color name="purple_700">#FF3700B3&lt;/color>
+    &lt;color name="teal_200">#FF03DAC5&lt;/color>
+    &lt;color name="teal_700">#FF018786&lt;/color>
+    &lt;color name="black">#FF000000&lt;/color>
+    &lt;color name="white">#FFFFFFFF&lt;/color>
+&lt;/resources></code></pre>
+        </section>        
+</section>
+
+<p>Y para cadenas</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">strings.xml</span>
+    </section>
+<section class="marco-b">
+        <section><pre><code class="language-xml">&lt;string name="NOMBRE">CADENA&lt;/string></code></pre>
+        </section>
+</section>
+
+<p>Para crear el <span class="subrayado">archivo de dimensiones</span> se deben seguir los siguientes pasos:</p>
+
+<p>Clic derecho sobre <span class="negrita">values -> New -> Values Resource File</span>.</p>
+
+<figure><img src="UD3/images/ud3-2023-10-04-09-35-28.png" /><br><figcaption>Nuevo fichero de recursos</figcaption></figure>
+<br>
+
+<p>En la ventana que se abre se debe indicar el nombre del archivo: <span class="inline-file">dimens.xml</span> y el resto de opciones dejarlas por defecto.</p>
+
+<figure><img src="UD3/images/ud3-2023-10-04-09-36-35.png" /><br><figcaption>Fichero de dimensiones</figcaption></figure>
+<br>
+
+
+<p>De esta manera se tendrá también el archivo <span class="inline-file">dimens.xml</span> disponible.</p>
+<figure><img src="UD3/images/ud3-2023-10-04-09-37-36.png" /><br><figcaption>Fichero de dimensiones</figcaption></figure>
+<br>
+
+<p>La estructura del archivo es similar al de los anteriores como se muestra en la siguiente imagen.</p>
+<figure><img src="UD3/images/ud3-2023-10-04-09-38-08.png" /><br><figcaption>Sintaxis</figcaption></figure>
+<section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;resources>
+    &lt;dimens name="button_text">25sp&lt;/dimens>
+&lt;/resources></code></pre>
+</section><br>
+<br>
+
+<figure><img src="UD3/images/creating_resourse_file.gif" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>Se pueden añadir todas las dimensiones que se necesiten.</p>
+
+<p>Kotlin crea por defecto la clase <span class="r-word">R</span> 
+    y la rellena con todos los recursos del proyecto (datos obtenidos de la carpeta <span class="inline-folder">res</span>).</p>
+
+
+    <h3>Uso de valores centralizados</h3>
+<p>Así, una vez centralizados los valores se puede usando la clase <span class="negrita">R</span> a todo lo que se ha definido en los archivos <span class="inline-file">colors.xml</span>,
+    <span class="inline-file">dimens.xml</span>, <span class="inline-file">strings.xml</span>.</p>
+<ul>
+    <li><span class="negrita">R.string.counter_text</span></li>
+    <li><span class="negrita">R.color.orange</span></li>
+    <li><span class="negrita">R.dimen.button_text</span></li>
+</ul>
+		
+<p>Teniendo el acceso a los valores centralizados con la clase <span class="negrita">R</span>
+     se dispone de tres funciones para acceder a los valores centralizados según el archivo donde se encuentren:</p>
+<ul>
+
+    <li><span class="negrita">stringResource</span></li>
+    <li><span class="negrita">dimensionResource</span> (si son sp se debe añadir detrás .value.sp)</li>
+    <li><span class="negrita">colorResource</span></li>
+</ul>
+<br><br>
+<p>Así pues, la confiugración del texto de nuestro botón quedaría así:</p>
+<section><pre><code class="language-kotlin">Text(
+    text = stringResource(id = R.string.clickme),
+    fontSize = dimensionResource(id = R.dimen.button_text).value.sp,
+    modifier = Modifier.padding(dimensionResource(id = R.dimen.button_padding)),
+    color = colorResource(id = R.color.teal_200)
+)</code></pre>
+</section><br><br>
+
+
+<p>Podemos añadir los valores, como hemos visto anteriormente, en XML correspondiente</p>
+<figure><img src="UD3/images/ud3-2023-10-04-10-10-24.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>O alternativamente, podemos escribir el nombre del recurso que necesitemos. Nos indicará que efectivamente ese identificador de recurso no existe.
+    Entonces, situamos el ratón sobre el nombre y nos dá la opción de crear el valor de recurso. Pulsando ALT + INTRO, el menú contextual también nos ofrece la posibilidad.
+</p>
+<figure><img src="UD3/images/creating_string_reset.gif" /><br><figcaption>Creando String resource desde código</figcaption></figure>
+<br>
+
+<h3>Valores centralizados que aceptan parámetros</h3>
+
+<p>En la aplicación <span class="cursiva">Contador de clics</span> se tiene la necesidad de centralizar la siguiente cadena:</p>
+
+
+<p>Esta cadena utiliza una variable por lo que a la hora de centralizar dicha cadena se debe pasar ese valor como parámetro.</p>
+
+<figure><img src="UD3/images/ud3-2023-10-04-13-13-06.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>El formato para declarar parámetros es <span class="d-word">%NºParámetro$Tipo</span>, 
+siendo los tipos de parámetros: <span class="negrita">s</span> (cadenas),  (números).</p>
+
+<figure><img src="UD3/images/ud3-2023-10-04-13-15-07.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Por ejemplo, si se quieren recibir varios parámetros:</p>
+<figure><img src="UD3/images/ud3-2023-10-04-13-19-30.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>En las últimas versiones de Android Studio se puede indicar siempre que el tipo de dato es <span class="negrita">s</span> (cadena) ya que Android Studio 
+    se encarga de convertir automáticamente el dato a <span class="negrita"><span class="cursiva">String</span></span>.</p>
+
+<p>Android Studio ayuda a crear estos valores centralizados.
+    Con el cursor encima de la <span class="negrita">string hardcoded</span> se muestra la ayuda contextual con clic <span class="cursiva">derecho</span> o con <span class="cursiva">ALT+INTRO</span> y 
+    se selecciona la opción <span class="negrita">Extract string resource</span>:</p>
+<figure><img src="UD3/images/ud3-2023-10-04-13-20-33.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Si se tienen varios archivos <span class="inline-file">strings.xml</span> se puede marcar que se añada el valor a todos los archivos y una vez se añada solo habrá que traducir el valor en cada archivo.</p>
+<figure><img src="UD3/images/ud3-2023-10-04-13-21-50.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Si la cadena tiene varios parámetros Android Studio los reconocerá:</p>
+<figure><img src="UD3/images/ud3-2023-10-04-13-22-36.png" /><br><figcaption>Cadena con parámetros</figcaption></figure>
+<br>
+
+<p>Ahora desde Kotlin en la función <span class="r-word">stringResources</span> se podrán pasar esos parámetros:</p>
+
+<section><pre><code class="language-xml">Text(
+    text = stringResource(
+        id = R.string.counter_text, //Recurso
+        times), //Primer parámetro, añadimos una variable
+    fontSize = 25.sp
+)</code></pre>
+</section><br><br>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> La traducción de aplicaciones tiene un gran inconveniente ya que la misma frase no tiene la misma longitud en todos los idiomas.
+    </section>
+<section class="marco-b">
+    Se debe realizar un buen estudio de la aplicación y de los diferentes idiomas para que la aplicación se muestre de manera similar en todos los idiomas en los que se distribuya.        
+</section>
+
+
+
+</section><!-- End section Centralizar Valores en el proyecto.-->
+
+
+<!--*********************************************************Aplicación Multi idioma***********************************************************-->
+<section class="apartado">
+<a name="sAplicacionMultiidioma"></a>
+<h2>Aplicación Multi idioma</h2>
+
+<p>Crear aplicaciones <span class="negrita">multiidioma</span> con Android Studio es muy sencillo, 
+    simplemente se debe crear un archivo <span class="inline-file">strings.xml</span> para cada idioma soportado.</p>
+<ul>
+    <li>Si solo se tiene un archivo <span class="inline-file">strings.xml</span> como ocurre nada más crear el proyecto,
+        ese archivo se cargará sea cual sea el idioma configurado en el dispositivo.</li>
+    <li>Si el dispositivo tiene un idioma configurado 
+        y no existe archivo <span class="inline-file">strings.xml</span> para ese idioma se cargará el archivo <span class="inline-file">strings.xml</span> 
+        por defecto (el que se crea junto al proyecto).</li>
+    <li>Si el dispositivo tiene uno o más idiomas configurados y hay archivos <span class="inline-file">strings.xml</span> para esos idiomas, 
+        se cargará el primero de la lista de la configuración del móvil.</li>
+    <li>Si se tienen varios archivos <span class="inline-file">strings.xml</span> y en uno no aparece una de las cadenas traducidas, 
+        se cargará la cadena en el idioma por defecto</li>    
+</ul>
+
+<p>Lo más habitual es que el archivo <span class="inline-file">strings.xml</span> creado con el proyecto sea para el idioma inglés.</p>
+
+<p>Para crear un archivo strings.xml para un idioma se deben seguir los siguientes pasos:</p>
+
+<p><span class="cursiva">Clic derecho</span> sobre la carpeta <span class="negrita">values -> New -> Values Resource File</span></p>
+
+<figure><img src="UD3/images/creating_string_multilanguage.gif" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En el inspector del proyecto se puede ver cómo se ha creado un segundo archivo para centralizar cadenas:</p>
+<figure><img src="UD3/images/ud3-2023-10-04-10-52-44.png" /><br><figcaption>Varios strings de idiomas</figcaption></figure>
+<br>
+
+<p>El siguiente paso es replicar el contenido del primer archivo strings.xml al segundo y traducir el valor de las cadenas:</p>
+<figure><img src="UD3/images/ud3-2023-10-04-10-53-22.png" /><br><figcaption>Replicando texto</figcaption></figure>
+<br>
+
+<p>Mediante el editor de idiomas también se pueden añadir cadenas para los diferentes idiomas e incluso añadir nuevos archivos <span class="inline-file">strings.xml</span>:</p>
+
+<figure><img src="UD3/images/ud3-2023-10-04-13-03-26.png" /><br><figcaption>String Editor</figcaption></figure>
+<br>
+
+<p>En el editor aparecen tantas columnas como archivos <span class="inline-file">strings.xml</span> haya:</p>
+<figure><img src="UD3/images/ud3-2023-10-04-13-03-52.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En el momento en el que se tienen diferentes archivos <span class="inline-file">strings.xml</span> para diferentes idiomas, 
+    al añadir una cadena a uno de los archivos Android Studio avisará que se debe traducir a los otros idiomas.</p>
+
+<figure><img src="UD3/images/ud3-2023-10-04-13-04-43.png" /><br><figcaption>Aviso de Android Studio para traducir cadena</figcaption></figure>
+<br>
+
+<p>Si una cadena no se traduce a algún idioma Android Studio mostrará la cadena definida en el archivo strings.xml por defecto.</p>
+
+<p>El resultado se puede ver con las previsualizaciones <span class="negrita">@Preview</span>:</p>
+
+
+<figure><img src="UD3/images/ud3-2023-10-04-13-05-54.png" /><br><figcaption>Previsualizaciones</figcaption></figure>
+<br>
+
+<p>Y también se puede comprobar con el emulador:</p>
+<figure><img src="UD3/images/ud3-2023-10-04-13-11-48.png" /><br><figcaption>Cambiado de idioma</figcaption></figure>
+<br>
+
+</section><!-- End section Aplicación Multi idioma-->
+
+
+<!--*********************************************************Orientaciones vertical y horizontal***********************************************************-->
+<section class="apartado">
+<a name="sOrientacionesverticalyhorizontal"></a>
+<h2>Orientaciones vertical y horizontal</h2>
+
+<p>En los dispositivos fijos como televisiones o automóviles no tiene sentido cambiar la orientación, 
+    de hecho directamente no disponen del acelerómetro para detectarla.</p>
+
+<p>La mayoría de dispositivos móviles Android (móviles y táblets) permiten cambiar la orientación de la pantalla entre vertical y horizontal.</p>
+
+<p>Existen excepciones como los smartWatch que siendo móviles generalmente solo tienen una orientación.</p>
+
+<p>Si se desarrolla una aplicación para móvil o táblet <span class="negrita">es importante tener en cuenta el diseño en las dos orientaciones</span>.</p>
+
+<p>Gracias al uso de <span class="cursiva">Jetpack Compose</span> los componentes se van a situar ocupando la pantalla tal y como se definan.</p>
+
+<p>Por esta razón, en principio todas las aplicaciones se visualizarán correctamente indistintamente del tamaño y la orientación de la pantalla.</p>
+
+<p>Más adelante se verá cómo mostrar diferentes componentes o los mismos componentes con diferente estilo según el tamaño de pantalla para crear una mejor experiencia de usuario.</p>
+
+<p>Es posible que se quiera diseñar una aplicación que no permita cambiar la orientación.
+    Para ello en el archivo <span class="inline-file">AndroidManifest.xml</span> se debe añadir la siguiente propiedad a la <span class="negrita">Activity</span>: </p>
+
+	<section><pre><code class="language-xml">android:screenOrientation="ORIENTACIÓN"</code></pre>
+    </section><br><br>
+
+    <figure><img src="UD3/images/ud3-2023-10-04-13-32-19.png" /><br><figcaption>Android Manifest. Orientación</figcaption></figure>
+    <br>
+    
+
+<p>
+Esta configuración se debe hacer para todas las Activities de la aplicación en las que se quiera bloquear la orientación.
+</p>
+
+
+</section><!-- End section Orientaciones vertical y horizontal-->
+
+
+<!--*********************************************************Values Resource Files***********************************************************-->
+<section class="apartado">
+<a name="sValuesResourceFiles"></a>
+<h2>Values Resource Files</h2>
+
+<p>Hasta este punto se han utilizado los <span class="negrita">archivos de recursos con valores</span> para centralizar valores (<span class="cursiva">strings.xml, colors.xml y dimens.xml</span>).</p>
+
+<p>Estos archivos también se pueden utilizar para que se carguen dependiendo de la configuración del dispositivo.</p>
+
+<p>Por ejemplo, se puede cargar un archivo <span class="negrita">colors.xml</span> cuando la orientación es vertical (<span class="cursiva">portrait</span>) y 
+    otro diferente cuando la orientación es horizontal (<span class="cursiva">landscape</span>). Igual que ocurre con los archivos strings.xml dependiendo del idioma.</p>
+
+<p>Con la manera antigua de implementar las interfaces de usuario mediante archivos XML esta configuración tenía mucho más sentido.</p>
+
+<p>A continuación, se va a estudiar cómo crear estor archivos.</p>
+
+<p>Sobre la carpeta <span class="inline-folder">values</span> se hace clic con el botón derecho y se selecciona la opción <span class="negrita">Values Resource File</span>.</p>
+
+<figure><img src="UD3/images/ud3-2023-10-04-13-40-20.png" /><br><figcaption>Creación de ficheros de recursos</figcaption></figure>
+<br>
+
+<p>El funcionamiento de estos archivos es el mismo que el comportamiento de los archivos <span class="negrita">strings.xml</span>. 
+Se creará el archivo en una carpeta que Android cargará según la configuración del dispositivo.</p>
+
+<figure><img src="UD3/images/ud3-2023-10-04-13-41-08.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+</section><!-- End section Values Resource Files-->
+
+<!--*********************************************************Debug***********************************************************-->
+<section class="apartado">
+<a name="sDebug"></a>
+<h2>Debug</h2>
+<p>Android Studio dispone de un <span class="negrita">modo depuración</span> que funciona como en el resto de IDE's.
+
+Se pueden configurar <span class="negrita">puntos de ruptura</span>, ejecutar en modo depuración, avanzar paso a paso…
+</p>
+<figure><img src="UD3/images/ud3-2023-10-04-13-54-00.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>Para comprobaciones más básicas se puede utilizar la clase <span class="negrita">Log</span> de la siguiente manera:</p>
+<section><pre><code class="language-kotlin">Log.i("ETIQUETA", "MENSAJE")</code></pre>
+</section><br><br>
+<p>De esta manera, el mensaje aparecerá en la sección <span class="d-word">Logcat</span> de Android Studio.</p>
+
+<figure><img src="UD3/images/ud3-2023-10-04-13-52-49.png" /><br><figcaption>Logcat</figcaption></figure>
+<br>
+
+
+</section><!-- End section Debug-->
+
+
+<!--*********************************************************Actualizaciones de Android Studio***********************************************************-->
+<section class="apartado">
+<a name="sActualizaciones"></a>
+<h2>Actualizaciones de Android Studio</h2>
+<p>Software <span class="negrita">Android Studio recibe actualizaciones</span> que pueden ser de diferentes componentes:</p>
+<ul>
+    <li>Android Studio.</li>
+    <li>SDK de Android.</li>
+    <li>JDK.</li>
+    <li>Plugins.</li>
+    <li>Gradle.</li>
+    <li>Dependencias.</li>
+</ul>
+
+<p>En ocasiones cuando se actualizan componentes hay proyectos que dejan de funcionar hasta que no se configure correctamente.</p>
+
+<p>La manera de mostrar los error dependerá del tipo de actualización que lo ha provocado.</p>
+<figure><img src="UD3/images/ud3-2023-10-04-13-55-57.png" /><br><figcaption>Muestra errores y problemas</figcaption></figure>
+<br>
+
+<p>Según el tipo de error la solución se realizará de una manera u otra.</p>
+
+<h3>Error versión de Java:</h3>
+
+<p>Para solucionar el error de versión de Java se debe ir a la configuración: <br>
+<span class="negrita">File -> Settings (CTRL+ALT+S)</span></p>
+
+<p>Y seleccionar el JDK correcto</p>
+<figure><img src="UD3/images/ud3-2023-10-04-13-57-35.png" /><br><figcaption>Seleccionar JDK correcto</figcaption></figure>
+<br>
+
+<h3>Error appcompat:</h3>
+
+<p>En las aplicaciones diseñadas XML se utiliza la librería <span class="negrita">appcompat</span>. </p>
+
+<p>Si se está desarrollando una aplicación que mezcla XML y Jetpack Compose, por ejemplo si se están migrando de XML a Jetpack Compose también se utiliza esa librería.</p>
+
+<p>En ocasiones al actualizar componentes se debe cambiar la versión de la dependencia, esto se configura en el archivo <span class="inline-file">build.gradle (Module: app)</span>:</p>
+
+<figure><img src="UD3/images/ud3-2023-10-04-13-59-02.png" /><br><figcaption>Dependencies gradle</figcaption></figure>
+<br>
+
+
+<div class="tarea">
+    Crea un conversor binario-decimal que dado un numero en decimal lo convierta a binario y al revés. 
+</div>
+
+</section><!-- End section Actualizaciones de Android Studio-->
 
 
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>  
