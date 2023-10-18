@@ -1370,6 +1370,54 @@ en github</p>
 <p>Aquí tienes una posible <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2324/tree/master/UD3/Statistics">solución</a>. Recuerda qué es solo una ayuda y debes intentarlo hacer tú.</p>
 
 </div>
+<br><br>
+<hr>
+<a href=""></a>
+<div class="oculto tarea">
+    <h4>Práctica 1: Tennis score.</h4>
+    <p>Crea una aplicación en Android Studio que lleve el conteo de puntos de un partido de tenis de 3 <span class="cursiva" lang="en">sets</span>. <br>
+    Cada <span class="cursiva" lang="en">set</span> está compuesto por juegos. Cada juego por puntos. <br></p>
+    
+    <p><span class="negrita">Cada punto de cada juego</span> incrementa los puntos. Es decir, si un equipo tiene 0 puntos y gana un punto pasará a tener 15, si gana otro 30, si gana otro 40 y finalmente si gana otro punto más ganaría
+    el juego, siempre y cuando el adversario tenga 30 puntos o menos. Si ambos equipo estan empatados a 40 puntos esto es un <span class="cursiva" lang="en">deuce</span>, 
+    si estando empatados a 40 un equipo hace un punto, éste tiene ventaja. <br>
+    Si el mismo equipo hace otro punto ganaría el juego. Si el contrincante hace otro punto vuelven a empatar el juego "<span class="cursiva" lang="en">deuce</span>". 
+    Es decir, una vez entrado en <span class="cursiva" lang="en">deuce</span>, el equipo ha de hacer dos puntos seguidos para ganar el juego.</p>
+    
+    <p><span class="negrita">Cada <span class="cursiva" lang="en">set</span> está compuesto de juegos</span>. El equipo que llegue a 6 juegos con una diferencia de 2 gana el <span class="cursiva" lang="en">set</span>. Es decir, ganará el <span class="cursiva" lang="en">set</span> si el resultado es 6 juegos a 4 (o menos), 
+    también podría ganar el partido quedando (7-5). Si ambos equipos llegan en un <span class="cursiva" lang="en">set</span> empatados a 6-6. Entonces se juega el <span class="cursiva" lang="en">tie break</span>. 
+    El <span class="cursiva" lang="en">tie break</span>, se juega puntuando de 1 en 1 y gana el que llegue a 7 o más con una ventaja de dos puntos sobre el oponente. <br></p>
+
+    <p><span class="negrita">El partido</span> lo ganará el equipo que haga 2 sets.</p>
+    
+    <p>Puedes ver las reglas de puntuación <a class="enlace" target="_blank" href="https://innertenis.com/puntuacion-en-el-tenis/">aquí</a></p>
+
+    <p>
+        Así pues, la aplicación tendrá un botón por equipo para incrementar un punto al equipo correspondiente dentro del juego. Si con el punto se gana el set, se incrementará el contador de sets.
+        Si con el set se gana el partido se indicará.
+        <br>
+        Habrá un botón para reiniciar el partido.
+    </p>
+    <p>Consideraciones:
+        <ul>
+            <li>La aplicación podrá estar en inglés y español</li>
+            <li>Sólo se podrá ver en vertical (portrait)</li>
+            <li>La gestión de colores será centralizada. Habiendo un color por equipo, uno para los SETs, otro para los JUEGOS, y otro para los PUNTOS</li>
+            <li>Si se llega a Tie Break, deberá notarse de alguna forma.</li>
+            <li>El código estará comentado y convenientemente tabulado</li>            
+        </ul>
+    </p>
+
+    <p>Aquí tenés un ejemplo de como podría quedar la práctica.</p>
+    <figure><img src="UD3/images/Ejemplo_practica.gif" /><br><figcaption></figcaption></figure>
+    <br>
+    
+
+    
+</div>
+
+</a>
+
 
 
 </section><!-- End section Ejercicios-->
