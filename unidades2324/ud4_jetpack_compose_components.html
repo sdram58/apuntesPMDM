@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Componentes Jetpack Compose</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/prism.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <script src="../script/script.js"></script>
+</head>
+<body class="line-numbers">
+    <div class="logos">
+      <div></div><div></div><div></div>
+  </div>
+  
+    <nav id="menu-lateral" class="main-menu-lateral oculto">
+      <div class="fila">
+        <a href="#sIntroduccion" title="1. Introducción">1. Introducción</a>
+        <a href="#sOrganizandoCodigo" title="2. Organizando el Código">2. Organizando el Código</a>
+        <a href="#sComponentesdeJetpackCompose" title="3.- Componentes de Jetpack Compose">3.- Componentes de Jetpack Compose</a>
+      </div>
+      
+      <div class="fila">
+        <a href="#sMaterial3" title="4.- Material 3">4.- Material 3</a>
+        <a href="#sComponentesTextyBasicText" title="5.- Componentes Text y Basic Text">5.- Componentes Text y Basic Text</a>
+        <a href="#Modifier" title="6.- Modifier">6.- Modifier</a>
+      </div>
+      <div class="fila">
+        <a href="#sComponenteButton" title="7.- Componente Button">7.- Componente Button</a>
+        <a href="#sComponentespropios" title="8.- Componentes propios">8.- Componentes propios</a>
+        <a href="#sComponenteSpacer" title="9.- Componente Spacer">9.- Componente Spacer</a>
+      </div>
+      <div class="fila">
+        <a href="#sImagenes" title="10.- Imágenes">10.- Imágenes</a>
+        <a href="#sComponenteBadge" title="11.- Componente Badge">11.- Componente Badge</a>
+        <a href="#sComponentesDivider" title="12.- Componentes Divider">12.- Componentes Divider</a>
+      </div>
+      <div class="fila">
+        <a href="#sConceptos" title="13.- Conceptos">13.- Conceptos</a>
+        <a href="#sComponentesparaintroducirinformacion" title="14.- Componentes para introducir información">14.- Componentes para introducir información</a>
+        <a href="#sStateHoisting" title="15.- State Hoisting">15.- State Hoisting</a>
+      </div>
+      
+      <div class="fila">
+        <a href="#sComponenteSwitch" title="16.- Componente Switch">16.- Componente Switch</a>
+      </div>
+    </nav>
+  
+    <h1>UD3.- Componentes de Jetpack Compose</h1>
+    
+        
+    <div class="main-menu">
+      <div class="fila">
+        <a href="#sIntroduccion" title="1. Introducción">1. Introducción</a>
+        <a href="#sOrganizandoCodigo" title="2. Organizando el Código">2. Organizando el Código</a>
+        <a href="#sComponentesdeJetpackCompose" title="3.- Componentes de Jetpack Compose">3.- Componentes de Jetpack Compose</a>
+      </div>
+      <div class="fila">
+        <a href="#sMaterial3" title="4.- Material 3">4.- Material 3</a>
+
+      </div>
+    </div>
+
+
+    <!--*********************************************************Introducción***********************************************************-->
+    <section class="apartado">
+    <a name="sIntroduccion"></a>
+    <h2>Introducción</h2>
+    <p>
+        En esta unidad se van a estudiar los diferentes componentes que ofrece <span class="negrita">Jetpack Compose</span> para diseñar interfaces.                
+    </p>
+    <p>Se estudiarán componentes de <span class="negrita">presentación e interacción</span> como textos, imágenes, diálogos etc.</p>
+    
+    <p>También se estudiarán componentes de <span class="negrita">layout</span> que permiten organizar los elementos de interfaz como columnas rejillas tarjetas</p>
+    
+    
+    </section><!-- End section Introducción-->
+  
+    <!--*********************************************************Organizando el código***********************************************************-->
+    <section class="apartado">
+    <a name="sOrganizandoCodigo"></a>
+    <h2>Organizando el código</h2>
+
+    <p>Antes de comenzar con el estudio de los componentes de <span class="negrita">Jetpack compose</span> es importante destacar que hay que organizar el código de la aplicación,
+     por ello hay que tener en cuenta:</p>
+    <ul>
+        <li>Se pueden crear tantos archivos como se quiera.</li>
+        <li>Si se tienen varias pantallas en la aplicación cada una tendrá su interfaz en un archivo.</li>
+        <li>El archivo que contenga una clase que extienda de Activity no debe tener componentes en él.</li>
+        <li>Se debe crear un componente con la base de la aplicación para poder utilizarlo en cualquier sitio.</li>
+        <li>Todos los archivos que contengan componentes de la interfaz deberían incluirse en la carpeta <span class="inline-folder">ui</span>.</li>
+        <li>Si varios componentes forman parte de una zona/sección de la pantalla se debe crear un componente que los agrupe.</li>
+        <li>Siempre que un componente se repita con las mismas características de estilo se debe crear un componente personalizado que lo extienda.</li>
+    </ul>
+
+    <p>Para entender lo anterior se va a modificar el proyecto <span class="negrita">Contador de clics</span> de la UD3 para cumplir con los puntos anteriores, 
+        además, a partir de ahora se harán indicaciones de dónde situar cada elemento que se estudie.</p>
+    
+    <p>El primer paso consiste en crear un nuevo elemento <span class="d-word">Composable</span> llamado <span class="r-word">MyAppContent</span>:</p>
+    
+	<p>Botón derecho sobre la carpeta <span class="negrita">ui -> New -> Kotlin Class/File</span>.</p>
+    <figure><img src="UD4/images/ud4-2023-10-20-16-14-32.png" /><br><figcaption></figcaption></figure>
+    <br>
+    <p>Se indica el nombre del archivo: <span class="negrita">MyAppContent</span>, se selecciona la opción File y se pulsa Enter.</p>
+    <figure><img src="UD4/images/ud4-2023-10-20-16-16-51.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+
+    <section class="marco-t file-">
+      <span class="icono file"> </span> <span class="negrita">MyAppContent.kt</span>
+      </section>
+    <section class="marco-b">
+        <section><pre><code class="language-kotlin">@Composable
+fun MyAppContent(content:@Composable () -> Unit) {
+    ClicsCounterDirectoriesTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            content()
+        }
+    }
+}</code></pre>
+        </section>
+    </section>
+
+  <p>A continuación, se debe usar ese componente desde la función <span class="r-word">onCreate</span> y desde la <span class="negrita">previsualización</span>:</p>
+  <figure><img src="UD4/images/ud4-2023-10-22-23-19-06.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+<p>De esta manera, siempre que se cree una pantalla nueva o se quiera previsualizar un componente se debe hacer uso del componente <span class="d-word">MyAppContent</span>
+   y se mantendrá el estilo de la aplicación.</p>
+
+<p>Ahora es el turno de la función <span class="negrita">Content</span> a la cual se le va a cambiar su nombre por <span class="d-word">ClickCounter</span>. 
+  Se debe cambiar también las llamadas a ella tanto en la función <span class="r-word">onCreate</span> como en la previsualización.</p>
+<figure><img src="UD4/images/ud4-2023-10-22-23-20-10.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Para acabar se va a extraer la función <span class="d-word">ClickCounter</span> a un archivo.</p>
+
+<p>Botón derecho sobre la carpeta <span class="cursiva">ui -> New -> Package</span>.</p>
+<figure><img src="UD4/images/ud4-2023-10-22-23-23-28.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se indica el nombre del paquete: <span class="negrita">screens</span> y se pulsa Enter.</p>
+
+<p>Botón derecho sobre la nueva carpeta <span class="cursiva">screens -> New -> Kotlin Class/File</span>:</p>
+<figure><img src="UD4/images/ud4-2023-10-22-23-24-32.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se indica el nombre del archivo: <span class="d-word">ClickCounter</span>, se selecciona la opción File y se pulsa Enter.</p>
+
+    <figure><img src="UD4/images/ud4-2023-10-22-23-24-48.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+  <p>La función <span class="d-word">ClickCounter</span> y la previsualización <span class="d-word">ClickCounterPreview</span> se quitarán del archivo 
+    <span class="inline-file">MainActivity.kt</span> y se pondrán dentro del archivo <span class="inline-file">ClickCounter</span>:</p>
+
+    <section class="marco-t file-">
+      <span class="icono file"> </span> <span class="negrita">ClickCounter.kt</span>
+      </section>
+    <section class="marco-b">
+        <section><pre><code class="language-kotlin">@Composable
+fun ClickCounter() {
+    var times by rememberSaveable { mutableStateOf(0) }
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+//            text = "has hecho clic $times veces",
+            text = stringResource(
+                R.string.counter_text,
+                times
+            ),
+            fontSize = 25.sp
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        Button(onClick = {
+            times++
+            Log.i(
+                BUTTON_CLICK,
+                "Se ha pulsado el botón. Valor de times: $times"
+            )
+        }) {
+            Text(
+                text = stringResource(id = R.string.clickme),
+                fontSize = 30.sp,
+                modifier = Modifier.padding(16.dp),
+            )
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+        Button(
+            onClick = {
+                times = 0
+                Log.i(
+                    BUTTON_CLICK,
+                    "Se ha pulsado RESET"
+                )
+            },
+            shape = RectangleShape,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.White,
+                contentColor = Color.Black
+            ),
+            border = BorderStroke(
+                2.dp,
+                Color.Red
+            ),
+            enabled = times != 0
+        ) {
+            Text(
+                text = stringResource(id = R.string.reset),
+                fontSize = 15.sp,
+                modifier = Modifier.padding(2.dp),
+            )
+        }
+    }
+}
+
+@Preview(
+    name = "Light Mode",
+    showBackground = true,
+    showSystemUi = true,
+)
+@Preview(
+    name = "Dark Mode",
+    showBackground = true,
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Preview(
+    showBackground = true,
+    name = "English",
+)
+@Preview(
+    showBackground = true,
+    name = "Spanish",
+    group = "locale",
+    locale = "es",
+)
+@Composable
+fun ClickCounterPreview() {
+    MyAppContent {
+        ClickCounter()
+    }
+}</code></pre>
+        </section>
+    </section>
+    
+    <p>De esta manera el proyecto queda más organizado.</p>
+    <p>Si una pantalla se va a componer de diferentes archivos es recomendable crear un <span class="negrita">nuevo paquete</span>
+       (package) con el nombre de la pantalla dentro de la carpeta <span class="negrita">screens</span>.</p>    
+    <p>Si hay componentes que se comparten entre pantallas es recomendable crear un nuevo paquete llamado <span class="negrita">common, share o partials</span>
+       y guardar esos componentes en esa carpeta.</p>    
+    
+       <figure><img src="UD4/images/ud4-2023-10-22-23-29-40.png" /><br><figcaption>Ejemplo estructura proyecto.</figcaption></figure>
+       <br>
+       
+    <section class="marco-t inf">
+      <span class="icono info"> </span> Es importante mantener organizado siempre el código.
+      </section>
+    <section class="marco-b">
+        
+    </section>
+  </section><!-- End section Organizando el código-->
+
+    <!--*********************************************************Componentes de Jetpack Compose***********************************************************-->
+    <section class="apartado">
+    <a name="sComponentesdeJetpackCompose"></a>
+    <h2>Componentes de Jetpack Compose</h2>
+    
+    <p>Los componentes de Jetpack Compose se pueden clasificar extraoficialmente en dos clases:</p>
+    
+   
+    <table>
+      <thead>
+        <th colspan="2"><p>
+        <span class="subrayado">Layout</span>
+        </p><p>Permiten organizar los elementos de la interfaz gráfica</p>
+        
+      </th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Box</td>
+          <td>Surface</td>
+        </tr>
+        <tr>
+          <td>Column</td>
+          <td>Row</td>
+        </tr>
+        <tr>
+          <td>Card</td>
+          <td>ConstraintLayout</td>
+        </tr>
+        <tr>
+          <td>Scaffod</td>
+          <td>TopAppBar</td>
+        </tr>
+        <tr>
+          <td>BottomBar</td>
+          <td>ModalDrawer</td>
+        </tr>
+        <tr>
+          <td>LazyColumn</td>
+          <td>LazyRow</td>
+        </tr>
+        <tr>
+          <td>LazyVerticalGrid</td>
+          <td>LazyHorizontalGrid</td>
+        </tr>
+        <tr>
+          <td>LazyVerticalStaggeredGrid</td>
+          <td>LazyHorizontalStaggeredGrid</td>
+        </tr>
+        <tr>
+          <td colspan="2">...</td>          
+        </tr>
+      </tbody>
+    </table>
+<br><br>
+    <table>
+      <thead>
+        <th colspan="2"><p>
+          <span class="subrayado">Presentación de información</span>          
+        </p><p>Permiten mostrar al usuario información. <br>
+          El usuario puede interactuar con ellos.
+          </p>
+        
+      </th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Text</td>
+          <td>TextField</td>
+        </tr>
+        <tr>
+          <td>Button</td>
+          <td>Image</td>
+        </tr>
+        <tr>
+          <td>Spacer</td>
+          <td>Switch</td>
+        </tr>
+        <tr>
+          <td>Slider</td>
+          <td>CheckBox</td>
+        </tr>
+        <tr>
+          <td>RadioButton</td>
+          <td>ElevatedButton</td>
+        </tr>
+        <tr>
+          <td>Icon</td>
+          <td>IconButton</td>
+        </tr>
+        <tr>
+          <td>SnackBar</td>
+          <td>BadgedBox</td>
+        </tr>
+        <tr>
+          <td>Slider</td>
+          <td>FloatingActionButton</td>
+        </tr>
+        <tr>
+          <td colspan="2">...</td>          
+        </tr>
+      </tbody>
+    </table>
+    <br>
+
+    <p>En la unidad anterior ya se han utilizado algunos componentes de Jetpack Compose: <span class="cursiva">Column, Row, Text, Button, Spacer, Surface</span>.</p>
+
+
+    <p><span class="negrita">Toda la interfaz</span> de las aplicaciones se va a realizar con:</p>
+    <ul>
+    <li><span class="negrita">Componentes que ofrece Jetpack Compose.</span></li>
+    
+    <li><span class="negrita">Componentes de Jetpack Compose propios</span> creados en base a extensiones y agrupaciones de los componentes que ofrece Jetpack Compose.</li>
+  </ul>
+
+
+  <p>Los <span class="negrita">componentes</span> Jetpack Compose son <span class="negrita">funciones</span> etiquetadas con <span class="r-word">@Composable</span>.</p>
+  
+  <p>Esto se puede observar en los componentes que facilita Jetpack Compose:</p>
+  
+<figure><img src="UD4/images/ud4-2023-10-22-23-47-00.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Para crear <span class="negrita">un componente propio</span> se debe crear una <span class="negrita">función etiquetada</span> con <span class="d-word">@Composable</span>.</p>
+
+<p>Además, la documentación indica que:</p>
+<ul>
+  <li>Si la función <span class="negrita">@Composable no devuelve nada</span> (lo más habitual) su nombre debe comenzar con mayúscula.</li>
+  <li>Si la función <span class="negrita">@composable devuelve algo</span> su nombre debe comenzar en minúscula.</li>
+</ul>
+
+<figure><img src="UD4/images/ud4-2023-10-22-23-49-09.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</section><!-- End section Componentes de Jetpack Compose-->   
+
+
+<!--*********************************************************Material 3***********************************************************-->
+<section class="apartado">
+<a name="sMaterial3"></a>
+<h2>Material 3</h2>
+<p>La última versión de Jetpack Compose utiliza Material Desing 3. Material Design es un estilo de diseño de interfaces de Google.</p>
+
+<p>Todos los componentes Jetpack Compose se pueden encontrar en la <a class="enlace" target="_blank" href="https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary">documentación oficial</a> 
+  con ejemplo visual y enlace a <a class="enlace" target="_blank" href="https://m3.material.io/components">Material Design 3</a>: 
+  para ver cómo usar el componente y las guías de estilo:</p>
+
+<figure><img src="UD4/images/ud4-2023-10-22-23-53-55.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>La web de <a class="enlace" target="_blank" href="https://m3.material.io/components">Material Design 3</a>  ofrece información muy importante 
+  de cómo usar los componentes en el apartado <span class="negrita">Guidelines</span> (guías de estilo):</p>
+
+<figure><img src="UD4/images/ud4-2023-10-22-23-56-06.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+</section><!-- End section Material 3-->
+    
+   <!--*********************************************************Componentes Text y BasicText***********************************************************-->
+   <section class="apartado">
+   <a name="sComponentesTextyBasicText"></a>
+   <h2>Componentes Text y BasicText</h2>
+     
+<p>Los componentes <span class="negrita">Text</span> y <span class="negrita">BasicText</span> permiten mostrar una cadena de texto en la interfaz.</p>
+
+<p>La diferencia es que <span class="negrita">Text utiliza los principios de Material</span> y BasicText no.</p>
+
+<p>Su uso básico ya se ha estudiado en clase y es el siguiente:  </p>
+    <figure><img src="UD4/images/ud4-2023-10-22-23-57-45.png" /><br><figcaption></figcaption></figure>
+    <br>
+
+<p>Es <span class="negrita">importante conocer el funcionamiento de los componentes</span> de Jetpack Compose, se pulsa la tecla <span class="negrita">CTRL y sin soltar se hace clic izquierdo</span> sobre el nombre de la clase.
+  También funciona teniendo el cursor en el nombre y pulsado CTRL+B.</p>
+<p>De esta manera se abre en Android Studio el código del componente clicado.
+  Esta acción se puede hacer con cualquier clase, función, objeto…</p>
+
+  <figure><img src="UD4/images/KotlinDoc.gif" /><br><figcaption>Haciendo ctrl+B sobre el componente podemos ver si definición.</figcaption></figure>
+  <br>
+  
+  <p>Todas las funciones disponen de documentación <span class="cursiva">KotlinDoc</span> donde se explican los parámetros que aceptan</p>
+  
+  <p>En la llamada a la función Text, al usar el nombre en los parámetros como recomienda Jetpack Compose, el orden de los mismos se puede alterar.</p>
+  
+  <figure><img src="UD4/images/ud4-2023-10-23-00-06-03.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>Cuando se usan los componentes de Jetpack Compose, igual que sucede con cualquier clase que no sea propia, es importante conocer qué parámetros tiene y cómo funciona.</p>
+
+<p>Con el cursor en una clase/función/parámetro/variable se pulsa CTRL+B y Android Studio abre el archivo donde se define para poder consultarlo.</p>
+
+<p>Por ejemplo:</p>
+<ul>
+<li>text necesita un String.</li>
+<li>modifier necesita un Modifier.</li>
+<li>fontWeight necesita un FontWeight.</li>
+</ul>
+
+<p>Navegando por los parámetros con CTRL+B se puede saber el tipo de dato que acepta. Esto también se puede consultar por internet en la documentación oficial.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-00-07-47.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>El único <span class="negrita">parámetro obligatorio</span> es <span class="negrita">text</span> que será la cadena a mostrar.</p>
+
+<p>El resto de parámetros se pueden omitir (tienen asignado un valor), en ese caso Kotlin le pondrá los valores por defecto.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-00-08-54.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Algunos ejemplos de Text con parámetros:</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-00-10-25.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>Con el parámetro <span class="negrita">style</span> se pueden indicar diferentes configuraciones de estilo a la vez.</p>
+
+<p>Aunque se pueden usar los parámetros específicos como <span class="negrita">color</span>, <span class="negrita">fontSize…</span></p>
+
+</section><!-- End section Componentes Text y BasicText-->
+
+<!--*********************************************************Modifier***********************************************************-->
+<section class="apartado">
+<a name="sModifier"></a>
+<h2>Modifier</h2>
+
+<p>Todos los componentes tienen un parámetro <span class="r-word">modifier</span>.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-00-11-10.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Por defecto el parámetro modifier contiene un objeto <span class="negrita">Modifier</span> con la configuración básica.</p>
+
+<p>El objeto <span class="r-word">Modifier</span> es un <span class="negrita">Companion Object</span> con muchas funciones de extensión para modificar los componentes</p>
+
+<p>Además, es de tipo <span class="negrita">builder</span> por lo que se pueden concatenar las llamadas a las funciones mediante el punto.</p>
+
+<p>El <span class="negrita">orden</span> de llamada a las funciones es <span class="negrita">importante</span> y gracias a él se crean diferentes efectos.</p>
+
+<p>Las funciones que contiene Modifier se pueden clasificar extraoficialmente en:</p>
+
+<br>
+<table>
+  <tr>
+    <th>De posicionamiento y tamaño
+    </th>
+    <td>fillMaxSize, fillMaxWidth, fillMaxHeight, wrapContentSize, wrapContentHeigtht, width, height, aspectRatio…
+    </td>
+  </tr>
+  <tr>
+    <th>De funcionalidad
+    </th>
+    <td>clickable, toggleable, horizontalScroll, verticalScroll…
+    </td>
+  </tr>
+  <tr>
+    <th>De apariencia
+    </th>
+    <td>padding, border, alpha…
+    </td>
+  </tr>
+  <tr>
+    <th>Listeners</th>
+    <td>onClick, onFocusChanged, onKeyEvent, onSizeChanged…
+    </td>
+  </tr>
+</table>
+
+<br><br>
+<p>Ejemplo de <span class="negrita">Text</span> con <span class="negrita">modifier</span>:</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-00-17-50.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>El <span class="negrita">orden de llamada</span> a las funciones de Modifier altera el comportamiento:</p>
+<figure><img src="UD4/images/ud4-2023-10-23-00-18-28.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Gracias a Modifier todos los componentes pueden ser <span class="negrita">clickable</span>:</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-00-19-10.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>El orden en el que aparezca <span class="negrita">clickable</span> también altera el comportamiento.</p>
+
+<p>Existen más manejadores de eventos: <span class="cursiva">onFocusChanged</span>, <span class="cursiva">onKeyEvent…</span></p>
+
+<p>Si el contenido de un componente no se puede mostrar entero por cualquier razón, 
+  gracias a Modifier se puede indicar con <span class="negrita">verticalScroll</span> y <span class="negrita">horizontalScroll</span>
+   que el contenido sea deslizable para poder visualizarlo totalmente.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-00-20-25.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Si un componente con un <span class="negrita">verticalScroll</span> o un <span class="negrita">HorizontalScroll</span> está ocupando toda la pantalla, 
+  el resto de elementos no se visualizarán a menos que al componente con Scroll se le indique un tamaño.</p>
+
+<p>Si en un elemento se puede hacer scroll vertical, dentro no debería tener un elemento con scroll vertical. 
+  Así, si en un elemento se puede hacer scroll horizontal, dentro no debería haber uno con scroll horizontal.</p>
+
+<p>Más adelante se explicará el uso de <span class="negrita">rememberScrollState</span>.</p>
+
+<p>En la documentación se pueden encontrar todas las funciones de extensión disponibles para el objeto Modifier: <br>
+<a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/modifiers-list">https://developer.android.com/jetpack/compose/modifiers-list</a></p>
+
+
+</section><!-- End section Modifier-->
+
+<!--*********************************************************Componente Button***********************************************************-->
+<section class="apartado">
+<a name="sComponenteButton"></a>
+<h2>Componente Button</h2>
+
+<p>Un <span class="r-word">Button</span> permite lanzar una acción al interactuar con él.</p>
+
+<p>Tiene dos parámetros obligatorios <span class="r-word">onCLick</span> y <span class="r-word">content</span> que son funciones lambda, 
+  este último además es el último parámetro definido por lo que se puede extraer de los paréntesis.
+</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-00-24-56.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>El parámetro <span class="negrita">content</span> es una función lambda que acepta <span class="negrita">@Composable</span>, 
+  eso significa que en el cuerpo de <span class="negrita">content</span> se pueden poner componentes Jetpack Compose.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-00-26-30.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Además, implementa <span class="negrita">RowScope</span> (ámbito de fila) por lo que se comporta como una <span class="negrita">fila</span>
+   y los componentes que se incluyan se añadirán en fila.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-00-27-28.png" /><br><figcaption></figcaption></figure>
+<br>
+<p><span class="r-word">Button</span> define algunos de sus valores por defecto en la clase <span class="r-word">ButtonDefaults</span>
+   y para algunas modificaciones se debe usar esa clase:</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-00-28-25.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>El componente <span class="r-word">Button</span> tiene <span class="negrita">diferentes variaciones</span> con estilo predefinido:</p>
+<figure><img src="UD4/images/ud4-2023-10-23-00-29-58.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Internamente todos estos componentes son del tipo Button.</p>
+
+
+</section><!-- End section Componente Button-->
+
+<!--*********************************************************Componentes propios***********************************************************-->
+<section class="apartado">
+<a name="sComponentespropios"></a>
+<h2>Componentes propios</h2>
+
+<p>Para organizar el código es habitual crear componentes propios que extiendan o agrupen a componentes de Jetpack Compose.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-00-33-25.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Se puede diseñar un componente propio que combine un <span class="negrita">Modifier</span> interno y el Modifier que reciba como parámetro.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-00-34-52.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<section class="marco-t warn">
+  <span class="icono warning"> </span> El lugar donde se llame a <span class="negrita">then</span> cambiará el comportamiento.
+  </section>
+<section class="marco-b">
+    
+</section>
+<p>Los componentes propios permiten dividir el código para que esté más organizado.</p>
+
+<p>Es importante que los componentes propios <span class="negrita">sean lo más pequeños posible</span> teniendo nombres <span class="negrita">semánticos</span> para que sean auto explicativos.</p>
+
+<p>Además, se pueden crear componentes que agrupen a otros para poder reutilizarlos todos juntos y organizar el código.</p>
+
+<p>Los ejemplos anteriores son perfectos para entender esto.</p>
+
+  
+
+</section><!-- End section Componentes propios-->
+
+<!--*********************************************************Componente Spacer***********************************************************-->
+<section class="apartado">
+<a name="sComponenteSpacer"></a>
+<h2>Componente Spacer</h2>
+
+<p>El componente <span class="r-word">Spacer</span> permite dejar un espacio entre otros componentes y
+  <span class="negrita">solo</span> admite el parámetro <span class="negrita">modifier</span>.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-00-39-08.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Es recomendable crearse un componente propio que extienda a Spacer para simplificar su uso:</p>
+<figure><img src="UD4/images/ud4-2023-10-23-00-40-06.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+</section><!-- End section Componente Spacer-->
+
+<!--*********************************************************Imágenes***********************************************************-->
+<section class="apartado">
+<a name="sImagenes"></a>
+<h2>Imágenes</h2>
+<p>En una aplicación Android las imágenes se tienen que importar previamente en el proyecto o bien conseguirlas de internet.</p>
+
+<p>Las imágenes que se importen al proyecto deben estar en uno de los siguientes formatos: vectorial, jpg, png y webp.</p>
+
+<p>Con respecto a imágenes matriciales (jpg, png y webp) es preferible el uso de imágenes en formato <span class="negrita">webp</span>
+   por ello se explicará como convertir imágenes añadidas al proyecto en formato jpg y png a formato webp.</p>
+
+<p>Para añadir imágenes al proyecto se debe abrir el panel <span class="d-word">Resource Manager</span> en la parte izquierda y 
+  desde él pulsar el botón <span class="d-word">+</span>.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-09-28-39.png" /><br><figcaption></figcaption></figure>
+<br>
+
+  <p>Para añadir imágenes matriciales (jpg, png y webp) se debe seleccionar la opción <span class="d-word">Import Drawables</span>.</p>
+  <figure><img src="UD4/images/ud4-2023-10-23-09-28-59.png" /><br><figcaption></figcaption></figure>
+  <br>
+ 
+  <p>Una vez seleccionada la imagen aparece la ventana de importación:</p>
+  
+
+<figure><img src="UD4/images/ud4-2023-10-23-09-29-38.png" /><br><figcaption></figcaption></figure>
+<br>
+
+  <p>Si se quiere se puede seleccionar un <span class="d-word">QUALIFIER</span>, esto permitiría cargar imágenes de diferentes tamaños según las características del dispositivo.</p>
+  
+  <p>Por último se debe pulsar el botón <span class="d-word">Import</span> y la imagen ya estará disponible.</p>
+
+ <p> Para añadir imágenes vectoriales, generalmente iconos ofrecidos por Google, se debe seleccionar la opción <span class="d-word">Vector Asset</span>.</p>
+ 
+<figure><img src="UD4/images/ud4-2023-10-23-09-31-10.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se abrirá una ventana que permite elegir el icono y configurar su nombre, tamaño, color y opacidad.</p>
+
+<p>Podemos seleccionar entre <span class="negrita">Clip art</span>, es decir, iconos predeterminados de Google o <span class="negrita">Local file</span>, si la fuente es externa. </p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-09-33-19.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Por último se debe pulsar el botón Finish y la imagen ya estará disponible.</p>
+<p>Las imágenes añadidas, sean del tipo que sean, se pueden consultar en la carpeta <span class="inline-folder">res</span>.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-09-35-18.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Si se han seleccionado <span class="cursiva">QUALIFIERS</span> las imágenes aparecerán organizadas según eso <span class="cursiva">QUALIFIERS</span>.</p>
+
+<h3>Conversión de imágenes matriciales a webp.</h3>
+
+<p>Google recomienda el uso de imágenes webp por estar más optimizadas y ocupar menos espacio.
+
+Con imágenes en formato webp se puede <span class="subrayado">reducir el tamaño de la aplicación hasta un 80%</span>.
+
+El formato webp es compatible a partir de la API 14 con pérdida de calidad y de la API 18 sin pérdida de calidad.
+
+Como en el curso se trabaja con la API 24+ no hay problemas de calidad.</p>
+
+<p>Sobre la imagen en el proyecto se hace clic derecho:</p>
+
+
+<figure><img src="UD4/images/ud4-2023-10-23-09-40-38.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Se eligen las opciones que se necesiten: 100% o <span class="cursiva">Lossless encoding -> máxima calidad.</span>
+</p>
+<figure><img src="UD4/images/ud4-2023-10-23-09-41-22.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se muestra una previsualización donde se puede ver la calidad final, el tamaño final y la diferencia.
+También se permite modificar la calidad final.
+</p>
+<figure><img src="UD4/images/ud4-2023-10-23-12-19-38.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>La imagen del ejemplo a una calidad del 30% no tiene casi pérdida y pasa a ocupar 14,5 KB en lugar de los 421,3 KB originales (un 3,5% del tamaño original).</p>
+
+<p>Para finalizar se pulsa el botón Finish y se convertirá la imagen a formato webp.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-12-20-27.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Con imágenes más grande se ve con más detalle esa optimización.
+<ul>
+  <li>Imagen original: 7,9 MB</li>
+  <li>Imagen final: 400 KB</li>
+  
+  <li>Se ha reducido al 6,1%</li>
+</ul>
+
+<figure><img src="UD4/images/ud4-2023-10-23-12-23-05.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</p>
+
+<h3>Componente Image</h3>
+<p>El componente <span class="r-word">Image</span> permite cargar imágenes importadas al proyecto. <br>
+
+La función tiene dos parámetros obligatorios:
+<ul>
+  <li><span class="negrita">painter</span>: sirve para indicar el recurso a cargar.</li>
+
+  <li><span class="negrita">contentDescription</span>: descripción de la imagen.</li>
+</ul>
+</p>
+<figure><img src="UD4/images/ud4-2023-10-23-12-25-01.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Con la función <span class="r-word">Modifier.clip()</span> se puede dar forma a cualquier componente.
+  Si se asigna borde se debe asignar la misma forma que a la función clip. </p>
+
+  <figure><img src="UD4/images/ud4-2023-10-23-12-26-41.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>Si se indica a la imagen que ocupe todo el espacio disponible con el parámetro <span class="r-word">ContentScale</span> se puede indicar cómo se debe comportar la imagen a la hora de rellenar el espacio:</p>
+  
+<p>Con <span class="r-word">Crop</span>: se ajusta a la dimensión más pequeña del contenedor.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-12-27-46.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Con la librería <span class="d-word">Coil</span> y el componente <span class="r-word">AsyncImage</span> se pueden cargar imágenes de internet.</p>
+
+<p>Se deben dar permisos de acceso a internet a la aplicación, para ello en el archivo del <span class="inline-file">AdroidManifest.xml</span>: 
+  <span class="cursiva">manifest -> AndroidManifest.xml </span> se debe añadir la siguiente línea:</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-12-31-08.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>A continuación, se añade la dependencia al archivo <span class="inline-file">build.graddle.kts (Module: app)</span>
+   y se hace clic en <span class="negrita">Sync Now</span> en la parte superior derecha.</p>
+   
+<figure><img src="UD4/images/ud4-2023-10-23-12-31-57.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Cuando finalice la sincronización ya se podrá usar el componente <span class="r-word">AsyncImage</span>.</p>
+<p>Como las previsualizaciones (@Preview) <span class="subrayado">no tienen acceso a internet</span> se debe lanzar la aplicación para ver el resultado.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-12-33-07.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p><span class="r-word">AsyncImage</span> también tiene el parámetro <span class="r-word">contentScale</span> para indicar cómo rellena la imagen el espacio disponible.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-12-35-07.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se puede dar forma a las imágenes con funciones de <span class="r-word">AsyncImage</span> y con la función <span class="r-word">Modifier.clip()</span>.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-12-43-46.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+
+<p>Coil ofrece la función <span class="r-word">crossfade</span> que indica a la imagen que aparezca poco a poco:</p>
+<figure><img src="UD4/images/ud4-2023-10-23-12-43-30.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<h3>Componente Icon</h3>
+<p>El componente <span class="r-word">Icon</span> permite representar un icono en la aplicación, es similar a <span class="r-word">Image</span> 
+  pero formando parte de Material Design.</p>
+
+<p>Solo permite imágenes vectoriales o rasterizadas (convertidas a webp).</p>
+
+<p>Solo se mostrará con un color.</p>
+
+<p>Su tamaño por defecto es de 24dp pero soporta los siguientes tamaños:</p>
+<figure><img src="UD4/images/ud4-2023-10-23-12-50-14.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En el ejemplo al usar una imagen como Icon se pierden los colores.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-12-51-14.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Con la clase <span class="negrita">Icons</span> se pueden utilizar los iconos del sistema.</p>
+
+<p>Lo más habitual es usar los iconos vectoriales de <span class="cursiva">Material Design</span>.</p>
+
+<p>Android Studio solo carga por defecto algunos iconos. 
+  Si se quiere tener disponible todo el paquete de iconos se debe añadir la siguiente dependencia al archivo <span class="inline-file">build.graddle.kts (Module: app)</span>:</p>
+
+  <figure><img src="UD4/images/ud4-2023-10-23-12-53-31.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+
+<p>Recuerda pulsar <span class="negrita">Sync Now</span> tras añadir la dependencia.</p>
+
+<p>Una vez añadida la dependencia ya están disponibles <a class="enlace" target="_blank" href="https://fonts.google.com/icons">todos los iconos</a> .</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-12-53-52.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>En la clase Icon existen subclases de iconos:</p>
+<ul>
+  <li><span class="negrita">Default</span>: como usar Filled.</li>
+<li><span class="negrita">Filled</span>: icono relleno del mismo color.</li>
+<li><span class="negrita">Outlined</span>: icono solo con los bordes.</li>
+<li><span class="negrita">TwoTone</span>: icono con dos colores.</li>
+<li><span class="negrita">Sharp</span>: icono con las esquinas anguladas.</li>
+<li><span class="negrita">Rounded</span>: icono con las esquinas redondeadas.</li>
+</ul>
+
+<figure><img src="UD4/images/ud4-2023-10-23-12-55-48.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Con el parámetro <span class="r-word">tint</span> se puede cambiar la tonalidad del icono.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-12-56-33.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+</section><!-- End section Imágenes-->
+
+<!--*********************************************************Componente Badge***********************************************************-->
+<section class="apartado">
+<a name="sComponenteBadge"></a>
+<h2>Componente Badge</h2>
+
+<p>El componente <span class="r-word">Badge</span> permite mostrar información dinámica como el número de mensajes pendientes.</p>
+
+<p>Un Badge solo debería tener un icono o un texto corto.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-12-58-57.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Componente BadgedBox</h3>
+
+<p>El componente <span class="r-word">BadgedBox</span> permite mostrar información dinámica como el número de mensajes pendientes sobre otro elemento como un icono.</p>
+
+<p>Se usan habitualmente en barras de navegación.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-13-00-11.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</section><!-- End section Componente Badge-->
+
+<!--*********************************************************Componentes Divider***********************************************************-->
+<section class="apartado">
+<a name="sComponentesDivider"></a>
+<h2>Componentes Divider</h2>
+
+<p>Existen tres componentes de tipo <span class="r-word">Divider</span>:</p>
+
+<ul>
+  <li><span class="negrita">Divider</span>: disponible hasta material3 v1.1.1, obsoleto en material3 v1.2.0.</li>
+  <li><span class="negrita">HorizontalDivider</span>: disponible en material3 v1.2.0.</li>
+  <li><span class="negrita">VerticalDivider</span>: disponible en material3 v1.2.0.</li>
+</ul>
+
+<p>Como la versión 1.2.0 se encuentra en Alpha, aún se puede utilizar el componente Divider.</p>
+
+<p>Si se quiere usar <span class="negrita">HorizontalDivider</span> y <span class="negrita">VerticalDivider</span>
+   hay que actualizar la dependencia en <span class="inline-file">build.gradle.kts (Module)</span> y sincronizar.</p>
+
+   <p><span class="negrita">Divider</span> (línea horizontal), <span class="negrita">HorizontalDivider</span> y <span class="negrita">VerticalDivider</span>
+     dibujan una línea que permite separa elementos generalmente en filas (Row) y columnas (Column).</p>
+   <figure><img src="UD4/images/ud4-2023-10-23-13-04-56.png" /><br><figcaption></figcaption></figure>
+   <br>
+   
+<p>Los tres componentes disponen de los mismos parámetros: <span class="negrita">modifier</span>, <span class="negrita">thickness</span> y <span class="negrita">color</span>.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-13-05-49.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<div class="tarea">
+  <p>
+    Crea un proyecto en Android Studio llamado <span class="negrita">ProfileTuNombre</span>.  
+  </p>
+  <p>
+    Utilizando los componentes vistos hasta este momento en la unidad, diseña una pantalla a modo de perfil de usuario de una red social donde aparezca:
+    <ul>
+      <li>Tu nombre</li>
+      <li>Una foto tuya (tipo carnet)</li>
+      <li>Una lista de hobbies o gustos que delante de cada elemento tenga un icono</li>
+      <li>Un botón para seguir o dejar de seguir</li>
+      <li>Dos imágenes pequeñas de lo que quieras</li>
+      <li>Un botón con un icono para dar a me gusta o quitar el me gusta en cada una de las imágenes</li>
+      <li>Un BadgedBox Con el icono de un sobre que indicará la cantidad de mensajes pendientes de leer</li>
+      <li>Un botón debajo del todo con un + que al pulsarlo se aumentará la cantidad de mensajes</li>
+    </ul>
+  </p>
+</div>
+
+</section><!-- End section Componentes Divider-->
+
+<!--*********************************************************Conceptos***********************************************************-->
+<section class="apartado">
+<a name="sConceptos"></a>
+<h2>Conceptos</h2>
+<h3>Composición y recomposición</h3>
+
+<p>La <span class="negrita">composición</span> y la <span class="negrita">recomposición</span> son un comportamiento habitual en las interfaces de usuario declarativas.</p>
+
+<ul>
+  <li><span class="negrita">Composición</span>: ejecución por primera vez de una función de composición (@Composable) -> pintar un componente en la interfaz.</li>
+
+<li><span class="negrita">Recomposición</span>: ejecución por segunda o más vez de una función de composición (@Composable)
+   -> repintar la interfaz pintando solo los componentes afectados.</li>
+</ul>
+
+<p>Si en tiempo de ejecución se modifica un componente, ese componente se recompone.</p>
+
+<p>De esta manera la interfaz de usuario siempre tiene la última versión del componente.</p>
+
+<h3>Estados</h3>
+
+<p>En Jetpack Compose un <span class="negrita">estado</span> es una variable conectada al estado de la aplicación.</p>
+
+<p>Si durante la ejecución de la aplicación un estado (variable conectada al estado de la aplicación) cambia su valor, 
+  las partes de la interfaz afectadas se recomponen (se vuelven a pintar).</p>
+
+<p>En el ejemplo de la UD3 <span class="cursiva">"Contador de clics"</span> se utilizó un estado para recomponer la interfaz al pulsar un botón.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-13-18-23.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p><span class="r-word">mutableStateOf</span>: indica que la variable es un estado 
+  (variable conectada al estado de la aplicación). 
+  Si esta variable cambia su valor se deben recomponer las funciones <span class="negrita">@Composable</span> que la utilicen.</p>
+
+<p>El problema es que cuando se vuelve a ejecutar la función <span class="negrita">@Composable</span> el estado volverá a tener el valor inicial.</p>
+
+<p>Para solucionar esto se usa:
+  <li><span class="negrita">remember</span>: indica a Android que una variable se <span class="subrayado">recuerde en la recomposición</span>.</li>
+  <li><span class="negrita">rememberSaveable</span>: lo anterior y también que se <span class="subrayado">recuerde al destruir y crear la Activity</span>.</li>
+</p>
+
+<p>Los estados se pueden crear con <span class="negrita">=</span> pero esto conlleva que para acceder al valor del estado se debe usar <span class="negrita">.value</span>.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-13-21-52.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>Para facilitar el uso de estados se creo el <span class="negrita">delegado by</span>, 
+  visto en los ejemplos, que permite acceder al valor del estado con el propio nombre de la variable.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-13-22-09.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Cuando se explicó el parámetro <span class="negrita">modifier</span>,
+   se indicó que si el contenido de un componente no cabe en la pantalla se pueden usar los modificadores <span class="negrita">verticalScroll</span>
+    y <span class="negrita">horizontalScroll</span> para deslizar y poder alcanzar todo el contenido.</p>
+
+<p>Para esto se hizo uso de <span class="r-word">rememberScrollState</span>.</p>
+
+<p>Esta función crea un estado con <span class="negrita">rememberSaveable</span> por lo que,
+   el estado del scroll se recordará tanto al cambiar la orientación como al cambiar la configuración:</p>
+
+</p>
+<figure><img src="UD4/images/ud4-2023-10-23-13-24-13.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Gracias a la recomposición es muy sencillo cambiar la apariencia de la interfaz gráfica:</p>
+<figure><img src="UD4/images/ud4-2023-10-23-13-26-35.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Otro ejemplo</p>
+<figure><img src="UD4/images/ud4-2023-10-23-13-27-32.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</section><!-- End section Conceptos-->
+
+
+<!--*********************************************************Componentes para introducir información***********************************************************-->
+<section class="apartado">
+<a name="sComponentesparaintroducirinformacion"></a>
+<h2>Componentes para introducir información</h2>
+
+<p>A continuación, se van a estudiar una serie de componentes Jetpack Compose que permiten <span class="negrita">recoger información del usuario</span>.</p>
+
+<p>Estos componentes se suelen utilizar en formularios o en pantallas de ajustes.</p>
+
+<p>Como estos componentes cambian conforme el usuario introduce los datos o los selecciona, se deben usar estados para su correcto funcionamiento.</p>
+
+<h3>Componente TextField</h3>
+<p>Los componentes <span class="r-word">TextField</span> permiten al usuario introducir datos desde el teclado del dispositivo.</p>
+<p>Existen tres componentes TextField:
+  <ul>
+    <li><span class="negrita">BasicTextField</span>: campo de texto básico.</li>
+    <li><span class="negrita">TextField</span>: utiliza los principios de Material.</li>
+    <li><span class="negrita">OutlinedTextField</span>: como TextField pero con un borde predefinido en el parámetro <span class="negrita">shape</span>.</li>
+  </ul>
+</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-13-31-32.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Como se estudió anteriormente es importante conocer los parámetros que admiten los componentes.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-13-32-04.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Todos los parámetros que aceptan una función <span class="negrita">lambda</span> permiten que se puedan realizar acciones.</p>
+<p>Si además la función lambda es <span class="negrita">@Composable</span>, dentro se podrán incorporar otros componentes.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-13-33-03.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Ejemplo con dos campos, uno para el correo y otro para la contraseña:</p>
+<figure><img src="UD4/images/ud4-2023-10-23-13-33-50.png" /><br><figcaption>Ejemplo con dos campos, uno para el correo y otro para la contraseña</figcaption></figure>
+<br>
+<p>Ejemplo de campo contraseña que permite ver el texto escrito:</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-13-35-31.png" /><br><figcaption>Ejemplo de campo contraseña que permite ver el texto escrito</figcaption></figure>
+<br>
+
+<p>Ejemplo en el que el botón solo se activa si los campos tienen datos:</p>
+
+<p>Gracias a los estados y la recomposición no es necesario un <span class="r-word">if</span> para activar el bótón:</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-13-37-18.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>El parámetro keyboardOptions permite indicar cómo será el teclado que se muestra</p>
+<figure><img src="UD4/images/ud4-2023-10-23-13-38-12.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>El parámetro keyboardActions permite indicar la acción que se ejecutará al pulsar el botón (imeAction).</p>
+<figure><img src="UD4/images/ud4-2023-10-23-13-39-17.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</section><!-- End section Componentes para introducir información-->
+
+<!--*********************************************************State Hoisting***********************************************************-->
+<section class="apartado">
+<a name="sStateHoisting"></a>
+<h2>State Hoisting</h2>
+<p>Como se estudió a principio de la unidad, es muy habitual crear componentes propios que envuelven uno o más componentes Jetpack Compose.</p>
+
+<p>En este punto se pueden dar dos opciones:
+  <ul>
+    <li><span class="negrita">Componente stateless</span>: componente propio en el que no se declara un estado.</li>
+<li><span class="negrita">Componente stateful</span>: componente propio en el que se declara un estado.</li>
+  </ul>
+</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-13-43-44.png" /><br><figcaption>Stateless</figcaption></figure>
+<br>
+<figure><img src="UD4/images/ud4-2023-10-23-13-44-05.png" /><br><figcaption>Stateful</figcaption></figure>
+<br>
+
+<p>Desde el exterior de un componente <span class="negrita">stateful</span> <span class="subrayado">no se tendrá acceso a su estado</span>.</p>
+
+<p>Imaginemos un formulario en el que <span class="negrita">todos los componentes son propios y stateful</span>, 
+  ¿Cómo se podría acceder a los datos que ha introducido el usuario?</p>
+
+<p>En el ejemplo anterior, se han añadido los componentes directamente y no existe ese problema, pero 
+  ¿y si se hubieran extraído los componentes a componentes propios como se recomienda?</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-13-47-21.png" /><br><figcaption>Extrayendo compomentes a componentes propios</figcaption></figure>
+<br>
+
+<p>Para solucionar esto se utiliza el <span class="negrita">State Hoisting </span> (elevación de estado) para poder acceder al estado desde el exterior.
+Mediante el <span class="negrita">State Hoisting</span> el estado no se declara dentro del componente si no en el componente más externo en el que se vaya a utilizar.</p>
+
+<p>Al declarar el estado fuera del componente, este se convertirá en <span class="negrita">stateless</span>.
+<span class="subrayado">Las recomendaciones son que todos los componentes sea stateless en la medida de lo posible</span>.</p>
+<p>
+Si un componente utiliza un estado y este estado no se necesita en el exterior, en ese caso el componente puede ser <span class="negrita">stateful</span>.
+</p>
+
+<p>La técnica del <span class="negrita">State Hoisting</span> consiste en eliminar el estado de un componente stateful (y así convertirlo en stateless) 
+  y sustituirlo por dos parámetros que se le deberán proporcionar al utilizarlo:
+<ul>
+  <li>Uno para proporcionar el valor al componente</li>
+<li>Otro que es una lambda para modificar ese valor. </li>
+</ul></p>
+
+<p>Esta técnica ya se utiliza en el componente <span class="negrita">TextField</span></p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-13-51-14.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Ejemplo anterior aplicando State Hoisting:</p>
+<figure><img src="UD4/images/ud4-2023-10-23-13-52-27.png" /><br><figcaption>Componentes <span class="negrita">stateless</span></figcaption></figure>
+<br>
+
+<figure><img src="UD4/images/ud4-2023-10-23-13-52-59.png" /><br><figcaption>Uso de componentes</figcaption></figure>
+<br>
+<p>Se puede realizar de una manera más limpia usando <span class="negrita">=</span> en lugar de <span class="negrita">by</span>.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-13-56-31.png" /><br><figcaption>Un solo estado</figcaption></figure>
+<br>
+
+<figure><img src="UD4/images/ud4-2023-10-23-13-57-22.png" /><br><figcaption>Varios estados</figcaption></figure>
+<br>
+
+
+</section><!-- End section State Hoisting-->
+
+<!--*********************************************************Componente Switch***********************************************************-->
+<section class="apartado">
+<a name="sComponenteSwitch"></a>
+<h2>Componente Switch</h2>
+
+<p>Los <span class="r-word">Switch</span> son interruptores que se utilizan para <span class="negrita">activar</span> y <span class="negrita">desactivar</span> funciones. 
+  Son habituales en las preferencias.</p>
+
+<p>El parámetro <span class="negrita">thumbContent</span> permite añadir un icono al interruptor.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-13-59-22.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Se pueden personalizar los colores:</p>
+<figure><img src="UD4/images/ud4-2023-10-23-14-00-45.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<!-- TODO: EJERCICIO 2------------------------>
+
+</section><!-- End section Componente Switch-->
+
+<!--*********************************************************Componente CheckBox***********************************************************-->
+<section class="apartado">
+<a name="sComponenteCheckBox"></a>
+<h2>Componente Checkbox</h2>
+
+
+
+<h3>Componente TriStateCheckBox</h3>
+
+</section><!-- End section ComponenteCheckBox-->
+
+
+<!--*********************************************************Componente RadioButton***********************************************************-->
+<section class="apartado">
+<a name="sComponenteRadioButton"></a>
+<h2>Componente RadioButton</h2>
+
+
+
+</section><!-- End section Componente RadioButton-->
+
+<!--*********************************************************ComponenteSlider***********************************************************-->
+<section class="apartado">
+<a name="sComponenteSlider"></a>
+<h2>Componente Slider</h2>
+
+
+
+</section><!-- End section ComponenteSlider-->
+
+<!--*********************************************************Componente ExposedDropdownMenu***********************************************************-->
+<section class="apartado">
+<a name="sComponenteExposedDropdownMenu"></a>
+<h2>Componente ExposedDropdownMenu</h2>
+
+
+
+</section><!-- End section Componente ExposedDropdownMenu-->
+
+<!--*********************************************************Componente DatePicker***********************************************************-->
+<section class="apartado">
+<a name="sComponenteDatePicker"></a>
+<h2>Componente DatePicker</h2>
+
+
+
+<h3>TimePicker y TimeInput</h3>
+
+</section><!-- End section Componente DatePicker-->
+
+
+<!--*********************************************************Componentes Chips***********************************************************-->
+<section class="apartado">
+<a name="sComponentesChips"></a>
+<h2>Componentes Chips</h2>
+
+
+
+</section><!-- End section Componentes Chips-->
+
+<!--*********************************************************Componente IconButton***********************************************************-->
+<section class="apartado">
+<a name="sComponenteIconButton"></a>
+<h2>Componente IconButton</h2>
+
+
+
+</section><!-- End section Componente IconButton-->
+
+<!--*********************************************************Componente ProgressIndicator***********************************************************-->
+<section class="apartado">
+<a name="sComponenteProgressIndicator"></a>
+<h2>Componente ProgressIndicator</h2>
+
+
+
+</section><!-- End section Componente ProgressIndicator-->
+
+<!--*********************************************************Componentes SearchBar***********************************************************-->
+<section class="apartado">
+<a name="sComponentesSearchBar"></a>
+<h2>Componentes SearchBar</h2>
+
+
+
+</section><!-- End section Componentes SearchBar-->
+
+<!--*********************************************************Componente AlertDialog***********************************************************-->
+<section class="apartado">
+<a name="sComponenteAlertDialog"></a>
+<h2>Componente AlertDialog</h2>
+
+
+
+</section><!-- End section Componente AlertDialog-->
+
+    <script src="../script/prism.js"></script>
+</body>
+</html>
