@@ -1161,8 +1161,107 @@ Si un componente utiliza un estado y este estado no se necesita en el exterior, 
 <h2>Componente Checkbox</h2>
 
 
+<p>Los <span class="r-word">Checkbox</span> permiten al usuario marcar una o varias opciones.</p>
+<p>Los colores se pueden personalizar de manera similar a los Switch.</p>
+<figure><img src="UD4/images/ud4-2023-10-23-16-55-45.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Como los <span class="r-word">Checkbox</span> suelen ir acompañados de texto,
+   se puede crear un componente propio que agrupe en una <span class="negrita">Row</span>  un <span class="negrita">Text</span> , un <span class="negrita">Spacer</span> 
+    y un <span class="negrita">Checkbox</span>  para poder utilizarlo en todos los lugares.</p>
+
+    <p>Veamos un ejemplo de cómo definirlo</p>
+<section><pre><code class="language-kotlin">//Data class para los objetos MyCheckbox
+data class Check(
+    var title: String,
+    var selected: Boolean,
+    var onCheckedChange: (Boolean) -> Unit
+)
+
+//Función que recibe un conjunto de títulos y los convierte 
+// en una lista de objetos Check
+@Composable
+fun getChecks(vararg titles: String): List&lt;Check> {
+    return titles.map {
+        var state by rememberSaveable {
+            mutableStateOf(false)
+        }
+        Check(
+            title = it,
+            selected = state,
+            onCheckedChange = { selected -> state = selected }
+        )
+    }
+}
+
+//Componente Checkbox stateles propio
+@Composable
+fun MyCheckBox(check: Check) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Checkbox(
+            checked = check.selected, 
+            onCheckedChange = { check.onCheckedChange(it) })
+        Text(text = check.title)
+    }
+}</code></pre>
+</section><br><br>
+<p>Y de cómo usarlo</p>
+
+<section><pre><code class="language-kotlin">Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        val myOptions = getChecks("Opción 1", "Opción 2", "Opción 3")
+        myOptions.forEach {
+            MyCheckBox(check = it)
+        }
+        Button(onClick ={
+            myOptions.map {option ->
+                Log.i("---->", "${option.title}: ${option.selected}")
+            }
+
+        }) {
+            Text(text = "Guardar")
+        }
+    }</code></pre>
+</section><br><br>
+
+<p> Cuyo resultado es el siguiente</p>
+<figure><img src="UD4/images/ud4-2023-10-23-17-32-09.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Y si pulsáramos sobre el segundo y el tercer, el resultado del <span class="cursiva">logcat</span>  sería el siguiente</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-17-33-07.png" /><br><figcaption></figcaption></figure>
+<br>
+
 
 <h3>Componente TriStateCheckBox</h3>
+
+<p>El componente <span class="r-word">TriStateCheckbox</span> es como un <span class="negrita">Checkbox</span>  pero con tres posiciones.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-23-17-34-34.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se utiliza en conjunto a otros Checkbox de menera que el icono cambiará dependiendo de la cantidad de Checkbox seleccionados: 
+  <ul>
+    <li>Nada seleccionado.</li>
+    <li>Algo seleccionado.</li>
+    <li>Todo seleccionado.</li>
+  </ul>
+</p>
+<p>Ejemplo con TriStateCheckbox:</p>
+
+	<figure><img src="UD4/images/ud4-2023-10-23-17-36-49.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>Que daría como resultado algo como lo siguiente:</p>
+  <figure><img src="UD4/images/ud4-2023-10-23-17-37-56.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  
 
 </section><!-- End section ComponenteCheckBox-->
 
@@ -1171,7 +1270,19 @@ Si un componente utiliza un estado y este estado no se necesita en el exterior, 
 <section class="apartado">
 <a name="sComponenteRadioButton"></a>
 <h2>Componente RadioButton</h2>
+<p>Los <span class="r-word">RadioButton</span>  permiten seleccionar una única opción entre varias.</p>
 
+
+<p>Los <span class="r-word">RadioButton</span> de un conjunto <span class="subrayado">se deben de agrupar</span> 
+   en un layout al que se indique el parámetro <span class="negrita">Modifier.selectableGroup()</span> .</p>
+
+   <figure><img src="UD4/images/ud4-2023-10-23-17-41-40.png" /><br><figcaption></figcaption></figure>
+   <br>
+   
+   <p>Dando como resultado:</p>
+   <figure><img src="UD4/images/ud4-2023-10-23-17-42-05.png" /><br><figcaption></figcaption></figure>
+   <br>
+   
 
 
 </section><!-- End section Componente RadioButton-->
