@@ -1283,8 +1283,104 @@ fun MyCheckBox(check: Check) {
    <figure><img src="UD4/images/ud4-2023-10-23-17-42-05.png" /><br><figcaption></figcaption></figure>
    <br>
    
+   <p>Es interesante que se pueda hacer clic sobre toda la fila no solo sobre el <span class="r-word">RadioButton</span>:</p>
+
+   <section><pre><code class="language-kotlin">var selected by rememberSaveable {
+    mutableStateOf("")
+}
+Column(
+    modifier = Modifier
+        .selectableGroup()
+        .fillMaxSize(),
+    horizontalAlignment = Alignment.CenterHorizontally,
+
+) {
+    Row(
+        modifier = Modifier.selectable(
+                selected = selected == "DAM",
+                onClick = { selected = "DAM" }
+            ),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        RadioButton(selected = selected == "DAM", onClick = { selected = "DAM" })
+        Text(text = "DAM")
+    }
 
 
+    Row(
+        modifier = Modifier.selectable(
+                selected = selected == "DAW",
+                onClick = { selected = "DAW" }
+            ),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        RadioButton(selected = selected == "DAW", onClick = { selected = "DAW" })
+        Text(text = "DAW")
+    }
+}</code></pre>
+   </section><br><br>
+   
+<p>Podemos generalizarlo con una lista de opciones en formato String</p>
+<section><pre><code class="language-kotlin">val listOfOptions = listOf("SMX", "ASIX", "DAM", "DAW")
+var selected by rememberSaveable {
+    mutableStateOf("")
+}
+Column(
+    modifier = Modifier
+        .selectableGroup()
+        .fillMaxSize(),
+    horizontalAlignment = Alignment.CenterHorizontally
+) {
+    listOfOptions.forEach() { option ->
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.selectable(
+                selected = selected == option,
+                onClick = { selected = option }
+            )) {
+            RadioButton(selected = selected == option, onClick = { selected = option })
+            Text(text = option)
+        }
+
+    }
+}</code></pre>
+</section><br><br>
+
+<figure><img src="UD4/images/ud4-2023-10-23-23-36-03.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Ejemplo con varios <span class="negrita">RadioButton</span> y <span class="negrita">StateHoisting</span>.</p>
+ <section><pre><code class="language-kotlin">@Composable
+fun MyRadioButton(vararg options:String, selected:String, onClick:(String)->Unit) {
+    Column(modifier = Modifier.selectableGroup().fillMaxSize(),
+           horizontalAlignment = Alignment.CenterHorizontally) {
+
+        options.forEach { option ->
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                RadioButton(
+                  selected = selected == option,
+                   onClick = { onClick(option) }
+                )
+                Text(text = option)
+
+            }
+        }
+    }
+
+}</code></pre>
+ </section><br><br>
+
+ <p>Y podríamos usar el componente con la siguiente llamada</p>
+ <section><pre><code class="language-kotlin">var option by rememberSaveable {
+    mutableStateOf("")
+}
+MyRadioButton(
+    "Opción 1", "Opción 2", "Opción 3",
+    selected = option,
+    onClick = {option = it}
+)</code></pre>
+ </section><br><br>
 </section><!-- End section Componente RadioButton-->
 
 <!--*********************************************************ComponenteSlider***********************************************************-->
@@ -1292,6 +1388,25 @@ fun MyCheckBox(check: Check) {
 <a name="sComponenteSlider"></a>
 <h2>Componente Slider</h2>
 
+<p>Los <span class="r-word">Slider</span> son barras con un indicador que se puede deslizar para seleccionar un valor.</p>
+
+<p>Por defecto se puede seleccionar entre los valores 0.0 y 1.0 pero se puede cambiar.</p>
+
+<p>También se puede modificar el indicador que se desliza.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-24-00-28-10.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD4/images/ud4-2023-10-24-00-28-42.png" /><br><figcaption>Slider cambiando el indicador</figcaption></figure>
+<br>
+
+<h3>Componente RangeSlider</h3>
+<p>El componente <span class="r-word">RangeSlider</span> funciona de manera similar a un <span class="negrita">Slider</span> pero permite seleccionar un rango de valores.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-24-00-30-59.png" /><br><figcaption>RangeSlider</figcaption></figure>
+<br>
+<p>Se pueden modificar los indicadores de inicio (<span class="negrita">starThumb</span>) y final (<span class="negrita">endThumb</span>).</p>
+
+<p>En el ejemplo se utilizan dos estados para los valores mínimo y máximo, se podría crear un estado propio que almacenara el rango (ahora mismo su uso es experimental).</p>
 
 
 </section><!-- End section ComponenteSlider-->
@@ -1300,7 +1415,24 @@ fun MyCheckBox(check: Check) {
 <section class="apartado">
 <a name="sComponenteExposedDropdownMenu"></a>
 <h2>Componente ExposedDropdownMenu</h2>
+<p>El componente <span class="r-word">ExposedDropdownMenu</span> permite mostrar un <span class="negrita">TextField</span> con un menú desplegable.</p>
 
+<p>Según como se programe el contenido un <span class="r-word">ExposedDropdownMenu</span> se puede usar de las siguientes maneras:
+<ul>
+  <li><span class="negrita">No editable</span>: solo se puede seleccionar una opción.</li>
+  <li><span class="negrita">Editable</span>: se puede elegir una opción y también se puede escribir.</li>
+  <li><span class="negrita">Editable y autocompletable</span>: como editable y que filtra los resultados.</li>
+</ul></p>
+
+<p>Un <span class="r-word">ExposedDropdownMenu</span> se compone de un TextField con el modificador <span class="negrita">menuAnchor()</span>
+   y de varios componentes <span class="negrita">DropdownMenuItem</span> que son las opciones disponibles.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-24-00-37-10.png" /><br><figcaption>Ejemplo de ExposedDropdownMenu no editable:
+</figcaption></figure>
+<br>
+<p>Resultado:</p>
+<figure><img src="UD4/images/ud4-2023-10-24-00-37-56.png" /><br><figcaption></figcaption></figure>
+<br>
 
 
 </section><!-- End section Componente ExposedDropdownMenu-->
