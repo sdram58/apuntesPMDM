@@ -61,6 +61,16 @@
       <div class="fila">
         <a href="#sComponentesSearchBar" title="25.- Componentes SearchBar">25.- Componentes SearchBar</a>
         <a href="#sComponenteAlertDialog" title="26.- Componente AlertDialog">26.- Componente AlertDialog</a>        
+        <a href="#sLayout" title="27.- Layout">27.- Layout</a>        
+      </div>
+      <div class="fila">
+        <a href="#sComponenteSurface" title="28.- Componente Surface">28.- Componente Surface</a>
+        <a href="#sComponenteCard" title="29.- Componente Card">29.- Componente Card</a>
+        <a href="#sComponenteBox" title="30.- Componente Box">30.- Componente Box</a>
+      </div>
+      <div class="fila">
+        <a href="#sComponentesColumnyRow" title="31.- Componentes Column y Row">31.- Componentes Column y Row</a>
+
       </div>
     </nav>
   
@@ -1207,6 +1217,24 @@ Si un componente utiliza un estado y este estado no se necesita en el exterior, 
 
 <!-- TODO: EJERCICIO 2------------------------>
 
+<div class="tarea">
+  <p>
+    Crea un proyecto en Android Studio llamado <span class="negrita">ConverterV2TuNombre</span>
+  </p>
+  <p>
+    La aplicación debe tener: 
+    <ul>
+      <li>Tu nombre</li>
+      <li>Una foto tuya (tipo carnet).</li>
+      <li>Un campo de texto en el que el usuario podrá escribir un número para convertir a binario o decimal.</li>
+      <li>Un interruptor (Switch) para decidir si se va a convertir a decimal o binario.</li>
+      <li>Un botón para realizar la conversión.</li>
+      <li>Un texto donde mostrará el resultado. Será de un color u otro si es binario o decimal.</li>
+      <li>Un botón para borrar tanto el campo de texto como el resultado convertido.</li>
+    </ul>
+  </p>
+</div>
+
 </section><!-- End section Componente Switch-->
 
 <!--*********************************************************Componente CheckBox***********************************************************-->
@@ -1859,6 +1887,166 @@ fun showToast(ctx:Context, txt:String){
   
 
 </section><!-- End section Componente AlertDialog-->
+
+<!--*********************************************************Layout***********************************************************-->
+<section class="apartado">
+<a name="sLayout"></a>
+<h2>Layout</h2>
+<p>El <span class="negrita">layout</span> es el diseño gráfico o disposición de los elementos.</p>
+
+<p>Es la manera en la que se colocan los elementos dentro de una interfaz.</p>
+
+<p>En Jetpack Compose existen una serie de componentes que permiten agrupar a otros componentes y ayudan al diseño del layout de las diferentes pantallas de la aplicación.</p>
+
+<p>Anteriormente ya se han usado algunos componentes de layout como <span class="cursiva">Surface</span>, <span class="cursiva">Column</span> y <span class="cursiva">Row</span>.</p>
+<p>En Jetpack Compose hay muchos componentes que ayudan a diseñar el layout de la aplicación:
+  <table>
+    <tr>
+      <td>Source</td>
+      <td>ConstraintLayout</td>
+    </tr>
+    <tr>
+      <td>Card</td>
+      <td>Scaffold</td>
+    </tr>
+    <tr>
+      <td>Box</td>
+      <td>TopAppBar</td>
+    </tr>
+    <tr>
+      <td>BoxWithConstraints</td>
+      <td>BottomBar</td>
+    </tr>
+    <tr>
+      <td>Column</td>
+      <td>NavigationDrawer</td>
+    </tr>
+    <tr>
+      <td>Row</td>
+      <td>NavigationRail</td>
+    </tr>
+    <tr>
+      <td>LazyRow y LazyColumn
+      </td>
+      <td>Layout</td>
+    </tr>
+    <tr>
+      <td>LazyVerticalGrid y LazyHorizontalGrid
+      </td>
+      <td>DropDownMenu</td>
+    </tr>
+    <tr>
+      <td>HorizontalPager y VerticalPager</td>
+      <td>BottomSheets y SideSheets
+      </td>
+    </tr>
+    <tr>
+      <td>LazyVerticalStaggeredGrid y LazyHorizontalStaggeredGrid</td>
+      <td>...</td>
+    </tr>
+  </table>
+</p>
+
+</section><!-- End section Layout-->
+
+<!--*********************************************************Componente Surface***********************************************************-->
+<section class="apartado">
+<a name="sComponenteSurface"></a>
+<h2>Componente Surface</h2>
+
+<p>El componente <span class="r-word">Surface</span> es el eje central en el que se basa la filosofía de <span class="negrita">Material Design</span>.</p>
+
+<p>Surface es un contenedor con estilo predefinido para seguir el tema por defecto de <span class="negrita">Material Design</span>.</p>
+
+<p>Se puede cambiar el estilo por defecto ya que Surface tiene parámetros para definir la forma, la elevación, el borde y colores para el contenido y el continente.</p>
+
+<p>Se recomienda el uso de Surface como elemento padre de toda la interfaz.</p>
+<figure><img src="UD4/images/ud4-2023-10-24-20-24-23.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se puede usar el componente <span class="negrita">Surface</span> tantas veces como se desee, cada vez que se requiera tener una superficie que se diferencie del resto de la interfaz.</p>
+<figure><img src="UD4/images/ud4-2023-10-24-20-26-32.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>El componente Surface por si solo no sirve para organizar los elementos de la interfaz.</p>
+<figure><img src="UD4/images/ud4-2023-10-24-20-31-58.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Sus parámetros están descritos en la documentación</p>
+<figure><img src="UD4/images/ud4-2023-10-24-20-34-10.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</section><!-- End section Componente Surface-->
+
+<!--*********************************************************Componente Card***********************************************************-->
+<section class="apartado">
+<a name="sComponenteCard"></a>
+<h2>Componente Card</h2>
+<p>Las <span class="r-word">Card</span> son componentes Surface con un estilo predefinido (que se puede cambiar con los parámetros)
+   para tener el aspecto de una tarjeta con <span class="negrita">borde</span>, <span class="negrita">elevación</span> y <span class="negrita">sombra</span>.</p>
+
+<p>Existen tres tipos: <span class="negrita">Card</span>, <span class="negrita">ElevatedCard</span> y <span class="negrita">OutlinedCard</span>.</p>
+
+<p>Dentro de una Card los elementos se organizan en columna (ColumnScope).</p>
+
+<figure><img src="UD4/images/ud4-2023-10-24-20-38-23.png" /><br><figcaption>Ejemplos de Card</figcaption></figure>
+<br>
+
+
+</section><!-- End section Componente Card-->
+
+<!--*********************************************************Componente Box***********************************************************-->
+<section class="apartado">
+<a name="sComponenteBox"></a>
+<h2>Componente Box</h2>
+<p>El componente <span class="r-word">Box</span> permite ubicar varios elementos en el mismo lugar uno encima de otro.</p>
+
+<p>Un posible uso podría ser mostrar un contenido u otro según se pulse un botón.</p>
+<figure><img src="UD4/images/ud4-2023-10-24-20-40-32.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Componente BoxWithConstraints</h3>
+<p>El componente <span class="r-word">BoxWithConstraints</span> es una versión especial de Box en la que se transmiten al contenido las dimensiones del componente para poder usarlas si fuera necesario.</p>
+<figure><img src="UD4/images/ud4-2023-10-24-20-48-45.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+
+</section><!-- End section Componente Box-->
+
+<!--*********************************************************Componentes Column y Row***********************************************************-->
+<section class="apartado">
+<a name="sComponentesColumnyRow"></a>
+<h2>Componentes Column y Row</h2>
+<p>Los componentes <span class="r-word">Column</span> y <span class="r-word">Row</span> ya se han utilizado anteriormente.</p>
+
+<p>Para alinear el contenido verticalmente y horizontalmente dentro de estos componentes se utilizan las propiedades:
+  <ul>
+    <li>Arrangement: eje principal (columnas: vertical, filas: horizontal).</li>
+    <li>Alignement: eje secundario (columnas: horizontal, filas: vertical).</li>
+  </ul>
+</p>
+<figure><img src="UD4/images/ud4-2023-10-24-20-51-08.png" /><br><figcaption>Ejemplos de Column y Row</figcaption></figure>
+<br>
+
+<h3>Arrangement</h3>
+<p>
+  <ul>
+    <li><span class="negrita">Center</span>: alineación centrada.</li>
+    <li><span class="negrita">SpaceEvenly</span>: el mismo espacio entre los elementos y en la parte superior e inferior</li>
+    <li><span class="negrita">SpaceBetween</span>: el mismo espacio entre los elementos pero no deja en la parte superior ni inferior.</li>
+    <li><span class="negrita">SpaceArround</span>: el mismo espacio arriba y debajo de cada elemento (entre objetos habrá el doble de espacio que arriba y abajo).</li>
+    <li><span class="negrita">spacedBy</span>: se indica el espacio entre elementos en dp.</li>
+    <li><span class="negrita">Top</span>: alineación a la parte superior  solo Column.</li>
+    <li><span class="negrita">Bottom </span>: alineación a la parte inferior  solo Column.</li>
+    <li><span class="negrita">End</span>: alineación al principio de la línea según sentido de lectura  solo Row.</li>
+    <li><span class="negrita">Start</span>: alineación al final de la línea según sentido de lectura  solo Row.</li>
+  </ul>
+</p>
+	
+
+
+
+</section><!-- End section Componentes Column y Row-->
 
     <script src="../script/prism.js"></script>
 </body>
