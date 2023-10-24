@@ -45,6 +45,22 @@
       
       <div class="fila">
         <a href="#sComponenteSwitch" title="16.- Componente Switch">16.- Componente Switch</a>
+        <a href="#sComponenteCheckBox" title="17.- Componente Checkbox">17.- Componente Checkbox</a>
+        <a href="#sComponenteRadioButton" title="18.- Componente Radio Button">18.- Componente Radio Button</a>
+      </div>
+      <div class="fila">
+        <a href="#sComponenteSlider" title="19.- Componente Slider">19.- Componente Slider</a>
+        <a href="#sComponenteExposedDropdownMenu" title="20.- Componente ExposedDropdownMenu">20.- Componente ExposedDropdownMenu</a>
+        <a href="#sComponenteDatePicker" title="21.- Componente Date Picker">21.- Componente Date Picker</a>        
+      </div>
+      <div class="fila">
+        <a href="#sComponentesChips" title="22.- Componentes Chip">22.- Componentes Chip</a>
+        <a href="#sComponenteIconButton" title="23.- Componente IconButton">23.- Componente IconButton</a>
+        <a href="#sComponenteProgressIndicator" title="24.- Componente ProgressIndicator">24.- Componente ProgressIndicator</a>
+      </div>
+      <div class="fila">
+        <a href="#sComponentesSearchBar" title="25.- Componentes SearchBar">25.- Componentes SearchBar</a>
+        <a href="#sComponenteAlertDialog" title="26.- Componente AlertDialog">26.- Componente AlertDialog</a>        
       </div>
     </nav>
   
@@ -57,9 +73,47 @@
         <a href="#sOrganizandoCodigo" title="2. Organizando el Código">2. Organizando el Código</a>
         <a href="#sComponentesdeJetpackCompose" title="3.- Componentes de Jetpack Compose">3.- Componentes de Jetpack Compose</a>
       </div>
+      
       <div class="fila">
         <a href="#sMaterial3" title="4.- Material 3">4.- Material 3</a>
-
+        <a href="#sComponentesTextyBasicText" title="5.- Componentes Text y Basic Text">5.- Componentes Text y Basic Text</a>
+        <a href="#Modifier" title="6.- Modifier">6.- Modifier</a>
+      </div>
+      <div class="fila">
+        <a href="#sComponenteButton" title="7.- Componente Button">7.- Componente Button</a>
+        <a href="#sComponentespropios" title="8.- Componentes propios">8.- Componentes propios</a>
+        <a href="#sComponenteSpacer" title="9.- Componente Spacer">9.- Componente Spacer</a>
+      </div>
+      <div class="fila">
+        <a href="#sImagenes" title="10.- Imágenes">10.- Imágenes</a>
+        <a href="#sComponenteBadge" title="11.- Componente Badge">11.- Componente Badge</a>
+        <a href="#sComponentesDivider" title="12.- Componentes Divider">12.- Componentes Divider</a>
+      </div>
+      <div class="fila">
+        <a href="#sConceptos" title="13.- Conceptos">13.- Conceptos</a>
+        <a href="#sComponentesparaintroducirinformacion" title="14.- Componentes para introducir información">14.- Componentes para introducir información</a>
+        <a href="#sStateHoisting" title="15.- State Hoisting">15.- State Hoisting</a>
+      </div>
+      
+      <div class="fila">
+        <a href="#sComponenteSwitch" title="16.- Componente Switch">16.- Componente Switch</a>
+        <a href="#sComponenteCheckBox" title="17.- Componente Checkbox">17.- Componente Checkbox</a>
+        <a href="#sComponenteRadioButton" title="18.- Componente Radio Button">18.- Componente Radio Button</a>
+      </div>
+      <div class="fila">
+        <a href="#sComponenteSlider" title="19.- Componente Slider">19.- Componente Slider</a>
+        <a href="#sComponenteExposedDropdownMenu" title="20.- Componente ExposedDropdownMenu">20.- Componente ExposedDropdownMenu</a>
+        <a href="#sComponenteDatePicker" title="21.- Componente Date Picker">21.- Componente Date Picker</a>        
+      </div>
+      <div class="fila">
+        <a href="#sComponentesChips" title="22.- Componentes Chip">22.- Componentes Chip</a>
+        <a href="#sComponenteIconButton" title="23.- Componente IconButton">23.- Componente IconButton</a>
+        <a href="#sComponenteProgressIndicator" title="24.- Componente ProgressIndicator">24.- Componente ProgressIndicator</a>
+      </div>
+      <div class="fila">
+        <a href="#sComponentesSearchBar" title="25.- Componentes SearchBar">25.- Componentes SearchBar</a>
+        <a href="#sComponenteAlertDialog" title="26.- Componente AlertDialog">26.- Componente AlertDialog</a>
+        <a href="" class="relleno"></a>   
       </div>
     </div>
 
@@ -1427,8 +1481,41 @@ MyRadioButton(
 <p>Un <span class="r-word">ExposedDropdownMenu</span> se compone de un TextField con el modificador <span class="negrita">menuAnchor()</span>
    y de varios componentes <span class="negrita">DropdownMenuItem</span> que son las opciones disponibles.</p>
 
-<figure><img src="UD4/images/ud4-2023-10-24-00-37-10.png" /><br><figcaption>Ejemplo de ExposedDropdownMenu no editable:
+<figure><img src="UD4/images/ud4-2023-10-24-00-37-10.png" /><br><figcaption>Ejemplo de ExposedDropdownMenu <span class="negrita">no editable</span> :
 </figcaption></figure>
+
+<section><pre><code class="language-kotlin">var classes = listOf("Bárbaro", "Bardo", "Brujo","Clérigo", "Druida", "Explorador",
+    "Guerrero", "Hechicero", "Mago", "Monje", "Paladín", "Pícaro")
+
+var showMenu by rememberSaveable {
+    mutableStateOf(false)
+}
+var selectedOptionText by rememberSaveable() {
+    mutableStateOf("Selecciona una clase")
+}
+
+ExposedDropdownMenuBox(
+    expanded = showMenu,
+    onExpandedChange = {showMenu = !showMenu}) {
+    OutlinedTextField(
+        modifier = Modifier.menuAnchor(),
+        value = selectedOptionText,
+        onValueChange = {},
+        label = { Text(text = "Clase")},
+        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = showMenu)}
+    )
+    ExposedDropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
+        classes.forEach(){ option ->
+            DropdownMenuItem(
+                text = { Text(option) },
+                onClick = {
+                    selectedOptionText = option
+                    showMenu = false
+                })
+        }
+    }
+}</code></pre>
+</section><br><br>
 <br>
 <p>Resultado:</p>
 <figure><img src="UD4/images/ud4-2023-10-24-00-37-56.png" /><br><figcaption></figcaption></figure>
@@ -1441,11 +1528,32 @@ MyRadioButton(
 <section class="apartado">
 <a name="sComponenteDatePicker"></a>
 <h2>Componente DatePicker</h2>
+<p>El componente <span class="r-word">DatePicker</span> permite seleccionar o introducir manualmente una fecha.</p>
 
+<p>Se puede indicar la fecha seleccionada inicialmente y cambiar la cabecera y el título.</p>
+
+<p>También se puede mostrar el icono para cambiar el modo de introducción de fecha.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-24-11-29-08.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Se vería similar a esto:</p>
+<figure><img src="UD4/images/ud4-2023-10-24-11-31-19.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Existen también los componentes <a class="enlace" target="_blank" href="https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#DatePickerDialog(kotlin.Function0,kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Function0,androidx.compose.ui.graphics.Shape,androidx.compose.ui.unit.Dp,androidx.compose.material3.DatePickerColors,androidx.compose.ui.window.DialogProperties,kotlin.Function1)">DatePickerDialog</a> (disponible) y 
+  <a class="enlace" target="_blank" href="https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#DateRangePicker(androidx.compose.material3.DateRangePickerState,androidx.compose.ui.Modifier,androidx.compose.material3.DatePickerFormatter,kotlin.Function0,kotlin.Function0,kotlin.Boolean,androidx.compose.material3.DatePickerColors)">DateRangePicker</a> (Jetpack Compose v1.2.0-alpha06).</p>
 
 
 <h3>TimePicker y TimeInput</h3>
 
+<p>Los componentes <span class="r-word">TimePicker</span> (con dial) y <span class="r-word">TimeInput</span>
+   (con teclado) permiten seleccionar una hora.</p>
+
+   <figure><img src="UD4/images/ud4-2023-10-24-11-36-50.png" /><br><figcaption>TimePicker</figcaption></figure>
+   <br>
+
+   <figure><img src="UD4/images/ud4-2023-10-24-11-37-33.png" /><br><figcaption>TimeInput</figcaption></figure>
+   <br>
+   
 </section><!-- End section Componente DatePicker-->
 
 
@@ -1453,16 +1561,66 @@ MyRadioButton(
 <section class="apartado">
 <a name="sComponentesChips"></a>
 <h2>Componentes Chips</h2>
+<p>Los <span class="negrita">Chips</span>  son pequeños componentes con un texto que inician el ingreso de información, 
+  el inicio de acciones, el filtrado de contenido o realización de selecciones.</p>
 
 
+<p>Existen cuatro tipos:
+  <ul>
+    <li><span class="negrita">Assist</span>: representan acciones predefinidas en la aplicación, por ejemplo, añadir al calendario o cómo llegar a un lugar.</li>
+    <li><span class="negrita">Filter</span>: representan filtros a aplicar a los elementos de una colección.</li>
+    <li><span class="negrita">Input</span>: representan pequeños trozos de información introducidos por el usuario, por ejemplo, tras introducir una dirección de email.</li>
+    <li><span class="negrita">Suggestion</span>: limitan las acciones del usuario al mostrar sugerencias generadas dinámicamente.</li>
+  </ul>
+</p>
 
+
+<p>Existen las variantes <span class="negrita">ElevatedAssistChip</span> , <span class="negrita">ElevatedFilterChip</span>  
+y <span class="negrita">ElevatedSuggestionChip</span>.</p>
+
+<p>Los Chips:
+  <ul>
+    <li>No son botones.</li>
+    <li>No se deben usar como acciones finales, para eso están los botones.</li>
+    <li>Son reactivas a las acciones del usuario.</li>
+    <li>Son contextuales al contenido de la aplicación.</li>
+    <li>Deberían aparecer siempre en grupo.</li>
+    <li>Se deben organizar para que se muestren con scroll horizontal.</li>
+  </ul>
+</p>
+
+<p>Todos los componentes <span class="negrita">Chip</span>  se basan en el componente privado <span class="r-word">Chip</span>
+   por lo que son similares visualmente aunque cada uno admite unos parámetros según su función.</p>
+
+   <figure><img src="UD4/images/ud4-2023-10-24-12-13-48.png" /><br><figcaption>SuggestionChip y AssitChip</figcaption></figure>
+   <br>
+   <figure><img src="UD4/images/ud4-2023-10-24-12-15-04.png" /><br><figcaption>FilterChip y InputChip</figcaption></figure>
+   <br>
+   
 </section><!-- End section Componentes Chips-->
 
 <!--*********************************************************Componente IconButton***********************************************************-->
 <section class="apartado">
 <a name="sComponenteIconButton"></a>
 <h2>Componente IconButton</h2>
+<p>Los <span class="r-word">IconButton</span> se utilizan cuando se necesita tener botones compactos, se usan habitualmente en barras de herramientas.</p>
+<p>Hay varios tipos:
+  <ul>
+    <li><span class="r-word">IconButton</span> </li>
+    <li><span class="r-word">IconToggleButton</span> </li>
+    <li><span class="r-word">FilledIconButton</span> </li>
+    <li><span class="r-word">FilledToggleIconButton</span> </li>
+    <li><span class="r-word">FilledTonalIconButton</span> </li>
+    <li><span class="r-word">FilledTonalIconToggleButton</span> </li>
+    <li><span class="r-word">OutlinedIconButton</span> </li>
+    <li><span class="r-word">OutlinedIconToggleButton</span> </li>
+  </ul>
+</p>
 
+<p>Las variantes <span class="negrita">Toggle</span>  tienen dos estados marcado o no.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-24-12-19-13.png" /><br><figcaption></figcaption></figure>
+<br>
 
 
 </section><!-- End section Componente IconButton-->
@@ -1472,7 +1630,39 @@ MyRadioButton(
 <a name="sComponenteProgressIndicator"></a>
 <h2>Componente ProgressIndicator</h2>
 
+<p>Los componentes <span class="r-word">LinearProgressIndicator</span> y <span class="r-word">CircularProgressIndicator</span> 
+  permiten informar al usuario de que se está ejecutando una acción en background.</p>
+<p>Las líneas de progreso pueden ser:
+  <ul>
+<li><span class="negrita">Indeterminadas</span> : no tienen fin.</li>
+<li><span class="negrita">Determinadas</span> : empiezan vacías y se rellenan del todo.</li>
+  </ul>
+</p>
 
+
+<p>Para convertir una línea de progreso en determinada se debe usar el parámetro progress con valores de <span class="negrita">0.0f</span>  a 
+  <span class="negrita">1.0f</span> .</p>
+<figure><img src="UD4/images/ud4-2023-10-24-12-25-49.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Los componentes <span class="r-word">LinearProgressIndicator</span> y <span class="r-word">CircularProgressIndicator</span>
+   tienen varios constructores según el aspecto que se quiera dar.</p>
+
+
+<p>Los parámetros disponibles son:
+  <ul>
+    <li><span class="negrita">progress</span>: porcentaje de progreso relleno.</li>
+    <li><span class="negrita">color</span>: color del progreso.</li>
+    <li><span class="negrita">trackColor</span>: color de fondo del progreso.</li>
+    <li><span class="negrita">strokeCap</span>: forma de la línea de progreso.</li>
+    <li><span class="negrita">strokeWidth</span> (solo el circular): grosor de la línea de progreso.</li>
+  </ul>
+</p>
+<figure><img src="UD4/images/ud4-2023-10-24-12-28-36.png" /><br><figcaption>CircularProgressIndicator</figcaption></figure>
+<br>
+
+<figure><img src="UD4/images/ud4-2023-10-24-12-30-45.png" /><br><figcaption>LinearProgressIndicator</figcaption></figure>
+<br>
 
 </section><!-- End section Componente ProgressIndicator-->
 
@@ -1481,7 +1671,126 @@ MyRadioButton(
 <a name="sComponentesSearchBar"></a>
 <h2>Componentes SearchBar</h2>
 
+<p>Existen dos componentes para crear barras de búsqueda: 
+  <ul>
+    <li><span class="negrita">SearchBar</span>: el cuerpo ocupa toda la pantalla.</li>
+    <li><span class="negrita">DockedSearchBar</span>: el cuerpo ocupa una parte de la pantalla (configurable).</li>
+  </ul>
+</p>
 
+
+
+
+<p>Para poder usar estos componentes se deben actualizar algunas versiones:
+<ul>
+  <li><span class="inline-file">build.gradle.kts (Project)</span>: <ul>
+    <li>Kotlin -> 1.8.21</li>
+  </ul></li>
+  <li>
+    <span class="inline-file">build.gradle.kts (Module)</span>:
+    <ul>
+      <li>kotlinCompilerExtensionVersion -> 1.4.7</li>
+      <li>compose-bom -> 2023.05.01</li>
+      <li>core-ktx -> 1.10.1</li>
+    </ul>
+  </li>
+</ul> 
+    
+</p>
+
+<p>Recuerda sincronizar tras realizar cambios en los archivos <span class="negrita">gradle</span> .</p>
+
+<p>Los <span class="r-word">SearchBar</span> tienen diferentes parámetros para configurarlos, algunos dependen de un estado, 
+  así la configuración mínima será la siguiente:</p>
+<figure><img src="UD4/images/ud4-2023-10-24-13-24-02.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se pueden usar diferentes técnicas:
+  <ul>
+    <li>Rellenar todo el cuerpo con todo y posteriormente filtrar según lo introducido.</li>
+    <li>Dejar el cuerpo vacío y cambiarlo con los resultados según lo introducido.    </li>
+    <li>Crear un estado para el cuerpo y cambiarlo con los resultados según lo introducido.    </li>
+    <li>…​</li>
+  </ul>
+</p>
+
+<p>Ejemplo de uso:</p>
+
+<section><pre><code class="language-kotlin">//Lista de todos los elementos a buscar
+  val dragonBallCharacters = listOf(
+      "Son Goku",
+      "vegeta",
+      "Piccolo",
+      "Son Gohan",
+      "Trunks",
+      "Bulma",
+      "Krillin",
+      "Master Roshi",
+      "Freezer",
+      "Cell"
+  )
+
+  //En algunas acciones se necesita el contexto(Suele ser la Activity)
+  val myContext = LocalContext.current
+
+
+  var querySearchstate by rememberSaveable {
+      mutableStateOf("")
+  }
+
+  var activeSearchState by rememberSaveable {
+      mutableStateOf(false)
+  }
+
+  SearchBar(
+      query = querySearchstate,
+      onQueryChange = {querySearchstate = it},
+      onSearch = {
+                  //Para mostrar mensajes temporales en la parte inferior de la pantalla (se pueden editar)
+                  Toast.makeText(myContext, "Se busca: $it", Toast.LENGTH_SHORT).show()
+      },
+      active = activeSearchState,
+      onActiveChange = {activeSearchState = it},
+      placeholder = { Text("Introduce el personaje a buscar")},
+      trailingIcon = {
+          val icon = if(activeSearchState) Icons.Default.Close else Icons.Default.Search
+          IconButton(onClick = {
+              querySearchstate = ""
+              activeSearchState != activeSearchState
+          }) {
+              Icon(
+                  imageVector = icon,
+                  contentDescription = "Cerrar búsqueda")
+          }
+      }
+      ) {
+        //Lo que se ha de mostrar filtrado.
+      val charactersToShow = if (querySearchstate.isEmpty()){
+          dragonBallCharacters
+      }else{
+          dragonBallCharacters.filter {
+              it.contains(other = querySearchstate, ignoreCase = true)
+          }
+      }
+      Column{
+          charactersToShow.forEach {
+              Text(
+                  text = it,
+                  modifier = Modifier
+                      .padding(8.dp)
+                      .clickable {
+                          Toast.makeText(myContext, "Seleccionado $it", Toast.LENGTH_SHORT).show()
+                          querySearchstate = it
+                          activeSearchState = false
+                      }
+              )
+
+          }
+      }
+  }</code></pre>
+</section><br><br>
+<figure><img src="UD4/images/ud4-2023-10-24-14-19-05.png" /><br><figcaption></figcaption></figure>
+<br>
 
 </section><!-- End section Componentes SearchBar-->
 
@@ -1490,7 +1799,64 @@ MyRadioButton(
 <a name="sComponenteAlertDialog"></a>
 <h2>Componente AlertDialog</h2>
 
+<p>El componente <span class="r-word">AlertDialog</span> permite mostrar un mensaje en una ventana modal (emergente).</p>
 
+<figure><img src="UD4/images/ud4-2023-10-24-14-23-45.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Los parámetros <span class="negrita">confirmButton</span>, <span class="negrita">dismissButton</span>,
+   <span class="negrita">icon</span>, <span class="negrita">tittle</span> y text son funciones lambda <span class="negrita">@Composable</span> 
+    por lo que dentro admiten cualquier componente que se quiera. </p>
+
+<p>También existe el componente <span class="negrita">Dialog</span> pero no utiliza los principios de Material y se debe configurar totalmente a mano.</p>
+
+<p>Ejemplo:</p>
+<section><pre><code class="language-kotlin">@Composable
+fun ElementoComposable(){
+  val ctx = LocalContext.current
+    
+  AlertDialog(
+        onDismissRequest = {
+            showToast(ctx, "Se ha cancelado")
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                showToast(ctx, "Se ha aceptado")
+            }) {
+                Text(text = "Confirmar")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = {
+                showToast(ctx, "Se ha cancelado")
+            }) {
+                Text(text = "Cancelar")
+            }
+        },
+        icon = {
+            Icon(
+                imageVector = Icons.Default.Warning,
+                contentDescription = "Advertencia"
+            )
+        },
+        title = { Text(text = "Alert Dialog")},
+        text = { Text(text = "Cuerpo del diálogo")}
+    )
+}
+  
+//Función para mostrar el mensaje
+fun showToast(ctx:Context, txt:String){
+   Toast.makeText(ctx,txt,Toast.LENGTH_SHORT).show()
+}</code></pre>
+</section><br><br>
+<p>Con el código anterior se mostrará siempre el <span class="r-word">AlertDialog</span> lo cual no es lo más interesante.</p>
+<p>El <span class="negrita">AlertDialog</span>  debería estar oculto y mostrarse al producirse una acción del usuario como pulsar un botón.</p>
+<p>Para <span class="negrita">controlar que esté oculto o visible</span>  se debe utilizar una <span class="subrayado">variable que debería almacenarse en el estado</span>, 
+  para que al cambiar, en la recomposición de la pantalla aparezca o no.</p>
+
+  <figure><img src="UD4/images/ud4-2023-10-24-14-39-36.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
 
 </section><!-- End section Componente AlertDialog-->
 
