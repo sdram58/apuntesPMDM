@@ -6,10 +6,12 @@
 nav.main-menu-lateral{
     overflow: auto;
     position: fixed;
+    border:1px solid black;
+    border-collapse: collapse;
     top: 10px;
     left: 5px;
     width:9%;
-    height: 100%;
+    height: 95%;
     
 }
 

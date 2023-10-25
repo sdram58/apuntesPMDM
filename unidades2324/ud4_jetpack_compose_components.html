@@ -70,9 +70,15 @@
       </div>
       <div class="fila">
         <a href="#sComponentesColumnyRow" title="31.- Componentes Column y Row">31.- Componentes Column y Row</a>
+        <a href="#sScroll" title="32.- Scroll">32.- Scroll</a>
+        <a href="#sComponenteListItem" title="33.- Componente ListItem">33.- Componente ListItem</a>
+      </div>
+      <div class="fila">
+        <a href="#sComponenteScaffold" title="34.- Componente Scaffold">34.- Componente Scaffold</a>
+        
 
       </div>
-    </nav>
+    </nav> <!-- BTM_MENU-->
   
     <h1>UD4.- Componentes de Jetpack Compose</h1>
     
@@ -122,8 +128,23 @@
       </div>
       <div class="fila">
         <a href="#sComponentesSearchBar" title="25.- Componentes SearchBar">25.- Componentes SearchBar</a>
-        <a href="#sComponenteAlertDialog" title="26.- Componente AlertDialog">26.- Componente AlertDialog</a>
-        <a href="" class="relleno"></a>   
+        <a href="#sComponenteAlertDialog" title="26.- Componente AlertDialog">26.- Componente AlertDialog</a>        
+        <a href="#sLayout" title="27.- Layout">27.- Layout</a>        
+      </div>
+      <div class="fila">
+        <a href="#sComponenteSurface" title="28.- Componente Surface">28.- Componente Surface</a>
+        <a href="#sComponenteCard" title="29.- Componente Card">29.- Componente Card</a>
+        <a href="#sComponenteBox" title="30.- Componente Box">30.- Componente Box</a>
+      </div>
+      <div class="fila">
+        <a href="#sComponentesColumnyRow" title="31.- Componentes Column y Row">31.- Componentes Column y Row</a>
+        <a href="#sScroll" title="32.- Scroll">32.- Scroll</a>
+        <a href="#sComponenteListItem" title="33.- Componente ListItem">33.- Componente ListItem</a>
+      </div>
+      <div class="fila">
+        <a href="#sComponenteScaffold" title="34.- Componente Scaffold">34.- Componente Scaffold</a>
+        <a class="relleno" href="#sComponenteScaffold" title="34.- Componente Scaffold">34.- Componente Scaffold</a>
+        <a href="" class="relleno"></a>
       </div>
     </div>
 
@@ -2036,18 +2057,484 @@ fun showToast(ctx:Context, txt:String){
     <li><span class="negrita">SpaceBetween</span>: el mismo espacio entre los elementos pero no deja en la parte superior ni inferior.</li>
     <li><span class="negrita">SpaceArround</span>: el mismo espacio arriba y debajo de cada elemento (entre objetos habrá el doble de espacio que arriba y abajo).</li>
     <li><span class="negrita">spacedBy</span>: se indica el espacio entre elementos en dp.</li>
-    <li><span class="negrita">Top</span>: alineación a la parte superior  solo Column.</li>
-    <li><span class="negrita">Bottom </span>: alineación a la parte inferior  solo Column.</li>
-    <li><span class="negrita">End</span>: alineación al principio de la línea según sentido de lectura  solo Row.</li>
-    <li><span class="negrita">Start</span>: alineación al final de la línea según sentido de lectura  solo Row.</li>
+    <li><span class="negrita">Top</span>: alineación a la parte superior -> solo Column.</li>
+    <li><span class="negrita">Bottom </span>: alineación a la parte inferior -> solo Column.</li>
+    <li><span class="negrita">End</span>: alineación al principio de la línea según sentido de lectura -> solo Row.</li>
+    <li><span class="negrita">Start</span>: alineación al final de la línea según sentido de lectura -> solo Row.</li>
   </ul>
 </p>
 	
+<figure><img src="UD4/images/ud4-2023-10-25-09-26-24.png" /><br><figcaption>Ejemplo Arrangement</figcaption></figure>
+<br>
+<p>Si no se indica <span class="negrita">Arrangement</span> en los componentes hijo se puede indicar el peso con el modifier <span class="negrita">weight()</span>.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-25-09-27-58.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Alignment</h3>
+<p><span class="negrita">Alignment</span>: eje secundario (columnas: horizontal, filas: vertical).
+  <ul>
+    <li><span class="negrita">Start</span>: alineación al principio de la línea según sentido de lectura -> solo Column.</li>
+    <li><span class="negrita">End</span>: alineación al final de la línea según sentido de lectura -> solo Column.</li>
+    <li><span class="negrita">CenterHorizontally</span>: alineación centrada -> solo Column.</li>
+    <li><span class="negrita">Top</span>: alineación a la parte superior -> solo Row.</li>
+    <li><span class="negrita">Bottom</span>: alineación a la parte inferior -> solo Row.</li>
+    <li><span class="negrita">CenterVertically</span>: alineación centrada -> solo Row.</li>
+  </ul>
+</p>
+
+	</section><!-- End section Componentes Column y Row-->
+
+  <!--*********************************************************Scroll***********************************************************-->
+  <section class="apartado">
+  <a name="sScroll"></a>
+  <h2>Scroll</h2>
+  
+  <p>Como se ha podido observar hasta el momento, cuando hay demasiados componentes en la pantalla es posible que algunos queden fuera del alcance del usuario 
+    (fuera de la parte visible de la pantalla).</p>
+
+<p>Cuando se explicó el parámetro <span class="negrita">modifier</span> se indicó que si el contenido de un componente no cabe en la pantalla se pueden usar los modificadores 
+  <span class="negrita">verticalScroll</span> y <span class="negrita">horizontalScroll</span> para deslizar y poder alcanzar todo el contenido.
+  Este comportamiento no es el idóneo ya que supone que se debe <span class="subrayado">cargar todo el contenido del componente en memoria RAM se vaya a visualizar o no</span>.</p>
+
+<p>Para solucionar esto están los componentes <span class="negrita">Lazy</span> que se estudiarán a continuación.</p>
+
+<p>Los componentes <span class="negrita">Lazy</span> por defecto tienen un parámetro que por defecto crea un estado con <span class="negrita">rememberSaveable</span>
+   para gestionar automáticamente el estado del scroll en esos componentes.</p>
+
+   <h3>Componentes Flow</h3>
+
+   <p>Los componentes <span class="r-word">FlowColumn</span> y <span class="r-word">FlowRow</span>
+     son similares a <span class="negrita">Column</span> y <span class="negrita">Row</span> pero cuando los elementos no caben en una única columna/fila entonces
+      se pasarán a la siguiente columna/fila.</p>
+   <figure><img src="UD4/images/ud4-2023-10-25-09-40-05.png" /><br><figcaption></figcaption></figure>
+   <br>
+   
+   <h3>Componentes Lazy</h3>
+
+   <p>Los componentes <span class="r-word">Lazy</span> permiten tener una serie de componentes organizados en fila, en columna o en cuadrícula.</p>
+   
+
+<p>Los componentes <span class="negrita">Lazy</span> tienen dos ventajas muy importantes:
+  <ul>
+    <li>En el caso de que el contenido no quepa en el espacio disponible, se podrá hacer scroll sin tener que añadir nada más.</li>
+    <li>Solo se cargan los componentes del contenido que se ven en pantalla y el anterior o siguiente de manera que se optimiza el uso de memoria.</li>
+  </ul>
+</p>
+
+<p>Los componentes <span class="negrita">Lazy</span> disponibles son:
+  <ul>
+    <li><span class="negrita">LazyColumn y LazyRow.</span></li>
+    <li><span class="negrita">LazyVerticalGrid y LazyhorizontalRow.</span></li>
+    <li><span class="negrita">LazyVerticalStaggeredGrid y LazyHorizontalStaggeredGrid.</span></li>
+  </ul>
+</p>
+
+<p>Todos los componentes Lazy tienen varios parámetros comunes:
+  <ul>
+    <li><span class="negrita">reverseLayout</span>: booleano que indica si los elementos se deben mostrar en orden inverso, por defecto es false.</li>
+    <li><span class="negrita">userScrollEnabled</span>: booleano que indica si el scroll está activo o no, por defecto es true.</li>
+  </ul>
+</p>
 
 
 
-</section><!-- End section Componentes Column y Row-->
+<p>Los componentes Lazy para organizar en cuadrícula tienen los parámetros:
+  <ul>
+    <li><span class="negrita">columns</span>: en una cuadrícula vertical indica el número de columnas.</li>
+    <li><span class="negrita">rows</span>: en una cuadrícula horizontal indica el número de filas.</li>
+  </ul>
+</p>
 
+
+<p>Para añadir contenido a los elementos Lazy se usan los siguientes bloques:
+  <ul>
+    <li><span class="negrita">item</span>: añade un elemento al componente Lazy.</li>
+    <li><span class="negrita">items</span>: recorre una lista y añade cada elemento de la lista al componente Lazy.</li>
+  </ul>
+</p>
+
+
+<p class="sub-section">Componente LazyColumn</p>
+
+<p>Ejemplo:</p>
+
+<section><pre><code class="language-kotlin">val dragonBallCharacters = listOf(
+    "Son Goku",
+    "vegeta",
+    "Piccolo",
+    "Son Gohan",
+    "Trunks",
+    "Bulma",
+    "Krillin",
+    "Master Roshi",
+    "Freezer",
+    "Cell"
+)
+
+LazyColumn(
+    modifier = Modifier.padding(5.dp),
+    verticalArrangement = Arrangement.spacedBy(8.dp)){
+    item {
+        OutlinedCard(
+            modifier = Modifier
+                .background(Color.DarkGray)
+                .padding(8.dp)
+                .fillMaxWidth()
+        ) {
+            Text(text = "Personajes",
+                  fontWeight = FontWeight.Bold,
+                  modifier = Modifier.padding(8.dp)
+            )
+
+        }
+    }
+    items(dragonBallCharacters){character ->
+        Card(modifier = Modifier
+            .background(Color(0xFF666666))
+            .padding(8.dp)
+            .fillMaxWidth(),
+              colors = CardDefaults.cardColors(
+                  containerColor = Color(0xFFF67979)
+              )
+            ) {
+            Text(text = character,
+                  color = Color.White,
+                  modifier = Modifier
+                      .height(80.dp)
+                      .padding(8.dp)
+            )
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<p>Lo que quedaría similar a esto:</p>
+<figure><img src="UD4/images/ud4-2023-10-25-10-17-38.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p class="sub-section">Componente LazyRow</p>
+
+<p>Ejemplo:</p>
+
+<figure><img src="UD4/images/ud4-2023-10-25-10-18-49.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p class="sub-section">StickyHeaders con LazyColum y LazyRow</p>
+
+<p>Un comportamiento muy habitual con <span class="negrita">LazyColumn</span> y <span class="negrita">LazyRow</span>
+   son las cabeceras "pegajosas" (<span class="r-word">StickyHeaders</span>) usadas en la aplicación contactos.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-25-10-21-24.png" /><br><figcaption>StickyHeaders</figcaption></figure>
+<br>
+
+<p>Para usar estas cabeceras se utiliza el elemento stickyHeader y se deben agrupar los elementos a mostrar por algún criterio como puede ser la primera letra.</p>
+
+<figure><img src="UD4/images/ud4-2023-10-25-10-22-09.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>De esta manera se tiene un Map que se puede recorrer para rellenar el contenido de la lista.</p>
+
+
+<section><pre><code class="language-kotlin">val dragonBallCharacters = listOf(
+    "Son Goku",
+    "vegeta",
+    "Piccolo",
+    "Son Gohan",
+    "Trunks",
+    "Bulma",
+    "Krillin",
+    "Master Roshi",
+    "Freezer",
+    "Cell"
+)
+
+LazyColumn(
+    modifier = Modifier.padding(5.dp),
+    verticalArrangement = Arrangement.spacedBy(8.dp)){
+        val groupCharacters: Map&lt;Char, List&lt;String>> = dragonBallCharacters.sorted().groupBy {
+            it[0]
+        }
+
+        groupCharacters.forEach() { header, names ->
+            stickyHeader {
+                Text(
+                    text = header.toString(),
+                    fontSize = 30.sp,
+                    color = Color.Blue,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .background(Color.LightGray)
+                        .fillMaxWidth()
+                )
+                Divider(
+                    color = Color.Black,
+                    thickness = 1.dp
+                )
+            }
+            items(names){name ->
+                Text(
+                    text = name,
+                    modifier = Modifier
+                        .padding(start= 40.dp,top= 4.dp, bottom = 4.dp)
+                )
+        }
+
+    }
+}</code></pre>
+</section><br><br>
+
+<section class="marco-t warn">
+  <span class="icono warning"> </span> stickyHeader aún está en modo experimental, hay que añadir la anotación en el componente
+  </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">@OptIn(ExperimentalFoundationApi::class)</code></pre>
+    </section>
+</section>
+
+<p>Quedaría de la siguiente manera:</p>
+<figure><img src="UD4/images/ud4-2023-10-25-10-57-32.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<h3>Componentes LazyVerticalGrid y LazyHorizontalGrid</h3>
+
+<p>Con <span class="r-word">LazyVerticalGrid</span> y <span class="r-word">LazyHorizontalGrid</span> se pueden organizar los elementos en cuadrícula por columnas o por filas.</p>
+
+<p>Todos los <span class="negrita">elementos ocuparán el mismo espacio</span>, el espacio que ocupan es <span class="negrita">el espacio del elemento más grande</span>.</p>
+
+<p>
+  Para indicar el número de columnas en <span class="negrita">LazyVerticalGrid</span> se usa el parámetro <span class="negrita">columns</span> 
+  y para indicar el número de filas en <span class="negrita">LazyHorizontalGrid</span> se usa el parámetro <span class="negrita">rows</span> con el valor:
+  <ul>
+    <li><span class="cursiva">GridCells.Fixed(número_columnas/filas)</span></li>
+    <li><span class="cursiva">GridCells.Adaptative(tamaño_mínimo_columna/fila.dp)</span></li>
+  </ul>
+</p>
+
+<p class="sub-section">Componente LazyVerticalGrid</p>
+<p>Ejemplo:</p>
+<figure><img src="UD4/images/ud4-2023-10-25-11-02-12.png" /><br><figcaption>LazyVerticalGrid</figcaption></figure>
+<br>
+
+<p class="sub-section">Componente LazyHorizontalGrid</p>
+
+<figure><img src="UD4/images/ud4-2023-10-25-11-03-39.png" /><br><figcaption>LazyHorizontalGrid</figcaption></figure>
+<br>
+
+<h3>Componentes Staggered</h3>
+<p>Los componentes <span class="r-word">LazyVerticalStaggeredGrid</span> y <span class="r-word">LazyHorizontalStaggeredGrid</span> 
+  son similares a los anteriores pero cada elemento ocupa el espacio de su contenido.</p>
+
+<p>Los parámetros más usados con LazyVerticalStaggeredGrid son:
+  <ul>
+    <li><span class="negrita">columns</span>: número de columnas</li>
+    <li><span class="negrita">verticalSpacing</span>: espacio vertical entre elementos.</li>
+    <li><span class="negrita">horizontalArrangment</span>: espacio horizontal entre elementos.</li>
+  </ul>
+</p>
+
+<p>Los parámetros más usados con LazyHorizontalStaggeredGrid son:
+  <ul>
+    <li><span class="negrita">rows</span>: número de filas.</li>
+    <li><span class="negrita">horizontalSpacing</span>: espacio horizontal entre elementos.</li>
+    <li><span class="negrita">vertivalArrangment</span>: espacio vertical entre elementos.</li>
+  </ul>
+</p>
+
+<p>La cantidad de filas y columnas se indica con el valor:
+  <ul>
+    <li><span class="cursiva">StaggeredGridCells.Fixed(número_columnas/filas)</span></li>
+    <li><span class="cursiva">StaggeredGridCells.Adaptative(tamaño_mínimo_columna/fila.dp)</span></li>
+  </ul>
+</p>
+	
+<p class="sub-section">Componente LazyVerticalStaggeredGrid</p>
+<p>Ejemplo:</p>
+  <figure><img src="UD4/images/ud4-2023-10-25-11-07-28.png" /><br><figcaption>LazyVerticalStaggeredGrid</figcaption></figure>
+  <br>
+  
+
+  <p class="sub-section">Componente LazyHorizontalStaggeredGrid</p>
+<p>Ejemplo:</p>
+  <figure><img src="UD4/images/ud4-2023-10-25-11-08-30.png" /><br><figcaption>LazyHorizontalStaggeredGrid</figcaption></figure>
+  <br>
+
+  <h3>Gestionar el estado en componentes Lazy</h3>
+  <p>Como se puede ver en la definición de los componentes Lazy, Android gestiona automáticamente el estado del scroll:</p>
+  <figure><img src="UD4/images/ud4-2023-10-25-11-10-16.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p>Puede ser interesante crear una variable propia para gestionar el estado para así saber, por ejemplo:
+    <ul>
+      <li>Dirección en la que el usuario está haciendo scroll.</li>
+      <li>Cantidad de scroll realizada.</li>
+      <li>Cuál es el índice del primer elemento visible.</li>
+      <li>…</li>
+    </ul>
+  </p>
+  
+  <p>Veamos un ejemplo:</p>
+
+  <section><pre><code class="language-kotlin">Column(
+    modifier = Modifier.fillMaxSize()
+) {
+    val dragonBallCharacters = listOf(
+        "Son Goku",
+        "vegeta",
+        "Piccolo",
+        "Son Gohan",
+        "Trunks",
+        "Bulma",
+        "Krillin",
+        "Master Roshi",
+        "Freezer",
+        "Cell"
+    )
+
+    val scrollState = rememberLazyStaggeredGridState()
+
+    val showEndTextGrid by remember {
+        derivedStateOf {
+            scrollState.firstVisibleItemIndex > 0
+        }
+    }
+
+    val coroutineGridScope = rememberCoroutineScope()
+    LazyVerticalStaggeredGrid(
+        columns = StaggeredGridCells.Fixed(3),
+        verticalItemSpacing = 8.dp,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        state = scrollState,
+        modifier = Modifier.weight(3f)
+
+    ) {
+        item {
+            OutlinedCard(
+                modifier = Modifier
+                    .background(Color.DarkGray)
+                    .padding(8.dp)
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = "Personajes",
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
+        }
+        items(dragonBallCharacters) { character ->
+            val randomHeight = ((2..30).random() * 15).dp
+            Card(
+                modifier = Modifier
+                    .background(Color.LightGray)
+                    .padding(8.dp)
+                    .fillMaxWidth()
+                    .height(randomHeight)
+            ) {
+                Text(
+                    text = character,
+                    modifier = Modifier
+                        .height(80.dp)
+                        .padding(8.dp)
+                )
+            }
+        }
+
+
+    }
+    if (showEndTextGrid) {
+        Button(
+            modifier = Modifier
+                .weight(0.5f)
+                .fillMaxWidth(),
+            onClick = {
+                coroutineGridScope.launch {
+                    scrollState.animateScrollToItem(0, 0)
+                }
+            }) {
+            Text(text = "Volver arriba")
+        }
+    }
+}</code></pre>
+  </section><br><br>
+  <figure><img src="UD4/images/EjemploLazyStaggerdState.gif" /><br><figcaption></figcaption></figure>
+  <br>
+  <p>En el ejemplo se crea un estado propio para guardar el scroll del componente <span class="cursiva">LazyVerticalStaggeredGrid</span> y se asigna a dicho componente.</p>
+
+<p>También se crea un estado para mostrar/ocultar un botón. Este estado depende del estado anterior así que se debe utilizar <span class="negrita">derivedStateOf</span>.</p>
+
+<p>El estado para el botón cambia cuando el primer ítem de la lista ya no está visible completamente.</p>
+
+<p>Por último, el botón utiliza una <span class="cursiva">corrutina</span> (se verán más adelante) para mover el scroll al primer elemento de la lista.</p>
+
+
+  </section><!-- End section Scroll-->
+
+
+  <!--*********************************************************Componente ListItem***********************************************************-->
+  <section class="apartado">
+  <a name="sComponenteListItem"></a>
+  <h2>Componente ListItem</h2>
+  
+  <p>Aunque en una columna, sea del tipo que sea, se puede añadir cualquier tipo de componente, 
+    Jetpack Compose ofrece el componente <span class="r-word">ListItem</span> para dar un estilo uniforme a los elementos de una lista.</p>
+
+<p>Un <span class="negrita">ItemList</span> tiene cinco zonas, generalmente en la zona <span class="negrita">leadingContent</span> se suele situar un icono o una imagen.
+  En la zona <span class="negrita">trailingContent</span> también se suele situar icono o texto.</p>
+
+<p>Si hay contenido en la zona <span class="negrita">overLineContent</span> el contenido de <span class="negrita">leadingContent</span>
+   y de <span class="negrita">trailingContent</span> alineará a la parte superior, si no hay <span class="negrita">overLineContent</span> se alinearán al centro verticalmente.</p>
+
+   <p>Definición del componente:</p>
+  <figure><img src="UD4/images/ud4-2023-10-25-12-55-45.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <p>Ejemplo:</p>
+  <figure><img src="UD4/images/ud4-2023-10-25-12-56-09.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  
+  </section><!-- End section Componente ListItem-->
+
+  <!--*********************************************************Componente Scaffold***********************************************************-->
+  <section class="apartado">
+  <a name="sComponenteScaffold"></a>
+  <h2>Componente Scaffold</h2>
+  <p>El componente <span class="r-word">Scaffold</span> es una estructura por defecto para crear interfaces complejas que ofrece Jetpack Compose siguiendo los principios de Material.</p>
+  
+
+<p>Incorpora varios componentes habituales como:
+  <ul>
+    <li><span class="negrita">topBar</span>: barra de navegación superior.</li>
+    <li><span class="negrita">bottomBar</span>: barra de navegación inferior.</li>
+    <li><span class="negrita">snackbarHost</span>: permite mostrar mensajes que sustituyen a los Toast antiguos.</li>
+    <li><span class="negrita">floatingActionButton</span>: icono flotante generalmente en la parte inferior de la pantalla.</li>
+  </ul>
+</p>
+<figure><img src="UD4/images/ud4-2023-10-25-12-58-21.png" /><br><figcaption>Definición de Scaffold</figcaption></figure>
+<br>
+
+<p>El único parámetro obligatorio es <span class="negrita">content</span> que al ser el último y una función lambda se puede extraer fuera de los paréntesis.</p>
+<p>Si se decide utilizar Scaffold se debe elegir entre las siguientes opciones:
+  <ul>
+    <li>Que el <span class="negrita">Scaffold</span> sea el <span class="subrayado">único hijo del componente <span class="negrita">Surface</span></span> 
+      principal del proyecto y añadir el resto de componentes a dicho <span class="negrita">Scaffold</span>.</li>
+    <li><span class="subrayado">Sustituir el <span class="negrita">Surface</span> principal por un <span class="negrita">Scaffold</span></span> y en él añadir el resto de componentes.</li>
+  </ul>
+</p>
+
+
+
+<p>
+
+</p>
+
+  
+  
+  </section><!-- End section Componente Scaffold-->
+
+  
+  <!---BTM_MENU--->  
     <script src="../script/prism.js"></script>
 </body>
 </html>
