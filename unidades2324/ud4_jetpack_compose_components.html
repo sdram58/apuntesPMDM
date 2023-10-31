@@ -74,6 +74,7 @@
       </div>
       <div class="fila">
         <a href="#sComponenteScaffold" title="34.- Componente Scaffold">34.- Componente Scaffold</a>
+        <a href="#sComponenteConstraintLayout" title="35.- Componente ConstraintLayout">35.- Componente ConstraintLayout</a>
         
 
       </div>
@@ -2682,10 +2683,107 @@ para <span class="negrita">cambiar el contenido del Scaffold</span>.</p>
   
 <p><span class="negrita">NavigationBar</span> con elementos <span class="negrita">NavigationBarItem</span>.</p>
 
+<figure><img src="UD4/images/ud4-2023-10-31-14-07-44.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<figure><img src="UD4/images/ud4-2023-10-31-14-08-14.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Componente SnackBar</h3>
+
+<p>Los <span class="r-word">Snackbar</span> son mensajes temporales que aparecen en la parte inferior de la pantalla.
+
+Para crear un <span class="r-word">Snackbar</span> se necesita un estado:</p>
+
+<section><pre><code class="language-kotlin">val snackBarHostState = remember {SnackBarHostState()}</code></pre>
+</section><br><br>
+
+<p>En el Scaffold se configura en el parámetro <span class="negrita">snackbarHost</span> , pudiendo configurar el estilo del Snackbar:</p>
+<figure><img src="UD4/images/ud4-2023-10-31-14-11-56.png" /><br><figcaption>Default SnackBar</figcaption></figure>
+<br>
+
+<figure><img src="UD4/images/ud4-2023-10-31-14-12-34.png" /><br><figcaption>Custom SnackBar</figcaption></figure>
+<br>
+
+<p>Para mostrar el <span class="negrita">Snackbar</span> se necesita una corrutina (se verán más adelante).</p>
+
+<section><pre><code class="language-kotlin">val coroutineScope = rememberCoroutineScope()</code></pre>
+</section><br><br>
+
+<figure><img src="UD4/images/ud4-2023-10-31-14-14-47.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+  </section><!-- End section Componente Scaffold-->
+
+
+
+
+  <!--*********************************************************Componente ConstraintLayout***********************************************************-->
+  <section class="apartado">
+  <a name="sComponenteConstraintLayout"></a>
+  <h2>Componente ConstraintLayout</h2>
+  <p>Los layouts estudiados hasta este punto gestionan la posición de los elementos automáticamente.</p>  
+
+<p>El componente <span class="r-word">ConstraintLayout</span> permite organizar los elementos en la pantalla teniendo <span class="subrayado">que indicar 
+  de manera expresa</span>  cómo se unen unos elementos con otros.</p>
+
+<p>De esta manera esas <span class="negrita">restricciones</span>  se mantendrán aunque se cambie la orientación de la pantalla o aunque el tamaño de pantalla sea diferente.</p>
+
+
+<p>Este layout es uno de los más usados con las <span class="negrita">vistas antiguas en XML</span> por ello es importante conocer su funcionamiento 
+  para poder realizar migraciones de XML a Jetpack Compose.</p>
+
+<p>También es importante conocerlo porque da mucha libertad a la hora de crear las interfaces de usuario en Android.</p>
+
+<p>Para poder utilizar este componente primero se debe añadir una dependencia al archivo <span class="inline-file">build.gradle.kts (Module)</span>
+   y sincronizar.</p>
+
+   <figure><img src="UD4/images/ud4-2023-10-31-14-24-15.png" /><br><figcaption></figcaption></figure>
+   <br>
+   
+
+<p>Una vez añadida la dependencia ya se puede utilizar el componente <span class="r-word">ConstraintLayout</span>
+   y en él añadir todos los componentes y restricciones.</p>
+
+<p>Para poder indicar a los componentes cómo se unen entre sí, es necesario que los componentes tengan algún tipo de referencia que se pueda utilizar.</p>
+
+<p>Se pueden crear referencias de una en una o bien varias de una sola vez.</p>
+<figure><img src="UD4/images/ud4-2023-10-31-14-24-51.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Una vez creadas las referencias ya se pueden asignar a los componentes del <span class="negrita">ConstraintLayout</span>.</p>
+
+<p>Para asignar una referencia a un componente se utiliza el modificador <span class="r-word">constrainAs</span></p>
+<figure><img src="UD4/images/ud4-2023-10-31-14-26-32.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Una vez asignadas las referencias a los componentes ya se puede indicar cómo se unen estos en el layout.</p>
+
+<p>Los elementos se pueden unir entre sí y también al propio contenedor que es el <span class="negrita">ConstraintLayout</span>, 
+  la referencia del propio contenedor es <span class="negrita">parent</span> .</p>
+
+<p>Para poder realizar las uniones es necesario conocer en qué puntos se pueden unir.</p>
+<figure><img src="UD4/images/ud4-2023-10-31-14-28-43.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Los puntos <span class="negrita">start</span> y <span class="negrita">end</span> dependerán del sentido de lectura del 
+  idioma configurado en el dispositivo.</p>
+
+
+  <p>Así pues podríamos tener un ejemplo como el siguiente:</p>
+<figure><img src="UD4/images/ud4-2023-10-31-14-30-24.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD4/images/ud4-2023-10-31-14-31-10.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Quedando de la siguiente forma:</p>
+<figure><img src="UD4/images/ud4-2023-10-31-14-31-48.png" /><br><figcaption></figcaption></figure>
+<br>
 
 
   
-  </section><!-- End section Componente Scaffold-->
+  </section><!-- End section Componente ConstraintLayout-->
 
   
   <!---BTM_MENU--->  
