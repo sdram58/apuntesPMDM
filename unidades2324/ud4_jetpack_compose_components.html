@@ -75,7 +75,11 @@
       <div class="fila">
         <a href="#sComponenteScaffold" title="34.- Componente Scaffold">34.- Componente Scaffold</a>
         <a href="#sComponenteConstraintLayout" title="35.- Componente ConstraintLayout">35.- Componente ConstraintLayout</a>
-        
+        <a href="#sComponentesModal" title="36.- Componentes Modal">36.- Componentes Modal</a>     
+      </div>
+      <div class="fila">
+        <a href="#sComponentesPager" title="37.- Componentes Pager">37.- Componentes Pager</a>     
+        <a href="#sComponentesTooltipBox" title="38.- Componentes TooltipBox">38.- Componentes TooltipBox</a>     
 
       </div>
     </nav> <!-- BTM_MENU-->
@@ -143,7 +147,12 @@
       </div>
       <div class="fila">
         <a href="#sComponenteScaffold" title="34.- Componente Scaffold">34.- Componente Scaffold</a>
-        <a class="relleno" href="#sComponenteScaffold" title="34.- Componente Scaffold">34.- Componente Scaffold</a>
+        <a href="#sComponenteConstraintLayout" title="35.- Componente ConstraintLayout">35.- Componente ConstraintLayout</a>
+        <a href="#sComponentesModal" title="36.- Componentes Modal">36.- Componentes Modal</a>     
+      </div>
+      <div class="fila">
+        <a href="#sComponentesPager" title="37.- Componentes Pager">37.- Componentes Pager</a>     
+        <a href="#sComponentesTooltipBox" title="38.- Componentes TooltipBox">38.- Componentes TooltipBox</a>     
         <a href="" class="relleno"></a>
       </div>
     </div>
@@ -935,8 +944,8 @@ La función tiene dos parámetros obligatorios:
 <p>Android Studio solo carga por defecto algunos iconos. 
   Si se quiere tener disponible todo el paquete de iconos se debe añadir la siguiente dependencia al archivo <span class="inline-file">build.graddle.kts (Module: app)</span>:</p>
 
-  <figure><img src="UD4/images/ud4-2023-10-23-12-53-31.png" /><br><figcaption></figcaption></figure>
-  <br>
+<section><pre><code class="language-kotlin">implementation("androidx.compose.material:material-icons-extended")</code></pre>
+</section><br><br>
   
 
 <p>Recuerda pulsar <span class="negrita">Sync Now</span> tras añadir la dependencia.</p>
@@ -1935,6 +1944,101 @@ fun showToast(ctx:Context, txt:String){
   <br>
   
 
+<div class="tarea">
+  <p>Crea una pantalla de login que tendrá los siguientes elementos:
+    <ul>
+      <li><span class="negrita">Cabecera</span>: contendrá el títutlo de la pantalla de registro.
+        <figure><img src="UD4/images/ud4-2023-11-05-21-12-46.png" /><br><figcaption>Título</figcaption></figure>
+        <br>        
+      </li>
+      <li><span class="negrita">Campo Email</span>: <ul>
+        <li>
+          Se validará que sea de tipo email
+        </li>
+        <li>Se le añadirá un icono de un sobre al final</li>
+        <li>Tendrá un label que será user@domain.com</li>
+      </ul>
+      <figure><img src="UD4/images/ud4-2023-11-05-21-59-59.png" /><br><figcaption></figcaption></figure>
+      <br>
+      
+        </li>
+        <li><span class="negrita">Campo nombre, primer apellido y segundo apellido</span>:
+          <ul>
+            <li>Máximo 15 caracteres, sólo tendrá letras, que podrán ser mayúsculas o minúsculas, con acentos o sin acentos y espacios para compuestos</li>
+            <li>Tendrá un label indicando qué contenido debe tener</li>
+          </ul>
+          <figure><img src="UD4/images/ud4-2023-11-05-22-03-12.png" /><br><figcaption></figcaption></figure>
+          <br>
+          
+        </li>
+        <li><span class="negrita">Campo teléfono</span>:
+          <ul>
+            <li>
+          Se validará que sea de tipo telefono
+        </li>
+        <li>El teclado solo permitirá números</li>
+        <li>Se le añadirá un icono de un teléfono al final</li>
+        <li>Tendrá un label que indicando que hay que poner un teléfono.</li>
+          </ul>
+        </li>
+        <li><span class="negrita">Campo fecha de nacimiento</span>:
+          <ul>
+            <li>Será un date DatePicker</li></ul>
+            <figure><img src="UD4/images/ud4-2023-11-05-22-08-10.png" /><br><figcaption></figcaption></figure>
+            <br>
+            
+        </li>
+        <li><span class="negrita">Campo favoritos</span>:
+          <ul>
+            <li>Serán un par de listas de Filterchips</li>
+            <li>Cuando esté seleccionado se pondrá el icono del check</li>
+          </ul>
+        <figure><img src="UD4/images/ud4-2023-11-05-22-07-16.png" /><br><figcaption></figcaption></figure>
+        <br>
+          
+        </li>
+        <li><span class="negrita">Botón borar formulario</span>:
+        <ul>
+          <li>Estará deshabilitado hasta que el usuario introduzca algún dato</li>
+          <li>Al hacer clic dejará el formulario en el estado original</li>
+        </ul>
+      </li>
+      <li><span class="negrita">Botón Registrarse</span>:
+      <ul>
+        <li>Se habilitará cuando todos los campos estén rellenados.</li>
+        <li>Al hacer clic comprobará que los datos estén ok.
+          <ul>
+            <li>Si están ok, se mostrará un dialogo informando de este hecho.
+              <figure><img src="UD4/images/ud4-2023-11-05-22-13-50.png" /><br><figcaption></figcaption></figure>
+              <br>
+              
+            </li>
+            <li>Si no están ok, se mostrará en la parte superior el mensaje.
+              <figure><img src="UD4/images/ud4-2023-11-05-22-14-44.png" /><br><figcaption></figcaption></figure>
+              <br>
+              
+            </li>
+          </ul>
+        </li>
+        <li>
+          <span class="negrita">Parte inferior</span>:
+          <ul><li>Estará fija abajo, es decir, sólo se hará scroll de la parte del formulario</li></ul>
+        </li>
+      </ul></li>
+
+
+    </ul>
+  </p>
+
+  <p>Aquí puedes ver un ejemplo del funcionamiento</p>
+
+  <figure><img src="UD4/images/SignInDemo.gif" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p>Aquí puedes ver el código.</p>
+  
+</div>
+
 </section><!-- End section Componente AlertDialog-->
 
 <!--*********************************************************Layout***********************************************************-->
@@ -2739,8 +2843,8 @@ Para crear un <span class="r-word">Snackbar</span> se necesita un estado:</p>
 <p>Para poder utilizar este componente primero se debe añadir una dependencia al archivo <span class="inline-file">build.gradle.kts (Module)</span>
    y sincronizar.</p>
 
-   <figure><img src="UD4/images/ud4-2023-10-31-14-24-15.png" /><br><figcaption></figcaption></figure>
-   <br>
+<section><pre><code class="language-kotlin">implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")</code></pre>
+</section><br><br>
    
 
 <p>Una vez añadida la dependencia ya se puede utilizar el componente <span class="r-word">ConstraintLayout</span>
@@ -2794,9 +2898,350 @@ Para crear un <span class="r-word">Snackbar</span> se necesita un estado:</p>
 <figure><img src="UD4/images/ud4-2023-11-04-21-22-20.png" /><br><figcaption></figcaption></figure>
 <br>
 
+<p>También se pueden crear <span class="negrita">barreras</span> con dos o más componentes que se usarán como guía para que otros componentes se unan a ellas. <br>
+Ejemplo:</p>
+<section><pre><code class="language-kotlin">ConstraintLayout(modifier = Modifier.fillMaxSize()){
+    val (lightBox, darkBox, blackBox) = createRefs()
+    val barrier = createEndBarrier(lightBox, darkBox)
+
+    Box(
+        modifier = Modifier
+            .background(Color.LightGray)
+            .size(100.dp)
+            .constrainAs(lightBox){
+                top.linkTo(parent.top, 20.dp)
+            }
+    )
+    Box(
+        modifier = Modifier
+            .background(Color.DarkGray)
+            .size(50.dp)
+            .constrainAs(darkBox){
+                top.linkTo(lightBox.bottom)
+                start.linkTo(parent.start, 80.dp)
+            }
+    )
+    Box(
+        modifier = Modifier
+            .background(Color.Black)
+            .size(50.dp)
+            .constrainAs(blackBox){
+                top.linkTo(parent.top, 150.dp)
+                start.linkTo(barrier)
+            }
+    )
+}</code></pre>
+</section><br><br>
+<br>
+<p>Quedando así:
+</p>
+<figure><img src="UD4/images/ud4-2023-11-05-19-08-46.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Si movemos el cuadro <span class="cursiva">darkGray</span> a la izquierda, quedaría de la siguiente manera:</p>
+<section><pre><code class="language-kotlin">Box(
+    modifier = Modifier
+        .background(Color.DarkGray)
+        .size(50.dp)
+        .constrainAs(darkBox){
+            top.linkTo(lightBox.bottom)
+            start.linkTo(parent.start, 10.dp)
+        }
+)</code></pre>
+</section><br><br>
+<figure><img src="UD4/images/ud4-2023-11-05-19-11-27.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<section class="marco-t inf">
+  <span class="icono info"> </span> La barrera es imaginaria.
+  </section>
+<section class="marco-b">
+    
+</section>
   
+
   </section><!-- End section Componente ConstraintLayout-->
 
+  <!--*********************************************************Componentes Modal***********************************************************-->
+  <section class="apartado">
+  <a name="sComponentesModal"></a>
+  <h2>Componentes Modal</h2>
+  
+  <p>Los componentes <span class="r-word">Modal</span> son componentes que aparecen sobre la pantalla, existen varios: 
+    <ul>
+      <li>ModalNavigationDrawer</li>
+      <li>ModalBottomSheet</li>
+      <li>ModalSideSheet</li>
+      <li>...</li>
+    </ul>
+    
+  </p>
+  
+
+<p>El más conocido es <span class="r-word">ModalNavigationDrawer</span> también conocido como <span class="negrita">menú hamburguesa</span>
+   que al pulsarlo se abre un menú lateral.</p>
+
+<figure><img src="UD4/images/ud4-2023-11-05-19-15-54.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En dispositivos con pantalla grande se debe sustituir este menú por un otros que estén siempre visible como un <span class="negrita">NavigationDrawer</span>
+   o un <span class="negrita">NavigationRail</span>.</p>
+
+<p>A continuación, se muestra un ejemplo de su uso para entender su funcionamiento, pero algunos conceptos que se utilizan se estudiarán más adelante como las corrutinas y la navegación.</p>
+
+<section><pre><code class="language-kotlin">sealed class Options(val title:String, val icon:ImageVector){
+    object Option1 :Options("Inicio", Icons.Default.Home)
+    object Option2 :Options("Editar", Icons.Default.Edit)
+    object Option3 :Options("Configuración", Icons.Default.Settings)
+    object Option4 :Options("Ayuda", Icons.Default.Help)
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Content() {
+    val options = listOf&lt;Options>(Options.Option1,Options.Option2, Options.Option3, Options.Option4)
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    var selectedOption by rememberSaveable {
+        mutableStateOf(options[0].title)
+    }
+    val scope = rememberCoroutineScope()
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = selectedOption) },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        if(drawerState.isOpen) scope.launch { drawerState.close()}
+                        else scope.launch { drawerState.open() }
+                    }) {
+                        Icon(imageVector = Icons.Default.Menu, contentDescription = "Menú" )
+                    }
+                },
+                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = Color.Cyan)
+            )
+        }
+    ) {
+        ModalNavigationDrawer(
+          drawerState = drawerState,
+          drawerContent = {
+              ModalDrawerSheet {
+                  Spacer(Modifier.height(12.dp))
+                  options.forEach{ option ->
+                      NavigationDrawerItem(
+                          icon = {
+                                 Icon(imageVector = option.icon, contentDescription = option.title)
+                          },
+                          label = { Text(option.title) },
+                          selected = option.title == selectedOption,
+                          onClick = {
+                              scope.launch { drawerState.close() }
+                              selectedOption = option.title
+                          },
+                          modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding))
+                  }
+              }
+          },
+          modifier = Modifier.padding(it), //Importante para que se visualice correctamente
+          content = {
+              //Cargar contenido según opción elegida (selectedOption)
+          })
+            
+
+    }
+}</code></pre>
+</section><br><br>
+<figure><img src="UD4/images/DemoDrawer.gif" /><br><figcaption></figcaption></figure>
+<br>
+
+  
+  </section><!-- End section Componentes Modal-->
+
+  <!--*********************************************************Componentes Pager***********************************************************-->
+  <section class="apartado">
+  <a name="sComponentesPager"></a>
+  <h2>Componentes Pager</h2>
+  <p>Mediante los componentes <span class="r-word">HorizontalPager</span> y <span class="r-word">VerticalPager</span>
+     se pueden crear diferentes pantallas y navegar por ellas deslizando el dedo por la pantalla.</p>
+  
+<section><pre><code class="language-kotlin">@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun Content() {
+    var colors = listOf(Color.LightGray, Color.Magenta, Color.Cyan, Color.Yellow, Color.White)
+    val pagerState = rememberPagerState(0 /*Initial Page*/)
+    HorizontalPager(
+        pageCount = colors.size,
+        state = pagerState
+        ) {pageNum ->
+        Text(text = "Página $pageNum",
+             textAlign = TextAlign.Center,
+             modifier = Modifier
+                 .padding(16.dp)
+                 .background(colors[pageNum])
+                 .fillMaxSize())
+    }
+}</code></pre>
+</section><br><br>
+  <figure><img src="UD4/images/ud4-2023-11-05-19-56-00.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p><span class="negrita">HorizontalPager</span> y <span class="negrita">VerticalPager</span>
+     se pueden combinar con botones e incluso desactivar los gestos y controlarlos con botones.</p>
+<section><pre><code class="language-kotlin">@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun Content() {
+    Column {
+        val colors = listOf(Color.LightGray, Color.Magenta, Color.Cyan, Color.Yellow)
+        val icons = listOf(Icons.Default.Home, Icons.Default.Mail, Icons.Default.Face, Icons.Default.Camera)
+        val pagerState = rememberPagerState(0 /*Initial Page*/)
+        val scope = rememberCoroutineScope()
+        HorizontalPager(
+            pageCount = colors.size,
+            state = pagerState,
+            modifier = Modifier.weight(0.9f)
+        ) { pageNum ->
+            Text(
+                text = "Página $pageNum",
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .background(colors[pageNum])
+                    .fillMaxSize()
+            )
+        }
+        NavigationBar(
+            modifier = Modifier.weight(0.1f)
+        ) {
+            colors.forEachIndexed{index, color ->
+                NavigationBarItem(
+                    selected = index==pagerState.currentPage,
+                    onClick = { 
+                              scope.launch { 
+                                  pagerState.animateScrollToPage(index)
+                              }
+                    },
+                    label = {
+                            Text(text = "Página $index")
+                    },
+                    icon = { Icon(
+                        imageVector = icons[index],
+                        contentDescription = icons[index].name
+                    )})
+            }
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+     <figure><img src="UD4/images/DemoPagger.gif" /><br><figcaption></figcaption></figure>
+     <br>
+     
+  
+  </section><!-- End section Componentes Pager-->
+
+
+  <!--*********************************************************Componentes TooltipBox***********************************************************-->
+  <section class="apartado">
+  <a name="sComponentesTooltipBox"></a>
+  <h2>Componentes TooltipBox</h2>
+  
+  <p>Los <span class="r-word">Tooltips</span> son pequeños mensajes que aparecen cuando se realiza una pulsación larga sobre un elemento.</p>
+  
+  <p>Cualquier componente puede tener un Tooltip.</p>
+  
+<p>Para poder usar estos componentes se deben actualizar algunas versiones:
+<ul>
+  <li><span class="inline-file">build.gradle.kts (Project):</span><ul>
+    <li>Kotlin -> 1.8.21</li>
+  </ul> </li>
+  <li><span class="inline-file">build.gradle.kts (Module):</span>
+  <ul>
+    <li>kotlinCompilerExtensionVersion -> 1.4.7</li>
+		<li>compose-bom -> 2023.05.01</li>
+		<li>core-ktx -> 1.10.1</li>
+  </ul></li>
+</ul>
+</p>
+
+<section class="marco-t warn">
+  <span class="icono warning"> </span> Recuerda sincronizar tras realizar cambios en los archivos <span class="negrita">gradle</span>.
+  </section>
+<section class="marco-b">
+    
+</section>
+
+<p>Para añadir un <span class="negrita">Tooltip</span> a un componente se debe envolver dicho componente 
+  en un <span class="r-word">PlainTooltipBox</span> o un <span class="r-word">RichTooltipBox</span>
+   y añadir al componente envuelto el <span class="negrita">Modifier tooltipAnchor</span>.</p>
+
+   <section><pre><code class="language-kotlin">@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Content() {
+    PlainTooltipBox(
+        tooltip = {
+            Text(text = "Añadir a contactos" )
+        }
+    ){
+        Button(onClick = { /*TODO*/ },
+               modifier = Modifier.tooltipAnchor()) {
+            Icon(
+                imageVector = Icons.Default.AddToPhotos,
+                contentDescription = "Añadir a contactos"
+            )
+        }
+    }
+}</code></pre>
+   </section><br><br>
+
+  <figure><img src="UD4/images/ud4-2023-11-05-20-22-28.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+   <p class="sub-section">RichTooltipBox</p>
+
+   <p>Los <span class="r-word">RichTooltipBox</span> permiten mostrar más información e incluso mostrar acciones. 
+    Necesitan un estado para mantener abiertos y una corrutina para cerrarlo.</p>
+
+<section><pre><code class="language-kotlin">@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MComp() {
+    val tooltipState by remember {
+        mutableStateOf(RichTooltipState())
+    }
+    val scope = rememberCoroutineScope()
+
+    RichTooltipBox(
+        title = {Text(text = "Añadir a contactos" )},
+        action = {
+            TextButton(onClick = {
+                scope.launch { tooltipState.dismiss() }
+            }) {
+                Text(text = "Leer más")
+            }
+        },
+        text = { Text(text = "Añade amigos desde...")},
+        tooltipState = tooltipState
+    ){
+        Button(onClick = { /*TODO*/ },
+               modifier = Modifier.tooltipAnchor()) {
+            Icon(
+                imageVector = Icons.Default.AddToPhotos,
+                contentDescription = "Añadir a contactos"
+            )
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+    <figure><img src="UD4/images/ud4-2023-11-05-20-22-05.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+<p>Teniendo el estado se puede lanzar el <span class="r-word">RichTooltipBox</span> siempre que se quiera, 
+  por ejemplo al pulsar un botón para mostrar la información siempre la primera vez que se pulsa el botón.</p>
+
+<section><pre><code class="language-kotlin">scope.launch { tooltipState.show() }</code></pre>
+</section><br><br>
+   
+  </section><!-- End section Componentes TooltipBox-->
   
   <!---BTM_MENU--->  
     <script src="../script/prism.js"></script>
