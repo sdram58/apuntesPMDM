@@ -2596,7 +2596,7 @@ fun showToast(ctx:Context, txt:String){
   <section class="apartado">
     <a name="sComponenteCard"></a>
     <h2>Componente Card</h2>
-    <p>Las <span class="r-word">Card</span> son componentes Surface con un estilo predefinido (que se puede cambiar con
+    <p>Las <span class="r-word">Card</span> son componentes <span class="cursiva">Surface</span> con un estilo predefinido (que se puede cambiar con
       los parámetros)
       para tener el aspecto de una tarjeta con <span class="negrita">borde</span>, <span
         class="negrita">elevación</span> y <span class="negrita">sombra</span>.</p>
@@ -2735,6 +2735,25 @@ fun showToast(ctx:Context, txt:String){
       son similares a <span class="negrita">Column</span> y <span class="negrita">Row</span> pero cuando los elementos
       no caben en una única columna/fila entonces
       se pasarán a la siguiente columna/fila.</p>
+
+      <section><pre><code class="language-kotlin">val textList = listOf("Precio Descendiente", "Precio Ascendente", "Puntuación 4+", "Ofertas", "Más vendidos")
+
+FlowRow(
+    horizontalArrangement = Arrangement.spacedBy(24.dp),
+    modifier = Modifier.padding(8.dp),
+    //maxItemsInEachRow = 2
+) {
+    textList.forEach{
+        Text(
+            text = it,
+            modifier = Modifier
+                .padding(4.dp)
+                .background(Color.LightGray)
+                .padding(4.dp)
+                )
+    }
+}</code></pre>
+      </section><br><br>
     <figure><img src="UD4/images/ud4-2023-10-25-09-40-05.png" /><br>
       <figcaption></figcaption>
     </figure>
@@ -2758,7 +2777,7 @@ fun showToast(ctx:Context, txt:String){
     <p>Los componentes <span class="negrita">Lazy</span> disponibles son:
     <ul>
       <li><span class="negrita">LazyColumn y LazyRow.</span></li>
-      <li><span class="negrita">LazyVerticalGrid y LazyhorizontalRow.</span></li>
+      <li><span class="negrita">LazyVerticalGrid y LazyhorizontalGrid.</span></li>
       <li><span class="negrita">LazyVerticalStaggeredGrid y LazyHorizontalStaggeredGrid.</span></li>
     </ul>
     </p>
@@ -2871,7 +2890,7 @@ LazyColumn(
     </figure>
     <br>
 
-    <p>Para usar estas cabeceras se utiliza el elemento stickyHeader y se deben agrupar los elementos a mostrar por
+    <p>Para usar estas cabeceras se utiliza el elemento <span class="negrita">stickyHeader</span> y se deben agrupar los elementos a mostrar por
       algún criterio como puede ser la primera letra.</p>
 
     <figure><img src="UD4/images/ud4-2023-10-25-10-22-09.png" /><br>
@@ -2986,7 +3005,7 @@ LazyColumn(
         class="r-word">LazyHorizontalStaggeredGrid</span>
       son similares a los anteriores pero cada elemento ocupa el espacio de su contenido.</p>
 
-    <p>Los parámetros más usados con LazyVerticalStaggeredGrid son:
+    <p>Los parámetros más usados con <span class="negrita">LazyVerticalStaggeredGrid</span> son:
     <ul>
       <li><span class="negrita">columns</span>: número de columnas</li>
       <li><span class="negrita">verticalSpacing</span>: espacio vertical entre elementos.</li>
@@ -2994,7 +3013,7 @@ LazyColumn(
     </ul>
     </p>
 
-    <p>Los parámetros más usados con LazyHorizontalStaggeredGrid son:
+    <p>Los parámetros más usados con <span class="negrita">LazyHorizontalStaggeredGrid</span> son:
     <ul>
       <li><span class="negrita">rows</span>: número de filas.</li>
       <li><span class="negrita">horizontalSpacing</span>: espacio horizontal entre elementos.</li>
@@ -3069,6 +3088,7 @@ LazyColumn(
     }
 
     val coroutineGridScope = rememberCoroutineScope()
+    
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Fixed(3),
         verticalItemSpacing = 8.dp,
