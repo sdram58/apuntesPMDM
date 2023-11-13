@@ -3930,17 +3930,99 @@ fun MComp() {
 
     <section>
       <pre><code class="language-kotlin">scope.launch { tooltipState.show() }</code></pre>
-    </section><br><br>
+    </section><br>
+
+
 
   </section><!-- End section Componentes TooltipBox-->
 
 
   <!--*********************************************************PRACTICA***********************************************************-->
-  <section class="apartado">
-  <a name="s"></a>
-  <h2>PRACTICA</h2>
+  <section class="apartado">  
+  <h2 id="sP2">PRÁCTICA P2 Master/Detail</h2>
 
-  <!-- TODO PRACTICA -->
+  <div class="tarea">
+    <p>En esta práctica se va a crear un Aplicación Maestro/Detalle, para ello y que se vea mejor forzaremos la aplicación a que el móvil esté modo Landscape.
+      Las aplicaciones maestro detella suelen tener una lista de elementos en un lado y cuando hacemos clic en uno de los elementos en el otro (el principal)
+      se nos muestra el detalle de la información del elemento seleccionado.
+    </p>
+    <p>A continucación puedes ver un ejemplo de cómo quedará la aplicación.</p>
+    <figure><img src="UD4/images/P2_example.gif" /><br><figcaption></figcaption></figure>
+    <br>
+    <p>
+      Veamos algunas partes de la aplicación:
+      <ul>
+        <li>
+          El layout principal será un Scaffold o un Surface y dentro el Scaffold.
+        </li>
+        <li>
+          EL Scafold tendrá una TopAppBar que implementarás en un fichero aparte. Tendrá un aspecto similar al siguiente:
+          <figure><img src="UD4/images/ud4-2023-11-13-11-00-34.png" /><br><figcaption>TopAppBar</figcaption></figure>
+          <br>
+          <ul>
+            <li>La imagen del título lo puedes obtener desde <a class="enlace" target="_blank" href="UD4/p2/dragonball.webp">aquí</a></li>
+            <li>La imagen de la bola la puedes obtener desde <a class="enlace" target="_blank" href="UD4/p2/fourstarball.webp">aquí</a></li>
+          </ul>
+        </li>
+        <li>
+          Inicialmente, al no haber ningún elemento de la lista seleccionado, nos mostrará un mensaje indicando que hay que seleccionar un personaje.
+          <br>
+          <figure><img src="UD4/images/ud4-2023-11-13-11-06-37.png" /><br><figcaption></figcaption></figure>
+          <br>
+          
+          Además, el mensaje tendrá las siguientes características:
+          <ul>
+            <li>Será una Card cuya forma será:
+              <section><pre><code class="language-kotlin">shape = CutCornerShape(16.dp)</code></pre>
+              </section><br>
+              Y el borde formando un gradiente:
+              <section><pre><code class="language-kotlin">border = BorderStroke(width = 4.dp, brush = Brush.linearGradient(listOf(Color(0xFFFDD835), Color(0xFFFB8C00), Color(0xFFE53935)))),</code></pre>
+              </section><br><br>
+               </li>
+          </ul>
+        </li>
+        <li>
+          La lista de la izquierda tendrá un StickyHeader con la inicial del grupo:
+          <figure><img src="UD4/images/ud4-2023-11-13-11-13-15.png" /><br><figcaption></figcaption></figure>
+          <br>
+          Se marcará el item seleccionado como en la imagen (los colores y el icono pueden cambiar)
+          <br>
+          La lista se hará en un fichero aparte, y el contenido serán el campo spanishName de la lista de personajes. 
+        </li>
+        <li>
+          Detalle del elemento seleccionado:
+          <ul>
+            <li>Podrá tener Scroll</li>
+            <li>Tendrá una apariencia similar a la de la imagen.</li>
+            <figure><img src="UD4/images/ud4-2023-11-13-11-16-11.png" /><br><figcaption>Detalle</figcaption></figure>
+            <br>            
+          </ul>
+        </li>
+        <li>El contenido de la lista y del detalle se obtendrán del fichero <a class="enlace" target="_blank" href="UD4/p2/Character.kt">Character</a> que os adjunto, que meteréis dentro del paquete model:
+        <figure><img src="UD4/images/ud4-2023-11-13-11-20-45.png" /><br><figcaption>Estructura ficheros</figcaption></figure>
+        <br>
+        Este fichero tiene un data class Character que contiene la información de cada personaje, además tiene un Companion Object (similar a funciones y atributos estáticos de java)
+        que tiene la lista con todos los personajes y una serie de funciones de ayuda para usarlas como mejor te venga.
+        </li>
+        <li>
+          FloatingActionButton: Al hacer clic aparecerá tu nombre con una imagen tuya, al  hacer clic sobre el texto o en cualquier parte de la pantalla, desaparecerá.
+          
+          <figure><img src="UD4/images/ud4-2023-11-13-11-24-55.png" /><br><figcaption>FloatingActionButton</figcaption></figure>
+          <br>
+          La información tendrá un aspecto similar al de la imagen. Nota la trasparencia.
+          <figure><img src="UD4/images/ud4-2023-11-13-11-26-02.png" /><br><figcaption>Info usuario</figcaption></figure>
+          <br>
+          
+        </li>
+        
+      </ul>
+    </p>
+
+    <p>Entrega la práctica <a class="enlace" target="_blank" href="https://aules.edu.gva.es/fp/mod/assign/view.php?id=5316376">aquí</a> en un archivo comprimido ZIP con el contenido de toda la carpeta. <br>
+    Recuerda poner comentarios, estructurar el código y hacer build -> Clean Project antes de entregarla.</p>
+    
+  </div>
+
   
   </section><!-- End section PRACTICA-->
 
