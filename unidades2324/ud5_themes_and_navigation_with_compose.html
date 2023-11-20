@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Componentes Jetpack Compose</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../styles/prism.css">
+  <link rel="stylesheet" href="../styles/styles.css">
+  <script src="../script/script.js"></script>
+</head>
+
+<body class="line-numbers">
+  <div class="logos"></div>
+
+  <nav id="menu-lateral" class="main-menu-lateral oculto">
+    <div class="fila">
+      <a href="#sNavegacion" title="1. Navegación">1. Navegación</a>
+      
+    </div>
+  </nav> <!-- BTM_MENU-->
+
+  <h1>UD5.- Temas y Navegación con Jetpack Compose</h1>
+
+
+  <div class="main-menu">
+    <div class="fila">
+      <a href="#sNavegacion" title="1. Navegación">1. Navegación</a>
+      
+    </div>
+  </div>
+
+
+  <!--*********************************************************Navegación***********************************************************-->
+  <section class="apartado">
+    <a name="sNavegacion"></a>
+    <h2>Navegación</h2>
+    
+<p>Con la programación tradicional de <span class="negrita">Android (Views)</span> cada pantalla de la aplicación se implementaba en una 
+  <span class="negrita">Activity diferente</span> .</p>
+
+<p>Esto obligaba a utilizar grafos de navegación, instrucciones para iniciar Activities,
+  crear elementos para poder mandar información a la ventana nueva y para poder recibir información cuando se cierre la ventana.</p>
+<p>Con <span class="negrita">Jetpack Compose</span>  se ha simplificado toda la navegación debido a que la estructura de <span class="subrayado"> una aplicación
+   desarrollada con Jetpack Compose se basa en <span class="negrita">Single Activity</span></span>.</p>
+<p>Single Activity consiste en <span class="negrita"> una única Activity que gestiona todos los elementos de la interfaz</span>, 
+  los cuales se dividen en diferentes componentes propios de Jetpack Compose</p>
+
+  <p>A partir de este momento es muy importante tener organizados en carpetas todos los componentes de la aplicación.</p>
+
+  <p>Para ello se puede crear un paquete llamado <span class="negrita">screens</span> dentro de <span class="negrita">ui</span> 
+    donde ir creando los diferentes componentes de cada una de las pantallas.</p>
+  <p>Dentro del paquete <span class="negrita">screens</span> se pueden ubicar directamente los archivos <span class="d-word">.kt</span> 
+     de cada  pantalla o incluso se pueden crear diferentes paquetes nuevos si cada pantalla hace uso de varios archivos <span class="d-word">.kt</span></p>
+
+     <figure><img src="UD5/images/ud5-2023-11-20-16-13-29.png" /><br><figcaption></figcaption></figure>
+     <br>
+     
+     <p>El ejemplo que se va a estudiar consiste en una aplicación con dos pantallas.</p>
+     <p>La primera pantalla mostrará un <span class="r-word">TextField</span> para introducir el <span class="cursiva">nombre</span> 
+       y un <span class="cursiva">botón</span> para <span class="subrayado">navegar a la segunda pantalla enviándole el nombre</span> .</p>
+     <p>La segunda pantalla mostrará el nombre recibido y mostrará un botón para volver</p>
+
+     <figure><img src="UD5/images/ud5-2023-11-20-17-20-47.png" /><br><figcaption></figcaption></figure>
+     <br>
+     
+
+<p>Para implementar la navegación con Jetpack Compose se debe añadir la siguiente dependencia en <span class="inline-file">build.gradle.kts (Module)</span>
+   y <span class="negrita">sincronizar</span> .</p>
+
+   <section><pre><code class="language-kotlin">implementation("androidx.navigation:navigation-compose:2.7.5")</code></pre>
+   </section><br>
+
+<p>La navegación con Jetpack Compose necesita dos elementos:
+  <ul>
+    <li><span class="r-word">NavController</span>: se encarga de controlar la navegación.</li>
+    <li><span class="r-word">NavHost</span>: se encarga de mostrar cada una de las pantallas a las que se navega.</li>
+  </ul>
+</p>
+
+<p>El elemento <span class="r-word">NavHost</span> define las diferentes pantallas a las que se puede navegar
+   y además necesita al <span class="r-word">NavController</span></p>
+
+<p>El primer paso es crear un paquete llamado <span class="inline-folder">navigation</span> y
+   en él crear un archivo llamado <span class="inline-file">Routes</span> que contendrá una <span class="negrita">sealed class</span> 
+   donde se definirán todas las pantallas de la aplicación para tenerlas centralizadas.</p>
+<figure><img src="UD5/images/ud5-2023-11-20-17-29-39.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">Routes.kt</span>
+  </section>
+<section class="marco-b">
+    
+<section><pre><code class="language-kotlin">sealed class Routes(val route:String){
+    object FirstScreen: Routes("first_screen")
+    object Secondcreen: Routes("second_screen/{name}"){
+        fun createRoute(name:String) = "second_screen/$name"
+    }
+}</code></pre>
+   </section><br>
+  </section><br>
+<p>Como la segunda pantalla recibe un parámetro se debe indicar en la ruta. Además, se crea una función para trabajar mejor con la ruta que recibe el parámetro.</p>
+   
+
+<p>A continuación, dentro del paquete navigation se creará un archivo que contendrá un componente 
+<span class="r-word">@Composable</span> llamado <span class="d-word">Navigation</span>. 
+En este archivo se definirán el <span class="negrita">NavController</span>  y el <span class="negrita">Navhost</span> </p>
+
+<section><pre><code class="language-kotlin">@Composable
+fun Navigation() {
+    //Constante para gestionar el estado y se debe propagar entre todas las pantallas
+    val navController = rememberNavController()
+    
+    //Elemento que conoce las diferentes pantallas y cual es la primera en lanzarse
+    NavHost(
+        navController = navController, 
+        startDestination = Routes.FirstScreen.route 
+    ){
+        //Definición de la primera pantalla
+        composable(
+            route = Routes.FirstScreen.route
+        ){
+            Routes.FirstScreen(navController)
+        }
+        
+        composable(
+            route = Routes.Secondcreen.route,
+            arguments = listOf(
+                navArgument(name = "name"){
+                    type= NavType.StringType
+                }
+            ){
+                val argument = it.arguments?.getString("name")
+                requireNotNull(argument)
+                SecondScreen(navController, argument)
+            }
+        )
+    }
+    
+}</code></pre>
+</section><br>
+
+<p>El parámetro puede ser de cualquier tipo primitivo.</p>
+<figure><img src="UD5/images/ud5-2023-11-20-17-41-13.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Debe coincidir con el parámetro indicado en la función que crea la ruta.</p>
+
+
+  </section><!-- End section Navegación-->
+
+  
+
+  <!---BTM_MENU--->
+  <script src="../script/prism.js"></script>
+</body>
+
+</html>
