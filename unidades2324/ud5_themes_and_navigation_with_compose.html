@@ -17,18 +17,30 @@
 
   <nav id="menu-lateral" class="main-menu-lateral oculto">
     <div class="fila">
-      <a href="#sNavegacion" title="1. Navegación">1. Navegación</a>
-      
+      <a href="#sNavegacion" title="1. Navegación">1.- Navegación</a>
+      <a href="#sDisenosAdaptativos" title="2.- Diseños Adaptativos">2.- Diseños Adaptativos</a>
+      <a href="#sSplashScreen" title="3.- Splash Screen">3.- Splash Screen</a>
     </div>
+    <div class="fila">
+      <a href="#sOnboarding" title="4.-Onboarding">4.- Onboarding</a>
+      <a href="#sTemas" title="5.- Temas">5.- Temas</a>
+      <a href="#sAnimaciones" title="6.- Animaciones">6.- Animaciones</a>
+    </div>
+
   </nav> <!-- BTM_MENU-->
 
-  <h1>UD5.- Temas y Navegación con Jetpack Compose</h1>
-
+  <h1>UD5.- Temas y Navegación con Jetpack Compose</h1>  
 
   <div class="main-menu">
     <div class="fila">
-      <a href="#sNavegacion" title="1. Navegación">1. Navegación</a>
-      
+      <a href="#sNavegacion" title="1. Navegación">1.- Navegación</a>
+      <a href="#sDisenosAdaptativos" title="2.- Diseños Adaptativos">2.- Diseños Adaptativos</a>
+      <a href="#sSplashScreen" title="3.- Splash Screen">3.- Splash Screen</a>
+    </div>
+    <div class="fila">
+      <a href="#sOnboarding" title="4.-Onboarding">4.- Onboarding</a>
+      <a href="#sTemas" title="5.- Temas">5.- Temas</a>
+      <a href="#sAnimaciones" title="6.- Animaciones">6.- Animaciones</a>
     </div>
   </div>
 
@@ -39,7 +51,7 @@
     <h2>Navegación</h2>
     
 <p>Con la programación tradicional de <span class="negrita">Android (Views)</span> cada pantalla de la aplicación se implementaba en una 
-  <span class="negrita">Activity diferente</span> .</p>
+  <span class="negrita">Activity diferente</span>.</p>
 
 <p>Esto obligaba a utilizar grafos de navegación, instrucciones para iniciar Activities,
   crear elementos para poder mandar información a la ventana nueva y para poder recibir información cuando se cierre la ventana.</p>
@@ -100,46 +112,47 @@
         fun createRoute(name:String) = "second_screen/$name"
     }
 }</code></pre>
-   </section><br>
+   </section>
   </section><br>
 <p>Como la segunda pantalla recibe un parámetro se debe indicar en la ruta. Además, se crea una función para trabajar mejor con la ruta que recibe el parámetro.</p>
    
 
 <p>A continuación, dentro del paquete navigation se creará un archivo que contendrá un componente 
-<span class="r-word">@Composable</span> llamado <span class="d-word">Navigation</span>. 
+<span class="r-word">@Composable</span> llamado <span class="inline-file">Navigation</span>. 
 En este archivo se definirán el <span class="negrita">NavController</span>  y el <span class="negrita">Navhost</span> </p>
 
 <section><pre><code class="language-kotlin">@Composable
 fun Navigation() {
     //Constante para gestionar el estado y se debe propagar entre todas las pantallas
     val navController = rememberNavController()
-    
+
     //Elemento que conoce las diferentes pantallas y cual es la primera en lanzarse
     NavHost(
-        navController = navController, 
-        startDestination = Routes.FirstScreen.route 
+        navController = navController,
+        startDestination = Routes.FirstScreen.route
     ){
         //Definición de la primera pantalla
         composable(
             route = Routes.FirstScreen.route
         ){
-            Routes.FirstScreen(navController)
+            FirstScreen(navController)
         }
-        
+
+        //Definición pantalla que recibe un parámetro de tipo String
         composable(
             route = Routes.Secondcreen.route,
             arguments = listOf(
                 navArgument(name = "name"){
                     type= NavType.StringType
                 }
-            ){
+            )
+        ){
                 val argument = it.arguments?.getString("name")
                 requireNotNull(argument)
                 SecondScreen(navController, argument)
-            }
-        )
+            }        
     }
-    
+
 }</code></pre>
 </section><br>
 
@@ -149,11 +162,287 @@ fun Navigation() {
 
 <p>Debe coincidir con el parámetro indicado en la función que crea la ruta.</p>
 
+<p>En el ejemplo se han definido dos pantallas:</p>
+
+
+<p>La primera cargará el componente <span class="negrita">FirstScreen</span>  que recibirá el objeto <span class="negrita">NavController</span> .</p>
+<p>La segunda cargará el componente <span class="negrita">SecondScreen</span>  que recibirá el objeto <span class="negrita">NavController</span> 
+   y también un argumento de tipo <span class="negrita">String</span>. 
+   Este argumento deberá indicarse cuando se quiera navegar a esta pantalla.</p>
+<p>El objeto <span class="negrita">NavController</span> debe pasarse a todos los componentes en los que 
+  al interactuar con ellos se produzca un cambio de pantalla (navegación).</p>
+
+  <figure><img src="UD5/images/ud5-2023-11-21-13-18-02.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+<p>Es imposible que el argumento sea <span class="negrita">null</span> porque se ha definido en la ruta y 
+  cuando se navegue a esa ruta por programa se va a pasar el argumento, pero aún así Android Studio obliga a indicar que puede 
+  ser null teniendo que poner el <span class="r-word">?</span>.</p>
+<p>Para evitar errores en el componente de la pantalla antes de llamarlo se debe poner la instrucción <span class="r-word">requireNotNull(variable)</span>
+  con la variable.</p>
+  <figure><img src="UD5/images/ud5-2023-11-21-13-20-45.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>El siguiente paso es indicar en el archivo <span class="inline-file">MainActivity</span> que se va a hacer uso del 
+  componente <span class="negrita">Navigation</span> .</p>
+<figure><img src="UD5/images/ud5-2023-11-21-13-22-43.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>Recuerda que el componente <span class="negrita">AppContent</span>  era el que se creaba para contener toda la estructura 
+  básica de la aplicación con el tema y el <span class="negrita">Surface</span></p>
+  <br>
+  <figure><img src="UD5/images/ud5-2023-11-21-13-23-03.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>Con todo esto ya está creado el sistema de navegación, lo único que queda es crear el contenido de las pantallas de la aplicación.</p>
+  
+  <section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">FirstScreen</span>
+    </section>
+  <section class="marco-b">
+      <section><pre><code class="language-kotlin">@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FirstScreen(navController: NavController) {
+    Scaffold(
+        topBar = {
+            TopAppBar(title = {
+                Text(text = "First Screen")
+            })
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(text = "App para navegar")
+
+            var namState by rememberSaveable {
+                mutableStateOf("")
+            }
+
+            TextField(
+                value = namState,
+                onValueChange = {namState = it},
+                placeholder = { Text(text = "Introduce tu nombre")}
+            )
+            Button(onClick = {
+                navController.navigate(route = Routes.Secondcreen.createRoute(namState))
+                namState = ""
+            },
+                enabled = namState.isNotEmpty()
+            ) {
+                Text(text = "Navega a la segunda pantalla")
+            }
+        }
+    }
+}</code></pre>
+      </section><br>
+      <figure><img src="UD5/images/ud5-2023-11-21-13-37-20.png" /><br><figcaption></figcaption></figure>
+      <br>
+      
+  </section>
+
+  <section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">SecondScreen</span>
+    </section>
+  <section class="marco-b">
+      <section><pre><code class="language-kotlin">@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SecondScreen(navController: NavController, name:String) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { 
+                    Text(text = "Second Screen")
+                }, 
+                navigationIcon = {
+                    IconButton(onClick = {
+                        //Volvemos al elemento anterior en la pila de navegación
+                        navController.popBackStack()
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Arrow Back"
+                        )
+                            
+                    }
+                })
+        }
+    ) {
+        
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            Text(text = "He navegado")
+            Text(text = "Parámetro; $name")
+            Button(onClick = {
+                navController.popBackStack()
+            }) {
+                Text(text = "Volver atrás")
+            }
+        }
+        
+    }
+}</code></pre>
+      </section><br><br>
+  </section>
+  
+  <figure><img src="UD5/images/ud5-2023-11-21-13-50-27.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+<p>En Android cuando se navega entre pantallas, estas se van acumulando en la pila de pantallas por ello para volver 
+  se ha utilizado la función <span class="r-word">popBackStack</span> del <span class="negrita">navController</span>  que permite volver a la pantalla anterior.</p>
+  <figure><img src="UD5/images/ud5-2023-11-21-13-53-14.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+<section class="marco-t warn">
+  <span class="icono warning"> </span> Si se hubiera navegado a FirstScreen entonces se estaría añadiendo de nuevo esa pantalla a la pila.
+  </section>
+<section class="marco-b"></section>
+
+<h3>Pasar varios argumentos a una pantalla</h3>
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">Routes.kt</span>
+  </section>
+<section class="marco-b">
+    <figure><img src="UD5/images/ud5-2023-11-21-13-57-24.png" /><br><figcaption></figcaption></figure>    
+    
+</section>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">Navigation.kt</span>
+  </section>
+<section class="marco-b">
+    <figure><img src="UD5/images/ud5-2023-11-21-13-58-01.png" /><br><figcaption></figcaption></figure>
+</section>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">FirstScreen</span>
+  </section>
+<section class="marco-b">
+  <figure><img src="UD5/images/ud5-2023-11-21-13-58-26.png" /><br><figcaption></figcaption></figure>
+</section>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">SecondScreen</span>
+</section>
+
+<section class="marco-b">
+  <figure><img src="UD5/images/ud5-2023-11-21-13-59-11.png" /><br><figcaption></figcaption></figure>    
+</section>
+
+<h3>Parámetros por defecto</h3>
+
+<p>Como se han definido los parámetros significa que son obligatorios si se quiere que los parámetros sean opcionales se debe 
+  indicar en los archivos <span class="negrita">Routes</span>  y <span class="negrita">Navigation</span>  de la siguiente manera:</p>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">Routes.kt</span>
+  </section>
+<section class="marco-b">
+    <figure><img src="UD5/images/ud5-2023-11-21-14-06-03.png" /><br><figcaption></figcaption></figure>
+</section>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">Navigation.kt</span>
+  </section>
+
+<section class="marco-b">
+    <figure><img src="UD5/images/ud5-2023-11-21-14-07-04.png" /><br><figcaption></figcaption></figure>
+</section>
+
+<p>Evidentemente se puede indicar varios parámetros opcionales e incluso mezclar parámetros obligatorios con opcionales.</p>
+
+<h3>BackHandler</h3>
+
+<p>En los dispositivos Android suele haber un botón que permite volver a la pantalla anterior. 
+  Además, las aplicaciones en ocasiones colocan en la barra superior una flecha que realiza la misma función.</p>
+<figure><img src="UD5/images/ud5-2023-11-21-14-15-38.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Estos botones ejecutan la operación <span class="negrita">navController.popBackStack()</span>.</p>
+<figure><img src="UD5/images/ud5-2023-11-21-14-19-54.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Esta operación siempre vuelve a la pantalla anterior sea de la propia aplicación o de otra, 
+  de hecho si se acaba de abrir una operación desde la pantalla principal pulsar sobre la flecha hará que vuelva la pantalla principal.</p>
+
+  <p>Este comportamiento se puede alterar usando el componente <span class="negrita">BackHandler</span> .</p>
+  <p>Si se pone el valor <span class="negrita">enabled = true</span>  los botones atrás estarán deshabilitados siempre.</p>
+  <figure><img src="UD5/images/ud5-2023-11-21-14-23-35.png" /><br><figcaption></figcaption></figure>
+  <br>
+    <p>No es recomendable que enabled siempre sea true porque en ese caso nunca se podrá salir de la aplicación.</p>
+  <p>Lo habitual es enlazar enabled con una variable de estado:</p>
+
+  <figure><img src="UD5/images/ud5-2023-11-21-14-24-32.png" /><br><figcaption></figcaption></figure>
+  <br>
 
   </section><!-- End section Navegación-->
 
+
+  <!--*********************************************************Diseños adaptativos***********************************************************-->
+  <section class="apartado">
+  <a name="sDisenosAdaptativos"></a>
+  <h2>Diseños adaptativos</h2>
+  
+<p>Los dispositivos móviles tienen tamaños y resoluciones de pantalla diferentes.</p>
+<p>Si se conoce el tamaño de pantalla y la orientación se puede decidir qué componentes mostrar en la pantalla.</p>
+<p>Por ejemplo, las aplicaciones maestro-detalle dependiendo del ancho muestran unos componentes u otros.</p>
+  <figure><img src="UD5/images/ud5-2023-11-21-14-47-20.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>Existen varias maneras de conocer el tamaño y orientación de la pantalla.</p>
+  <h3>Desde setContent</h3>
+
+  <p>De esta manera se obtienen <span class="negrita">las clases de tamaño de ventana</span> que se pueden pasar al componente 
+    <span class="negrita">Navigation</span>  para decidir en él qué elementos se deben mostrar.</p>
   
 
+  
+  </section><!-- End section Diseños adaptativos-->
+
+  <!--*********************************************************SplashScreen***********************************************************-->
+  <section class="apartado">
+  <a name="sSplashScreen"></a>
+  <h2>SplashScreen</h2>
+  
+  
+  
+  </section><!-- End section SplashScreen-->
+
+  <!--*********************************************************-Onboarding***********************************************************-->
+  <section class="apartado">
+  <a name="sOnboarding"></a>
+  <h2>-Onboarding</h2>
+  
+  
+  
+  </section><!-- End section -Onboarding-->
+
+  <!--*********************************************************Temas***********************************************************-->
+  <section class="apartado">
+  <a name="sTemas"></a>
+  <h2>Temas</h2>
+  
+  
+  
+  </section><!-- End section Temas-->
+
+  <!--*********************************************************Animaciones***********************************************************-->
+  <section class="apartado">
+  <a name="sAnimaciones"></a>
+  <h2>Animaciones</h2>
+  
+  
+  
+  </section><!-- End section Animaciones-->
   <!---BTM_MENU--->
   <script src="../script/prism.js"></script>
 </body>
