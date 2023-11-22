@@ -400,21 +400,188 @@ fun SecondScreen(navController: NavController, name:String) {
 
   <p>Existen varias maneras de conocer el tamaño y orientación de la pantalla.</p>
   <h3>Desde setContent</h3>
+<p>Primero debemos añadir la dependecia de material en el <span class="inline-file">build.gradle (Module:app)</span></p>
+
+<section><pre><code class="language-kotlin">implementation("androidx.compose.material3:material3-android:1.2.0-alpha11")</code></pre>
+</section><br>
+<p>Luego, en el <span class="negrita">setContent</span> obtenemos los valores de ancho y alto.</p>
+<section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            val widthSizeClass = calculateWindowSizeClass(this).widthSizeClass
+            val heightSizeClass = calculateWindowSizeClass(this).heightSizeClass
+            AppContent {
+                Navigation()
+            }
+        }
+    }
+
+}</code></pre>
+</section><br>
 
   <p>De esta manera se obtienen <span class="negrita">las clases de tamaño de ventana</span> que se pueden pasar al componente 
     <span class="negrita">Navigation</span>  para decidir en él qué elementos se deben mostrar.</p>
-  
 
+    <p>Las clases de tamaño de ventana están <a class="enlace" target="_blank" href="https://developer.android.com/guide/topics/large-screens/support-different-screen-sizes?hl=es-419">categorizadas en la documentación</a> de Jetpack Compose y en ella se indica cómo se deben organizar los elementos.</p>
+    
+
+
+
+    <figure><img src="UD5/images/ud5-2023-11-21-17-01-48.png" /><br><figcaption>Width</figcaption></figure>
+    <br>
+    
+    <figure><img src="UD5/images/ud5-2023-11-21-17-03-55.png" /><br><figcaption>Height</figcaption></figure>
+    <br>
+    
+
+  <figure><img src="UD5/images/ud5-2023-11-21-17-04-14.png" /><br><figcaption>Tabla resumen</figcaption></figure>
+  <br>
+
+  <p>Por ejemplo el Pixel 4 con API 30 obtiene los siguientes valores:
+    <ul>
+      <li><span class="negrita">WindowWidthSizeClass.Compact</span></li>
+      <li><span class="negrita">WindowHeightSizeClass.Medium</span></li>
+    </ul>
+  </p>
+
+  <figure><img src="UD5/images/ud5-2023-11-21-18-08-08.png" /><br><figcaption></figcaption></figure>
+  <br>
   
+  
+<p>Existen varias maneras de conocer el tamaño y orientación de la pantalla:</p>
+
+<h3>Desde <span class="negrita">cualquier componente @Composable se obtiene la orientación</span>:</h3>
+
+<section><pre><code class="language-kotlin">//Dentro de un elemento composable
+if(LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT){
+    Log.i("--->", "Vertical")
+}else{
+    Log.i("--->", "Horizontal")
+}</code></pre>
+</section><br>
+
+<p>De esta manera se sabe si el dispositivo está en posición horizontal o vertical, se debe tener en cuenta que el usuario puede haber bloqueado la orientación</p>
+
+<h3>Desde cualquier componente @Composable se obtiene el tamaño de pantalla</h3>
+<section><pre><code class="language-kotlin">BoxWithConstraints {
+    Log.i("---", "ancho: $maxWidth - alto: $maxHeight")
+    
+    when{
+        maxWidth &lt;= 600.dp ->{
+            Log.i("--->", "Vertical")
+        }
+        else{
+            Log.i("--->", "Horizontal")
+        }
+    }
+}</code></pre>
+</section><br><br>
+<p>De esta manera se saben las dimensiones máximas disponibles, esta consulta <span class="negrita">se debe realizar en el nivel más alto posible</span>
+   por ejemplo en la función composable de NavHost cuando se define la ruta para así tener el valor máximo.</p>
+
+
+  <p>Una vez se conoce el tamaño/orientación de la pantalla se pueden cargar unos componentes u otros. Por ejemplo:</p>
+  <p>Dependiendo del ancho se muestra un componente o se muestran dos.</p>
+  <figure><img src="UD5/images/ud5-2023-11-21-17-18-35.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Dependiendo del ancho se muestra un componente u otro. El segundo componente dentro carga tanto <span class="cursiva">MainScreen</span> como <span class="cursiva">DetailContent</span></p>
+<figure><img src="UD5/images/ud5-2023-11-21-17-19-46.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<div class="tarea">
+<p>Ejercicio: <br>
+Modifica la aplicación de la práctica de DragonBall para que se vea con diseño adaptativo, es decir, en landscape se verá como está, 
+pero en portrait serán de pantallas distintas, una con la lista y otra con el detalle.</p>
+
+</div>
+
   </section><!-- End section Diseños adaptativos-->
+
 
   <!--*********************************************************SplashScreen***********************************************************-->
   <section class="apartado">
   <a name="sSplashScreen"></a>
   <h2>SplashScreen</h2>
   
-  
-  
+<p>Una <span class="d-word">Splash Screen</span> (pantalla de presentación) es una ventana que aparece cuando se lanza una Activity de una aplicación o un juego.</p>
+<p>La <span class="d-word">Splash Screen</span> solo aparece:
+  <ul>
+    <li>Al abrir una aplicación si el proceso asociado a dicha aplicación no está ejecutándose</li>
+    <li>Si la Activity asociada a dicha <span class="d-word">Splash Screen</span> no está en la pila (con Jetpack Compose y Single Activity esto nunca ocurrirá).</li>
+  </ul>
+</p>
+
+<p>La <span class="d-word">Splash Screen</span> desaparece cuando ya se han cargado todos los elementos necesarios para la aplicación.</p>
+<p>En una Splash Screen suelen aparecer:
+  <ul>
+    <li>Imagen o logotipo.</li>
+    <li>Nombre de la aplicación.</li>
+    <li>Versión de la aplicación.</li>
+    <li>Nombre de los desarrolladores.</li>
+    <li>Motor utilizado para el desarrollo.</li>
+  </ul>
+</p>
+
+<p>No es obligado añadir una Splash Screen pero es un buen recurso para evitar la pantalla en blanco mientras se abre la aplicación y mientras se 
+  cargan datos necesarios para la aplicación.</p>
+
+<p>Con la navegación de Jetpack Compose es muy sencillo implementar una Splash Screen.
+  <ul>
+    <li>Crear una ruta para la Splash Screen en <span class="inline-file">Routes.kt</span></li>
+    <li>Añadir la ruta de la Splash Screen al archivo <span class="inline-file">Navigation.kt</span></li>
+    <li>Indicar en el <span class="negrita">NavHost</span> (<span class="inline-file">Navigation.kt</span>) que la Splash Screen es la <span class="r-word">startDestination</span></li>
+    <li>Crear un componente <span class="negrita">@Composable</span> con el contenido de la Splash Screen</li>
+    <li>Indicar en el <span class="negrita">@Composable</span> de la Splash Screen que al acabar de cargar se navegue a la siguiente pantalla.</li>
+  </ul>
+</p>
+
+<p>Aquí un ejemplo de SplashScreen</p>
+<section><pre><code class="language-kotlin">@Composable
+fun SplashScreen(navController: NavController) {
+    LaunchedEffect(key1 = true){
+        //Aquí deberíamos hacer la carga del sistema.
+        //Consultar una BDD, acceder a una API, etc..
+        //Lo simulamos con un delay de 5s
+        delay(5000)
+        //Lo quitamos de la pila por si el usuario le da a volver no vuelva al SplashScreen
+        navController.popBackStack()
+        navController.navigate(Routes.FirstScreen.route)
+    }
+
+    Splash()
+}
+
+@Composable
+fun Splash() {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = "logo",
+            modifier = Modifier.size(200.dp,150.dp),
+            contentScale = ContentScale.Fit
+
+
+        )
+        Text(text = "Bienvenidos",
+             fontSize = 30.sp,
+             fontWeight = FontWeight.Bold,
+             color = GreenSerra
+        )
+
+    }
+}</code></pre>
+</section><br><br>
+<p>Se utiliza <span class="negrita cursiva">LanchedEffect</span> (se estudiará más adelante) para poder ejecutar ese código en segundo plano.</p>
+<p>En una aplicación real en vez de la instrucción <span class="negrita cursiva">delay(5000)</span> se tendrían que codificar las instrucciones que obtienen la información que la aplicación necesita, por ejemplo de una base de datos o de una API.</p>
+<p>Se pueden diseñar Splash Screens muy vistosas utilizando las animaciones que se verán al final de esta unidad.</p>
+
   </section><!-- End section SplashScreen-->
 
   <!--*********************************************************-Onboarding***********************************************************-->
@@ -422,26 +589,658 @@ fun SecondScreen(navController: NavController, name:String) {
   <a name="sOnboarding"></a>
   <h2>-Onboarding</h2>
   
-  
-  
+<p>Se conoce como <span class="negrita">Onboarding</span> (subir a bordo) a una serie de pantallas que se muestran en la aplicación a modo de presentación de la misma.</p>
+<p>Mediante el <span class="cursiva">Onboarding</span>  se puede explicar al usuario en pocos pasos el funcionamiento de la aplicación.</p>
+<p>También permite que el usuario introduzca datos, por ejemplo, en <span class="cursiva">Telegram/ Whatsapp</span> en el <span class="cursiva">Onboarding</span> 
+   se pide el número de teléfono, la confirmación del mismo y el nombre de usuario.</p>
+<p>Existen muchas técnicas para el <span class="cursiva">Onboarding</span>, en unos es obligado pasar por todos los pasos y 
+  en otros se permite saltárselo y pasar a la aplicación en sí.</p>
+<p>El <span class="cursiva">OnBoarding</span> solo debe mostrarse la primera vez que se abre la aplicación tras ser instalada.tras ser instalada.</p>
+<p>Si en el <span class="cursiva">Onboarding</span> se recogen datos necesarios para el funcionamiento, este se seguirá mostrando mientras no se hayan recogido esos datos.</p>
+<p>En aplicaciones donde se puede realizar cambio de usuario el <span class="cursiva">Onboarding</span> se mostrará cada vez que el usuario actual salga del sistema (logout).</p>
+<p>En internet se pueden encontrar muchas técnicas y buenas prácticas para diseñar un buen Onboarding</p>
+<p>A continuación se muestran un par de ejemplos:</p>
+<figure><img src="UD5/images/ud5-2023-11-21-19-11-40.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<figure><img src="UD5/images/ud5-2023-11-21-19-11-54.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Crear un Onboarding con Jetpack Compose y Navegación es muy sencillo utilizando la navegación, se puede elegir una de las siguientes técnicas:
+  <ul>
+    <li>Crear tantas Screens como pantallas tenga el Onboarding y controlar lanavegación entre ellas.</li>
+    <li>Crear una única Screen con un HorizontalPager (si se recogen datosobligatorios se deberá controlar la navegación entre las páginas conbotones).</li>
+  </ul>
+</p>
+
+<p>Al acabar el Onboarding se tendrá que navegar a una Screen que ya tenga funcionalidad de la aplicación.</p>
+
+<p>Para que el Onboarding solo se muestre la primera vez que se ejecute la aplicación (o cuando sea necesario si por ejemplo el usuario hace logout ) 
+  se debe almacenar de alguna manera esa información.</p>
+<p>En la <span class="cursiva">UD7 Persistencia</span> se estudiará cómo guardar preferencias de la aplicación que permitirán almacenar esta información.</p>
+
+
   </section><!-- End section -Onboarding-->
 
   <!--*********************************************************Temas***********************************************************-->
   <section class="apartado">
   <a name="sTemas"></a>
   <h2>Temas</h2>
+<p>En la unidad anterior se estudió cómo centralizar valores y con ello cómo poder crear una paleta de colores dentro del archivo <span class="negrita">res -> values -> colors.xml</span> 
+  con la que crear un tema para toda la aplicación.</p>
+<p>Aunque este archivo es totalmente funcional <span class="subrayado">no sigue las bases de Material Design y se debe evitar su uso</span>.</p>
+<p>Dentro de esa misma carpeta se encuentra el archivo <span class="inline-file">themes.xml</span> que indica el tema base sobre el que se construye el tema de <span class="negrita">Jetpack Compos</span>e</p>
   
-  
-  
+<figure><img src="UD5/images/ud5-2023-11-21-19-31-22.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>Cuando se crea un proyecto en Android Studio por defecto se crea un <span class="negrita">tema Jetpack Compose</span> propio basado en Material Design 
+  que se puede personalizar.</p>
+<p>Los archivos de este tema se encuentran dentro de la carpeta <span class="negrita">ui --> theme</span></p>
+
+<p>A partir de ahora para configurar el tema de la aplicación se hará uso de estos archivos.</p>
+<figure><img src="UD5/images/ud5-2023-11-21-19-33-14.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>El tema se define dentro del archivo <span class="inline-file">Theme.kt</span> su contenido es el siguiente:</p>
+<figure><img src="UD5/images/ud5-2023-11-21-19-34-56.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>El tema <span class="negrita">Theme.kt</span> se divide en tres subsistemas:
+  <ul>
+    <li><span class="negrita">Color.kt</span>: paleta de colores</li>
+    <li><span class="negrita">Type.kt</span>: tipografía de letras</li>
+    <li><span class="negrita">Shape.kt</span>: formas (este archivo no se crea por defecto)</li>
+  </ul>
+</p>
+<figure><img src="UD5/images/ud5-2023-11-21-19-38-46.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>Cuando se realizan cambios en cualquiera de estos tres archivos, 
+  se podrán ver los resultados automáticamente en los componentes de la aplicación Jetpack Compose que implementen Material3.</p>
+
+  <h3>Paleta de colores</h3>
+
+<p>Se compone de <span class="negrita">6 colores clave</span> , en la imagen siguiente se pueden ver los 5 colores clave del tema por defecto de Material 3 a los que se suma un color clave para errores.</p>
+<figure><img src="UD5/images/ud5-2023-11-21-21-07-34.png" /><br><figcaption>Paleta de colores</figcaption></figure>
+<br>
+
+<p>Cada color se debe definir en 13 tonos diferentes desde 0 (negro) hasta 100 (blanco)</p>
+<figure><img src="UD5/images/ud5-2023-11-21-21-07-57.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Para cada uno de los 6 colores clave se deben <span class="negrita">elegir 4 tonalidades</span> que serán las que se <span class="negrita">definan en el tema</span> de la aplicación.</p>
+<figure><img src="UD5/images/ud5-2023-11-21-21-08-59.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Los roles para los colores Primary , Secondary y Tertiary son:
+  <ul>
+    <li><span class="negrita">Primary</span>: es el color de base, que se usa para componentes principales, como botones prominentes, estados activos y el tono de las superficies elevadas.</li>
+    <li><span class="negrita">Secondary</span>: se usa para componentes menos prominentes en la IU, como los chips de filtro.</li>
+    <li><span class="negrita">Tertiary</span>: se usa para realizar Se Puede obtener más información de cuándo usar cada color clave en la documentación oficial de Material:
+      <a class="enlace" target="_blank" href="https://m3.material.io/styles/color/roles#19e75989-7485-4f5b-a769-940c4e4364bc">Color roles</a></li>
+</ul>
+</p>
+<figure><img src="UD5/images/ud5-2023-11-21-21-10-44.png" /><br><figcaption>Roles colores</figcaption></figure>
+<br>
+
+<p class="sub-section">Uso de los colores del tema Material</p>
+<p>Para poder utilizar los colores definidos del tema Material, ya sea el tema por defecto o una vez personalizada la paleta se debe 
+  hacer uso de la clase <span class="negrita">MaterialTheme</span></p>
+<figure><img src="UD5/images/ud5-2023-11-21-23-00-29.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p class="sub-section">Modificar paleta de colores</p>
+
+<p>La elección de una paleta de colores es algo primordial en una aplicación que requiere de un exhaustivo estudio.</p>
+<p>Con los suficientes conocimientos de diseño se puede crear la paleta de manera manual. </p>
+<p>Si no se dispone de esos conocimientos se puede usar la herramienta que ofrece Material3: <a class="enlace" target="_blank" href="https://m3.material.io/theme-builder#/custom">https://m3.material.io/theme-builder#/custom</a></p>
+<p>En esta herramienta se seleccionan los colores clave que se necesiten y automáticamente genera los tonos necesarios y muestra cómo se visualizarán en la aplicación.</p>
+<figure><img src="UD5/images/ud5-2023-11-21-23-07-11.png" /><br><figcaption>web edición colores material</figcaption></figure>
+<br>
+<figure><img src="UD5/images/ud5-2023-11-21-23-07-30.png" /><br><figcaption>web edición colores material</figcaption></figure>
+<br>
+<p>Una vez decidida la paleta de colores, esta se debe introducir en la aplicación dentro del archivo <span class="inline-file">Color.kt</span></p>
+<p>Este archivo por defecto tiene definidos algunos colores a modo de muestra.</p>
+<figure><img src="UD5/images/ud5-2023-11-21-23-08-47.png" /><br><figcaption>Colores.kt</figcaption></figure>
+<br>
+
+<p>Lo mejor es definir todos los colores de la paleta tanto para el modo claro como el modo oscuro de la manera en la que se utilizarán luego en la aplicación.</p>
+
+<p>A continuación, se muestran todas las variables necesarias para modificar toda la paleta de colores del tema por defecto de Material 3.</p>
+<figure><img src="UD5/images/ud5-2023-11-21-23-10-35.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Este mismo código se obtiene al utilizar la <a class="enlace" target="_blank" href="https://m3.material.io/theme-builder#/custom">herramienta de generación de paletas de Material 3</a></p>
+
+<p>Una vez añadida toda la paleta, se debe indicar dicha paleta en el subsistema de colores del tema de la
+aplicación en el archivo <span class="inline-file">Theme.kt</span></p>
+<figure><img src="UD5/images/ud5-2023-11-21-23-12-39.png" /><br><figcaption>Theme.kt</figcaption></figure>
+<br>
+<h3>Dynamic Color</h3>
+
+<p>Una característica muy importante en Material 3 es <span class="d-word">Dynamic Color</span>, algoritmo que permite generar colores derivados del fondo de pantalla 
+que se disponga en el dispositivo.</p>
+
+<p>Los proyectos Android Studio con Jetpack Compose habilitan por defecto Dynamic Color si el dispositivo tiene una versión e Android válida, 
+esto se puede observar en el archivo <span class="inline-file">Theme.kt</span></p>
+<figure><img src="UD5/images/ud5-2023-11-21-23-16-13.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Si se quiere desactivar simplemente se deben quitar las líneas de código que lo habilitan.</p>
+
+<h3>Tipografía</h3>
+<p>Material 3 define 5 roles diferentes de tipografía con tres tamaño cada uno:</p>
+<figure><img src="UD5/images/ud5-2023-11-21-23-17-25.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Cada uno de los <a class="enlace" target="_blank" href="https://m3.material.io/styles/typography/applying-type#fea95f28-348c-42ae-95e1-1c5bfd819524">5 roles tiene una funcionalidad específica</a></p>
+
+<p>Para cada rol se definen 3 tamaños diferentes:</p>
+<figure><img src="UD5/images/ud5-2023-11-21-23-19-03.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se pueden consultar <a class="enlace" target="_blank" href="https://m3.material.io/styles/typography/type-scale-tokens#a734c6ed-634c-4abb-adb2-35daf0aed06a">las características detalladas de cada rol</a></p>
+
+<p class="sub-section">Uso de las tipografías del tema Material</p>
+
+  <p>Igual que con los colores, para usar las tipografías se debe hacer uso de la clase <span class="r-word">MaterialTheme</span></p>
+  <figure><img src="UD5/images/ud5-2023-11-21-23-20-52.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+<p class="sub-section">Modificar tipografías --> Type.kt</p>
+
+<p>Para modificar las tipografías del tema de Material 3 se deben añadir estilos propios en el archivo <span class="inline-file">Type.kt</span></p>
+<figure><img src="UD5/images/ud5-2023-11-21-23-23-35.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Formas</h3>
+<p>Material 3 define una serie de formas que se le pueden aplicar a los componentes.</p>
+<p>Con los componentes <span class="cursiva">Button</span>, <span class="cursiva">TextField</span>, <span class="cursiva">Card</span> … 
+  se observó que se aplicaba una forma alrededor de ellos.</p>
+<p>Por defecto la forma predefinida en el tema de material es la forma redondeada, aunque las formas se pueden personalizar.</p>
+<p class="sub-section">Uso de las formas del tema Material</p>
+
+<p>Igual que con los colores, para usar las tipografías se debe hacer uso de la clase <span class="r-word">MaterialTheme</span></p>
+<figure><img src="UD5/images/ud5-2023-11-21-23-26-41.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Las formas que se pueden definir pueden ser redondeadas o angulares y pueden ser simétricas o no.</p>
+<figure><img src="UD5/images/ud5-2023-11-21-23-28-10.png" /><br><figcaption></figcaption></figure>
+<br>
+<p class="sub-section">Modificar formas --> Shape.kt</p>
+
+<p>Por defecto Android Studio no crea el archivo para personalizar las formas.</p>
+<p>Se deberá crear a mano dentro de la carpeta theme y dentro se añadirán las formas personalizadas.</p>
+<p>Existen diferentes constructores para <span class="negrita">RoundedCornerShape</span> y <span class="negrita">CutCornerShape</span>.</p>
+<figure><img src="UD5/images/ud5-2023-11-21-23-29-56.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>A continuación, se debe indicar en el archivo <span class="inline-file">Theme.kt</span> que se ha creado el archivo <span class="inline-file">Shape.kt</span> para que lo use en el tema de la aplicación.</p>
+<p>En este punto se puede observar cómo se están cargando los tres subsistemas (color, tipografía y formas) en el tema de la aplicación.</p>
+<figure><img src="UD5/images/ud5-2023-11-21-23-32-22.png" /><br><figcaption>Theme.kt</figcaption></figure>
+<br>
+
+<h3>Modificación inline de los parámetros del tema</h3>
+
+<p>En ocasiones se necesita <span class="negrita">hacer variaciones</span> a los valores del tema de 
+  Material de la aplicación pero <span class="negrita">sin modificar los valores del tema ni añadir valores nuevos</span></p>
+<p>Mediante la función <span class="r-word">copy</span> se realiza una "copia temporal" de la característica del tema aplicándole los parámetros 
+  que se desee para modificar dicha característica.</p>
+<p>Dependiendo del tipo de característica (<span class="cursiva">colorScheme , typography , shapes</span>)
+   sobre la que se utilice la función <span class="negrita">copy</span> se podrán indicar unos u otros parámetros.</p>
+   <section><pre><code class="language-kotlin">Text(
+    text = "Hola Rick!",
+    style = MaterialTheme.typography.bodyLarge.copy(
+        shadow = Shadow(
+            offset = Offset(5f,5f),
+            blurRadius = 2f,
+            color = Color(0xFFFF8000)
+        )
+    )
+)</code></pre>
+   </section><br>
+<figure><img src="UD5/images/ud5-2023-11-21-23-36-44.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Barra de estado y barra de navegación</h3>
+<p>El sistema operativo Android ofrece dos barras que por defecto se muestran en las aplicaciones
+  <ul>
+    <li>la barra de estado (superior)</li>
+    <li>la barra de navegación (inferior).</li>
+  </ul>
+</p>
+<p>El estilo de estas barras se configura dependiendo de los colores del tema de la aplicación, 
+  pero como estas barras las ofrece el sistema operativo para modificar su estilo independientemente del tema, se debe seguir un procedimiento específico.</p>
+<p>El primer paso para poder modificar estas barras es añadir la siguiente dependencia en <span class="inline-file">build.gradle.kts (Module)</span> y sincronizar.</p>
+
+<section><pre><code class="language-kotlin">implementation("com.google.accompanist:accompanist-systemuicontroller:0.32.0")</code></pre>
+</section><br>
+
+<p>Para modificar las barras de estado y navegación se puede optar por dos técnicas:
+  <ul>
+    <li>Modificarlas de manera unificada para toda la aplicación -> <span class="negrita">Theme.kt</span></li>
+    <li>Modificarlas para una única Activity -> <span class="negrita">MainActivity.kt</span></li>
+  </ul>
+</p>
+
+<p>Si se modifican en los dos lugares tendrá prioridad la configuración aplicada en la Activity</p>
+
+<p class="sub-section">Modificar barra de estado y de navegación desde Theme.kt</p>
+
+<p>Para modificar la apariencia de las barras de estado y de navegación se necesita una variable de estado para el acceso a las propiedades de dichas barras.</p>
+<p>El código para modificar las barras debe ir dentro del componente SideEffect así que se debe eliminar el código que aparece en él y añadir el código propio.</p>
+<p>Veamos unos ejemplos:</p>
+<section><pre><code class="language-kotlin">val systemUiController = rememberSystemUiController()
+SideEffect {
+    systemUiController.setSystemBarsColor(
+        color = Color(0xFFFF8000),
+        darkIcons = true
+    )
+}</code></pre>
+</section><br>
+
+<p>Lo que se vería así:</p>
+<figure><img src="UD5/images/ud5-2023-11-21-23-50-44.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>y otro ejemplo modificando las dos barras</p>
+<section><pre><code class="language-kotlin">val systemUiController = rememberSystemUiController()
+SideEffect {
+    systemUiController.setStatusBarColor(
+        color = Color(0xFF0080FF),
+        darkIcons = true
+    )
+
+    systemUiController.setNavigationBarColor(
+        color = Color(0xFF00FF80),
+        darkIcons = true
+    )
+}
+</code></pre>
+</section><br>
+<figure><img src="UD5/images/ud5-2023-11-21-23-52-16.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>También se pueden ocultar una de las barras o las dos. 
+  Cuando se ocultan las barras de estado y/o navegación Android estudio deja su espacio vacío por lo que se debe indicar a la aplicación que pueda utilizar ese espacio libre.</p>
+
+  <section><pre><code class="language-kotlin">val systemUiController = rememberSystemUiController()
+SideEffect {
+    val window = (view.context as Activity).window
+    window.statusBarColor = colorScheme.primary.toArgb()
+    WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+
+    systemUiController.isStatusBarVisible = false
+    systemUiController.isNavigationBarVisible = false
+}</code></pre>
+  </section><br>
+<figure><img src="UD5/images/ud5-2023-11-21-23-59-55.png" /><br><figcaption></figcaption></figure>
+<br>
+<p class="sub-section">Modificar barra de estado y de navegación desde la Activity</p>
+
+<p>La modificación de las barras de estado y/o navegación desde una Activity es similar a si se modifican desde <span class="cursiva">Theme.kt</span> 
+  pero en este caso el código debe ir dentro del componente Theme de la Activity</p>
+<section><pre><code class="language-kotlin">setContent {
+    TemasTheme {
+        val systemUiController = rememberSystemUiController()
+        SideEffect {
+            systemUiController.setStatusBarColor(
+                color = Color(0xFF0080FF),
+                darkIcons = true
+            )
+
+        }
+        // A surface container using the 'background' color from the theme
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            Greeting()
+        }
+    }
+}</code></pre>
+</section><br>
+<figure><img src="UD5/images/ud5-2023-11-22-00-04-33.png" /><br><figcaption>Modificando barra de estado desde la Activity</figcaption></figure>
+<br>
+
+<p>Para ocultar las barras de estado desde la Activity es similar a cómo se ocultan desde Theme.kt pero en este caso no es necesario crear la variable <span class="negrita">window</span> ya que Android la
+incrusta en la Activity automáticamente.</p>
+<section><pre><code class="language-kotlin">val systemUiController = rememberSystemUiController()
+SideEffect {
+    systemUiController.setStatusBarColor(
+        color = Color(0xFF0080FF),
+        darkIcons = true
+    )
+    
+    systemUiController.isStatusBarVisible = false
+
+}</code></pre>
+</section><br>
+
   </section><!-- End section Temas-->
 
+  
   <!--*********************************************************Animaciones***********************************************************-->
   <section class="apartado">
   <a name="sAnimaciones"></a>
   <h2>Animaciones</h2>
+<p>Jetpack Compose dispone de una serie de <a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/animation?hl=es-419">API's para crear animaciones</a> en los componentes de la interfaz.</p>
+
+<figure><img src="UD5/images/ud5-2023-11-22-00-12-02.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>A continuación, se van a mostrar algunos ejemplos de uso de las API's de animación, si se quiere más información sobre su uso se debe consultar la <a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/animation?hl=es-419">documentación</a>
+  , por ejemplo, para cambiar el tipo de animación o la duración de la misma.</p>
   
-  
-  
+  <h3>animate*AsState</h3>
+Mediante esta API se puede crear una animación entre dos valores, Android se encarga de crear la animación desde el valor inicial hasta el valor final.
+<p>El <span class="negrita">*</span> se puede sustituir por cualquiera de los siguientes tipos:
+  <ul>
+    <li>Int</li>
+    <li>Float </li>
+    <li>Color</li>
+    <li>Dp </li>
+    <li>Size </li>
+    <li>Offset</li>
+    <li>Rect </li>
+    <li>IntOffset</li>
+    <li>InstSize</li>
+  </ul>
+</p>
+<section><pre><code class="language-kotlin">var animateColor by rememberSaveable {
+    mutableStateOf(false)
+}
+val backgroundColor by animateColorAsState(
+    if(animateColor) Color(0xFFFFA020) else Color(0xFF40C0FF)
+)
+Column(
+    modifier = Modifier.fillMaxSize(),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally
+) {
+    Button(onClick = { animateColor = !animateColor }) {
+        Text(text = "Camabiar Color")
+    }
+    Spacer(modifier = Modifier.height(10.dp))
+    Text(
+        text = "Hola Rick!",
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier
+            .background(backgroundColor)
+            .padding(20.dp)
+    )
+}</code></pre>
+</section><br>
+
+<figure><img src="UD5/images/ud5-2023-11-22-00-24-39.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Cambiar opacidad</p>
+<section><pre><code class="language-kotlin">var animateAlpha by rememberSaveable {
+    mutableStateOf(true)
+}
+val alpha:Float by animateFloatAsState(
+    if(animateAlpha) 1f else 0.3f
+)
+Column(
+    modifier = Modifier.fillMaxSize(),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally
+) {
+    Button(onClick = { animateAlpha = !animateAlpha }) {
+        Text(text = "Cambiar Opacidad")
+    }
+    Spacer(modifier = Modifier.height(10.dp))
+    Box(
+        modifier = Modifier
+            .graphicsLayer(alpha = alpha)
+            .fillMaxWidth()
+            .background(Color(0xFFFFA020))
+    ) {
+        Text(
+            text = "Hola Rick!",
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .padding(20.dp)
+        )
+    }
+}</code></pre>
+</section><br>
+<figure><img src="UD5/images/OpacityDemo.gif" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<h3>AnimatedVisibility</h3>
+<p>Permite ocultar y mostrar componentes.</p>
+<section><pre><code class="language-kotlin">var visible by rememberSaveable {
+    mutableStateOf(false)
+}
+
+Column(
+    modifier = Modifier.fillMaxSize(),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally
+) {
+    Button(onClick = { visible = !visible }) {
+        Text(text = if(visible) "Ocultar" else "Mostrar")
+    }
+    Spacer(modifier = Modifier.height(10.dp))
+    AnimatedVisibility(visible = visible) {
+        Text(
+            text = "Hola Rick!",
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .background(Color(0xFFFFA020))
+                .padding(20.dp)
+                .fillMaxWidth()
+        )
+    }
+}</code></pre>
+</section><br>
+
+<figure><img src="UD5/images/VisibilityDemo.gif" /><br><figcaption></figcaption></figure>
+<br>
+<p>En la documentación se puede ver que la animación de entrada por defecto consiste en <span class="negrita">oscurecer-expandir</span> y 
+la de salida por defecto consiste en <span class="negrita">atenuar-contraer</span> </p>
+
+<p>Mediante los parámetros <span class="r-word">enter</span> y <span class="r-word">exit</span> se pueden configurar estas animaciones.
+<ul>
+  <li>fadeIn</li>
+  <li>fadeOut</li>
+  <li>slideIn</li>
+  <li>slideOut</li>
+  <li>slideInHorizontally</li>
+  <li>slideOutHorizontally</li>
+  <li>slideInVertically</li>
+  <li>slideOutVertically</li>
+  <li>scaleIn</li>
+  <li>scaleOut</li>
+  <li>expandIn</li>
+  <li>shrinkOut</li>
+  <li>expandHorizontally</li>
+  <li>shrinkHorizontally</li>
+  <li>expandVertically</li>
+  <li>shrinkVertically</li>
+</ul></p>
+
+<p><a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/animation?hl=es-419#enter-exit-transition">Ver animaciones de ejemplo</a></p>
+
+
+<h3>AnimatedContent</h3>
+
+<p>Anima todo el contenido de un componente, por defecto la animación es oscurecer agrandar.</p>
+<section class="marco-t warn">
+  <span class="icono warning"> </span> experimental, en el futuro podría sufrir cambios o desaparecer
+  </section>
+<section class="marco-b">
+  <p>Añadir dependencia en el <span class="inline-file">build.gradle (Module:app)</span></p>
+  <section><pre><code class="language-kotlin">implementation("androidx.compose.animation:animation-android:1.5.4")</code></pre>
+  </section>
+</section>
+
+<section><pre><code class="language-kotlin">var times by rememberSaveable {
+    mutableStateOf(0)
+}
+Row {
+    Button(onClick = { times++ }) {
+        Text(text = "+1")
+    }
+    Spacer(modifier = Modifier.width(10.dp))
+    Button(onClick = { times-- }) {
+        Text(text = "-1")
+    }
+
+    AnimatedContent(targetState = times, label ="") {
+        Text(text = "Cuenta $it",
+        modifier = Modifier.padding(10.dp))
+    }
+
+    AnimatedContent(
+        targetState = times,
+        //Personalizando la animación
+        transitionSpec = {
+              //targetState: nuevo valor de la variable de estado
+              //initialState: valor anterior de la variable de estado
+
+              if(targetState&lt;initialState){
+                  (slideInVertically { height -> height} + fadeIn())
+                      .togetherWith(slideOutVertically{height -> -height} + fadeOut())
+              }else{
+                  (slideInVertically { height -> -height} + fadeIn())
+                      .togetherWith(slideOutVertically{height -> height} + fadeOut())
+              }
+        },
+        label ="") {targetCount ->
+        Text(text = "$targetCount",
+              modifier = Modifier.padding(10.dp))
+    }
+}</code></pre>
+</section><br>
+<figure><img src="UD5/images/AnimatedContentDemo.gif" /><br><figcaption></figcaption></figure>
+<br>
+
+
+
+<h3>Crossfade</h3>
+
+<p>Convierte el contenido de un componente en otro, mezclándolos durante la animación.</p>
+
+<section><pre><code class="language-kotlin">var visibleContent by rememberSaveable {
+    mutableStateOf("Manga")
+}
+Crossfade(
+    targetState = visibleContent,
+    label = "",
+    modifier = Modifier.clickable {
+        visibleContent = if(visibleContent == "Manga") "Anime" else "Manga"
+    }) {screen ->
+    when(screen){
+        "Manga" -> Text(text = "Manga")
+        "Anime" -> Text(text = "Anime")
+    }
+
+}</code></pre>
+</section><br>
+<figure><img src="UD5/images/CrossFadeDemo1.gif" /><br><figcaption></figcaption></figure>
+<br>
+<p>Veamos otro ejemplo:</p>
+<section><pre><code class="language-kotlin">Column(
+    modifier = Modifier.fillMaxSize(),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally
+) {
+    val sections = arrayOf("Anime", "Manga", "Otros")
+    var visibleContent by rememberSaveable {
+        mutableStateOf(sections[0])
+    }
+    Row(modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween) {
+        for (section in sections) {
+            Button(onClick = { visibleContent = section }) {
+                Text(text = "$section")
+            }
+            
+        }
+    }
+
+    Crossfade(
+        targetState = visibleContent,
+        label = ""
+    ) { screen ->
+        when (screen) {
+            "Manga" -> Text(text = "Mostrar Manga")
+            "Anime" -> Text(text = "Mostrar Anime")
+            "Otros" -> Text(text = "Mostrar otros")
+        }
+
+    }
+}</code></pre>
+</section><br><br>
+
+<figure><img src="UD5/images/CrossFadeDemo2.gif" /><br><figcaption></figcaption></figure>
+<br>
+
+
+
+<h3>Modifier.animateContentSize</h3>
+<p>Android animará el componente cuando su tamaño cambie a causa de que su contenido cambie de tamaño</p>
+
+<section><pre><code class="language-kotlin">var expanded by rememberSaveable {
+    mutableStateOf(false)
+}
+Column(
+    verticalArrangement = Arrangement.Top,
+    modifier = Modifier
+        .fillMaxWidth()
+        /*.animateContentSize(animationSpec = tween(
+            durationMillis = 2000,
+            easing = LinearEasing
+        ))*/
+        .background(Color(0xFFFFA0C0))
+        //.padding(10.dp)
+
+) {
+    Row(
+        modifier = Modifier
+            .background(Color.White)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(text = "Son Goku")
+        TextButton(onClick = {
+            expanded = !expanded
+        }) {
+            Text(text = if(expanded) "Menos." else "Leer más...")
+        }
+    }
+
+    Text(text = "Hey!")
+    if(expanded){
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(text = "Goku niño: Un pequeño con cola tiene una habilidad innata para convertirse"+
+                "en un mono gigante sin capacidad de razonamiento y que destroza todo lo que "+
+                "esté a su paso. Sus principales enemigos derrotados fueron Pilaf, los soldados"+
+                " del Ejército Rojo y el tradicional Piccolo Daimao.\n" +
+                "\n" +
+                "Goku joven: Milk, una doncella heredera al trono de un pueblo pequeño, se casa"+
+                " con Goku y tienen juntos a su primer hijo, Gohan. Sin embargo, después de "+
+                "algunos años, su hermano Raditz llega a la Tierra con la única misión de "+
+                "colonizarla por completo y un equipo de guerreros se une para detenerlo. Goku "+
+                "pierde la vida por primera vez y conoce el Reino de los Cielos.\n" +
+                "\n"+
+              "Goku adulto: Tal vez el momento más importante en la historia del alienígena. "+
+                "En poco más de 10 diez años, Goku adquiere el superpoder de transformarse en "+
+                "Super Saiyajin 1, Super Saiyajin 2, Super Saiyajin 3 y las fases de Dios.\n" +
+                "\n" +
+                "Después de la llegada del Dios de la destrucción, Beerus, los rituales de "+
+                "transformación de Kakaroto superan lo místico hasta alcanzar un poder a la "+
+                "altura del mismo creador de todo el universo.",
+              textAlign = TextAlign.Justify)
+    }
+}</code></pre>
+</section><br><br>
+
   </section><!-- End section Animaciones-->
   <!---BTM_MENU--->
   <script src="../script/prism.js"></script>
