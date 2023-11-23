@@ -582,6 +582,13 @@ fun Splash() {
 <p>En una aplicación real en vez de la instrucción <span class="negrita cursiva">delay(5000)</span> se tendrían que codificar las instrucciones que obtienen la información que la aplicación necesita, por ejemplo de una base de datos o de una API.</p>
 <p>Se pueden diseñar Splash Screens muy vistosas utilizando las animaciones que se verán al final de esta unidad.</p>
 
+
+<div class="tarea">
+  <p>Modifica la aplicación de DragonBall para que tenga una <span class="cursiva">SplashScreen</span> . En esta aparecerá la bola de dragón de la aplicación y 
+  con el texto "DragonBall" durante 3 segundos.</p>
+  
+</div>
+
   </section><!-- End section SplashScreen-->
 
   <!--*********************************************************-Onboarding***********************************************************-->
@@ -1239,9 +1246,85 @@ Column(
               textAlign = TextAlign.Justify)
     }
 }</code></pre>
-</section><br><br>
+</section><br>
+<h3>Personalizar animaciones</h3>
+<p>Las animaciones por defecto están configuradas de una manera, pero se pueden personalizar.</p>
+
+<p class="sub-section">Parámetro <span class="negrita">animationSpec</span></p>
+<p>Se puede utilizar en:</p>
+  <ul>
+    <li><span class="cursiva">animate*AsState</span> , <span class="cursiva">Crossfade</span>  y <span class="cursiva">Modifier.animateContentSize</span> </li>
+    <li><span class="cursiva">fadeX</span> , <span class="cursiva">slideX</span> , <span class="cursiva">scaleX</span> 
+      , <span class="cursiva">expandX</span>  y <span class="cursiva">shrinkX</span> 
+       permitidos en el parámetro transitionSpec de AnimatedContent. </li>
+    <li><span class="cursiva">fadeX</span> , <span class="cursiva">slideX</span> , <span class="cursiva">scaleX</span> 
+      , <span class="cursiva">expandX</span>  y <span class="cursiva">shrinkX</span> 
+       permitidos en los parámetros <span class="negrita">enter</span>  y <span class="negrita">exit</span>  de <span class="cursiva">AnimatedContent</span> </li>
+  </ul>
+</p>
+
+
+
+<p>Se pueden consultar todos los detalles de cómo personalizar las animaciones en la
+<a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/animation/customize?hl=es-419">documentacion</a>.</p>
+
+<p>A continuación, se muestran algunos ejemplos básicos</p>
+
+<p>Animación basada en físicas: <a class="enlace" target="_blank" 
+  href="https://developer.android.com/jetpack/compose/animation/customize?hl=es-419#spring">spring</a> (muelle)
+
+<figure><img src="UD5/images/ud5-2023-11-23-12-10-00.png" /><br><figcaption></figcaption></figure>
+<br>
+<ul>
+  <li><span class="negrita">dampingRatio</span>  indica el rebote al llegar al valor destino.</li>
+  <li><span class="negrita">stiffness</span>  indica la velocidad a la que se mueve hacia el valor destino</li>
+</ul>
+</p>
+
+<p class="sub-section">Animación basada en duración: <span class="negrita">tween</span>  (between)</p>
+
+<figure><img src="UD5/images/ud5-2023-11-23-12-18-30.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Donde:
+<ul>
+  <li><span class="negrita">durationMillis</span>: es el tiempo de la animación.</li>
+  <li><span class="negrita">easing</span>: indica cómo se realiza la animación entre los dos valores.</li>
+  <li><span class="negrita">delayMillis</span>: espera antes de iniciar la animación.</li>
+</ul>  
+</p>
+
+<p class="sub-section">Repetir animación basada en duración (tween)</p>
+
+<p><span class="subrayado">Con cantidad de repeticiones:</span></p>
+<figure><img src="UD5/images/ud5-2023-11-23-12-21-16.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p><span class="subrayado">Con infinitas repeticiones:</span> </p>
+
+<figure><img src="UD5/images/ud5-2023-11-23-12-22-41.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
 
   </section><!-- End section Animaciones-->
+
+  <!--*********************************************************Práctica***********************************************************-->
+  <section class="apartado">
+  <a name="sP03"></a>
+  <h2>Práctica 03. Aplicación libre</h2>
+
+  <div class="tarea">
+    <p>
+      Elija una temática y crea una aplicación sobre esa temática.
+    </p>
+    <p>La aplicación tiene</p>
+  </div>
+
+
+  
+  
+  
+  </section><!-- End section Práctica-->
   <!---BTM_MENU--->
   <script src="../script/prism.js"></script>
 </body>
