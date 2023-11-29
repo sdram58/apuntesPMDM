@@ -1198,10 +1198,11 @@ Column(
     verticalArrangement = Arrangement.Top,
     modifier = Modifier
         .fillMaxWidth()
-        /*.animateContentSize(animationSpec = tween(
+        .wrapContentHeight()
+        .animateContentSize(animationSpec = tween(
             durationMillis = 2000,
             easing = LinearEasing
-        ))*/
+        ))
         .background(Color(0xFFFFA0C0))
         //.padding(10.dp)
 
@@ -1246,7 +1247,13 @@ Column(
               textAlign = TextAlign.Justify)
     }
 }</code></pre>
+
+<figure><img src="UD5/images/ExpandedDemo.gif" /><br><figcaption></figcaption></figure>
+<br>
+
 </section><br>
+
+
 <h3>Personalizar animaciones</h3>
 <p>Las animaciones por defecto están configuradas de una manera, pero se pueden personalizar.</p>
 
