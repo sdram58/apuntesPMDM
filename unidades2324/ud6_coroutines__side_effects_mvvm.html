@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corrutinas, Side Effects y MVVM</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../styles/prism.css">
+  <link rel="stylesheet" href="../styles/styles.css">
+  <script src="../script/script.js"></script>
+</head>
+
+<body class="line-numbers">
+  <div class="logos"></div>
+
+  <nav id="menu-lateral" class="main-menu-lateral oculto">
+    <div class="fila">
+      <a href="#sCorrutinas" title="1.- Corrutinas">1.- Corrutinas</a>
+      <a href="#sSideEffects" title="2.- Side Effects">2.- Side Effects</a>
+      <a href="#sArquitecturasAndroid" title="3.- Arquitecturas Android">3.- Arquitecturas Android</a>      
+    </div>
+    <div class="fila">
+      <a href="#sCasopractico" title="4.- Caso práctico">4.- Caso práctico</a>      
+    </div>
+
+  </nav> <!-- BTM_MENU-->
+
+  <h1>UD6.- Corrutinas, Side Effects y MVVM</h1>  
+
+  <div class="main-menu">
+    <div class="fila">
+      <a href="#sCorrutinas" title="1.- Corrutinas">1.- Corrutinas</a>
+      <a href="#sSideEffects" title="2.- Side Effects">2.- Side Effects</a>
+      <a href="#sArquitecturasAndroid" title="3.- Arquitecturas Android">3.- Arquitecturas Android</a>
+    </div>
+    <div class="fila">
+      <a href="#sCasopractico" title="4.- Caso práctico">4.- Caso práctico</a>      
+      <a href="" class="relleno"></a><a href="" class="relleno"></a>
+    </div>
+  </div>
+
+  <!--*********************************************************Corrutinas***********************************************************-->
+  <section class="apartado">
+  <a name="sCorrutinas"></a>
+  <h2>Corrutinas</h2>
+  <h3>Introducción</h3>
+<p>En Android el <span class="negrita">hilo principal</span> de ejecución es el <span class="negrita">encargado de mostrar la interfaz de usuario</span>
+   y de <span class="negrita">gestionar las interacciones</span> del usuario con la aplicación.</p>
+
+<p>Esto significa que <span class="negrita">si el hilo principal ejecuta una tarea pesada o asíncrona, la interfaz de usuario se quedará bloqueada</span>
+   y el usuario no podrá interactuar con el dispositivo hasta que la tarea finalice.
+   <ul>
+    <li><span class="negrita">Tareas pesadas</span>: aquellas que tienen una duración larga.</li>
+    <li><span class="negrita">Tareas asíncronas</span>: aquellas que se podrían realizar en segundo plano</li>
+   </ul>
+  </p>
+
+  <h3>Corrutinas</h3>
+
+<p>Kotlin dispone de las <span class="d-word">corrutinas</span> para realizar acciones sin bloquear el hilo principal.</p>
+<p>Las corrutinas son más eficientes que los hilos porque agrupan los hilos disponibles para ejecutar las instrucciones con diferentes 
+  configuraciones (<span class="cursiva">context + dispatcher</span>).</p>
+<p>Además, la cantidad de hilos es limitada pero la cantidad de corrutinas que se pueden lanzar es casi infinita.</p>
+<p>De esta manera cuando se quiere ejecutar un conjunto de instrucciones y evitar que se bloquee el hilo principal se debe crear una corrutina 
+  e indicarle la configuración en la que se va a ejecutar, así, el sistema gestionará la corrutina usando los hilos que estime necesario.</p>
+<p>Mas información: <a class="enlace" target="_blank" href="https://kotlinlang.org/docs/coroutines-overview.html">corrutinas Kotlin</a> y 
+  <a class="enlace" target="_blank" href="https://developer.android.com/kotlin/coroutines?hl=es-419">corrutinas Kotlin en Android</a>.</p>
+
+  
+  <h3>Funciones de suspensión</h3>
+<p>Las funciones de suspensión son aquellas que alguna de sus instrucciones bloquean la ejecución 
+  de la propia función hasta que finalice dicha instrucción.</p>
+<p>Estas funciones siempre se deben ejecutar dentro de una corrutina o dentro del alcance de una corrutina (<span class="cursiva">coroutine scope</span>)
+  o dentro de otra función de suspensión.</p>
+
+  <figure><img src="UD6/images/ud6-2023-12-03-20-00-23.png" /><br><figcaption>Android Studio notifica que una instrucción puede bloquear la ejecución de la función.</figcaption></figure>
+  <br>
+  
+
+  
+  </section><!-- End section Corrutinas-->
+
+  <!--*********************************************************Side Effects***********************************************************-->
+  <section class="apartado">
+  <a name="sSideEffects"></a>
+  <h2>Side Effects</h2>
+<p>Como ya se ha estudiado, Jetpack Compose realiza <span class="negrita">recomposiciones</span> de la interfaz de usuario <span class="negrita"> cuando se producen cambios
+   de estado</span>.</p>
+<p>En ocasiones <span class="negrita">la aplicación recompone más o menos veces de las necesarias</span> 
+  o incluso <span class="negrita">al recomponer se ejecuta código que no debería ejecutarse</span>.</p>
+<p>A todas estas situaciones no deseadas se les llama <span class="d-word">Side Effects</span>.</p>
+<p>Todos los componentes de la aplicación deberían de evitar los efectos secundarios, 
+  pero hay ocasiones en las que se necesitan los efectos secundarios como podría ser para <span class="negrita">eventos únicos</span> como mostrar una notificación o 
+  navegar a una pantalla si un estado cumple una condición.</p>
+
+<p>El siguiente código produce un <span class="negrita">efecto secundario</span>:</p>
+
+<figure><img src="UD6/images/ud6-2023-12-03-23-03-10.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Cuando se pulsa el botón se cambia el mensaje.</p>
+<p>El <span class="cursiva">Toast</span> se muestra siempre que se el mensaje no está vacío.</p>
+<p>Como una vez pulsado el botón el mensaje ya no está vacío a partir de ahí cuando cambien los <span class="cursiva">TextField</span>
+   siempre se va a mostrar el <span class="cursiva">Toast</span>.</p>
+
+<p>Para solucionar estos problemas se crearon los <span class="negrita">Effects Handlers</span> (manejadores de efectos) 
+  <span class="negrita">que permiten ejecutar estas acciones en un entorno controlado</span>.</p>
+<p>Los <span class="cursiva">Effects Handlers</span> también facilitan el uso de corrutinas en Jetpack Compose.</p>
+<p>Los <span class="cursiva">Effects Handlers</span> disponibles son:
+<ul>
+  <li><span class="negrita">LaunchedEffect</span></li>
+  <li><span class="negrita">RememberCoroutineScope</span></li>
+  <li><span class="negrita">derivedStateOf</span></li>
+  <li>SideEffect</li>
+  <li>RemindUpdatedState</li>
+  <li>DisposableEffect</li>
+  <li>produceState</li>
+  <li>snapshotFlow</li>
+</ul>
+</p>
+
+<h3>LaunchedEffect</h3>
+<p>Un bloque <span class="negrita">LaunchedEffect se ejecuta siempre la primera vez que se compone el componente en el que se incluye</span>.</p>
+<p><span class="negrita">Después solo se ejecutará (recompondrá) si cambia alguno de los parámetros que recibe.</span></p>
+<p>LaunchedEffect admite hasta tres parámetros key (key1, key2, key3) o un listado de keys.</p>
+
+<figure><img src="UD6/images/ud6-2023-12-03-23-09-36.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>En el ejemplo anterior, <span class="subrayado">el bloque solo se ejecutará una vez (al componerse por primera vez el componente) aunque se recomponga </span>
+  la función <span class="cursiva">SplashScreen</span> ya que el parámetro que recibe siempre tendrá el mismo valor (<span class="cursiva">true</span>).</p>
+
+  <p>Un bloque LaunchedEffect es una corrutina por lo que también <span class="negrita">permite ejecutar funciones de suspensión dentro de un componente @Composable</span>.</p>
+  
+<figure><img src="UD6/images/ud6-2023-12-03-23-10-32.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>Así, si el bloque se está ejecutando y sufre una recomposición, la corrutina que se estaba ejecutando se detiene y vuelve a empezar.</p>
+<p>La corrutina cancela su ejecución cuando el bloque LaunchedEffect abandona la composición (deja de estar en pantalla).</p>
+  
+<p>Aplicándolo al ejemplo anterior del login:</p>
+
+
+<figure><img src="UD6/images/ud6-2023-12-03-23-13-25.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>El bloque LaunchedEffect se ejecutará cada vez que cambie el estado message.</p>
+
+<p>Esta primera aproximación no funcionará correctamente porque el mensaje solo cambia cuando pasa de "<span class="cursiva">Usuario logueado!</span>"
+   a "<span class="cursiva">Error</span>" y viceversa. Por lo que si se produce un error y
+    al cambiar los datos se mantiene el error no se volverá a mostrar el mensaje.</p>
+
+<p>Para solucionarlo simplemente se debe vaciar <span class="negrita">message</span> tras mostrar el <span class="cursiva">Toast</span>.</p>
+
+<p>Ejemplo completo del Login:</p>
+<figure><img src="UD6/images/ud6-2023-12-03-23-15-45.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>RememberCoroutineScope</h3>
+
+<p><span class="negrita">RememberCoroutineScope</span> permite obtener un ámbito seguro (<span class="cursiva">scope</span>) 
+  donde poder ejecutar una corrutina.</p>
+<p>Se utiliza cuando se necesita ejecutar función de suspensión <span class="negrita">fuera del ámbito de un componente @Composable</span>
+   como por ejemplo dentro de <span class="cursiva">onClick</span>.</p>
+<p>No se puede usar <span class="negrita">LaunchedEffect</span> al no estar dentro del contexto de un componente <span class="negrita">@Composable</span>.</p>
+<figure><img src="UD6/images/ud6-2023-12-03-23-18-50.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En este caso se necesita el ámbito de una Corrutina.</p>
+
+<p>Primero se obtiene el ámbito de la corrutina con <span class="negrita">rememberCoroutineScope</span> y 
+  luego para poder ejecutar la corrutina se utiliza la función <span class="r-word">launch</span>.</p>
+<figure><img src="UD6/images/ud6-2023-12-03-23-20-33.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Este Effect Handler ya se ha utilizado para mover el scroll automáticamente</p>
+<figure><img src="UD6/images/ud6-2023-12-03-23-21-09.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Mover el scroll es una función de suspensión y al realizar esta acción al clicar un botón se necesita el ámbito de la corrutina.</p>
+
+<h3>derivedStateOf</h3>
+
+<p>El manejador <span class="r-word">derivedStateOf</span> permite crear un estado que dependa de uno o varios estados más.</p>
+<p>De esta manera se evitan recomposiciones extra innecesarias.</p>
+<p>Se podría decir que derivedStateOf no manda realizar recomposiciones hasta que el valor del estado sea diferente al valor anterior.</p>
+
+<p>Para entender mejor la necesidad de <span class="negrita">derivedStateOf</span> se va a estudiar el siguiente ejemplo:</p>
+<figure><img src="UD6/images/ud6-2023-12-03-23-23-19.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Cuando cambia el estado <span class="cursiva">username</span> se ejecuta la función <span class="cursiva">isUsernameValid</span>
+   que cambiará el valor de <span class="cursiva">buttonEnabled</span> y el botón se recompondrá cada vez que se introduzca una letra.</p>
+
+<p>¿Tiene sentido que se recomponga el botón si <span class="cursiva">buttonEnabled</span> es 
+  <span class="cursiva">true</span> y al introducir una letra más vuelve a ser <span class="cursiva">true</span>?</p>
+
+  <p>Al indicar que <span class="negrita">buttonEnabled</span> es un estado derivado de otro se evita recomponer demasiadas veces la vista.</p>
+  <figure><img src="UD6/images/ud6-2023-12-03-23-26-02.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+
+  <p>El botón solo se recompondrá cuando el valor de <span class="negrita">buttonEnabled</span> pase de true a false o viceversa.</p>
+  
+  <p>Si el valor de <span class="negrita">buttonEnabled</span> es true y al introducir una letra sigue siendo true no se recompondrá la vista.</p>
+  
+  </section><!-- End section Side Effects-->
+
+  <!--*********************************************************Arquitecturas Android***********************************************************-->
+  <section class="apartado">
+  <a name="sArquitecturasAndroid"></a>
+  <h2>Arquitecturas Android</h2>
+  
+<p>En el desarrollo de aplicaciones de cualquier tipo es muy importante la elección de la arquitectura a utilizar.</p>
+
+<p>Lo más habitual es utilizar una arquitectura que permita separar la lógica de la aplicación (programación) de las vistas (interfaz gráfica).</p>
+
+<p>De esta manera las vistas se encargan de mostrar la interfaz (pintar) y la lógica se puede separar en otros componentes donde se programa el funcionamiento de la aplicación.</p>
+
+<p>Con esta separación posteriormente será más fácil trabajar con la lógica, realizar cambios, hacer tests…</p>
+<p>Las arquitecturas que más se han utilizado en Android han sido:
+  <ul>
+    <li><span class="negrita">MVC</span> – Model View Controller</li>
+
+    <li><span class="negrita">MVP</span> – Model View Presenter</li>
+    
+    <li><span class="negrita">MVVM</span> – Model View ViewModel</li>
+  </ul>
+</p>
+
+<h3>MVC</h3>
+
+<span class="negrita">MVC -> Model View Controller (Modelo-Vista-Controlador):</span>
+
+<p>La arquitectura MVC promueve la organización de la aplicación en <span class="negrita">tres partes bien diferenciadas</span>
+   y <span class="negrita">débilmente acopladas</span>.
+  <ul>
+    <li><span class="negrita">Modelo</span>: en este componente se trabaja con los datos (accesos a la base de datos).</li>
+    <li><span class="negrita">Vista</span>: se encarga de organizar los datos obtenidos por el modelo y con ellos genera la interfaz gráfica que se muestra al usuario.</li>
+    <li><span class="negrita">Controlador</span>: se encarga de gestionar las peticiones a la aplicación.</li>
+  </ul></p>
+
+
+<p>Un <span class="subrayado">acoplamiento débil</span> indica que los cambios en una parte del código afectan muy poco al resto de partes.</p>
+
+<p>En el mejor caso, al usar el patrón MVC, un cambio no afectará en nada a otras partes.</p>
+
+<p>Existen muchas implementaciones de la arquitectura MVC, en la usada en Android tanto el controlador como la vista están definidos en el mismo lugar (Activity o Fragment) y además los dos dependen del modelo.</p>
+<figure><img src="UD6/images/ud6-2023-12-03-23-31-50.png" /><br><figcaption>MVC</figcaption></figure>
+<br>
+
+<p>Una de las desventajas de la arquitectura es que toda la responsabilidad recae en el mismo elemento (<span class="cursiva">Activity o Fragment</span>).</p>
+
+<p>Esto puede ocasionar errores de fluidez al haber una tarea pesada en el hilo principal.</p>
+
+<h3>MVP</h3>
+<p><span class="negrita">MVP -> Model View Presenter:</span></p>
+
+<p>Organiza mejor los archivos y cambia la forma en la que trabajan los tres componentes.
+  <ul>
+    <li><span class="negrita">Modelo</span>: igual que MVC.</li>
+    <li><span class="negrita">Vista</span>: el <span class="cursiva">Activity</span> o <span class="cursiva">Fragment</span> es considerado parte de la vista y 
+      ya no se sitúa junto al Controlador.</li>
+    <li><span class="negrita">Presenter</span>: similar al Controlador de MVC pero es el encargado de orquestar todo lo que sucede. 
+      Suele haber un Presenter por cada <span class="cursiva">Activity</span> o <span class="cursiva">Fragment</span>.</li>
+  </ul>
+</p>
+
+<figure><img src="UD6/images/ud6-2023-12-03-23-34-29.png" /><br><figcaption>MVP</figcaption></figure>
+<br>
+
+<h3>MVVM</h3>
+<p><span class="negrita">MVVM -> Model View ViewModel:</span>
+<ul>
+  <li><span class="negrita">Model</span>: igual que MVC.</li>
+
+  <li><span class="negrita">View</span>: responsable de la visualización de los datos.</li>
+  
+  <li><span class="negrita">ViewModel</span>: 
+  <ul>
+    <li>Envuelve al modelo y prepara los datos observables para la vista.</li>
+		<li>Proporciona enlaces a la vista para pasarle eventos al modelo.</li>
+		<li>Los cambios en él cambian automáticamente la vista y viceversa.</li>
+  </ul></li>
+</ul>
+</p>
+
+
+<p>El <span class="negrita">View Model</span> será el encargado de:
+  <ul>
+    <li>Responder a las interacciones en la vista</li>
+    <li>Acceder a los datos (model)</li>
+    <li>Informar a la vista de los cambios en los datos.</li>
+  </ul>
+</p>
+
+<p>Además, <span class="negrita">View Model sobrevive a los cambios de configuración</span> de la interfaz como son los cambios de orientación,
+  esto significa que la información que almacena el View Model se mantiene en todo momento.</p>
+
+<p class="sub-section">LiveData</p>
+
+<p>Aunque View Model es capaz de trabajar con estados tal y como se han utilizado hasta ahora, 
+  <span class="subrayado">se recomienda usar la <span class="negrita">clase LiveData</span> </span>debido a que está más optimizada para los ciclos de vida de la Activity.</p>
+
+<p><span class="negrita">LiveData</span> permite contener <span class="negrita">datos que pueden ser observados como si fuesen estados</span>.</p>
+
+<p>Esta diseñada específicamente para se utilizada en <span class="cursiva">Activities</span>, <span class="cursiva">Fragments</span> o 
+  <span class="cursiva">Services</span> de manera que <span class="negrita">solo notifica a los observadores si estos se están ejecutando</span>
+   (estado del ciclo de vida activo).</p>
+
+<p>Permite cambios de orientación del dispositivo sin pérdida de los datos observados.</p>
+
+<p>Android proporciona las clases <span class="negrita">LiveData</span> y <span class="negrita">MutableLiveData</span> para almacenar cualquier tipo de dato y poder observar sus cambios</p>
+
+<p class="sub-section">View Model y LiveData</p>
+
+<p>A partir de este momento:
+  <ul>
+    <li>Si un componente necesita un estado y ese estado no se necesita desde ningún otro punto de la aplicación, 
+      el componente contendrá el estado (stateful).</li>
+    <li>Si un componente necesita un estado y este estado se necesita en otros puntos de la aplicación,
+      el componente no contendrá el estado (stateless) y se suscribirá a un LiveData que le ofrezca el View Model.</li>
+  </ul>
+</p>
+
+ </section><!-- End section Arquitecturas Android-->
+
+ <!--*********************************************************Caso práctico***********************************************************-->
+ <section class="apartado">
+ <a name="sCasopractico"></a>
+ <h2>Caso práctico</h2>
+ 
+ 
+ 
+ </section><!-- End section Caso práctico-->
+
+ 
+  <!---BTM_MENU--->
+  <script src="../script/prism.js"></script>
+</body>
+
+</html>
