@@ -23,6 +23,7 @@
     </div>
     <div class="fila">
       <a href="#sCasopractico" title="4.- Caso práctico">4.- Caso práctico</a>      
+      <a href="#sActividades" title="5.- Actividades">5.- Actividades</a>      
     </div>
 
   </nav> <!-- BTM_MENU-->
@@ -37,7 +38,7 @@
     </div>
     <div class="fila">
       <a href="#sCasopractico" title="4.- Caso práctico">4.- Caso práctico</a>      
-      <a href="" class="relleno"></a><a href="" class="relleno"></a>
+      <a href="#sActividades" title="5.- Actividades">5.- Actividades</a>  <a href="" class="relleno"></a>
     </div>
   </div>
 
@@ -78,6 +79,26 @@
   <figure><img src="UD6/images/ud6-2023-12-03-20-00-23.png" /><br><figcaption>Android Studio notifica que una instrucción puede bloquear la ejecución de la función.</figcaption></figure>
   <br>
   
+  <h3>Cancelar corrutinas</h3>
+
+  <p>Mediante <span class="negrita">rememberCoroutineScope</span> y <span class="negrita">viewModelScope</span>
+   se pueden ejecutar corrutinas con <span class="negrita">launch</span> (entre otros builders)</p>
+  
+<p>Cuando la corrutina se ejectua dentro de un elemento <span class="cursiva">@Composable</span>, la corrutina se cancelará si la screen deja de verse en la pantalla.</p>
+
+<p>Con el método <span class="negrita">launch</span> se permita almacenar el identificador de la corrutina para posteriormente cancelarla si fuera necesario.
+  Esto es muy útil con las corrutinas ejecutadas dentro de un ViewModel.
+</p>
+
+<section><pre><code class="language-kotlin">var myCoroutinJob:Job = Job()
+myCoroutinJob = viewModelScope.launch{
+  //Acciones a realizar en la corrutina
+}
+
+....
+//Podemos cancelar la corrutina mediante su job. (Entre otras acciones)
+myCoroutinJob.cancel()</code></pre>
+</section><br><br>
 
   
   </section><!-- End section Corrutinas-->
@@ -332,10 +353,329 @@
  <section class="apartado">
  <a name="sCasopractico"></a>
  <h2>Caso práctico</h2>
+ <p>Vamos a seguir paso a paso cómo crear una aplicación usando <span class="negrita">ViewModel</span>, en este caso la aplicación será
+   un <span class="cursiva">Listado de libros</span>. Así pues lo primero que haremos será crear el proyecto en la carpeta seleccionada 
+   con la plantilla por defecto de compose</p>
+
+   <h3>Añadir dependencias</h3>
+
+<p>Tras crear el proyecto es necesario añadir las dependencias que se necesiten. En este caso añadiremos las siguientes:</p>
+
+<p>Ampliar la gama de iconos de material que vienen por defecto.</p>
+<section><pre><code class="language-kotlin">implementation("androidx.compose.material:material-icons-extended:1.5.4")</code></pre>
+</section><br>
+<p>Para gestionar la navegación.</p>
+<section><pre><code class="language-kotlin">implementation("androidx.navigation:navigation-compose:2.7.5")</code></pre>
+</section><br>
+
+<p>Finalmente, para poder usar <span class="negrita">LiveData</span> añadir la siguiente dependencia</p>
+<section><pre><code class="language-kotlin">implementation("androidx.compose.runtime:runtime-livedata:1.5.4")</code></pre>
+</section><br>
+<section class="marco-t inf">
+  <span class="icono info"> </span> Recuerda añadirlo en <span class="inline-file">build.gradle.kts</span> (Module) y sincronizar.
+  </section>
+<section class="marco-b"></section>
+     
+<h3>Modelo de datos</h3>
+ <p>Para almacenar los datos, en un paquete llamado <span class="inline-folder">model</span> se crea el archivo <span class="inline-file">Book.kt</span>
+   que contendrá una <span class="r-word">data class</span> que define el objeto <span class="d-word">Book</span> 
+   y un método estático para conseguir todos los libros</p>
  
+<section><pre><code class="language-kotlin">data class Book(
+    val title: String = "",
+    val author: String = "",
+    var favorite: Boolean = false,
+    var visible: Boolean = true,
+) {
+    companion object{
+        fun getData() : List<Book> {
+            return listOf(
+                Book("Ready Player One", "Ernest Cline"),
+                Book("El juego de Ender", "Orson Scott Card"),
+                Book("El señor de los anillos", "J. R. R. Tolkien"),
+                Book("La historia interminable", "Michael Ende"),
+                Book("Juego de tronos", "George R. R. Martin"),
+                Book("El color de la magia", "Terry Pratchett"),
+                Book("La sangre de los elfos", "Andrzej Sapkowski"),
+                Book("Dune", "Frank Herbert"),
+                Book("Una educación mortal: Primera lección de Escolomancia", "Naomi Novik"),
+                Book("El nombre del viento", "Patrick Rothfuss"),
+                Book("Harry Potter y la piedra filosofal", "J. K. Rowling"),
+                Book("La quinta ola", "Rick Yancey"),
+                Book("Las crónicas de Narnia", "C. S. Lewis"),
+            )
+        }
+    }
+}</code></pre>
+</section><br>
+<h3>View Model</h3>
+ <p>En un paquete llamado <span class="inline-folder">viewmodel</span> se crea el archivo <span class="inline-file">BookViewModel.kt</span>
+   que contendrá una <span class="r-word">class</span> para el <span class="negrita">View Model</span> con todos <span class="negrita">LiveData</span>
+    (estados) necesarios y los <span class="negrita">métodos para modificar dichos LiveData</span>.</p>
+
+    <section><pre><code class="language-kotlin">class BookViewModel : ViewModel() {
+  // Los LiveData (estados) solo deben de poder cambiar desde el View Model, por ello se declaran private.
+  // Para acceder al valor de los estados desde el exterior del View Model se crea una variable
+  //  no mutable que almacenará el mismo valor que la variable privada
+
+  // Lista de libros
+  private val _books = MutableLiveData&lt;List&lt;Book>>()
+  val books: LiveData&lt;List&lt;Book>> = _books
+
+  // Libro seleccionado
+  private val _selectedBook = MutableLiveData&lt;Book>()
+  val selectedBook: LiveData&lt;Book> = _selectedBook
+
+  // Variable para indicar que se están obteniendo los datos del repositorio
+  private var _isLoading = MutableLiveData&lt;Boolean>()
+  val isLoading: LiveData&lt;Boolean> = _isLoading
+
+  // Cuando instancia un objeto BookViewModel tras llamar al constructor se ejecuta el bloque init
+  init {
+      // Corrutina: coroutineScope
+      viewModelScope.launch {
+          _isLoading.value = true
+          delay(2000)
+          _books.value = Book.getData()
+          _isLoading.value = false
+      }
+  }
+
+  fun deleteBook(book: Book) {
+    // Con API o BBDD se mandaría el id y se borraría.
+    //  Por último se obtendría la lista actualizada y se actualizaría el LiveData
+
+    // En este caso se elimina el libro de la lista y se actualiza el LiveData
+    _books.value = _books.value?.filter { it != book }
+  }
+
+  // Al pulsar sobre un libro se almacena como seleccionado.
+  fun onBookClicked(book: Book) {
+        _selectedBook.value = book
+    }
+}</code></pre>
+    </section><br>
  
- 
+    <h3>Navegación y rutas</h3>
+
+    <p>En un paquete llamado <span class="inline-folder">navigation</span> se crean los archivos <span class="inline-file">Routes.kt</span>
+       y <span class="inline-file">Navigation.kt</span> donde se definirá la navegación de la aplicación.
+      
+      <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">Routes.kt</span>
+        </section>
+      <section class="marco-b">
+          <section><pre><code class="language-kotlin">sealed class Routes(val route: String) {
+    object MainScreen: Routes("main_screen")
+    object BookInfo: Routes("book_info_screen")
+}</code></pre>
+          </section>
+      </section>
+      <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">Navigation.kt</span>
+        </section>
+      <section class="marco-b">
+          <section><pre><code class="language-kotlin">@Composable
+fun Navigation(bookViewModel: BookViewModel) {
+  val navController = rememberNavController()
+  NavHost(
+      navController = navController,
+      startDestination = Routes.MainScreen.route,
+  ) {
+      composable(Routes.MainScreen.route) {
+          MainScreen(navController, bookViewModel)
+      }
+
+      composable(Routes.BookInfo.route) {
+          BookInfo(navController, bookViewModel)
+      }
+  }
+}</code></pre>
+          </section>
+      </section>
+      
+      </p>
+    
+  <h3>MainActivity</h3>
+  <p>En el archivo <span class="inline-file">MainActivity.kt</span> se crea un <span class="d-word">BookViewModel</span>
+     que se pasa al componente <span class="d-word">Navigation</span> que será el contenido de la <span class="cursiva">Activity</span>.</p>
+  
+<section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Si se necesita el ViewModel en una variable no puede declararse dentro de un componente @Composable
+        val bookViewModel by viewModels&lt;BookViewModel>()
+
+        setContent {
+            BooksViewModelTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    Navigation(bookViewModel)
+                    // Si solo se necesita el View Model en un lugar se puede declarar al llamar al componente
+                    //Navigation(BookViewModel())
+                }
+            }
+        }
+    }
+}</code></pre>
+</section><br>
+
+<h3>Pantalla Principal</h3>
+<p>En un paquete llamado <span class="inline-folder">screens</span> se crea el archivo <span class="inline-file">MainScreen.kt</span>
+   para la interfaz de la pantalla principal que mostrará el listado de libros.</p>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">MainScreen.kt</span>
+  </section>
+<section class="marco-b">
+  <figure><img src="UD6/images/ud6-2023-12-04-12-53-50.png" /><br><figcaption>MainScreen</figcaption></figure>
+</section>
+
+<h3>Pantalla Información</h3>
+<p>En un paquete llamado <span class="inline-folder">screens</span> se crea el archivo <span class="inline-file">BookInfo.kt</span>
+   para para mostrar la información detallada del libro de la lista sobre  el que se pulse.</p>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">BookInfo.kt</span>
+  </section>
+<section class="marco-b">
+  <figure><img src="UD6/images/ud6-2023-12-04-12-56-45.png" /><br><figcaption>BookInfo</figcaption></figure>   
+</section>
+  
+
+<h3>Problematica con ViewModel y LiveData</h3>
+
+<p>Cuando el <span class="negrita">LiveData</span> almacena una lista de objetos, aunque se modifique la lista los cambios no se notifican a los observadores 
+  por lo que no se realiza la composición:</p>
+<figure><img src="UD6/images/ud6-2023-12-04-12-59-09.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En estas situaciones ocurren porque aunque se haya modificado la lista, la instancia es la misma, para solucionar esto se debe crear una lista nueva 
+  y se deben realizar copias de los elementos de la lista, modificarlos y añadirlos a la lista nueva</p>
+
+<figure><img src="UD6/images/ud6-2023-12-04-12-59-55.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+
  </section><!-- End section Caso práctico-->
+
+ <!--*********************************************************Actividades***********************************************************-->
+ <section class="apartado oculto">
+ <a name="sActividades"></a>
+ <h2>Actividades</h2>
+ 
+ <div class="tarea">
+  <p><span class="negrita">Actividad 1</span></p>
+  <p>Replica el ejemplo de la lista de libros de los apuntes, pero en la ventana principal añade en la parte inferior una foto tuya tipo carnet
+     y tu nombre y apellido.</p>
+     <p>
+      Además, añade lo necesario para poder marcar/desmarcar como favorito un elemento desde la screen de información del elemento.
+      En la screen principal se debe mostrar si el elemento está marcado como favorito.
+     </p>
+     <p>Debería quedar similar a esto:</p>
+<figure><img src="UD6/images/BookListDemo.gif" /><br><figcaption></figcaption></figure>
+<br>
+
+     <p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2324/tree/master/UD6/BooksViewModel">Aquí</a> tienes una posible implementación. 
+    Nota que se ha añadido una elemento de búsqueda.</p>
+     
+ </div>
+<br>
+<hr><br>
+ <a id="P04" href="https://aules.edu.gva.es/fp/mod/assign/view.php?id=5408111" target="_blank" class="tarea">
+  <p><span class="negrita">Práctica 4</span></p>
+
+<p>Crea un proyecto en Android Studio llamado <span class="negrita">WorkoutTuNombre</span>.</p>
+
+<p>La aplicación permitirá al usuario introducir su nombre y el número de repeticiones para realizar series de ejercicios. 
+  Cuando el usuario pulse el botón de comenzar se mostrará un gif con el ejercicio a realizar e irá descontando repeticiones (cada 2 segundos), 
+  al llegar a cero cambiará el gif del ejercicio a realizar y volverá a empezar la cuenta de repeticiones.</p>
+
+<p>La aplicación tendrá dos ventanas y se debe usar rutas y navegación.</p>
+
+
+<p><span class="negrita">Ventana principal</span>:
+<ul>
+  <li>Una frase motivadora.</li>
+  <li>Un campo para que el usuario introduzca su nombre.</li>
+  <li>Algún método mediante el cual el usuario pueda introducir el número de repeticiones para los ejercicios. No se deben permitir números negativos. No tiene sentido realizar una única repetición así que una opción sería que como mínimo haya 3 repeticiones para poder comenzar.</li>
+  <li>Un botón para navegar a la siguiente ventana. Este botón no debe estar activo a menos que el campo del nombre tenga un valor.</li>
+  <li>En la parte inferior una foto tuya tipo carnet (actual) y tu nombre y apellido.</li>
+</ul></p>
+
+<p><span class="negrita">Ventana ejercicio</span>:
+<ul>
+  <li>Debe aparecer el nombre del usuario.</li>
+  <li>El número de repeticiones.</li>
+  <li>Un espacio donde aparecerá la imagen con el ejercicio a realizar.</li>
+  <li>Un botón para comenzar el ejercicio.</li>
+  <li>Un botón para volver a la ventana anterior (popBackStack).</li>
+</ul></p>
+
+
+<p>Para que los datos estén disponibles en las dos ventanas se debe usar un ViewModel.</p>
+
+
+<p><span class="negrita">ViewModel</span>:</p>
+<p>En el ViewModel debe haber los <span class="negrita">LiveData</span> para almacenar los datos y todos los métodos necesarios para el funcionamiento de la aplicación.</p>
+
+<p>Los datos que se necesitan en el ViewModel son: "nombre de usuario", "número de repeticiones", "ejercicio actual" (para notificar del ejercicio que se debe realizar)
+   y "haciendo ejercicio" (para indicar que se está realizando ejercicio).</p>
+
+
+<p>Los métodos necesarios en el <span class="negrita">ViewModel</span> son: 
+  <ul>
+    <li>uno para actualizar el nombre de usuario</li>
+    <li>uno para actualizar el número de repeticiones</li>
+    <li>uno para parar el ejercicio</li>
+    <li>uno para empezar el ejercicio.</li>
+  </ul>
+  
+</p>
+
+
+<p>A continuación, se muestra un posible algoritmo para el método comenzar el ejercicio:
+  <ul>
+    <li>Crear una lista de drawables con todos los gifs de los ejercicios.</li>
+    <li>Actualizar "haciendo ejercicio" para indicar que se está realizando ejercicio.</li>
+    <li>Actualizar "ejercicio actual" con un drawable aleatorio de la lista creada anteriormente.</li>
+    <li>Corrutina con un bucle que se repetirá mientras "haciendo ejercicio" sea verdadero:</li>
+     <li>Espera de 2 segundos.</li>
+     <li>Restar uno a "número de repeticiones".</li>
+   <li>Si "numero de repeticiones" es cero reinicia "número de repeticiones" y actualiza "ejercicio actual" con un drawable aleatorio de la lista.</li>
+  </ul>
+</p>
+
+ 
+
+<p>Se pueden crear más <span class="negrita">LiveData</span> y métodos si se considera necesario.</p>
+
+
+<p>Instrucciones para la entrega:
+  <ul>
+    <li>Para la ejecución de la aplicación si estuviera en marcha.</li>
+    <li>Pulsa la opción del menú: Build -> Clean Project.</li>
+    <li>Cierra Android Studio.</li>
+    <li>Comprime la carpeta del proyecto en un archivo rar o zip. (Seleccionando la carpeta. No los archivos de dentro de ella).</li>
+    <li>Adjunta el archivo comprimido a la tarea.</li>
+  </ul>
+</p>
+
+<p>Aquí un ejemplo de como podría quedar la App</p>
+<figure><img src="UD6/images/WorkoutDemo.gif" /><br><figcaption></figcaption></figure>
+<br>
+
+
+   
+
+ </a>
+ 
+ </section><!-- End section Actividades-->
 
  
   <!---BTM_MENU--->
