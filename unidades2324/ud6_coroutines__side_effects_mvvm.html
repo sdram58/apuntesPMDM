@@ -78,7 +78,37 @@
 
   <figure><img src="UD6/images/ud6-2023-12-03-20-00-23.png" /><br><figcaption>Android Studio notifica que una instrucción puede bloquear la ejecución de la función.</figcaption></figure>
   <br>
+
+  <h3>Coroutine Context</h3>
+  <p>Define, entre otras cosas, el trabajo y el dispatcher (conjuntos de hilos) que se usarán para realizar la tarea</p>
+  <section><pre><code class="language-kotlin">var job=Job()
+val coroutineContext: CoroutineContext = Dispatchers.IO + job
+
+launch(coroutineContext){
+  //Acciones
+}
+</code></pre>
+  </section><br>
+
+  <h3>Coroutine Scope</h3>
+
+  <p>Estable el ámbito de ejecución de la corrutina, es decir, dónde va a usarse la corrutina</p>
+  <section><pre><code class="language-kotlin">var job=Job()
+val coroutineContext: CoroutineContext = Dispatchers.IO + job
+val coroutineScope = CoroutineScope(coroutineContext)
+
+coroutineScope.launch{
+  //Acciones
+}
+....
+coroutineScope.cancel("....")
+</code></pre>
+  </section><br>
+
+  <p>Lo normal es que el <span class="negrita">CoroutineScope</span>  nos venga dado
+     (<span class="negrita">rememberCoroutineScope</span> , <span class="negrita">viewModelScope</span>, ...) en la parte que la usemos, pero podemos crear el nuestro</p>
   
+
   <h3>Cancelar corrutinas</h3>
 
   <p>Mediante <span class="negrita">rememberCoroutineScope</span> y <span class="negrita">viewModelScope</span>
@@ -98,7 +128,40 @@ myCoroutinJob = viewModelScope.launch{
 ....
 //Podemos cancelar la corrutina mediante su job. (Entre otras acciones)
 myCoroutinJob.cancel()</code></pre>
-</section><br><br>
+</section><br>
+
+<h3>Peticiones asíncronas</h3>
+
+<p>Nos permiten ejecutar varias acciones en segundo plano y esperar a ellas a la vez, evitamos pérdida de tiempo
+  innecesaria ya que se ejecutan en concurrente.
+</p>
+
+<section><pre><code class="language-kotlin">//runBlocking nos crea una corrutina que bloquea el hilo hasta que terminen las otras
+//Su uso está solo aconsejado para pruebas.
+fun main() = runBlocking{
+    //Ojo no es un entero, es un deferred
+    val datoA = async{
+        println("Empieza A")
+        delay(2000)
+        println("Termina A")
+        25
+    }
+
+    //Ojo no es un entero, es un deferred
+    val datoB = async{
+        println("Empieza B")
+        delay(4000)
+        println("Termina B")
+        60
+    }
+
+    //Esperamos a que terminen los dos, al ser deferred usamos el await()
+    val total = datoA.await() + datoB.await()
+
+    println("${datoA.await()} + ${datoB.await()} = $total")
+}</code></pre>
+</section><br>
+
 
   
   </section><!-- End section Corrutinas-->
