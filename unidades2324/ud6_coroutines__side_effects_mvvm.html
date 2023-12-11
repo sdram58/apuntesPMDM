@@ -729,6 +729,42 @@ fun Navigation(bookViewModel: BookViewModel) {
   </ul>
 </p>
 
+<p>Para usar un GIF puedes usar el siguiente @Composable al que se le pasa un entero (referencia al drawable):
+<section><pre><code class="language-kotlin">@Composable
+fun GifImage(gifImage: Int) {
+    val imageLoader = ImageLoader.Builder(LocalContext.current)
+        .components {
+            if (Build.VERSION.SDK_INT >= 28) {
+                add(ImageDecoderDecoder.Factory())
+            } else {
+                add(GifDecoder.Factory())
+            }
+        }
+        .build()
+
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(data = gifImage)
+                .apply(
+                    block = fun ImageRequest.Builder.() {
+                        size(Size.ORIGINAL)
+                    }
+                )
+                .build(),
+            imageLoader = imageLoader
+        ),
+        contentDescription = null,
+    )
+}</code></pre>
+</section><br><br>
+</p>
+<p>Recuerda añadir las siguientes dependencias:
+  <section><pre><code class="language-kotlin">implementation("io.coil-kt:coil-compose:2.5.0")
+implementation("io.coil-kt:coil-gif:2.5.0")</code></pre>
+  </section><br><br>
+</p>
+
 <p>Aquí un ejemplo de como podría quedar la App</p>
 <figure><img src="UD6/images/WorkoutDemo.gif" /><br><figcaption></figcaption></figure>
 <br>
