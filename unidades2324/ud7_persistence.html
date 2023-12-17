@@ -17,8 +17,16 @@
 
   <nav id="menu-lateral" class="main-menu-lateral oculto">
     <div class="fila">
-      <a href="#sCorrutinas" title="1.- Corrutinas">1.- Corrutinas</a>
-        
+      <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
+      <a href="#sFileSystem" title="2.- File System">2.- File System</a>
+      <a href="#sAlamacenamientoEspecíficodelaapp" title="3.- Alamacenamiento específico de la app">3.- Alamacenamiento específico de la app</a>
+      
+    </div>
+    
+    <div class="fila">
+      <a href="#sAccesoalalmacenamientoexterno" title="4.- Acceso al almacenamiento externo">4.- Acceso al almacenamiento externo</a>
+      <a href="#sDataStore" title="5.- DataStore">5.- DataStore</a>
+
     </div>
 
   </nav> <!-- BTM_MENU-->
@@ -27,13 +35,484 @@
 
   <div class="main-menu">
     <div class="fila">
-      <a href="#sCorrutinas" title="1.- Corrutinas">1.- Corrutinas</a>
-        
+      <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
+      <a href="#sFileSystem" title="2.- File System">2.- File System</a>
+      <a href="#sAlamacenamientoEspecíficodelaapp" title="3.- Alamacenamiento específico de la app">3.- Alamacenamiento específico de la app</a>
     </div>
   </div>
 
   
+  <!--*********************************************************Introducción***********************************************************-->
+  <section class="apartado">
+  <a name="sIntroduccion"></a>
+  <h2>Introducción</h2>
+  
+<p>La persistencia de datos es un asunto muy importante en las aplicaciones móviles.</p>
+<p>La primera razón es conocida por todos y ocurre cuando se cambia la orientación/configuración del dispositivo, esto se ha solucionado con el uso de estados 
+  y de <span class="cursiva">ViewModel</span>.</p>
+<p>Pero existen otras situaciones donde es interesante poder guardar los datos para su posterior uso.</p>
+<p>En esta unidad se estudiarán las siguientes herramientas para implementar la persistencia de datos:
+  <ul>
+    <li><span class="negrita">File System</span>.</li>
+    <li><span class="negrita">Datastore</span>.</li>
+    <li><span class="negrita">Room</span>.</li>
+  </ul>
+</p>
+ 
+  
+  </section><!-- End section Introducción-->
 
+  <!--*********************************************************File System***********************************************************-->
+  <section class="apartado">
+  <a name="sFileSystem"></a>
+  <h2>File System</h2>
+  
+  <p>Como en cualquier sistema operativo, Android usa un sistema de archivos (File System).</p>
+  
+<p>Este sistema de archivos permite varias opciones para guardar los datos de la aplicación:
+  <ul>
+    <li>Almacenamiento específico de la aplicación (<span class="cursiva">App-specific storage</span>).</li>
+    <li>Almacenamiento compartido (<span class="cursiva">Shared storage</span>).</li>
+    <li>Preferencias.</li>
+    <li>Bases de datos.</li>
+  </ul>
+</p>
+
+<h3>Almacenamiento específico de la aplicación (App-specific storage)</h3>
+<p>Almacena archivos destinados solo para el uso desde la propia 	aplicación.</p>
+<p>Se pueden crear carpetas dedicadas en el almacenamiento interno y en el externo.</p>
+<p>Se debe usar el almacenamiento interno para información confidencial (otras Apps no tendrán acceso a él).</p>
+
+<h3>Almacenamiento compartido (Shared storage)</h3>
+  <p>Almacena archivos que la aplicación puede compartir con otras aplicaciones como son 	documentos, media (audio, vídeo…) u otros archivos.</p>
+  
+
+  <h3>Preferencias</h3>
+  <p>Almacenamiento privado para la aplicación. Permite pares clave-valor.</p>
+
+  <h3>Bases de datos</h3>
+
+  <p>Almacena datos estructurados de manera privada usando la librería Room (framework que usa SQLite)</p>
+  
+
+  <p>En la <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage?hl=es-419">documentación oficial</a> se puede  consultar la siguiente tabla resumen:</p>
+  
+  <figure><img src="UD7/images/ud7-2023-12-17-20-11-08.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <figure><img src="UD7/images/ud7-2023-12-17-20-13-05.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <h3>¿Qué opción elegir?</h3>
+<p>A la hora de elegir un tipo de almacenamiento entran diferentes variables:
+  <ul>
+    <li><span class="negrita">Tamaño de los datos a almacenar</span>: el almacenamiento interno tiene espacio limitado.</li>
+    <li><span class="negrita">Asegurar el acceso a los datos</span>: mejor el almacenamiento interno o una base de datos ya que no siempre se tiene acceso al almacenamiento externo.</li>
+    <li><span class="negrita">Tipo de datos</span>: si no se deben compartir los archivos se debe usar el almacenamiento específico de la aplicación.</li>
+    <li><span class="negrita">Privacidad de los datos</span>: si se trabaja con datos sensibles se deben almacenar en las preferencias, en una base de datos o el almacenamiento interno. Este último además oculta los datos a los usuarios.</li>
+  </ul>
+</p>
+
+
+
+  
+  </section><!-- End section File System-->
+
+  <!--*********************************************************Alamacenamiento Específico de la app***********************************************************-->
+  <section class="apartado">
+  <a name="sAlamacenamientoEspecíficodelaapp"></a>
+  <h2>Alamacenamiento Específico de la app</h2>
+  
+  <p>Android ofrece las siguientes localizaciones destinadas para uso exclusivo de la aplicación.</p>  
+
+<p>Directorios en el <span class="negrita">almacenamiento interno</span>:
+  <ul>
+    <li>Android evita que otras aplicaciones accedan a estas ubicaciones.</li>
+    <li>A partir de Android 10 (API 29) y superiores estas ubicaciones están encriptadas.</li>
+    <li>Son un buen lugar para almacenar datos sensibles.</li>
+    <li>Suelen tener poca capacidad.</li>
+  </ul>
+</p>
+
+
+
+<p>Directorios en el <span class="negrita">almacenamiento externo</span>:
+<ul>
+  <li>Son ubicaciones destinadas al uso exclusivo de la aplicación aunque otras aplicaciones con los permisos adecuados podrían acceder a esas ubicaciones.</li>
+  <li>Si se van a crear archivos destinados a ser compartidos con otras aplicaciones, estos deberían crearse en el espacio compartido del almacenamiento externo.</li>
+</ul></p>
+
+
+<p>Las dos opciones incluyen un directorio para almacenar <span class="negrita">archivos persistentes</span> y otro para <span class="negrita">caché</span>.</p>
+
+<h3>Acceso a archivos del almacenamiento interno</h3>
+<p>Los archivos comunes y persistentes se encuentran en un directorio al que se puede acceder utilizando la propiedad 
+  <span class="r-word">filesDir</span> de un objeto <span class="negrita">contexto</span> (como ya se ha visto anteriormente se puede obtener 
+  el contexto de diferentes maneras).</p>
+
+<p>Mediante la API <span class="r-word">File</span> (similar a Java) se puede acceder a los archivos y almacenar archivos.</p>
+
+<p>Para que el rendimiento de la aplicación no se vea afectado no se debe abrir y cerrar el mismo archivo muchas veces.</p>
+
+<p>A continuación se muestra como abrir un archivo con la API:</p>
+
+<figure><img src="UD7/images/ud7-2023-12-17-20-28-18.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p class="sub-section">Almacenar un archivo usando un Stream</p>
+<p>Como alternativa a la API File se puede utilizar el método <span class="r-word">openFileOutput()</span> para conseguir un objeto
+   <span class="r-word">FileOutputStream</span> que permite escribir en un archivo dentro del directorio <span class="r-word">filesDir</span>.</p>
+<figure><img src="UD7/images/ud7-2023-12-17-20-29-32.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Desde Android Studio desde el <span class="negrita">Device File Explorer</span> se pueden ver los archivo creados:
+  <ul>
+    <li><span class="negrita">data -> data -> nombredelpaquete -> files</span></li>
+  </ul>
+</p>
+<figure><img src="UD7/images/ud7-2023-12-17-20-41-46.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<figure><img src="UD7/images/ud7-2023-12-17-20-42-26.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En versiones Android 7 (API 24) o superiores en el caso de no indicar el <span class="negrita">Context.MODE_PRIVATE</span> se obtendrá una excepción de seguridad</p>
+
+<figure><img src="UD7/images/ud7-2023-12-17-20-43-21.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Si se quiere permitir que otras aplicaciones accedan a los archivos del almacenamiento interno se debe usar un 
+<a class="enlace" target="_blank" href="https://developer.android.com/reference/androidx/core/content/FileProvider">FileProvider</a> 
+al que se le debe indicar el atributo <span class="negrita">FLAG_GRANT_READ_URI_PERMISSION</span>.</p>
+
+<p>Para leer el contenido de un archivo se usa el método <span class="r-word">openFileOutput()</span> 
+  para obtener un objeto <span class="r-word">BufferedReader</span> que devuelva una secuencia de cadenas (una por cada línea del archivo):</p>
+
+<figure><img src="UD7/images/ud7-2023-12-17-20-46-16.png" /><br><figcaption></figcaption></figure>
+<br>
+	
+<p class="sub-section">Visualizar lista de archivos</p>
+
+<p>Se puede obtener un array con los nombres de los archivos del directorio filesDir utilizando el método <span class="r-word">fileList()</span>:</p>
+
+<figure><img src="UD7/images/ud7-2023-12-17-20-47-07.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p class="sub-section">Subdirectorios</p>
+
+<p>Si es necesario se pueden crear subdirectorios con el método <span class="r-word">getDir()</span>.</p>
+
+<p>Este método también permite acceder a los subdirectorios creados.</p>
+<figure><img src="UD7/images/ud7-2023-12-17-20-49-31.png" /><br><figcaption></figcaption></figure><br>
+
+<p>Este método tiene un pequeño inconveniente y es que crea el directorio con el prefijo <span class="negrita">app_</span>
+   y fuera del directorio <span class="negrita">files</span>:</p>
+
+<figure><img src="UD7/images/ud7-2023-12-17-20-50-18.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Para crear subdirectorios dentro de <span class="negrita">files</span> se pueden utilizar las funciones de la clase File como en Java.</p>
+<figure><img src="UD7/images/ud7-2023-12-17-21-33-18.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD7/images/ud7-2023-12-17-21-33-45.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<h3>Cache</h3>
+<p>Si se tienen que almacenar temporalmente archivos con datos sensibles se deben almacenar en el directorio <span class="inline-folder">chache</span>.</p>
+
+<p>Para crear un archivo en almacenamiento cache se utiliza 
+  <span class="r-word">File.createTempFile()</span>, se debe indicar el prefijo (nombre), 
+  el sufijo (extensión, por defecto .tmp) y un objeto contexto:</p>
+<figure><img src="UD7/images/ud7-2023-12-17-21-38-17.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Para acceder a los archivos ubicados en el directorio cache se debe usar la propiedad <span class="r-word">cacheDir</span> sobre un contexto y la clase 
+  <span class="negrita">File</span>:</p>
+
+<figure><img src="UD7/images/ud7-2023-12-17-21-38-53.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+
+<p>La gestión del directorio <span class="inline-folder">cache</span> la gestiona Android, 
+  si la aplicación se queda sin espacio entonces Android eliminará archivos almacenados en ese directorio.</p>
+
+<p>Es posible eliminar archivos del directorio cache usando uno de los siguientes métodos.
+  <ul>
+    <li>Usando un objeto File y el método delete:
+<figure><img src="UD7/images/ud7-2023-12-17-21-39-27.png" /><br><figcaption></figcaption></figure>
+<br>
+
+    </li>
+    <li>Usando el método <span class="negrita">deleteFile</span> sobre el contexto:
+<figure><img src="UD7/images/ud7-2023-12-17-21-39-49.png" /><br><figcaption></figcaption></figure>
+<br>
+
+    </li>
+  </ul>
+</p>
+
+  
+  </section><!-- End section Alamacenamiento Específico de la app-->
+
+  <!--*********************************************************Acceso al almacenamiento externo***********************************************************-->
+  <section class="apartado">
+  <a name="sAccesoalalmacenamientoexterno"></a>
+  <h2>Acceso al almacenamiento externo</h2>
+<p>Si se necesita un espacio extra para almacenar archivos específicos de la aplicación se puede usar el almacenamiento externo siempre que esté disponible.</p>
+
+<p>El almacenamiento externo puede ser una partición en la memoria interna pero también puede ubicarse en un dispositivo de almacenamiento externo conectado como puede ser una tarjeta SD o incluso un pendrive conectado al USB.</p>
+
+<p>En las ocasiones en las que el almacenamiento externo se ubica en un dispositivo de almacenamiento conectado, este almacenamiento puede dejar de estar disponible, por ejemplo una tarjeta SD que se extrae del dispositivo.</p>
+
+<p>Así que no es conveniente crear en el almacenamiento externo archivos de los que dependa el funcionamiento correcto de la aplicación.</p>
+
+<h3>Verificar la disponibilidad del almacenamiento externo</h3>
+<p>Es importante verificar que el almacenamiento externo esté disponible antes de intentar leer o guardar información en él.</p>
+
+<p>Mediante la clase <span class="r-word">Environment</span> y su método <span class="r-word">getExternalStoragareState</span>
+   se puede consultar la disponibilidad del almacenamiento externo así como los permisos sobre él.</p>
+
+<p>Si el estado es <span class="d-word">MEDIA_MOUNTED</span> se tendrán permisos de <span class="negrita">lectura y escritura</span>, 
+  si el estado es <span class="d-word">MEDIA_MOUNTED_READ_ONLY</span> solo se tendrán permisos de <span class="negrita">lectura</span>.</p>
+<p>Una buena manera de comprobar esto sería con las funciones siguientes:</p>
+
+<figure><img src="UD7/images/ud7-2023-12-17-22-53-25.png" /><br><figcaption></figcaption></figure>
+<br>
+<h3>Seleccionar una ubicación del almacenamiento externo</h3>
+
+<p>Como el almacenamiento externo puede estar tanto en la memoria interna como en un dispositivo conectado, 
+  a la hora de almacenar información en el almacenamiento externo se debe elegir la ubicación.</p>
+<p>Para acceder a las ubicaciones se debe usar la clase <span class="r-word">ContextCompat</span> y su método <span class="r-word">getExternalFilesDirs</span>.</p>
+<p>De esta manera se obtendrá un array con todos los volúmenes disponibles.</p>
+<p>Por norma general el primer elemento del array será el volumen principal de almacenamiento externo 
+  y es el que se debe usar a menos que esté lleno o no disponible.</p>
+
+  <p>Con el siguiente código se obtendría la ruta del volumen principal del almacenamiento externo.</p>
+
+<figure><img src="UD7/images/ud7-2023-12-17-22-59-17.png" /><br><figcaption></figcaption></figure>
+<br>
+
+  <p>Comprobando el tamaño del array <span class="negrita">externalStorageVolumes</span> se podría conocer si existe algún volumen más.</p>
+  
+  <p>En el emulador usado en clase la posición 1 del array es la emulación de una tarjeta SD conectada al dispositivo virtual.</p>
+
+  <h3>Acceder a los archivos del almacenamiento externo</h3>
+    <p>Para acceder a los archivos del almacenamiento externo se debe usar el método <span class="negrita">getExternalFilesDir</span>
+       de un objeto <span class="negrita">contexto</span>.</p>>
+
+  <p>Para que el rendimiento de la aplicación no se vea afectado no se debe abrir y cerrar el mismo archivo muchas veces.</p>
+
+<figure><img src="UD7/images/ud7-2023-12-17-23-14-08.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>En Android 11 (API 30) y superiores no se permite crear subdirectorios en el almacenamiento externo.</p>
+
+<h3>Crear archivos en la caché del almacenamiento externo</h3>
+
+
+<p>Para crear un archivo en la caché del almacenamiento externo se utiliza la propiedad <span class="r-word">externalCacheDir</span> de un objeto
+   <span class="negrita">contexto</span>:</p>
+
+   <figure><img src="UD7/images/ud7-2023-12-17-23-15-40.png" /><br><figcaption></figcaption></figure>
+   <br>
+   
+<h3>Eliminar archivos de la caché del almacenamiento externo</h3>
+
+<p>Se debe usar el método <span class="r-word">delete</span> sobre un objeto de la clase <span class="negrita">File</span> que represente al archivo a borrar.</p>
+<figure><img src="UD7/images/ud7-2023-12-17-23-16-13.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Contenido multimedia</h3>
+
+<p>Si la aplicación funciona con archivos multimedia que no son indispensables pero sí aportan valor a la experiencia de usuario, 
+  lo mejor es almacenarlos en el almacenamiento externo:</p>
+<figure><img src="UD7/images/ud7-2023-12-17-23-17-30.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Para el buen funcionamiento de la aplicación es importante utilizar los nombres de directorios que aporta la API 
+  con las constantes de la clase <span class="r-word">Environment</span>:</p>
+<figure><img src="UD7/images/ud7-2023-12-17-23-19-32.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p><a class="enlace" target="_blank" href="https://developer.android.com/reference/android/os/Environment#fields">https://developer.android.com/reference/android/os/Environment#fields</a></p>
+
+<p>Si ninguno de los nombres predefinidos se adapta a las necesidades de la aplicación se puede pasar null al método
+   <span class="r-word">getExternalFilesDir</span>.</p>
+
+<p>De esta manera se almacenarán los archivos directamente en el directorio raíz del almacenamiento externo específico de la aplicación.</p>
+
+
+<h3>Consulta espacio libre</h3>
+<p>Algunos dispositivos tienen un espacio de almacenamiento muy limitado por lo que
+   al desarrollar una aplicación se debe tener especial cuidado con el espacio que ocupa la aplicación.</p>
+
+<p>Una buena práctica antes de almacenar un archivo es comprobar si el archivo cabe en el espacio disponible.</p>
+
+<p>Pero no es necesario comprobar el espacio libre entre otras razones porque hay veces que no se sabe cuánto va a ocupar el archivo, 
+  en estos casos se puede intentar guardar el archivo capturando la excepción <span class="r-word">IOException</span>
+   que se lanzará si no se consigue almacenar el archivo.</p>
+
+<p>Para comprobar el espacio libre que puede proporcionar el dispositivo se utiliza el método <span class="r-word">getAllocatatableBytes</span>.</p>
+
+<p>Este método en ocasiones puede mostrar más capacidad de la real debido a que es posible que el sistema haya detectado archivos 
+  en la caché de otras aplicaciones y si fuera necesario los borraría.</p>
+
+<p>Si hay espacio suficiente se debe usar el método <span class="r-word">allocateBytes</span>. 
+  Si no se usa este método la app puede solicitar al usuario que elimine archivos o que borre toda la caché del dispositivo.</p>
+
+<p>El siguiente código muestra cómo obtener el espacio libre del dispositivo:</p>
+<figure><img src="UD7/images/ud7-2023-12-17-23-23-24.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+
+  </section><!-- End section Acceso al almacenamiento externo-->
+
+
+  <!--*********************************************************DataStore***********************************************************-->
+  <section class="apartado">
+  <a name="sDataStore"></a>
+  <h2>DataStore</h2>
+  
+  <p><span class="d-word">DataStore</span> permite almacenar en el dispositivo conjuntos de datos pequeños o simples.</p>
+
+
+<p>Los datos almacenados con <span class="negrita">DataStore</span> se guardan en el almacenamiento interno específico de la aplicación 
+  por lo que ninguna otra aplicación podrá acceder a ellos.</p>
+
+<p>DataStore tiene dos implementaciones:
+<ul>
+  <li><span class="negrita">Preferences DataStore</span>: almacenar pares clave-valor.</li>
+<li><span class="negrita">Proto DataStore</span>: almacenar objetos (instancias de clases).</li>
+</ul>
+</p>
+
+
+<p>Debido a la complejidad de desarrollo de <span class="negrita">Proto DataStore</span>, en clase solo se estudiará <span class="negrita">Preferences DataStore</span>.</p>
+
+<p>DataStore permite crear archivos para guardar información, generalmente preferencias.
+
+<p>La ventaja de <span class="negrita">DataStore</span> radica en que es el sistema operativo el que maneja toda la gestión de los archivos de preferencias.</p>
+
+<p><span class="negrita">Reglas para usar DataStore</span>:
+  <ul>
+    <li>Solo mantener una instancia de DataStore abierta sobre el mismo archivo.</li>
+<li>El tipo genérico de DataStore debe ser inmutable.</li>
+<li>No mezclar nunca SingleProcessDataStore y MultiProcessDataStore para el mismo archivo.</li>
+  </ul>
+</p>
+<h3>Preferences DataStore</h3>
+<p><span class="negrita">Preferences DataStore</span> permite almacenar pares clave-valor.</p>
+
+<p>Los datos que se pueden almacenar serán de tipos básicos:
+  <ul>
+    <li>Int</li>
+    <li>Double</li>
+    <li>String</li>
+    <li>Boolean</li>
+    <li>Float</li>
+    <li>Long</li>
+  </ul>
+</p>
+
+<p>Además se ofrece la posibilidad de almacenar un conjunto de cadenas:
+  <ul>
+    <li>Set&lt;String></li>
+  </ul>
+</p>
+
+<p>Lo más habitual es que las preferencias se guarden y recuperen desde el <span class="cursiva">ViewModel</span> para poder mantener las variables de estado de manera correcta.</p>
+
+<p>Así, para mantener una buena estructura de archivos en el proyecto se recomienda crear un paquete llamado <span class="inline-folder">preferences</span> 
+  donde se ubicará una la clase en la que se implementará toda la lógica de guardado y recuperación de los valores de las preferencias.</p>
+
+<p>Esta nueva clase se utilizará desde el <span class="cursiva">ViewModel</span> correspondiente.</p>
+
+<p><span class="negrita">Preferences DataStore</span> hace uso de corrutinas y de Flows (flujos de datos).</p>
+
+<p>Los <span class="negrita">Flow</span> permiten emitir varios valores de manera secuencial que se recogerán desde una corrutina, por ejemplo, 
+  se pueden usar para recibir actualizaciones en vivo desde una base de datos.</p>
+
+<p>Un <span class="negrita">Flow</span> es similar a un Iterator pero que usa funciones de suspensión para producir y consumir los valores.</p>
+
+<p>En Preferences DataStore se usa un Flow para recuperar los datos.</p>
+
+<p>Preferences DataStore también necesita el contexto de la aplicación para la correcta gestión de los archivos de preferencias.</p>
+
+<h3>Creación de Ejemplo</h3>
+<p>El primer paso para poder usar Preferences DataStore es añadir la dependencia en <span class="inline-file">build.gradle.kts (Module)</span> y sincronizar</p>
+<section><pre><code class="language-kotlin">implementation("androidx.datastore:datastore-preferences:1.0.0")</code></pre>
+</section><br>
+<p class="sub-section">Clase para guardar y recuperar preferencias</p>
+
+<section><pre><code class="language-kotlin">class AppPreferences(val context: Context) {
+    //Variables estáticas para representar las calves de los valores a guardar
+    companion object{
+        val NAME = stringPreferencesKey("NAME")
+    }
+
+    //Variable DataStore a la que se le pasa el nombre del archivo de preferencias "preferences"
+    //Al declararla con el delegado "by" la variable será un singleton: solo habrá una instancia
+    private val Context.dataStore: DataStore&lt;Preferences> by preferencesDataStore(name = "preferences")
+
+    //Función que recibe un String y lo almacena en el archivo de preferencias declarado en el DataStore
+    //El guardado se debe realizar en segundo plano por lo que necesitará una corrutina para ello
+    //se añade la palabra suspend para indicar que cuando se realice la llamada se use una corrutina
+    suspend fun saveFullName(name: String){
+        context.dataStore.edit {preferences ->
+            preferences[NAME] = name
+        }
+    }
+
+    //Función que recupera un String del archivo de preferencias declarado en el DataStore.
+    //Esta función devuelve un Flow
+    fun loadName()= context.dataStore.data.map { preferences ->
+        preferences[NAME] ?: ""
+    }
+}</code></pre>
+</section><br>
+
+<p class="sub-section">ViewModel que hace uso de la clase anterior</p>
+<section><pre><code class="language-kotlin">//Como se necessita el contexto el viewModel se extiende de AndroidViewModel para que el propio
+//Sistema operativa le pase el objeto Application del que se recuperará el contexto
+class PreferencesViewModel(application: Application):AndroidViewModel(application) {
+    //Declaración del objeto para guardar/almacenar preferencias
+    private val preferences = AppPreferences(application.applicationContext)
+
+    private val _fullName = MutableLiveData&lt;String>()
+    val fullname: LiveData&lt;String> = _fullName
+
+    fun onFullNameChange(fullName:String){
+        _fullName.value = fullName
+    }
+
+    //Método que llama a AppPreferences para almacenar la preferencia en el archivo de preferencias
+    fun saveFullName(name: String){
+        viewModelScope.launch {
+            preferences.saveFullName(name)
+            _fullName.postValue("")
+        }
+    }
+    
+    //Método que llama a Appreferences para recuperar la preferencia del archivo de preferencias
+    fun loadFullName(){
+        viewModelScope.launch { 
+            //Como loadName devuelve un Flow para recuparar sus datos se usa el método collect()
+            preferences.loadName().collect(){
+                _fullName.postValue(it)
+            }
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<p>En las diferentes pantallas de la aplicación si se necesita guardar o recuperar datos del archivo de preferencias se hará uso de los métodos del ViewModel:</p>
+
+
+
+<p>Si se quieren guardar datos de más complejidad como son objetos, en la clase que almacena las preferencias se debe deconstruir y construir ese objeto. <br>
+Clase para guardar/recuperar preferencias:</p>
+
+  
+  </section><!-- End section DataStore-->
  
   <!---BTM_MENU--->
   <script src="../script/prism.js"></script>
