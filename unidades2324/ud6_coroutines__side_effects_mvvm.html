@@ -622,7 +622,43 @@ fun Navigation(bookViewModel: BookViewModel) {
 
 <figure><img src="UD6/images/ud6-2023-12-04-12-59-55.png" /><br><figcaption></figcaption></figure>
 <br>
-
+<section class="marco-t inf">
+  <span class="icono info"> </span> Sobre LiveData
+  </section>
+<section class="marco-b">
+    <p>Si vamos a modificar el valor desde otro hilo del principal, debemos hacer con <span class="negrita">miLiveData.postValue(valor)</span>
+       en lugar de <span class="negrita">miLiveData.value = valor</span>. Es decir, si estamos dentro de una corrutina y cambiamos el valor del live data, usaremos
+      postValue para que se notifique correctamente.</p>
+      <section><pre><code class="language-kotlin">_usernameLD.postValue("Otro valor")</code></pre>
+      </section><br><br>
+</section>
+  
+<section class="marco-t inf">
+  <span class="icono info"> </span> Sobre ViewModel
+  </section>
+<section class="marco-b">
+    <p>Si hay un ViewModel que lo comparten todas las Screens se puede crear el ViewModel en la MainActivity usando "by"</p>
+    <section><pre><code class="language-kotlin">val workoutViewModel by viewModels&lt;WorkoutViewModel>()</code></pre>
+    </section><br>
+    <p>o en el componente Navigation usando "=remember":</p>
+    <section><pre><code class="language-kotlin">val workoutViewModel = remember {
+  WorkoutViewModel()
+}</code></pre>
+    </section><br>
+  <p>Si hay un ViewModel que solo usan algunas Screens (no todas) se crea el ViewModel en el Navigation usando "=remember" y se pasa a las Screens que lo necesiten</p>
+  <p>Si hay un ViewModel que solo se usa en una Screen se creal el ViewModel en esa Screen usando "=remember". (También se puede usar la función <span class="negrita">viewModel()</span>
+    )</p>
+    <section><pre><code class="language-kotlin">val workoutViewModel= viewModel(){
+      //Si nuestro constructor de ViewModel tiene parámetro de entrada.
+    WorkoutViewModel(3)
+}</code></pre>
+    </section><br>
+    <p>o simplemente</p>
+    <section><pre><code class="language-kotlin">//No tiene parámetro de entrada inicial
+val workoutViewModel = viewModel(WorkoutViewModel::class.java)</code></pre>
+    </section><br><br>
+</section>
+  
 
 
  </section><!-- End section Caso práctico-->
