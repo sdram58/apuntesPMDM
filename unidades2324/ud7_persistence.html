@@ -20,13 +20,11 @@
       <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
       <a href="#sFileSystem" title="2.- File System">2.- File System</a>
       <a href="#sAlamacenamientoEspecíficodelaapp" title="3.- Alamacenamiento específico de la app">3.- Alamacenamiento específico de la app</a>
-      
     </div>
     
     <div class="fila">
       <a href="#sAccesoalalmacenamientoexterno" title="4.- Acceso al almacenamiento externo">4.- Acceso al almacenamiento externo</a>
       <a href="#sDataStore" title="5.- DataStore">5.- DataStore</a>
-
     </div>
 
   </nav> <!-- BTM_MENU-->
@@ -38,6 +36,12 @@
       <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
       <a href="#sFileSystem" title="2.- File System">2.- File System</a>
       <a href="#sAlamacenamientoEspecíficodelaapp" title="3.- Alamacenamiento específico de la app">3.- Alamacenamiento específico de la app</a>
+    </div>
+    
+    <div class="fila">
+      <a href="#sAccesoalalmacenamientoexterno" title="4.- Acceso al almacenamiento externo">4.- Acceso al almacenamiento externo</a>
+      <a href="#sDataStore" title="5.- DataStore">5.- DataStore</a>
+      <a href="" class="relleno"></a>
     </div>
   </div>
 
@@ -511,7 +515,106 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
 <p>Si se quieren guardar datos de más complejidad como son objetos, en la clase que almacena las preferencias se debe deconstruir y construir ese objeto. <br>
 Clase para guardar/recuperar preferencias:</p>
 
+<p class="sub-section">Datos complejos</p>
+
+<p>Si se quieren guardar datos de más complejidad como son objetos, en la clase que almacena las preferencias se debe deconstruir y construir ese objeto.</p>
+<p>La clase a almacenar podría ser algo así:</p>
+<section><pre><code class="language-kotlin">data class User(
+    val username:String,
+    val email:String,
+    val id: Int
+) </code></pre>
+</section><br><br>
+<p>Clase para guardar/recuperar preferencias:	</p>
+<section><pre><code class="language-kotlin">class AppPreferences(val context: Context) {
+    //Variables estáticas para representar las calves de los valores a guardar
+    companion object{
+        val FULL_NAME = stringPreferencesKey("FULL_NAME")
+        val EMAIL = stringPreferencesKey("EMAIL")
+        val ID = intPreferencesKey("ID")
+    }
+
+    //Variable DataStore a la que se le pasa el nombre del archivo de preferencias "preferences"
+    //Al declararla con el delegado "by" la variable será un singleton: solo habrá una instancia
+    private val Context.dataStore: DataStore&lt;Preferences> by preferencesDataStore(name = "preferences")
+
+    //Función que recibe un String y lo almacena en el archivo de preferencias declarado en el DataStore
+    //El guardado se debe realizar en segundo plano por lo que necesitará una corrutina para ello
+    //se añade la palabra suspend para indicar que cuando se realice la llamada se use una corrutina
+    suspend fun saveUser(user: User){
+        context.dataStore.edit {preferences ->
+            preferences[FULL_NAME] = user.username
+            preferences[EMAIL] = user.email
+            preferences[ID] = user.id            
+        }
+    }
+
+    //Función que recupera un String del archivo de preferencias declarado en el DataStore.
+    //Esta función devuelve un Flow
+    fun loadUser()= context.dataStore.data.map { preferences ->
+        User(
+            username = preferences[FULL_NAME] ?: "",
+            email = preferences[EMAIL] ?: "",
+            id = preferences[ID] ?: 0
+        )
+    }
+}</code></pre>
+</section><br><br>
+
+<p>Y el ViewModel podría quedar de la siguiente manera:</p>
+<section><pre><code class="language-kotlin">//Como se necessita el contexto el viewModel se extiende de AndroidViewModel para que el propio
+//Sistema operativa le pase el objeto Application del que se recuperará el contexto
+class PreferencesViewModel(application: Application):AndroidViewModel(application) {
+    //Declaración del objeto para guardar/almacenar preferencias
+    private val preferences = AppPreferences(application.applicationContext)
+
+    private var _id = MutableLiveData&lt;Int>()
+    val id:LiveData&lt;Int> get() = _id
+
+    private val _username = MutableLiveData&lt;String>()
+    val username: LiveData&lt;String> = _username
+
+    private var _email = MutableLiveData&lt;String>()
+    val email:LiveData&lt;String> get() = _email
+    fun onUserNameChange(username:String){
+        _username.value = username
+    }
+
+    fun onEmailChange(email:String){
+        _email.value = email
+    }
+
+    //Método que llama a AppPreferences para almacenar la preferencia en el archivo de preferencias
+    fun saveUser(user: User){
+        viewModelScope.launch {
+            preferences.saveUser(user)
+            _username.postValue("")
+        }
+    }
+
+    //Método que llama a Appreferences para recuperar la preferencia del archivo de preferencias
+    fun loadFullName(){
+        viewModelScope.launch {
+            //Como loadName devuelve un Flow para recuparar sus datos se usa el método collect()
+            preferences.loadUser().collect(){
+                _username.postValue(it.username)
+                _email.postValue(it.email)
+                _id.postValue(it.id)
+            }
+        }
+    }
+}</code></pre>
+</section><br><br>
   
+<div class="tarea">
+  <p>Crea una aplicación que tenga un <span class="cursiva">SplashScreen</span> y un <span class="cursiva">onboarding</span>
+     donde se piden datos del usuario, nombre, email, etc...</p>
+  
+  <p>Estos datos se guardarán en un DataStore, y la aplicación detectará si no hay datos mostrará el onboarding y si hubiera datos iría a la pantalla principal.
+    La aplicación no ha de ser funcional, es decir, la pantalla principal puede ser sólo un texto.
+  </p>
+
+</div>
   </section><!-- End section DataStore-->
  
   <!---BTM_MENU--->
