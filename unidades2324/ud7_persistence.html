@@ -1240,10 +1240,10 @@ fun Splash() {
   <a class="tarea" target="_blank" href="https://aules.edu.gva.es/fp/mod/assign/view.php?id=5463526">
     <p>La práctica consistirá en realizar una applicación de la lista de la compra. La aplicación tendrá los siguientes requisitos:
       <ul>
-        <li><span class="negrita">SplashScreen:</span> Realiza una SplashScreen adecuada a la aplicación, en la SplashScreen, cargarás los datos si los hubiera</li>
+        <li><span class="negrita">SplashScreen:</span> Realiza una SplashScreen adecuada a la aplicación, en la SplashScreen, cargarás aquí los datos si los hubiera</li>
         <li><span class="negrita">OnBoarding:</span> Crea una simple pantalla de Onboarding donde pidas el nombre al usuario, este nombre se guardará en un <span class="negrita">DataStore</span>. 
-          Si ya lo hubiera un guardado, esta pantalla no debe aparecer y después del SplashScreen ir directamente al MainScreen.</li>
-        <li><span class="negrita">MainScreen:</span> Esta pantalla tendrá los siguientes componentes.
+          Si ya hubiera uno guardado, esta pantalla no debe aparecer y después del SplashScreen ir directamente al MainScreen.</li>
+        <li><span class="negrita">MainScreen:</span> Esta pantalla tendrá los siguientes componentes (Usa un Scaffold):
         <ul>
           <li><span class="negrita">FloatingActionButton</span>: Con el símbolo de + nos llevará a otra pantalla (<span class="negrita">AddScreen</span>) donde habrá un formulario para 
           crear un nuevo producto.</li>
@@ -1253,7 +1253,7 @@ fun Splash() {
            y que actualice o inserte según el caso). También tendrá un icono de papelera que borrará el producto.</li>
            <li><span class="negrita">Saludo</span>: Encima de la lista deberá aparecer un mensaje de bienvenida al usuario logeado. Algo como "Bienvenido Carlos"</li>
            <li><span class="negrita">Total lista:</span> En la parte inferior habrá un cuadro que nos mostrará el total de la lista, es decir, la suma de todos los
-          productos, por el precio unitario de cada producto multiplicado por la cantidad de ese producto. </li>
+          productos, por el precio unitario de cada producto multiplicado por la cantidad de ese producto. Este componente estará abajo y será siempre visible </li>
           <li><span class="negrita">ModalNavigationDrawer:</span> Al desplegarlo tendrá una única opción que será <span class="negrita">Logout</span>. 
             Al pulsarla, eliminaremos el usuario del DataStore, volveremos a la pantalla de OnBoarding y borraremos los datos de la BDD.</li>
         </ul></li>
