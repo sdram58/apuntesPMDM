@@ -34,7 +34,8 @@
       <a href="#sManejo_de_Unity" title="9.- Manejo de Unity">9.- Manejo de Unity</a>
     </div>
     <div class="fila">
-      <a href="#sManejo_de_Unity" title="10.- Manejo de Unity">10.- Manejo de Unity</a>
+      <a href="#sAgregando_GameObjects_a_la_escena" title="10.- Agregando GameObjects a la escena">10.- Agregando GameObjects a la escena</a>
+      <a href="#sPunto_pivote_de_un_GameObject" title="11.- Punto pivote de un GameObject">11.- Punto pivote de un GameObject</a>
 
     </div>
 
@@ -691,13 +692,214 @@
     <li><span class="negrita">z</span>: eje profundidad</li>
   </ul>
 </p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-59-29.png" /><br><figcaption></figcaption></figure>
+<br>
 
+<p>Cada motor de juegos y cada editor 3D utiliza un sistema de coordenadas diferente.</p>
 
+<p>Unity utiliza el sistema Y-Up.</p>
 
+<p>Unreal y Blender utilizan el sistema Z-Up donde el eje vertical es z y el eje de profundidad es y.</p>
+<p>En la <span class="negrita">parte superior derecha de la ventana de visualización</span> aparece un <span class="negrita">gizmo</span>
+   muy útil que indica la dirección en la que se está visualizando la escena.</p>
+<figure><img src="UD9/images/ud9-2024-01-25-12-00-40.png" /><br><figcaption></figcaption></figure>
+<br>
 
+<p>Al hacer clic en lo conos se cambia la visualización para orientarse en ese eje.</p>
 
+<p>En la parte inferior de ese gizmo aparece el punto de vista actual, puede indicar "Persp" o cualquier otra dirección como "Back", si se pulsa sobre el cubo central o en el icono de debajo con el punto de vista actual, se cambia a una visualización isométrica.</p>
 
+<p>Si se está desarrollando un juego en 3D la visualización irá cambiando constantemente, pero si se está desarrollando un juego en 2D la visualización por defecto no es la correcta y debería cambiarse.</p>
+
+<p>En la parte superior se encuentran las siguientes herramientas.</p>
+<figure><img src="UD9/images/ud9-2024-01-25-12-01-47.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En la izquierda:
+  <ul>
+    <li>Las dos primeras son opciones de cómo funciona la herramienta "mano".</li>
+    <li>La tercera permite activar/desactivar la visualización de la rejilla.</li>
+    <li>La cuarta permite que al mover los GamObjects se "enganchen" a los puntos de la rejilla.</li>
+    <li>La quinta indica los pasos de movimiento cuando se mueve un GameObject.</li>
+  </ul>
+</p>
+
+<p>En la derecha:
+  <ul>
+    <li>La primera indica cómo se van a visualizar los GameObjects de la escena (sólidos, aristas…).</li>
+    <li>La segunda permite cambiar el tipo de cámara de 3D a 2D (ortográfica).</li>
+    <li>La tercera permite activar/desactivar las luces de la escena.</li>
+    <li>La cuarta permite activar/desactivar los sonidos.</li>
+    <li>La quinta permite activar efectos como el cielo, la niebla…</li>
+    <li>La sexta permite mostrar/ocultar el número de GameObjects ocultos en la escena.</li>
+    <li>La séptima permite configurar la cámara.</li>
+    <li>La octava permite configurar la visualización de los gizmos.</li>
+  </ul>
+</p>
+
+<p>En la parte superior izquierda se encuentran las siguientes herramientas que permiten desplazarse por la escena y manipular los GameObject de la misma:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-12-09-50.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Las herramientas anteriores que permiten modificar un GameObject de la escena, 
+  al seleccionarlas mostrarán un gizmo sobre el GameObject para facilitar la manipulación del GameObject.</p>
+<figure><img src="UD9/images/ud9-2024-01-25-12-11-24.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Todos los GameObjects tienen un <span class="negrita">punto pivote</span> que será a partir del cual se ejecutarán los cambios sobre ellos.</p>
+
+<p>El punto pivote por defecto se encuentra en el <span class="negrita">centro del Gameobject</span>, 
+  por eso el gizmo de las herramientas anteriores se dibuja desde el centro del GameObject seleccionado.</p>
+
+  <figure><img src="UD9/images/ud9-2024-01-25-13-50-41.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <p>El punto pivote no se puede cambiar de sitio.</p>
+
+  <h3>Movimiento de la cámara de visualización</h3>
+
+  <p class="sub-section">Con teclas:</p>
+  <p>
+    <ul>
+      <li>Flechas ⬅ ➡: desplaza izquierda-derecha la cámara.</li>
+      <li>Flechas ⬆ ⬇: zoom-in y zoom-out.</li>
+    </ul>
+  </p>
+  
+  
+  <p class="sub-section">Con ratón:</p>
+  <p>
+    <ul>
+      <li>Con la herramienta mano seleccionada al hacer clic y arrastrar: se desplaza en horizontal y vertical la cámara.</li>
+      <li>Botón central (rueda) del ratón: misma acción que la línea anterior.</li>
+      <li>CTRL + ALT + clic izquierdo: misma acción que la línea anterior.</li>
+      <li>Con el botón derecho pulsado: se rota la cámara sobre sí misma.</li>
+      <li>ALT + clic izquierdo: rota la cámara sobre el punto central de la visualización.</li>
+    </ul>
+  </p>
+
+  <p>Todos los GameObject se pueden mover/alinear con la visualización.</p>
+
+  <p>Esto es útil con las cámaras porque permiten alinear la cámara a la vista de visualización para que al ejecutar el juego sea esa orientación vista la que se vea.</p>
+  
+  <figure><img src="UD9/images/ud9-2024-01-25-13-53-48.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p>Como se ha indicado anteriormente, si se está desarrollando un juego en 2D interesa cambiar la visualización de la escena para que se ajuste a la visualización 
+    del juego teniendo el eje z en horizontal y el eje y en vertical.</p>
+  <figure><img src="UD9/images/ud9-2024-01-25-13-54-45.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
 </section><!-- End section Manejo de Unity-->
+
+  <!--*********************************************************Agregando GameObjects a la escena***********************************************************-->
+  <section class="apartado">
+    <a name="sAgregando_GameObjects_a_la_escena"></a>
+    <h2>Agregando GameObjects a la escena</h2>
+    
+    <p>Para agregar GameObjects a la escena se puede hacer click derecho sobre la zona de elementos de la escena (jerarquía) 
+      o bien se puede pulsar la opción del menú GameObject.</p>
+    
+<p>La opción del menú ofrece además acciones a realizar sobre un GameObject si está seleccionado.</p>
+<figure><img src="UD9/images/ud9-2024-01-25-13-56-44.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Dependiendo del tipo de proyecto se tendrán disponibles diferentes tipos de GameObjects para a la escena 
+  (desde el Package Manager se pueden agregar paquetes para ampliar el catálogo).</p>
+
+<p>Se pueden añadir GameObjects vacíos (empty) que sirven para agrupar otros GameObjects y así mantener la jerarquía organizada.</p>
+
+<p>También existen objetos 3D que serán los primeros con los que se trabajará en clase.</p>
+
+<figure><img src="UD9/images/ud9-2024-01-25-13-58-59.png" /><br><figcaption>Proyecto 3D</figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-01-25-13-59-21.png" /><br><figcaption>Proyecto 3D con el paquete 2D Sptrite</figcaption></figure>
+<br>
+<p>Al agregar un GameObject a la escena en la jerarquía se permite cambiar el nombre 
+  (posteriormente se puede cambiar haciendo clic derecho sobre él en la jerarquía).</p>
+
+<p>Además, al añadir el GameObject, este se posiciona en el centro de la escena sean cuales sean esas coordenadas.</p>
+<figure><img src="UD9/images/ud9-2024-01-25-14-00-24.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>Al seleccionar el GameObject en el inspector se puede ver los componentes que tiene, 
+  entre ellos se encuentra <span class="r-word">Transform</span> que indica los valores de <span class="negrita">posición, rotación y escala</span>.</p>
+
+  <p>Los GameObject se agregan en la jerarquía como hijos de la escena.</p>
+
+  <p>Desde la jerarquía, se pueden organizar los GameObject unos dentro de otros arrastrándolos encima del que debe contenerlos o 
+    arrastrándolos fuera del que los contiene.</p>
+  
+  <p>Si se hace clic derecho sobre un objeto en la jerarquía y se añade un GameObject, este se añadirá directamente como hijo del que se ha pulsado.</p> 
+  <figure><img src="UD9/images/ud9-2024-01-25-14-01-59.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+<section class="marco-t warn">
+  <span class="icono warning"> </span>Todas las modificaciones que se realicen sobre un GameObject afectan a todos los GameObjects que se encuentren 
+  dentro de él en la jerarquía.
+  </section>
+<section class="marco-b">
+    
+</section>
+
+<h3>Punto pivote de un GameObject</h3>
+<p><span class="negrita">Todos los GameObject tienen un punto pivote situado en su centro.</span></p>
+
+<p>Las coordenadas de este punto pivote en la escena es lo que utiliza Unity para realizar todos los cálculos necesarios.</p>
+
+<p>El punto pivote <span class="negrita">no se puede cambiar de sitio</span>.</p>
+
+<p>El punto pivote también es la referencia cuando un GameObject sigue a otro, por ejemplo, una cámara que sigue a un personaje, 
+  en este caso la cámara tomará como centro a seguir el punto pivote del GameObject.</p>
+
+<p>Si se quiere que ese centro de seguimiento sea diferente se puede crear un GameObject vacío y añadirlo al GameObject principal en las coordenadas que se quiera, y a continuación indicar que la cámara siga al GameObject vacío.</p>
+
+<h3>Modificando GameObjects</h3>
+<p>Para modificar un GameObject se debe seleccionar o haciendo clic en él en la jerarquía o haciendo clic en él en la visualización de la escena.</p>
+
+<p>Si se hace doble clic en un GameObject de la jerarquía además de seleccionar el GameObject la vista se centrará en ese GameObject.</p>
+
+<p>Si se hace clic sobre un GameObject en la visualización además de seleccionar el GameObject la vista se centrará donde se hecho doble clic.</p>
+
+<p><span class="negrita">Todas las modificaciones se realicen sobre un GameObject toman como referencia el punto pivote del GameObject</span>.</p>
+
+<p>Existen varias formas de modificar un GameObject en la escena:</p>
+
+<p class="sub-section">Cambiando manualmente sus valores en el inspector</p>
+
+<figure><img src="UD9/images/ud9-2024-01-25-14-06-47.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Se puede indicar que el GameObject se sitúe en el centro del las coordenadas (0,0,0).</p>
+
+<figure><img src="UD9/images/ud9-2024-01-25-14-07-26.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Esta acción puede ser problemática debido a que el punto pivote por defecto se encuentra en su centro, así que al mover a (0,0,0)
+  puede ocurrir algo como lo de la siguiente imagen donde el GameObject tiene la mitad debajo del punto (0,0,0).</p>
+<figure><img src="UD9/images/ud9-2024-01-25-14-07-47.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p class="sub-section">Desde el inspector situando el ratón encima de una de las coordenadas </p>
+<p>cambia el icono y permite que al hacer clic y desplazar sin soltar el clic se cambie el valor</p>
+<figure><img src="UD9/images/ud9-2024-01-25-14-08-44.png" /><br><figcaption></figcaption></figure>
+<br>
+<p class="sub-section">Con las herramientas vistas anteriormente</p>
+<p>Utilizando el ratón podemos modificar un GameObject.</p>
+
+<p>Al seleccionarlas aparece un gizmo y al interactuar con él con el ratón se realizan las acciones requeridas.</p>
+
+<p>Cada gizmo funciona de una manera diferente</p>
+<figure><img src="UD9/images/ud9-2024-01-25-14-09-56.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Movimiento solo en el eje X</p>
+<figure><img src="UD9/images/ud9-2024-01-25-14-10-56.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Movimiento en los ejes que no son Y (plano X y Z):</p>
+<figure><img src="UD9/images/ud9-2024-01-25-14-10-43.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+</section><!-- End section Agregando GameObjects a la escena-->
+
 
   <!---BTM_MENU--->
   <script src="../script/prism.js"></script>
