@@ -162,6 +162,13 @@
 		"description": "Make copy text into a paragraph"
 	},
 
+	"PasteLi": {
+		"scope": "html",
+		"prefix": "li-",
+		"body": ["<li>${CLIPBOARD:\"file\"}</li>$1"],
+		"description": "Make copy text into a li"
+	},
+
 	"TODO": {
 		"scope": "html",
 		"prefix": "todo",

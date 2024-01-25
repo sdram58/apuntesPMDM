@@ -31,8 +31,12 @@
     <div class="fila">
       <a href="#sAnyadiendo_codigo_ejecutable" title="7.- Añadiendo código ejecutable">7.- Añadiendo código ejecutable</a>
       <a href="#sScripting" title="8.- Scripting">8.- Scripting</a>
+      <a href="#sManejo_de_Unity" title="9.- Manejo de Unity">9.- Manejo de Unity</a>
+    </div>
+    <div class="fila">
+      <a href="#sManejo_de_Unity" title="10.- Manejo de Unity">10.- Manejo de Unity</a>
 
-  </div>
+    </div>
 
   </nav> <!-- BTM_MENU-->
 
@@ -406,24 +410,294 @@
   
   
   <h3>Tipos de datos en C#</h3>
-<p>Tipos de datos básicos de C# son:</p>
+<p class="sub-section">Tipos de datos básicos de C# son:</p>
+
 <figure><img src="UD9/images/ud9-2024-01-24-13-55-57.png" /><br><figcaption></figcaption></figure>
 <br>
 
+<p class="sub-section">Tipos de datos compuestos:</p>
 
-  <p>Tipos de datos compuestos:
+<p>
     <ul>
       <li><span class="negrita">Array</span>: conjunto de un tipo de dato.</li>
       <li><span class="negrita">List</span>: listas dinámicas (pueden modificar su tamaño).</li>
     </ul>
   </p>
   
+<p class="sub-section">Tipos de datos específicos de C# para Unity son:</p>
+
+<p>
+  <ul>
+    <li><span class="negrita">Vector3</span>: empaquetado de tres floats (x, y, z) que facilita el trabajo con puntos, vectores y direcciones dentro del espacio 3D.</li>
+    <li><span class="negrita">GameObject</span>: referencia a un GameObject de la escena o a un prefab del proyecto.</li>
+    <li><span class="negrita">Transform, Rigidbody o cualquier otro componente</span>: referencia a dicho componente dentro de un GameObject.</li>
+    <li><span class="negrita">Texture, Material o cualquier otro tipo de asset</span>: referencia a un asset del proyecto</li>
+  </ul>
+</p>
+
+<h3>Operadores</h3>
+<p>Los operadores son similares a los usados en Java:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-10-27-24.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>La clase <span class="r-word">Mathf</span> permite cálculos con números tipo <span class="r-word">float</span>:</p>
+
+<p>Ejemplos:
+  <ul>
+    <li>Mathf.Abs(number)</li>
+    <li>Mathf.Round(number)</li>
+    <li>Mathf.Ceiling(number)</li>
+    <li>Mathf.Floor(number)</li>
+    <li>Mathf.Max(a, b, c, d)</li>
+    <li>Mathf.Min(a, b, c, d)</li>
+    <li>Mathf.Pow(number, exponent)</li>
+    <li>Mathf.Sqrt(number)</li>
+    <li>…</li>
+
+  </ul>
+</p>
+
+<h3>Variables</h3>
+
+<p>Las variables en C# se definen igual que en java:</p>
+
+	<section><pre><code class="language-kotlin">int age;</code></pre>
+  </section><br>
+
+<p>También se puede inicializar cuando se declara:</p>
+
+	<section><pre><code class="language-kotlin">int age = 21;</code></pre>
+  </section><br>
+
+<p>Una vez declarada en cualquier momento se puede cambiar su valor:</p>
+
+	<section><pre><code class="language-kotlin">age = 22;</code></pre>
+  </section><br>
 
 
+<p>Si las variables se declaran para la clase como propiedades se pueden declarar su acceso como <span class="negrita">public</span> o <span class="negrita">private</span>.</p>
+<p>Si la variable se declara dentro de un método no se debe declarar el tipo de acceso ya que solo será visible dentro de ese método.</p>
+
+<figure><img src="UD9/images/ud9-2024-01-25-10-30-33.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Las variables declaradas como propiedades con acceso public <span class="subrayado">serán visibles desde el Inspector de Unity</span> durante la ejecución, permitiendo cambiar su valor durante la ejecución desde allí.</p>
+<figure><img src="UD9/images/ud9-2024-01-25-10-31-18.png" /><br><figcaption></figcaption></figure>
+<br>
 
 
+<p>Hay que recordar que los cambios realizados durante la ejecución son cambios temporales y al parar la ejecución se volverá al estado inicial.</p>
+
+<h3>Estructuras de control</h3>
+
+<figure><img src="UD9/images/ud9-2024-01-25-10-48-49.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Arrays</h3>
+<p class="sub-section">Declarar un <span class="negrita">Array</span></p>
+<p>Se puede indicar su tamaño y posteriormente asignar valores:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-10-49-57.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>Se puede declarar asignando directamente los valores:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-10-50-13.png" /><br><figcaption></figcaption></figure>
+
+<p class="sub-section">Recorrer un <span class="negrita">Array</span></p>
+<p>Con un bucle <span class="negrita">for</span>:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-10-51-21.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Con un bucle <span class="negrita">foreach</span>:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-10-51-40.png" /><br><figcaption></figcaption></figure>
+
+<h3>Listas</h3>
+<p>Las <span class="negrita">listas</span> permiten modificar su tamaño y añadir/eliminar elementos de la misma.</p>
+
+<p>Se necesita importar la librería:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-10-56-04.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Declarar una lista vacía:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-10-56-18.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Declarar una lista asignando datos:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-10-56-33.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Las <span class="negrita">listas</span> permiten modificar su tamaño y añadir/eliminar elementos de la misma.</p>
+<figure><img src="UD9/images/ud9-2024-01-25-10-57-17.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Modificar elementos se realiza igual que con los Array:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-10-57-36.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Añadir elementos a una lista:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-10-57-57.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Eliminar elementos de una lista:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-10-58-16.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Obtener la longitud de una lista:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-10-58-36.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Eliminar todos los elementos de una lista:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-00-32.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Comprobar si un valor está en una lista:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-00-50.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Ordenar una lista:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-01-05.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Invertir el orden de una lista:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-01-21.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Recorrer una lista:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-02-23.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Convertir una lista en un array:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-02-38.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Convertir un array en una lista:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-02-58.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>ArrayList</h3>
+<p>En un Array o en una Lista solo se pueden almacenar datos de un tipo.</p>
+
+
+<p>En los <span class="r-word">ArrayList</span> se permite almacenar datos de diferentes tipos además de no tener un tamaño predeterminado como las listas.</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-04-31.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se debe tener cuidado al cambiar los datos porque el compilador no realiza ninguna comprobación de tipo de dato:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-05-06.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>HashTable</h3>
+<p>Los <span class="r-word">HashTable</span> también conocidos como <span class="negrita">diccionarios</span> son un tipo de dato 
+  compuesto en el que cada elemento es un par <span class="negrita">clave-valor</span>.</p>
+
+<p>En los HashTable se accede a los datos a través de la clave.</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-06-39.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Las claves siempre deben ser de tipo <span class="negrita">string</span>.</p>
+
+<p>El tamaño de una HashTable es dinámico como las listas.</p>
+
+<p>Se puede comprobar si existe una clave con el método <span class="negrita">Contains</span> y para usar el valor se debe realizar un casting:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-07-37.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Recorrer un HashTable:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-08-34.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Métodos</h3>
+<p>Como en cualquier lenguaje orientado a objetos dentro de las clases se pueden crear métodos.</p>
+
+
+<p>En C# para crear un método se debe seguir la siguiente estructura:
+  <ul>
+    <li>Tipo de acceso (si no se pone nada por defecto será private).</li>
+    <li>Tipo de dato que devuelve (void si no devuelve nada).</li>
+    <li>Identificador del método (primera letra en mayúscula y CamelCase).</li>
+    <li>Paréntesis para indicar los parámetros si los hay.</li>
+    <li>Llaves para indicar el bloque de código del método.</li>
+  </ul>
+</p>
+<p>Declaración de un método:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-10-37.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>La llamada a un método se realiza igual que en cualquier lenguaje de programación:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-11-02.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Clase MonoBehaviour</h3>
+<p>Cuando se crea un script C# en Unity se puede observar que la clase que contiene el script hereda de la clase <span class="r-word">MonoBehaviour</span>.</p>
+
+<p>La clase <span class="negrita">MonoBehaviour</span> es necesaria para los scripts que se asocian a los <span class="negrita">GameObject</span> del proyecto.</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-12-47.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Como Unity funciona por eventos, dentro de las clases que heredan de MonoBehaviour se pueden incluir una serie de métodos definidos por defecto que se ejecutarán cuando se produzcan los eventos asociados a dichos métodos.</p>
+
+<p>Por defecto se añaden dos métodos que se ejecutan con determinados eventos:
+  <ul>
+    <li><span class="negrita">Start</span>: se llama en el frame en el que el script se activa y justo antes de la primera llamada de cualquier método Update.</li>
+    <li><span class="negrita">Update</span>: se llama en cada frame.</li>
+  </ul>
+</p>
+
+
+<p>Hay muchos métodos más que se pueden consultar en la documentación: 
+  <a class="enlace" target="_blank" href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.html">https://docs.unity3d.com/ScriptReference/MonoBehaviour.html</a></p>
+
+<h3>Bucle del juego</h3>
+
+<p>Se puede definir como bucle del juego las diferentes fases por las que pasa un script cuando se ejecuta:
+  <ul>
+    <li>Inicialización</li>
+    <li>Actualización de físicas</li>
+    <li>Actualización de INPUT</li>
+    <li>Lógica del juego</li>
+    <li>Destrucción</li>
+  </ul>
+</p>
+
+<p>Cada una de estas fases tiene asociados un conjunto de métodos de la clase MonoBehaviour:</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-15-54.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Al ejecutar el juego, Unity comienza a ejecutar el bucle del juego, de esta manera, 
+  en cada fase ejecutará los métodos correspondientes que se encuentren en los scripts añadidos a los GameObject de la escena.</p>
+
+<p>Ejemplo de un script implementando algunos de los métodos de la clase MonoBehaviour:</p>
+
+<figure><img src="UD9/images/ud9-2024-01-25-11-16-34.png" /><br><figcaption></figcaption></figure>
 
 </section><!-- End section Scripting-->
+
+<!--*********************************************************Manejo de Unity***********************************************************-->
+<section class="apartado">
+<a name="sManejo_de_Unity"></a>
+<h2>Manejo de Unity</h2>
+<p>Es muy importante aprender cómo funciona la ventana de visualización de Unity para poder trabajar correctamente con los GameObject.</p>
+
+<p>La ventana de visualización es el lugar donde se pueden ver los objetos que forman parte de la escena.</p>
+
+<p>En esta ventana suelen aparecer los llamados gizmos, un gizmo es un gráfico que ayuda al programador ofreciendo información sobre el GameObject dentro de la escena.</p>
+
+<p>Por ejemplo, si se selecciona la luz que aparece en la escena se podrá ver cómo aparece un gizmo que indica la dirección de la luz.</p>
+<figure><img src="UD9/images/ud9-2024-01-25-11-22-45.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>El sistema de coordenadas es el que permite ubicar a todos los GameObject en la escena.</p>
+
+<p>Cada GameObject tendrá unas coordenadas que indican su posición.</p>
+
+<p>Unity utiliza un sistema de coordenadas <span class="negrita">Y-Up</span>:
+  <ul>
+    <li><span class="negrita">x</span>: eje horizontal</li>
+    <li><span class="negrita">y</span>: eje vertical</li>
+    <li><span class="negrita">z</span>: eje profundidad</li>
+  </ul>
+</p>
+
+
+
+
+
+
+</section><!-- End section Manejo de Unity-->
 
   <!---BTM_MENU--->
   <script src="../script/prism.js"></script>
