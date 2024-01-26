@@ -35,8 +35,13 @@
     </div>
     <div class="fila">
       <a href="#sAgregando_GameObjects_a_la_escena" title="10.- Agregando GameObjects a la escena">10.- Agregando GameObjects a la escena</a>
-      <a href="#sPunto_pivote_de_un_GameObject" title="11.- Punto pivote de un GameObject">11.- Punto pivote de un GameObject</a>
-
+      <a href="#sMateriales" title="11.- Materiales">11.- Materiales</a>
+      <a href="#sComponentes_de_GameObject" title="12. Componentes de GameObject">12. Componentes de GameObject</a>
+    </div>
+    <div class="fila">
+      <a href="#sUI" title="13.- UI">13.- UI</a>
+      <a href="#sPrefabs" title="14.- Prefabs">14.- Prefabs</a>
+      
     </div>
 
   </nav> <!-- BTM_MENU-->
@@ -59,8 +64,18 @@
     <div class="fila">
       <a href="#sAnyadiendo_codigo_ejecutable" title="7.- Añadiendo código ejecutable">7.- Añadiendo código ejecutable</a>
       <a href="#sScripting" title="8.- Scripting">8.- Scripting</a>
+      <a href="#sManejo_de_Unity" title="9.- Manejo de Unity">9.- Manejo de Unity</a>
+    </div>
+    <div class="fila">
+      <a href="#sAgregando_GameObjects_a_la_escena" title="10.- Agregando GameObjects a la escena">10.- Agregando GameObjects a la escena</a>
+      <a href="#sMateriales" title="11.- Materiales">11.- Materiales</a>
+      <a href="#sComponentes_de_GameObject" title="12. Componentes de GameObject">12. Componentes de GameObject</a>
+    </div>
+    <div class="fila">
+      <a href="#sUI" title="13.- UI">13.- UI</a>
+      <a href="#sPrefabs" title="14.- Prefabs">14.- Prefabs</a>
       <a href="" class="relleno"></a>
-  </div>
+    </div>
   </div>
 
   
@@ -896,10 +911,344 @@
 <p>Movimiento en los ejes que no son Y (plano X, Z):</p>
 <figure><img src="UD9/images/ud9-2024-01-25-14-10-43.png" /><br><figcaption></figcaption></figure>
 <br>
+<p>Al usar las herramientas con los gizmos se puede utilizar el ajuste por <span class="negrita">snaps</span>.</p>
+
+<p>Los pasos o snaps por defecto se pueden cambiar:</p>
+<figure><img src="UD9/images/ud9-2024-01-26-09-28-26.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Para realizar las modificaciones por snaps al usar los gizmos se debe pulsar la tecla control.</p>
+
+<p>Todas las modificaciones se realizan tomando como punto de referencia el punto pivote.</p>
+
+<p>Se pueden realizar modificaciones cambiando el punto de referencia a un vértice de la malla del GameObject, para esto se debe pulsar la tecla v tras seleccionar la herramienta.</p>
+
+<p>Se puede ver como al pulsar la tecla v, al mover el ratón sobre el GameObject el gizmo se sitúa en el vértice más cercano.</p>
+
+<p>Esta acción se conoce como vertex snap y permite situar GameObjects a partir de uno de sus vértices en el vértice de otro Gameobject.</p>
+
+<figure><img src="UD9/images/ud9-2024-01-26-09-29-17.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Unidades de medida</h3>
+<p>Por defecto las unidades de medida usadas en Unity son:
+  <ul>
+<li><span class="negrita">Distancias</span>: metros.</li>
+<li><span class="negrita">Tamaños</span>: metros.</li>
+<li><span class="negrita">Peso (masa)</span>: kilogramos.</li>
+<li><span class="negrita">Tiempo</span>: segundos.</li>
+  </ul>
+</p>
+
+<p>Es importante tener esto en cuenta ya que el comportamiento de los GameObjects con las físicas va a depender de su tamaño y peso.</p>
+
 
 
 </section><!-- End section Agregando GameObjects a la escena-->
+<!--*********************************************************Materiales***********************************************************-->
+<section class="apartado">
+<a name="sMateriales"></a>
+<h2>Materiales</h2>
+<p>Los <span class="negrita">materiales</span> permiten dar aspecto a los GameObject.</p>
 
+<p>Para crear un material se hace clic derecho en el gestor de archivos y se selecciona <span class="negrita">Create -> Material</span>, 
+  al crearlo permitirá asignarle un nombre.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-09-32-28.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Cabe recordar que para mantener la organización de archivos los materiales deben incluirse en una carpeta llamada <span class="inline-folder">Materials</span>
+   dentro de la carpeta <span class="inline-folder">Assets</span>.</p>
+
+   <p>Un material en el gestor de archivos se representa con una esfera y según la configuración que se le aplique en el inspector tendrá un aspecto u otro.</p>
+   
+<figure><img src="UD9/images/ud9-2024-01-26-09-33-59.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Con una buena configuración se puede conseguir que el material sea realista.</p>
+
+<p>También se pueden conseguir materiales de la Unity Asset Store y de repositorios de internet.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-09-53-50.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se puede aplicar un material a un GameObject de varias maneras:
+  <ul>
+<li>Arrastrar el material al GameObject en la jerarquía.</li>
+<li>Arrastrar el material al GameObject en la visualización.</li>  
+<li>Arrastrar el material al GameObject en el inspector en la zona "Add Component".</li>
+</ul>
+</p>
+
+<figure><img src="UD9/images/ud9-2024-01-26-09-54-59.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Materiales Físicos</h3>
+<p>Los materiales físicos (Physic Material) permiten controlar como van a interactuar físicamente los GameObject cuando colisionan entre sí.</p>
+
+<p>Se suelen utilizar para permitir que los GameObject reboten o para que haya fricción entre ellos.</p>
+
+<p>Para crear un material físico se hace clic con el botón derecho sobre el gestor de archivos y se elige la opción <span class="negrita">Create -> Physic Material</span>.</p>
+
+<p>Al crearse, se debe introducir su nombre.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-05-23.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Los parámetros que se pueden configurar en un material físico son:</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-05-53.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Se puede aplicar un material físico a un GameObject de varias maneras:
+  <ul>
+    <li>Arrastrar el material al GameObject en la jerarquía.</li>
+    <li>Arrastrar el material al GameObject en la visualización.</li>
+    <li>Arrastrar el material al GameObject en el inspector en la zona "Add Component".</li>
+</ul>
+</p>
+
+<figure><img src="UD9/images/ud9-2024-01-26-10-06-48.png" /><br><figcaption></figcaption></figure>
+
+
+
+</section><!-- End section Materiales-->
+
+<!--*********************************************************Componentes de GameObject***********************************************************-->
+<section class="apartado">
+<a name="sComponentes_de_GameObject"></a>
+<h2>Componentes de GameObject</h2>
+<p>Los GameObject pueden contener diferentes componentes.</p>
+
+<p>Como mínimo todos los GameObject tienen el componente Transform que sirve para indicar la posición, la rotación y el tamaño del GameObject</p>
+
+<p>Los GameObject geométricos también tienen un Mesh y un Mesh Renderer para poder dibujarse.</p>
+
+<p>Los GameObject que se visualizan en las cámaras tienen un Collider para detectar las colisiones.</p>
+
+<figure><img src="UD9/images/ud9-2024-01-26-10-00-53.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se pueden añadir otros componentes a los GameObject desde el <span class="negrita">Menú -> GameObject</span> o
+  desde el inspector con el botón "<span class="negrita">Add Component</span>" que aparece en la parte inferior.</p>
+
+
+<p>Usando el botón "Add Componen" aparece un buscador en el que se puede escribir el componente que se quiere.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-02-02.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Cuando se desarrolla un videojuego suele ser necesario que algunos GameObjects estén <span class="negrita">afectados por las físicas</span>
+   (gravedad, fuerzas…) para eso se necesita que los GameObject tengan un componente llamado <span class="r-word">RigidBody</span>.</p>
+
+<p>En la configuración del <span class="r-word">RigidBody</span> se indica el peso del GameObject dentro de la escena entre otros parámetros.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-03-05.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+
+</section><!-- End section Componentes de GameObject-->
+
+<!--*********************************************************UI (User Interface)***********************************************************-->
+<section class="apartado">
+<a name="sUI"></a>
+<h2>UI (User Interface)</h2>
+<p>La interfaz de usuario (UI) son elementos que se añaden a la escena para dar información al usuario.</p>
+
+<p>Con a la interfaz de usuario se pueden crear los menús y el HUD (Head-Up display).</p>
+
+<p>La interfaz de usuario se puede crear tanto con GameObjects 2D como 3D pero habitualmente se utilizan GameObjects 2D.</p>
+
+<p>Dentro de la interfaz de usuario pueden aparecer GameObjects como texto, imágenes, sliders, scrollbars, botones o campos de texto.</p>
+
+<p>Los GameObjects de interfaz de usuario deben ser hijos de un GameObject de tipo <span class="negrita">Canvas</span>.</p>
+
+<p>Cuando se añade a la escena un GameObject de interfaz de usuario, si no existe un <span class="negrita">Canvas</span> en la escena, 
+  se creará para poder contener el GmaObject de la interfaz de usuario.</p>
+
+  <figure><img src="UD9/images/ud9-2024-01-26-10-09-35.png" /><br><figcaption></figcaption></figure>
+
+  <h3>UI - Texto</h3>
+  <p>Existen dos GameObjects para añadir texto a la escena:
+    <ul>
+      <li><span class="negrita">Text</span>: texto primitivo con pocas opciones de configuración.</li>
+      <li><span class="negrita">TextMeshPro</span>: texto avanzado con muchas opciones de configuración.</li>
+    </ul>
+  </p>
+
+<p>Existen otros GameObject de tipo MeshPro que mejoran a los tipos primitivos.</p>
+
+<p>Se recomienda el uso de los MeshPro siempre que estén disponibles.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-11-13.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Cuando se añade un <span class="negrita">TextMeshPro</span> por primera vez al proyecto aparecerá una ventana indicando que se necesita importar todos los paquetes 
+  necesarios, se debe pulsar en el botón "<span class="cursiva">Import TMP Essentials</span>".</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-12-31.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>También indica que se pueden importar paquetes de ejemplos y extras.</p>
+
+<p>Para visualizar correctamente los elementos del <span class="negrita">Canvas</span> en la pantalla hay que realizar 
+  desde el inspector algunos cambios en la configuración.</p>
+
+<p>Se debe seleccionar como "<span class="negrita">Render Mode</span>" la opción "<span class="negrita">Screen Space - Camera</span>" 
+  y posteriormente arrastrar desde la jerarquía la cámara a la casilla "<span class="negrita">Render Camera</span>"</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-14-41.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-01-26-10-15-02.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>UI - Imágenes</h3>
+<p>Para añadir imágenes a la interfaz de usuario se necesita que las imágenes sean <span class="d-word">sprites</span>.</p>
+
+<p>Los sprites son imágenes de mapa de bits que contienen una unidad mínima de información como puede ser la imagen de un botón o la imagen de un personaje.</p>
+
+<p>Una imagen puede contener uno o más sprites.</p>
+
+<p>Cada sprite se pueden añadir a la escena directamente de manera independiente convirtiéndose en un GameObject.</p>
+
+<p>Si una imagen contiene varios sprites se optimiza la carga de las imágenes en el juego.</p>
+
+<p>Los sprites pueden usarse para formar un personaje completo y poder animar cada uno de los sprite de manera independiente.</p>
+
+<p>También pueden usarse para formar la animación de un personaje o un objeto al moverse haciendo que un GameObject vaya cambiando de sprite.</p>
+
+<figure><img src="UD9/images/ud9-2024-01-26-10-28-46.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Una imagen con varios sprites también sirve para contener los diferentes elementos del mundo o de la interfaz de usuario.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-29-31.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>El primer paso para poder añadir sprites al proyecto Unity es añadir el paquete 2D Sprite desde el <span class="negrita">Menú -> Window -> Package Manager</span>.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-30-33.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>De esta manera se instala la herramienta <span class="negrita">Unity Sprite Editor</span>.</p>
+
+<p>El siguiente paso es arrastrar las imágenes al gestor de archivos a una carpeta llamada <span class="inline-folder">Sprites</span>.</p>
+
+<p>Al seleccionar una imagen del gestor de archivos, en el inspector se puede indicar el tipo de textura que es.
+  Para convertirla en un Sprite se debe elegir la opción <span class="negrita">Sprite (2D and UI)</span>.</p>
+
+<figure><img src="UD9/images/ud9-2024-01-26-10-31-40.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Al realizar esta acción estará disponible el botón <span class="negrita">Sprite Editor</span> y 
+  al pulsarlo se abrirá el editor que permite crear el sprite a partir de la imagen.</p>
+
+<p>Si la imagen solo contiene un Sprite al estar seleccionado el modo por defecto "<span class="cursiva">Single</span>" 
+  solo con abrir el editor ya se habrá convertido la imagen en un Sprite.</p>
+
+<p>Cuando una imagen se convierte en un Sprite en el gestor de archivos aparece una flecha sobre ella.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-32-54.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>El editor de sprites permite modificar el sprite.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-33-21.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Si una imagen contiene varios sprites, en el inspector la opción <span class="negrita">Sprite Mode</span> se debe marcar como <span class="negrita">Multiple</span>.</p>
+
+<p>Es importante que el fondo de la imagen sea transparente para obtener mejores resultados con los sprites.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-34-18.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>De esta manera el editor de sprite permite obtener varios sprites a partir de la imagen.</p>
+
+<p>Desde el editor de sprites se pueden seleccionar a mano los diferentes sprites con el ratón, una vez seleccionado un sprite se debe poner un nombre para reconocerlo posteriormente:</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-35-15.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Una vez creado el sprite, con la opción <span class="negrita">Trim</span> se recorta el sprite ajustándose al contenido de la imagen (el fondo debe ser transparente).</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-35-48.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Se puede cambiar la manera de seleccionar el sprite si se quiere ajustar mejor a la imagen.</p>
+
+<p>Con <span class="negrita">Outline Tolerance</span> se ajusta el contorno a la imagen, 
+  con <span class="negrita">Generate</span> se genera el contorno y con <span class="negrita">Apply</span> se crea el sprite con ese contorno.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-37-14.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Si los sprites se organizan en la imagen de una manera ordenada, 
+  desde el editor en el desplegable <span class="negrita">Slice</span> se puede seleccionar la manera en la que se va a dividir la imagen para que 
+  el editor cree automáticamente los sprites:</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-37-42.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p><ul>
+  <li><span class="negrita">Automatic</span>: el editor detecta los sprites según el contenido.</li>
+  <li><span class="negrita">Grid By Cell Size</span>: en la imagen los sprites se encuentran organizados en forma de rejilla, con esta opción se debe indicar el tamaño de cada cuadro de la rejilla.</li>
+  <li><span class="negrita">Grid By Cell Count</span>: en la imagen los sprites se encuentran organizados en forma de rejilla, con esta opción se debe indicar el número de filas y de columnas.</li>
+</ul></p>
+
+<p>Tras seleccionar la opción deseada se debe pulsar el botón Slice para generar todos los sprites</p>
+
+<figure><img src="UD9/images/ud9-2024-01-26-10-39-10.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-01-26-10-39-17.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-01-26-10-40-12.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Si la imagen contiene los sprites de animación de un personaje, como en el ejemplo, 
+  cuando se utilizan las opciones del botón <span class="negrita">Slice</span> se debe estudiar el contenido de la imagen para que el pivote sea correcto 
+  y la animación funcione correctamente.</p>
+
+<p>Lo más habitual en estos casos es que los sprites estén organizados en forma de rejilla y el pivote se sitúe en el centro, 
+  aunque esto puede cambiar entre las diferentes hojas de sprites.</p>
+
+<p>Una vez creados los sprites en el gestor de archivos al pulsar la flecha que aparece en la imagen se mostrarán todos los sprites creados junto con su nombre.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-41-11.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Una vez una imagen se ha convertido en uno o varios sprites, se puede arrastrar uno de los sprite a la jerarquía o a la visualización y se añadirá un GameObject que muestre ese sprite.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-52-04.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>También se puede añadir un GameObject de tipo <span class="negrita">UI -> Image</span> y añadirle el sprite arrastrándolo a la opción Source Image.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-52-56.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-01-26-10-53-10.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</section><!-- End section UI (User Interface)-->
+
+<!--*********************************************************Prefabs***********************************************************-->
+<section class="apartado">
+<a name="sPrefabs"></a>
+<h2>Prefabs</h2>
+<p>Un <span class="r-word">Prefab</span> es un GameObject con todas sus características 
+  (tamaño, rotación, giro, material, texturas, físicas…) almacenado como un asset.</p>
+
+<p>Al tener un GameObject guardado como un prefab este <span class="negrita">podrá ser instanciado desde un script</span>.</p>
+
+<p>Un ejemplo típico de un prefab en un juego serían los objetos que dejan los enemigos cuando desaparecen tras ser golpeados.</p>
+
+<p>Los prefab también son fáciles de exportar para poder ser usados en otros proyectos.</p>
+
+<p>Para crear un prefab se debe arrastrar el objeto desde la jerarquía al gestor de archivos.</p>
+
+<p>Para mantener una buena organización todos los prefab se situarán en una carpeta llamada <span class="inline-folder">Prefabs</span>.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-55-31.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>En la jerarquía se indica que el GameObject proviene de un prefab mostrando su nombre en color azul.</p>
+
+<p>En el gestor de archivos aparece una previsualización del prefab.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-56-18.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Al seleccionar el prefab en el inspector se pueden ver sus características y componentes.
+</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-56-46.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Un GameObject en la jerarquía que proviene de un prefab se puede editar en la escena actual sin que esta edición afecte al prefab.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-57-23.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Para editar un prefab se debe hacer doble clic sobre él en el gestor de archivos.</p>
+
+<p>Los cambios sobre el prefab se replicarán en todos los GameObject del proyecto que estén creados a partir del prefab.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-57-56.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>En una escena se pueden añadir todas las copias de un prefab que se necesiten.</p>
+
+<p>Desde un script también se pueden añadir GameObjects que sean prefabs.</p>
+<figure><img src="UD9/images/ud9-2024-01-26-10-58-35.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+
+
+
+</section><!-- End section Prefabs-->
 
   <!---BTM_MENU--->
   <script src="../script/prism.js"></script>
