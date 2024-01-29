@@ -41,7 +41,12 @@
     <div class="fila">
       <a href="#sUI" title="13.- UI">13.- UI</a>
       <a href="#sPrefabs" title="14.- Prefabs">14.- Prefabs</a>
-      
+      <a href="#sLa_Clase_GameObject" title="15.- La Clase GameObject">15.- La Clase GameObject</a>
+    </div>
+    <div class="fila">
+      <a href="#sEl_componente_Transform" title="16.- El componente Transform">16.- El componente Transform</a>
+      <a href="#sLa_clase_Input" title="17.- sLa_clase_Input">17.- sLa_clase_Input</a>
+
     </div>
 
   </nav> <!-- BTM_MENU-->
@@ -1013,7 +1018,7 @@
 <h2>Componentes de GameObject</h2>
 <p>Los GameObject pueden contener diferentes componentes.</p>
 
-<p>Como mínimo todos los GameObject tienen el componente Transform que sirve para indicar la posición, la rotación y el tamaño del GameObject</p>
+<p>Como mínimo todos los GameObject tienen_el compone_te Transform que sirve para indicar la posición, la rotación y el tamaño del GameObject</p>
 
 <p>Los GameObject geométricos también tienen un Mesh y un Mesh Renderer para poder dibujarse.</p>
 
@@ -1244,11 +1249,356 @@
 <figure><img src="UD9/images/ud9-2024-01-26-10-58-35.png" /><br><figcaption></figcaption></figure>
 <br>
 
-
-
-
-
 </section><!-- End section Prefabs-->
+
+<!--*********************************************************La Clase GameObject***********************************************************-->
+<section class="apartado">
+<a name="sLa_Clase_GameObject"></a>
+<h2>La Clase GameObject</h2>
+<h3>Acceso a las propiedades del GameObject</h3>
+<p>Desde un script añadido a un GameObject se puede acceder a las propiedades del propio GameObject y a todos los componentes que se añadan al GameObject.</p>
+
+<p>Para acceder a toda esta información se utiliza la variable <span class="r-word">gameObject</span> 
+  que <span class="negrita">se inyecta directamente</span> al heredar de la clase <span class="r-word">MonoBehaviour</span>.</p>
+<figure><img src="UD9/images/ud9-2024-01-29-10-56-27.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<figure><img src="UD9/images/ud9-2024-01-29-10-56-54.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-01-29-10-57-11.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-01-29-10-57-50.png" /><br><figcaption>Cambiando la propiedad nombre por código</figcaption></figure>
+<br>
+
+<p>Todos los GameObject tienen al menos un componente <span class="negrita">Transform</span> que sirve para <span class="negrita">indicar la posición, 
+  la rotación y el tamaño del GameObject</span>.</p>
+
+<p>Como es un componente presente <span class="subrayado">en todos</span> los GameObject, 
+  Unity inyecta directamente la propiedad <span class="negrita">transform que se puede usar directamente</span> o 
+  desde la propiedad gameObject para poder utilizarlo directamente.</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-00-07.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Para acceder a un componente <span class="negrita">diferente a Transform</span>, 
+  se debe crear una propiedad para poder almacenar ese componente en ella mediante el método <span class="negrita">GetComponent</span> y poder acceder.</p>
+
+<p>Por ejemplo, para acceder al componente <span class="negrita">Collider</span>:</p>
+
+<figure><img src="UD9/images/ud9-2024-01-29-11-01-57.png" /><br><figcaption>Al ejecutar se desactiva el collider</figcaption></figure>
+<br>
+<h3>Acceso a otros GameObjects</h3>
+<p>Para acceder desde un script a otros GameObjects <span class="negrita">se debe <span class="negrita">declarar una propiedad de tipo GameObject</span></span>
+  y posteriormente <span class="negrita">asignarle el GameObject que se quiera</span>. (Sphere<span class="negrita">GO</span>  -> <span class="negrita">G</span>ame<span class="negrita">O</span>bject).</p>
+
+  <figure><img src="UD9/images/ud9-2024-01-29-11-03-58.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+<p>Hay varias opciones para asignar el GameObject a la propiedad.
+  <ul>
+    <li>Si la propiedad es <span class="negrita">pública</span> se puede <span class="negrita">arrastrar</span> el GameObject desde la jerarquía a la variable en el Inspector.
+      <figure><img src="UD9/images/ud9-2024-01-29-11-06-10.png" /><br><figcaption></figcaption></figure>     
+    </li>
+    <li>Desde el propio script con el método <span class="negrita">Find</span> de la clase <span class="negrita">GameObject</span>
+       para buscar por el <span class="negrita">nombre</span> (en estos casos la propiedad suele ser privada).
+       <figure><img src="UD9/images/ud9-2024-01-29-11-07-41.png" /><br><figcaption>Al ejecutar se buscan los GameObjects con esa etiqueta y se rellena el array</figcaption></figure>
+    </li>
+    <li><span class="negrita">Asignar etiquetas</span> a los GameObject y 
+      desde el propio script con el método <span class="r-word">FindGameObjectsWithTag</span> de la clase <span class="negrita">GameObject</span>
+       para buscar por <span class="negrita">etiqueta</span>.
+       <figure><img src="UD9/images/ud9-2024-01-29-11-09-22.png" /><br><figcaption></figcaption></figure>
+       <br>
+       <p>En este caso la variable se debe declarar como array porque pude haber más de un GameObject con esa etiqueta (en estos casos la propiedad suele ser privada).</p>
+       <figure><img src="UD9/images/ud9-2024-01-29-11-11-20.png" /><br><figcaption></figcaption></figure>  
+       <br>    
+       
+       <figure><img src="UD9/images/ud9-2024-01-29-11-12-54.png" /><br><figcaption>Al ejecutar se buscan los GameObjects con esa etiqueta y se rellena el array.
+</figcaption></figure>
+       <br>
+       
+      </li>
+  </ul>
+</p>
+
+<p>Al acceder a otros GameObjects se puede acceder a sus propiedades, por ejemplo, 
+  el siguiente script añadido a la MainCamera, accedería a la propiedad <span class="negrita">Text</span> de un GameObject de tipo TextMeshPro y modificaría su valor.</p>
+
+<p>Para poder acceder al GameObject se deberá arrastrar dicho GameObject a la casilla correspondiente del Inspector al seleccionar la MainCamera.</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-14-25.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Acceso a componentes de otros GameObjects</h3>
+<p>Una vez se tiene la referencia a un GameObject con cualquiera de las técnicas vistas anteriormente, 
+  se puede acceder a los componentes de dicho GameObject con el método <span class="negrita">GetComponent</span>
+   igual que se accede a los componentes del propio GameObject .</p>
+
+<figure><img src="UD9/images/ud9-2024-01-29-11-15-43.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Si la propiedad para acceder al componente se declara pública <span class="negrita">al arrastrar el GameObject</span>
+   a la casilla en el Inspector <span class="negrita">se asignará directamente el tipo de componente especificado</span> al declarar la propiedad.</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-16-38.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Se puede acceder a los scripts de otros GameObjetcs a partir del GameObject al que se quiere acceder y al <span class="negrita">nombre del script</span>.</p>
+
+<p>Se puede utilizar cualquier técnica de las vistas anteriormente para obtener la referencia al otro GameObject.</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-18-28.png" /><br><figcaption></figcaption></figure>
+<br>
+</section><!-- End section La Clase GameObject-->
+
+<!--*********************************************************El componente Transform***********************************************************-->
+<section class="apartado">
+<a name="sEl_componente_Transform"></a>
+<h2>El componente Transform</h2>
+<p>El componente <span class="r-word">Transform</span> se estructura en tres elementos:
+  <ul>
+    <li><span class="negrita">Posición</span></li>
+    <li><span class="negrita">Rotación</span></li>
+    <li><span class="negrita">Escala</span></li>
+  </ul>
+</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-20-46.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Para cada elemento se especifica un valor por cada coordenada que se puede consultar como se ha visto anteriormente.</p>
+
+<figure><img src="UD9/images/ud9-2024-01-29-11-20-54.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Para modificar la <span class="negrita">posición</span>, la <span class="negrita">rotación</span> y la <span class="negrita">escala</span>
+   se usan objetos de la clase <span class="r-word">Vector3</span>.</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-22-06.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>El código de la imagen representa las coordenadas: x=3, y=8, z=1.</p>
+
+<p>Los parámetros que admite son números decimales (float) aunque se puede indicar con enteros.</p>
+
+<p>Si se indica un número decimal se debe añadir al final la letra f:</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-22-20.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Cambiar posición de un GameObject</h3>
+
+<p>Para <span class="negrita">cambiar la posición</span> de un GameObject:
+<ul>
+  <li>
+    Indicar <span class="negrita">un nuevo Vector3</span> para la propiedad <span class="negrita">position</span> de su <span class="negrita">Transform</span>:
+    <figure><img src="UD9/images/ud9-2024-01-29-11-23-18.png" /><br><figcaption></figcaption></figure>
+  </li>
+  <li>
+    Operar la propiedad <span class="negrita">position</span> del <span class="negrita">Transform</span> con un <span class="negrita">Vector3</span>:
+    <figure><img src="UD9/images/ud9-2024-01-29-11-24-03.png" /><br><figcaption></figcaption></figure>
+  </li>
+  <li>
+    Usar el método <span class="r-word">Translate</span> sobre el <span class="negrita">Transform</span>:
+    <figure><img src="UD9/images/ud9-2024-01-29-11-24-40.png" /><br><figcaption></figcaption></figure>
+    <br>
+    <p>Con <span class="r-word">Translate</span> se puede indicar si se usará como referencia el transform propio (valor por defecto) 
+      o el punto central del espacio de coordenadas (0, 0, 0):</p>
+    <figure><img src="UD9/images/ud9-2024-01-29-11-25-39.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+  </li>
+</ul>
+</p>
+
+<p>Además, la clase <span class="r-word">Vector3</span> dispone de algunas propiedades que devuelven objetos Vector3 a una unidad en las coordenadas:</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-26-32.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>En la documentación se puede consultar todo lo disponible:
+<a class="enlace" target="_blank" href="https://docs.unity3d.com/ScriptReference/Vector3.html">https://docs.unity3d.com/ScriptReference/Vector3.html</a>
+</p>
+
+<p>Los objetos de la clase <span class="r-word">Vector3</span> se pueden operar:</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-27-08.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Rotar un GameObject</h3>
+<p class="sub-section">Sobre sí mismo</p>
+
+<p>Indicar un <span class="negrita">nuevo Vector3</span> para la propiedad <span class="negrita">rotation</span> de su <span class="negrita">Transform</span>
+   usando el método <span class="negrita">Euler</span> de la clase <span class="negrita">Quaternion</span>:</p>
+
+<figure><img src="UD9/images/ud9-2024-01-29-11-29-15.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Usar la propiedad <span class="negrita">eulerAngles</span> (comportamiento similar al método anterior):</p>
+
+<figure><img src="UD9/images/ud9-2024-01-29-11-30-49.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Usar el método <span class="negrita">Rotate</span> sobre el <span class="negrita">Transform</span>.</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-30-56.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Con <span class="negrita">Rotate</span> se puede indicar si se usará como referencia el transform propio (valor por defecto)
+   o el punto central del espacio de coordenadas (0, 0, 0).</p>
+
+<p class="sub-section">Girar alrededor de otro</p>
+
+<p>Con el Método <span class="r-word">RotateAround(origen, eje, velocidad)</span> se puede hacer que un GameObject gire alrededor de otro:</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-32-50.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Con el método <span class="r-word">LookAt(transformOtherGameObject)</span> se puede hacer que un GameObject mire siempre hacia otro GameObject:</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-33-16.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Estas dos técnicas deben usarse dentro del método Update del script.</p>
+
+<h3>Escalar un GameObject</h3>
+<p>Para <span class="negrita">escalar</span> un GameObject solo tiene sentido el escalarlo respecto a su punto pivote.</p>
+<p>Por esta razón se utiliza la propiedad <span class="r-word">localScale</span>:</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-34-06.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>El componente Transform en la jerarquía</h3>
+<p>Cuando se tienen GameObjects agrupados, el componente Transform permite acceder a todos los Transform y GameObjects de la agrupación</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-35-02.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-01-29-11-35-14.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>El orden de acceso a los GameObject hijos es el mismo que el orden en el que se encuentren en la jerarquía.</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-38-33.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Desde un GameObject agrupado también se puede acceder a su padre.</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-39-18.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Movimiento desde los métodos Update y FixedUpdate</h3>
+<p class="sub-section">Método Update</p>
+
+<p>El método <span class="r-word">Update</span> se ejecuta una vez por cada frame generado.</p>
+
+<p>Cuando se aplica una modificación del componente transform de un GameObject en el método Update <span class="negrita">se produce un movimiento</span>, por ejemplo: 
+  añadir 0,01 unidad a la posición x en cada Update.</p>
+
+  <figure><img src="UD9/images/ud9-2024-01-29-11-40-35.png" /><br><figcaption>Moviendo el GameObject</figcaption></figure>
+  <br>
+  
+  <p>El problema de usar el método <span class="negrita">Update</span> es que la cantidad de FPS que se generar depende de muchísimos factores, 
+    desde la capacidad del equipo donde se ejecuta el juego hasta la cantidad de elementos que se muestran en un momento determinado.</p>
+  <figure><img src="UD9/images/ud9-2024-01-29-11-41-57.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p>Por esta razón, no es buena idea realizar movimientos directamente de esta manera.</p>
+  
+  <p>Existen dos formas para solucionar este problema:
+    <ul>
+      <li>La clase <span class="r-word">Time</span> y su método <span class="r-word">deltaTime</span>. <br>
+Si se multiplica un movimiento por <span class="negrita">Time.deltaTime</span> se consigue que el movimiento sea constante independientemente de la cantidad de frames
+de cada momento.
+<span class="negrita">Time.deltaTime</span> devuelve el valor 0,02 (que corresponde a 20 milisegundos).
+(Técnica usada hasta la creación del método siguiente).</li>
+<li>El método <span class="r-word">FixedUpdate</span> de la clase <span class="negrita">MonoBehaviour</span>.
+	Se ejecuta en intervalos regulares de tiempo de 20 ms (50 veces/segundo).</li>
+    </ul>
+  </p>
+  
+<p>Además, es habitual crear una propiedad de tipo float llamada <span class="negrita">speed</span> para usarla como multiplicador y controlar la velocidad.</p>
+
+<p>Mover un objeto en el eje x dependiendo del valor de la propiedad speed desde el método <span class="negrita">Update</span>.</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-44-47.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p class="sub-section">Método FixedUpdate</p>
+<p>Por defecto el método <span class="negrita">FixedUpdate</span> se ejecuta cada 20 ms, 
+  pero este comportamiento se puede cambiar desde <span class="negrita">Menú -> Edit -> Project Settings</span>… en la sección <span class="negrita">Time</span>.</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-45-47.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Mover un objeto en el eje x dependiendo del valor de la propiedad <span class="negrita">speed</span> desde el método <span class="r-word">FixedUpdate</span></p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-46-19.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Con los dos métodos, Update y Fixedupdate se puede conseguir el mismo resultado si se acaba multiplicando por el mismo valor.</p>
+<figure><img src="UD9/images/ud9-2024-01-29-11-47-06.png" /><br><figcaption>speed*Time.deltaTime</figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-01-29-11-47-21.png" /><br><figcaption>speed</figcaption></figure>
+<br>
+<p>La ventaja de FixedUpdate es que se puede configurar desde los ajustes del proyecto.</p>
+
+</section><!-- End section El componente Transform-->
+
+<!--*********************************************************La clase Input***********************************************************-->
+<section class="apartado">
+<a name="sLa_clase_Input"></a>
+<h2>La clase Input</h2>
+<p>Mediante la clase <span class="r-word">Input</span> se pueden capturar <span class="negrita">los eventos de entrada</span>
+   del dispositivo del usuario (teclado, ratón, gamepad…).</p>
+
+<p>La <span class="negrita">clase Input permite unificar</span> en un único punto todos los dispositivos de entrada disponibles.</p>
+
+<p>Unity ofrece una herramienta donde poder configurar los dispositivos de entrada.</p>
+
+<p>En muchos juegos también se permite cambiar esa configuración para que el usuario tenga una experiencia personalizada.</p>
+
+<p>Desde el <span class="negrita">Menu -> Edit -> Project Settings…</span>
+   se abre la configuración del proyecto, allí en la opción <span class="negrita">Input Manager</span> se puede visualizar y
+    configurar los <span class="negrita">dispositivos de entrada</span>:</p>
+<figure><img src="UD9/images/ud9-2024-01-29-19-19-18.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>La clase <span class="r-word">MonoBehaviour</span> ofrece algunos métodos que permiten ejecutar código cuando se producen eventos de ratón:
+<ul>
+  <li><span class="negrita">OnMouseDown</span></li>
+  <li><span class="negrita">OnMouseDrag</span></li>
+  <li><span class="negrita">OnMouseEnter</span></li>
+  <li><span class="negrita">OnMouseExit</span></li>
+  <li><span class="negrita">OnMouseOver</span></li>
+  <li><span class="negrita">OnMouseUp</span></li>
+  <li><span class="negrita">OnMouseUpAsButton</span></li>
+</ul>
+</p>
+<p>La <span class="negrita"> clase Input</span> tiene una serie de métodos que devuelven un valor booleano cuando se produce la interacción del usuario con una <span class="negrita">tecla</span>, 
+  <span class="negrita">un botón del ratón</span> o un <span class="negrita">botón virtual</span> como "<span class="cursiva">Fire1</span>".</p>
+
+<p>Estos métodos se suelen utilizar dentro del método Update del script debido a que se ejecuta muchas más veces que otros métodos.</p>
+<figure><img src="UD9/images/ud9-2024-01-29-19-21-12.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>
+  <ul>
+    <li>Input.GetKeyDown(KeyCode.E)
+Input.GetKey(KeyCode.V)
+Input.GetKeyUp(KeyCode.Space)
+Input.GetMouseButtonDown(0)
+Input.GetMouseButton(1)
+Input.GetMouseButtonUp(2)
+Input.GetMouseButtonUp("Fire1")
+Input.GetMouseButton("Jump")
+</li>
+  </ul>
+</p>
+
+<p>Todos los métodos en la  <a class="enlace" target="_blank" href="https://docs.unity3d.com/ScriptReference/Input.html">documentación</a></p>
+
+<p>La <span class="negrita">clase Input</span> tiene una serie de métodos para capturar los valores de los ejes de movimiento.</p>
+
+<p>Estos métodos devuelven un valor decimal float que cuando el eje está en reposo el valor es 0 y cuando se pulsan devuelven un entre -1 y 1 dependiendo de la aceleración (tiempo de pulsación de la tecla o rango de movimiento del joystick).</p>
+<p>Existen los ejes:
+  <ul>
+    <li>Horizontal y Vertical: w, a, s, d, flechas, joystick, cruceta.
+      <ul>
+          <li>Input.GetAxis("Horizontal")</li>
+          <li>Input.GetAxis("Vertical")</li>
+      </ul>
+    </li>
+    <li>Mouse X y Mouse Y: asignados al movimiento del ratón.
+      <ul>
+<li>Input.GetAxis("Mouse X")</li>
+<li>Input.GetAxis("Mouse Y")</li>
+      </ul>
+    </li>
+  </ul>
+</p>
+
+
+<h3>Movimiento mediante la clase Input</h3>
+
+
+
+
+
+
+
+
+</section><!-- End section La clase Input-->
 
   <!---BTM_MENU--->
   <script src="../script/prism.js"></script>
