@@ -45,14 +45,19 @@
     </div>
     <div class="fila">
       <a href="#sEl_componente_Transform" title="16.- El componente Transform">16.- El componente Transform</a>
-      <a href="#sLa_clase_Input" title="17.- sLa_clase_Input">17.- sLa_clase_Input</a>
+      <a href="#sLa_clase_Input" title="17.- La clase Input">17.- La clase Input</a>
+      <a href="#sMovimiento_cinematico_y_movimiento_fisico" title="18.- Movimiento cinemático y movimiento físico">18.- Movimiento cinemático y movimiento físico</a>
+    </div>
+    <div class="fila">
+      <a href="#sColisiones" title="19.- Colisiones">19.- Colisiones</a>
+      <a href="#sMetodos_Intersantes" title="20.-Métodos Intersantes">20.-Métodos Intersantes</a>
 
     </div>
-
+    
   </nav> <!-- BTM_MENU-->
-
+  
   <h1>UD9.- Introducción a Unity</h1>  
-
+  
   <div class="main-menu">    
     <div class="fila">
       <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
@@ -79,7 +84,16 @@
     <div class="fila">
       <a href="#sUI" title="13.- UI">13.- UI</a>
       <a href="#sPrefabs" title="14.- Prefabs">14.- Prefabs</a>
-      <a href="" class="relleno"></a>
+      <a href="#sLa_Clase_GameObject" title="15.- La Clase GameObject">15.- La Clase GameObject</a>
+    </div>
+    <div class="fila">
+      <a href="#sEl_componente_Transform" title="16.- El componente Transform">16.- El componente Transform</a>
+      <a href="#sLa_clase_Input" title="17.- La clase Input">17.- La clase Input</a>
+      <a href="#sMovimiento_cinematico_y_movimiento_fisico" title="18.- Movimiento cinemático y movimiento físico">18.- Movimiento cinemático y movimiento físico</a>      
+    </div>
+    <div class="fila">
+      <a href="#sColisiones" title="19.- Colisiones">19.- Colisiones</a>
+
     </div>
   </div>
 
@@ -163,7 +177,7 @@
 
 <p>Si no se tiene instalado <span class="negrita">Microsoft Visual Studio Community</span> y no se quiere instalar, se debe desmarcar.</p>
 <p>Se puede utilizar cualquier otro editor de código cambiando la configuración del editor Unity una vez esté instalado. 
-  En <span class="negrita">Menú -> Edit -> Preferences</span>.</p>
+  En <span class="negrita">Menú &rarr; Edit &rarr; Preferences</span>.</p>
 
   <figure><img src="UD9/images/ud9-2024-01-24-12-40-06.png" /><br><figcaption></figcaption></figure>
   <br>
@@ -183,6 +197,7 @@
     <li><span class="negrita">Installs</span>: gestor de editores Unity instalados.</li>
     <li><span class="negrita">Learn</span>: apartado de autoaprendizaje</li>
     <li><span class="negrita">Community</span>: acceso a la comunidad con secciones como Assets Store o Foros.</li>
+    
   </ul>
   
 </p>
@@ -278,7 +293,7 @@
 <figure><img src="UD9/images/ud9-2024-01-24-12-59-27.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<p>Desde el <span class="negrita">Menú -> Edit -> Preferences</span> en la sección <span class="negrita">Colors</span>
+<p>Desde el <span class="negrita">Menú &rarr; Edit &rarr; Preferences</span> en la sección <span class="negrita">Colors</span>
    se puede decidir qué color va a superponer a la interfaz cuando se ejecute el juego: <span class="negrita">Playmode tint</span>.</p>
 
 <p>Interesa poner un modo que aporte mucho contraste para así saber siempre si se está ejecutando o no.</p>
@@ -306,7 +321,7 @@
 <br>
 
 <p>Una vez creada la carpeta <span class="inline-folder">Scripts</span> con el botón derecho sobre ella o sobre la parte derecha en el gestor 
-  (la que representa la carpeta), se debe seleccionar <span class="negrita">Create -> C# Script</span></p>
+  (la que representa la carpeta), se debe seleccionar <span class="negrita">Create &rarr; C# Script</span></p>
 
 <figure><img src="UD9/images/ud9-2024-01-24-13-15-46.png" /><br><figcaption></figcaption></figure>
 <br>
@@ -956,7 +971,7 @@
 <h2>Materiales</h2>
 <p>Los <span class="negrita">materiales</span> permiten dar aspecto a los GameObject.</p>
 
-<p>Para crear un material se hace clic derecho en el gestor de archivos y se selecciona <span class="negrita">Create -> Material</span>, 
+<p>Para crear un material se hace clic derecho en el gestor de archivos y se selecciona <span class="negrita">Create &rarr; Material</span>, 
   al crearlo permitirá asignarle un nombre.</p>
 <figure><img src="UD9/images/ud9-2024-01-26-09-32-28.png" /><br><figcaption></figcaption></figure>
 <br>
@@ -990,7 +1005,7 @@
 
 <p>Se suelen utilizar para permitir que los GameObject reboten o para que haya fricción entre ellos.</p>
 
-<p>Para crear un material físico se hace clic con el botón derecho sobre el gestor de archivos y se elige la opción <span class="negrita">Create -> Physic Material</span>.</p>
+<p>Para crear un material físico se hace clic con el botón derecho sobre el gestor de archivos y se elige la opción <span class="negrita">Create &rarr; Physic Material</span>.</p>
 
 <p>Al crearse, se debe introducir su nombre.</p>
 <figure><img src="UD9/images/ud9-2024-01-26-10-05-23.png" /><br><figcaption></figcaption></figure>
@@ -1027,7 +1042,7 @@
 <figure><img src="UD9/images/ud9-2024-01-26-10-00-53.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<p>Se pueden añadir otros componentes a los GameObject desde el <span class="negrita">Menú -> GameObject</span> o
+<p>Se pueden añadir otros componentes a los GameObject desde el <span class="negrita">Menú &rarr; GameObject</span> o
   desde el inspector con el botón "<span class="negrita">Add Component</span>" que aparece en la parte inferior.</p>
 
 
@@ -1116,7 +1131,7 @@
 <p>Una imagen con varios sprites también sirve para contener los diferentes elementos del mundo o de la interfaz de usuario.</p>
 <figure><img src="UD9/images/ud9-2024-01-26-10-29-31.png" /><br><figcaption></figcaption></figure>
 <br>
-<p>El primer paso para poder añadir sprites al proyecto Unity es añadir el paquete 2D Sprite desde el <span class="negrita">Menú -> Window -> Package Manager</span>.</p>
+<p>El primer paso para poder añadir sprites al proyecto Unity es añadir el paquete 2D Sprite desde el <span class="negrita">Menú &rarr; Window &rarr; Package Manager</span>.</p>
 <figure><img src="UD9/images/ud9-2024-01-26-10-30-33.png" /><br><figcaption></figcaption></figure>
 <br>
 
@@ -1199,7 +1214,7 @@
 <p>Una vez una imagen se ha convertido en uno o varios sprites, se puede arrastrar uno de los sprite a la jerarquía o a la visualización y se añadirá un GameObject que muestre ese sprite.</p>
 <figure><img src="UD9/images/ud9-2024-01-26-10-52-04.png" /><br><figcaption></figcaption></figure>
 <br>
-<p>También se puede añadir un GameObject de tipo <span class="negrita">UI -> Image</span> y añadirle el sprite arrastrándolo a la opción Source Image.</p>
+<p>También se puede añadir un GameObject de tipo <span class="negrita">UI &rarr; Image</span> y añadirle el sprite arrastrándolo a la opción Source Image.</p>
 <figure><img src="UD9/images/ud9-2024-01-26-10-52-56.png" /><br><figcaption></figcaption></figure>
 <br>
 <figure><img src="UD9/images/ud9-2024-01-26-10-53-10.png" /><br><figcaption></figcaption></figure>
@@ -1288,7 +1303,7 @@
 <br>
 <h3>Acceso a otros GameObjects</h3>
 <p>Para acceder desde un script a otros GameObjects <span class="negrita">se debe <span class="negrita">declarar una propiedad de tipo GameObject</span></span>
-  y posteriormente <span class="negrita">asignarle el GameObject que se quiera</span>. (Sphere<span class="negrita">GO</span>  -> <span class="negrita">G</span>ame<span class="negrita">O</span>bject).</p>
+  y posteriormente <span class="negrita">asignarle el GameObject que se quiera</span>. (Sphere<span class="negrita">GO</span>  &rarr; <span class="negrita">G</span>ame<span class="negrita">O</span>bject).</p>
 
   <figure><img src="UD9/images/ud9-2024-01-29-11-03-58.png" /><br><figcaption></figcaption></figure>
   <br>
@@ -1501,7 +1516,7 @@ de cada momento.
 
 <p class="sub-section">Método FixedUpdate</p>
 <p>Por defecto el método <span class="negrita">FixedUpdate</span> se ejecuta cada 20 ms, 
-  pero este comportamiento se puede cambiar desde <span class="negrita">Menú -> Edit -> Project Settings</span>… en la sección <span class="negrita">Time</span>.</p>
+  pero este comportamiento se puede cambiar desde <span class="negrita">Menú &rarr; Edit &rarr; Project Settings</span>… en la sección <span class="negrita">Time</span>.</p>
 <figure><img src="UD9/images/ud9-2024-01-29-11-45-47.png" /><br><figcaption></figcaption></figure>
 <br>
 
@@ -1530,7 +1545,7 @@ de cada momento.
 
 <p>En muchos juegos también se permite cambiar esa configuración para que el usuario tenga una experiencia personalizada.</p>
 
-<p>Desde el <span class="negrita">Menu -> Edit -> Project Settings…</span>
+<p>Desde el <span class="negrita">Menu &rarr; Edit &rarr; Project Settings…</span>
    se abre la configuración del proyecto, allí en la opción <span class="negrita">Input Manager</span> se puede visualizar y
     configurar los <span class="negrita">dispositivos de entrada</span>:</p>
 <figure><img src="UD9/images/ud9-2024-01-29-19-19-18.png" /><br><figcaption></figcaption></figure>
@@ -1590,15 +1605,326 @@ Input.GetMouseButton("Jump")
 
 
 <h3>Movimiento mediante la clase Input</h3>
+<p>Gracias a la <span class="negrita">clase Input se pueden mover GameObjects</span> cuando el usuario interactúe con los <span class="negrita">dispositivos de entrada</span>.</p>
 
+<p>En el código, teniendo la cámara con la orientación que se indica con el gizmo:
+  <ul>
+    <li>flecha arriba o w	 &rarr;	<span class="negrita">mover</span> hacia adelante (se aleja de la cámara).</li>
+    <li>flecha abajo o s	 &rarr;	<span class="negrita">mover</span> hacia atrás ( se acerca a la cámara).</li>
+    <li>flecha izquierda o a &rarr;	<span class="negrita">mover</span> hacia izquierda.</li>
+    <li>flecha derecha o d &rarr;	<span class="negrita">mover</span> hacia derecha.</li>
+  </ul>
+</p>
+<figure><img src="UD9/images/ud9-2024-01-31-12-50-54.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-01-31-12-51-05.png" /><br><figcaption></figcaption></figure>
+<br>
+<p><ul>
+  <li>flecha arriba o w		&rarr;	<span class="negrita">mover</span> hacia adelante.</li>
+	<li>flecha abajo o s		&rarr;	<span class="negrita">mover</span> hacia atrás.</li>
+	<li>flecha izquierda o a	&rarr;	<span class="negrita">rotar</span> hacia izquierda.</li>
+	<li>flecha derecha o d	&rarr;	<span class="negrita">rotar</span> hacia derecha</li>
+</ul></p>
 
+<figure><img src="UD9/images/ud9-2024-01-31-12-55-05.png" /><br><figcaption></figcaption></figure>
+<br>
 
+<p>Con cualquiera de los dos códigos anteriores, si se sitúa la cámara detrás del GameObject, en la misma orientación x y se añade la cámara como hija del GameObject, 
+  la cámara seguirá al GameObject mientras se mueva.</p>
 
-
-
+<figure><img src="UD9/images/ud9-2024-01-31-12-55-32.png" /><br><figcaption></figcaption></figure>
+<br>
 
 
 </section><!-- End section La clase Input-->
+<!--*********************************************************Movimiento cinemático y movimiento físico***********************************************************-->
+<section class="apartado">
+<a name="sMovimiento_cinematico_y_movimiento_fisico"></a>
+<h2>Movimiento cinemático y movimiento físico</h2>
+<p>Tipos de movimientos en Unity:
+  <ul>
+    <li><span class="negrita">Cinemático</span>:
+      <ul>
+        <li>Movimiento que se realiza directamente sobre el componente transform del GameObject.</li>
+        <li>Estos movimientos son independientes de las físicas del juego (gravedad, aceleración, impulsos, inercias, rozamiento…).</li>
+      </ul>
+    </li>
+    <li><span class="negrita">Físico</span>:
+      <ul>
+        <li>Movimientos que se realizan usando el motor físico del juego.</li>
+        <li>El GameObject debe tener el componente <span class="negrita">Rigidbody</span>.</li>
+      </ul>
+    </li>
+  </ul>
+</p>
+
+<p>Al añadir el componente <span class="r-word">Rigidbody</span> a un GameObject en el inspector se puede ver su configuración.</p>
+<figure><img src="UD9/images/ud9-2024-01-31-13-00-16.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Propiedades de <span class="negrita">Rigidbody</span>:
+<ul>
+    <li><span class="negrita">Mass</span>: peso del objeto en kilogramos.</li>
+  <li><span class="negrita">Drag</span>: resistencia al movimiento lineal.</li>
+  <li><span class="negrita">Angular Drag</span>: resistencia a las rotaciones.</li>
+  <li><span class="negrita">Use Gravity</span>: indica si le afecta o no la gravedad.</li>
+  <li><span class="negrita">Is Kinematic</span>: si se activa, el GameObject no se verá afectado por el motor físico.
+    Se suele activar para detectar colisiones.	(solo se podrá manipular con su Transform).</li>
+  <li><span class="negrita">Constraints</span>: permite bloquear coordenadas.</li>
+
+</ul>
+</p>
+<figure><img src="UD9/images/ud9-2024-01-31-13-02-08.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Con los movimientos cinemáticos (sin físicas) cuando se mueve un GameObject lo que ocurre es que el GameObject se está <span class="negrita">transportando</span>
+   a la nueva posición.</p>
+
+<p>Cuando un GameObject tiene el componente <span class="negrita">Rigidbody</span> no es recomendable modificar su posición usando su 
+  Transform ya que al transportarse a la nueva posición podría aparecer parcialmente dentro de otro objeto y generar una colisión indeseada.</p>
+
+<p>Para mover un GameObject que tenga un Rigidbody se le deben <span class="negrita">aplicar fuerzas que empujen</span> al GameObject en alguna dirección.</p>
+
+<p>Si las <span class="negrita">fuerzas se aplican sin interacción con el Input</span> se utiliza el método <span class="negrita">FixedUpdate</span>.</p>
+
+<p>Si las <span class="negrita">fuerzas se aplican con interacción con el Input</span> se utiliza el método <span class="negrita">Update</span>.</p>
+
+<h3>Movimiento Físico</h3>
+<p>Ejemplo de movimiento físico:</p>
+<figure><img src="UD9/images/ud9-2024-01-31-13-29-35.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Con el código anterior se debe tener cuidado con los materiales físicos de los GameObjects 
+  ya que la fricción puede hacer que el GameObject no se comporte como se desea.</p>
+
+<p>El suelo ofrece rozamiento y al empujar al GameObject este vuelca hacia adelante.</p>
+
+<p>Además, por la fricción, al aplicar las fuerzas el GameObject tarda un tiempo en realizar el movimiento y al parar de aplicar fuerzas el GameObject va frenándose.</p>
+
+<figure><img src="UD9/images/ud9-2024-01-31-13-30-46.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Para solucionar estos problemas se puede optar una de las siguientes opciones:
+  <ul>
+    <li>Crear <span class="negrita">Materiales físicos</span> para ofrecer más realismo. 
+      Estos materiales físicos se deben configurar correctamente y se deben de asignar a los GameObject que afecten al movimiento como son superficies o personaje.</li>
+    <li>Añadir <span class="negrita">restricciones</span> al componente Rigidbody para bloquear la posición y/o rotación en alguno de los 3 ejes.</li>
+  </ul>
+</p>
+<figure><img src="UD9/images/ud9-2024-01-31-13-32-07.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Como se ha visto para aplicar fuerzas se necesita una propiedad el tipo Rigidbody en el código.</p>
+
+<p>Algunos de los métodos que se pueden utilizar son:
+  <ul>
+    <li><span class="negrita">AddForce</span>: aplica fuerzas de empuje en las coordenadas del mundo.</li>
+    <li><span class="negrita">AddTorque</span>: aplica fuerzas de giro en las coordenadas del mundo.</li>
+    <li><span class="negrita">AddRelaviteForce</span>: aplica fuerzas de empuje en las coordenadas locales.</li>
+    <li><span class="negrita">AddRelaviteTorque</span>: aplica fuerzas de giro en las coordenadas locales.</li>
+    <li><span class="negrita">AddForceAtPosition</span>: aplica fuerzas de empuje en una posición determinada.</li>
+    <li><span class="negrita">AddExplosionForce</span>: se utiliza para simular explosiones.</li>
+  </ul>
+</p>
+
+<p>Estos métodos tienen una versión que además de recibir un Vector3 también se les puede indicar el tipo de fuerza a aplicar con las siguientes propiedades:
+  <ul>
+    <li><span class="negrita">ForceMode.Force</span>: en función del objeto. fuerza = masa * aceleración.</li>
+    <li><span class="negrita">ForceMode.Acceleration</span>: aceleración ignorando la masa del GameObject.</li>
+    <li><span class="negrita">ForceMode.Impulse</span>: aplica la fuerza de manera instantánea en un frame (se usa en Update).</li>
+    <li><span class="negrita">ForceMode.VelocityChange</span>: aplica directamente una velocidad.</li>
+  </ul>
+</p>
+
+<p>Usando solo movimientos físicos se puede mantener la inercia de los movimientos en cualquier eje.</p>
+<figure><img src="UD9/images/ud9-2024-01-31-13-35-11.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Combinación de movimientos cinemáticos y físicos</h3>
+<p>Aunque no es recomendable, se pueden mezclar los dos tipos de movimiento:
+  <ul>
+    <li><span class="negrita">Cinemático</span>: mover al personaje/enemigos por las superficies.</li>
+    <li><span class="negrita">Físico</span>: aplicar fuerza hacia arriba para que el personaje salte.</li>
+  </ul>
+</p>
+<figure><img src="UD9/images/ud9-2024-01-31-13-36-07.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>El problema con este código es que si se deja de mover el personaje en mitad de un salto, no mantendrá la inercia en el salto.</p>
+
+</section><!-- End section Movimiento cinemático y movimiento físico-->
+
+<!--*********************************************************Colisiones***********************************************************-->
+<section class="apartado">
+<a name="sColisiones"></a>
+<h2>Colisiones</h2>
+<p>Para poder detectar las colisiones entre GameObjects, estos deben tener un componente <span class="r-word">Collider</span> 
+  (suele estar presente en todos los GameObjects).</p>
+
+<p>Unity ofrece dos mecanismos que permiten detectar las colisiones entre GameObjects:
+  <ul>
+    <li>Mediante <span class="negrita">Collider</span>.</li>
+    <li>Mediante <span class="negrita">Trigger</span> (Collider marcado como is Trigger generalmente cuando son GameObjects sin representación gráfica en pantalla).</li>
+  </ul>
+</p>
+
+<p>Lo más habitual es utilizar el nombre del GameObject o las etiquetas (<span class="negrita">Tag</span>) para detectar las colisiones.</p>
+
+<h3>Colisiones con Collider</h3>
+<p>Las <span class="negrita">colisiones mediante collider</span> se utilizan cuando un GameObject toca a otro.</p>
+
+<p>Por ejemplo:
+  <ul>
+    <li>El jugador empuja a otro GameObject.</li>
+    <li>Un GameObject impacta en otro GameObject como podría ser un disparo.</li>
+    <li>…</li>
+  </ul>
+</p>
+
+<p>Los collider pueden ser 3D o 2D, así, la clase MonoBehaviour ofrece métodos que se ejecutarán cuando se detecte una colisión entre colliders.</p>
+
+<p class="sub-section">Versiones 3D:</p>
+<p>
+  <ul>
+    <li><span class="negrita">void OnCollisionEnter(Collision collision)</span>: se activa en el frame en el que inicia la colisión.</li>
+    <li><span class="negrita">void OnCollisionStay(Collision collision)</span>: activo mientras la colisión se mantiene.</li>
+    <li><span class="negrita">void OnCollisionExit(Collision collision)</span>: se activa en el frame que termina la colisión.</li>
+  </ul>
+</p>
+
+<p class="sub-section">Versiones 2D:</p>
+<p>
+  <ul>
+    <li><span class="negrita">void OnCollisionEnter2D(Collision collision)</span></li>
+    <li><span class="negrita">void OnCollisionStay2D(Collision collision)</span></li>
+    <li><span class="negrita">void OnCollisionExit2D(Collision collision)</span></li>
+  </ul>
+</p>
+
+<p>En los métodos se recibe un objeto del tipo Collisión a través del cual se podrá acceder a todo lo relacionado con la colisión y con el otro GameObject.</p>
+
+<p>Al colisionar con otros GameObjects se pueden ejecutar acciones.</p>
+<figure><img src="UD9/images/ud9-2024-01-31-13-40-49.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>A través de la colisión se puede acceder a todos los elementos del GameObject contra el que se ha colisionado.</p>
+<figure><img src="UD9/images/ud9-2024-01-31-13-41-02.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Colisiones con Trigger</h3>
+<p>Las <span class="negrita">colisiones con trigger</span> se utilizan para determinar si un GameObject esta en una zona determinada</p>
+<p>Por ejemplo:
+  <ul>
+    <li>Un GameObject tiene un collider más grande que su tamaño para poder detectar que el jugador está en el radio de acción 
+      y cuando pulse una tecla lo pueda recoger (consumible) o utilizar (interruptor).</li>
+    <li>Un GameObject vacío tiene un collider para detectar si el jugador está dentro de él.</li>
+    <li>…</li>
+  </ul>
+</p>
+
+<p>Para que un GameObject actúe como Trigger se debe marcar la opción <span class="negrita">Is Trigger</span> en el Inspector dentro del componente Collider.</p>
+
+<p>En ocasiones los GameObject que actúan como Trigger solo tienen los componentes Transform y Collider porque no es necesario que se muestren en pantalla.</p>
+
+<p>Si se configura un collider como Is Trigger los métodos que ofrece la clase MonoBehaviour son los siguientes:</p>
+
+
+<p class="sub-section">Versiones 3D:</p>
+<p>
+  <ul>
+    <li><span class="negrita">void OnTriggerEnter(Collider other)</span>: se activa en el frame en el que inicia la colisión.</li>
+    <li><span class="negrita">void OnTriggerStay(Collider other)</span>: activo mientras la colisión se mantiene.</li>
+    <li><span class="negrita">void OnTriggerExit(Collider other)</span>: se activa en el frame que termina la colisión.</li>
+  </ul>
+</p>
+
+
+<p class="sub-section">Versiones 2D:</p>
+<p>
+  <ul>
+    <li><span class="negrita">void OnTriggerEnter2D(Collider other)</span></li>
+    <li><span class="negrita">void OnTriggerStay2D(Collider other)</span></li>
+    <li><span class="negrita">void OnTriggerExit2D(Collider other)</span></li>
+  </ul>
+</p>
+
+<p>En esta ocasión el otro objeto se recibe en los métodos como objetos del tipo Collider que es el Collider del otro GameObject implicado.</p>
+<p>En el GameObject que se mueve:</p>
+<figure><img src="UD9/images/ud9-2024-01-31-13-44-02.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>En el GameObject configurado como <span class="negrita">is Trigger</span>:</p>
+<figure><img src="UD9/images/ud9-2024-01-31-13-44-10.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En el siguiente ejemplo, un GameObject invisible con un Collider aplica una fuerza que hace flotar a otro GameObject que esté dentro de él, 
+  siempre y cuando el otro GameObject tenga un componente Rigidbody:</p>
+<figure><img src="UD9/images/ud9-2024-01-31-13-45-12.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+
+</section><!-- End section Colisiones-->
+
+<!--*********************************************************Métodos Intersantes***********************************************************-->
+<section class="apartado">
+<a name="sMetodos_Intersantes"></a>
+<h2>Métodos Intersantes</h2>
+<h3>Método Destroy</h3>
+<p>El método <span class="r-word">Destroy</span> elimina al GameObject, si no se indica tiempo se eliminará inmediatamente, 
+  si se indica tiempo se eliminará pasados esos segundos.</p>
+<figure><img src="UD9/images/ud9-2024-01-31-13-47-43.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Método Instantiate</h3>
+<p>El método <span class="r-word">Instantiate</span> permite crear GameObjects en tiempo de ejecución.</p>
+
+<p>Ejemplos de uso:
+  <ul>
+    <li>Cuando el jugador dispara debe crearse el proyectil en ese punto y moverse en la dirección en la que apunta.</li>
+    <li>En una zona del escenario aparece un enemigo en la parte superior que cae y al llegar abajo desaparece 
+      (bucle con Instantiate, movimiento, detección por trigger al llegar abajo y Destroy).</li>
+  </ul>
+</p>
+
+<p>Se crea un objeto cuando se pulsa el botón "<span class="cursiva">Fire1</span>" (botón izquierdo del ratón).</p>
+<figure><img src="UD9/images/ud9-2024-01-31-13-49-03.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Cuando el jugador toca al GameObject este se replica a si mismo 10 veces.</p>
+<figure><img src="UD9/images/ud9-2024-01-31-13-49-19.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Se crea un objeto cuando en intervalos de tiempo fijos sin tener que realizar ninguna acción.
+Al GameObject creado se le aplica una fuerza al crearse y saldrá lanzado.
+</p>
+<figure><img src="UD9/images/ud9-2024-01-31-13-49-37.png" /><br><figcaption>GameObject generador</figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-01-31-13-49-55.png" /><br><figcaption>GameObject generado</figcaption></figure>
+<br>
+
+<h3>Utilidades</h3>
+<p>Mediante los métodos <span class="r-word">Invoke</span> e <span class="r-word">InvokeRepeating</span>
+   se puede indicar el tiempo de espera antes de realizar la llamada a otro método.</p>
+
+
+<figure><img src="UD9/images/ud9-2024-01-31-13-50-28.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Se pueden cancelar las invocaciones a ctivas con el método <span class="r-word">CancelInvoke</span>.</p>
+<p>Si no se le indica ningún parámetro cancelará todas las invocaciones, si se le pasa como parámetro el nombre de un método cancelará esa invocación.</p>
+
+<figure><img src="UD9/images/ud9-2024-01-31-13-50-52.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Otra manera de realizar las tareas de <span class="r-word">InvokeRepeating</span> es con el uso de <span class="negrita">Corrutinas</span>.</p>
+<figure><img src="UD9/images/ud9-2024-01-31-13-51-28.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Para cancelar corrutinas se utilizan los métodos <span class="negrita">StopAllCoroutines</span> y <span class="negrita">StopCoroutine("NombreMétodo")</span>.</p>
+
+
+
+
+
+</section><!-- End section Métodos Intersantes-->
 
   <!---BTM_MENU--->
   <script src="../script/prism.js"></script>
