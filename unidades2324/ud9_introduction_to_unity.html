@@ -51,7 +51,6 @@
     <div class="fila">
       <a href="#sColisiones" title="19.- Colisiones">19.- Colisiones</a>
       <a href="#sMetodos_Intersantes" title="20.-Métodos Intersantes">20.-Métodos Intersantes</a>
-
     </div>
     
   </nav> <!-- BTM_MENU-->
@@ -93,7 +92,8 @@
     </div>
     <div class="fila">
       <a href="#sColisiones" title="19.- Colisiones">19.- Colisiones</a>
-
+      <a href="#sMetodos_Intersantes" title="20.-Métodos Intersantes">20.-Métodos Intersantes</a>
+      <a href="" class="relleno"></a>
     </div>
   </div>
 
@@ -383,7 +383,8 @@
   
 <figure><img src="UD9/images/ud9-2024-01-24-13-45-54.png" /><br><figcaption></figcaption></figure>
 <br>
-
+<br>
+<hr>
 <div class="tarea">
   <p>Actividad 3: <br>Crea un Script llamado MiPrimerScript que muestre "hola mundo! y asócialo a la Main Camera, luego quítalo y asócialo a Directional Light, 
     finalmente crea un EmptyObject y asócialo a éste. ¿Hay alguna diferencia?"</p>
@@ -1022,8 +1023,68 @@
 </p>
 
 <figure><img src="UD9/images/ud9-2024-01-26-10-06-48.png" /><br><figcaption></figcaption></figure>
+ <br>
+ <br>
+ <hr>
+ <br>
+<div class="tarea">
+  <p><span class="subrayado negrita">Actividad 3. Montando la escena</span> <br>
+    Crea un proyecto 3D en Unity llamado <span class="subrayado">EscenaTuNombre</span>. <br>
+Pon la cámara de visualización como si se fuera a desarrollar un juego en 2D (eje z hacia atrás). <br>
+Añade a la escena un plano y modifica su tamaño para que tenga poca profundidad, pero sea muy ancho (como una pasarela en horizontal de izquierda a derecha). <br>
+Añade a la escena un cubo, una esfera, una cápsula y un cilindro. Sitúalos en la escena como quieras, pero deben de estar en la misma coordenada Z que el plano. <br>
+Solo uno debe estar tocando la superficie del plano. <br>
+De los GameObject que no están tocando la superficie del plano debes colocar uno en la misma coordenada z que el que está tocando la superficie otro, 
+la coordenada x debe estar un poco desplazada (tiene que seguir estando encima del otro) y la coordenada y debe ser más alta, en la parte superior de la escena. <br>
+Crea 5 materiales con color y aspecto distinto y asigna cada uno a un GameObject. <br>
+
+Sitúa la visualización en un ángulo diferente al de la cámara, puedes rotarla y moverla, pero tienen que aparecer el plano y todos los objetos.
+<span class="oculto">Haz una captura de la ventana de visualización y ponle el nombre TuNombreUnity1.png </span>
+<span class="oculto">Haz una captura de la ventana del juego en ejecución, ponle el nombre TuNombreUnity2.png.
+  Comprime las dos capturas en un archivo rar o zip llamado TuNombre y adjunta ese archivo comprimido a la tarea.</span>
+
+  </p>
+</div>
+
+<br>
+ <hr>
+ <br>
+<div class="tarea">
+  <p><span class="subrayado negrita">Actividad 4. Eventos MonoBehaviour</span> <br>
+    Abre el proyecto EscenaTuNombre. <br>
+Crea un script llamado EventsScript y añádelo al GameObject que está en la superficie. <br>
+En el script añade instrucciones para mostrar mensajes por consola con Debug.Log para los siguientes eventos:
+ Start, Update, OnMouseEnter (el ratón se sitúa sobre el GameObject), OnMouseDrag (se clica sobre el GameObject y sin soltar se mueve el ratón). <br>
+Los mensajes deben seguir el siguiente formato "TuNombre (NombreEvento): LoQueQuieras".  <br>
+ <span class="oculto">
+  Haz clic en el script en el gestor de archivos para que se vea en el inspector el código del script, a continuación, 
+ejecuta el juego y haz una captura donde se visualice la consola y el inspector (recuerda activar la opción Collapse de la consola), 
+ponle a la captura el nombre TuNombreUnity3.png. <br>
+Comprime la captura en un archivo rar o zip llamado TuNombre y adjunta ese archivo comprimido a la tarea.
+ </span>
 
 
+  </p>
+</div>
+
+<br>
+ <hr>
+ <br>
+<div class="tarea">
+  <p><span class="subrayado negrita">Actividad 5. Gravedad</span> <br>
+    Abre el proyecto EscenaTuNombre. <br>
+Uno de los GameObject de la escena se encuentra en la misma vertical que el que estaba tocando la superficie, 
+pues a ese objeto que está en la parte superior de la escena añádele el componente RigidBody. <br>
+Ejecuta el juego y observa qué ocurre. <br>
+Cambia el peso de ese GameObject y vuelve a ejecutar el juego para observar qué ocurre. <br>
+Cambia otras configuraciones del RigidBody y vuelve a ejecutar el juego para observar qué ocurre. <br>
+
+<div class="oculto">Haz una captura de la ventana del juego en ejecución antes de que el cubo caiga, ponle el nombre TuNombreUnity4.png. <br>
+  Haz una captura de la ventana del juego en ejecución cuando el cubo golpea al objeto que tiene debajo, ponle el nombre TuNombreUnity5.png. <br>
+  Haz una captura de la ventana del juego en ejecución cuando el cubo deje de moverse, ponle el nombre TuNombreUnity6.png. <br>
+  Comprime las dos capturas en un archivo rar o zip llamado TuNombre y adjunta ese archivo</div>
+
+</div>
 
 </section><!-- End section Materiales-->
 
@@ -1263,6 +1324,27 @@
 <p>Desde un script también se pueden añadir GameObjects que sean prefabs.</p>
 <figure><img src="UD9/images/ud9-2024-01-26-10-58-35.png" /><br><figcaption></figcaption></figure>
 <br>
+
+
+<br>
+<hr>
+<br>
+<div class="tarea">
+  <p><span class="subrayado negrita">Actividad 6. Imágenes y prefabs</span> <br>
+Abre el proyecto <span class="subrayado">EscenaTuNombre</span>. <br>
+Añade un GameObject del tipo Cube, crea un material nuevo para él y asígnaselo. <br>
+Crea 5 copias de este último cubo y crea una figura juntándolos como quieras (puedes rotarlos y escalarlos). <br>
+Crea un GameObject vacío y añádele los 6 cubos que forman la figura, ten cuidado con las coordenadas. <br>
+Crea un Prefab con ese GameObject vacío. <br>
+Añade a la escena un texto con tu nombre. <br>
+Añade a la escena una foto tuya tipo carnet (actual). <br>
+
+<div class="oculto">Haz una captura de toda la ventana de Unity en ejecución, se tiene que ver el Asset en el gestor de archivos y 
+  en la ventana de visualización se tienen que ver todos los GameObject de la escena, ponle el nombre TuNombreUnity7.png. <br>
+  Comprime la captura en un archivo rar o zip llamado TuNombre y adjunta ese archivo comprimido a la tarea.</div>
+</p>
+  
+</div>
 
 </section><!-- End section Prefabs-->
 
@@ -1634,7 +1716,33 @@ Input.GetMouseButton("Jump")
 
 <figure><img src="UD9/images/ud9-2024-01-31-12-55-32.png" /><br><figcaption></figcaption></figure>
 <br>
+<br>
+<hr>
+<br>
+<div class="tarea">
+  <p>
+    <span class="subrayado negrita">Actividad 7.  Modificando GameObjects mediante Inputs</span> <br>
+Crea un proyecto 3D en Unity llamado <span class="subrayado">InputsTuNombre</span>. <br>
+Pon la cámara de visualización como si se fuera a desarrollar un juego en 2D (eje z hacia atrás). <br>
+Añade a la escena un plano y modifica su tamaño para que sea de 15x15x15 y esté en las coordenadas (0, 0, 0). <br>
+Añade un GameObject del tipo Capsule y sitúalo en las coordenadas (0, 1, 0). <br>
+Añade un GameObject del tipo Cube y sitúalo en las coordenadas (3, 0.5, 0). <br>
+Añade un GameObject del tipo Sphere y sitúalo en las coordenadas (6, 0.5, 0). <br>
+Crea un material de color naranja y asígnaselo al GameObject Capsule. <br>
+Crea un material de color azul y asígnaselo al cubo. <br>
+Crea un material de color verde y asígnaselo a la esfera <br>
+Duplica el cubo y muévelos por el plano (puedes hacer unas 20  copias). <br>
+Crea un script para la cápsula y añade en él el código necesario para realizar las siguientes acciones:
+<ul>
+  <li>Al pulsar los ejes Horizontal y vertical la cápsula debe moverse por el plano.</li>
+  <li>Al pulsar la tecla E la esfera debe escalarse en todos sus ejes creciendo 0.5.</li>
+  <li>Al pulsar la tecla Q la esfera debe escalarse en todos sus ejes decreciendo -0.5. Debes comprobar que la esfera nunca sea más pequeña que 0.5.</li>
+</ul>
+ <br>
+Crea un script para la cámara y añádele el código para que siempre esté mirando hacia la cápsula
 
+  </p>
+</div>
 
 </section><!-- End section La clase Input-->
 <!--*********************************************************Movimiento cinemático y movimiento físico***********************************************************-->
@@ -1750,6 +1858,30 @@ Input.GetMouseButton("Jump")
 <br>
 
 <p>El problema con este código es que si se deja de mover el personaje en mitad de un salto, no mantendrá la inercia en el salto.</p>
+ <br><br>
+ <hr>
+ <br>
+ <div class="tarea">
+  <p>
+    <span class="subrayado negrita">Actividad 8. Rigidbody y seguimiento de cámara</span> <br>
+    Abre el proyecto <span class="subrayado">InputsTuNombre</span>.
+    Añade a la cápsula el componente Rigidbody. <br>
+    Configura las restricciones del Rigidbody de la cápsula para que no vuelque al chocar. <br>
+    A la hora de programar el movimiento de la cápsula había dos opciones, la que rotaba con las teclas a y d y la que no rotaba. 
+    Si usaste la que no rotaba, cambia el código para usar la opción que sí que rota. <br>
+    Añade a la esfera el componente Rigidbody. <br>
+    Desactiva el script de la cámara. <br>
+    Pon la visualización detrás de la cápsula como en la imagen (eje z apuntando al fondo). <br>
+     <figure><img src="UD9/images/ud9-2024-02-01-10-37-56.png" /><br><figcaption></figcaption></figure>
+     <br>
+     
+    Selecciona la cámara y selecciona la opción Menú &rarr; GameObject &rarr; Align With View. <br> <br>
+    Haz que la cámara sea hija de la cápsula. <br> <br>
+    Ejecuta el juego y mueve la cápsula para observar que la cámara ahora sigue a la cápsula y que la cápsula colisiona con el resto de GameObjects gracias al Rigidbody.
+    
+  </p>
+ </div>
+
 
 </section><!-- End section Movimiento cinemático y movimiento físico-->
 
@@ -1921,8 +2053,108 @@ Al GameObject creado se le aplica una fuerza al crearse y saldrá lanzado.
 <p>Para cancelar corrutinas se utilizan los métodos <span class="negrita">StopAllCoroutines</span> y <span class="negrita">StopCoroutine("NombreMétodo")</span>.</p>
 
 
+<br><br>
+<hr>
+<br>
+<div class="tarea">
+  <p><span class="subrayado negrita">Práctica 7 – Pachinko</span></p>
+  
+<p>Un Pachinko es una máquina recreativa de origen japonés en la que el jugador tiene una gran cantidad de bolas de acero que se introducen en la máquina recreativa. <br>
+La máquina de pachinko tiene un sistema que lanza las bolas desde abajo por un lateral para que lleguen a la parte superior y desde ahí comiencen a bajar. <br>
+En el tablero hay una serie de alfileres (pines) en los que las bolas metálicas rebotan y toman caminos de manera aleatoria. <br>
+Además, en el tablero puede haber diferentes puertas por las que pueden entrar las bolas para así conseguir puntos con los que se consiguen premios, 
+y en ocasiones, puertas que devuelven la bola al jugador para que vuelva a introducirla. <br>
+Por último, las bolas que llegan a la parte inferior no otorgan premios. <br></p>
 
 
+<p>A continuación, se pueden ver algunos ejemplos reales y en videojuegos.</p>
+<figure><img src="UD9/images/ud9-2024-02-01-11-00-27.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-02-01-11-00-52.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+ 	  	 
+<p>Crea un proyecto 3D en Unity llamado <span class="subrayado">PachinkoTuNombre</span>. <br>
+Instala en el proyecto el paquete de Unity que se <a class="enlace" target="_blank" href="./UD9/resources/pr-pachinko.unitypackage">adjunta</a> 
+en la tarea de una de las siguientes maneras: 
+<ul>
+  <li>Al hacer doble clic en el archivo del paquete se abrirá la ventana de diálogo para incorporar todos los elementos del paquete. </li>
+  <li>Al arrastrar el archivo del paquete se abrirá la ventana de diálogo para incorporar todos los elementos del paquete.</li>
+</ul> <br>
+</p>
+<p>El paquete incluye además del tablero, una imagen con sprites y 
+  una serie de materiales que puedes aplicar al tablero y a las bolas metálicas. <br> 
+
+Todos los elementos del tablero incluyen un Collider para que las bolas no puedan traspasarlos, y además se incluye un Collider 
+delante para que así las bolas no puedan salir despedidas hacia delante (quedando el hueco para las bolas metálicas).</p>
+<figure><img src="UD9/images/ud9-2024-02-01-11-04-26.png" /><br><figcaption></figcaption></figure>
+<br>
+
+ <p>En el siguiente enlace puedes encontrar el mismo paquete que de materiales metálicos que se incluye con la tarea. 
+Puedes usar alguno de esos materiales para las bolas metálicas. 
+<a class="enlace" target="_blank" href="https://assetstore.unity.com/packages/2d/textures-materials/metals/yughues-free-metal-materials-12949">https://assetstore.unity.com/packages/2d/textures-materials/metals/yughues-free-metal-materials-12949</a></p>
+
+
+<p>Primero deberás crear los siguientes prefabs (presta atención a la escala de los elementos para que no haya problema con las colisiones):
+<ul>
+  <li>Una bola metálica con físicas y colisiones.</li>
+  <li>Un pin estático (puede ser un cilindro) con material metálico y con material físico para que reboten las bolas.</li>
+  <li>Un pin giratorio (puede ser un cilindro con un cubo alargado, o con dos cubos alargados en forma de cruz o cualquier cosa que se te ocurra) 
+    que no tendrá material que haga que rebote. En este pin cuando la bola choque con él, deberá girar el pin teniendo como eje su centro.</li>
+   <figure><img src="UD9/images/ud9-2024-02-01-11-09-34.png" /><br><figcaption></figcaption></figure>
+   <br>
+   
+  <li>Puerta en la que se ganan 5 puntos si la bola cae en ella.</li>
+  <li>Puerta en la que se ganan 10 puntos si una bola cae en ella, debe ser algo más pequeña que la anterior.</li>
+  <li>Puerta en la que se obtiene una bola extra.</li>
+</ul></p>
+
+
+<p>Los prefabs de las puertas deben tener los sprites incluidos para indicar al usuario qué ocurre al caer la bola en esas puertas.
+En la escena debes añadir:
+<li>En la parte superior central debe verse una foto tuya tipo carnet (actual), tu nombre la cantidad de puntos y la cantidad de bolas restantes.</li>
+ <figure><img src="UD9/images/ud9-2024-02-01-11-12-11.png" /><br><figcaption></figcaption></figure>
+ <br>
+ 
+<li>Tantos pines estáticos y giratorios como quieras para que el juego se vea dinámico.</li>
+<li>Dos puertas de 5 puntos.</li>
+<li>Una puerta de 10 puntos.</li>
+<li>Dos puertas de bola extra.</li></p>
+
+
+
+<p><span class="subrayado">Mecánicas del juego:</span> 
+<ul>
+  <li>El juego empezará con 100 bolas y 0 puntos.</li>
+  <li>Al pulsar la tecla flecha izquierda caerá una bola desde el hueco superior izquierdo y se restará una bola a la cantidad de bolas.</li>
+  <li>Al pulsar la tecla flecha derecha caerá una bola desde el hueco superior derecho y se restará una bola a la cantidad de bolas.</li>
+  <li>Cuando una bola cae en alguna puerta se deben sumar los puntos correspondientes o sumar una bola a la cantidad de bolas restantes.</li>
+  <li>Cuando una bola cae en alguna puerta o por la parte inferior se debe destruir.</li>
+  <li>En todo momento el HUD debe estar actualizado con los puntos actuales y la cantidad de bolas restantes.</li>
+</ul></p>
+
+
+
+<p>Los GameObjects en la escena deben tener nombres apropiados. <br>
+Crea y asigna todas las etiquetas que veas que son necesarias. <br>
+Crea los scripts necesarios y añádelos a los GameObjects o Prefabs para que el juego funcione correctamente.</p>
+
+
+<p>
+<span class="subrayado">Extras:</span>
+<ul>
+  <li>Cada vez que se cree una bola su material será uno aleatorio de entre todos los materiales de bolas metálicos incluidos en el paquete.</li>
+  <li>Prefab de una puerta que premia al jugador con 50 bolas más. Debe ser una puerta que sea difícil que una bola caiga a ella. 
+    Una vez creada la puerta añádela al tablero.</li>
+  <li>Modificar el tablero para que sea como los pachinko originales en los que la bola se lanza desde abajo por el lateral hacia la parte superior del tablero. 
+    En este caso las teclas de las flechas se sustituirán por la tecla espacio y al pulsarla se lanzará una bola. 
+    Debes crear un mecanismo para que la fuerza de la bola pueda cambiar, por ejemplo, una rueda que gire con las teclas de las flechas e indique la potencia.</li>
+</ul></p>
+
+
+
+</div>
 
 </section><!-- End section Métodos Intersantes-->
 

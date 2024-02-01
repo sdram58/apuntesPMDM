@@ -181,6 +181,18 @@
 		"body": ["<!------------------------------------------$CLIPBOARD------------------------------------------------->\n$2"],
 		"description": "Creates a commentary"
 	},
+	"Right Arrow": {
+		"scope": "html",
+		"prefix": "fr-",
+		"body": ["&rarr;"],
+		"description": "Creates a right arrow"
+	},
+	"Left Arrow": {
+		"scope": "html",
+		"prefix": "fl-",
+		"body": ["&larr;"],
+		"description": "Creates a Left arrow"
+	},
 
 
 
