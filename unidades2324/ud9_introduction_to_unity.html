@@ -51,6 +51,13 @@
     <div class="fila">
       <a href="#sColisiones" title="19.- Colisiones">19.- Colisiones</a>
       <a href="#sMetodos_Intersantes" title="20.-Métodos Intersantes">20.-Métodos Intersantes</a>
+      <a href="#sComponenteCharacterController" title="21.- Componente CharacterController">21.- Componente CharacterController</a>
+    </div>
+    
+    <div class="fila">
+      <a href="#sCamaraprofesional" title="22.- Cámara profesional">22.- Cámara profesional</a>
+      <a href="#sMovimientoProgramado" title="23.- Movimiento Programado">23.- Movimiento Programado</a>
+
     </div>
     
   </nav> <!-- BTM_MENU-->
@@ -2001,7 +2008,7 @@ Crea un script para la cámara y añádele el código para que siempre esté mir
 <!--*********************************************************Métodos Intersantes***********************************************************-->
 <section class="apartado">
 <a name="sMetodos_Intersantes"></a>
-<h2>Métodos Intersantes</h2>
+<h2>Métodos Interesantes</h2>
 <h3>Método Destroy</h3>
 <p>El método <span class="r-word">Destroy</span> elimina al GameObject, si no se indica tiempo se eliminará inmediatamente, 
   si se indica tiempo se eliminará pasados esos segundos.</p>
@@ -2157,6 +2164,203 @@ Crea los scripts necesarios y añádelos a los GameObjects o Prefabs para que el
 </div>
 
 </section><!-- End section Métodos Intersantes-->
+
+<!--*********************************************************Componente CharacterController***********************************************************-->
+<section class="apartado">
+<a name="sComponenteCharacterController"></a>
+<h2>Componente CharacterController</h2>
+<p>En muchos juegos en primera o tercera persona se necesitan las físicas para el control de algunas colisiones como por ejemplo 
+  que el personaje no atraviese el suelo o las paredes.</p>
+
+<p>Además, en estos juegos el movimiento no es realista de manera intencionada de manera que el personaje 
+  puede empezar a moverse o cambiar de dirección de manera inmediata sin que le afecte ningún tipo de inercia.</p>
+
+<p>Para estos casos Unity ofrece la clase <span class="r-word">CharacterController</span> que tiene funciones propias, 
+  le afectan las colisiones y no necesita de un <span class="r-word">Rigidbody</span> facilitando así su uso.</p>
+
+<p>Al añadir el componente <span class="negrita">CharacterController</span> a un GameObject automáticamente se añade un 
+  <span class="subrayado">collider en forma de cápsula</span>  al GameObject 
+  que está asociado al componente <span class="negrita">CharacterController</span>.</p>
+
+<figure><img src="UD9/images/ud9-2024-02-20-18-19-30.png" /><br><figcaption>GameObject vacío</figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-02-20-18-19-46.png" /><br><figcaption>GameObjects compuestos</figcaption></figure>
+<br>
+<p>Todos los GameObjects que se representan gráficamente en la escena tienen un componente <span class="negrita">Collider</span>,
+  puede ser interesante eliminarlo o desactivarlo si con el collider en forma de cápsula del CharacterController es suficiente.</p>
+<figure><img src="UD9/images/ud9-2024-02-20-18-21-17.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Las <span class="negrita">propiedades del componente CharacterController</span> son las siguientes:
+  <ul>
+    <li><span class="negrita">Slope Limit</span> : el personaje podrá subir pendientes de hasta los grados indicados aquí.</li>
+    <li><span class="negrita">Step Offset</span> : el personaje podrá subir escalones de como máximo 0,3 metros.</li>
+    <li><span class="negrita">Skin Width</span> : ancho de la piel del collider (margen en el que no afectan las colisiones).</li>
+    <li><span class="negrita">Min Move Distance</span> : valor mínimo para que se mueva el personaje.</li>
+    <li><span class="negrita">Center</span> : posición del collider con respecto al GameObject.</li>
+    <li><span class="negrita">Radius</span> : radio de la cápsula.</li>
+    <li><span class="negrita">Height</span> : altura de la cápsula.</li>
+  </ul>
+</p>
+
+<p>Como al <span class="negrita">CharacterController no le afectan las físicas</span>, 
+  el componente ofrece una serie de propiedades y métodos para obtener información del 
+  GameObject como por ejemplo la propiedad <span class="r-word">isGrounded</span> que indica si el elemento
+   ha tocado el suelo durante su último movimiento.</p>
+
+<p>El suelo será cualquier otro GameObject con un collider en el que el CharacterController pueda situarse encima de él.</p>
+
+
+<p>Para mover al personaje hay disponibles dos métodos:
+  <ul>
+    <li><span class="negrita">Move</span> : permite mover al personaje especificándole todos los movimientos como gravedad, salto, desplazamiento horizontal…</li>
+    <li><span class="negrita">SimpleMove</span> : permite mover al personaje afectándole la gravedad.</li>
+  </ul>
+</p>
+
+
+<p>La técnica que se utiliza con el método <span class="r-word">Move</span> consiste en recopilar del <span class="negrita">Input</span> 
+  y del resto de GameObjects de la escena todos los datos que afectan al movimiento 
+  y con ellos calcular el vector de movimiento que se debe aplicar al personaje.</p>
+
+
+<p>Algunos datos que se deben recopilar son:
+  <ul>
+    <li>¿Se está tocando el suelo?</li>
+    <li>¿Se ha pulsado alguna tecla o botón?</li>
+    <li>¿Hay que aplicar impulso hacia arriba porque se está saltando?</li>
+    <li>…</li>
+  </ul>
+</p>
+
+<p>Una primera aproximación del movimiento de un jugador con CharacterController donde el jugador se pueda mover por una superficie,
+   sería la siguiente:</p>
+
+<figure><img src="UD9/images/ud9-2024-02-20-18-26-04.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Las propiedades son públicas para poder consultar su valor en el <span class="cursiva">Inspector</span> 
+  cuando se ejecuta el script.</p>
+
+<p>Esta aproximación es muy sencilla ya que no tiene en cuenta la cámara ni la gravedad ni otros factores importantes. 
+  Además, al moverse en diagonal se suman las dos fuerzas y el movimiento es más rápido, lo cual no tiene sentido.</p>
+
+  <h3>Control de personaje con CharacterController</h3>
+
+<p>A continuación, se va a mostrar una serie de scripts para:
+  <ul>
+    <li>Movimiento completo del jugador, incluidos el salto y el deslizamiento en pendientes pronunciadas.</li>
+    <li>Seguimiento de la cámara al jugador.</li>
+    <li>Poder empujar GameObjects afectados por la física (con Rigidbody).</li>
+  </ul>
+</p>
+<p>Estos scripts están basados en los tutoriales de Unity y se pueden mejorar de varias maneras.</p>
+<p class="sub-section">PlayerController.cs</p>
+
+<figure><img src="UD9/images/ud9-2024-02-20-18-37-45.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<figure><img src="UD9/images/ud9-2024-02-20-18-37-54.png" /><br><figcaption>PlayerController.cs</figcaption></figure>
+<br>
+
+<figure><img src="UD9/images/ud9-2024-02-20-18-38-58.png" /><br><figcaption>PlayerController.cs cont.</figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-02-20-18-39-20.png" /><br><figcaption>PlayerController.cs cont.</figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-02-20-18-39-46.png" /><br><figcaption>PlayerController.cs cont.</figcaption></figure>
+<br>
+<p class="sub-section">PushRigidBody.cs</p>
+<figure><img src="UD9/images/ud9-2024-02-20-18-40-38.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-02-20-18-40-47.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p class="sub-section">ThirdPersonCamera.cs</p>
+<figure><img src="UD9/images/ud9-2024-02-20-18-41-06.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-02-20-18-41-19.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>CharacterController vs Movimiento físico</h3>
+<p>A la hora de implementar el movimiento del personaje se debe elegir entre:
+  <ul>
+    <li>Implementar el movimiento mediante físicas con Rigidbody. <br>
+      Al utilizar físicas, el movimiento se vuelve más realista lo que puede ser un valor añadido en simuladores. <br>
+      El control por parte del jugador será más complicado.</li>
+      <li>Implementar el movimiento mediante cinemática con CharacterController. <br>
+Al utilizar CharacterController, como desarrollador se tiene más facilidad de uso, 
+control preciso de las colisiones y más eficiencia en general al estar optimizada para personajes. <br>
+Además, el jugador tendrá un control más preciso que es muy útil para realizar acciones complejas. <br>
+En la mayoría de los casos es suficiente la implementación con CharacterController.</li>
+  </ul>
+</p>
+
+</section><!-- End section Componente CharacterController-->
+
+<a href="#s"></a>
+<!--*********************************************************Cámara profesional***********************************************************-->
+<section class="apartado">
+<a name="sCamaraprofesional"></a>
+<h2>Cámara profesional</h2>
+<p>Unity ofrece un paquete llamado <span class="r-word">Cinemachine</span> que ofrece herramientas y 
+  de cámaras virtuales que simulan un estudio de grabación y permiten un control total de la cámara.</p>
+<figure><img src="UD9/images/ud9-2024-02-20-18-45-12.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-02-20-18-45-20.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Una vez instalado el paquete, en el <span class="negrita">Menú &rArr; Component &rArr; Cinemachine</span> 
+   se encuentran las configuraciones de cámaras virtuales que se pueden añadir a la cámara de la escena.</p>
+<figure><img src="UD9/images/ud9-2024-02-20-18-48-23.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-02-20-18-48-29.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+
+</section><!-- End section Cámara profesional-->
+
+
+<!--*********************************************************Movimiento Programado***********************************************************-->
+<section class="apartado">
+<a name="sMovimientoProgramado"></a>
+<h2>Movimiento Programado</h2>
+
+<p>En un video juego puede haber elementos que tengan un movimiento programado,
+  por ejemplo, un enemigo que se mueve de un lado a otro siempre en la misma ruta o una plataforma que va de un punto a otro.</p>
+
+
+<p>En estos casos la mecánica siempre es la misma:
+  <ul>
+    <li>Se crea un GameObject vacío.</li>
+    <li>Se añade a ese GameObject el GameObject que va a moverse (enemigo, plataforma…).</li>
+    <li>Se añaden a ese GameObject tantos GameObjects vacíos como puntos se deben alcanzar al moverse.</li>
+    <li>En un script añadido al elemento que va a moverse se indica el movimiento de punto a punto.</li>
+  </ul>
+</p>
+<p>El conjunto anterior quedará así si la plataforma solo tiene que ir a dos puntos:</p>
+<figure><img src="UD9/images/ud9-2024-02-20-18-51-47.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>En el GameObject que se debe mover se añade un script con el siguiente código:</p>
+<figure><img src="UD9/images/ud9-2024-02-20-18-53-12.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En este código se utiliza el movimiento cinemático para trasladar la plataforma de un lugar a otro.</p>
+
+<p>El código anterior se puede mejorar creando un array de posiciones destino y 
+  haciendo que cuando el GameObject pase por todas las posiciones repetidamente.</p>
+
+<p>También se puede indicar que el GameObject haga una pausa al llegar a un destino.</p>
+
+<p>Si se añade un <span class="negrita">RigidBody a la plataforma</span>  (que no use gravedad y que sea kinemático), 
+  se podrá hacer que el jugador u cualquier otro GameObject pueda quedarse encima de la plataforma y moverse con ella.</p>
+
+<p>Al tener un Rigidbody el movimiento debe hacerse con físicas.</p>
+
+<p>En este caso el script se situará en el GameObject padre de la plataforma.</p>
+
+
+
+</section><!-- End section Movimiento Programado-->
 
   <!---BTM_MENU--->
   <script src="../script/prism.js"></script>
