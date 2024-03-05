@@ -20,8 +20,7 @@
       <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
       <a href="#sUnityHub" title="2.- Unity Hub">2.- Unity Hub</a>
       <a href="#sInstalacionUnity" title="3.- Instalación Unity">3.- Instalación Unity</a>
-    </div>
-    
+    </div>    
     <div class="fila">
       <a href="#sCrear_Proyecto_Unity" title="4.- Crear Proyecto Unity">4.- Crear Proyecto Unity</a>
       <a href="#sEditor_Unity" title="5.- Editor Unity">5.- Editor Unity</a>
@@ -57,7 +56,15 @@
     <div class="fila">
       <a href="#sCamaraprofesional" title="22.- Cámara profesional">22.- Cámara profesional</a>
       <a href="#sMovimientoProgramado" title="23.- Movimiento Programado">23.- Movimiento Programado</a>
-
+      <a href="#sRaycast" title="24.- Raycast">24.- Raycast</a>
+    </div>
+    <div class="fila">
+      <a href="#sNPCs" title="25.-NPC's">25.-NPC's</a>
+      <a href="#sCambiodeescenas" title="26.- Cambio de escenas">26.- Cambio de escenas</a>
+      <a href="#sPlayerPrefs" title="27.- PlayerPrefs">27.- PlayerPrefs</a>
+    </div>
+    <div class="fila">
+      <a href="#sMenus" title="28.- Menús">28.- Menús</a>
     </div>
     
   </nav> <!-- BTM_MENU-->
@@ -69,8 +76,7 @@
       <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
       <a href="#sUnityHub" title="2.- Unity Hub">2.- Unity Hub</a>
       <a href="#sInstalacionUnity" title="3.- Instalación Unity">3.- Instalación Unity</a>
-    </div>
-    
+    </div>    
     <div class="fila">
       <a href="#sCrear_Proyecto_Unity" title="4.- Crear Proyecto Unity">4.- Crear Proyecto Unity</a>
       <a href="#sEditor_Unity" title="5.- Editor Unity">5.- Editor Unity</a>
@@ -95,12 +101,27 @@
     <div class="fila">
       <a href="#sEl_componente_Transform" title="16.- El componente Transform">16.- El componente Transform</a>
       <a href="#sLa_clase_Input" title="17.- La clase Input">17.- La clase Input</a>
-      <a href="#sMovimiento_cinematico_y_movimiento_fisico" title="18.- Movimiento cinemático y movimiento físico">18.- Movimiento cinemático y movimiento físico</a>      
+      <a href="#sMovimiento_cinematico_y_movimiento_fisico" title="18.- Movimiento cinemático y movimiento físico">18.- Movimiento cinemático y movimiento físico</a>
     </div>
     <div class="fila">
       <a href="#sColisiones" title="19.- Colisiones">19.- Colisiones</a>
       <a href="#sMetodos_Intersantes" title="20.-Métodos Intersantes">20.-Métodos Intersantes</a>
-      <a href="" class="relleno"></a>
+      <a href="#sComponenteCharacterController" title="21.- Componente CharacterController">21.- Componente CharacterController</a>
+    </div>
+    
+    <div class="fila">
+      <a href="#sCamaraprofesional" title="22.- Cámara profesional">22.- Cámara profesional</a>
+      <a href="#sMovimientoProgramado" title="23.- Movimiento Programado">23.- Movimiento Programado</a>
+      <a href="#sRaycast" title="24.- Raycast">24.- Raycast</a>
+    </div>
+    <div class="fila">
+      <a href="#sNPCs" title="25.-NPC's">25.-NPC's</a>
+      <a href="#sCambiodeescenas" title="26.- Cambio de escenas">26.- Cambio de escenas</a>
+      <a href="#sPlayerPrefs" title="27.- PlayerPrefs">27.- PlayerPrefs</a>
+    </div>
+    <div class="fila">
+      <a href="#sMenus" title="28.- Menús">28.- Menús</a>
+      <a href="" class="relleno"></a><a href="" class="relleno"></a>
     </div>
   </div>
 
@@ -2202,6 +2223,9 @@ Crea los scripts necesarios y añádelos a los GameObjects o Prefabs para que el
     <li><span class="negrita">Height</span> : altura de la cápsula.</li>
   </ul>
 </p>
+<figure><img src="UD9/images/ud9-2024-03-05-09-59-36.png" /><br><figcaption></figcaption></figure>
+<br>
+
 
 <p>Como al <span class="negrita">CharacterController no le afectan las físicas</span>, 
   el componente ofrece una serie de propiedades y métodos para obtener información del 
@@ -2338,11 +2362,14 @@ En la mayoría de los casos es suficiente la implementación con CharacterContro
   </ul>
 </p>
 <p>El conjunto anterior quedará así si la plataforma solo tiene que ir a dos puntos:</p>
-<figure><img src="UD9/images/ud9-2024-02-20-18-51-47.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2024-03-05-10-03-16.png" /><br><figcaption></figcaption></figure>
+<br>
+
 <br>
 <p>En el GameObject que se debe mover se añade un script con el siguiente código:</p>
 <figure><img src="UD9/images/ud9-2024-02-20-18-53-12.png" /><br><figcaption></figcaption></figure>
 <br>
+
 
 <p>En este código se utiliza el movimiento cinemático para trasladar la plataforma de un lugar a otro.</p>
 
@@ -2358,9 +2385,376 @@ En la mayoría de los casos es suficiente la implementación con CharacterContro
 
 <p>En este caso el script se situará en el GameObject padre de la plataforma.</p>
 
+<p>Este código se debe añadir al GameObject padre del que se mueve.</p>
+<figure><img src="UD9/images/ud9-2024-03-05-10-55-07.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Además se deberá arrastrar en el inspector la plataforma y los puntos por los que debe pasar la plataforma.</p>
 
+<p>Al tener la plataforma un Rigidbody el movimiento debe ser físico.</p>
 
+<p>Si se ha implementado el movimiento del personaje mediante el componente <span class="negrita">CharacterController</span> 
+   y se usa el ejemplo anterior para mover una plataforma, el personaje no se mantendrá encima de la plataforma.</p>
+
+<p>Esto ocurre porque la plataforma contiene un Rigidbody y se mueve mediante físicas pero el personaje no tiene Rigidbody.</p>
+
+<p>Para solucionar esto se debe detectar el suelo que está tocando el personaje y
+  cuando esté en la plataforma mover al personaje lo mismo que se mueve la plataforma.</p>
+
+<p>Para realizar esto se pueden utilizar los <span class="negrita">Raycast</span> .</p>
 </section><!-- End section Movimiento Programado-->
+
+<!--*********************************************************Raycast***********************************************************-->
+<section class="apartado">
+<a name="s"></a>
+<h2>Raycast</h2>
+
+<p>Un <span class="negrita">Raycast</span>  consiste en la emisión de un rayo.</p>
+
+<p>Un <span class="negrita">rayo</span>  es una línea <span class="negrita">imaginaria</span>  que sale desde un punto y va en una dirección determinada.</p>
+
+<p>Al realizar emisiones de rayos con Raycast se puede detectar los GameObjects y los triggers que se encuentran en la trayectoria del rayo.</p>
+
+<p>Para emitir un rayo se necesita:
+  <ul>
+    <li>Un objeto de la clase <span class="negrita">Ray</span> .</li>
+
+    <li>Un objeto de la clase <span class="negrita">RaycastHit</span>  que indicará en qué GameObject impacta el rayo.</li>
+    
+    <li>Emitir el rayo con el método <span class="negrita">Raycast</span>  de la clase <span class="negrita">Physics</span> .</li>
+  </ul>
+</p>
+
+<p>Algunas utilidades de Raycast son:
+  <ul>
+    <li>Detectar colisiones.</li>
+    <li>Detectar si un GameObject está en la trayectoria de otro.</li>
+    <li>Seleccionar elementos con el ratón.</li>
+    <li>Realizar disparos.</li>
+    <li>…</li>
+  </ul>
+</p>
+
+<p>En el siguiente ejemplo se emite un rayo y cuando impacta se muestra un mensaje:</p>
+
+<p>Si los rayos no se visualizan al ejecutar se deberán activar en la parte de la derecha de la visualización de la Scene o del Game en el apartado Gizmos:</p>
+
+<p>El método <span class="negrita">Raycast</span>  tiene varias versiones.</p>
+
+<p>Una de las versiones admite un segundo parámetro de la clase <span class="negrita">RaycastHit</span>,
+  en este objeto se almacenará toda la información sobre el impacto, incluido el GameObject en el que impacta el rayo.</p>
+
+<p>Se debe declarar el objeto de la clase <span class="negrita">RaycastHit</span> antes de realizar la llamada al método 
+  <span class="negrita">Raycast</span>.</p>
+
+  <p>Se puede indicar que el rayo no impacte en los Collider tipo Trigger.</p>
+  <p>Por defecto un rayo solo impacta en el primer GameObject con el que se encuentra, 
+    este comportamiento se puede cambiar si se utiliza el método <span class="negrita">RaycastAll</span> de la clase <span class="negrita">Physics</span> .</p>
+  <p>Este método devuelve un array con todos los GameObjects en los que impacta el rayo.</p>
+   
+  <p>Se pueden emitir rayos desde la cámara, esto permite funciones como seleccionar objetos con el ratón.</p>
+  
+<p>El siguiente script se debe añadir a la cámara. 
+  Este script no puede llamarse Camera porque sobre escribiría la clase <span class="negrita">Camera</span>  de Unity.</p>
+
+  <p>En muchos videojuegos se utilizan los Raycast para detectar colisiones, por ejemplo, para saber si el personaje está tocando el suelo.</p>
+  
+  <p>Para detectar colisiones entre GameObjects usando Raycast se debe lanzar un rayo cuya distancia no supere mucho al GameObject 
+    desde el que se emite.</p>
+  
+  <p>En algunos videojuegos se emiten rayos desde diferentes puntos del personaje para controlar así su movimiento.</p>
+
+  <p>Con el método Raycast se emite un rayo, que es una línea.</p>
+  
+<p>La clase Physics ofrece otros tipos de emisión con otras formas:
+  <ul>
+    <li><span class="negrita">BoxCast</span>: emite un rayo cuyo haz tiene forma de cubo</li>
+    <li><span class="negrita">CapsuleCast</span>: emite un rayo cuyo haz tiene forma de cápsula</li>
+    <li><span class="negrita">SphereCast</span>: emite un rayo cuyo haz tiene forma de esfera</li>
+    <li><span class="negrita">LineCast</span>: devuelve true si hay algún objeto con el que el rayo impacte</li>
+  </ul>
+</p>
+
+<p>A continuación, se muestra un script que amplía la funcionalidad del control del personaje con <span class="negrita">CharacterController</span> 
+   en el que se comprueba si el GameObject está tocando el suelo usando un <span class="negrita">SphereCast</span> .</p>
+
+   <h3>Control de personaje – Sobre plataformas móviles</h3>    
+   <p>Así, para que un personaje con CharacterController pueda moverse junto con una plataforma con Rigidbody que está pisando, 
+    se debe añadir el siguiente script al personaje:</p>
+</section><!-- End section Raycast-->
+
+
+<!--*********************************************************sNPCs***********************************************************-->
+<section class="apartado">
+<a name="sNPCs"></a>
+<h2>NPC's</h2>
+<p>Los <span class="negrita">NPC</span>  (<span class="negrita">N</span>on <span class="negrita">P</span>layable 
+<span class="negrita">C</span>haracters) son aquellos personajes que los controla el propio videojuego 
+y sobre los cuales el jugador no puede indicarle qué acciones debe realizar.</p>
+
+<p>Los NPC se pueden clasificar en:
+  <ul>
+    <li><span class="negrita">Enemigos</span>: presentan un desafío que se debe superar para poder continuar.</li>
+    <li><span class="negrita">Aliados</span>: acompañan al jugador pudiendo aportar ayuda en puzles y combates.</li>
+    <li><span class="negrita">Influenciables</span>: dependiendo de las acciones pueden convertirse en aliados o enemigos.</li>
+    <li><span class="negrita">Comerciantes</span>: ofrecen la posibilidad de intercambiar objetos para mejorar y/o avanzar.</li>
+    <li><span class="negrita">Informativos</span>: solo proporcionan información con o sin importancia para la misión.</li>
+    <li><span class="negrita">Decorativos</span>: existen para dotar al juego de un ambiente más realista completando las escenas.</li>
+  </ul>
+</p>
+
+<p>En general un NPC puede ser:
+  <ul>
+    <span class="negrita">Activo</span>: ofrece misiones, información, objetos que cambian a medida que el jugador avanza.
+    <span class="negrita">Pasivos</span>: repiten la misma información o comportamiento cada vez que el jugador interactúa con ellos.
+  </ul>
+</p>
+
+<p>A los NPC se les presupone un mínimo de <span class="negrita">IA</span> (<span class="negrita">I</span>nteligencia 
+  <span class="negrita">A</span>rtificial), esta IA consiste en programar el comportamiento que debe tener el NPC.
+  Se pueden programar IA's más simples y más complejas.</p>
+
+<p>En el siguiente ejemplo se va a estudiar como 
+  <span class="negrita">implementar que un NPC vaya de un punto a otro por el camino más óptimo</span>.</p>
+
+<p>Esta técnica también se puede utilizar para que el personaje vaya a un punto seleccionado con el ratón 
+  o que un enemigo realice una ronda por el escenario y que al ver al jugador le persiga.</p>
+
+
+
+<p>Se necesita instalar el paquete AI Navigation.</p>
+
+<p>Al instalar el paquete AI Navigation se añadirá una nueva opción: <span class="negrita">Menú</span>  &rarr; <span class="negrita">Window</span>  &rarr;
+<span class="negrita">AI</span>  &rarr; <span class="negrita">Navigation</span> .</p>
+
+<p>Al pulsar la opción <span class="negrita">Menú</span>  &rarr; <span class="negrita">Window</span>  &rarr; <span class="negrita">AI</span> 
+   &rarr; <span class="negrita">Navigation</span>  aparece la ventana Navigation.</p>
+
+<p>En la pestaña <span class="negrita">Agents</span>  se pueden definir las características del GameObject 
+  que se va a mover por la ruta más óptima.</p>
+
+<p>Se pueden crear tantos agentes como se quiera, por ejemplo, puede haber enemigos que no pueden saltar sobre un muro y otros que sí.</p>
+
+<p>En la pestaña <span class="negrita">Areas</span>  se pueden definir las diferentes áreas y su prioridad (Cost),
+  a menor número mayor prioridad de pasar por esa área.</p>
+
+  <p>A los GameObjects que se deben mover se les debe añadir el componente <span class="negrita">NavMeshAgent</span> .</p>
+  
+  <p>En el ejemplo, la cápsula se moverá hasta la posición de la esfera por el camino más óptimo.</p>
+  
+  <p><span class="negrita">Se ha añadido el componente NavMeshAgent a la cápsula</span> , en el inspector se puede ver las opciones de configuración que tiene.</p>
+  
+<p>Ahora se debe añadir el componente <span class="negrita">NavMeshSurface</span>  sobre los GameObjects de la escena y asignarle el área que se quiera.</p>
+
+<p>Este componente permite definir <span class="negrita">por dónde podrá moverse el agente</span> .</p>
+
+<p>En el ejemplo, el suelo y todos los bloques están dentro de un GameObject y en ese GameObject se añade el componente NavMeshSurface.</p>
+
+<p>Una vez configurado el NavMeshSurface se debe pulsar la opción <span class="negrita">Bake</span> .</p>
+
+<p>Esta opción genera la superficie por la que el personaje se podrá mover. 
+  Se puede observar que se deja un margen alrededor de los obstáculos para evitar comportamientos imprevistos. 
+  Esta superficie se puede modificar cambiando los ajustes del <span class="negrita">Agent</span>  y pulsando <span class="negrita">Clear</span> 
+   y <span class="negrita">Bake</span>  de nuevo.</p>
+
+  <p>Como la esfera no es un elemento del escenario se le debe añadir el componente <span class="negrita">NavMeshObstacle</span> .</p>
+     
+  <p>El componente <span class="negrita">NavMeshObstacle</span>  se suele utilizar para los GameObject que pueden moverse por la escena.</p>
+  
+  <p>El componente <span class="negrita">NavMeshObstacle</span>  se utiliza para personajes que se mueven por la escena y 
+    para GameObjects que al moverse pueden afectar a la superficie de navegación.</p>
+  
+  <p>Los enemigos tendrán el componente <span class="cursiva">NavMeshObstacle</span>  y no deben afectar a la superficie de navegación.</p>
+  
+  <p>GameObjects como piedras que pueden caer y entorpecer el paso o puertas 
+    que pueden cerrarse sí que deben afectar a la superficie de navegación.</p>
+  
+  <p>Para configurar un <span class="negrita">NavMeshObstacle</span>  y que afecte a la superficie debe marcarse la opción <span class="negrita">Carve</span>, 
+    si se quiere que solo afecte a la superficie cuando el GameObject se queda estático (por ejemplo una piedra grande que cae) 
+    se debe desmarcar la opción <span class="negrita">Carve Only Stationary</span>.</p>
+
+  <p>En el ejemplo, hay un cubo con el componente NavMeshObstacle y la opción Carve activada.</p>
+  
+  <p>En la navegación se pueden crear <span class="negrita">enlaces</span>.</p>
+  <p>Existen dos tipos de enlaces:
+    <ul>
+      <li><span class="negrita">NavMeshLink</span> : permite unir zonas de navegación de la misma superficie, por ejemplo, para permitir que el jugador baje un escalón más grande del permitido.</li>
+      <li><span class="negrita">OffMeshLink</span> : permite unir dos zonas de navegación separadas físicamente.</li>
+    </ul>
+  </p>
+  <p>Los enlaces pueden ser unidireccionales o bidireccionales.</p>
+  
+  <h3>NavMeshLink</h3>
+  <p>Un NavMeshLink tiene dos puntos y una superficie visible entre los dos puntos.</p>
+  <p>Si por ejemplo, se quiere que el personaje pueda bajar el escalón pero no pueda subirlo se debe desmarcar la opción <span class="negrita">Bidireccional</span> .</p>
+
+  <h3>OffMeshLink</h3>
+  <p>Un OffMeshLink necesita dos GameObjects como referencia para la navegación.</p>
+  
+  <p>En este punto solo falta asignar al GameObject que se debe mover (cápsula) el siguiente script.</p>
+  <p>Se debe añadir la librería en la parte superior del script.</p>
+  
+  <p>A partir del script anterior se puede conseguir que un GameObject realice una ruta:
+    <ul>
+      <li>En la escena se deben crear GameObjects vacíos con un collider tipo trigger y situarlos donde se quiera.</li>
+      <li>En el script se debe declarar un array de objetivos.</li>
+      <li>En el método Start se indica que el primer objetivo sea la posición cero del array.</li>
+      <li>En el método Update se comprueba si se ha alcanzado el objetivo.</li>
+      <li>Si se ha alcanzado se actualiza el objetivo a la siguiente posición del array.</li>
+      <li>Si la siguiente posición del array es igual a longitud del array se actualiza el objetivo a la posición cero del array.</li>
+      <li>En el inspector se deben añadir todos los GameObject vacíos al script en el orden que se quiere que tenga la ruta de movimiento.</li>
+    </ul>
+  </p>
+  
+  <p>Si se quiere que el enemigo que realiza la ruta persiga al jugador se deben añadir los siguientes elementos:
+    <ul>
+      <li>En el script se debe declarar un Transform para el jugador.  </li>
+      <li>Se debe añadir al funcionalidad de que se cree un Raycast desde el enemigo en la dirección en la que camina y con una longitud (se puede simular la vista humana haciendo que el Raycast gire algunos grados a cada lado).</li>
+      <li>Si el Raycast impacta en el jugador se guarda el objetivo actual en una variable y se cambia el objetivo por el transform del jugador.</li>
+      <li>Si el Raycast deja de impactar en el jugador (el jugador se aleja más que la longitud del rayop) se actualiza el objetivo por el objetivo guardado en el paso anterior (se puede mejorar actualizando el objetivo por el punto más cercano actual de la ruta del enemigo).</li>
+    </ul>
+  </p>
+  
+<p>Si se quiere implementar que el personaje del jugador vaya al punto de la pantalla donde se realice clic, se puede utilizar el siguiente script:</p>
+
+  
+  </section><!-- End section sNPCs-->
+
+  <!--*********************************************************Cambio de escenas***********************************************************-->
+  <section class="apartado">
+  <a name="sCambiodeescenas"></a>
+  <h2>Cambio de escenas</h2>
+<p>En un videojuego es habitual que haya más de una escena, principalmente porque cada nivel del juego suele ser una escena diferente.</p>
+
+<p>Además, en los juegos también suele haber un menú inicial y un menú de opciones, que también son escenas.</p>
+
+<p>Para poder cambiar a una escena, esta debe añadirse en las preferencias del build del juego.</p>
+
+<p>Los cambios entre escenas se pueden realizar en diferentes momentos:
+<ul>
+  <li>Al pulsar el botón Jugar en el menú principal.</li>
+  <li>Al superar un nivel.</li>
+  <li>Dentro de un nivel al entrar a una zona nueva.</li>
+  <li>...</li>
+</ul>
+</p>
+
+<p>El primer paso es añadir todas las escenas a las preferencias del build del juego: 
+  <span class="negrita">File</span> &rarr; <span class="negrita">Build Settings…</span>.</p>
+
+<p>Pulsando el botón <span class="negrita">Add Open Scenes</span>  se añadirá la escena abierta.</p>
+
+<p>Para añadir el resto de escenas se deben arrastrar desde el gestor de archivos.</p>
+
+<p>La escena que esté en primera posición (0) será la que se cargue cuando se ejecute el juego (tras compilarlo y generar el ejecutable).</p>
+
+<p>Para realizar el cambio de escena desde un script, en el script se debe añadir la librería en la parte superior del script.</p>
+
+<p>La instrucción para cambiar de escena es la siguiente:</p>
+
+<p>También se puede indicar el identificador de la escena (Build settings):</p>
+
+<p>Al realizar un cambio de escena se puede indicar a los GameObjects que no se destruyan y se mantengan en la escena nueva.</p>
+
+<p>Esto permite pasar datos entre escenas y ahorrar tiempo al estar ya los GameObjects cargados en memoria.</p>
+
+
+  </section><!-- End section Cambio de escenas-->
+
+
+  <!--*********************************************************PlayerPrefs***********************************************************-->
+  <section class="apartado">
+  <a name="sPlayerPrefs"></a>
+  <h2>PlayerPrefs</h2>
+  <p>Las <span class="negrita">PlayerPrefs</span>  permiten almacenar información en el ordenador donde se ejecute el juego.</p>
+  
+
+<p>Con las PlayerPrefs se suelen guardar:
+<ul>
+  <li>El nombre del jugador.</li>
+  <li>Puntuaciones.</li>
+  <li>Vidas.</li>
+  <li>Opciones de juego como la resolución o teclas definidas por el usuario.</li>
+  <li>Último nivel (escena) jugado.</li>
+<li>…</li>
+</ul>
+</p>
+
+<p><span class="negrita">PlayerPrefs</span>  ofrece varios métodos para almacenar/recuperar información según el tipo de dato:
+  <ul>
+    <li>SetFloat</li>
+<li>SetInt</li>
+<li>SetString</li>
+  </ul>
+  <ul>
+    <li>GetFloat</li>
+    <li>GetInt</li>
+    <li>GetString</li>
+  </ul>
+</p>
+
+<p>Los métodos <span class="negrita">Get</span> pueden tener uno o dos parámetros, 
+  el segundo será el valor por defecto para el caso en el que no exista la preferencia.</p>
+  
+
+<p>Para comprobar si una preferencia existe se usa el método <span class="negrita">HasKey</span> :</p>
+
+<p>Para eliminar una preferencia se utiliza el método <span class="negrita">DeleteKey</span> :</p>
+
+<p>Para eliminar todas las preferencias se utiliza el método <span class="negrita">DeleteAll</span> :</p>
+
+  
+  </section><!-- End section PlayerPrefs-->
+
+  <!--*********************************************************Menús***********************************************************-->
+  <section class="apartado">
+  <a name="sMenus"></a>
+  <h2>Menús</h2>
+  
+  <p>Para crear menús hay dos opciones:
+    <ul>
+      <li>
+        Menú <span class="negrita">principal</span>  (cuando no existe ningún nivel cargado): <br>
+        Suele crearse en una escena propia utilizando elementos de UI.
+      </li>
+      <li>Menú <span class="negrita">ingame</span>:<br>
+        Puede crearse igual que el menú principal, 
+        pero al cambiar de escena entre el nivel actual y el menú se deberá almacenar toda la situación actual.</li>
+    </ul>
+    </p>
+  
+<p>Se puede crear dentro de la escena del nivel creando una cámara secundaria con los elementos de la UI. 
+  Esta cámara estará lejos de los elementos del nivel. 
+  Al acceder al menú se pondrán en pausa todos los elementos de la escena y 
+  se cambiará la cámara activa para que sea la que tiene asociado el menú.</p>
+
+  <p>Aunque se puede crear un menú con GameObjects como si fuera una escena del juego, 
+    lo más habitual es utilizar GameObjects de UI (Interfaz de Usuario).</p>
+    
+  <p>El manejo de eventos en GameObjects de UI es diferente al del resto de GameObjects, 
+    a continuación, se estudiarán los pasos a seguir para interactuar con ellos.</p>
+  
+    <p>Cada tipo de GameObject de UI dispone de unos eventos que se pueden consultar en el inspector.</p>
+    
+  <p>Estos eventos se deben enlazar con un método en un script de Unity.</p>
+  
+  <p>Tras crear el script y añadir los métodos necesarios, que pueden tener el nombre que se quiera, 
+    se debe añadir ese script al GameObject Canvas para poder seleccionar sus métodos posteriormente desde el inspector de los GameObject de UI.</p>
+  
+  <p>Una vez añadido el script al <span class="negrita">Canvas</span>, 
+    para seleccionar un método desde un GameObject de UI se debe seleccionar el GameObject de UI y
+    en el inspector realizar las siguientes acciones:
+  <ul>
+    <li>Pulsar <span class="negrita">+</span> en el evento que se quiera.</li>
+    <li>En el bloque que aparece, arrastrar el GameObject Canvas desde la jerarquía.</li>
+    <li>Seleccionar el método que se quiere que se ejecute al ejecutarse el evento.</li>
+  </ul></p>
+    
+
+<p>De esta manera se enlaza el método con el evento en el GameObject de UI.</p>
+
+
+
+  </section><!-- End section Menús-->
 
   <!---BTM_MENU--->
   <script src="../script/prism.js"></script>
