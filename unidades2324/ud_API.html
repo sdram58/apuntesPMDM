@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UD8.- Introducción a videojuegos</title>
+  <title>UDXX.- API's</title>
   <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
   <link rel="stylesheet" href="../styles/prism.css">
   <link rel="stylesheet" href="../styles/styles.css">
@@ -18,18 +18,28 @@
   <nav id="menu-lateral" class="main-menu-lateral oculto">
     <div class="fila">
       <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
-      <a href="#sHistoria" title="2. Historia">2. Historia</a>
-      <a href="#sEvoluciondelosvideojuegos" title="3.- Evolución de  los videojuegos">3.- Evolución de  los videojuegos</a>
+      <a href="#sArquitecturaorientadaaServicios" title="2. Arquitectura orientada a Servicios">2. Arquitectura orientada a Servicios</a>
+      <a href="#sAPI_Rest" title="3.- API Rest">3.- API Rest</a>      
     </div>    
+    <div class="fila">
+      <a href="#sCoil" title="4.- Coil">4.- Coil</a>
+      <a href="#sConexionainternet" title="5.- Conexión a Internet">5.- Conexión a Internet</a>
+      <a href="#sHttpURLConnection" title="6.- HttpURLConnection">6.- HttpURLConnection</a>
+    </div>
+    <div class="fila">
+      <a href="#sLibreriasparaconexionesHTTP" title="7.- Librerías para conexiones HTTP">7.- Librerías para conexiones HTTP</a>
+      <a href="#sRetrofit" title="8.- Retrofit">8.- Retrofit</a>
+      
+    </div>
   </nav> <!-- BTM_MENU-->
 
-  <h1>UD8.- Introducción a videojuegos</h1>  
+  <h1>UDXX.- API's</h1>  
 
   <div class="main-menu">
     <div class="fila">
       <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
-      <a href="#sHistoria" title="2. Historia">2. Historia</a>
-      <a href="#sEvoluciondelosvideojuegos" title="3.- Evolución de  los videojuegos">3.- Evolución de  los videojuegos</a>
+      <a href="#sArquitecturaorientadaaServicios" title="2. Arquitectura orientada a Servicios">2. Arquitectura orientada a Servicios</a>
+      <a href="#sAPI_Rest" title="3.- API Rest">3.- API Rest</a>
     </div>
   </div>
   
@@ -37,376 +47,417 @@
   <section class="apartado">
   <a name="sIntroduccion"></a>
   <h2>Introducción</h2>
-  <h3>Videojuego</h3>
+  <p>En la unidad anterior se estudió cómo almacenar y acceder a información en el propio dispositivo.</p>
   
-<p>La definición de <span class="d-word">videojuego</span> es muy simple:</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-12-26.png" /><br><figcaption></figcaption></figure>
-<br>
-
-<figure><img src="UD8/images/ud8-2024-01-22-19-12-47.png" /><br><figcaption></figcaption></figure>
-<br>
+  <p>En esta unidad se estudiarán las diferentes técnicas para el acceso a información disponible en internet a través de API Rest.</p>
+  
+  <p>De esta manera se verán las técnicas para poder obtener y enviar información de API's existentes y enviar información a API's exsitentes.</p>
+  
 
 
-<p>Un videojuego es un juego que se apoya en medios electrónicos para el desarrollo del mismo.</p>
-
-<p>Es un software de <span class="negrita">entretenimiento</span> que haciendo uso de las capacidades de los equipos electrónicos permite que 
-  el usuario/los usuarios interactúen con un mundo virtual con la finalidad de alcanzar un objetivo.</p>
-<p>En su origen la finalidad de los videojuegos era el <span class="negrita">entretenimiento</span>,
-  finalidad que se mantiene en la mayoría de videojuegos actuales aunque también existen videojuegos educativos e instructivos.</p>
-<p>Los equipos electrónicos usados para ejecutar videojuegos son conocidos como plataformas, hoy en día las plataformas más extendidas son 
-  <span class="negrita">ordenadores, consolas, móviles y táblets</span>.</p>
-
-  <h3>Plataformas</h3>
- <figure><img src="UD8/images/ud8-2024-01-22-19-16-41.png" /><br><figcaption>Plataformas</figcaption></figure>
- <br>
- 
- <h3>Aplicaciones VS Videojuegos</h3>
- <p>Aunque a nivel técnico los dos son programas informáticos, existen algunas diferencias significativas:
-  <ul>
-<li>Objetivo.</li>
-<li>Interacción.</li>
-<li>Modelo de negocio.</li>
-<li>Diseño y estética.</li>
-
-  </ul>
-
- </p>
 </section><!-- End section Introducción-->
- <!--*********************************************************Historia***********************************************************-->
- <section class="apartado">
- <a name="sHistoria"></a>
- <h2>Un poco de historia</h2>
- 
- <h3>Primer videojuego de la historia</h3>
- <p><span class="negrita">Tennis for Two</span> (1958)</p>
- <p>Con unos osciloscopios jugaban a pasarse la pelota</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-24-27.png" /><br><figcaption></figcaption></figure>
+
+<!--*********************************************************Arquitectura orientada a Servicios***********************************************************-->
+<section class="apartado">
+<a name="sArquitecturaorientadaaServicios"></a>
+<h2>Arquitectura orientada a Servicios</h2>
+
+<h3><span class="negrita">Arquitectura orientada a servicios</span> &rarr; <span class="negrita">SOA (Service Oriented Architecture)</span></h3>
+
+<p>Los <span class="negrita">servicios web</span> (web services) son un conjunto de protocolos y estándares que permiten que diferentes aplicaciones intercambien datos.</p>
+
+<p>Una de las características principales es que estas aplicaciones pueden estar desarrolladas con diferentes lenguajes de programación 
+  y pueden estar ejecutándose en plataformas diferentes.</p>
+
+<p>Incluso pueden estar desarrolladas por entidades diferentes.</p>
+
+<figure><img src="UD9/images/ud9-2024-03-06-13-06-31.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<h3>Primera consola de la historia </h3>
-<p><span class="negrita">Prototipo "Brown Box"</span> (1968)		-> 	<span class="negrita">Magnavox Odyssey</span> (1972)</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-25-37.png" /><br><figcaption></figcaption></figure>
-<br>
+<p>Cuando se utiliza una arquitectura orientada a servicios, el desarrollo de aplicaciones <span class="negrita">no se basa en generar aplicaciones completas</span>.</p>
 
-<p>28 juegos, entre ellos el famoso Pong</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-26-07.png" /><br><figcaption>Pong</figcaption></figure>
-<br>
+<p>Con SOA se desarrollan servicios (aplicaciones) que <span class="negrita">generan resultados</span> y 
+  estos servicios se pueden <span class="negrita">utilizar</span> tanto en la <span class="negrita">propia aplicación</span> como en <span class="negrita">aplicaciones de terceros</span>.</p>
 
- </section><!-- End section Historia-->
+<h3>Estándares usados en SOA</h3>
+<p>Para la implementación de servicios se pueden utilizar diferentes tecnologías dependiendo de las características del servicio a desarrollar.
+  Entre las más usadas se encuentran las siguientes:
+<ul>
+  <li><span class="negrita">HTML</span>: HyperText Markup Language</li>
+  <li><span class="negrita">XML</span>: eXtensible Markup Language</li>
+  <li><span class="negrita">JSON</span>: JavaScript Object Notation</li>
+  <li><span class="negrita">SOAP</span>: Simple Object Access Protocol</li>
+  <li><span class="negrita">WSDL</span>: Web Servides Description Language</li>
+  <li><span class="negrita">REST</span>: Representational State Transfer</li>
+</ul>
+</p>
 
- <!--*********************************************************Evolución de los videojuegos***********************************************************-->
- <section class="apartado">
- <a name="sEvoluciondelosvideojuegos"></a>
- <h2>Evolución de los videojuegos</h2>
-<p>Los videojuegos están en constante evolución, según los siguientes factores:
+</section><!-- End section Arquitectura orientada a Servicios-->
+
+<!--*********************************************************API Rest***********************************************************-->
+<section class="apartado">
+<a name="sAPI_Rest"></a>
+<h2>API Rest</h2>
+
+<h3>API (Application Programming Interface)</h3>
+
+<p>Una <span class="negrita">API</span> es un <span class="negrita">conjunto de funcionalidades</span> ya desarrolladas 
+  y preparadas para ser usadas dentro de otras tecnologías haciendo uso de los principios SOA.</p>
+
+<p>Su finalidad es ofrecer una <span class="negrita">capa de abstracción</span> a la hora de realizar diferentes tareas 
+  (cálculos, obtener/guardar datos…) de manera que se facilitan las tareas a los desarrolladores.</p>
+
+<h3>REST</h3>
+<p><span class="negrita">REST</span> → REpresentational State Transfer</p>
+<p>Es una arquitectura que se basa en <span class="negrita">peticiones HTTP</span>
+   para trabajar con los datos de la aplicación web (almacenados en la base de datos) mediante operaciones bien definidas:
+<ul>
+  <li><span class="negrita">GET</span>: obtener uno o varios registros de una tabla.</li>
+  <li><span class="negrita">POST</span>: almacenar un registro nuevo en una tabla.</li>
+  <li><span class="negrita">PUT</span>: cambiar todos los campos de un registro de una tabla.</li>
+  <li><span class="negrita">PATCH</span>: cambiar algún campo de un registro de una tabla.</li>
+  <li><span class="negrita">DELETE</span>: eliminar un registro de una tabla.</li>
+</ul>
+</p>
+
+<h3>API Rest</h3>
+<p><span class="negrita">API Rest</span> es una implementación de servicios web donde se utiliza principalmente las tecnologías 
+  <span class="negrita">REST</span> y <span class="negrita">JSON</span> para el acceso a los datos.</p>
+
+<p>Para desarrollar servicios web API REST se debe:
   <ul>
-    <li>Avances tecnológicos.</li>
-    <li>Nuevos tipos de dispositivos.</li>
-    <li>Conectividad.</li>
-    <li>Cultura.</li>
-    <li>Gustos y preferencias de los consumidores.</li>
-    <li>Tiempo disponible para jugar.</li>
+    <li>Definir las <span class="negrita">URL</span> (amigables) aceptadas por la API REST.</li>
+    <li>Definir el <span class="negrita">tipo de petición</span> aceptado para cada URL.</li>
+    <li>Crear los scripts que traten las peticiones a las URL que se definan y generen lo datos resultado.</li>
+  </ul>
+</p>
+
+<p>A cada para "URL-tipo petición" se le conoce como <span class="negrita">endpoint</span>.</p>
+
+<p>Actualmente muchas empresas ofrecen su API para la integración de sus datos y funcionalidades en cualquier aplicación.</p>
+
+
+<figure><img src="UD9/images/ud9-2024-03-06-13-15-22.png" /><br><figcaption>Noticia de Febrero de 2023</figcaption></figure>
+<br>
+<p>Existen infinidad de API's públicas, algunas requieren de registro:
+  <ul>
+    <li><span class="negrita">Datos abiertos Valencia</span>: <a class="enlace" target="_blank" href="https://valencia.opendatasoft.com/pages/home/">https://valencia.opendatasoft.com/pages/home/</a></li>
+    <li><span class="negrita">Rick y Morty</span>: <a class="enlace" target="_blank" href="https://rickandmortyapi.com/">https://rickandmortyapi.com/</a></li>
+    <li><span class="negrita">Star Wars</span>: <a class="enlace" target="_blank" href="https://swapi.dev/">https://swapi.dev/</a></li>
+    <li><span class="negrita">Disney</span>: <a class="enlace" target="_blank" href="https://disneyapi.dev/">https://disneyapi.dev/</a></li>
     <li>…</li>
   </ul>
 </p>
 
-<p>Los tres primeros son los más determinantes debido a que estos factores influyen directamente en las mecánicas que pueden tener los videojuegos. 
-  Por ejemplo, la aparición de dispositivos táctiles permitió crear mecánicas que no existían previamente.</p>
+<p>Listados con API's públicas:
+  <ul>
+    <li><a class="enlace" target="_blank" href="https://github.com/public-apis/public-apis">https://github.com/public-apis/public-apis</a></li>
+    <li><a class="enlace" target="_blank" href="https://rapidapi.com/collection/list-of-free-apis">https://rapidapi.com/collection/list-of-free-apis</a></li>
+  </ul>
+</p>
 
-<p>Cuando se habla de videoconsolas es más sencillo estudiar su evolución debido a que estas se pueden clasificar por generaciones.</p>
+<p>API's con datos ficticios para pruebas:
+  <li><a class="enlace" target="_blank" href="https://httpbin.org">https://httpbin.org</a>: dispone de una gran variedad de peticiones disponibles.</li>
+	<li><a class="enlace" target="_blank" href="https://app.mocklab.io">https://app.mocklab.io</a>: al crear una cuenta se puede configurar las peticiones al gusto.</li>
+</p>
 
- <figure><img src="UD8/images/ud8-2024-01-22-19-30-21.png" /><br><figcaption>Gráfico basado en las fechas de lanzamiento de UK.</figcaption></figure>
- <br>
- 
- <h3>Ventas por generación</h3>
- <figure><img src="UD8/images/ud8-2024-01-22-19-32-07.png" /><br><figcaption></figcaption></figure>
- <br>
- <figure><img src="UD8/images/ud8-2024-01-22-19-32-24.png" /><br><figcaption></figcaption></figure>
- <br>
- 
- 
- </section><!-- End section Evolución de los videojuegos-->
+<p>Como se ha indicado anteriormente para hacer uso de una API es necesario conocer sus <span class="negrita">endpoints</span>.</p>
 
-<!--*********************************************************Mercado en la actualidad***********************************************************-->
+<p>A continuación, se muestra un endpoint junto con los datos JSON que genera:
+  <a class="enlace" target="_blank" href="https://swapi.dev/api/starships/10/?format=json">https://swapi.dev/api/starships/10/?format=json</a></p>
+
+<figure><img src="UD9/images/ud9-2024-03-06-13-19-12.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+
+</section><!-- End section API Rest-->
+
+<!--*********************************************************Coil***********************************************************-->
 <section class="apartado">
-<a name="sMercadoenlaactualidad"></a>
-<h2>Mercado en la actualidad</h2>
+<a name="sCoil"></a>
+<h2>Coil</h2>
+<h3>Librería Coil</h3>
 
-<p>Se estima que en 2023 el mercado de los videojuegos alcanzó los 240.000 millones de dólares en todo el mundo.</p>
-<p>China, EEUU y Japón se encuentran en el top 3 mundial en ingresos.</p>
-<p>En Europa en el top 5 de mercados se encuentran Alemania, UK, Francia, España e Italia.</p>
-<p>España está tras Polonia en el segundo puesto mundial en facturación en videojuegos e-sports.</p>
-<p>El mercado de los videojuegos está en constante crecimiento.</p>
+<p>En la UD4 se estudió el uso de la librería Coil para el acceso a imágenes ubicadas en internet.</p>
 
-<p>Las razones de este crecimiento son:
-  <ul>
-    <li>Auge de uso de dispositivos móviles.</li>
-    <li>Expansión de la Realidad virtual y aumentada.</li>
-    <li>Evolución de los dispositivos.</li>
-    <li>Evolución de las tecnologías asociadas (aprendizaje automático, inteligencia artificial…).</li>
-  </ul>
-</p>
+<p>La librería Coil necesita una URL de donde obtener la imagen, esta URL puede ser la ruta directa a una imagen 
+  o bien un <span class="negrita">endpoint de una API</span> como en los ejemplos vistos:</p>
 
-</section><!-- End section Mercado en la actualidad-->
+<figure><img src="UD9/images/ud9-2024-03-06-13-21-06.png" /><br><figcaption></figcaption></figure>
+<br>
 
-<!--*********************************************************La industria del videojuego en España***********************************************************-->
+
+</section><!-- End section Coil-->
+
+<!--*********************************************************5.- Conexión a internet***********************************************************-->
 <section class="apartado">
-<a name="sLaindustriadelvideojuegoenEspanya"></a>
-<h2>La industria del videojuego en España</h2>
-<p><a class="enlace" target="_blank" href="https://www.aevi.org.es/web/">AEVI</a> (Asociación Española de VIdeojuegos)</p>
+<a name="sConexionainternet"></a>
+<h2>5.- Conexión a internet</h2>
+<p>Es importante destacar que si la aplicación va a acceder a internet se deben dar permisos indicándolo en el archivo del manifiesto
+   <span class="negrita">manifest</span> &rarr; <span class="inline-file">AndroidManifest.xml</span>
+con la siguiente línea: </p>
 
-<p>Actualmente hay unos 800 <a class="enlace" target="_blank" href="https://www.devuego.es/bd/estudios/">estudios de desarrollo de videojuegos</a> en activo en España.</p>
-<p>De todos estos estudios unos 400 están constituidos como empresas.</p>
-
-<p>Distribución de los estudios por comunidad:</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-39-44.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2024-03-06-13-23-27.png" /><br><figcaption></figcaption></figure>
 <br>
-<p>Existen cerca de 10.000 profesionales trabajando en la industria.</p>
 
-<p>Roles más demandados:
-  <ul>
-    <li><span class="negrita">Programadores</span>: 20%.</li>
-    <li><span class="negrita">Productores</span>: 6%, responsables de gestionar el desarrollo de los videojuegos.</li>
-    <li><span class="negrita">Diseñadores</span>: 12%, responsables de crear la estética y la jugabilidad.</li>
-    <li><span class="negrita">Artistas</span>: 10%, responsables de crear los gráficos y la música de los videojuegos.</li>
-    <li><span class="negrita">Equipo de operaciones</span>: 22%, responsable de la distribución, marketing y ventas.</li>
-  </ul>
-</p>
 
-<p>Se puede observar que para desarrollar videojuegos se necesitan profesionales de diferentes ámbitos.</p>
+</section><!-- End section 5.- Conexión a internet-->
 
-<p>En resumen la industria de los videojuegos:
-  <ul>
-    <li>Tiene una alta facturación.</li>
-    <li>Está localizada en todo el mundo.</li>
-    <li>Está en constante crecimiento.</li>
-    <li>Siempre está en constante cambio.</li>
-    <li>Busca innovar.</li>
-    <li>Necesita de trabajadores de muchos campos diferentes.</li>
-    <li>No espera a nadie.</li>
-  </ul>
-</p>
-
-</section><!-- End section La industria del videojuego en España-->
- 
-<!--*********************************************************Géneros de videojuegos***********************************************************-->
+<!--*********************************************************HttpURLConnection***********************************************************-->
 <section class="apartado">
-<a name="sGenerosdevideojuegos"></a>
-<h2>Géneros de videojuegos</h2>
-<p>Los videojuegos se pueden clasificar de muchas maneras, a continuación, se muestra una Clasificación según su género y subgénero.</p>
+<a name="sHttpURLConnection"></a>
+<h2>HttpURLConnection</h2>
+<p>Android ofrece la clase <span class="negrita">HttpURLConnection</span> para realizar conexiones HTTP de manera manual.</p>
 
-<p>Basados en:
-  <ul>
-    <li>Acción en tiempo real.</li>
-    <li>Desarrollo argumental y exploración.</li>
-    <li>Ingenio y coordinación.</li>
-    <li>Pensamiento y administración.</li>
-    <li>Deportivos.</li>
-  </ul>
-</p>
+<p>Las conexiones con HttpURLConnection se deben de realizar en una corrutina fuera del hilo principal.</p>
 
-<p>Fuente: <a class="enlace" target="_blank" href="https://videojuegos.fandom.com/es/wiki/G%C3%A9neros_de_videojuegos">videojuegos.fandom</a></p>
+<p>Se pueden realizar peticiones de cualquier tipo de los permitidos en el protocolo HTTP.</p>
 
-<h3>Acción en tiempo real</h3>
-<p>Arcade: rompebloques, laberinto, velocidad o endless runner, obstáculos.</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-46-14.png" /><br><figcaption></figcaption></figure>
+<p>El siguiente código sirve para realizar una petición tipo GET en Jetpack Compose.</p>
+
+<figure><img src="UD9/images/ud9-2024-03-06-13-25-41.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2024-03-06-13-25-50.png" /><br><figcaption></figcaption></figure>
 <br>
-<p>Plataformas: comical action, vista lateral, 3D.</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-46-38.png" /><br><figcaption></figcaption></figure>
+<p>Ejemplo de ejecución del código anterior:</p>
+<figure><img src="UD9/images/ud9-2024-03-06-13-29-05.png" /><br><figcaption></figcaption></figure>
 <br>
-<p>Disparos: shoot'em up, correr y disparar, rail shooter, galería de tiro, FPS.</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-47-04.png" /><br><figcaption></figcaption></figure>
-<br>
-<p>Peleas: versus, con plataformas, beat'em up, por turnos</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-47-31.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2024-03-06-13-29-20.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<h3>Desarrollo argumental y exploración</h3>
-<p>Aventura conversacional: novela visual.
-<br>
-Aventura gráfica: point-and-click, en primera persona.
-</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-48-25.png" /><br><figcaption></figcaption></figure>
-<br>
-<p>ROL: RPG occidental, RPG japonés, roguelike,  RPG táctico, Action-RPG.</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-48-52.png" /><br><figcaption></figcaption></figure>
-<br>
-<p>Aventura de acción: plataformas de exploración, sigilo, survival horror, conducción por misiones.</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-49-26.png" /><br><figcaption></figcaption></figure>
-<br>
-
-<h3>Ingenio y coordinación</h3>
-<p>Puzzle.
-Puzzle de bloques.
-Didácticos.
-Preguntas.
-Musicales.
-Ejercicio físico.
-</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-50-40.png" /><br><figcaption></figcaption></figure>
-<br>
-<h3>Pensamiento y administración</h3>
-<p>Estrategia: artillería, por turnos, en tiempo real, construcción de imperios</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-51-18.png" /><br><figcaption></figcaption></figure>
-<br>
-<p>Simulación: construcción y administración, negocios, oficios, manager deportivo, simulador de vehículo, simulador de vida.</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-51-59.png" /><br><figcaption></figcaption></figure>
-<br>
-<h3>Deportivos</h3>
-<p>Simulador de deportes: deportes reales, deportes ficticios.</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-52-38.png" /><br><figcaption></figcaption></figure>
-<br>
-<p>Carreras: arcade, deportivas (reales), combate.</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-53-01.png" /><br><figcaption></figcaption></figure>
-<br>
-<p>Juegos de mesa: de tablero, naipes, cartas coleccionables.</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-53-33.png" /><br><figcaption></figcaption></figure>
-<br>
-<p>Mecánicos: pinball, pachinko.</p>
-<figure><img src="UD8/images/ud8-2024-01-22-19-53-54.png" /><br><figcaption></figcaption></figure>
-<br>
+<p>En una aplicación real se deberán parsear los datos para mostrarlos de una manera entendible y atractiva para los usuarios.</p>
 
 
-</section><!-- End section Géneros de videojuegos-->
 
-<!--*********************************************************Fases de desarrollo de videojuegos***********************************************************-->
+
+</section><!-- End section HttpURLConnection-->
+
+<!--*********************************************************Librerías para conexiones HTTP***********************************************************-->
 <section class="apartado">
-<a name="sFasesdedesarrollodevideojuegos"></a>
-<h2>Fases de desarrollo de videojuegos</h2>
-<h3>Concepto (análisis)</h3>
-<p>Como con cualquier aplicación, los videojuegos comienzan con una idea y su análisis, en este análisis se determinan los aspectos del juego:
-  <ul>
-    <li>Género.</li>
-    <li>Gameplay.</li>
-    <li>Personajes.</li>
-    <li>Ambiente.</li>
-    <li>Música.</li>
-    <li>…</li>
-  </ul>
-</p>
-<p>El concepto suele acompañarse de un guión gráfico como un <span class="negrita">storyboard</span> con todas las ideas.</p>
-<h3>Pre-producción (análisis)</h3>
-<p>Con el <span class="negrita">concepto</span> decidido se pasa a la definición de todos los elementos que componen el juego como el desarrollo de la historia,
-  versiones iniciales de los guiones con los objetivos, desarrollo de los personajes…</p>
+<a name="sLibreriasparaconexionesHTTP"></a>
+<h2>Librerías para conexiones HTTP</h2>
 
-<p>Con esta información los artistas comienzan a crear propuestas de diseños para ir dando la forma definitiva.</p>
+<p>Aunque anteriormente se ha visto como utilizar la clase HttpURLConnection para realizar conexiones HTTP desde Android, 
+  también existen una serie de librerías para facilitar y agilizar estas acciones.</p>
+  <p>Librerías Android:
+    <ul>
+      <li><span class="negrita">Retrofit</span> (Será el que veamos)</li>
+      <li>Volley</li>
+    </ul>
+  </p>
+  
+  
+  <p>Librerías Kotlin (disponibles en proyectos Android y Kotlin):
+    <ul>
+      <li>Ktor</li>
+      <li>http4k</li>
+    </ul>
+  </p>
+  
 
-<p>También se describe toda la parte sonora del juego como efectos, música, voces…</p>
+</section><!-- End section Librerías para conexiones HTTP-->
 
-<p>De manera paralela se debe especificar el funcionamiento general del juego.</p>
-
-<p>En la parte técnica se realiza el diseño de la programación indicando cómo se implementará el juego, los lenguajes de programación, las metodologías…</p>
-
-<p>Toda la información anterior tiene como objetivo generar el <span class="d-word">GDD</span> (Game Design Document) 
-  en el que se especifica toda la planificación necesaria para la implementación del juego.</p>
-
-<p>Por último, en esta fase se puede realizar un prototipo muy básico del juego.</p>
-
-<h3>Producción (implementación)</h3>
-<p>Durante la implementación el primer paso es crear una versión inicial del juego la cual se irá mejorando gradualmente durante la implementación.</p>
-
-<p>El primer paso es generar todos los <span class="negrita">assets</span> necesarios en base a los requisitos indicados en el GDD.</p>
-
-<p>Una vez se tienen todos los assets o la mayoría de ellos se debe "ensamblar" el juego.</p>
-
-<p>En esta parte es donde se utiliza el motor de videojuegos.</p>
-
-<h3>Pruebas</h3>
-<p>Esta fase consiste en corregir los errores que se van detectando durante la producción.</p>
-
-<p>Las pruebas suelen ser de dos tipos:
-  <ul>
-    <li><span class="negrita">Alpha:</span>
-      <ul>
-        <li>Realizadas por personas involucradas en el desarrollo.</li>
-		    <li>Su objetivo es corregir errores graves y mejorar características.</li>
-      </ul>
-    </li>
-    <li>
-      <span class="negrita">Beta</span>:
-      <ul>
-        <li>Realizadas por personas externas al equipo de desarrollo.</li>
-		    <li>Su objetivo es detectar fallos menores y mejorar la experiencia de usuario.</li>
-      </ul>
-    </li>
-  </ul>
-</p>
-
-<h3>Post-producción</h3>
-<p>En esta fase las tareas a realizar son:
-  <ul>
-    <li><span class="negrita">Marketing</span>: dar a conocer el juego.</li>
-    <li><span class="negrita">Distribución</span>: crear copias físicas/digitales y hacerlas llegar a las tiendas.</li>
-    <li><span class="negrita">Mantenimiento</span>: seguir detectando errores, añadir mejoras…</li>    
-  </ul>
-</p>
-
-<p>El marketing y la distribución suelen contratarse en empresas externas conocidas como <span class="negrita">publishers</span>.</p>
-
-<p>Gracias al mantenimiento se puede alargar la vida del juego y seguir obteniendo beneficios: DLC's, funcionalidades nuevas…</p>
-
-</section><!-- End section Fases de desarrollo de videojuegos-->
-
-
-<!--*********************************************************Motores de videojuegos***********************************************************-->
+<!--*********************************************************Retrofit***********************************************************-->
 <section class="apartado">
-<a name="sMotoresdevideojuegos"></a>
-<h2>Motores de videojuegos</h2>
-<p>Un motor de videojuegos es un software que unifica herramientas y bibliotecas necesarias para crear videojuegos.</p>
-
-<p>Entre las funcionalidades que ofrecen se encuentran:
-<ul>
-  <li>Motor de físicas.</li>
-<li>Gestión de colisiones.</li>
-<li>Renderizado de gráficos.</li>
-<li>Integración de sonidos.</li>
-<li>Creación y gestión de animaciones.</li>
-<li>Inteligencia artificial para los NPC's.</li>
-<li>Diseño de niveles.</li>
-</ul>
-</p>
-
-<p>Los motores de videojuegos se pueden clasificar de diferentes maneras pero la más habitual es motores <span class="negrita">2D</span>
-   y motores <span class="negrita">3D</span>.</p>
-
-
-<p>Los motores de videojuegos más populares:
-<ul>
-  <li><span class="negrita">Unreal Engine</span>: propietario, 3D, genéricos.</li>
-  <li><span class="negrita">Unity</span>: propietario, 2D/3D, genéricos.</li>
-  <li><span class="negrita">Godot</span>: SW libre, 2D/3D, genéricos.</li>
-  <li><span class="negrita">GameMaker Studio 2</span>: propietario, 2D/3D, genéricos.</li>
-  <li><span class="negrita">MUGEN</span>: freeware, 2D, lucha.</li>
-  <li><span class="negrita">RPG Maker</span>: propietario, 2D, rol.</li>
-  <li><span class="negrita">Ren'Py</span>: SW libre, novelas visuales.</li>
-</ul>
-</p>
-<p>Todos los motores anteriores permiten desarrollar videojuegos para varias plataformas.</p>
-
-</section><!-- End section Motores de videojuegos-->
-
-<!--*********************************************************Glosario***********************************************************-->
-<section class="apartado">
-<a name="sGlosario"></a>
-<h2>Glosario</h2>
-<p>En el mundo de los videojuegos y su desarrollo existen infinidad de <a class="enlace" target="_blank" href="https://www.devuego.es/gamerdic/terminos/">términos</a> que deben conocerse, algunos de ellos son:
-<ul>
-  <li>Publisher</li>
-  <li>Mecánicas</li>
-  <li>Assets</li>
-  <li>Plataforma</li>
-  <li>DLC</li>
-  <li>Frame rate</li>
-  <li>CGI</li>
-  <li>Textura</li>
-  <li>….</li>
-</ul>
-
+<a name="sRetrofit"></a>
+<h2>Retrofit</h2>
+<p>Retrofit es una librería de código abierto para Java y Android que permite simplificar la realización de peticiones HTTP y el procesamiento de los datos obtenidos.</p>
+<p>Características:
+  <ul>
+    <li><span class="negrita">Seguridad de tipos</span>: se garantiza la seguridad al convertir automáticamente las respuestas JSON a objetos Java/Kotlin y en las peticiones lo objetos Java/Kotlin a JSON.</li>
+    <li><span class="negrita">Código legible y mantenible</span>: gracias a anotaciones en interfaces se definen las peticiones HTTP simplificando su uso.</li>
+    <li>Permite <span class="negrita">añadir parámetros, cabeceras y variables</span> a los endpoint.</li>
+    <li>Permite manejar <span class="negrita">diferentes formatos de respuesta</span> además de JSON.</li>
+  </ul>
 </p>
 
 
 
-</section><!-- End section Glosario-->
+En la  <a class="enlace" target="_blank" href="https://square.github.io/retrofit/">web oficial</a> se puede encontrar toda la información.
+
+<h3>Caso de estudio</h3>
+<p>Para estudiar el uso de la librería <span class="r-word">Retrofit</span> se va a realizar un caso de estudio que constará de una aplicación que realizará peticiones a una API pública.</p>
+
+<p>Se utilizará la API <a class="enlace" target="_blank" href="https://rickandmortyapi.com">https://rickandmortyapi.com</a> para recuperar personajes de la serie.</p>
+
+<p>El endpoint que se usará será el siguiente, sustituyendo el parámetro <span class="negrita">name</span> por el valor que introduzca el usuario:
+  <br>
+  <a class="enlace" target="_blank" href="https://rickandmortyapi.com/api/character/?name=rick">https://rickandmortyapi.com/api/character/?name=rick</a>
+</p>
+ 	
+
+<p>Esta API devuelve la información de los personajes encontrados en formato JSON.</p>
+
+<p>Retrofit permitirá realizar la petición a la API y almacenar la información recibida en objetos fácilmente usables desde el código kotlin.</p>
+
+<p>La aplicación contendrá un campo de búsqueda para introducir un nombre y un botón de buscar.</p>
+
+<p>Con los datos obtenidos de la API se mostrarán por pantalla la información de los personajes encontrados.</p>
+<figure><img src="UD9/images/ud9-2024-03-06-13-37-09.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Evidentemente, el uso de Retrofit para obtener datos de una API puede ser para realizar tareas diferentes a las utilizadas en el caso de estudio.</p>
+
+<p class="sub-section">Ejemplos de petición a la API y datos recibidos de esta:</p>
+
+<p><a class="enlace" target="_blank" href="https://rickandmortyapi.com/api/character/?name=frank">https://rickandmortyapi.com/api/character/?name=frank</a></p>
+
+<figure><img src="UD9/images/ud9-2024-03-06-13-38-02.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Con el atributo image tenemos la url de la imagen</p>
+<figure><img src="UD9/images/ud9-2024-03-06-13-38-42.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p><a class="enlace" target="_blank" href="https://rickandmortyapi.com/api/character/?name=felipe">https://rickandmortyapi.com/api/character/?name=felipe</a></p>
+<p>Si no lo encuentra nos devuelve el siguiente mensaje</p>
+<figure><img src="UD9/images/ud9-2024-03-06-13-38-56.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Tras crear un proyecto se debe:</p>
+
+<p>Añadir en el <span class="inline-file">AndroidManifest.xml</span> el permiso a conexión a internet.</p>
+<figure><img src="UD9/images/ud9-2024-03-06-13-39-54.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Añadir la dependencia en <span class="inline-file">build.gradle.kts (Module)</span> y sincronizar.</p>
+
+<figure><img src="UD9/images/ud9-2024-03-06-13-40-22.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>La respuesta de la API es en formato JSON, así que <span class="negrita">se debe analizar la estructura de dicho JSON</span>
+   para crear los modelos de datos que se necesiten.</p>
+
+<p>Para almacenar estos modelos se utilizarán <span class="negrita">Data class</span>.</p>
+
+<p>Es conveniente crear la estructura de Data class dentro de una carpeta (package) que se puede llamar <span class="negrita">model</span>.</p>
+
+<p>Para el ejemplo se podrían crear las siguientes Data class:
+  <ul>
+    <li><span class="negrita">Response</span>: para representar toda la respuesta.</li>
+    <li><span class="negrita">Info</span>: para representar el elemento info de la respuesta.</li>
+    <li><span class="negrita">Results</span>: para representar la información de cada personaje.</li>
+  </ul>
+</p>
+<figure><img src="UD9/images/ud9-2024-03-06-13-42-31.png" /><br><figcaption>Estructura JSON respuesta</figcaption></figure>
+<br>
+
+<h3>Data class necesarias</h3>
+<figure><img src="UD9/images/ud9-2024-03-06-13-43-18.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-03-06-13-43-31.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se puede observar que no es necesario utilizar todos los datos de la respuesta, Retrofit se encargará de seleccionar solo los necesarios</p>
+
+<p>La tarea de crear las Data Class necesarias puede ser laboriosa por ello se puede usar el plugin <span class="negrita">JSON To Kotlin Class</span>
+   para detectar automáticamente la estructura de datos la respuesta de una petición a una API.</p>
+
+<p><span class="negrita">File &rarr; Settings…</span></p>
+<figure><img src="UD9/images/ud9-2024-03-06-13-44-37.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Dentro de la carpeta <span class="negrita">model</span> haciendo clic con el botón derecho se selecciona la opción 
+  <span class="negrita">New &rarr; Kotlin data class File from JSON</span>.</p>
+
+<figure><img src="UD9/images/ud9-2024-03-06-13-45-23.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En la ventana que se abre se debe copiar toda la respuesta del endpoint que se quiera.</p>
+
+<p>Para el case de estudio se va a usar el endpoint de ejemplo:
+<a class="enlace" target="_blank" href="https://rickandmortyapi.com/api/character/?name=Morty">https://rickandmortyapi.com/api/character/?name=Morty</a> </p>
+
+<figure><img src="UD9/images/ud9-2024-03-06-13-46-04.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>La estructura Data class generada es la siguiente:</p>
+<figure><img src="UD9/images/ud9-2024-03-06-13-47-22.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Si alguno de los datos de la respuesta no se va a utilizar se puede eliminar de la estructura de Data class creada.</p>
+
+<p>Con Kotlin data class File from JSON los nombres de las propiedades se obtienen directamente de la respuesta JSON.</p>
+
+
+<p>En ocasiones puede que no sean los más idóneos, en este caso se podrían cambiar utilizando la notación <span class="r-word">@SerializedName</span>:</p>
+<figure><img src="UD9/images/ud9-2024-03-06-13-48-13.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Para facilitar el uso de los datos recibidos se cambia el nombre de la propiedad <span class="negrita">results</span>
+   por <span class="d-word">characters</span> y el nombre de la Data class <span class="negrita">Results</span> por <span class="d-word">CharacterInfo</span>:</p>
+
+<figure><img src="UD9/images/ud9-2024-03-06-13-49-03.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>El siguiente paso es crear una <span class="negrita">interface</span> que permita realizar las peticiones.</p>
+
+<p>Para ello se crea dentro del paquete <span class="negrita">data</span> un archivo llamado <span class="inline-file">RetrofitService.kt</span> con el siguiente código:</p>
+
+
+<figure><img src="UD9/images/ud9-2024-03-06-13-49-31.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>En este archivo se deben crear tantas funciones como peticiones a diferentes endpoints se vayan a realizar en la aplicación.</p>
+
+<p>En el caso de que la aplicación <span class="negrita">también haga uso de una base de datos local SQLite</span> se habrán creado al menos un DAO general 
+  y un DAO específico.</p>
+
+<p>En este caso es recomendable que el archivo <span class="inline-file">RetrofitService.kt</span> siga la estructura DAO.</p>
+
+<p>En la aplicación se deberá comprobar el estado de la conexión a internet para decidir si se utilizan peticiones a la API o a la base de datos Local.</p>
+
+<p>También habrá que tener en cuenta el respaldo de datos en las dos direcciones.</p>
+
+<p>Para poder usar la <span class="negrita">interface</span> creada anteriormente se debe tener un objeto que devuelva el <span class="negrita">servicio Retrofit</span>.</p>
+
+<p>Para ello se crea dentro del paquete <span class="negrita">data</span> un archivo llamado RetrofitServiceFactory.kt con el siguiente código:</p>
+<figure><img src="UD9/images/ud9-2024-03-06-13-51-47.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>La aplicación hará uso de un ViewModel y LiveData para mantener los datos durante la ejecución.</p>
+
+<p>En un paquete llamado <span class="negrita">viewmodel</span> se crea el archivo <span class="inline-file">CharacterViewModel</span> con el siguiente código:</p>
+<figure><img src="UD9/images/ud9-2024-03-06-13-52-27.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Por último, se muestra el código de la pantalla principal en el archivo <span class="inline-file">MainActivity.kt</span></p>
+<figure><img src="UD9/images/ud9-2024-03-06-13-53-01.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<figure><img src="UD9/images/ud9-2024-03-06-13-53-32.png" /><br><figcaption>Componente GridListSwitch</figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-03-06-13-53-46.png" /><br><figcaption>Componente SearchBox</figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-03-06-13-54-00.png" /><br><figcaption>Componente LoadingInfo</figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-03-06-13-55-09.png" /><br><figcaption>Componentes CharacterVerticalGrid y CharacterInfoGrid</figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-03-06-13-55-54.png" /><br><figcaption>Componentes CharactersLazyColumn y CharacterInfoList</figcaption></figure>
+<br>
+
+<p>La aplicación desarrollada en el caso de estudio se puede ampliar de las siguientes maneras.</p>
+
+<p>Si se analiza el JSON de la respuesta se puede observar que no se reciben todos los datos existentes si no que se reciben paginados de 20 en 20.</p>
+
+<p>Con las variables <span class="negrita">pages</span> y <span class="negrita">next</span> se puede saber si se necesitan hacer más peticiones para seguir obteniendo datos.</p>
+
+<p>De esta manera se puede añadir un botón al final de los personajes y que al pulsarlo cargue los siguientes resultados para el personaje que se busca.</p>
+
+<figure><img src="UD9/images/ud9-2024-03-06-13-56-53.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Otra mejora sería crear una pantalla para mostrar la información completa de cada personaje.</p>
+
+<p>De esta manera se puede hacer que al pulsar sobre el personaje se navegue a esa pantalla y se le pase como parámetro todos los datos del personaje.</p>
+
+<p>Si se han modificado las Data class para la respuesta eliminando campos innecesarios, 
+  en la pantalla para la información del personaje se podría realizar una petición nueva a la API 
+  para obtener solo la información de ese personaje mediante su endpoint. </p>
+
+<p>En el JSON también se puede observar que cada personaje tiene un endpoint propio:</p>
+<figure><img src="UD9/images/ud9-2024-03-06-13-57-46.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+</section><!-- End section Retrofit-->
 
 
   <!---BTM_MENU--->
