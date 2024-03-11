@@ -2205,6 +2205,7 @@ Crea los scripts necesarios y añádelos a los GameObjects o Prefabs para que el
 
 <figure><img src="UD9/images/ud9-2024-02-20-18-19-30.png" /><br><figcaption>GameObject vacío</figcaption></figure>
 <br>
+
 <figure><img src="UD9/images/ud9-2024-02-20-18-19-46.png" /><br><figcaption>GameObjects compuestos</figcaption></figure>
 <br>
 <p>Todos los GameObjects que se representan gráficamente en la escena tienen un componente <span class="negrita">Collider</span>,
@@ -2328,15 +2329,18 @@ En la mayoría de los casos es suficiente la implementación con CharacterContro
 <h2>Cámara profesional</h2>
 <p>Unity ofrece un paquete llamado <span class="r-word">Cinemachine</span> que ofrece herramientas y 
   de cámaras virtuales que simulan un estudio de grabación y permiten un control total de la cámara.</p>
-<figure><img src="UD9/images/ud9-2024-02-20-18-45-12.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2024-03-11-10-24-06.png" /><br><figcaption></figcaption></figure>
 <br>
-<figure><img src="UD9/images/ud9-2024-02-20-18-45-20.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2024-03-11-10-24-16.png" /><br><figcaption></figcaption></figure>
 <br>
+
+
 <p>Una vez instalado el paquete, en el <span class="negrita">Menú &rArr; Component &rArr; Cinemachine</span> 
    se encuentran las configuraciones de cámaras virtuales que se pueden añadir a la cámara de la escena.</p>
-<figure><img src="UD9/images/ud9-2024-02-20-18-48-23.png" /><br><figcaption></figcaption></figure>
+
+<figure><img src="UD9/images/ud9-2024-03-11-10-25-13.png" /><br><figcaption></figcaption></figure>
 <br>
-<figure><img src="UD9/images/ud9-2024-02-20-18-48-29.png" /><br><figcaption></figcaption></figure>
+<figure><img src="UD9/images/ud9-2024-03-11-10-25-32.png" /><br><figcaption></figcaption></figure>
 <br>
 
 
@@ -2390,7 +2394,14 @@ En la mayoría de los casos es suficiente la implementación con CharacterContro
 <br>
 <p>Además se deberá arrastrar en el inspector la plataforma y los puntos por los que debe pasar la plataforma.</p>
 
+<figure><img src="UD9/images/ud9-2024-03-11-10-28-20.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
 <p>Al tener la plataforma un Rigidbody el movimiento debe ser físico.</p>
+
+<figure><img src="UD9/images/ud9-2024-03-11-10-28-38.png" /><br><figcaption></figcaption></figure>
+<br>
 
 <p>Si se ha implementado el movimiento del personaje mediante el componente <span class="negrita">CharacterController</span> 
    y se usa el ejemplo anterior para mover una plataforma, el personaje no se mantendrá encima de la plataforma.</p>
@@ -2435,10 +2446,19 @@ En la mayoría de los casos es suficiente la implementación con CharacterContro
 </p>
 
 <p>En el siguiente ejemplo se emite un rayo y cuando impacta se muestra un mensaje:</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-29-22.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-03-11-10-29-32.png" /><br><figcaption></figcaption></figure>
+<br>
 
 <p>Si los rayos no se visualizan al ejecutar se deberán activar en la parte de la derecha de la visualización de la Scene o del Game en el apartado Gizmos:</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-29-55.png" /><br><figcaption></figcaption></figure>
+<br>
 
 <p>El método <span class="negrita">Raycast</span>  tiene varias versiones.</p>
+
+<figure><img src="UD9/images/ud9-2024-03-11-10-30-21.png" /><br><figcaption></figcaption></figure>
+<br>
 
 <p>Una de las versiones admite un segundo parámetro de la clase <span class="negrita">RaycastHit</span>,
   en este objeto se almacenará toda la información sobre el impacto, incluido el GameObject en el que impacta el rayo.</p>
@@ -2446,22 +2466,61 @@ En la mayoría de los casos es suficiente la implementación con CharacterContro
 <p>Se debe declarar el objeto de la clase <span class="negrita">RaycastHit</span> antes de realizar la llamada al método 
   <span class="negrita">Raycast</span>.</p>
 
+  <figure><img src="UD9/images/ud9-2024-03-11-10-30-58.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <figure><img src="UD9/images/ud9-2024-03-11-10-31-08.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p>Se pueden aplicar <span class="negrita">filtros</span> para que el rayo solo impacte en los GameObjects afectados por ese filtro.
+    <ul>
+      <li><span class="negrita">Por distancia</span>: menor o igual a 7
+        <figure><img src="UD9/images/ud9-2024-03-11-10-33-47.png" /><br><figcaption></figcaption></figure>       
+      </li>
+      <li><span class="negrita">Por capas</span>: igual que se pueden crear etiquetas (tags) se pueden crear capas  (layers) y 
+        asignarlas a los GameObjects. Las capas se pueden indicar creando una variable de la clase LayerMask. 
+        En el inspector se podrán selecciona varias capas.
+      <figure><img src="UD9/images/ud9-2024-03-11-10-34-16.png" /><br><figcaption></figcaption></figure>
+      <br>
+      
+      </li>
+    </ul>
+  </p>
+  
   <p>Se puede indicar que el rayo no impacte en los Collider tipo Trigger.</p>
+
+  <figure><img src="UD9/images/ud9-2024-03-11-10-34-47.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
   <p>Por defecto un rayo solo impacta en el primer GameObject con el que se encuentra, 
     este comportamiento se puede cambiar si se utiliza el método <span class="negrita">RaycastAll</span> de la clase <span class="negrita">Physics</span> .</p>
   <p>Este método devuelve un array con todos los GameObjects en los que impacta el rayo.</p>
+   <figure><img src="UD9/images/ud9-2024-03-11-10-35-12.png" /><br><figcaption></figcaption></figure>
+   <br>
    
   <p>Se pueden emitir rayos desde la cámara, esto permite funciones como seleccionar objetos con el ratón.</p>
   
 <p>El siguiente script se debe añadir a la cámara. 
   Este script no puede llamarse Camera porque sobre escribiría la clase <span class="negrita">Camera</span>  de Unity.</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-36-10.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-03-11-10-36-19.png" /><br><figcaption></figcaption></figure>
+<br>
+
 
   <p>En muchos videojuegos se utilizan los Raycast para detectar colisiones, por ejemplo, para saber si el personaje está tocando el suelo.</p>
   
   <p>Para detectar colisiones entre GameObjects usando Raycast se debe lanzar un rayo cuya distancia no supere mucho al GameObject 
     desde el que se emite.</p>
+  <figure><img src="UD9/images/ud9-2024-03-11-10-36-40.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <figure><img src="UD9/images/ud9-2024-03-11-10-36-48.png" /><br><figcaption></figcaption></figure>
+  <br>
   
   <p>En algunos videojuegos se emiten rayos desde diferentes puntos del personaje para controlar así su movimiento.</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-37-07.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-03-11-10-37-15.png" /><br><figcaption></figcaption></figure>
+<br>
 
   <p>Con el método Raycast se emite un rayo, que es una línea.</p>
   
@@ -2480,6 +2539,12 @@ En la mayoría de los casos es suficiente la implementación con CharacterContro
    <h3>Control de personaje – Sobre plataformas móviles</h3>    
    <p>Así, para que un personaje con CharacterController pueda moverse junto con una plataforma con Rigidbody que está pisando, 
     se debe añadir el siguiente script al personaje:</p>
+
+    <figure><img src="UD9/images/ud9-2024-03-11-10-37-55.png" /><br><figcaption></figcaption></figure>
+    <br>
+    <figure><img src="UD9/images/ud9-2024-03-11-10-38-03.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
 </section><!-- End section Raycast-->
 
 
@@ -2521,10 +2586,14 @@ y sobre los cuales el jugador no puede indicarle qué acciones debe realizar.</p
 
 
 
-<p>Se necesita instalar el paquete AI Navigation.</p>
+<p>Se necesita instalar el paquete <span class="r-word">AI Navigation</span>.</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-38-48.png" /><br><figcaption></figcaption></figure>
+<br>
 
 <p>Al instalar el paquete AI Navigation se añadirá una nueva opción: <span class="negrita">Menú</span>  &rarr; <span class="negrita">Window</span>  &rarr;
 <span class="negrita">AI</span>  &rarr; <span class="negrita">Navigation</span> .</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-38-59.png" /><br><figcaption></figcaption></figure>
+<br>
 
 <p>Al pulsar la opción <span class="negrita">Menú</span>  &rarr; <span class="negrita">Window</span>  &rarr; <span class="negrita">AI</span> 
    &rarr; <span class="negrita">Navigation</span>  aparece la ventana Navigation.</p>
@@ -2532,22 +2601,39 @@ y sobre los cuales el jugador no puede indicarle qué acciones debe realizar.</p
 <p>En la pestaña <span class="negrita">Agents</span>  se pueden definir las características del GameObject 
   que se va a mover por la ruta más óptima.</p>
 
+  <figure><img src="UD9/images/ud9-2024-03-11-10-39-33.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
 <p>Se pueden crear tantos agentes como se quiera, por ejemplo, puede haber enemigos que no pueden saltar sobre un muro y otros que sí.</p>
 
 <p>En la pestaña <span class="negrita">Areas</span>  se pueden definir las diferentes áreas y su prioridad (Cost),
   a menor número mayor prioridad de pasar por esa área.</p>
 
+  <figure><img src="UD9/images/ud9-2024-03-11-10-39-43.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
   <p>A los GameObjects que se deben mover se les debe añadir el componente <span class="negrita">NavMeshAgent</span> .</p>
   
   <p>En el ejemplo, la cápsula se moverá hasta la posición de la esfera por el camino más óptimo.</p>
   
   <p><span class="negrita">Se ha añadido el componente NavMeshAgent a la cápsula</span> , en el inspector se puede ver las opciones de configuración que tiene.</p>
   
+  <figure><img src="UD9/images/ud9-2024-03-11-10-40-08.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <figure><img src="UD9/images/ud9-2024-03-11-10-40-16.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+
 <p>Ahora se debe añadir el componente <span class="negrita">NavMeshSurface</span>  sobre los GameObjects de la escena y asignarle el área que se quiera.</p>
 
 <p>Este componente permite definir <span class="negrita">por dónde podrá moverse el agente</span> .</p>
 
 <p>En el ejemplo, el suelo y todos los bloques están dentro de un GameObject y en ese GameObject se añade el componente NavMeshSurface.</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-40-43.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD9/images/ud9-2024-03-11-10-40-50.png" /><br><figcaption></figcaption></figure>
+<br>
+
 
 <p>Una vez configurado el NavMeshSurface se debe pulsar la opción <span class="negrita">Bake</span> .</p>
 
@@ -2556,9 +2642,17 @@ y sobre los cuales el jugador no puede indicarle qué acciones debe realizar.</p
   Esta superficie se puede modificar cambiando los ajustes del <span class="negrita">Agent</span>  y pulsando <span class="negrita">Clear</span> 
    y <span class="negrita">Bake</span>  de nuevo.</p>
 
+   <figure><img src="UD9/images/ud9-2024-03-11-10-41-12.png" /><br><figcaption></figcaption></figure>
+   <br>
+   
+
   <p>Como la esfera no es un elemento del escenario se le debe añadir el componente <span class="negrita">NavMeshObstacle</span> .</p>
      
   <p>El componente <span class="negrita">NavMeshObstacle</span>  se suele utilizar para los GameObject que pueden moverse por la escena.</p>
+  <figure><img src="UD9/images/ud9-2024-03-11-10-41-42.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <figure><img src="UD9/images/ud9-2024-03-11-10-41-55.png" /><br><figcaption></figcaption></figure>
+  <br>
   
   <p>El componente <span class="negrita">NavMeshObstacle</span>  se utiliza para personajes que se mueven por la escena y 
     para GameObjects que al moverse pueden afectar a la superficie de navegación.</p>
@@ -2572,7 +2666,16 @@ y sobre los cuales el jugador no puede indicarle qué acciones debe realizar.</p
     si se quiere que solo afecte a la superficie cuando el GameObject se queda estático (por ejemplo una piedra grande que cae) 
     se debe desmarcar la opción <span class="negrita">Carve Only Stationary</span>.</p>
 
+    <figure><img src="UD9/images/ud9-2024-03-11-10-42-37.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
   <p>En el ejemplo, hay un cubo con el componente NavMeshObstacle y la opción Carve activada.</p>
+  <figure><img src="UD9/images/ud9-2024-03-11-10-42-56.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <figure><img src="UD9/images/ud9-2024-03-11-10-43-06.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <figure><img src="UD9/images/ud9-2024-03-11-10-43-22.png" /><br><figcaption></figcaption></figure>
+  <br>
   
   <p>En la navegación se pueden crear <span class="negrita">enlaces</span>.</p>
   <p>Existen dos tipos de enlaces:
@@ -2586,12 +2689,18 @@ y sobre los cuales el jugador no puede indicarle qué acciones debe realizar.</p
   <h3>NavMeshLink</h3>
   <p>Un NavMeshLink tiene dos puntos y una superficie visible entre los dos puntos.</p>
   <p>Si por ejemplo, se quiere que el personaje pueda bajar el escalón pero no pueda subirlo se debe desmarcar la opción <span class="negrita">Bidireccional</span> .</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-43-51.png" /><br><figcaption></figcaption></figure>
+<br>
 
   <h3>OffMeshLink</h3>
   <p>Un OffMeshLink necesita dos GameObjects como referencia para la navegación.</p>
   
   <p>En este punto solo falta asignar al GameObject que se debe mover (cápsula) el siguiente script.</p>
   <p>Se debe añadir la librería en la parte superior del script.</p>
+  <figure><img src="UD9/images/ud9-2024-03-11-10-44-24.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <figure><img src="UD9/images/ud9-2024-03-11-10-44-32.png" /><br><figcaption></figcaption></figure>
+  <br>
   
   <p>A partir del script anterior se puede conseguir que un GameObject realice una ruta:
     <ul>
@@ -2615,6 +2724,8 @@ y sobre los cuales el jugador no puede indicarle qué acciones debe realizar.</p
   </p>
   
 <p>Si se quiere implementar que el personaje del jugador vaya al punto de la pantalla donde se realice clic, se puede utilizar el siguiente script:</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-45-08.png" /><br><figcaption></figcaption></figure>
+<br>
 
   
   </section><!-- End section sNPCs-->
@@ -2640,22 +2751,34 @@ y sobre los cuales el jugador no puede indicarle qué acciones debe realizar.</p
 
 <p>El primer paso es añadir todas las escenas a las preferencias del build del juego: 
   <span class="negrita">File</span> &rarr; <span class="negrita">Build Settings…</span>.</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-45-40.png" /><br><figcaption></figcaption></figure>
+<br>
 
 <p>Pulsando el botón <span class="negrita">Add Open Scenes</span>  se añadirá la escena abierta.</p>
 
 <p>Para añadir el resto de escenas se deben arrastrar desde el gestor de archivos.</p>
 
 <p>La escena que esté en primera posición (0) será la que se cargue cuando se ejecute el juego (tras compilarlo y generar el ejecutable).</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-46-03.png" /><br><figcaption></figcaption></figure>
+<br>
 
 <p>Para realizar el cambio de escena desde un script, en el script se debe añadir la librería en la parte superior del script.</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-46-23.png" /><br><figcaption></figcaption></figure>
+<br>
 
 <p>La instrucción para cambiar de escena es la siguiente:</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-46-31.png" /><br><figcaption></figcaption></figure>
+<br>
 
 <p>También se puede indicar el identificador de la escena (Build settings):</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-46-41.png" /><br><figcaption></figcaption></figure>
+<br>
 
 <p>Al realizar un cambio de escena se puede indicar a los GameObjects que no se destruyan y se mantengan en la escena nueva.</p>
 
 <p>Esto permite pasar datos entre escenas y ahorrar tiempo al estar ya los GameObjects cargados en memoria.</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-46-55.png" /><br><figcaption></figcaption></figure>
+<br>
 
 
   </section><!-- End section Cambio de escenas-->
@@ -2682,14 +2805,20 @@ y sobre los cuales el jugador no puede indicarle qué acciones debe realizar.</p
 <p><span class="negrita">PlayerPrefs</span>  ofrece varios métodos para almacenar/recuperar información según el tipo de dato:
   <ul>
     <li>SetFloat</li>
-<li>SetInt</li>
-<li>SetString</li>
+    <li>SetInt</li>
+    <li>SetString</li>
   </ul>
+  <figure><img src="UD9/images/ud9-2024-03-11-10-47-30.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
   <ul>
     <li>GetFloat</li>
     <li>GetInt</li>
     <li>GetString</li>
   </ul>
+  <figure><img src="UD9/images/ud9-2024-03-11-10-47-40.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
 </p>
 
 <p>Los métodos <span class="negrita">Get</span> pueden tener uno o dos parámetros, 
@@ -2697,10 +2826,16 @@ y sobre los cuales el jugador no puede indicarle qué acciones debe realizar.</p
   
 
 <p>Para comprobar si una preferencia existe se usa el método <span class="negrita">HasKey</span> :</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-48-02.png" /><br><figcaption></figcaption></figure>
+<br>
 
 <p>Para eliminar una preferencia se utiliza el método <span class="negrita">DeleteKey</span> :</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-48-11.png" /><br><figcaption></figcaption></figure>
+<br>
 
 <p>Para eliminar todas las preferencias se utiliza el método <span class="negrita">DeleteAll</span> :</p>
+<figure><img src="UD9/images/ud9-2024-03-11-10-48-18.png" /><br><figcaption></figcaption></figure>
+<br>
 
   
   </section><!-- End section PlayerPrefs-->
@@ -2729,13 +2864,19 @@ y sobre los cuales el jugador no puede indicarle qué acciones debe realizar.</p
 
   <p>Aunque se puede crear un menú con GameObjects como si fuera una escena del juego, 
     lo más habitual es utilizar GameObjects de UI (Interfaz de Usuario).</p>
+    <figure><img src="UD9/images/ud9-2024-03-11-10-48-49.png" /><br><figcaption></figcaption></figure>
+    <br>
     
   <p>El manejo de eventos en GameObjects de UI es diferente al del resto de GameObjects, 
     a continuación, se estudiarán los pasos a seguir para interactuar con ellos.</p>
   
     <p>Cada tipo de GameObject de UI dispone de unos eventos que se pueden consultar en el inspector.</p>
+    <figure><img src="UD9/images/ud9-2024-03-11-10-49-25.png" /><br><figcaption></figcaption></figure>
+    <br>
     
   <p>Estos eventos se deben enlazar con un método en un script de Unity.</p>
+  <figure><img src="UD9/images/ud9-2024-03-11-10-49-52.png" /><br><figcaption></figcaption></figure>
+  <br>
   
   <p>Tras crear el script y añadir los métodos necesarios, que pueden tener el nombre que se quiera, 
     se debe añadir ese script al GameObject Canvas para poder seleccionar sus métodos posteriormente desde el inspector de los GameObject de UI.</p>
@@ -2748,10 +2889,15 @@ y sobre los cuales el jugador no puede indicarle qué acciones debe realizar.</p
     <li>En el bloque que aparece, arrastrar el GameObject Canvas desde la jerarquía.</li>
     <li>Seleccionar el método que se quiere que se ejecute al ejecutarse el evento.</li>
   </ul></p>
+  <figure><img src="UD9/images/ud9-2024-03-11-10-50-22.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
     
 
 <p>De esta manera se enlaza el método con el evento en el GameObject de UI.</p>
 
+<figure><img src="UD9/images/ud9-2024-03-11-10-51-21.png" /><br><figcaption></figcaption></figure>
+<br>
 
 
   </section><!-- End section Menús-->
