@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UD.- Introducción a Firebase</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../styles/prism.css">
+  <link rel="stylesheet" href="../styles/styles.css">
+  <script src="../script/script.js"></script>
+</head>
+
+<body class="line-numbers">
+  <div class="logos"></div>
+
+  <nav id="menu-lateral" class="main-menu-lateral oculto">
+    <div class="fila">
+      <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
+      <a href="#sAccesoaFirebase" title="2.- Acceso a Firebase">2.- Acceso a Firebase</a>
+      <a href="#sIntegraciondeFirebaseenlaaplicacion" title="3.- Integración de Firebase en la aplicación">3.- Integración de Firebase en la aplicación</a>
+    </div>
+    <div class="fila">
+      <a href="#sAnalytics" title="4.- Analytics">4.- Analytics</a>
+      <a href="#sAutenticacion" title="5.- Autenticación">5.- Autenticación</a>
+
+    </div>
+    
+  </nav> <!-- BTM_MENU-->
+
+  <h1>UD.- Introducción a Firebase</h1>  
+
+  <div class="main-menu">
+    <div class="fila">
+      <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
+      <a href="#sAccesoaFirebase" title="2.- Acceso a Firebase">2.- Acceso a Firebase</a>
+      <a href="#sIntegraciondeFirebaseenlaaplicacion" title="3.- Integración de Firebase en la aplicación">3.- Integración de Firebase en la aplicación</a>
+    </div>
+    <div class="fila">
+      <a href="#sAnalytics" title="4.- Analytics">4.- Analytics</a>
+
+    </div>
+  </div>
+
+  
+  <!--*********************************************************Introducción***********************************************************-->
+  <section class="apartado">
+  <a name="sIntroduccion"></a>
+  <h2>Introducción</h2>
+  
+<p><span class="d-word">Firebase</span> es una plataforma creada por Google en 2014 para ayudar a los desarrolladores en la creación de aplicaciones.</p>
+
+<p>Está disponible para juegos Android, aplicaciones iOS y Android, aplicaciones web y aplicaciones Unity.</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-11-00-05.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>La página oficial de Firebase es: <a class="enlace" target="_blank" href="https://firebase.google.com/">https://firebase.google.com/</a></p>
+
+<p>Sus características principales son:
+<ul>
+  <li><span class="negrita">Desarrollo</span>: gracias a las funcionalidades que ofrece permite la creación de mejores aplicaciones minimizando el tiempo de optimización y desarrollo.</li>
+
+<li><span class="negrita">Analítica</span>: ofrece una serie de métricas que permiten un análisis exhaustivo de la aplicación.</li>
+
+<li><span class="negrita">Crecimiento</span>: permite gestionar todos los usuarios de las aplicaciones. Incluye invitaciones, notificaciones…</li>
+
+<li><span class="negrita">Monetización</span>: permite añadir elementos para monetizar la aplicación.</li>
+
+<li><span class="negrita">Rapidez</span>: la API de Firebase es intuitiva y sencilla de usar.</li>
+
+<li><span class="negrita">Agilidad</span>: ofrece herramientas disponibles a diferentes plataformas desde un mismo lugar.</li>
+</ul>
+
+</p>
+
+<p>La plataforma proporciona diferentes servicios como:
+  <ul>
+    <li>Autenticación (Google, X (Twitter), Apple, usuarios propios).</li>
+    <li>Almacenamiento en la nube.</li>
+    <li>Hosting.</li>
+    <li>Bases de datos.</li>
+    <li>…</li>
+  </ul>
+</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-11-03-08.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Firebase es gratis con ciertos límites.</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-11-03-44.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-11-03-55.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p><a class="enlace" target="_blank" href="https://firebase.google.com/pricing">Aquí</a> tienes todos los límites en los servicios</p>
+
+<p>En el apartado de <span class="negrita">documentación</span> se puede encontrar todo lo necesario para la integración de Firebase en una aplicación. </p>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-11-05-26.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Si una aplicación va a hacer uso de Firebase <span class="subrayado">debe tener permisos de acceso a internet</span> en el archivo del <span class="inline-file">AndroidManifest.xml</span>
+	<span class="negrita">manifest &rarr; AndroidManifest.xml</span> con la siguiente línea:
+</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-11-33-09.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En esta unidad se van a ver ejemplos de los siguientes servicios de Firebase:
+  <ul>
+    <li>Autenticación.</li>
+    <li>Notificaciones Push.</li>
+    <li>Crashlytics.</li>
+    <li>Configuración remota.</li>
+    <li>Bases de datos.</li>
+  </ul>
+</p>
+
+<h3>Descarga de responsabilidad (Disclaimer)</h3>
+<p>Firebase es una plataforma viva que va cambiando adaptándose a las necesidades de cada momento.</p>
+
+<p>También va introduciendo nuevos mecanismos y tecnologías para su uso.</p>
+
+<p>Por ello, en este documento se encuentran pequeñas muestras de cómo usar algunos de sus servicios. Estas pequeñas muestras pueden no estar actualizadas y pueden no mostrar todas las capacidades de la plataforma.</p>
+
+<p>Si se quiere aprender más sobre Firebase se recomienda navegar por su documentación y ejemplos.</p>
+
+</section><!-- End section Introducción-->
+
+<!--*********************************************************Acceso a Firebase***********************************************************-->
+<section class="apartado">
+<a name="sAccesoaFirebase"></a>
+<h2>Acceso a Firebase</h2>
+
+<p>Para acceder a Firebase se debe utilizar una <span class="negrita">cuenta de Google</span> para iniciar sesión y a continuación se debe ir a la <span class="d-word">consola</span>.</p>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-11-35-48.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>También se puede acceder directamente a la siguiente URL e iniciar sesión con una cuenta de Google 
+  <a class="enlace" target="_blank" href="https://console.firebase.google.com/">https://console.firebase.google.com/</a>.</p>
+
+<p>Una vez se ha accedido a la consola se debe crear un nuevo proyecto siguiendo las instrucciones.</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-11-37-47.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Para crear un proyecto se le debe <span class="negrita">dar nombre</span> que no exista previamente (la plataforma avisará en ese caso), 
+  en el siguiente paso se pregunta sobre el uso de <span class="negrita">Google Analytics</span> y por último se debe <span class="negrita">crear/elegir una cuenta para Google Analytics</span>.
+</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-11-38-30.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-11-39-15.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Una vez finalizada la creación del proyecto se tendrá disponible la consola</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-11-40-52.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</section><!-- End section Acceso a Firebase-->  
+
+<!--*********************************************************Integración de Firebase en la aplicación***********************************************************-->
+<section class="apartado">
+<a name="sIntegraciondeFirebaseenlaaplicacion"></a>
+<h2>Integración de Firebase en la aplicación</h2>
+
+<p><span class="negrita">Tras crear un proyecto en Android Studio</span> para integrar Firebase a la aplicación 
+  se debe ir a la consola del proyecto de Firebase y seleccionar el tipo de aplicación.</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-11-43-30.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>La integración de Firebase en la aplicación consta de varios pasos.
+  <ul>
+    <li>El primero consiste en registrar la aplicación:</li>
+    <li>Nombre del paquete.</li>
+    <li>Alias de la app (nombre de la app).</li>
+    <li>Certificado SHA-1.</li>
+  </ul>
+</p>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-03-55.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>Una buena práctica es añadir el nombre del proyecto en el elemento <span class="negrita">package</span> del <span class="negrita">manifiesto</span> del proyecto de Android Studio:</p>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-01-48.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>Para obtener la <span class="d-word">firma SHA-1</span> (huella digital) 
+  se puede ejecutar el siguiente comando desde la consola de gradle: <span class="negrita">gradle signingReport</span></p>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-04-35.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Al ejecutar el comando, en la pestaña <span class="negrita">Run</span> se obtendrán las diferentes claves de firma:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-07-58.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Tras conseguir la firma <span class="negrita">SHA-1</span> desde Android Studio se debe volver a configurar que se ejecute la aplicación.</p>
+
+<p>Si no se realiza este cambio, al pulsar el botón "Play" se volverá a ejecutar el comando <span class="negrita">gradle</span> anterior.</p>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-10-28.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Si se añade el <span class="negrita">gradle</span> al <span class="negrita">path</span> del sistema también se podrá ejecutar el comando 
+  gradle <span class="d-word">signingReport</span> desde la terminal del sistema o de Android Studio.</p>
+
+<p>El siguiente paso consiste en descargar desde firebase console el <span class="negrita">archivo de configuración</span> y añadirlo al proyecto Android Studio.</p>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-25-05.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Tal como nos indica el asistente se debe descargar en la raíz del proyecto.</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-27-24.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En el siguiente paso se debe añadir en <span class="inline-file">build.gradle.kts (Project)</span> la dependencia de Firebase .</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-28-12.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>También se debe añadir en <span class="inline-file">build.gradle.kts (Module)</span> la dependencia de Firebase .</p>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-29-35.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En este punto se debe sincronizar para que descargue las dependencias.</p>
+<p>Una vez configurada la integración ya se podrá consultar la aplicación en la consola de Firebase.</p>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-31-12.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Aplicación ya integrada con el proyecto de Firebase.</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-32-01.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Desde Android Studio hay disponible una opción: <span class="negrita">Menú &rarr; Tools &rarr; Firebase </span></p>
+<p>Mediante esta opción se pueden configurar el proyecto para el uso de Firebase de manera automática.</p>
+<p>Estas opciones abren flujos de trabajo automáticos entre Android Studio y la aplicación web Firebase.</p>
+<p>En algunas opciones se deberá completar la configuración de manera manual, como por ejemplo, el añadir la clave SHA-1 en la aplicación web de Firebase.</p>
+
+<p>Estando ya la aplicación ingtgrada con Firebase como se ha indicado anteriormente:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-34-02.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Al pulsar en una opción no configurada aún:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-35-20.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Aunque se puede usar este asistente, los ejemplos de clase se realizarán de manera manual para comprender todos los pasos que hay que realizar.</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-36-55.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>El asistente de Firebase integrado en Android Studio ofrece ejemplos de recopilación de datos:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-37-33.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+</section><!-- End section Integración de Firebase en la aplicación-->
+
+<!--*********************************************************Analytics***********************************************************-->
+<section class="apartado">
+<a name="sAnalytics"></a>
+<h2>Analytics</h2>
+<p>Al integrar la aplicación con Firebase, se añade la dependencia para el análisis de datos:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-38-43.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>De esta manera la aplicación enviará a Firebase todos los datos necesarios para poder calcular las diferentes métricas de análisis:
+  <li>Número de usuarios.</li>
+  <li>Ubicación de los usuarios.</li>
+  <li>Plataforma de acceso.</li>
+  <li>…</li>
+</p>
+
+<p>Por defecto, Firebase registra los eventos de la siguiente página web para las métricas:
+<a class="enlace" target="_blank" href="https://support.google.com/analytics/answer/9234069">https://support.google.com/analytics/answer/9234069</a></p>
+
+<p>Solo con iniciar la aplicación en el emulador ya se pueden consultar los datos de análisis:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-48-52.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Analytics monitoriza automáticamente una serie de eventos que se pueden consultar directamente:
+  <a class="enlace" target="_blank" href="https://support.google.com/analytics/topic/13367566">https://support.google.com/analytics/topic/13367566</a>
+</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-12-49-19.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Eventos</h3>
+<p>Desde el código de la aplicación se pueden enviar <span class="negrita">eventos personalizados</span> al sistema <span class="negrita">Analytics</span>.</p>
+<section><pre><code class="language-kotlin">//Creación instancia de FirebaseAnalytics
+val analytics = Firebase.analytics
+
+analytics.logEvent(
+    name = "Configuration",
+    block = {
+        param("Configuration", "Integración con Firebase completada")
+        param("Main_Activity", "Cargada la pantalla principal")
+    }
+)</code></pre>
+</section><br><br>
+<p>Un evento personalizado debe tener un <span class="negrita">nombre</span>
+   y un bloque de datos que sean <span class="negrita">pares clave-valor</span> (al menos un par clave-valor).</p>
+
+<p>Con el código anterior se puede forzar el envío de eventos existentes y el uso de nombres de parámetros existentes.</p>
+   
+
+<p>Para ello se usa la clase FirebaseAnalytics, por ejemplo para enviar la pantalla a la que se accede:
+     <span class="d-word">FirebaseAnalytics.Event.SCREEN_VIEW</span></p>
+
+   <figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-09-48.png" /><br><figcaption></figcaption></figure>
+   <br>
+<p>Según la documentación de Firebase desde la integración de la aplicación y la generación de los eventos, pueden pasar 24 horas hasta que se muestren en la plataforma.</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-11-58.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+</section><!-- End section Analytics-->
+
+<!--*********************************************************Autenticación***********************************************************-->
+<section class="apartado">
+<a name="sAutenticacion"></a>
+<h2>Autenticación</h2>
+
+<p>Firebase ofrece diversas opciones de autenticación que permiten crear en una aplicación un sistema de registro y login de manera rápida.</p>
+
+
+<p>Entre todas las opciones de autenticación se encuentran
+  <ul>
+    <li>Métodos <span class="negrita">nativos</span>:
+      <ul>
+        <li>Correo electrónico </li>
+        <li>Número de teléfono</li>
+        <li>Anónimo</li>
+      </ul>
+    </li>
+    <li>
+      Métodos de <span class="negrita">terceros</span>:
+      <ul>
+        <li>Google</li>
+        <li>Apple </li>
+        <li>Z (Twitter) </li>
+        <li>GitHub </li>
+        <li>…</li>
+      </ul>
+    </li>
+    <li>
+      Métodos <span class="negrita">personalizados</span>:
+      Requieren del desarrollo propio del sistema de autenticación en alguna plataforma externa.
+
+    </li>
+  </ul>
+</p>
+
+<p>Mediante estos métodos de autenticación el desarrollador puede desentenderse de toda la gestión de almacenamiento de dichos datos.</p>
+<p>Firebase ofrece diversas opciones de autenticación:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-20-15.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En la pestaña Users se pueden consultar los usuarios autenticados, evidentemente en este momento esta pestaña está vacía.</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-20-35.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>En el resto de pestañas se pueden configurar las diferentes opciones.</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-31-05.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>En este curso solo se verá dos de los sistemas de autenticación: <ul>
+  <li>Correo electrónico y contraseña.</li>
+  <li>Google</li>
+</ul>
+</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-31-56.png" /><br><figcaption></figcaption></figure>
+<br>
+<section class="marco-t warn">
+  <span class="icono warning"> </span> <span class="negrita">Advertencia</span>: <br>
+
+Se recomienda que todas las tareas de registro y autenticación se realicen en segundo plano mediante funciones suspendidas..
+
+De esta forma la aplicación no se quedará bloqueada si el acceso a internet es lento o si ocurre algún problema en el proceso.
+
+  </section>
+<section class="marco-b">
+    
+</section>
+<h3>Autenticación por correo electrónico y contraseña</h3>
+<p>Se debe habilitar el proveedor de correo y contraseña en la <span class="negrita">consola de Firebase</span>:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-33-23.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Una vez habilitado el proveedor de correo electrónico ya se podrá usar en los proyectos Android Studio.</p>
+
+<p>Además de las dependencias añadidas anteriormente, es necesario añadir la siguiente dependencia en <span class="inline-file">build.gradle.kts (Module)</span>
+   y sincronizar.</p>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-34-10.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>A continuación, se deben diseñar las diferentes pantallas necesarias para poder registrarse y hacer login en la aplicación.</p>
+<p class="sub-section">Registro de usuario</p>
+
+<p><span class="negrita">Tras obtener los datos de registro del usuario desde los campos de la aplicación</span>, 
+  para registrar al usuario en el sistema se debe usar el siguiente método pasándole como parámetros el usuario y 
+  la contraseña de al menos 6 caracteres (en el ejemplo se usan literales).</p>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-35-48.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Se puede añadir el método <span class="r-word">addOnCompleteListener</span>
+   que se ejecutará al completar el registro para conocer si el registro ha sido correcto o no.</p>
+<p>Por ejemplo, será incorrecto si el email ya está registrado. </p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-36-26.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Una vez registrado el usuario se podrá consultar en la consola de Firebase:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-37-06.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p class="sub-section">Inicio de sesión</p>
+
+<p>Tras <span class="negrita"> obtener los datos de acceso (login) del usuario desde los campos de la aplicación</span>, 
+  para comprobar si las credenciales son correctas se debe usar el siguiente método pasándole como parámetros el 
+  usuario y la contraseña (en el ejemplo se usan literales).</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-37-48.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Se puede añadir el método <span class="r-word">addOnCompleteListener</span>
+   que se ejecutará al completar el inicio de sesión para conocer si ha sido correcto o no.</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-38-25.png" /><br><figcaption></figcaption></figure>
+<br>
+<p class="sub-section">Acceso a los datos del usuario registrado</p>
+
+<p>Una vez que el usuario se ha registrado con éxito, se puede utilizar la variable <span class="r-word">auth</span> creada para acceder a sus datos:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-39-03.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Y también para para modificarlos:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-39-29.png" /><br><figcaption></figcaption></figure>
+<br>
+ <p class="sub-section">Cerrar sesión</p>
+ <p>Para cerrar la sesión del usuario se debe usar el método <span class="r-word">signOut</span> sobre la variable <span class="r-word">auth</span> creada.</p>
+ <figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-40-13.png" /><br><figcaption></figcaption></figure>
+ <br>
+ 
+ <h3>Autenticación con una cuenta de Google</h3>
+
+ <p>La autenticación de Firebase con Google permite tres opciones:
+  <ul>
+    <li>Utilizar las credenciales ya almacenadas en el dispositivo.</li>
+    <li>Añadir unas credenciales nuevas de un correo ya existente.</li>
+    <li>Añadir unas credenciales nuevas a partir de un nuevo registro en Google.</li>
+  </ul>
+ </p>
+ 
+<p>Cuando se utiliza la autenticación de Firebase con Google, se abrirá una ventana nueva en el dispositivo en la que se deberá elegir una de estas opciones.</p>
+<p>Se debe habilitar el proveedor de Google en la consola de Firebase</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-42-15.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Tras habilitar el proveedor de Google se debe volver a descargar el archivo <span class="inline-file">google-services.json</span>
+   desde la configuración del proyecto de Firebase y sustituirlo en el proyecto de Android Studio</p>
+<figure><img src="UD_Firebase/images/google-services-json.gif" /><br><figcaption></figcaption></figure>
+<br>
+<p>Una vez habilitado el proveedor de Google ya se podrá usar en los proyectos Android Studio.</p>
+<p>Además de las dependencias añadidas anteriormente, es necesario añadir la siguiente dependencia en <span class="inline-file">build.gradle.kts (Module)</span> y sincronizar.</p>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-47-55.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Para el funcionamiento de la autenticación con cuenta de Google es 
+  necesario el <span class="negrita">identificador de la aplicación</span> que se encuentra en el archivo <span class="inline-file">google-services.json</span>
+   y también en la <span class="negrita">consola de Firebase</span>.</p>
+   <figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-14-00-31.png" /><br><figcaption>desde Android Studio</figcaption></figure>
+   <br>
+   
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-59-31.png" /><br><figcaption>desde Firebase Console</figcaption></figure>
+<br>
+
+
+
+</section><!-- End section Autenticación-->
+  <!---BTM_MENU--->
+  <script src="../script/prism.js"></script>
+</body>
+
+</html>
