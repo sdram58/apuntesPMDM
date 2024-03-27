@@ -24,6 +24,7 @@
     <div class="fila">
       <a href="#sAnalytics" title="4.- Analytics">4.- Analytics</a>
       <a href="#sAutenticacion" title="5.- Autenticación">5.- Autenticación</a>
+      <a href="#sNotificaciones" title="6.- Notificaciones">6.- Notificaciones</a>
 
     </div>
     
@@ -462,9 +463,280 @@ De esta forma la aplicación no se quedará bloqueada si el acceso a internet es
 <figure><img src="UD_Firebase/images/ud_Firebase-2024-03-20-13-59-31.png" /><br><figcaption>desde Firebase Console</figcaption></figure>
 <br>
 
+<p>Es recomendable centralizar el identificador en el archivo strings.xml</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-18-57-35.png" /><br><figcaption></figcaption></figure>
+<br>
 
+<p>A continuación, se muestra un ejemplo de cómo registrar al usuario utilizando las credenciales que ya tiene almacenadas en el dispositivo:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-18-59-06.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-18-59-22.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Una vez registrado el usuario se podrá consultar en la consola de Firebase:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-01-59.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Cuando se registra a un usuario con este método en la aplicación, <span class="negrita">el dispositivo recuerda este registro y lo mantiene autenticado aunque cierre la aplicación</span>,
+  si no se realiza el cierre de sesión.</p>
+
+<p>Para cerrar la sesión totalmente en la aplicación se debe usar el siguiente código:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-02-56.png" /><br><figcaption></figcaption></figure>
 
 </section><!-- End section Autenticación-->
+
+<!--*********************************************************Notificaciones***********************************************************-->
+<section class="apartado">
+<a name="sNotificaciones"></a>
+<h2>Notificaciones</h2>
+<p>Firebase ofrece un sistema de notificaciones para las aplicaciones llamado <span class="r-word">Messaging</span>.</p>
+
+<p>Gracias a <span class="r-word">Messaging</span> desde la consola de Firebase se pueden enviar notificaciones a los dispositivos que tengan la aplicación instalada.</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-04-12.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se debe añadir la siguiente dependencia en <span class="inline-file">build.gradle.kts (Module)</span> y sincronizar.</p>
+
+<p>Además se debe añadir el siguiente código en el <span class="negrita">manifiesto</span> 
+  dentro de la etiqueta <span class="negrita">application</span> para permitir las notificaciones en segundo plano:</p>
+
+  <figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-06-10.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p>Por último, se necesita crear la clase indicada en el manifiesto, para ello se crea una clase Kotlin nueva llamada <span class="inline-file">MyFirebaseMessagingService.kt</span>:</p>
+
+  <section><pre><code class="language-kotlin">class MyFirebaseMessagingService: FirebaseMessagingService() {
+
+    override fun onNewToken(token:String){
+        super.onNewToken(token)
+    }
+
+
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        super.onMessageReceived(remoteMessage)
+
+        //Tratar la notificación FIREBASE recibida
+        remoteMessage.notification?.let { message ->
+            //A través de la variable message se puede acceder a toda la información de la notificación recibida
+
+            //Se indica que al pulsar la notificsación se navegue a la MainActivity de la aplicación
+            val intent = Intent(this, MainActivity::class.java).apply {
+                addFlags(FLAG_ACTIVITY_CLEAR_TOP)
+            }
+
+            //variable necesaria para que muestre la notifciación sin estar en el contexto de la aplicación
+            val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+            //Construcción de la notificación de Android
+            val channelID = "Firebase Example"
+            val channelName = "Example Notification"
+            val notificationBuilder = NotificationCompat.Builder(this, channelID)
+                .setContentTitle(message.title)
+                .setContentText(message.body)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setAutoCancel(false)
+                .setContentIntent(pendingIntent)
+
+            //Optención del administrador de notificaciones del sistema Android
+            val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+            //Si el dispositivo tienen una versión superior a OReo se debe crear un canal de notificaciones
+            // en caso contrario no es necesario
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                val channel = NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_HIGH)
+                manager.createNotificationChannel(channel)
+            }
+
+            //Se indica a Android que genere la notificación en el dispositivo.
+            //Al crear la notificación se necesita un identificador, en el ejemplo se genera de manera aleatoria
+            manager.notify(Random.nextInt(), notificationBuilder.build())
+
+        }
+
+
+    }
+}</code></pre>
+  </section><br><br>
+  
+  <p>El método <span class="r-word">onNewToken</span> servirá para recibir notificaciones en un dispositivo específico.</p>
+  
+  <p>El método <span class="r-word">onMessageReceived</span> servirá para:
+    <ul>
+      <li>Recibir notificaciones generales de Firebase.</li>
+      <li>Crear las notificaciones que se mostrarán en el dispositivo.</li>
+    </ul>
+  </p>
+  
+<h3>Enviar notificaciones desde la consola de Firebase</h3>
+  <p>Para poder enviar notificaciones se debe crear una campaña desde la consola de Firebase:</p>
+  
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-09-07.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Se puede enviar una <span class="negrita">notificación push</span> a <span class="negrita">todos los dispositivos</span> con la aplicación instalada.</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-09-48.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-10-24.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-11-05.png" /><br><figcaption>Consola Firebase</figcaption></figure>
+<br>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-11-24.png" /><br><figcaption>Dispositivo</figcaption></figure>
+<br>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-11-53.png" /><br><figcaption>Logcat</figcaption></figure>
+<br>
+
+<h3>Notificaciones Push Generales</h3>
+<p>El ejemplo anterior funciona para dispositivos con las versiones de Android inferiores a la 13.</p>
+
+<p>A partir de la versión 13 el usuario debe otorgar explícitamente permisos de recepción de notificaciones en tiempo de ejecución.</p>
+
+<p>Para implementar esto se deben realizar los siguientes cambios al código.</p>
+<p>Se necesita crear una configuración a nivel de aplicación para las notificaciones, 
+  para ello se crea la clase <span class="d-word">AndroidFirebaseApp</span> en un archivo llamado <span class="inline-file">AndroidFirebaseApp.kt</span>:</p>
+<section><pre><code class="language-kotlin">class AndroidFirebaseApp: Application() {
+    override fun onCreate() {
+        super.onCreate()
+        
+        val channelID = "FirebaseExample"
+        val channelName = "Example notification"
+        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channel = NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_HIGH)
+            manager.createNotificationChannel(channel)
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<p>En el <span class="negrita">manifiesto</span>  se añaden los permisos para las notificaciones y se registra la clase anterior:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-22-02.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>La documentación de Firebase aconseja añadir al manifiesto dentro de la etiqueta application el siguiente código para unificar la apariencia de las notificaciones:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-23-15.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se deberán indicar los recursos correctos para la aplicación: icono existente en la carpeta drawable y color y nombre de canal como valores centralizados.</p>
+
+<p>Es habitual pedir los permisos al iniciar la aplicación, en la clase MainActivity se debe añadir:</p>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-43-31.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Al ejecutar la aplicación si no se han otorgado los permisos, aparecerá un mensaje como el siguiente:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-44-04.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-44-19.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<h3>Notificaciones Push a un único dispositivo</h3>
+
+<p>En la clase <span class="d-word">MyFirebaseMessaginService</span> se encuentra el método <span class="r-word">onNewToken</span> 
+  que se ejecuta la primera vez que se utiliza la aplicación ya que <span class="negrita">se ha registrado esta clase como servicio en el manifiesto</span>.</p>
+
+<p>De esta manera se genera un <span class="negrita">token</span> único para cada dispositivo en el que se instale la aplicación.</p>
+
+<p>Este token se puede almacenar para posteriormente usarlo para enviar notificaciones a un dispositivo concreto.</p>
+
+<p>Para enviar una notificación a un único dispositivo desde la consola de Firebase, 
+  al crear una nueva campaña se debe elegir "<span class="negrita">Enviar mensaje de prueba</span>" y en la ventana que aparece se debe añadir el token:</p>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-46-27.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-46-41.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>En una aplicación real cada token se debería almacenar en una preferencia y cuando el usuario se autentifique en la aplicación se debería guardar el token junto a sus datos.</p>
+
+<p>De esta manera con alguna aplicación externa se podrían seleccionar todos los usuarios que se quiera y enviar notificaciones directamente a ellos mediante su token.</p>
+
+<p>Esta funcionalidad es más avanzada y no se verá en este curso.</p>
+
+
+<h3>Notificaciones Push por temas</h3>
+
+<p>Es posible enviar notificaciones push solo a determinados dispositivos haciendo uso de los <span class="negrita">temas</span> (topics).</p>
+
+<p>Para ello es necesario que los dispositivos estén suscritos a un tema, para ello en el código de la aplicación se debe añadir lo siguiente:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-48-14.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se puede usar la técnica que se quiera para crear los temas, por ejemplo, detectar la versión de Android instalada, la ubicación del dispositivo…</p>
+
+<p>A la hora de crear la campaña desde Firebase se debe elegir la opción <span class="negrita">Tema</span>:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-49-13.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>Notificaciones In-App</h3>
+<p>Se puede enviar una <span class="negrita">notificación In-App</span> (dentro de la aplicación) directamente a todos los dispositivos con la aplicación instalada.</p>
+
+<p>Para ahorrar recursos Firebase solo recupera una vez al día los mensajes desde el servidor para las notificaciones In-App.</p>
+
+<p>Se debe añadir las siguientes dependencias en <span class="inline-file">build.gradle.kts (Module)</span>S y sincronizar.</p>
+
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-50-26.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Desde la consola de Firebase se debe elegir la opción adecuada dependiendo de si ya se ha iniciado una campaña o no.</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-53-05.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-19-53-18.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Según la documentación:</p>
+
+<p>"Para ahorrar energía, Firebase In-App Messaging solo recupera mensajes del servidor una vez al día.
+  Eso puede dificultar las pruebas, por lo que Firebase console te permite especificar un dispositivo de prueba que muestra mensajes a pedido."</p>
+
+<p>En la propia documentación se explica cómo <a class="enlace" target="_blank" href="https://firebase.google.com/docs/in-app-messaging/get-started?hl=es&platform=android#send_a_test_message_2">enviar mensajes In-App a un dispositivo de prueba</a></p>
+
+<p>Para que funcionen correctamente las notificaciones In-App se deberá dar permiso al proyecto desde Google Cloud iniciando sesión con la misma cuenta que se utiliza en 
+  la consola de Firebase.</p>
+<p><a class="enlace" target="_blank" href="https://console.cloud.google.com/apis/api/firebaseinappmessaging.googleapis.com">https://console.cloud.google.com/apis/api/firebaseinappmessaging.googleapis.com</a></p>
+
+<h3>Enviar información extra en la notificación</h3>
+<p>Al crear una notificación desde Firebase se puede añadir <span class="negrita">datos extra</span> con el <span class="negrita">formato clave-valor</span>:</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-20-00-53.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Esta información se recibe junto con la notificación.</p>
+<p>En el método donde se trata la notificación se pueden recuperar los datos extra enviados en la notificación.</p>
+
+<p>Si la aplicación está abierta se podrán usar los datos directamente.</p>
+<figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-20-01-33.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Si la aplicación está cerrada, se pueden añadir los datos recibidos a la notificación para cuando se abra la aplicación al pulsar la notificación estén disponibles esos datos:</p>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">MyFirebaseMessagingService.kt</span>
+  </section>
+<section class="marco-b">
+    <figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-20-02-23.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+</section>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+  </section>
+<section class="marco-b">
+    <figure><img src="UD_Firebase/images/ud_Firebase-2024-03-26-20-02-48.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+</section>
+
+<p>Recibir datos en la notificación se puede utilizar por ejemplo para:
+  <ul>
+    <li>Dependiendo de un valor recibido se podría navegar a una pantalla u otra de la aplicación.</li>
+    <li>Dependiendo de los valores recibidos se pueden mostrar unos botones u otros en la notificación.</li>
+    <li>Cualquier otra funcionalidad que se pueda necesitar.</li>
+    <li>…</li>
+  </ul>
+</p>
+
+
+
+
+</section><!-- End section Notificaciones-->
   <!---BTM_MENU--->
   <script src="../script/prism.js"></script>
 </body>
