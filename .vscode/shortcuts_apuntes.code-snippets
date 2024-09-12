@@ -38,7 +38,7 @@
 	"Images": {
 		"scope": "html",
 		"prefix": "ima",
-		"body": ["<figure><img src=\"$CLIPBOARD\" /><br><figcaption>$1</figcaption></figure>\n<br>\n$0"],
+		"body": ["<a href=\"$CLIPBOARD\" target=\"_BLANK\"><figure><img src=\"$CLIPBOARD\" /><br><figcaption>$1</figcaption></figure></a>\n<br>\n$0"],
 		"description": "Image"
 	},
 	"Inline Images": {
