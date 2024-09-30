@@ -720,7 +720,7 @@
   <br>
   
   <br>
-  <p>In the hierarchy, it is indicated that the GameObject originates from a prefab by displaying its name in blue.</p>
+  <p>In the hierarchy, it is indicated that the GameObject originates from a prefab by displaying its name in <span class="negrita">blue</span>.</p>
   
   <p>A preview of the prefab appears in the file manager.</p>
   <a href="UD3/images/ud3-2024-01-26-10-56-18.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-56-18.png" /><br><figcaption></figcaption></figure></a>
@@ -757,8 +757,8 @@
   <hr>
   <br>
   <div class="tarea">
-    <p><span class="subrayado negrita">Activity 6. Images and Prefabs</span> <br>
-  Open the project <span class="subrayado">EscenaTuNombre</span>. <br>
+    <p><span class="subrayado negrita">Activity 5. Images and Prefabs</span> <br>
+  Open the project <span class="subrayado">SceneYourName</span>. <br>
   Add a Cube GameObject, create a new material for it, and assign it. <br>
   Create 5 copies of this cube and arrange them into a figure however you'd like (you can rotate and scale them). <br>
   Create an empty GameObject and add the 6 cubes that form the figure, being careful with the coordinates. <br>
@@ -780,7 +780,7 @@
   <h3>Accessing GameObject Properties</h3>
   <p>From a script added to a GameObject, you can access the properties of the GameObject itself and all the components added to it.</p>
   
-  <p>To access this information, you use the <span class="r-word">gameObject</span> variable, which <span class="negrita">is directly injected</span> when inheriting from the <span class="r-word">MonoBehaviour</span> class.</p>
+  <p>To access this information, you use the <span class="r-word">gameObject</span> variable (note that it starts with lowercase), which <span class="negrita">is directly injected</span> when inheriting from the <span class="r-word">MonoBehaviour</span> class.</p>
   <a href="UD3/images/ud3-2024-01-29-10-56-27.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-10-56-27.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
@@ -840,10 +840,28 @@
          <br>
          
          <br>
-         <p>In this case, the variable should be declared as an array because there could be more than one GameObject with that tag (the property is usually private).</p>
+         <p>In this case, the variable <span class="negrita">should be declared as an array</span> because there could be more than one GameObject with that tag (the property is usually private).</p>
          <a href="UD3/images/ud3-2024-01-29-11-11-20.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-11-20.png" /><br><figcaption></figcaption></figure></a>
          <br>
-         
+<section><pre><code class="language-csharp">public class Test : MonoBehaviour
+{
+    public GameObject[] blueCubesGO;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        blueCubesGO = GameObject.FindGameObjectsWithTag("blueCubes");
+        foreach (GameObject cubeGO in blueCubesGO)
+        {
+            Debug.Log("Cubo: " + cubeGO.name );
+        }
+    }
+
+    // Update is called once per frame
+    void Update(){
+    }
+}</code></pre>
+</section><br><br>
          <br>    
          
          <a href="UD3/images/ud3-2024-01-29-11-12-54.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-12-54.png" /><br><figcaption></figcaption></figure></a>
@@ -858,9 +876,31 @@
   <p>When accessing other GameObjects, you can access their properties. For example, the following script, added to the MainCamera, would access the <span class="negrita">Text</span> property of a GameObject of type TextMeshPro and modify its value.</p>
   
   <p>To access the GameObject, you must drag it to the appropriate slot in the Inspector after selecting the MainCamera.</p>
-  <a href="UD3/images/ud3-2024-01-29-11-14-25.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-14-25.png" /><br><figcaption></figcaption></figure></a>
-  <br>
-  
+  <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+public class Test : MonoBehaviour
+{
+    public int points = 0;
+
+    public TextMeshProUGUI pointsTMP;
+    // Start is called before the first frame update
+    void Start()
+    {
+        pointsTMP.text ="Points: " + points;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space)){
+            pointsTMP.text ="Points: " + ++points;
+        }
+    }
+}</code></pre>
+  </section><br><br>
   <br>
   
   <h3>Accessing Components of Other GameObjects</h3>
@@ -1679,7 +1719,7 @@
     
     </section><!-- End section Interesting Methods-->
   
-  
+  <div class="oculto">
   <!--*********************************************************CharacterController Component***********************************************************-->
   <section class="apartado">
     <a name="sComponenteCharacterController"></a>
@@ -2408,7 +2448,8 @@
     
     
       </section><!-- End section Menus-->
-  
+    
+  </div> <!--END OCULTO-->
 
   <!---BTM_MENU--->
   <script src="../script/prism.js"></script>
