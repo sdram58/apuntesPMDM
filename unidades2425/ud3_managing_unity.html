@@ -37,18 +37,18 @@
       <a href="#sColisiones" title="11.- Collisions">11.- Collisions</a>
       <a href="#sMetodos_Intersantes" title="12.- Interesting Methods">12.- Interesting Methods</a>
     </div>
-    <div class="fila">      
+    <div class="oculto fila">      
       <a href="#sComponenteCharacterController" title="13.- CharacterController Component">13.- CharacterController Component</a>
       <a href="#sCamaraprofesional" title="14.- Professional Camera">14.- Professional Camera</a>
       <a href="#sMovimientoProgramado" title="15.- Programmed Movement">15.- Programmed Movement</a>
     </div>
     
-    <div class="fila">      
+    <div class="oculto fila">      
       <a href="#sRaycast" title="16.- Raycast">16.- Raycast</a>
       <a href="#sNPCs" title="17.- NPCs">17.- NPCs</a>
       <a href="#sCambiodeescenas" title="18.- Scene Switching">18.- Scene Switching</a>
     </div>
-    <div class="fila">      
+    <div class="oculto fila">      
       <a href="#sPlayerPrefs" title="19.- PlayerPrefs">19.- PlayerPrefs</a>
       <a href="#sMenus" title="20.- Menus">20.- Menus</a>
       <a href="" class="oculto"></a>
@@ -81,18 +81,18 @@
       <a href="#sColisiones" title="11.- Collisions">11.- Collisions</a>
       <a href="#sMetodos_Intersantes" title="12.- Interesting Methods">12.- Interesting Methods</a>
     </div>
-    <div class="fila">      
+    <div class="oculto fila">      
       <a href="#sComponenteCharacterController" title="13.- CharacterController Component">13.- CharacterController Component</a>
       <a href="#sCamaraprofesional" title="14.- Professional Camera">14.- Professional Camera</a>
       <a href="#sMovimientoProgramado" title="15.- Programmed Movement">15.- Programmed Movement</a>
     </div>
     
-    <div class="fila">      
+    <div class="oculto fila">      
       <a href="#sRaycast" title="16.- Raycast">16.- Raycast</a>
       <a href="#sNPCs" title="17.- NPCs">17.- NPCs</a>
       <a href="#sCambiodeescenas" title="18.- Scene Switching">18.- Scene Switching</a>
     </div>
-    <div class="fila">      
+    <div class="oculto fila">      
       <a href="#sPlayerPrefs" title="19.- PlayerPrefs">19.- PlayerPrefs</a>
       <a href="#sMenus" title="20.- Menus">20.- Menus</a>
       <a href="" class="relleno"></a>
@@ -133,6 +133,7 @@
     <br>
     
     <p>Clicking on the cones changes the view to align with that axis.</p>
+
     
     <p>At the bottom of this gizmo, the current view is displayed, which can indicate "Persp" or any other direction such as "Back." If you click on the central cube or the icon below it with the current view, the view changes to an isometric one.</p>
     
@@ -144,7 +145,13 @@
     
     <p>On the left:
       <ul>
-        <li>The first two options control how the "hand" tool works.</li>
+        <li>The first two options control how the "hand" tool works.
+          <ul>
+            <li><span class="negrita">Center</span> controls whether the manipulation point of the objects is located at the center of the selection or at the pivot of each object.</li>
+            <li><span class="negrita">Global</span> controls whether the transformation axes are based on the world’s global coordinates or on the object’s local axes.</li>
+            
+          </ul>
+        </li>
         <li>The third toggles the grid display on or off.</li>
         <li>The fourth allows GameObjects to "snap" to grid points when moved.</li>
         <li>The fifth indicates the movement steps when moving a GameObject.</li>
@@ -171,9 +178,12 @@
     <a href="UD3/images/ud3-2024-01-25-12-11-24.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-12-11-24.png" /><br><figcaption></figcaption></figure></a>
     <br>
     
+    <a href="UD3/images/movement_shample.gif" target="_BLANK"><figure><img src="UD3/images/movement_shample.gif" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
     <p>All GameObjects have a <span class="negrita">pivot point</span>, from which any changes will be applied to the object.</p>
     
-    <p>The pivot point is located in the <span class="negrita">center of the GameObject</span> by default, which is why the gizmo for the above tools is drawn from the center of the selected GameObject.</p>
+    <p>The pivot point is located in the <span class="negrita">center of the GameObject by default</span>, which is why the gizmo for the above tools is drawn from the center of the selected GameObject.</p>
     
       <a href="UD3/images/ud3-2024-01-25-13-50-41.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-13-50-41.png" /><br><figcaption></figcaption></figure></a>
       <br>
@@ -194,7 +204,7 @@
       <p class="sub-section">With mouse:</p>
       <p>
         <ul>
-          <li>With the hand tool selected, click and drag: moves the camera horizontally and vertically.</li>
+          <li>With the hand tool selected <img style="vertical-align: baseline"  src="UD3/images/ud_3-2024-09-30-10-53-07.png" />, click and drag: moves the camera horizontally and vertically.</li>
           <li>Middle mouse button (scroll wheel): same action as the previous line.</li>
           <li>CTRL + ALT + left-click: same action as the previous line.</li>
           <li>Right-click and hold: rotates the camera around its axis.</li>
@@ -265,7 +275,7 @@
     
     <p>The coordinates of this pivot point in the scene are what Unity uses to perform all necessary calculations.</p>
     
-    <p>The pivot point <span class="negrita">cannot be moved</span>.</p>
+    <p>The pivot point <span class="negrita">cannot be moved</span>. Except with design programs like Blender</p>
     
     <p>The pivot point is also the reference when one GameObject follows another, for example, a camera following a character. In this case, the camera will track the pivot point of the GameObject.</p>
     
@@ -378,7 +388,9 @@
     
     <a href="UD3/images/ud3-2024-01-26-09-54-59.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-09-54-59.png" /><br><figcaption></figcaption></figure></a>
     <br>
-    
+    <div class="tarea">
+      <span class="negrita subrayado">Activity 1</span>: Create 3 materials and apply them to the cubes like in the image above</div>
+    <br>
     <h3>Physical Materials</h3>
     <p>Physical materials (Physic Material) allow control over how GameObjects physically interact when they collide with each other.</p>
     
@@ -405,7 +417,7 @@
     <hr>
     <br>
     <div class="tarea">
-      <p><span class="subrayado negrita">Activity 3: Building the Scene</span> <br>
+      <p><span class="subrayado negrita">Activity 2: Building the Scene</span> <br>
         Create a 3D project in Unity called <span class="subrayado">SceneYourName</span>. <br>
         Set the view camera as if developing a 2D game (Z-axis pointing backwards). <br>
         Add a plane to the scene and modify its size so that it is shallow but very wide (like a horizontal platform from left to right). <br>
@@ -424,7 +436,7 @@
     <hr>
     <br>
     <div class="tarea">
-      <p><span class="subrayado negrita">Activity 4: MonoBehaviour Events</span> <br>
+      <p><span class="subrayado negrita">Activity 3: MonoBehaviour Events</span> <br>
         Open the SceneYourName project. <br>
         Create a script called EventsScript and attach it to the GameObject that is touching the surface. <br>
         In the script, add instructions to display console messages with Debug.Log for the following events: Start, Update, OnMouseEnter (when the mouse is over the GameObject), and OnMouseDrag (when the GameObject is clicked and dragged with the mouse). <br>
@@ -440,7 +452,7 @@
     <hr>
     <br>
     <div class="tarea">
-      <p><span class="subrayado negrita">Activity 5: Gravity</span> <br>
+      <p><span class="subrayado negrita">Activity 4: Gravity</span> <br>
         Open the SceneYourName project. <br>
         One of the GameObjects is vertically aligned with the one that was touching the surface. Add a RigidBody component to the object at the top of the scene. <br>
         Run the game and observe what happens. <br>
@@ -452,6 +464,9 @@
           Compress the screenshots into a rar or zip file named YourName and attach them to the assignment.</div>
       </p>
     </div>
+
+    <br><br>
+    <a href="UD3/images/demo_act_2_4.gif" target="_BLANK"><figure><img src="UD3/images/demo_act_2_4.gif" /><br><figcaption></figcaption></figure></a>
     
   </section><!-- End section Materials -->
   
@@ -544,6 +559,8 @@
   <br>
   
   <br>
+  <a href="UD3/images/demo_canvas_text.gif" target="_BLANK"><figure><img src="UD3/images/demo_canvas_text.gif" /><br><figcaption></figcaption></figure></a>
+    <br>
   
   <h3>UI - Images</h3>
   <p>To add images to the user interface, the images must be <span class="d-word">sprites</span>.</p>
@@ -571,6 +588,7 @@
   
   <br>
   <p>The first step to adding sprites to the Unity project is to add the 2D Sprite package from the <span class="negrita">Menu &rarr; Window &rarr; Package Manager</span>.</p>
+  
   <a href="UD3/images/ud3-2024-01-26-10-30-33.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-30-33.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
@@ -1557,7 +1575,7 @@
     <hr>
     <br>
     <div class="tarea">
-      <p><span class="subrayado negrita">Practice 6 – Pachinko</span></p>
+      <p><span class="subrayado negrita">Practice 1 – Pachinko</span></p>
       
     <p>A Pachinko is a Japanese arcade machine in which the player has a large number of steel balls that are introduced into the machine. <br>
     The pachinko machine has a system that launches the balls from below through a side to reach the top, from where they begin to fall. <br>
