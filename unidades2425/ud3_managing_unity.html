@@ -1017,13 +1017,13 @@ public class Test : MonoBehaviour
   
   <a href="UD3/images/ud3-2024-01-29-11-29-15.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-29-15.png" /><br><figcaption></figcaption></figure></a>
   <br>
-  
+  <p>Second option is a bit more verbose but useful if you already have a Vector3 variable or if you want to manipulate the rotation using vector operations before passing it to the function.</p>
   <br>
   
   <p>Use the <span class="negrita">eulerAngles</span> property (similar behavior to the method above):</p>
   
   <a href="UD3/images/ud3-2024-01-29-11-30-49.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-30-49.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  <br>  
   
   <br>
   
@@ -1093,17 +1093,22 @@ public class Test : MonoBehaviour
     
     <p>The problem with using the <span class="negrita">Update</span> method is that the number of FPS generated depends on many factors, 
       from the capabilities of the computer running the game to the number of elements displayed at any given moment.</p>
+      <a href="UD3/images/ud_3-2024-10-01-13-11-35.png" target="_BLANK"><figure><img src="UD3/images/ud_3-2024-10-01-13-11-35.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
     <a href="UD3/images/ud3-2024-01-29-11-41-57.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-41-57.png" /><br><figcaption></figcaption></figure></a>
     <br>
     
-    <p>For this reason, it is not advisable to move objects directly in this way.</p>
+    <p>For this reason, it is not advisable to move objects directly in this way. It may be that on one computer it runs much faster than on another, or 
+      depending on performance, it may run faster or slower depending on the system load.</p>
     
     <p>There are two ways to solve this problem:
       <ul>
         <li>The <span class="r-word">Time</span> class and its <span class="r-word">deltaTime</span> method. <br>
   If you multiply a movement by <span class="negrita">Time.deltaTime</span>, the movement will be consistent regardless of the frame rate at any given time.
   <span class="negrita">Time.deltaTime</span> returns the value 0.02 (corresponding to 20 milliseconds).
-  (This technique was used until the introduction of the next method).</li>
+  (This technique was used until the introduction of the next method). What Time.deltaTime does is calculate the time between the current frame and the previous one, 
+  and generate a number so that when multiplied by that time, it always gives the same result. This makes it independent of the frame rate.</li>
   <li>The <span class="r-word">FixedUpdate</span> method of the <span class="negrita">MonoBehaviour</span> class.
     It runs at regular intervals of 20 ms (50 times per second).</li>
       </ul>
@@ -1182,14 +1187,14 @@ public class Test : MonoBehaviour
   <br>
   <p>
     <ul>
-      <li>Input.GetKeyDown(KeyCode.E)<br>
-  Input.GetKey(KeyCode.V)<br>
-  Input.GetKeyUp(KeyCode.Space)<br>
-  Input.GetMouseButtonDown(0)<br>
-  Input.GetMouseButton(1)<br>
-  Input.GetMouseButtonUp(2)<br>
-  Input.GetMouseButtonUp("Fire1")<br>
-  Input.GetMouseButton("Jump")</li>
+      <li>Input.GetKeyDown(KeyCode.E)</li>
+  <li>Input.GetKey(KeyCode.V)</li>
+  <li>Input.GetKeyUp(KeyCode.Space)</li>
+  <li>Input.GetMouseButtonDown(0)</li>
+  <li>Input.GetMouseButton(1)</li>
+  <li>Input.GetMouseButtonUp(2)</li>
+  <li>Input.GetMouseButtonUp("Fire1")</li>
+  <li>Input.GetMouseButton("Jump")</li>
     </ul>
   </p>
   
@@ -1229,7 +1234,28 @@ public class Test : MonoBehaviour
   </p>
   <a href="UD3/images/ud3-2024-01-31-12-50-54.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-12-50-54.png" /><br><figcaption></figcaption></figure></a>
   <br>
-  
+  <section><pre><code class="language-csharp">public class CubeTransformScript : MonoBehaviour
+{
+    public float translationSpeed = 5;
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Debug.Log("Input.GetAxis(\"Horizontal\"): " + Input.GetAxis("Horizontal"));
+        transform.Translate(
+            Input.GetAxis("Horizontal") * translationSpeed * Time.deltaTime,
+            0,
+            Input.GetAxis("Vertical") * translationSpeed * Time.deltaTime * -1
+        );
+    }
+}</code></pre>
+  </section><br><br>
   <br>
   <a href="UD3/images/ud3-2024-01-31-12-51-05.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-12-51-05.png" /><br><figcaption></figcaption></figure></a>
   <br>
@@ -1241,7 +1267,9 @@ public class Test : MonoBehaviour
     <li>left arrow or a	&rarr;	<span class="negrita">rotate</span> left.</li>
     <li>right arrow or d	&rarr;	<span class="negrita">rotate</span> right.</li>
   </ul></p>
-  
+  <section><pre><code class="language-csharp">transform.Translate(Vector3.forward * Input.GetAxis("Vertical") * translationSpeed * Time.deltaTime);
+transform.Rotate(Vector3.up * Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime);</code></pre>
+  </section><br><br>
   <a href="UD3/images/ud3-2024-01-31-12-55-05.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-12-55-05.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
@@ -1259,7 +1287,7 @@ public class Test : MonoBehaviour
   <br>
   <div class="tarea">
     <p>
-      <span class="subrayado negrita">Activity 7. Modifying GameObjects via Inputs</span> <br>
+      <span class="subrayado negrita">Activity 6. Modifying GameObjects via Inputs</span> <br>
   Create a 3D project in Unity called <span class="subrayado">InputsYourName</span>. <br>
   Set the camera view as if a 2D game is being developed (z-axis facing backward). <br>
   Add a plane to the scene and modify its size to be 15x15x15, positioned at coordinates (0, 0, 0). <br>
