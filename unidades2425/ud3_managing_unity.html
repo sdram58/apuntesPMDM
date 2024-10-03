@@ -389,7 +389,7 @@
     <a href="UD3/images/ud3-2024-01-26-09-54-59.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-09-54-59.png" /><br><figcaption></figcaption></figure></a>
     <br>
     <div class="tarea">
-      <span class="negrita subrayado">Activity 1</span>: Create 3 materials and apply them to the cubes like in the image above</div>
+      <span class="negrita subrayado">Activity 7</span>: Create 3 materials and apply them to the cubes like in the image above</div>
     <br>
     <h3>Physical Materials</h3>
     <p>Physical materials (Physic Material) allow control over how GameObjects physically interact when they collide with each other.</p>
@@ -417,7 +417,7 @@
     <hr>
     <br>
     <div class="tarea">
-      <p><span class="subrayado negrita">Activity 2: Building the Scene</span> <br>
+      <p><span class="subrayado negrita">Activity 7: Building the Scene</span> <br>
         Create a 3D project in Unity called <span class="subrayado">SceneYourName</span>. <br>
         Set the view camera as if developing a 2D game (Z-axis pointing backwards). <br>
         Add a plane to the scene and modify its size so that it is shallow but very wide (like a horizontal platform from left to right). <br>
@@ -436,7 +436,7 @@
     <hr>
     <br>
     <div class="tarea">
-      <p><span class="subrayado negrita">Activity 3: MonoBehaviour Events</span> <br>
+      <p><span class="subrayado negrita">Activity 7: MonoBehaviour Events</span> <br>
         Open the SceneYourName project. <br>
         Create a script called EventsScript and attach it to the GameObject that is touching the surface. <br>
         In the script, add instructions to display console messages with Debug.Log for the following events: Start, Update, OnMouseEnter (when the mouse is over the GameObject), and OnMouseDrag (when the GameObject is clicked and dragged with the mouse). <br>
@@ -452,7 +452,7 @@
     <hr>
     <br>
     <div class="tarea">
-      <p><span class="subrayado negrita">Activity 4: Gravity</span> <br>
+      <p><span class="subrayado negrita">Activity 7: Gravity</span> <br>
         Open the SceneYourName project. <br>
         One of the GameObjects is vertically aligned with the one that was touching the surface. Add a RigidBody component to the object at the top of the scene. <br>
         Run the game and observe what happens. <br>
@@ -757,7 +757,7 @@
   <hr>
   <br>
   <div class="tarea">
-    <p><span class="subrayado negrita">Activity 5. Images and Prefabs</span> <br>
+    <p><span class="subrayado negrita">Activity 7. Images and Prefabs</span> <br>
   Open the project <span class="subrayado">SceneYourName</span>. <br>
   Add a Cube GameObject, create a new material for it, and assign it. <br>
   Create 5 copies of this cube and arrange them into a figure however you'd like (you can rotate and scale them). <br>
@@ -1287,7 +1287,7 @@ transform.Rotate(Vector3.up * Input.GetAxis("Horizontal") * rotationSpeed * Time
   <br>
   <div class="tarea">
     <p>
-      <span class="subrayado negrita">Activity 6. Modifying GameObjects via Inputs</span> <br>
+      <span class="subrayado negrita">Activity 7. Modifying GameObjects via Inputs</span> <br>
   Create a 3D project in Unity called <span class="subrayado">InputsYourName</span>. <br>
   Set the camera view as if a 2D game is being developed (z-axis facing backward). <br>
   Add a plane to the scene and modify its size to be 15x15x15, positioned at coordinates (0, 0, 0). <br>
@@ -1367,8 +1367,37 @@ transform.Rotate(Vector3.up * Input.GetAxis("Horizontal") * rotationSpeed * Time
   
   <h3>Physical Movement</h3>
   <p>Example of physical movement:</p>
-  <a href="UD3/images/ud3-2024-01-31-13-29-35.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-29-35.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  
+  <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using System.Net.Security;
+using UnityEngine;
+
+public class CubeScript : MonoBehaviour
+{
+    public float linealForce;
+    public float angularForce;
+
+    private Rigidbody rb;
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        //Get a reference to the Rigibody component
+        rb = GetComponent&lt;Rigidbody&gt;        
+    }
+
+    private void FixedUpdate()
+    {
+        float acceleration = Input.GetAxis("Vertical");
+        float spin = Input.GetAxis("Horizontal");
+
+        //Thrust and turning forces are applied
+        rb.AddForce(transform.forward * acceleration * linealForce);
+        rb.AddTorque(transform.up * spin * angularForce);
+    }
+}</code></pre>
+  </section><br><br>
   
   <br>
   
@@ -1377,9 +1406,9 @@ transform.Rotate(Vector3.up * Input.GetAxis("Horizontal") * rotationSpeed * Time
   <p>The floor provides friction, and when pushing the GameObject, it tips forward.</p>
   
   <p>Additionally, due to friction, when applying forces, the GameObject takes some time to move, and when stopping the force, it slows down gradually.</p>
-  
-  <a href="UD3/images/ud3-2024-01-31-13-30-46.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-30-46.png" /><br><figcaption></figcaption></figure></a>
+  <a href="UD3/images/ud_3-2024-10-03-10-50-48.png" target="_BLANK"><figure><img src="UD3/images/ud_3-2024-10-03-10-50-48.png" /><br><figcaption></figcaption></figure></a>
   <br>
+  
   
   <br>
   <p>To solve these problems, you can choose one of the following options:
@@ -1417,8 +1446,32 @@ transform.Rotate(Vector3.up * Input.GetAxis("Horizontal") * rotationSpeed * Time
   </p>
   
   <p>By using only physical movements, inertia of movements can be maintained on any axis.</p>
-  <a href="UD3/images/ud3-2024-01-31-13-35-11.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-35-11.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  <section><pre><code class="language-csharp">public class CubeScript : MonoBehaviour
+    {    
+        public float speed = 2;
+        public float translationSpeed = 5;
+        public float rotationSpeed = 180;
+        public float jumpForce = 8f;
+        private Rigidbody rb;
+        
+        void Start()
+        {
+            rb = GetComponent<Rigidbody>();        
+        }
+    
+        // Update is called once per frame
+        void Update()
+        {
+            transform.Translate(Vector3.forward * Input.GetAxis("Vertical") * translationSpeed * Time.deltaTime);
+    
+            transform.Translate(Vector3.up * Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime);
+    
+            if(Input.GetButtonDown("Jump")){
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            }
+        }
+    }</code></pre>
+      </section><br><br>
   
   <br>
   
@@ -1440,7 +1493,7 @@ transform.Rotate(Vector3.up * Input.GetAxis("Horizontal") * rotationSpeed * Time
    <br>
    <div class="tarea">
     <p>
-      <span class="subrayado negrita">Activity 8. Rigidbody and Camera Tracking</span> <br>
+      <span class="subrayado negrita">Activity 7. Rigidbody and Camera Tracking</span> <br>
       Open the project <span class="subrayado">InputsYourName</span>.
       Add the Rigidbody component to the capsule. <br>
       Configure the Rigidbody constraints for the capsule so it doesn’t tip over when colliding. <br>
@@ -1642,7 +1695,7 @@ transform.Rotate(Vector3.up * Input.GetAxis("Horizontal") * rotationSpeed * Time
     <br><br>
     <hr>
     <br>
-    <div class="tarea">
+    <div id="task1" class="tarea">
       <p><span class="subrayado negrita">Practice 1 – Pachinko</span></p>
       
     <p>A Pachinko is a Japanese arcade machine in which the player has a large number of steel balls that are introduced into the machine. <br>
