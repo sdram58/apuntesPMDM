@@ -389,7 +389,7 @@
     <a href="UD3/images/ud3-2024-01-26-09-54-59.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-09-54-59.png" /><br><figcaption></figcaption></figure></a>
     <br>
     <div class="tarea">
-      <span class="negrita subrayado">Activity 1</span>: Create 3 materials and apply them to the cubes like in the image above.</div>
+      <span class="negrita subrayado">Activity 1</span>: Create 3 materials and apply them to the cubes like in the image above</div>
     <br>
     <h3>Physical Materials</h3>
     <p>Physical materials (Physic Material) allow control over how GameObjects physically interact when they collide with each other.</p>
@@ -417,7 +417,7 @@
     <hr>
     <br>
     <div class="tarea">
-      <p><span class="subrayado negrita">Activity 2: Building the Scene</span> <br>
+      <p><span class="subrayado negrita">Activity 7: Building the Scene</span> <br>
         Create a 3D project in Unity called <span class="subrayado">SceneYourName</span>. <br>
         Set the view camera as if developing a 2D game (Z-axis pointing backwards).<br>
         Add a plane to the scene and modify its size so that it is shallow but very wide (like a horizontal platform from left to right). <br>
@@ -436,7 +436,7 @@
     <hr>
     <br>
     <div class="tarea">
-      <p><span class="subrayado negrita">Activity 3: MonoBehaviour Events</span> <br>
+      <p><span class="subrayado negrita">Activity 7: MonoBehaviour Events</span> <br>
         Open the SceneYourName project. <br>
         Create a script called EventsScript and attach it to the GameObject that is touching the surface. <br>
         In the script, add instructions to display console messages with Debug.Log for the following events: Start, Update, OnMouseEnter (when the mouse is over the GameObject), and OnMouseDrag (when the GameObject is clicked and dragged with the mouse). <br>
@@ -452,7 +452,7 @@
     <hr>
     <br>
     <div class="tarea">
-      <p><span class="subrayado negrita">Activity 4: Gravity</span> <br>
+      <p><span class="subrayado negrita">Activity 7: Gravity</span> <br>
         Open the SceneYourName project. <br>
         One of the GameObjects is vertically aligned with the one that was touching the surface. Add a RigidBody component to the object at the top of the scene. <br>
         Run the game and observe what happens. <br>
@@ -720,7 +720,7 @@
   <br>
   
   <br>
-  <p>In the hierarchy, it is indicated that the GameObject originates from a prefab by displaying its name in blue.</p>
+  <p>In the hierarchy, it is indicated that the GameObject originates from a prefab by displaying its name in <span class="negrita">blue</span>.</p>
   
   <p>A preview of the prefab appears in the file manager.</p>
   <a href="UD3/images/ud3-2024-01-26-10-56-18.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-56-18.png" /><br><figcaption></figcaption></figure></a>
@@ -757,7 +757,7 @@
   <hr>
   <br>
   <div class="tarea">
-    <p><span class="subrayado negrita">Activity 5. Images and Prefabs</span><br>
+    <p><span class="subrayado negrita">Activity 6. Images and Prefabs</span> <br>
   Open the project <span class="subrayado">EscenaTuNombre</span>. <br>
   Add a Cube GameObject, create a new material for it, and assign it. <br>
   Create 5 copies of this cube and arrange them into a figure however you'd like (you can rotate and scale them). <br>
@@ -780,7 +780,7 @@
   <h3>Accessing GameObject Properties</h3>
   <p>From a script added to a GameObject, you can access the properties of the GameObject itself and all the components added to it.</p>
   
-  <p>To access this information, you use the <span class="r-word">gameObject</span> variable, which <span class="negrita">is directly injected</span> when inheriting from the <span class="r-word">MonoBehaviour</span> class.</p>
+  <p>To access this information, you use the <span class="r-word">gameObject</span> variable (note that it starts with lowercase), which <span class="negrita">is directly injected</span> when inheriting from the <span class="r-word">MonoBehaviour</span> class.</p>
   <a href="UD3/images/ud3-2024-01-29-10-56-27.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-10-56-27.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
@@ -840,10 +840,28 @@
          <br>
          
          <br>
-         <p>In this case, the variable should be declared as an array because there could be more than one GameObject with that tag (the property is usually private).</p>
+         <p>In this case, the variable <span class="negrita">should be declared as an array</span> because there could be more than one GameObject with that tag (the property is usually private).</p>
          <a href="UD3/images/ud3-2024-01-29-11-11-20.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-11-20.png" /><br><figcaption></figcaption></figure></a>
          <br>
-         
+<section><pre><code class="language-csharp">public class Test : MonoBehaviour
+{
+    public GameObject[] blueCubesGO;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        blueCubesGO = GameObject.FindGameObjectsWithTag("blueCubes");
+        foreach (GameObject cubeGO in blueCubesGO)
+        {
+            Debug.Log("Cubo: " + cubeGO.name );
+        }
+    }
+
+    // Update is called once per frame
+    void Update(){
+    }
+}</code></pre>
+</section><br><br>
          <br>    
          
          <a href="UD3/images/ud3-2024-01-29-11-12-54.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-12-54.png" /><br><figcaption></figcaption></figure></a>
@@ -858,9 +876,31 @@
   <p>When accessing other GameObjects, you can access their properties. For example, the following script, added to the MainCamera, would access the <span class="negrita">Text</span> property of a GameObject of type TextMeshPro and modify its value.</p>
   
   <p>To access the GameObject, you must drag it to the appropriate slot in the Inspector after selecting the MainCamera.</p>
-  <a href="UD3/images/ud3-2024-01-29-11-14-25.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-14-25.png" /><br><figcaption></figcaption></figure></a>
-  <br>
-  
+  <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+public class Test : MonoBehaviour
+{
+    public int points = 0;
+
+    public TextMeshProUGUI pointsTMP;
+    // Start is called before the first frame update
+    void Start()
+    {
+        pointsTMP.text ="Points: " + points;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space)){
+            pointsTMP.text ="Points: " + ++points;
+        }
+    }
+}</code></pre>
+  </section><br><br>
   <br>
   
   <h3>Accessing Components of Other GameObjects</h3>
@@ -977,13 +1017,13 @@
   
   <a href="UD3/images/ud3-2024-01-29-11-29-15.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-29-15.png" /><br><figcaption></figcaption></figure></a>
   <br>
-  
+  <p>Second option is a bit more verbose but useful if you already have a Vector3 variable or if you want to manipulate the rotation using vector operations before passing it to the function.</p>
   <br>
   
   <p>Use the <span class="negrita">eulerAngles</span> property (similar behavior to the method above):</p>
   
   <a href="UD3/images/ud3-2024-01-29-11-30-49.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-30-49.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  <br>  
   
   <br>
   
@@ -1053,17 +1093,22 @@
     
     <p>The problem with using the <span class="negrita">Update</span> method is that the number of FPS generated depends on many factors, 
       from the capabilities of the computer running the game to the number of elements displayed at any given moment.</p>
+      <a href="UD3/images/ud_3-2024-10-01-13-11-35.png" target="_BLANK"><figure><img src="UD3/images/ud_3-2024-10-01-13-11-35.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
     <a href="UD3/images/ud3-2024-01-29-11-41-57.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-41-57.png" /><br><figcaption></figcaption></figure></a>
     <br>
     
-    <p>For this reason, it is not advisable to move objects directly in this way.</p>
+    <p>For this reason, it is not advisable to move objects directly in this way. It may be that on one computer it runs much faster than on another, or 
+      depending on performance, it may run faster or slower depending on the system load.</p>
     
     <p>There are two ways to solve this problem:
       <ul>
         <li>The <span class="r-word">Time</span> class and its <span class="r-word">deltaTime</span> method. <br>
   If you multiply a movement by <span class="negrita">Time.deltaTime</span>, the movement will be consistent regardless of the frame rate at any given time.
   <span class="negrita">Time.deltaTime</span> returns the value 0.02 (corresponding to 20 milliseconds).
-  (This technique was used until the introduction of the next method).</li>
+  (This technique was used until the introduction of the next method). What Time.deltaTime does is calculate the time between the current frame and the previous one, 
+  and generate a number so that when multiplied by that time, it always gives the same result. This makes it independent of the frame rate.</li>
   <li>The <span class="r-word">FixedUpdate</span> method of the <span class="negrita">MonoBehaviour</span> class.
     It runs at regular intervals of 20 ms (50 times per second).</li>
       </ul>
@@ -1142,14 +1187,14 @@
   <br>
   <p>
     <ul>
-      <li>Input.GetKeyDown(KeyCode.E)<br>
-  Input.GetKey(KeyCode.V)<br>
-  Input.GetKeyUp(KeyCode.Space)<br>
-  Input.GetMouseButtonDown(0)<br>
-  Input.GetMouseButton(1)<br>
-  Input.GetMouseButtonUp(2)<br>
-  Input.GetMouseButtonUp("Fire1")<br>
-  Input.GetMouseButton("Jump")</li>
+      <li>Input.GetKeyDown(KeyCode.E)</li>
+  <li>Input.GetKey(KeyCode.V)</li>
+  <li>Input.GetKeyUp(KeyCode.Space)</li>
+  <li>Input.GetMouseButtonDown(0)</li>
+  <li>Input.GetMouseButton(1)</li>
+  <li>Input.GetMouseButtonUp(2)</li>
+  <li>Input.GetMouseButtonUp("Fire1")</li>
+  <li>Input.GetMouseButton("Jump")</li>
     </ul>
   </p>
   
@@ -1189,7 +1234,28 @@
   </p>
   <a href="UD3/images/ud3-2024-01-31-12-50-54.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-12-50-54.png" /><br><figcaption></figcaption></figure></a>
   <br>
-  
+  <section><pre><code class="language-csharp">public class CubeTransformScript : MonoBehaviour
+{
+    public float translationSpeed = 5;
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Debug.Log("Input.GetAxis(\"Horizontal\"): " + Input.GetAxis("Horizontal"));
+        transform.Translate(
+            Input.GetAxis("Horizontal") * translationSpeed * Time.deltaTime,
+            0,
+            Input.GetAxis("Vertical") * translationSpeed * Time.deltaTime * -1
+        );
+    }
+}</code></pre>
+  </section><br><br>
   <br>
   <a href="UD3/images/ud3-2024-01-31-12-51-05.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-12-51-05.png" /><br><figcaption></figcaption></figure></a>
   <br>
@@ -1201,7 +1267,9 @@
     <li>left arrow or a	&rarr;	<span class="negrita">rotate</span> left.</li>
     <li>right arrow or d	&rarr;	<span class="negrita">rotate</span> right.</li>
   </ul></p>
-  
+  <section><pre><code class="language-csharp">transform.Translate(Vector3.forward * Input.GetAxis("Vertical") * translationSpeed * Time.deltaTime);
+transform.Rotate(Vector3.up * Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime);</code></pre>
+  </section><br><br>
   <a href="UD3/images/ud3-2024-01-31-12-55-05.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-12-55-05.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
@@ -1299,8 +1367,37 @@
   
   <h3>Physical Movement</h3>
   <p>Example of physical movement:</p>
-  <a href="UD3/images/ud3-2024-01-31-13-29-35.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-29-35.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  
+  <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using System.Net.Security;
+using UnityEngine;
+
+public class CubeScript : MonoBehaviour
+{
+    public float linealForce;
+    public float angularForce;
+
+    private Rigidbody rb;
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        //Get a reference to the Rigibody component
+        rb = GetComponent&lt;Rigidbody&gt;        
+    }
+
+    private void FixedUpdate()
+    {
+        float acceleration = Input.GetAxis("Vertical");
+        float spin = Input.GetAxis("Horizontal");
+
+        //Thrust and turning forces are applied
+        rb.AddForce(transform.forward * acceleration * linealForce);
+        rb.AddTorque(transform.up * spin * angularForce);
+    }
+}</code></pre>
+  </section><br><br>
   
   <br>
   
@@ -1309,9 +1406,9 @@
   <p>The floor provides friction, and when pushing the GameObject, it tips forward.</p>
   
   <p>Additionally, due to friction, when applying forces, the GameObject takes some time to move, and when stopping the force, it slows down gradually.</p>
-  
-  <a href="UD3/images/ud3-2024-01-31-13-30-46.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-30-46.png" /><br><figcaption></figcaption></figure></a>
+  <a href="UD3/images/ud_3-2024-10-03-10-50-48.png" target="_BLANK"><figure><img src="UD3/images/ud_3-2024-10-03-10-50-48.png" /><br><figcaption></figcaption></figure></a>
   <br>
+  
   
   <br>
   <p>To solve these problems, you can choose one of the following options:
@@ -1349,8 +1446,32 @@
   </p>
   
   <p>By using only physical movements, inertia of movements can be maintained on any axis.</p>
-  <a href="UD3/images/ud3-2024-01-31-13-35-11.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-35-11.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  <section><pre><code class="language-csharp">public class CubeScript : MonoBehaviour
+    {    
+        public float speed = 2;
+        public float translationSpeed = 5;
+        public float rotationSpeed = 180;
+        public float jumpForce = 8f;
+        private Rigidbody rb;
+        
+        void Start()
+        {
+            rb = GetComponent<Rigidbody>();        
+        }
+    
+        // Update is called once per frame
+        void Update()
+        {
+            transform.Translate(Vector3.forward * Input.GetAxis("Vertical") * translationSpeed * Time.deltaTime);
+    
+            transform.Translate(Vector3.up * Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime);
+    
+            if(Input.GetButtonDown("Jump")){
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            }
+        }
+    }</code></pre>
+      </section><br><br>
   
   <br>
   
@@ -1574,7 +1695,7 @@
     <br><br>
     <hr>
     <br>
-    <div class="tarea">
+    <div id="task1" class="tarea">
       <p><span class="subrayado negrita">Practice 1 – Pachinko</span></p>
       
     <p>A Pachinko is a Japanese arcade machine in which the player has a large number of steel balls that are introduced into the machine. <br>
@@ -1679,7 +1800,7 @@
     
     </section><!-- End section Interesting Methods-->
   
-  
+  <div class="oculto">
   <!--*********************************************************CharacterController Component***********************************************************-->
   <section class="apartado">
     <a name="sComponenteCharacterController"></a>
@@ -2408,7 +2529,8 @@
     
     
       </section><!-- End section Menus-->
-  
+    
+  </div> <!--END OCULTO-->
 
   <!---BTM_MENU--->
   <script src="../script/prism.js"></script>
