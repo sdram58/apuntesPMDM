@@ -1,0 +1,2555 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UD5.-Introduction to Kotlin</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/prism.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <script src="../script/script.js"></script>
+  </head>
+
+  
+<body class="line-numbers">
+  <div class="logos"></div>
+
+  <nav id="menu-lateral" class="main-menu-lateral oculto">
+    <div class="fila">
+      <a href="#sFundamentos" title="1.- Fundamentals of Kotlin">1.- Fundamentals of Kotlin</a><a 
+       href="#sNullSafety" title="2.- Null Safety">2.- Null Safety</a><a 
+       href="#sExpresionesRegulares" title="3.- Regular Expressions">3.- Regular Expressions</a>
+    </div>
+    <div class="fila">
+      <a 
+       href="#sControldeFlujo" title="4.- Control Flow">4.- Control Flow</a>
+       <a href="#sColecciones" title="5.- Collections">5.- Collections</a>
+       <a href="#sFunciones" title="6.- Functions">6.- Functions</a>
+    </div>
+    <div class="fila">
+      <a 
+       href="#sPOO" title="7.- Object-Oriented Programming">7.- Object-Oriented Programming</a><a 
+       href="#sFuncionesExtension" title="8.- Extension Functions">8.- Extension Functions</a><a 
+       href="#sSingleton" title="9.- Singleton">9.- Singleton</a>
+    </div>
+    <div class="fila">
+      <a 
+       href="#sHerencia" title="10.- Inheritance">10.- Inheritance</a><a
+       href="#sFuncionesdealcance" title="11.- Scope Functions">11.- Scope Functions</a><a 
+       href="#sFuncionesLambda" class="" title="12.- Lambda Functions">12.- Lambda Functions</a>
+    </div>
+
+    <div class="fila">
+      <a href="#sEjerciciosInteractivos" title="13.- Interactive Kotlin Exercises">13.- Interactive Kotlin Exercises</a>
+    </div>
+  </nav>
+
+  <h1>UD5.-Introduction to Kotlin</h1>
+  
+  <div class="main-menu">
+    <div class="fila">
+      <a href="#sFundamentos">1.- Fundamentals of Kotlin</a><a 
+       href="#sNullSafety">2.- Null Safety</a><a 
+       href="#sExpresionesRegulares">3.- Regular Expressions</a>
+    </div>
+    <div class="fila">
+      <a href="#sControldeFlujo">4.- Control Flow</a><a 
+      href="#sColecciones">5.- Collections</a><a 
+      href="#sFunciones">6.- Functions</a>
+    </div>
+    <div class="fila">
+      <a 
+       href="#sPOO">7.- Object-Oriented Programming</a><a 
+       href="#sFuncionesExtension">8.- Extension Functions</a><a 
+       href="#sSingleton">9.- Singleton</a>
+    </div>
+    <div class="fila">
+      <a 
+       href="#sHerencia">10.- Inheritance</a><a
+       href="#sFuncionesdealcance">11.- Scope Functions</a><a 
+       href="#sFuncionesLambda" class="">12.- Lambda Functions</a>
+    </div>
+
+    <div class="fila">
+      <a href="#sEjerciciosInteractivos">13.- Interactive Kotlin Exercises</a>
+      <a href="" class="relleno"></a><a href="" class="relleno"></a>
+    </div>
+  </div>
+
+
+<!--*********************************************************1.- Fundamentos de Kotlin***********************************************************-->
+<section class="apartado">
+  <a name="sFundamentos"></a>
+  <h2>Fundamentals of Kotlin</h2>
+  
+  <h3>Introduction</h3>
+  
+  <p>
+    Initially, <span class="negrita">Java</span> was the <span class="negrita">programming language for Android</span>, 
+    but in <span class="negrita">2017 Google</span> designated <span class="negrita">Kotlin</span> as the 
+    <span class="negrita">official language for Android</span>, equating it with Java.
+  </p>
+  
+  <p>
+    It has official support from Google and is integrated into Android Studio.
+  </p>
+  
+  <figure>
+    <a href="UD5/images/ud5-2023-09-15-13-17-05.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-15-13-17-05.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <figcaption>Kotlin features</figcaption>
+  </figure>
+  
+  <br>
+  
+  <p>Some of Kotlin's features are:</p>
+  
+  <ul>
+    <li>
+      <span class="negrita">Multiplatform and multipurpose language</span> compiled on the JVM, so it is fully compatible 
+      with Java and its libraries (calls to Java from Kotlin and vice versa).
+    </li>
+    <li>
+      Object-oriented language (<span class="negrita">OOP</span>)
+    </li>
+    <li>
+      It is a <span class="negrita">concise language</span> that avoids unnecessary code (up to 40% less).
+    </li>
+    <li>
+      It is <span class="d-word">Null Safety</span>, handling nulls safely and avoiding 
+      <span class="r-word">NullPointerException</span> errors.
+    </li>
+    <li>
+      Unofficially, it can be said that it is like Java but with the style of Python (its advantages).
+    </li>
+  </ul>
+  
+
+  <p>
+    The official documentation contains everything you need to know about the language: 
+    <a class="enlace" target="_blank" href="https://kotlinlang.org/docs/basic-syntax.html">https://kotlinlang.org/docs/basic-syntax.html</a>
+    <br>
+    There is also a platform available to learn Kotlin through examples: 
+    <a class="enlace" target="_blank" href="https://play.kotlinlang.org/byExample/overview">https://play.kotlinlang.org/byExample/overview</a>
+  </p>
+  
+  <p>
+    In this course, <span class="negrita">Kotlin</span> will be used as the programming language for Android. 
+    Since Kotlin is a multipurpose language, it can be used to develop Android, desktop, web, or console applications.
+  </p>
+  
+  <p>
+    In this unit, we will cover the <span class="negrita">fundamentals and syntax of Kotlin</span>, 
+    to later use the language within <span class="d-word">Android Studio</span> to develop Android mobile applications. 
+    If you want to create and test Kotlin scripts, you must have a Java JDK installed. 
+    We could use <a class="enlace" target="_blank" href="https://www.jetbrains.com/es-es/idea/">IntelliJ IDEA</a> from JetBrains, 
+    which is the IDE that Android Studio is based on.
+  </p>
+  
+  <a href="UD5/images/ud5-2023-09-15-16-32-08.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-15-16-32-08.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>
+    You can also test Kotlin scripts online through the official link: 
+    <a class="enlace" target="_blank" href="https://play.kotlinlang.org/">https://play.kotlinlang.org/</a>
+  </p>
+  
+  <a href="UD5/images/ud5-2023-09-15-16-31-13.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-15-16-31-13.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>
+    However, since we already have <span class="d-word">Android Studio</span> installed, this will be the tool we use for developing Android applications and testing Kotlin code.
+    <br>
+    To do this, we have several options:
+  </p>
+  
+  <p>
+    We can start a new project (or reuse a previous one, though that might clutter the file structure and is not a best practice) and create a Kotlin file, for example 
+    <span class="inline-file">Test.kt</span>, and add the <span class="r-word">main</span> function for our tests.
+  </p>
+  
+  <section class="marco-t inf">
+    <span class="icono info"> </span> Note that the Kotlin file has the extension <span class="negrita">.kt</span>.
+  </section>
+  <section class="marco-b"></section>
+  
+  <figure><img src="UD2/images/test_code.gif" /><br><figcaption>Test File</figcaption></figure>
+  <br>
+  
+  <p>Let's see a simple example of input and output:</p>
+  
+  <section><pre><code class="language-kotlin">fun main(){
+      val variable:String
+      variable = readln()
+      println("You have written $variable")
+  }</code></pre></section><br>
+  
+  <p>After executing it, it waits for us to type something and press enter, then it writes it on the screen.</p>
+  
+  <figure><img src="UD2/images/Test_IO.gif" /><br><figcaption>Input/Output</figcaption></figure>
+  <br>
+  
+  <section class="marco-t inf">
+    <span class="icono info"> </span> Input and Output
+  </section>
+  <section class="marco-b">
+    <span class="r-word">println()</span>  -> Writes to the standard output<br>
+    <span class="r-word">readln()</span>  -> Reads from standard input (keyboard)
+  </section>
+  
+   
+  <p>
+    Another option would be, still using a project, in our case the initial <span class="negrita">hello world</span>. 
+    By right-clicking on our package, we can create a new <span class="d-word">Scratch file</span>.
+  </p>
+  
+  <a href="UD5/images/ud5-2023-09-15-16-37-39.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-15-16-37-39.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>
+    Select the programming language we want, in this case Kotlin.
+  </p>
+  
+  <a href="UD5/images/ud5-2023-09-15-16-38-39.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-15-16-38-39.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>
+    Let's see an example: <br>
+    In this case, we use the <span class="r-word">println()</span> function, and as we can see on the right, it shows us the output on the screen. 
+    If we create a variable, it indicates its type, and if we display the variable, it shows the value of the variable at that moment.
+    Keep in mind that a scratch file executes from top to bottom as we can see.
+  </p>
+  
+  <figure><img src="UD2/images/Scratch_example.gif" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <h3>Kotlin Style Guide</h3>
+  
+  <p>
+    In any programming language, it’s important for the <span class="negrita">code to be readable</span>. 
+    Official platforms usually provide <a class="enlace" target="_blank" href="guides de estilo">style guides</a> for developers to follow, 
+    and it’s advisable to review these guides to develop proper code. 
+    <br>
+    You can also use the option <span class="negrita">Code -> Reformat Code (Ctrl+Alt+L)</span> in the IDE, so that the code is formatted according to style guidelines 
+    (as long as the settings in the IDE have not been modified).
+  </p>
+  
+  <h3>Greetings in Kotlin</h3>
+  
+  <p>
+    As previously mentioned, Kotlin files have the extension <span class="negrita">.kt</span>, and unlike in Java, 
+    <span class="negrita">everything does not need to be inside classes</span>. 
+    Functions can exist outside of classes, specifically the main function <span class="r-word">main</span> does not need to be inside a class. 
+    The main function can accept arguments, but it is not required. It's also unnecessary to declare the visibility of the function (public/static).
+    The <span class="r-word">println()</span> function is available without needing to use Java's System.out, and the 
+    <span class="r-word">readln()</span> function captures user input from the console as a string.
+    The semicolon at the end of each statement is optional, but <span class="negrita">by convention, it should not be used</span>. 
+    Comments, both inline and block, are the same as in Java: <span class="r-word">//</span> and <span class="r-word">/* */</span>.
+  </p>
+  
+  <h3>Package and Imports</h3>
+  
+  <p>
+    As in Java, the package the file belongs to and the imports should be placed at the top of the file.
+  </p>
+  
+  <a href="UD5/images/ud5-2023-09-16-12-01-32.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-12-01-32.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <h3>Data Types in Kotlin</h3>
+  
+  <p class="sub-section">Numerical Types</p>
+  
+  <p>
+    These are indicated with the reserved keywords <span class="r-word">Int, Float, Long, Short, Byte, and Double</span>.
+  <ul>
+    <li>
+      Decimals:	<span class="negrita">Double</span> (64 bits), <span class="negrita">Float</span> (32 bits)
+    </li>
+    <li>
+      Integers: <span class="negrita">Long</span> (64 bits), <span class="negrita">Int</span> (32 bits),
+      <span class="negrita">Short</span> (16 bits), <span class="negrita">Byte</span> (8 bits)
+    </li>
+  </ul>
+  <br>
+  Examples of literals:
+  </p>
+  
+  <a href="UD5/images/ud5-2023-09-16-12-06-10.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-12-06-10.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+
+<p>
+  Kotlin allows the use of the <span class="negrita">underscore character</span> (underscore, _) in <span class="negrita">numeric literals</span> to improve readability. 
+  <br>
+  Examples of literals: <br>
+  <section><pre><code class="language-kotlin">2_000_000
+44_294_051
+6135_8442_0103_5610L</code></pre>
+  </section><br><br>
+</p>
+
+<p class="sub-section">Characters</p>
+
+<p>
+  Indicated with the reserved word <span class="r-word">Char</span>.
+</p>
+
+<p>
+  UTF-16 encoding is used, so literals can be indicated with the character or its UNICODE representation between single quotes.
+  <br>
+  Examples of <span class="negrita">literals</span>:
+  <section><pre><code class="language-kotlin">'N'		->		'\u004E'
+'7'		->		'\u0037'</code></pre>
+  </section><br><br>
+  They cannot be treated as numbers.
+</p>
+
+<p>
+  There are a series of <span class="r-word">escape characters</span>:
+  <ul>
+    <li>
+      \t&nbsp;&nbsp;&nbsp;Tab
+    </li>
+    <li>
+      \b&nbsp;&nbsp;&nbsp;Backspace
+    </li>
+    <li>
+      \r&nbsp;&nbsp;&nbsp;Carriage return
+    </li>
+    <li>
+      \n&nbsp;&nbsp;&nbsp;Newline
+    </li>
+    <li>
+      \'&nbsp;&nbsp;&nbsp;Apostrophe
+    </li>
+    <li>
+      \"&nbsp;&nbsp;&nbsp;Double quote
+    </li>
+    <li>
+      \\&nbsp;&nbsp;&nbsp;Backslash
+    </li>
+    <li>
+      \$&nbsp;&nbsp;&nbsp;Dollar sign
+    </li>
+    <li>
+      \u+XXXX&nbsp;&nbsp;&nbsp;Unicode symbol (4 hexadecimal digits)
+    </li>
+  </ul>
+</p>
+
+<p class="sub-section">Booleans</p>
+
+<p>
+  Indicated with the reserved word <span class="r-word">Boolean</span>.
+  <br>
+  Possible values are <span class="cursiva">true</span> and <span class="cursiva">false</span>, and their <span class="negrita">literals</span>:
+  <section><pre><code class="language-kotlin">true
+false</code></pre>
+  </section><br><br>
+</p>
+
+<p class="sub-section">Strings</p>
+
+<p>
+  Indicated with the reserved word <span class="r-word">String</span>.
+  <br>
+  String literals <span class="negrita">are indicated with double quotes:</span>
+  <section><pre><code class="language-kotlin">"Hello there!"
+"Rick Sanchez"</code></pre>
+  </section><br><br>
+</p>
+
+<p>
+  With <span class="negrita">triple double quotes</span>, the string can include line breaks, known as <span class="subrayado">raw strings</span>, where all characters between the quotes are included.
+</p>
+
+<section><pre><code class="language-kotlin">"""This is a text
+that spans several lines
+or is displayed in multiple
+lines"""
+</code></pre>
+</section><br><br>
+
+<p>
+  Leading and trailing whitespaces, as well as left margins, can be removed.
+</p>
+
+<section><pre><code class="language-kotlin">"""|This is a text
+|that spans several lines
+|or is displayed in multiple
+|lines""".trimMargin()
+</code></pre>
+</section><br><br>
+
+<p>
+  By default, the character ' <span class="negrita">|</span> ' is the margin delimiter, but it can be changed: <span class="r-word">trimMargin(">")</span>.
+</p>
+
+<a href="UD5/images/ud5-2023-09-16-12-48-27.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-12-48-27.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>
+  <span class="negrita">String templates</span> allow integrating variables into strings by using the <span class="r-word">$</span> symbol followed by the variable name. Kotlin will replace it with the value stored in the variable.
+  <br>
+  If the variable is an object or if you want to operate with it, you should wrap it in curly braces <span class="negrita">{ }</span>.
+</p>
+
+<section><pre><code class="language-kotlin">"The discount is $discount %"
+"The price is ${product.price} €"
+
+"""	|Notebook $notebookPrice €
+|Blue pen $penPrice €
+|    Total: ${notebookPrice + penPrice}
+""".trimMargin()
+</code></pre>
+</section><br><br>
+
+<p>
+  It is recommended to always use <span class="negrita">string templates</span> and <span class="negrita">raw strings</span>. 
+  Although you can concatenate strings with the <span class="negrita">+</span> character, its use should be avoided. 
+  Additionally, using multiple println statements in sequence should also be avoided.
+</p>
+
+
+<p class="sub-section">Arrays</p>
+
+<p>
+  Arrays are <span class="negrita">fixed-length data structures</span> that allow storing multiple values of the same type (numbers, characters, strings, booleans, objects).
+</p>
+
+<p>1 2 3 4 5 <br>
+  "Rick", "Morty", "Summer" 
+</p>
+
+<p>
+  We will cover them in more detail later.
+</p>
+
+<h3>Variable Declaration</h3>
+
+<p>
+  Using the reserved word <span class="r-word">var</span>, variables are declared. <br>
+
+  Variables are like boxes that store values, and these values can change during the program's execution. <br>
+
+  Kotlin is a <span class="negrita">statically typed</span> language, meaning that once a variable is of a certain type, that type cannot change (similar to Java).
+
+  When declaring a variable, you can either specify the data type or not. <br>
+
+  If not specified, Kotlin will infer the type based on the assigned value.
+</p>
+
+<p>
+  When declaring a variable, one of these two options must be followed:
+
+  <ul>
+    <li><span class="negrita">Specify the type</span> of data to be stored.</li>
+    <li><span class="negrita">Specify the value</span> to be stored (Kotlin will infer the data type).</li>
+  </ul>
+  <br>
+  You can also declare a variable by specifying both the data type and the value to be stored.
+</p>
+
+<p class="sub-section">Declaring Simple Type Variables</p>
+
+<a href="UD5/images/ud5-2023-09-16-12-58-32.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-12-58-32.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p class="sub-section">Array Declaration</p>
+
+<p>
+  Arrays are objects and are created using the <span class="r-word">Array</span> class, which provides <span class="r-word">get</span> and <span class="r-word">set</span> methods, 
+  but for convenience, square brackets <span class="negrita">[ ]</span> can also be used.
+</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-00-16.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-00-16.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>
+  You can use the Array class constructor to specify the size and even a <span class="negrita">lambda function</span> to fill the elements.
+</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-01-35.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-01-35.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>
+  The code inside the curly braces is a <span class="negrita">lambda function</span> (anonymous), which will be explained later.
+
+  In this lambda function, the variable <span class="r-word">it</span> represents the iteration number, starting from zero.
+
+  As Android Studio has code hints enabled by default, leaving a line break between the braces will show this information.
+</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-03-25.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-03-25.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>
+  Creating an array of the first 10 even numbers.
+</p>
+
+<section><pre><code class="language-kotlin">val a = Array(10){
+    it*2
+}
+
+for(b in a) print("$b ")</code></pre>
+</section><br><br>
+
+<p class="sub-section">Declaring Multidimensional Arrays</p>
+
+<p>
+  <span class="negrita">Multidimensional arrays</span> are arrays where each element is also an array.
+
+  The most common type is matrices, which can be represented as a table.
+
+  There are several ways to declare a multidimensional array in Kotlin:
+</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-10-35.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-10-35.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>
+  Accessing matrix elements is done <span class="negrita">using row and column indices.</span>
+</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-19-41.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-19-41.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+
+<p class="sub-section">The Any Type</p>
+
+<p>
+  All variable types are classes, and in Kotlin's hierarchy, they have a superclass called <span class="r-word">Any</span> (similar to Object in Java).
+  <br><br>
+  You can declare a variable using the Any type and then assign any kind of data to it. This can be useful in certain cases, as will be explained later.
+</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-23-47.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-23-47.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>
+  To use a variable, it must store a value. 
+  <br><br>
+  There is a data type that allows a variable to be left empty, known as <span class="r-word">Unit</span> (similar to void in Java).
+</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-25-14.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-25-14.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p class="sub-section">Variable Scope</p>
+
+<p>
+  The scope of a variable is the area where it can be used. 
+  <br><br>
+  Generally, a variable <span class="negrita">can be used within the entire code block where it is declared</span>, which <span class="negrita">is delimited by curly braces { }</span>.
+  <br>
+  A variable can be used inside the entire block, including other blocks within it.
+  <br><br>
+  If a variable <span class="negrita">is declared outside a block { }</span>, it can be used <span class="negrita">in all project files</span>.
+</p>
+
+<h3>Type Conversion</h3>
+
+<p>
+  If you want to perform a type conversion, you must <span class="negrita">use a method of the class corresponding to the type you wish to convert to</span>.
+  <br><br>
+  For example, to convert a <span class="negrita">Double</span> to an <span class="negrita">Int</span>, you must use the <span class="r-word">toInt</span> method from the Double class on the decimal variable. 
+  <br><br>
+  This will also truncate the value, meaning the decimal part will be lost.
+</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-29-00.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-29-00.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>
+  Conversion methods typically start with "to":
+</p>
+
+<section><pre><code class="language-kotlin">toDouble()		toFloat()		toLong()		toInt()
+toChar()		toShort()		toByte()		toString()</code></pre>
+</section><br><br>
+
+<p>
+  When a value is read from the keyboard, it is always treated as a string, so if a number is requested, it must be converted to an integer or decimal as needed:
+</p>
+
+<section><pre><code class="language-kotlin">var number = readln().toInt()</code></pre>
+</section><br><br>
+
+<h3>Constant Declaration</h3>
+
+<p>
+  The reserved word <span class="r-word">val</span> is used to declare constants. <br><br>
+  Its usage is similar to variables declared with <span class="r-word">var</span>, except that once a value is assigned, it cannot be changed during program execution.
+</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-32-06.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-32-06.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>
+  However, constants can be assigned during the program execution, for example, after asking the user for a value. 
+  Right after defining it, you should initialize it on the same line.
+</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-36-11.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-36-11.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>
+  Arrays and all objects can be declared as <span class="negrita">val</span> and later have their values changed.
+  <br><br>
+  This is because they are objects, and with <span class="negrita">val</span>, the reference stored cannot be changed, but the values within the object can be modified.
+</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-37-37.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-37-37.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>
+  You can use the reserved word <span class="r-word">const</span> before the <span class="negrita">val</span> declaration to define constants with known values.
+</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-38-47.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-38-47.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>
+  These constants cannot be assigned during program execution, so they must be defined outside of functions.
+</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-39-29.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-39-29.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>
+  Constants declared with <span class="negrita">const</span> can be declared inside <span class="negrita">singleton objects</span> (a class with a single instance, which will be discussed later).
+</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-41-26.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-41-26.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<h3>Operators</h3>
+
+<p>They allow creating expressions. They are similar to those in Java:
+
+  <ul>
+    <li>
+      Sign:  +    -
+      </li>
+    <li>
+      Arithmetic:  +    -    *    /    %
+    </li>
+    <li>
+      Assignment:  =    +=    -=    *=    /=    %=
+      </li>
+    <li>
+      Increment:  ++    --    (can be pre-increment or post-increment)
+    </li>
+    <li>
+      Relational:  ==    !=    &lt;    >    &lt;=    >=
+      </li>
+    <li>
+      Logical:  &&    ||    !
+    </li>
+    <li>
+      Bitwise:  and    or    xor    inv    shl (shift &lt;-)    shr (shift ->)
+    </li>
+  </ul>
+</p>
+
+<h3>Exercises</h3>
+
+<a class="tarea" target="_blank" href="UD2/exercises/PrimerosProgramasKotlin.pdf">Exercises</a>
+
+</section> <!-- END SECTION-->
+
+<!--*********************************************************Null Safety***********************************************************-->
+<section class="apartado">
+<a name="sNullSafety"></a>
+<h2>Null Safety</h2>
+
+<p>One of the most common and dreaded errors that can occur while programming is the infamous <span class="negrita">NullPointerException</span>.</p>
+
+<p>This error happens when the programmer doesn't initialize an object or for some reason, it hasn't been initialized.</p>
+
+<p>By default, Kotlin does not allow assigning <span class="r-word">null</span> to variables to prevent possible errors.</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-47-37.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-47-37.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>However, Kotlin does natively support the <span class="r-word">null</span> value.</p>
+
+<p>To declare variables that can store <span class="r-word">null</span>, you must use the symbol <span class="r-word">?</span> after the variable's data type in the declaration.</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-49-15.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-49-15.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>Kotlin will prevent performing actions that could result in an error if the variable is null.</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-49-54.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-49-54.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>As in Java, for variables that can store null, a prior check can be done before trying to access it.</p>
+<a href="UD5/images/ud5-2023-09-16-13-50-59.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-50-59.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>The <span class="r-word">?</span> operator also allows performing these checks in a simpler way, reducing code.</p>
+<a href="UD5/images/ud5-2023-09-16-13-51-28.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-51-28.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>This operator allows for simultaneous checks.</p>
+<a href="UD5/images/ud5-2023-09-16-13-52-00.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-52-00.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<h3>Elvis Operator ?:</h3>
+<p>The Elvis operator <span class="r-word">?:</span> allows providing a default value when a variable holds the null value.</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-54-17.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-54-17.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>The most common use is to obtain a non-null value when a property is null or a method returns null.</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-54-54.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-54-54.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>This operator can also be used to <span class="negrita">throw</span> an exception.</p>
+<a href="UD5/images/ud5-2023-09-16-13-56-15.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-56-15.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>If multiple statements need to be executed after the Elvis operator, they should be enclosed in a <span class="negrita">run { }</span> block (this will be explained in more detail later).
+<br>
+The last statement in the block should be the value to assign if the variable is null.
+</p>
+
+<a href="UD5/images/ud5-2023-09-16-13-57-36.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-57-36.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<h3>The !! Operator</h3>
+<p>When you are <span class="negrita">absolutely sure</span> that a variable that <span class="negrita">can store null does not store null</span>,
+  you can use the <span class="r-word">!!</span> operator to bypass Kotlin's null-checking mechanism.
+<br><br>
+In this case, if the variable stores null, a <span class="negrita">NullPointerException</span> will be thrown.
+
+<a href="UD5/images/ud5-2023-09-16-14-04-53.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-14-04-53.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+This operator often appears in Java-to-Kotlin migrations.
+</p>
+
+<section class="marco-t warn">
+  <span class="icono warning"> </span> Kotlin's philosophy is contrary to its use. In other words, it is not recommended to use it!
+  </section>
+<section class="marco-b">
+    
+</section>
+
+
+</section> <!-- FIN SECCION Null Safety-->
+
+<!--*********************************************************Expressiones Regulares***********************************************************-->
+<section class="apartado">
+  <a name="sExpresionesRegulares"></a>
+  <h2>Regular Expressions</h2>
+  
+  <p>In every programming language, it is necessary to check if the values entered by the user meet specific rules.</p>
+  
+  <p>A very typical action is to check if the user has entered a value and whether that value is an empty string or not.</p>
+  
+  <a href="UD5/images/ud5-2023-09-16-14-06-17.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-14-06-17.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>Sometimes, these checks might not be enough for the program's requirements, in which case <span class="negrita">regular expressions</span> must be used.</p>
+  
+  <p>Regular expressions are character patterns that allow checking if a string of characters matches the pattern or not. 
+    <br>Typical examples of checks with regular expressions:
+    <ul>
+      <li>That a name doesn't contain numbers.</li>
+      <li>That it has a specific length.</li>
+      <li>That characters follow a certain order (like a DNI: 8 digits and 1 letter).</li>
+      <li>That it is a valid email address.</li>
+      <li>...</li>
+    </ul>
+   <br>
+  
+  Regular expressions exist in many programming languages, so it's important to understand how they work.
+  </p>
+  
+  <p>To create a regular expression in Kotlin, use the <span class="r-word">Regex</span> class:
+  
+    <section><pre><code class="language-kotlin">val checkDNI = Regex("regular_expression")</code></pre>
+    </section><br><br>
+  
+  You can also specify modifiers for the regular expression:
+  
+    <section><pre><code class="language-kotlin">val check = Regex("regular_expression", RegexOption.IGNORE_CASE)</code></pre>
+    </section><br><br>
+  
+  Designing regular expressions is a skill that becomes more complex as you want to check more advanced patterns.
+  Below is a brief guide on how to use regular expressions in a basic way.
+  </p>
+  
+  <p><span class="negrita">Grouping</span>
+  
+  <ul>
+    <li>[ ]  [abc] contains any character from the specified set.</li>
+    <li>[^ ]  [^abc] contains any character not in the specified set.</li>
+    <li>[ - ]  [0-9] contains any character in the range.</li>
+    <li>[^ - ]  [^A-B] contains any character not in the range.</li>
+    <li>( | )  (x|y) contains one of the characters (using | as a separator).</li>
+  </ul>
+    
+  <br>
+  <span class="negrita">Character Count</span>
+  <ul>
+    <li>{ }  a{3} contains exactly 3 'a's in a row.</li>
+    <li>{ ,}  a{3,} contains 3 or more 'a's in a row.</li>
+    <li>{ , }  a{3,5} contains 3, 4, or 5 'a's in a row.</li>
+    <li>*  a* contains 0 or more 'a's. Similar to: a{0, }</li>
+    <li>+  a+ contains 1 or more 'a's. Similar to: a{1, }</li>
+    <li>?  a? contains 0 or 1 'a'. Similar to: a{0,1}</li>
+  </ul>
+  
+  </p>
+  
+  <p><span class="negrita">Start – End</span>
+    <ul>
+      <li>^  ^hello starts with "hello".</li>
+      <li>$  hello$ ends with "hello".</li>
+      <li>^ $  ^hello$ exactly matches "hello".</li>
+    </ul>
+  
+  <span class="negrita">Others</span>
+  <ul>
+    <li><span class="negrita">\\s</span>  a whitespace character.</li>
+    <li><span class="negrita">\\S</span>  any non-whitespace character.</li>
+    <li><span class="negrita">\\w</span>  a letter.</li>
+    <li><span class="negrita">\\C</span>  not a letter.</li>
+    <li><span class="negrita">\\d</span>  a digit. Similar to: [0-9]</li>
+    <li><span class="negrita">\\D</span>  not a digit. Similar to: [^0-9]</li>
+  </ul>
+  
+  </p>
+  
+  <p>Examples of regular expressions in Kotlin</p>
+  <section><pre><code class="language-kotlin">// contains 4 lowercase letters
+  "[a-z]{4}"
+  
+  // contains 8 characters: letters and/or numbers
+  "[a-zA-Z0-9]{8}"
+  
+  // 7 or 8 digits followed by 1 letter (DNI)
+  "^\d{7,8}\w{1}$"
+  
+  // set of letters, followed by an @, followed by a set of letters, 
+  // followed by a dot, followed by 2 or 3 letters 
+  // simple email pattern: rick_sanchez@mail.com
+  "^[a-z_.]+@[a-z]+\.[a-z]{2,3}$"
+  </code></pre>
+  </section><br><br>
+  
+  <p>To check if a variable matches a pattern defined by a regular expression, you can use methods from both the <span class="r-word">String</span> class and the <span class="r-word">Regex</span> class:</p>
+  
+  <a href="UD5/images/ud5-2023-09-16-14-21-54.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-14-21-54.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>The Regex class also has additional methods with different functionalities, such as:
+  
+    <ul>
+      <li>replace</li>
+      <li>find</li>
+    </ul>	
+  </p>
+  
+  <p>For creating regular expressions, you can refer to Cheat Sheets:
+    <a class="enlace" target="_blank" href="https://quickref.me/regex">https://quickref.me/regex</a>
+  
+  <br>
+  There are also tools available to test regular expressions:
+    <a class="enlace" target="_blank" href="https://regex101.com/">https://regex101.com/</a>
+  </p>
+  <a href="UD5/images/ud5-2023-09-16-14-22-42.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-14-22-42.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <h3>Exceptions</h3>
+  
+  <p>Exceptions are caught with <span class="r-word">try – catch</span> blocks in the same way as in Java.</p>
+  
+  <a href="UD5/images/ud5-2023-09-16-14-23-34.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-14-23-34.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <h3>Exercises</h3>
+  
+  <a class="tarea" target="_blank" href="UD2/exercises/ValidandoDatos.pdf">Exercises</a>
+  
+
+</section> <!-- FIN SECCION Expresiones Regulares-->
+
+<!--*********************************************************Control de Flujo***********************************************************-->
+<section class="apartado">
+  <a name="sControldeFlujo"></a>
+  <h2>Control Flow</h2>
+  <p>These are instructions that allow altering the normal flow of program execution. They are very similar to those in any other language.</p>
+  
+  <p>
+    <ul>
+      <li>if</li>
+      <li>if – else</li>
+      <li>if – else if – else</li>
+      <li>when</li>
+      <li>for</li>
+      <li>while</li>
+      <li>do – while</li>
+      <li>repeat</li>
+    </ul>
+  </p>
+  
+  <p>Style guide for curly braces <span class="negrita">{ }</span>:</p>
+  
+  <p>
+    <ul>
+      <li>
+        Curly braces <span class="negrita">are not needed</span> for <span class="r-word">when</span> branches or <span class="r-word">if</span> expressions 
+        that don't have more than one <span class="r-word">else</span> branch and <span class="negrita">fit on a single line</span>.
+        </li>
+      <li>
+        Curly braces <span class="negrita">are needed</span> for any branch of <span class="r-word">if, for, when, do</span>, 
+        and for <span class="r-word">while</span> statements and expressions, even if the body is empty or contains only one statement.
+      </li>
+    </ul>
+  </p>
+  
+  <h3>if, if-else, and if-else if-else</h3>
+  
+  <p>If it can be written on one line, omit the curly braces, and it is preferred to write it that way.</p>
+  
+  <a href="UD5/images/ud5-2023-09-16-23-59-05.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-23-59-05.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p class="sub-section">if as an expression</p>
+  
+  <p>The <span class="negrita">if</span> statement can be used as an expression, for example, to assign a value to a variable, as seen in the example:
+  
+  <a href="UD5/images/ud5-2023-09-17-00-01-02.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-01-02.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  In this case, you can write the expression like this, but it's mandatory to include the else branch.
+  
+  <a href="UD5/images/ud5-2023-09-17-00-02-29.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-02-29.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  If used as an expression, <span class="negrita">the else branch is mandatory</span>.
+  </p>
+  
+  <p>When using <span class="negrita">if</span> as an expression, curly braces can be used for multiple statements. 
+     In this case, <span class="negrita">the last statement in the curly braces must be the value to assign</span>.
+  
+  If used as an expression with code blocks, the last expression must be the value to assign without needing to equal it to the variable.
+  </p>
+  
+  <a href="UD5/images/ud5-2023-09-17-00-04-00.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-04-00.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <h3>when</h3>
+  <p>A condition with multiple branches (similar to switch in Java):
+  <a href="UD5/images/ud5-2023-09-17-00-05-39.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-05-39.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  If there are multiple statements in any branch, curly braces should be used for all branches:
+  <a href="UD5/images/ud5-2023-09-17-00-06-05.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-06-05.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>With when, you can group values:
+  <a href="UD5/images/ud5-2023-09-17-00-07-21.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-07-21.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  You can also use expressions to evaluate:
+  <a href="UD5/images/ud5-2023-09-17-00-07-58.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-07-58.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  </p>
+  
+  <p>It is possible to use <span class="r-word">in</span> or <span class="r-word">!in</span> to use ranges and collections to evaluate:
+  <a href="UD5/images/ud5-2023-09-17-00-08-33.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-08-33.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  You can check if the variable is of a type or not using <span class="r-word">is</span> or <span class="r-word">!is</span>:
+  <a href="UD5/images/ud5-2023-09-17-00-08-53.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-08-53.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>In some cases, <span class="subrayado">the else branch is mandatory</span>, for example, if the result of the expression is a <span class="negrita">boolean</span>:
+  <a href="UD5/images/ud5-2023-09-17-00-13-20.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-13-20.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  If no variable is provided for evaluation, when can be used to replace if-else blocks:
+  <a href="UD5/images/ud5-2023-09-17-00-13-46.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-13-46.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>It can be used as an expression, in which case the else branch is mandatory unless the compiler can verify that all options are covered:
+  
+    <a href="UD5/images/ud5-2023-09-17-00-15-19.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-15-19.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <a href="UD5/images/ud5-2023-09-17-00-15-40.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-15-40.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    
+  </p>
+  
+  <h3>for</h3>
+  <p>for loops in Kotlin are a bit different as they use ranges, progressions, and collections for iterations.
+  
+  <ul>
+    <li>
+      <span class="negrita">Ranges</span>: ascending/descending series of Int, Long, or Char.
+    </li>
+    <li>
+      <span class="negrita">Progressions</span>: like a range but with a step parameter between elements.
+    </li>
+    <li>
+      <span class="negrita">Collections</span>: sets of elements like arrays.
+    </li>
+  </ul>
+  </p>
+  
+  <p class="sub-section">Ranges and progressions</p>
+  <p>There are different ways to create ranges and progressions. The image on the left shows how they are created, but by default, Android Studio has code hints enabled. Once the range is created, you will see it displayed as in the right image with more information.
+  All ranges can be used as progressions with a default step of 1 or converted into progressions with an explicit step as shown in the last example.
+  
+  <a href="UD5/images/ud5-2023-09-17-00-20-21.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-20-21.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  </p>
+  
+  <p class="sub-section">for loops for ranges, progressions, and collections</p>
+  
+  <p>for loops use <span class="negrita">ranges, progressions, and collections</span>, and to iterate through them, the word <span class="r-word">in</span> is used.
+  <a href="UD5/images/ud5-2023-09-17-00-22-20.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-22-20.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  </p>
+  <p>It also works with ranges of characters:
+    <a href="UD5/images/ud5-2023-09-17-00-23-22.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-23-22.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    
+  </p>
+  
+  <p>The for statement allows iterating through objects that provide an <span class="negrita">iterator</span> such as <span class="subrayado">strings, lists, arrays, or collections.</span>
+  <br>
+  You can access the position in two ways.
+  <a href="UD5/images/ud5-2023-09-17-00-24-41.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-24-41.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  </p>
+  
+  <h3>while and do-while</h3>
+  <p>while: first checks the condition; it’s possible that the body may not execute.
+  
+  <a href="UD5/images/ud5-2023-09-17-00-26-03.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-26-03.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  do-while: the condition is evaluated after the body is executed, so the body runs at least once.
+  <a href="UD5/images/ud5-2023-09-17-00-26-33.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-26-33.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  </p>
+  
+  <h3>repeat</h3>
+  <p>The <span class="r-word">repeat</span> function repeats the body’s code the specified number of times, internally executing a for loop.
+  <a href="UD5/images/ud5-2023-09-17-00-27-52.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-27-52.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  </p>
+  
+  <h3>break, continue, and return</h3>
+  
+  <p>Kotlin provides three typical ways to break the flow of a loop.
+  
+    <ul>
+      <li><span class="negrita">return</span>: exits the loop and the function containing it.</li>
+      <li><span class="negrita">break</span>: exits the current loop.</li>
+      <li><span class="negrita">continue</span>: skips the current iteration of the loop.</li>
+    </ul>
+  </p>
+  <p>In Kotlin, statements can be labeled using the <span class="negrita">@</span> character as <span class="d-word">labelName@</span>, allowing you to break the flow of any series of nested loops.
+  <br>
+  By adding labels, a break will terminate the loop that is labeled.
+  <a href="UD5/images/ud5-2023-09-17-00-29-59.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-29-59.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  </p>
+  
+  <h3>Exercises</h3>
+  
+  <a class="tarea" target="_blank" href="UD2/exercises/ControlFlujoKotlin.pdf">Exercises</a>
+  
+
+</section> <!-- FIN SECCION Control de Flujo-->
+
+<!--*********************************************************Colecciones***********************************************************-->
+<section class="apartado">
+  <a name="sColecciones"></a>
+  <h2>Collections</h2>
+  
+  <p><span class="negrita">Collections</span> are a data type that allows storing a variable number of elements, zero or more.
+  
+  Typically, a collection will store elements of the same data type.
+  
+  You can store data of different types, but in that case, you must be especially careful when using the collection.
+  
+  Additionally, collections can store the <span class="negrita">null</span> value in any of their elements. There are four types of collections in Kotlin:
+  </p>
+  
+  <p><strong>Array</strong>:</p>
+  <ul>
+    <li>Collection of elements.</li>
+    <li>Elements are accessed by their position index.</li>
+    <li>Elements can be repeated.</li>
+    <li>Two arrays are not equal even if they contain the same elements in the same position.</li>
+  </ul>
+  
+  <p><strong>List</strong>:</p>
+  <ul>
+    <li><strong>Ordered</strong> collection of elements.</li>
+    <li>Elements are accessed by their position index.</li>
+    <li>Elements can be repeated.</li>
+    <li>Two Lists are equal if they contain the same elements in the same position.</li>
+  </ul>
+  
+  <p><strong>Set</strong>:</p>
+  <ul>
+    <li>Collection of elements <strong>without order</strong>.</li>
+    <li>Elements cannot be repeated in a Set.</li>
+    <li>Two Sets are equal if they contain the same elements, regardless of order.</li>
+  </ul>
+  
+  <p><strong>Map</strong>:</p>
+  <ul>
+    <li>Also called dictionaries.</li>
+    <li>A Map is a set of <span class="negrita">key-value</span> pairs, and the key cannot be repeated.</li>
+    <li>Two Maps are equal if they contain the same key-value pairs, regardless of order.</li>
+  </ul>
+  </p>
+  
+  <p>For <span class="negrita">List, Set, and Map</span>, Kotlin offers two versions:
+  
+  <ul>
+    <li><span class="negrita">Immutable</span>:
+      <ul>
+        <li>Elements cannot be added or removed from the collection.</li>
+        <li>No elements in the collection can be modified.</li>
+      </ul>
+    </li>
+  </ul>
+  
+  <ul>
+    <li><span class="negrita">Mutable</span>:
+      <ul>
+        <li>Elements can be added, removed, and modified in the collection.</li>        
+      </ul>
+    </li>
+  </ul>
+  <br>		
+  </p>
+  
+  <h3>List and MutableList</h3>
+  <p>
+  Whether mutable or not, they can be declared with either <span class="r-word">val</span> or <span class="r-word">var</span>.
+  
+  Their internal behavior dictates whether they can be modified or not.
+  <a href="UD5/images/ud5-2023-09-17-00-41-49.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-41-49.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <a href="UD5/images/ud5-2023-09-17-00-42-14.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-42-14.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  </p>
+  
+  <p>Some operations on List and MutableList
+  <section class="marco-t warn">
+    <span class="icono warning"> </span> Operations that modify are only applicable to MutableList
+  </section>
+  <section class="marco-b">
+      
+  </section>
+  <a href="UD5/images/ud5-2023-09-17-00-43-24.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-43-24.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <h3>Set and MutableSet</h3>
+  <p class="sub-section">Set</p>
+  <a href="UD5/images/ud5-2023-09-17-00-44-59.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-44-59.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p class="sub-section">MutableSet</p>
+  <a href="UD5/images/ud5-2023-09-17-00-45-22.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-45-22.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>Some operations on Set and MutableSet
+  <section class="marco-t warn">
+    <span class="icono warning"> </span> Operations that modify are only applicable to MutableSet
+  </section>
+  <section class="marco-b">
+      
+  </section>
+  <a href="UD5/images/ud5-2023-09-17-00-47-36.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-47-36.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  </p>
+  
+  <h3>Map</h3>
+  <p>Creating a Map</p>
+  <a href="UD5/images/ud5-2023-09-17-00-48-58.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-48-58.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>Creating a MutableMap</p>
+  <a href="UD5/images/ud5-2023-09-17-00-49-46.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-49-46.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>Some operations on Map and MutableMap
+  <section class="marco-t warn">
+    <span class="icono warning"> </span> Operations that modify are only applicable to MutableMap
+  </section>
+  <section class="marco-b">
+      
+  </section>
+  <a href="UD5/images/ud5-2023-09-17-00-50-37.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-50-37.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  </p>
+  
+  <h3>Operations on collections</h3>
+  
+  <p>Some operations on collections return a boolean value indicating whether the operation was successful or not. 
+    For example, <span class="negrita">add</span> and <span class="negrita">remove</span>.
+  
+  If you want to know all the available operations for <span class="negrita">List, Set, and Map</span>, whether mutable or read-only, you should consult the official documentation.
+  </p>
+  
+  <p>There are operations on collections that allow performing operations on all elements of the collection and return a new collection with the results.
+  
+  You could say they "iterate" over the collection.
+  
+  These operations accept a <span class="negrita">lambda function</span>, which means you must use curly braces to delimit the instructions. (The use of a lambda function was also seen in the array declaration, and they will be fully explained later).
+  
+  Within the lambda function, <span class="negrita">it</span> will be available <span class="subrayado">as the current element.</span>
+  </p>
+  
+  <p class="sub-section">forEach</p>
+  
+  <p>Iterates over all the elements of the collection, allowing actions to be performed on them.
+    <a href="UD5/images/ud5-2023-09-17-00-54-04.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-54-04.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+  </p>
+  
+  <p class="sub-section">filter</p>
+  
+  <p>Returns the collection with elements that meet the condition.
+    <a href="UD5/images/ud5-2023-09-17-00-55-46.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-55-46.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+  </p>
+  
+  <p class="sub-section">map</p>
+  
+  <p>Returns the collection by applying a transformation to each element.
+    <a href="UD5/images/ud5-2023-09-17-00-55-23.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-55-23.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+  </p>
+  
+  <h3>Sequences</h3>
+  
+  <p>Sequences allow optimizing operations on collections.
+  
+  <a href="UD5/images/ud5-2023-09-17-00-56-41.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-56-41.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  In the previous example, both operations are performed on all elements of the list, generating intermediate lists that don't disappear until all operations are complete.
+  
+  This behavior, when the collection has many elements and/or many operations are performed on it, will penalize application performance.
+  </p>
+  <p>To improve this behavior, you can convert the collection to a sequence, perform all the operations, and finally generate the collection again.
+    The sequence does not generate intermediate collections.
+    <a href="UD5/images/ud5-2023-09-17-00-58-03.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-58-03.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+  </p>
+  
+  <p>Sequences only generate their elements when used, allowing them to generate an infinite number of values, which can then be used.
+  You must be careful, as the application could get stuck waiting for the sequence to finish.
+  <a href="UD5/images/ud5-2023-09-17-00-59-57.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-59-57.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+</section> <!-- Fin Sección Colecciones-->
+
+<!--*********************************************************Funciones***********************************************************-->
+<section class="apartado">
+  <a name="sFunciones"></a>
+  <h2>Functions</h2>
+  
+  <h3>Built-in Functions</h3>
+  <p>As with any programming language, Kotlin incorporates a large number of pre-programmed functions ready to use.
+  
+  Some have already been seen: <span class="negrita">println, toInt, toString</span>… <br>
+  
+  For arrays, for example, you have functions such as:
+    <section><pre><code class="language-kotlin">min()			max()			isEmpty()			indexOf()
+  sort()			sorted()		reverse()			reversedArray()</code></pre>
+    </section><br><br>
+  
+  You can find all of them in the documentation.
+  </p>
+  
+  <h3>Custom Functions</h3>
+  <p>In Kotlin, functions are declared with the keyword <span class="r-word">fun</span>.
+  
+  Here is an example of a function and its call:
+  <a href="UD5/images/ud5-2023-09-17-01-04-49.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-04-49.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>Functions can have no parameters and return no values.
+  
+  If no return type is specified, it returns <span class="r-word">Unit</span>, which is equivalent to <span class="negrita">void</span> in other programming languages. 
+  If nothing is returned, <span class="r-word">: Unit</span> can be omitted.
+  <a href="UD5/images/ud5-2023-09-17-01-06-10.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-06-10.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>Parameters are separated by commas, and the use of the <span class="negrita">trailing comma</span> is allowed (final comma).
+  <a href="UD5/images/ud5-2023-09-17-01-08-13.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-08-13.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p><span class="subrayado">Input parameters are immutable</span>, meaning their values cannot be changed within the function body, as if they were declared with <span class="r-word">val</span>.
+  
+  To modify them, you must create a copy.
+  <a href="UD5/images/ud5-2023-09-17-01-09-20.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-09-20.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>If the function can be written in a single line, you can <span class="negrita">remove the braces and add the symbol =</span> before the body.
+  <a href="UD5/images/ud5-2023-09-17-01-10-33.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-10-33.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  Other Functions:
+  <a href="UD5/images/ud5-2023-09-17-01-11-15.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-11-15.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p class="sub-section">Named Parameters</p>
+  
+  <p>You can use parameter names when calling a function, allowing you to change the order of parameters.
+  
+  Just like with ranges, Android Studio shows hints to indicate parameter names.
+  <a href="UD5/images/ud5-2023-09-17-01-12-40.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-12-40.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p class="sub-section">Default Values</p>
+  
+  <p>It is possible to define default values for input parameters, allowing you to omit those parameters if desired.
+    <a href="UD5/images/ud5-2023-09-17-01-14-26.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-14-26.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+  </p>
+  
+  <p>If default values are used in the function definition and named parameters in the function call, intermediate parameters can be omitted.
+  
+    <a href="UD5/images/ud5-2023-09-17-01-15-37.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-15-37.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+  </p>
+  
+  <p>If both named and unnamed parameters are used in the function call, the named arguments must come last unless they occupy their correct place.
+    <a href="UD5/images/ud5-2023-09-17-01-17-29.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-17-29.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+  </p>
+  
+  <h3>Variable Number of Parameters</h3>
+  <p>It is possible to declare a variable number of parameters.
+  
+  This is done using a parameter with the <span class="r-word">vararg</span> keyword.
+  
+  It is usually the last parameter. If not, subsequent parameters must be passed using their name.
+  
+  With an <span class="negrita">intArray</span> or a <span class="negrita">collection that can be converted to intArray</span>, you can use the <span class="negrita">*</span>
+  (spread operator) to pass it entirely as a <span class="negrita">vararg</span> parameter.
+  <a href="UD5/images/ud5-2023-09-17-01-19-00.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-19-00.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <h3>Function Overloading</h3>
+  
+  <p>Kotlin allows function overloading even if they are not defined within a class.
+    <a href="UD5/images/ud5-2023-09-17-01-20-14.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-20-14.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+  </p>
+  
+  <p>In previous examples, the <span class="negrita">max</span> function was created, which already exists, causing an overload. You can see both your function and the system's.
+  <a href="UD5/images/ud5-2023-09-17-01-22-00.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-22-00.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <h3>Scope of Functions</h3>
+  <p>Like variables, the scope of a function determines where it can be used.
+  
+  In Kotlin, the following types of functions exist:
+  
+  <ul>
+    <li><span class="negrita">Top-level</span> functions.</li>
+    <li><span class="negrita">Local</span> functions.</li>
+    <li><span class="negrita">Member</span> functions.</li>
+    <li><span class="negrita">Extension</span> functions.</li>
+  </ul>
+  
+  Depending on the type, it can be used in different parts of the code.
+  </p>
+  
+  <p class="sub-section">Top-level Functions</p>
+  
+  <p>They are defined without being inside any block { } or class.
+  
+  They are typically used as function libraries, where a file includes several top-level functions that can be used anywhere.
+  
+  They can be used throughout the file itself and in any file where they are imported.
+  <a href="UD5/images/ud5-2023-09-17-01-24-51.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-24-51.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+
+  <p class="sub-section">Local</p>
+
+  <p>
+  Local functions are defined within another function and can be used throughout the { } block of that function, even from other local functions within the same parent function.
+  
+  They must be defined before any call to them.
+  
+  Local functions can use the local variables of the parent function.
+  <a href="UD5/images/ud5-2023-09-17-01-25-59.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-25-59.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p class="sub-section">Member Function</p>
+  
+  <p>
+  These are functions defined within classes or objects.
+  In object-oriented programming, they are known as <span class="negrita">methods</span>.
+  They are covered in the next section, <span class="negrita">OOP</span> (Object-Oriented Programming).
+  </p>
+  
+  <p class="sub-section">Extension Functions</p>
+  
+  <p>
+  Kotlin allows you to extend the functionality of classes by adding functions to them.
+  These functions only exist within the scope in which they are defined.
+  <a href="UD5/images/ud5-2023-09-17-01-27-55.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-27-55.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <h3>Inline Functions</h3>
+  <p>In a normal function, its code is stored in memory once. Each time it's invoked, the parameters are added to the stack, and the function is called.</p>
+  
+  <p>In an <span class="d-word">inline function</span>, the invocation does not occur. Instead, the function's code is inserted each time it is used.</p>
+  
+  <p>In theory, an inline function has better performance compared to regular functions because it avoids using the stack to pass parameters and prevents jump and return instructions. 
+  However, this depends on how the code is compiled. 
+  For instance, in the Java Virtual Machine (JVM), even machine code instructions use the stack. 
+  Since the code must be "copied" each time the inline function is called, the executable size will increase as the inline function grows.</p>
+  
+  <section><pre><code class="language-kotlin">inline fun suma(a: Int, b: Int) = a + b
+  val c = suma(2, 2)</code></pre>
+  </section><br><br>
+  
+  <p>The real advantage of inline functions comes into play when they are applied to higher-order functions. 
+  Higher-order functions have some performance penalties (both in time and memory). 
+  When calling the Lambda parameter, a new object is created in memory, containing a method with the parameters specified in the Lambda.</p>
+  
+  <h3>Exercises</h3>
+  
+  <a class="tarea" target="_blank" href="UD2/exercises/Actividades Reutilizar código.pdf">Exercises</a>
+  
+
+  </section><!-- End section Funciones-->
+
+<!--*********************************************************Programación Orientada a Objetos***********************************************************-->
+<section class="apartado">
+  <a name="sPOO"></a>
+  <h2>Object-Oriented Programming (OOP)</h2>
+  
+  <p>As mentioned at the beginning of this unit, Kotlin aims to be concise and avoid writing excessive code.
+  This feature becomes very apparent when developing classes.
+  We will study both the traditional way of coding classes like in Java and Kotlin's recommended approach.
+  </p>
+  
+  <p>To create classes, the reserved word <span class="r-word">class</span> is used, just like in Java.
+  
+  Kotlin allows more than one public class to be defined in a single <span class="negrita">.kt</span> file (this is not allowed in Java).
+  If only one class is defined in a <span class="negrita">.kt</span> file, then the <span class="subrayado">filename must be the name of the class</span>.
+  If several classes are defined in a <span class="negrita">.kt</span> file, then a representative filename should be chosen.
+  </p>
+  
+  <p>In Kotlin, all classes inherit from the <span class="r-word">Any</span> class (in Java, it's Object).
+  
+  The <span class="negrita">Any</span> class defines three methods inherited by its subclasses:
+  <ul>
+    <li><span class="negrita">equals</span> -> indicates if one object is equal to another</li>
+    <li><span class="negrita">hashCode</span> -> returns the hash code of an object</li>
+    <li><span class="negrita">toString</span> -> returns the string representation of an object</li>
+  </ul>
+  </p>
+  
+  <p>Example of a class definition in Kotlin:
+  
+  <a href="UD5/images/ud5-2023-09-17-13-14-35.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-14-35.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  Kotlin is so concise that a class without a body can be defined like this:
+  
+  <a href="UD5/images/ud5-2023-09-17-13-15-00.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-15-00.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  Even without a body, an object of this class can be instantiated:
+  <a href="UD5/images/ud5-2023-09-17-13-15-39.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-15-39.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>You can see that the structure of defining a class is similar to that used in Java.
+  
+  <span class="negrita">Getters</span> and <span class="negrita">setters</span> are defined after each property.
+  
+  The constructor is defined with the word constructor.
+  <a href="UD5/images/ud5-2023-09-17-13-17-34.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-17-34.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  Its usage is also similar to Java:
+  <a href="UD5/images/ud5-2023-09-17-13-18-05.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-18-05.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>Unless otherwise specified, classes, properties, and methods are <span class="negrita">public</span> by default.
+  
+  There are visibility modifiers:
+  <ul>
+    <li><span class="negrita">public</span></li>
+    <li><span class="negrita">private</span></li>
+    <li><span class="negrita">protected</span></li>
+    <li><span class="negrita">internal</span> -> visible within the same module (package)</li>
+  </ul>
+  
+  <a href="UD5/images/ud5-2023-09-17-13-20-49.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-20-49.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>Kotlin saves code using expression functions (in one line):
+    <a href="UD5/images/ud5-2023-09-17-13-21-58.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-21-58.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    
+  </p>
+  
+  <p>Kotlin also saves code by making getters and setters implicit:
+    <a href="UD5/images/ud5-2023-09-17-13-22-55.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-22-55.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    
+  </p>
+  
+  <p>Kotlin allows further code reduction by incorporating properties into the class definition, making the <span class="negrita">constructor implicit:</span>
+  <a href="UD5/images/ud5-2023-09-17-13-23-48.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-23-48.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <h3>Constructors</h3>
+  
+  <p>With this structure, you get the constructor, getters, and setters:
+  
+  <a href="UD5/images/ud5-2023-09-17-13-24-47.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-24-47.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  If no specific actions are needed in the constructor, getters, or setters, this syntax saves a lot of code.
+  
+  Using this syntax, the constructor is referred to as the <span class="negrita">primary constructor</span>.
+  </p>
+  
+  <p>Constructors defined in the class body are called <span class="negrita">secondary constructors</span>.
+  
+  Constructors are declared with the reserved word <span class="r-word">constructor</span>.
+  
+  There is constructor overloading, as can be seen with the constructor.
+  
+  If a property does not appear in any constructor, it <span class="subrayado">must have a default value.</span>
+  
+  <a href="UD5/images/ud5-2023-09-17-13-35-03.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-35-03.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <a href="UD5/images/ud5-2023-09-17-13-35-37.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-35-37.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>If both primary and secondary constructors are used, the <span class="r-word">this</span> keyword must be used in the secondary constructors.
+  
+  The <span class="negrita">this</span> keyword calls the primary constructor (similar to super in Java).</p>
+  
+  <p>There may be no constructors at all.
+  
+  In that case, properties must be assigned a value in their declaration.
+  <a href="UD5/images/ud5-2023-09-17-13-37-57.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-37-57.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>If the primary constructor is used but actions are required on the properties, an <span class="negrita">init</span> block should be used.
+  <a href="UD5/images/ud5-2023-09-17-13-38-59.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-38-59.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <h3>Member Functions</h3>
+  
+  <p>Member functions (methods) can be defined within classes.
+  <a href="UD5/images/ud5-2023-09-17-13-39-48.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-39-48.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  The same function defined with a body:
+  <a href="UD5/images/ud5-2023-09-17-13-40-20.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-40-20.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>If you override a function from a parent class, you must add the <span class="r-word">override</span> keyword to the function definition.
+  <a href="UD5/images/ud5-2023-09-17-13-41-26.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-41-26.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>Obviously, you can combine all of the above:
+    <ul>
+      <li>Primary constructor</li>
+      <li>init block for primary constructor actions</li>
+      <li>Secondary constructor</li>
+      <li>Implicit getters and setters</li>
+      <li>Overloading inherited functions</li>
+    </ul>
+  
+    <a href="UD5/images/ud5-2023-09-17-13-42-53.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-42-53.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+  </p>
+  
+  <p>To change the access type of class properties, you simply add it before their declaration.
+    <a href="UD5/images/ud5-2023-09-17-13-44-11.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-44-11.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+  </p>
+  
+  <p>Since getters and setters are implicit, they will have the same access type as the properties, and this can only be changed to more restrictive access.
+  
+  This behavior may be problematic since if you want to encapsulate the class properties (a typical OOP feature), you won't have access to them when using the class objects.
+  
+  <section><pre><code class="language-kotlin">fun main(){
+    val p1 = Producto(name= "Mesa")
+    println(p1.name) //No read access
+    p1.name = "Silla" //No write access
+    println(p1.price) //Read access granted
+    p1.price = 20.0  //No write access
+    println("Bye world")
+  }
+  
+  class Producto(private var name: String){
+    var price:Double = 10.0
+        get() = field //Not needed here
+        private set
+  
+    init{
+        name = name.uppercase()
+    }
+  
+    constructor(name:String, price:Double):this(name){
+        this.price = price
+    }
+  
+    override fun toString(): String {
+        return "$name: $price €"
+    }
+  }</code></pre>
+  </section><br><br>
+  </p>
+  
+  <p>To solve this issue, you can create public methods to access private properties.
+  
+  <span class="negrita">Although this solution goes against Kotlin's philosophy of saving code.</span>
+  <a href="UD5/images/ud5-2023-09-17-13-57-15.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-57-15.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+
+  <p>As seen previously, once a class is declared, its usage is similar to Java.
+
+    Access to properties and functions is done using dot notation:
+    <a href="UD5/images/ud5-2023-09-17-13-59-24.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-59-24.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    </p>
+    
+    <h3>Enum class in Kotlin</h3>
+    <p>The <span class="negrita">enum class</span> allows defining a set of constants related to each other.
+    
+    It provides a safe way to handle these values without the risk of errors.
+    <a href="UD5/images/ud5-2023-09-17-14-01-18.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-14-01-18.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    </p>
+    
+    <h3>Data class in Kotlin</h3>
+    <p>Data classes are a way to model data where the purpose of their objects is simply to store data.
+    
+    <span class="negrita">They are very simple classes that only contain attributes.</span>
+    
+    They are used to interact with other classes or external APIs.
+    
+    To declare this type of class, the keyword <span class="r-word">data</span> is used.
+    <a href="UD5/images/ud5-2023-09-17-14-03-01.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-14-03-01.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    </p>
+    
+    <p>Kotlin provides data classes with a set of <span class="negrita">utility functions</span> or features:
+      <ul>
+        <li><span class="negrita">equals()</span>: Compares two objects of the class. It compares the content of the attributes.</li>
+        <li><span class="negrita">hashCode()</span>: Hash code (used in the previous function).</li>
+        <li><span class="negrita">copy()</span>: Creates a copy of the object, attribute by attribute, but they are distinct objects.</li>
+        <li><span class="negrita">toString()</span>: Generates a readable string with the object's data. It doesn't show memory references.</li>
+        <li><span class="negrita">component1(), component2()</span>: Retrieves each property of the object in its declared order.</li>
+      </ul>
+    
+      <a href="UD5/images/ud5-2023-09-17-14-06-34.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-14-06-34.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+    </p>
+    
+    <p>Properties not present in the primary constructor will not benefit from the features of data classes.
+    For example, when using <span class="negrita">toString</span>, only the properties in the primary constructor will appear.
+    With the <span class="negrita">copy</span> function, entire objects can be copied, and values of the properties can be changed during the copying process.
+    <a href="UD5/images/ud5-2023-09-17-14-07-54.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-14-07-54.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    </p>
+    
+    <p>Objects of a data class can be <span class="negrita">deconstructed</span>, allowing the values of its properties to be extracted into variables.
+    
+    If a value is not needed, the <span class="d-word">_</span> symbol should be used in its place.
+    
+    If the unwanted values are at the end of the list, you can simply omit them.
+    <a href="UD5/images/ud5-2023-09-17-14-08-48.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-14-08-48.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    </p>
+    
+    <h3>Initialization with lateinit vs lazy (Delegation)</h3>
+    
+    <p>Typically, non-null variables must be initialized in the constructor. 
+      However, this is not always the best option. 
+      If we do not want to initialize a property in the constructor, we have two alternatives, <span class="r-word">lateinit</span> and <span class="r-word">lazy</span>. 
+      With <span class="r-word">lateinit</span>, we achieve delayed initialization, 
+      informing the compiler that the initialization will occur later in the code. If we attempt to access a variable before it is initialized, 
+      we will encounter an error such as <span class="negrita">Caused by:</span>:</p>
+    
+    <section class="marco-t err">
+      <span class="icono error"> </span>  kotlin.UninitializedPropertyAccessException: lateinit property test has not been initialized.
+    </section>
+    <section class="marco-b">
+        
+    </section>
+    
+    <section><pre><code class="language-kotlin">lateinit var text: String
+    fun doSomething() {
+       text = "a value"
+       println("Length is "+text.length)
+       texto = "Another value"
+    } </code></pre>
+    </section><br><br>
+    
+    <p>The <span class="r-word">lateinit</span> modifier can only be used for mutable variables (var) declared in the class body (not in the primary constructor), 
+      and only when that variable does not have a custom <span class="negrita">getter</span> or <span class="negrita">setter</span>.</p>
+    
+    <p>With <span class="r-word">lazy</span>, we achieve deferred initialization, 
+      meaning that a variable will not be initialized unless it is used in our code. 
+      It will be initialized only once and will retain its value thereafter.</p>
+    
+      <section><pre><code class="language-kotlin">public class Example{
+       val name: String by lazy { "Rosa López" }
+    
+       if(condition) print("${name.length}") //Initialization takes place here
+    } 
+    </code></pre>
+      </section><br><br>
+    
+    <p>In the previous example, both the first and subsequent calls to name will return "Rosa López".</p>
+    
+    <p>Once we know what each of these functions does, when should we use each?</p>
+    <p><ul>
+        <li><span class="d-word">lazy</span> can only be used for immutable <span class="d-word">val</span> variables, whereas
+          <span class="d-word">lateinit</span> can only be applied to mutable variables,
+          as the immutability of that variable cannot be guaranteed, because it cannot be compiled as <span class="d-word">final</span>.</li>
+        <li>A <span class="d-word">lateinit</span> variable can be initialized anywhere within the object where it is visible.
+          If we need the variable to be initialized from outside, in an unknown way beforehand, we will need to use <span class="d-word">lateinit</span>.</li>
+      </ul></p>
+    
+
+  
+</section><!-- End section Programación Orientada a Objetos-->
+
+
+
+<!--*********************************************************Funciones de Extensión***********************************************************-->
+<section class="apartado">
+  <a name="sFuncionesExtension"></a>
+  <h2>Extension Functions</h2>
+  
+  <p>Kotlin allows you to <span class="negrita">extend the functionality</span> of existing classes, 
+    whether they are system classes or your own, without using inheritance, even if the existing class is final.</p>
+  
+  <p>
+  <span class="negrita">Extension functions</span> are defined outside the class definition, meaning they can <span class="negrita">only be used in the scope where they are defined</span>.
+  </p>
+  <p>
+  Although the extension function is defined outside the class, it behaves as if it were defined within the class, functioning like an additional method. It can access both properties and methods of the class, even if they are private.
+  </p>
+  
+  <p>An example of an extension function was already shown in the section on functions:
+  <a href="UD5/images/ud5-2023-09-17-19-13-20.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-19-13-20.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>These functions are defined like any other functions, but with the name of the class to be extended.
+  
+  Here’s an example of an extension function for an existing class:
+  <a href="UD5/images/ud5-2023-09-17-19-14-20.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-19-14-20.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  And an extension function for your own class:
+  <a href="UD5/images/ud5-2023-09-17-19-14-41.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-19-14-41.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>A typical use case for extension functions occurs with collections.
+  
+  Thanks to an extension function, you can perform an action on each element of the collection.
+  <a href="UD5/images/ud5-2023-09-17-19-16-48.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-19-16-48.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>The output would be:
+  <a href="UD5/images/ud5-2023-09-17-19-17-16.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-19-17-16.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>An extension function cannot override a member function.
+  
+  An extension function can overload a member function.
+  
+  Although no error is shown, if you attempt to override a member function with an extension function, the member function will always be called during execution.
+  <a href="UD5/images/ud5-2023-09-17-19-19-01.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-19-19-01.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+
+</section><!-- End section Funciones de Extensión-->
+
+<!--*********************************************************Singleton***********************************************************-->
+<section class="apartado">
+<a name="sSingleton"></a>
+<h2>Singleton</h2>
+<p>In Kotlin, you can create a singleton, which is a unique object of its class. This means that there can only be one instance of that class.</p>
+
+<section><pre><code class="language-kotlin">object Author{
+    var name = "Carlos Tarazona"
+    var company = "2DAM"
+    var date = Date()
+
+    override fun toString(): String {
+        return """$name ($company)
+            |$date""".trimMargin()
+    }
+}</code></pre>
+</section><br><br>
+
+<p>You can also add extension functions to a singleton, just like with any other class.
+
+If declared globally in the .kt file, you can add extension functions in the same way as with any other class.
+</p>
+
+
+
+</section><!-- End section -->
+
+<!--*********************************************************Herencia***********************************************************-->
+<section class="apartado">
+  <a name="sHerencia"></a>
+  <h2>Inheritance</h2>
+  <p>In <span class="negrita">Kotlin, all classes are final by default</span>, meaning inheritance is not allowed unless explicitly indicated.</p>
+  <p>To allow a class to be a superclass, you need to use the reserved word <span class="negrita">open</span>.</p>
+  
+  <p>If using the primary constructor with default getters and setters:</p>
+  <a href="UD5/images/ud5-2023-09-17-19-31-58.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-19-31-58.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>This code provides:
+  <ul>
+    <li>The Product class with a constructor, getters, and setters</li>
+    <li>The Monitor class, with its constructor calling the parent class's constructor, and inheriting the parent class's getters and setters</li>
+  </ul>
+  </p>
+  
+  <p>New properties and methods can be added as well.
+  <a href="UD5/images/ud5-2023-09-17-19-32-52.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-19-32-52.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  </p>
+  
+  <p>In the child class, the <span class="negrita">primary constructor is automatically created, which calls the parent class's constructor</span>. A secondary constructor is also created, which calls the primary constructor using <span class="negrita">this</span>.</p>
+  
+  <h3>Abstract Classes</h3>
+  
+  <p>To declare an abstract class, you use the reserved word <span class="r-word">abstract</span> before the word <span class="r-word">class</span>.</p>
+  <p>Abstract classes cannot be instantiated.</p>
+  <a href="UD5/images/ud5-2023-09-17-19-35-01.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-19-35-01.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <div class="tarea">
+    <p>In this exercise, we will create an employee management system using object-oriented programming with inheritance, polymorphism, and function and constructor overloading. The system will contain three types of employees: <span class="negrita">Employee</span>, <span class="negrita">Manager</span>, and <span class="negrita">Technician</span>. Each type of employee will have specific properties and behaviors.</p>
+    
+    <p>Class Definitions</p>
+    
+    <p>Create a base class called Employee with the following properties and methods:</p>
+    <ul>
+      <li><span class="negrita">Properties</span>: name (String), age (Int), salary (Double).</li>
+      <li><span class="negrita">Methods</span>: calculateMonthlyPay(), which calculates the employee's monthly pay.</li>
+    </ul>
+  
+    <p>Create a Manager class that inherits from the Employee class with additional properties and methods:</p>
+    <ul>
+      <li><span class="negrita">Properties</span>: department (String), bonus (Double).</li>
+      <li><span class="negrita">Methods</span>: calculateMonthlyPay(), which overrides the base class method to include the bonus in the manager's pay.</li>
+    </ul>
+  
+    <p>Create a Technician class that inherits from the Employee class with additional properties and methods:</p>
+    <ul>
+      <li><span class="negrita">Properties</span>: level (String), overtimeHours (Int).</li>
+      <li><span class="negrita">Methods</span>: calculateMonthlyPay(), which overrides the base class method to calculate the technician's pay considering overtime hours.</li>
+    </ul>
+  </div>
+  
+  <section class="marco-t inf">
+    <span class="icono info"> </span> Solution:
+  </section>
+  <section class="marco-b">
+      <section><pre><code class="language-kotlin">open class Empleado(val nombre: String, val edad: Int, val salario: Double) {
+      open fun calcularPagoMensual(): Double {
+          return salario
+      }
+  }
+  
+  class Gerente(nombre: String, edad: Int, salario: Double, val departamento: String, val bono: Double) : Empleado(nombre, edad, salario) {
+      override fun calcularPagoMensual(): Double {
+          return salario + bono
+      }
+  }
+  
+  class Tecnico(nombre: String, edad: Int, salario: Double, val nivel: String, val horasExtra: Int) : Empleado(nombre, edad, salario) {
+      override fun calcularPagoMensual(): Double {
+          val salarioBase = salario
+          val pagoHorasExtra = horasExtra * 10.0 // Assuming $10 per overtime hour.
+          return salarioBase + pagoHorasExtra
+      }
+  }
+  
+  fun main() {
+      val empleado1 = Empleado("Juan Pérez", 30, 3000.0)
+      val gerente1 = Gerente("Ana López", 35, 5000.0, "Sales", 1000.0)
+      val tecnico1 = Tecnico("Luis García", 25, 2500.0, "Junior", 20)
+  
+      val empleados = listOf(empleado1, gerente1, tecnico1)
+  
+      for (empleado in empleados) {
+          println("Nombre: ${empleado.nombre}, Pago Mensual: ${empleado.calcularPagoMensual()}")
+      }
+  }
+  </code></pre>
+  </section><br><br>
+  <p>In this exercise, we created a class hierarchy including the base class Employee and two derived classes, Manager and Technician. Each class has its own calculateMonthlyPay() method, which is overloaded to calculate each type of employee's specific monthly pay. Then, in the main() function, we create instances of each type of employee and calculate their monthly pay.</p>
+  </section>
+  
+  <h3>Sealed Classes</h3>
+
+  <p>Sealed classes are used to represent a hierarchy of classes that inherit from a parent class, where both the parent and nested classes are defined together in the same file.</p>
+  
+  <p>Imagine we want to define a parent class called <span class="d-word">Figure</span>, from which the subclasses <span class="d-word">Triangle</span>, <span class="d-word">Square</span>, and <span class="d-word">Circle</span> extend. As you can see, it's a technique used for polymorphism.</p>
+  
+  <section><pre><code class="language-kotlin">sealed class Figura {
+     class Triangulo(val lado1:Int, val lado2:Int, val lado3:Int) : Figura()
+     class Cuadrado(val lado:Int) : Figura()
+     class Circulo(val radio:Int) : Figura()
+  }
+  </code></pre>
+  </section><br><br>
+  
+  <p>Since Kotlin 1.1, it's no longer necessary for the subclasses to be nested within the parent class:</p>
+  
+  <section><pre><code class="language-kotlin">sealed class Figura
+  class Triangulo(val lado1:Int, val lado2:Int, val lado3:Int) : Figura()
+  class Cuadrado(val lado:Int) : Figura()
+  class Circulo(val radio:Int) : Figura()
+  </code></pre>
+  </section><br><br>
+  
+  <p>A sealed class is declared as abstract, and when we create instances of this class, we are forced to use one of its subclasses. Additionally, a sealed class must be defined in a single file, meaning the number of subclasses cannot be expanded in the future. This means that we won't be able to add new types of figures, which is why they are called sealed.</p>
+  
+  <p>Thanks to this, when used with a <span class="r-word">when</span> expression, we can be sure that all cases are covered, and there will be no need to add an <span class="r-word">else</span> clause.</p>
+  
+  <section><pre><code class="language-kotlin">val figura: Figura = Triangulo()
+  val texto = when (figura) {
+     is Triangulo -> "triangle"
+     is Cuadrado -> "square"
+     is Circulo -> "circle"
+     else -> "undefined"
+  }
+  </code></pre>
+  </section><br><br>
+  
+  <p class="sub-section">Object</p>
+  
+  <p>If we want to consider the possibility that a figure is undefined or we need a type of figure that doesn't require storing a state, we can add <span class="negrita">object elements</span> to our sealed class:</p>
+  
+  <section><pre><code class="language-kotlin">sealed class Figura
+  class Triangulo(val lado1:Int, val lado2:Int, val lado3:Int) : Figura()
+  …
+  object Punto : Figura()
+  object SinDefinir : Figura()
+  </code></pre>
+  </section><br><br>
+  
+  <p>We will then need to incorporate these options into the <span class="negrita">when</span> block:</p>
+  
+  <section><pre><code class="language-kotlin">val texto = when(figura) {
+     is Triangulo -> "triangle"
+     …
+     Punto -> "point"
+     SinDefinir -> "undefined"
+  }
+  </code></pre>
+  </section><br><br>
+  
+  <p>Note that these new options are not classes, so we won't use them in comparison.</p>
+  
+  <p>To understand the difference between a class and an object, let's see how it works internally.</p>
+  
+  <p>When the figure is a type of <span class="cursiva">Triangle, Square, or Circle</span>, it will work normally, meaning a new object is created in memory with all its properties.</p>
+  
+  <p>But when it's <span class="cursiva">Point</span> or <span class="cursiva">Undefined</span>, it works differently. The first time it's needed, an instance of the object is created. These objects are only created once in memory. The second time we need a variable with this value, it won't create a new object, but the variable will be a reference to the previously created object. This behavior is the same as with enums. An object cannot add new properties but can override its functions.</p>
+  
+  <p>Let's see an example:</p>
+  
+  <section><pre><code class="language-kotlin">sealed class Figura(open var color:Int=0) {
+     abstract fun area(): Int
+  
+     class Cuadrado (override var color: Int, val lado: Int) : Figura(color) {
+        override fun area() = lado * lado
+     }
+     object Punto : Figura(1) {
+      override fun area() = 0
+        init {println("Point Created, ")}
+     }
+  }
+  </code></pre>
+  </section><br><br>
+  
+  <section><pre><code class="language-kotlin">fun main(){
+    val p1 = Figura.Punto
+    val p2 = Figura.Punto
+    val c = Figura.Cuadrado(2,8)
+  
+    p1.color = 3
+    println("color c=${c.color}, ")
+    println("color p2=${p2.color}")
+  }
+  </code></pre>
+  </section><br><br>
+  
+  <div class="tarea">
+    <p>With the code above:</p>
+    <ol>
+      <li>What is the output?</li>
+      <li>Why does "Point created" appear only once?</li>
+      <li>Why is the color of p2 equal to 3 if we changed the color of p1?</li>
+      <li>Why does the color of c remain 2?</li>
+      <li>How can we ensure that each point has its own color?</li>
+    </ol>
+  </div>
+  
+  <section class="marco-t inf">
+    <span class="icono info"> </span> Solution:
+  </section>
+  <section class="marco-b">
+      <p>When the <span class="d-word">figure</span> class is created, an instance is created for each object element. The example creates the object <span class="d-word">point</span>. Creating the variables p1 and p2 will not involve creating new objects, as both will be references to the previous object. The initialization of <span class="negrita">c</span> will create a new object in memory, with its two properties. In the next instruction, the color of <span class="negrita">p1</span> is modified, but since there is only one color, the color of <span class="negrita">p2</span> is also modified.</p>
+      <ol>
+          <li>Only one <span class="d-word">Point</span> object is created.</li>
+          <li>Both <span class="cursiva">p1</span> and <span class="cursiva">p2</span> refer to the same object.</li>
+          <li>The variable <span class="cursiva">c</span> is a separate object.</li>
+          <li>We would use the class <span class="d-word">Point</span> instead of the object <span class="d-word">point</span>.</li>
+      </ol>
+  </section>
+  
+  <p>The previous example defined types of figures. However, the different subclasses do not necessarily need to be related to each other.</p>
+  
+  <p>We can use a sealed class to represent a variable that can take values of different types, even if those types are unrelated.</p>
+  
+  <p>For example, an HTTP request could return either a <span class="negrita">web page</span> or an <span class="negrita">error code</span>:</p>
+  
+  <section><pre><code class="language-kotlin">sealed class RespuestaHTTP 
+  data class Correcta(val contenido: String) : RespuestaHTTP()
+  data class Error(val codigo: Int, val mensaje: String) : RespuestaHTTP()
+  
+  fun getUrl(url: String): RespuestaHTTP {
+     val valido = … 
+     if (valido) return Correcta("Content…") 
+     else        return Error(404, "Not found")
+  }
+  
+  val respuesta = getUrl("/")
+  when (respuesta) {
+     is Correcta -> println(respuesta.contenido)
+     is Error -> println(respuesta.mensaje)
+  }
+  </code></pre>
+  </section><br><br>
+  
+
+</section><!-- End section Herencia-->
+
+<!--*********************************************************Funciones de alcance***********************************************************-->
+<section class="apartado">
+  <a name="sFuncionesdealcance"></a>
+  <h2>Scope Functions</h2>
+  <p>Kotlin offers the so-called <span class="negrita">scope functions</span> that allow executing a block of code <span class="negrita">in the context of the object that calls them</span>.</p>
+  <p>
+  Since they execute in the context of the calling object, that object is available inside the function’s body. There are five scope functions:
+  <ul>
+    <li>let</li>
+    <li>run</li>
+    <li>with</li>
+    <li>apply</li>
+    <li>also</li>
+  </ul>
+  </p>
+  
+  <p>These functions return a value, but it’s not necessary to capture (store) it in any variable.</p>
+  
+  <table>
+      <thead>
+          <tr>
+              <td>Function</td>
+              <td>Usage</td>
+              <td>Context</td>
+              <td>Returns</td>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>let</td>
+              <td>Execute block of code ensuring the object is not null.</td>
+              <td>Own object accessible with <span class="negrita">it</span></td>
+              <td>Result of the last expression</td>
+          </tr>
+          <tr>
+              <td>apply</td>
+              <td>Object configuration.</td>
+              <td>Own object accessible with <span class="negrita">this</span></td>
+              <td>Own object</td>
+          </tr>
+          <tr>
+              <td>run</td>
+              <td>Object configuration and execution of instructions on it.</td>
+              <td>Own object accessible with <span class="negrita">this</span></td>
+              <td>Result of the last expression</td>
+          </tr>
+          <tr>
+              <td>run</td>
+              <td>Execute instructions when an expression is required, used without being called from an object.</td>
+              <td>-</td>
+              <td>Result of the last expression</td>
+          </tr>
+          <tr>
+              <td>also</td>
+              <td>Continue performing actions on the object.</td>
+              <td><span class="r-word">it</span></td>
+              <td>Own object</td>
+          </tr>
+          <tr>
+              <td>with</td>
+              <td>Group function calls on an object.</td>
+              <td><span class="r-word">this</span></td>
+              <td>Result of the last expression</td>
+          </tr>
+      </tbody>
+  </table>
+  
+  <p>All scope functions are used with a block of curly braces <span class="negrita">{ } (lambda function).</span></p>
+  
+  <p>Android Studio shows code hints to help understand how each one works.</p>
+  
+  <a href="UD5/images/ud5-2023-09-18-09-07-47.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-07-47.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <h3>let</h3>
+  <p>
+  <ul>
+    <li><span class="negrita">Context</span>: the object from which it is called, accessible with <span class="negrita">it</span>.</li>
+    <li><span class="negrita">Returns</span>: the result of the last expression.</li>
+  </ul>
+  </p>
+  
+  <a href="UD5/images/ud5-2023-09-18-09-09-47.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-09-47.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>The use of <span class="negrita">let</span> ensures that the object is not <span class="negrita">null</span> before executing the instructions.</p>
+  <a href="UD5/images/ud5-2023-09-18-09-10-40.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-10-40.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <p>In the <span class="negrita">case the product object is null, the let block will not execute</span>.</p>
+  
+  <h3>run</h3>
+  <p>It has two uses:</p>
+  <ol>
+    <li>Called from an object like let, but it does not check if the variable is null.
+      <ul>
+        <li><span class="negrita">Context</span>: the object from which it is called, accessible with <span class="negrita">this</span>. You don’t need to explicitly use <span class="negrita">this</span> to access properties.</li>
+        <li><span class="negrita">Returns</span>: the result of the last expression.</li>
+      </ul>
+      <a href="UD5/images/ud5-2023-09-18-09-14-08.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-14-08.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+    </li>
+    <li>Called without using an object.
+      <ul>
+        <li><span class="negrita">Context</span>: no context.</li>
+        <li><span class="negrita">Returns</span>: the result of the last expression.</li>
+      </ul>
+      <a href="UD5/images/ud5-2023-09-18-09-15-08.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-15-08.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+    </li>
+  </ol>
+  
+  <h3>also</h3>
+  <p>Allows performing extra actions (also = besides) on the calling object.
+    <ul>
+      <li><span class="negrita">Context</span>: the object from which it is called, accessible with <span class="r-word">it</span>.</li>
+      <li><span class="negrita">Returns</span>: the object itself (automatically).</li>
+    </ul>
+  <a href="UD5/images/ud5-2023-09-18-09-25-36.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-25-36.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <h3>apply</h3>
+  <p>Used to configure (assign values to) an object.
+    <ul>
+      <li><span class="negrita">Context</span>: the object from which it is called, accessible with <span class="r-word">this</span>.</li>
+      <li><span class="negrita">Returns</span>: the object itself (automatically).</li>
+    </ul>
+  <a href="UD5/images/ud5-2023-09-18-09-27-00.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-27-00.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <h3>with</h3>
+  <p>Allows grouping actions on an object.
+    <ul>
+      <li><span class="negrita">Context</span>: the object from which it is called, accessible with <span class="r-word">this</span>.</li>
+      <li><span class="negrita">Returns</span>: the result of the last expression.</li>
+    </ul>
+  <a href="UD5/images/ud5-2023-09-18-09-28-10.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-28-10.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <a href="UD5/images/ud5-2023-09-18-09-29-03.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-29-03.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+
+
+</section><!-- End section Funciones de alcance-->
+
+<!--*********************************************************Funciones Lambda***********************************************************-->
+<section class="apartado">
+  <a name="sFuncionesLambda"></a>
+  <h2>Lambda Functions</h2>
+  
+  <p>Generally, a function must be declared and assigned an identifier to be used:</p>
+  
+  <a href="UD5/images/ud5-2023-09-18-09-31-08.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-31-08.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>Lambda functions, also known as anonymous functions or arrow functions, are functions that <span class="negrita">are not declared</span> (do not have an identifier) and <span class="negrita">are used as expressions</span>.</p>
+  
+  <p>Lambda functions are written <span class="negrita">within curly braces { }</span>, they may have parameters or not and must have a body. The <span class="negrita">result of the last instruction in a lambda is returned (WITHOUT RETURN)</span>. If the function contains multiple instructions, Android Studio will show code hints.</p>
+  
+  <a href="UD5/images/ud5-2023-09-18-09-33-22.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-33-22.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>If code hints are not showing in Android Studio, they can be activated through File -> Settings (CTRL+ALT+S):</p>
+  
+  <a href="UD5/images/ud5-2023-09-18-09-35-18.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-35-18.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>If a lambda has parameters, they are separated from the body using the <span class="r-word">-></span> symbol, hence the name "arrow functions."</p>
+  
+  <a href="UD5/images/ud5-2023-09-18-09-36-08.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-36-08.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>In the previous lambdas, Kotlin infers the data types. Explicit types can also be indicated:</p>
+  
+  <a href="UD5/images/ud5-2023-09-18-09-37-56.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-37-56.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>If the lambda has only one parameter, it can be omitted and replaced with <span class="negrita">it</span>:</p>
+  
+  <a href="UD5/images/ud5-2023-09-18-09-37-19.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-37-19.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>Lambdas are used as expressions, meaning they must be assigned to some element. If a lambda is assigned to a variable, it behaves just like a regular function. However, this doesn’t provide new functionality.</p>
+  
+  <a href="UD5/images/ud5-2023-09-18-09-42-30.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-42-30.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>Lambdas <span class="negrita">can be passed as parameters to other functions</span>, which introduces new functionality commonly used in modern programming languages and frameworks. Passing lambdas as function parameters allows:</p>
+  
+  <ul>
+    <li>Creating callback functions.</li>
+    <li>Returning different responses from a function.</li>
+    <li>Allowing the developer to introduce custom logic.</li>
+  </ul>
+  
+  <p>Syntax for passing a lambda function as a parameter to a function:</p>
+  
+  <section><pre><code class="language-kotlin">fun nameOfFun(parameter1: Type, lambdaName: (Type1, Type2…) -> TypeReturn) { … }</code></pre></section>
+  
+  <br>
+  
+  <p>If the lambda does not receive parameters:</p>
+  
+  <section><pre><code class="language-kotlin">fun nameOfFun(parameter1: Type, lambdaName: () -> TypeReturn) { … }</code></pre></section>
+  
+  <br>
+  
+  <p>If the lambda does not return anything:</p>
+  
+  <section><pre><code class="language-kotlin">fun nameOfFun(parameter1: Type, lambdaName: (Type1, Type2…) -> Unit) { … }</code></pre></section>
+  
+  <br>
+  
+  <p>If the lambda neither receives parameters nor returns anything:</p>
+  
+  <section><pre><code class="language-kotlin">fun nameOfFun(parameter1: Type, lambdaName: () -> Unit) { … }</code></pre></section>
+  
+  <br>
+  
+  <h3>Creating Callback Functions</h3>
+  
+  <p>Callback functions ensure that a set of instructions executes after a specific operation, which is typical in <span class="negrita">asynchronous execution</span> (e.g., threads). In the following example, overloaded functions receive a lambda function executed at the end of the <span class="cursiva">doLogin</span> function body:</p>
+  
+  <a href="UD5/images/ud5-2023-09-18-09-45-54.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-09-45-54.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>The previous <span class="cursiva">doLogin</span> function can be called as shown:</p>
+  
+  <a href="UD5/images/ud5-2023-09-18-10-04-58.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-10-04-58.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>If the lambda is the <span class="negrita">last parameter</span>, it can be moved outside the parentheses:</p>
+  
+  <a href="UD5/images/ud5-2023-09-18-10-05-57.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-10-05-57.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>If the lambda is the <span class="negrita">only parameter</span>, the parentheses can be omitted from the call:</p>
+  
+  <a href="UD5/images/ud5-2023-09-18-10-07-29.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-10-07-29.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <h3>Returning Different Responses from a Function</h3>
+  
+  <p>A function can accept multiple parameters, and any or all of them can be lambda functions. This allows executing different lambda functions based on the need:</p>
+  
+  <a href="UD5/images/ud5-2023-09-18-10-27-11.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-10-27-11.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>A possible use with its output is shown below:</p>
+  
+  <a href="UD5/images/ud5-2023-09-18-10-29-25.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-10-29-25.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>Depending on the lambda’s body, one or more of these functions can be executed. In the previous example, both the <span class="d-word">correct</span> and <span class="d-word">error</span> functions return the result, but only the last call to the lambda functions takes effect.</p>
+  
+  <h3>Allowing Developers to Introduce Custom Logic</h3>
+  
+  <p>If the <span class="d-word">calculate</span> function is part of an external library, using it gives developers the option to incorporate custom logic into the function.</p>
+  
+  <a href="UD5/images/ud5-2023-09-18-10-35-04.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-10-35-04.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <h3>Previously Seen Lambda Usage</h3>
+  
+  <ul>
+    <li>In array creation:</li>
+    <a href="UD5/images/ud5-2023-09-18-10-36-49.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-10-36-49.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <li>In functions like forEach, filter, and map:</li>
+    <a href="UD5/images/ud5-2023-09-18-10-37-31.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-10-37-31.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <li>In scope functions:</li>
+    <a href="UD5/images/ud5-2023-09-18-10-37-57.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-10-37-57.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+  </ul>
+  
+  <h3>Lambdas in Android Development</h3>
+  
+  <p>Lambdas are crucial in Android mobile app development, especially when using <span class="negrita">Jetpack Compose</span>, as will be seen in the next module.</p>
+  
+  <a href="UD5/images/ud5-2023-09-18-10-39-22.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-18-10-39-22.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+
+</section><!-- End section Funciones Lambda-->
+
+<!--*********************************************************Ejercicios Interactivos en Kotlin***********************************************************-->
+<section class="apartado">
+<a name="sEjerciciosInteractivos"></a>
+<h2>Interactive exercises en Kotlin</h2>
+<div class="" style="width: 100%;">
+  <p>Do this exercises from <a class="enlace" target="_blank" href="https://kotlinlang.org/">https://kotlinlang.org/</a> </p> <br>
+  <iframe src="https://play.kotlinlang.org/koans/Introduction/Hello,%20world!/Task.kt" frameborder="1" style="width: 100%;height: 1500px;"></iframe>
+</div>
+
+
+</section><!-- End section Ejercicios Interactivos en Kotlin-->
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <script src="../script/prism.js"></script>
+</body>
+</html>
