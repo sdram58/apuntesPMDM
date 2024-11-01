@@ -37,21 +37,21 @@
       <a href="#sColisiones" title="11.- Collisions">11.- Collisions</a>
       <a href="#sMetodos_Intersantes" title="12.- Interesting Methods">12.- Interesting Methods</a>
     </div>
-    <div class="oculto fila">      
+    <div class="fila">      
       <a href="#sComponenteCharacterController" title="13.- CharacterController Component">13.- CharacterController Component</a>
       <a href="#sCamaraprofesional" title="14.- Professional Camera">14.- Professional Camera</a>
       <a href="#sMovimientoProgramado" title="15.- Programmed Movement">15.- Programmed Movement</a>
     </div>
     
-    <div class="oculto fila">      
+    <div class="fila">      
       <a href="#sRaycast" title="16.- Raycast">16.- Raycast</a>
       <a href="#sNPCs" title="17.- NPCs">17.- NPCs</a>
       <a href="#sCambiodeescenas" title="18.- Scene Switching">18.- Scene Switching</a>
     </div>
-    <div class="oculto fila">      
+    <div class="fila">      
       <a href="#sPlayerPrefs" title="19.- PlayerPrefs">19.- PlayerPrefs</a>
       <a href="#sMenus" title="20.- Menus">20.- Menus</a>
-      <a href="" class="oculto"></a>
+      <a href="#sComunicacion" title="21.- Communication between GameObjects">21.- Communication between GameObjects</a>
     </div>
     
   </nav> <!-- BTM_MENU-->
@@ -81,21 +81,21 @@
       <a href="#sColisiones" title="11.- Collisions">11.- Collisions</a>
       <a href="#sMetodos_Intersantes" title="12.- Interesting Methods">12.- Interesting Methods</a>
     </div>
-    <div class="oculto fila">      
+    <div class="fila">      
       <a href="#sComponenteCharacterController" title="13.- CharacterController Component">13.- CharacterController Component</a>
       <a href="#sCamaraprofesional" title="14.- Professional Camera">14.- Professional Camera</a>
       <a href="#sMovimientoProgramado" title="15.- Programmed Movement">15.- Programmed Movement</a>
     </div>
     
-    <div class="oculto fila">      
+    <div class="fila">      
       <a href="#sRaycast" title="16.- Raycast">16.- Raycast</a>
       <a href="#sNPCs" title="17.- NPCs">17.- NPCs</a>
       <a href="#sCambiodeescenas" title="18.- Scene Switching">18.- Scene Switching</a>
     </div>
-    <div class="oculto fila">      
+    <div class="fila">      
       <a href="#sPlayerPrefs" title="19.- PlayerPrefs">19.- PlayerPrefs</a>
       <a href="#sMenus" title="20.- Menus">20.- Menus</a>
-      <a href="" class="relleno"></a>
+      <a href="#sComunicacion" title="21.- Communication between GameObjects">21.- Communication between GameObjects</a>
     </div>
 
   </div>
@@ -1863,8 +1863,45 @@ public class CubeScript : MonoBehaviour
     
     <p>An initial approach for character movement using CharacterController, where the character can move on a surface, could be the following:</p>
     
-    <a href="UD3/images/ud3-2024-02-20-18-26-04.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-26-04.png" /><br><figcaption></figcaption></figure></a>
-    <br>
+    <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public float horizontalMove;
+    public float verticalMove;
+    public Vector3 playerInput;
+
+    public CharacterController player;
+
+    public float playerSpeed;
+    // Start is called before the first frame update
+    void Start()
+    {  
+        player = GetComponent&lt;CharacterController>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //Getting the player's input values
+        horizontalMove = Input.GetAxis("Horizontal");
+        verticalMove = Input.GetAxis("Vertical");
+
+        playerInput = new Vector3(horizontalMove,0, verticalMove);
+
+        // ClampMagnitude creates a new Vector3, but limits the values to the specified maximum.
+        // Since GetAxis Horizontal/Vertical returns a maximum of 1, that value is specified here.
+        // This way, diagonal movement will be at the same speed as movement in a single direction.
+
+        playerInput = Vector3.ClampMagnitude(playerInput, 1);
+
+        // The player's movement is assigned based on the control input and speed.
+        player.Move(playerInput * playerSpeed * Time.deltaTime);
+    }
+}</code></pre>
+    </section><br><br>
     
     <p>The properties are public so their values can be checked in the <span class="cursiva">Inspector</span> when the script is executed.</p>
     
@@ -1873,7 +1910,7 @@ public class CubeScript : MonoBehaviour
     
     <h3>Character Control with CharacterController</h3>
     
-    <p>Below is a series of scripts for:
+    <p>Below, there are a series of scripts for:
       <ul>
         <li>Full player movement, including jumping and sliding on steep slopes.</li>
         <li>Camera following the player.</li>
@@ -1885,28 +1922,237 @@ public class CubeScript : MonoBehaviour
     
     <a href="UD3/images/ud3-2024-02-20-18-37-45.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-37-45.png" /><br><figcaption></figcaption></figure></a>
     <br>
+    <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    // Properties to get the Input
+    private float horizontalMove;
+    private float verticalMove;
     
-    <a href="UD3/images/ud3-2024-02-20-18-37-54.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-37-54.png" /><br><figcaption></figcaption></figure></a>
-    <br>
+    // Property to indicate where the player wants to move based on previous values
+    private Vector3 playerInput;
     
-    <a href="UD3/images/ud3-2024-02-20-18-38-58.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-38-58.png" /><br><figcaption></figcaption></figure></a>
-    <br>
-    <a href="UD3/images/ud3-2024-02-20-18-39-20.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-39-20.png" /><br><figcaption></figcaption></figure></a>
-    <br>
-    <a href="UD3/images/ud3-2024-02-20-18-39-46.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-39-46.png" /><br><figcaption></figcaption></figure></a>
+    // Property to access the CharacterController component
+    private CharacterController player;
+    
+    // Property to indicate the movement speed
+    public float playerSpeed;
+    
+    // Variable to indicate where the player is going to move
+    private Vector3 movePlayer;
+    
+    // Property to indicate the gravity force
+    public float gravity = 9.807f;
+    
+    // Property to store the velocity to apply during a fall
+    public float fallVelocity;
+    
+    // Property to store the jump force
+    public float jumpForce;
+    
+    // Properties to access the camera and know its direction
+    public Camera mainCamera;
+    private Vector3 camForward;
+    private Vector3 camRight;
+    
+    // Property to know if the character is on a slope
+    public bool isOnSlope = false;
+    private Vector3 hitNormal;
+    
+    // Properties to indicate the sliding speed and falling force
+    // On a slope steeper than allowed (that cannot be climbed)
+    public float slideVelocity;
+    public float slopeForceDown;
+
+    void Start()
+    {
+        player = GetComponent&lt;CharacterController>();
+    }
+
+    void Update()
+    {
+        // The values of the player's input are obtained
+        horizontalMove = Input.GetAxis("Horizontal");
+        verticalMove = Input.GetAxis("Vertical");
+
+        playerInput = new Vector3(horizontalMove, 0, verticalMove);
+
+        // ClampMagnitude creates a new Vector3 but limits the values to the specified one
+        // Since GetAxis Horizontal/Vertical returns a maximum of 1, that value is used.
+        // Moving diagonally will behave the same as moving in a single direction.
+        playerInput = Vector3.ClampMagnitude(playerInput, 1);
+
+        // The camera's direction is obtained, and a vector is created indicating where
+        // the player should move based on the Input and the camera's direction.
+        camDirection();
+        movePlayer = playerInput.x * camRight + playerInput.z * camForward;
+
+        // The player's movement speed is applied
+        movePlayer *= playerSpeed;
+
+        // The character rotates towards the direction they are moving
+        player.transform.LookAt(player.transform.position + movePlayer);
+
+        // The falling velocity is calculated using gravity as the base
+        SetGravity();
+        SlideOnSlope();
+
+        // The jump force is applied
+        PlayerSkills();
+
+        // Movement is applied to the character
+        player.Move(movePlayer * Time.deltaTime);
+    }
+
+    // Method that calculates the direction the camera is pointing to move the character according to its direction
+    // Pressing W/S will always move up/down on the screen, respectively
+    // Pressing A/D will always move left/right on the screen, respectively
+    void camDirection()
+    {
+        camForward = mainCamera.transform.forward;
+        camRight = mainCamera.transform.right;
+
+        // Y is not needed here, so it is set to zero
+        camForward.y = 0;
+        camRight.y = 0;
+
+        // Normalizes the value to a magnitude of 1
+        camForward = camForward.normalized;
+        camRight = camRight.normalized;
+    }
+
+    // Method that calculates the force that should be applied during falls
+    void SetGravity()
+    {
+        // If the character is on the ground, gravity is a static force; if in the air, it's an acceleration (accumulates)
+        if (player.isGrounded)
+        {
+            // On the ground, gravity must start with the magnitude of gravity -9.807
+            fallVelocity = -gravity * Time.deltaTime;
+        }
+        else
+        {
+            fallVelocity -= gravity * Time.deltaTime;
+        }
+
+        // The calculated fall velocity is applied
+        movePlayer.y = fallVelocity;
+    }
+
+    // Method to apply forces based on the character's skills, for example, jumping
+    void PlayerSkills()
+    {
+        if (player.isGrounded && Input.GetButtonDown("Jump"))
+        {
+            fallVelocity = jumpForce;
+            movePlayer.y = fallVelocity;
+        }
+    }
+
+    // Method that detects if the character is on a slope that cannot be climbed,
+    // causing the player to slide
+    void SlideOnSlope()
+    {
+        // Calculates if the character is on a slope that cannot be climbed
+        isOnSlope = Vector3.Angle(Vector3.up, hitNormal) >= player.slopeLimit;
+        // If it cannot be climbed, forces are applied to slide downwards
+        if (isOnSlope)
+        {
+            movePlayer.x += (1 - hitNormal.y) * hitNormal.x * slideVelocity;
+            movePlayer.z += (1 - hitNormal.y) * hitNormal.z * slideVelocity;
+            movePlayer.y += slopeForceDown;
+        }
+    }
+
+    // Method inherited from MonoBehaviour that detects collisions
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        // When detecting a collision, the angle of the surface normal is obtained
+        hitNormal = hit.normal;
+    }
+
+
+
+}
+</code></pre>
+    </section><br>
     <br>
     <p class="sub-section">PushRigidBody.cs</p>
     <a href="UD3/images/ud3-2024-02-20-18-40-38.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-40-38.png" /><br><figcaption></figcaption></figure></a>
     <br>
-    <a href="UD3/images/ud3-2024-02-20-18-40-47.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-40-47.png" /><br><figcaption></figcaption></figure></a>
-    <br>
+    <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PushRigidBody : MonoBehaviour
+{
+    // Pushing force that the character has
+    public float pushPower = 2;
+    // Mass of the object being pushed
+    private float targetMass;
+
+    // When a collision is detected, a pushing force will be applied
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        // At this point, you could check to only push GameObjects with a specific tag.
+        // In this code, any object with a Rigidbody will be pushed.
+
+        // Rigidbody of the element that will be pushed
+        Rigidbody body = hit.collider.attachedRigidbody;
+
+        if (body != null && !body.isKinematic && hit.moveDirection.y > -0.3)
+        {
+            // The mass of the object to push is obtained
+            targetMass = body.mass;
+            // The direction in which the object will be pushed is calculated
+            Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+            // The pushing force is applied based on the direction, character's force, and object's weight
+            body.velocity = pushDir * pushPower / targetMass;
+        }
+    }
+}</code></pre>
+    </section><br><br>
     
     <p class="sub-section">ThirdPersonCamera.cs</p>
     <a href="UD3/images/ud3-2024-02-20-18-41-06.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-41-06.png" /><br><figcaption></figcaption></figure></a>
     <br>
-    <a href="UD3/images/ud3-2024-02-20-18-41-19.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-41-19.png" /><br><figcaption></figcaption></figure></a>
-    <br>
-    
+ <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ThirdPersonCamera : MonoBehaviour
+{
+    // Distance from the camera to the character
+    public Vector3 offset;
+    // Character's Transform (GameObject that the camera follows)
+    private Transform target;
+    // Smoothing applied when moving the camera. Allows values between 0 and 1 only
+    [Range(0, 1)] public float lerpValue;
+    // Mouse sensitivity to move the camera
+    public float sensitivity;
+
+    void Start()
+    {
+        target = GameObject.Find("Player").transform;
+    }
+
+    // Method executed after all Update calls, so all character adjustments
+    // have been made, and the camera is then updated.
+    void LateUpdate()
+    {
+        // Moves the GameObject from one position to another in a smooth way
+        transform.position = Vector3.Lerp(transform.position, target.position + offset, lerpValue);
+
+        offset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * sensitivity, Vector3.up) * offset;
+        transform.LookAt(target);
+    }
+}
+</code></pre>
+ </section><br><br>   
+    <p><a class="enlace" target="_blank" href="https://youtu.be/a9DEOeJxw9Y?si=OM8Kp5rI4AqE9KNV">Here</a> you've a youtube's playlist with a complete explanation</p>
     <h3>CharacterController vs Physical Movement</h3>
     <p>When implementing character movement, the choice is between:
       <ul>
@@ -1967,8 +2213,42 @@ public class CubeScript : MonoBehaviour
     
     <br>
     <p>Add a script to the GameObject that needs to move with the following code:</p>
-    <a href="UD3/images/ud3-2024-02-20-18-53-12.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-53-12.png" /><br><figcaption></figcaption></figure></a>
-    <br>
+    <section><pre><code class="language-csharp">public class Platform : MonoBehaviour
+{
+    // Starting point
+    public GameObject startGO;
+    // Ending point
+    public GameObject endGO;
+    // Platform speed
+    public float platformSpeed = 4;
+    // Platform movement direction
+    private Vector3 platformDestiny;
+
+    void Start()
+    {
+        // At the start, the initial destination point is set
+        platformDestiny = endGO.transform.position;
+    }
+
+    void Update()
+    {
+        // If the platform reaches a start/end destination point, the destination is set to the other point
+        if (transform.position == endGO.transform.position)
+        {
+            platformDestiny = startGO.transform.position;
+        }
+        else if (transform.position == startGO.transform.position)
+        {
+            platformDestiny = endGO.transform.position;
+        }
+
+        // Calculate the position to move the platform in the current frame
+        Vector3 newPosition = Vector3.MoveTowards(transform.position, platformDestiny, platformSpeed * Time.deltaTime);
+        transform.position = newPosition;
+    }
+}
+</code></pre>
+    </section><br><br>
     
     <p>This code uses kinematic movement to move the platform from one place to another.</p>
     
@@ -1994,8 +2274,68 @@ public class CubeScript : MonoBehaviour
     
     <p>Since the platform has a Rigidbody, the movement must be physical.</p>
     
-    <a href="UD3/images/ud3-2024-03-11-10-28-38.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-28-38.png" /><br><figcaption></figcaption></figure></a>
-    <br>
+    <section><pre><code class="language-csharp">public class PlatformEnhanced : MonoBehaviour
+{
+    // Rigidbody of the GameObject that will move
+    public Rigidbody platformRB;
+    // Array of transforms for the positions (empty GameObjects as points)
+    public Transform[] platformPositions;
+    // Platform speed
+    public float platformSpeed;
+    // Indicates if it can move or not
+    public bool moveToTheNext = true;
+    // Variable indicating the time to wait upon reaching a target position
+    public float waitTime;
+
+    // Variable to calculate the positions between which it will move
+    private int actualPosition = 0;
+    private int nextPosition = 1;
+
+    void Start()
+    {
+        // The platform starts at the initial position
+        platformRB.position = platformPositions[0].position;
+    }
+
+    void Update()
+    {
+        // If it moves and hasn't waited the indicated time
+        if (moveToTheNext)
+        {
+            StopCoroutine(WaitForNext(0)); // Stop the coroutine when it can move (the wait time has passed)
+
+            // Move the platform to the indicated position
+            platformRB.MovePosition(Vector3.MoveTowards(platformRB.position, platformPositions[nextPosition].position, platformSpeed * Time.deltaTime));
+        }
+
+        // Check if the platform has reached the destination
+        if (Vector3.Distance(platformRB.position, platformPositions[nextPosition].position) == 0)
+        {
+            // Upon reaching the destination, a coroutine is launched to wait for the indicated time
+            StartCoroutine(WaitForNext(waitTime));
+            actualPosition = nextPosition;
+            // If it's the last destination, the next one will be the first
+            if (nextPosition + 1 == platformPositions.Length)
+            {
+                nextPosition = 0;
+            }
+            else
+            {
+                nextPosition++;
+            }
+        }
+    }
+
+    // Coroutine to wait upon reaching a destination
+    IEnumerator WaitForNext(float time)
+    {
+        moveToTheNext = false; // Indicates it cannot move
+        yield return new WaitForSeconds(time); // Waits the indicated time
+        moveToTheNext = true; // Indicates it can move again
+    }
+}
+</code></pre>
+    </section><br><br>
     
     <p>If the character's movement has been implemented using the <span class="negrita">CharacterController</span> component, 
        and the previous example is used to move a platform, the character will not stay on the platform.</p>
@@ -2041,8 +2381,30 @@ public class CubeScript : MonoBehaviour
     </p>
     
     <p>In the following example, a ray is emitted, and when it hits something, a message is displayed:</p>
-    <a href="UD3/images/ud3-2024-03-11-10-29-22.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-29-22.png" /><br><figcaption></figcaption></figure></a>
-    <br>
+    <section><pre><code class="language-csharp">public class Sphere : MonoBehaviour
+{
+    private float rotationSpeed = 30f;
+
+    void Update()
+    {
+        // Object rotation to emit rays in all 360 degrees
+        transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
+        
+        // Declare the ray (origin and direction)
+        Ray ray = new Ray(transform.position, transform.forward);
+        
+        // Visualize the ray in debug mode only
+        Debug.DrawRay(ray.origin, ray.direction * 5f);
+        
+        // If the ray hits another GameObject, a message is displayed
+        if (Physics.Raycast(ray))
+        {
+            Debug.Log("Hit detected");
+        }
+    }
+}
+</code></pre>
+    </section><br><br>
     <a href="UD3/images/ud3-2024-03-11-10-29-32.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-29-32.png" /><br><figcaption></figcaption></figure></a>
     <br>
     
@@ -2060,8 +2422,31 @@ public class CubeScript : MonoBehaviour
     
     <p>The <span class="negrita">RaycastHit</span> object must be declared before calling the <span class="negrita">Raycast</span> method.</p>
     
-      <a href="UD3/images/ud3-2024-03-11-10-30-58.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-30-58.png" /><br><figcaption></figcaption></figure></a>
-      <br>
+      <section><pre><code class="language-csharp">public class Sphere : MonoBehaviour
+{
+    private float rotationSpeed = 30f;
+
+    void Update()
+    {
+        transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
+
+        // Variable to store the GameObject that the ray hits
+        RaycastHit hit;
+        Ray ray = new Ray(transform.position, transform.forward);
+        Debug.DrawRay(ray.origin, ray.direction * 5f);
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            Debug.Log("Distance: " + hit.distance);
+            Debug.Log("Hit point: " + hit.point);
+
+            // Change the color of the object that is hit
+            hit.transform.gameObject.GetComponent&lt;MeshRenderer>().material.color = Color.blue;
+        }
+    }
+}
+</code></pre>
+      </section><br><br>
       
       <a href="UD3/images/ud3-2024-03-11-10-31-08.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-31-08.png" /><br><figcaption></figcaption></figure></a>
       <br>
@@ -2104,8 +2489,33 @@ public class CubeScript : MonoBehaviour
       
     <p>The following script should be added to the camera. 
       This script cannot be named Camera as it would overwrite Unity's built-in <span class="negrita">Camera</span> class.</p>
-    <a href="UD3/images/ud3-2024-03-11-10-36-10.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-36-10.png" /><br><figcaption></figcaption></figure></a>
-    <br>
+    <section><pre><code class="language-csharp">// The script cannot be named Camera because it would override Unity's Camera class
+public class CameraRay : MonoBehaviour
+{
+    private Camera mainCamera;
+
+    void Start()
+    {
+        mainCamera = GetComponent&lt;Camera>();
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                hit.transform.gameObject.GetComponent&lt;MeshRenderer>().material.color = Color.green;
+                Debug.DrawRay(ray.origin, ray.direction * 10, Color.blue);
+            }
+        }
+    }
+}
+</code></pre>
+    </section><br><br>
     <a href="UD3/images/ud3-2024-03-11-10-36-19.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-36-19.png" /><br><figcaption></figcaption></figure></a>
     <br>
     
@@ -2113,16 +2523,39 @@ public class CubeScript : MonoBehaviour
       
       <p>To detect collisions between GameObjects using Raycast, you should cast a ray with a distance that doesn't greatly exceed the GameObject 
         emitting the ray.</p>
-      <a href="UD3/images/ud3-2024-03-11-10-36-40.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-36-40.png" /><br><figcaption></figcaption></figure></a>
-      <br>
+      <section><pre><code class="language-csharp">private bool GroundCheck()
+{
+    float rayLength = 0.6f;
+    Ray ray = new Ray(transform.position, Vector3.down);
+    Debug.DrawRay(ray.origin, ray.direction * rayLength, Color.red);
+
+    return Physics.Raycast(ray.origin, ray.direction, rayLength);
+}
+</code></pre>
+      </section><br><br>
       
       <a href="UD3/images/ud3-2024-03-11-10-36-48.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-36-48.png" /><br><figcaption></figcaption></figure></a>
       <br>
       
       
       <p>In some video games, rays are emitted from different points on the character to control their movement.</p>
-    <a href="UD3/images/ud3-2024-03-11-10-37-07.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-37-07.png" /><br><figcaption></figcaption></figure></a>
-    <br>
+    <section><pre><code class="language-csharp">private bool GroundCheck()
+{
+    float rayLength = 0.8f;
+
+    Vector3 rightRayPosition = transform.position + new Vector3(transform.localScale.x / 2 - 0.05f, 0, 0);
+    Ray rayRight = new Ray(rightRayPosition, Vector3.down);
+    Debug.DrawRay(rayRight.origin, rayRight.direction * rayLength, Color.green);
+
+    Vector3 leftRayPosition = transform.position - new Vector3(transform.localScale.x / 2 - 0.05f, 0, 0);
+    Ray rayLeft = new Ray(leftRayPosition, Vector3.down);
+    Debug.DrawRay(rayLeft.origin, rayLeft.direction * rayLength, Color.green);
+
+    return Physics.Raycast(rayRight.origin, rayRight.direction, rayLength) ||
+           Physics.Raycast(rayLeft.origin, rayLeft.direction, rayLength);
+}
+</code></pre>
+    </section><br><br>
     <a href="UD3/images/ud3-2024-03-11-10-37-15.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-37-15.png" /><br><figcaption></figcaption></figure></a>
     <br>
     
@@ -2144,12 +2577,84 @@ public class CubeScript : MonoBehaviour
        <p>Thus, for a character with a CharacterController to move along with a platform with a Rigidbody that it is standing on, 
         the following script should be added to the character:</p>
     
-        <a href="UD3/images/ud3-2024-03-11-10-37-55.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-37-55.png" /><br><figcaption></figcaption></figure></a>
-        <br>
-        
-        <br>
-        <a href="UD3/images/ud3-2024-03-11-10-38-03.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-38-03.png" /><br><figcaption></figcaption></figure></a>
-        <br>
+        <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MoveWithFloor : MonoBehaviour
+{
+    // Variable to access the character controller
+    private CharacterController player;
+    // Variable to store the position of the last touched ground points
+    private Vector3 actualGroundPosition;
+    private Vector3 lastGroundPosition;
+    // Variable to store the name of the last touched ground object
+    private string groundName;
+    private string lastGroundName;
+    // Variable to store the last rotations of the platform
+    private Quaternion actualRotation;
+    private Quaternion lastRotation;
+
+    void Start()
+    {
+        player = GetComponent&lt;CharacterController>();
+    }
+
+    void Update()
+    {
+        // If the player is touching the ground, we check which element it is
+        if (player.isGrounded)
+        {
+            RaycastHit hit; // Variable to store the surface the player is on
+
+            // A SphereCast is used to check if there's a surface below
+            // The surface is stored in the variable hit
+            if (Physics.SphereCast(transform.position, player.height / 4.2f, -transform.up, out hit))
+            {
+                // If the surface has the "Platforms" tag, we need to calculate the surface's movement
+                // to apply it to the player
+                if (hit.collider.CompareTag("Platforms"))
+                {
+                    // Get the GameObject of the surface and retrieve its name, position, and rotation
+                    GameObject groundedIn = hit.collider.gameObject;
+                    groundName = groundedIn.name;
+                    actualGroundPosition = groundedIn.transform.position;
+                    actualRotation = groundedIn.transform.rotation;
+
+                    // If the platform has changed position and the player remains on it, update the player's position
+                    if (actualGroundPosition != lastGroundPosition && groundName == lastGroundName)
+                    {
+                        transform.position += actualGroundPosition - lastGroundPosition;
+                        player.enabled = false;
+                        player.transform.position = transform.position;
+                        player.enabled = true;
+                    }
+
+                    // If the platform has changed its rotation and the player remains on it, update the player's rotation
+                    if (actualRotation != lastRotation && groundName == lastGroundName)
+                    {
+                        var newRotation = transform.rotation * (actualRotation.eulerAngles - lastRotation.eulerAngles);
+                        transform.RotateAround(groundedIn.transform.position, Vector3.up, newRotation.y);
+                    }
+
+                    // After applying movements, update the variables
+                    lastGroundName = groundName;
+                    lastGroundPosition = actualGroundPosition;
+                    lastRotation = actualRotation;
+                }
+            }
+        }
+
+        // If no collision is detected, reset the variables to default values
+        else
+        {
+            lastGroundName = null;
+            lastGroundPosition = Vector3.zero;
+            lastRotation = Quaternion.Euler(Vector3.zero);
+        }            
+    }
+}</code></pre>
+        </section><br><br>
         
         <br>
         
@@ -2177,8 +2682,8 @@ public class CubeScript : MonoBehaviour
     
     <p>In general, an NPC can be:
       <ul>
-        <span class="negrita">Active</span>: offers missions, information, or items that change as the player progresses.
-        <span class="negrita">Passive</span>: repeats the same information or behavior each time the player interacts with them.
+        <li><span class="negrita">Active</span>: offers missions, information, or items that change as the player progresses.</li>
+        <li><span class="negrita">Passive</span>: repeats the same information or behavior each time the player interacts with them.</li>
       </ul>
     </p>
     
@@ -2318,8 +2823,32 @@ public class CubeScript : MonoBehaviour
       <a href="UD3/images/ud3-2024-03-11-10-44-24.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-44-24.png" /><br><figcaption></figcaption></figure></a>
       <br>
       
-      <a href="UD3/images/ud3-2024-03-11-10-44-32.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-44-32.png" /><br><figcaption></figcaption></figure></a>
-      <br>
+      <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+
+public class NavMeshController : MonoBehaviour
+{
+    // Target object to follow
+    public Transform aim;
+    // Variable to handle navigation through the scene
+    private NavMeshAgent agent;
+
+    void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
+
+    void Update()
+    {
+        // Each frame updates the target position
+        // so if the target moves, the path will be recalculated
+        agent.destination = aim.position;
+    }
+}</code></pre>
+      </section><br><br>
       
       
       <p>From the above script, you can create a path for a GameObject:
@@ -2337,15 +2866,42 @@ public class CubeScript : MonoBehaviour
       <p>If you want the patrolling enemy to chase the player, add the following:
         <ul>
           <li>Declare a Transform for the player in the script.</li>
-          <li>Add the functionality of casting a Raycast from the enemy in the direction it walks, with a specific length (you can simulate human vision by having the Raycast rotate a few degrees to each side).</li>
+          <li>Add the functionality of casting a Raycast from the enemy in the direction it walks, with a specific length 
+            (you can simulate human vision by having the Raycast rotate a few degrees to each side).</li>
           <li>If the Raycast hits the player, save the current target in a variable and change the target to the player's transform.</li>
-          <li>If the Raycast no longer hits the player (the player moves out of range), update the target to the previously saved one (this can be improved by updating the target to the closest current point on the enemy's route).</li>
+          <li>If the Raycast no longer hits the player (the player moves out of range), 
+            update the target to the previously saved one (this can be improved by updating the target to the closest current point on the enemy's route).</li>
         </ul>
       </p>
       
     <p>If you want the player's character to move to the point clicked on the screen, you can use the following script:</p>
-    <a href="UD3/images/ud3-2024-03-11-10-45-08.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-45-08.png" /><br><figcaption></figcaption></figure></a>
-    <br>
+    <section><pre><code class="language-csharp">public class NavMeshMouse : MonoBehaviour
+{
+    // Variable to handle navigation through the scene
+    private NavMeshAgent agent;
+
+    void Start()
+    {
+        agent = GetComponent&lt;NavMeshAgent>();
+    }
+
+    void Update()
+    {
+        // When clicking on a point on the screen, a ray is cast to determine where the click occurred
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+            {
+                // Sets the agent's destination to the point where the ray hit,
+                // which is where the mouse click occurred
+                agent.destination = hit.point;
+            }
+        }
+    }
+}
+</code></pre>
+    </section><br><br>
     
       
       </section><!-- End section NPCs-->
@@ -2385,22 +2941,46 @@ public class CubeScript : MonoBehaviour
     <br>
     
     <p>To change scenes from a script, the following library needs to be added at the top of the script.</p>
-    <a href="UD3/images/ud3-2024-03-11-10-46-23.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-46-23.png" /><br><figcaption></figcaption></figure></a>
-    <br>
+    <section><pre><code class="language-csharp">using UnityEngine.SceneManagement;</code></pre>
+    </section><br><br>
     
     <p>The instruction to switch scenes is as follows:</p>
-    <a href="UD3/images/ud3-2024-03-11-10-46-31.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-46-31.png" /><br><figcaption></figcaption></figure></a>
-    <br>
+    <section><pre><code class="language-csharp">SceneManager.LoadScene("SceneName");</code></pre>
+    </section><br><br>
     
     <p>You can also use the scene identifier (Build settings):</p>
-    <a href="UD3/images/ud3-2024-03-11-10-46-41.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-46-41.png" /><br><figcaption></figcaption></figure></a>
-    <br>
+    <section><pre><code class="language-csharp">SceneManager.LoadScene(2);</code></pre>
+    </section><br><br>
     
     <p>When switching scenes, you can tell specific GameObjects not to be destroyed and to persist in the new scene.</p>
     
     <p>This allows data to be transferred between scenes and saves time since the GameObjects are already loaded in memory.</p>
-    <a href="UD3/images/ud3-2024-03-11-10-46-55.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-46-55.png" /><br><figcaption></figcaption></figure></a>
-    <br>
+    <section><pre><code class="language-csharp">public class DontDestroy : MonoBehaviour
+{
+    // Static variable to store the instance of this script
+    public static DontDestroy instance;
+
+    // When the script is loaded
+    void Awake()
+    {
+        // If an instance of the script already exists, destroy the GameObject
+        // that contains it to avoid duplicates
+        if (DontDestroy.instance != null)
+        {
+            Destroy(gameObject);
+            return; // Stop the execution of the Awake method
+        }
+
+        // If there is no instance of the script, store it in the variable
+        // This only happens the first time the GameObject is loaded
+        instance = this;
+
+        // Indicate that this GameObject should persist across scenes
+        DontDestroyOnLoad(gameObject);
+    }
+}
+</code></pre>
+    </section><br><br>
     
       </section><!-- End section Scene Switching-->
     
@@ -2529,6 +3109,259 @@ public class CubeScript : MonoBehaviour
     
     
       </section><!-- End section Menus-->
+
+
+      <!--*********************************************************sComunicacion***********************************************************-->
+      <section class="apartado">
+      <a name="sComunicacion"></a>
+      <h2>Communication between GameObjects</h2>
+<p>Previously, we studied how one GameObject could access the script of another GameObject.</p>
+
+<p>To do this, a reference to the other object must be stored in a variable in order to access the Script component and thus be able to access its properties and methods.</p>
+
+<p>This method is very intrusive and goes against the principles of object-oriented programming.</p>
+
+<p>There is an alternative way of communication using <span class="d-word">delegates</span> and <span class="d-word">events</span>.</p>
+
+<p>Delegates can be considered as references to other methods.</p>
+
+<p>Events are an extension of delegates that allow the class defining them to notify other classes when an action occurs.</p>
+
+<p>In this way, a delegate and an event associated with that delegate can be defined within a GameObject.</p>
+
+<p>Other GameObjects can subscribe to that event by specifying their own method, so that when the event is triggered from the emitting GameObject, that method will be called.</p>
+
+<p>The best way to understand this is through an example.</p>
+
+<p><span class="subrayado">Scene explanation</span>:</p>
+<p>
+<ul>
+  <li><span class="negrita">Capsule</span>: character (Player tag) with RigidBody that can move across the plane.</li>
+<li><span class="negrita">Walls with doors</span>: the brown GameObjects are doors that rise up.</li>
+<li><span class="negrita">Blue tile</span>: switch that opens the doors when pressed.</li>
+</ul>
+</p>
+
+<a href="UD3/images/ud_3-2024-10-24-19-09-18.png" target="_BLANK"><figure><img src="UD3/images/ud_3-2024-10-24-19-09-18.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<a href="UD3/images/ud_3-2024-10-24-19-09-39.png" target="_BLANK"><figure><img src="UD3/images/ud_3-2024-10-24-19-09-39.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<p><span class="negrita">Script on the tile</span></p>
+<section><pre><code class="language-csharp">public class DoorSwitch : MonoBehaviour
+{
+    // Declare the delegate
+    public delegate void Activate();
+    // Declare an event of the same type as the delegate
+    // It is declared as static to allow subscription using the class name
+    public static event Activate OnActivate;
+
+    // Other GameObjects can subscribe to these events
+    // These events can be triggered from any function
+    // When the event is triggered, the rest of the subscribed GameObjects
+    // will be able to execute their own function
+    private void OnTriggerEnter(Collider other)
+    {
+        // Only trigger the event if some GameObject has subscribed to it
+        if (OnActivate != null)
+        {
+            OnActivate(true);
+        }
+    }
+}
+</code></pre>
+</section><br><br>
+
+<p><span class="negrita">Script on the door:</span></p>
+<section><pre><code class="language-csharp">public class Door : MonoBehaviour
+{
+    void Start()
+    {
+        // The door subscribes to the OnActivate event from the switch
+        // By subscribing, it indicates that if the event occurs, the Open method of this class will be executed
+        DoorSwitch.OnActivate += Open;
+    }
+
+    private void Open()
+    {
+        transform.Translate(Vector3.up * 3f);
+    }
+
+    void OnDisable()
+    {
+        // The door unsubscribes from the OnActivate event of the switch
+        DoorSwitch.OnActivate -= Open;
+    }
+}
+</code></pre>
+</section><br><br>
+<p>You can make the door lower when leaving the tile and add a cube with <span class="r-word">Rigidbody</span> to the scene to leave it on the tile.</p>
+
+<p>In this case, the tile will have two events, activate and deactivate.</p>
+
+<p>The doors will need to subscribe to both events, each with its own method.</p>
+<a href="UD3/images/ud_3-2024-10-24-19-11-31.png" target="_BLANK"><figure><img src="UD3/images/ud_3-2024-10-24-19-11-31.png" /><br><figcaption></figcaption></figure></a>
+<br>
+<p><span class="negrita">Script on the tile</span></p>
+<section><pre><code class="language-csharp">public class DoorSwitch : MonoBehaviour
+{
+    public delegate void Activate();
+    public static event Activate OnActivate;
+
+    public delegate void Disable();
+    public static event Disable OnDisable;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (OnActivate != null)
+        {
+            OnActivate();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (OnDisable != null)
+        {
+            OnDisable();
+        }
+    }
+}
+</code></pre>
+</section><br><br>
+<p><span class="negrita">Script on the door:</span></p>
+<section><pre><code class="language-csharp">public class Door : MonoBehaviour
+{
+    void Start()
+    {
+        DoorSwitch.OnActivate += Open;
+        DoorSwitch.OnDisable += Close;
+    }
+
+    private void Open()
+    {
+        transform.Translate(Vector3.up * 3f);
+    }
+
+    private void Close()
+    {
+        transform.Translate(Vector3.down * 3f);
+    }
+
+    void OnDisable()
+    {
+        DoorSwitch.OnActivate -= Open;
+        DoorSwitch.OnDisable -= Close;
+    }
+}
+</code></pre>
+</section><br><br>
+<a href="UD3/images/ud_3-2024-10-24-19-12-47.png" target="_BLANK"><figure><img src="UD3/images/ud_3-2024-10-24-19-12-47.png" /><br><figcaption></figcaption></figure></a>
+<br>
+<p>You can also use the same event for different actions, for this, the delegate should be defined to accept a parameter.</p>
+
+<p>This way, when the event is triggered, you can send that parameter, which can be used by the GameObjects subscribed to the event.</p>
+
+<p><span class="negrita">Script on the tile</span></p>
+<section><pre><code class="language-csharp">public class DoorSwitch : MonoBehaviour
+{
+    public delegate void Activate(bool open);
+    public static event Activate OnActivate;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (OnActivate != null)
+        {
+            OnActivate(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (OnActivate != null)
+        {
+            OnActivate(false);
+        }
+    }
+}
+</code></pre>
+</section><br><br>
+ 
+
+<p><span class="negrita">Script on the door:</span></p>
+    <section><pre><code class="language-csharp">public class Door : MonoBehaviour
+{
+    void Start()
+    {
+        DoorSwitch.OnActivate += Open;
+    }
+
+    private void Open(bool open)
+    {
+        if (open)
+        {
+            transform.Translate(Vector3.up * 3f);
+        }
+        else
+        {
+            transform.Translate(Vector3.down * 3f);
+        }
+    }
+
+    void OnDisable()
+    {
+        DoorSwitch.OnActivate -= Open;
+    }
+}
+</code></pre>
+    </section><br><br>
+<p>As seen in the examples, using delegates and events is a much less intrusive technique.</p>
+<p>Additionally, it allows multiple GameObjects to subscribe to the same event easily, and they can perform actions when that event is triggered.</p>
+<p>In the example, a system event was used, but from the script where the event is defined, the event can be triggered whenever an action occurs, simply by calling the event.</p>
+
+<section><pre><code class="language-csharp">void Start() {
+    OnActivate(true);
+}
+</code></pre>
+</section><br><br>
+
+
+      
+      </section><!-- End section sComunicacion-->
+
+      <!--*********************************************************FinalPractice***********************************************************-->
+      <section class="apartado">
+      <a name="sFinalPractice"></a>
+      <h2>FinalPractice</h2>
+
+      <div class="tarea">
+        <p>This project consists of a free-creation videogame with the following requirements:
+          <ol>
+            <li>The game should have an initial menu where the player can enter their name before starting. <span class="negrita">1pt</span></li>
+            <li>Include a scoring system, such as based on time to complete, collecting coins or other items, or defeating enemies. This score should be saved in <span class="cursiva">PlayerPref</span> along with the player’s name. <span class="negrita">1.5pts</span></li>
+            <li>The initial menu should display the player’s name along with their score. <span class="negrita">0.5pts</span></li>
+            <li>Besides the menu screen, the game should have at least two screens that can be navigated to after completing the first. Note, the screens don’t have to be very extensive. <span class="negrita">0.75pts</span></li>
+            <li>The camera should follow the player character. <span class="negrita">0.75pts</span></li>
+            <li>Include at least two types of enemies:
+              <ul>
+                <li>One that chases the player. <span class="negrita">1.5pts</span></li>
+                <li>Another that follows a set path. <span class="negrita">1pt</span></li>
+              </ul>
+            </li>
+            <li>Make use of prefabs where necessary.</li>
+            <li>Include gameplay mechanics such as player movement, jumps, lives, attacks, etc. <span class="negrita">1.5pts</span></li>
+            <li>Game design and characters (store assets are acceptable), background, sprites, animations, audio, etc. <span class="negrita">1.5pts</span></li>
+          </ol>
+        </p>
+      
+        <p>For submission, create a package with the necessary scene elements and record a video, maximum 5 minutes, demonstrating the game’s functionality and how you have implemented the most important functionalities.</p>
+      </div>
+      
+      
+      
+      
+      </section><!-- End section FinalPractice-->
     
   </div> <!--END OCULTO-->
 
