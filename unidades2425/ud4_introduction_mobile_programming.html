@@ -76,7 +76,8 @@
     <p>Within the mobile world, we mainly have Apple's iOS, BlackBerry, and Android platforms (following the failure of Microsoft’s Windows Mobile Phone and Nokia’s Symbian). 
         Unfortunately, the first two are proprietary, which has led <span class="negrita">Android</span> to dominate the market, as seen in this <a class="enlace" target="_blank" href="https://gs.statcounter.com/os-market-share/mobile/spain">link</a>.</p>
         
-        <figure><img src="UD4/images/ud4-2023-09-13-09-05-10.png" /><br><figcaption>Mobile operating system market share in Spain</figcaption></figure>
+                
+        <a href="UD4/images/ud_4-2024-11-21-10-35-11.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-10-35-11.png" /><br><figcaption>Mobile operating system market share in Spain</figcaption></figure></a>
         <br>
         
         <br><br>
@@ -232,7 +233,7 @@
 
     <p>
         Android implements an operating system based on Linux, and its virtual machine (Dalvik) compiles Java files into .apk applications. 
-        An apk <sup>(*)</sup> contains Java classes compiled into a bytecode format known as DEX. 
+        An apk 
         The DEX format is processor architecture-independent, so to be executed, it must be translated into native "machine code" for the processor in our device. 
         Naturally, this is slower compared to direct execution.
         <br>
@@ -298,16 +299,439 @@
         to see which versions or devices can run our application. Although developers have created libraries to maintain backward compatibility with previous versions.
     </p>
 
-    <figure><img src="UD4/images/ud4-2023-09-13-09-55-34.png" /><br><figcaption>Android versions/API version</figcaption></figure>
+    
+    <div>
+        <table class="wikitable">
+
+            <tbody><tr>
+            <th>Name
+            </th>
+            <th>Internal codename
+            </th>
+            <th>Version number(s)
+            </th>
+            <th><a href="/wiki/API" title="API">API</a> level
+            </th>
+            <th>Release date
+            </th>
+            <th>Latest security patch date
+            </th>
+            <th>Latest <a href="/wiki/Google_Play_Services" title="Google Play Services">Google Play Services</a> version
+            </th></tr>
+            <tr>
+            <td><a href="/wiki/Android_1.0" class="mw-redirect" title="Android 1.0">Android 1.0</a>
+            </td>
+            <td data-sort-value="" style="background: var(--background-color-interactive, #ececec); color: var(--color-base, inherit); vertical-align: middle; text-align: center;" class="table-na">—
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="1.0"><span style="display: none;">Old version, no longer maintained:</span> 1.0
+            </td>
+            <td>1
+            </td>
+            <td>September 23, 2008
+            </td>
+            <td rowspan="18" data-sort-value="" style="background: var(--background-color-interactive, #ececec); color: var(--color-base, inherit); vertical-align: middle; text-align: center;" class="table-na">—
+            </td>
+            <td rowspan="7" data-sort-value="" style="background: var(--background-color-interactive, #ececec); color: var(--color-base, inherit); vertical-align: middle; text-align: center;" class="table-na">—
+            </td></tr>
+            <tr>
+            <td><a href="/wiki/Android_1.1" class="mw-redirect" title="Android 1.1">Android 1.1</a>
+            </td>
+            <td>Petit Four
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="1.1"><span style="display: none;">Old version, no longer maintained:</span> 1.1
+            </td>
+            <td>2
+            </td>
+            <td>February 9, 2009
+            </td></tr>
+            <tr>
+            <td><a href="/wiki/Android_Cupcake" title="Android Cupcake">Android Cupcake</a>
+            </td>
+            <td>Cupcake
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="1.5"><span style="display: none;">Old version, no longer maintained:</span> 1.5
+            </td>
+            <td>3
+            </td>
+            <td>April 27, 2009
+            </td></tr>
+            <tr>
+            <td><a href="/wiki/Android_Donut" title="Android Donut">Android Donut</a>
+            </td>
+            <td>Donut
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="1.6"><span style="display: none;">Old version, no longer maintained:</span> 1.6
+            </td>
+            <td>4
+            </td>
+            <td>September 15, 2009
+            </td></tr>
+            <tr>
+            <td rowspan="3"><a href="/wiki/Android_Eclair" title="Android Eclair">Android Eclair</a>
+            </td>
+            <td rowspan="3">Eclair
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="2.0"><span style="display: none;">Old version, no longer maintained:</span> 2.0
+            </td>
+            <td>5
+            </td>
+            <td>October 27, 2009
+            </td></tr>
+            <tr>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="2.0.1"><span style="display: none;">Old version, no longer maintained:</span> 2.0.1
+            </td>
+            <td>6
+            </td>
+            <td>December 3, 2009
+            </td></tr>
+            <tr>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="2.1"><span style="display: none;">Old version, no longer maintained:</span> 2.1
+            </td>
+            <td>7
+            </td>
+            <td>January 11, 2010
+            </td></tr>
+            <tr>
+            <td><a href="/wiki/Android_Froyo" title="Android Froyo">Android Froyo</a>
+            </td>
+            <td>Froyo
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="2.2 – 2.2.3"><span style="display: none;">Old version, no longer maintained:</span> 2.2 – 2.2.3
+            </td>
+            <td>8
+            </td>
+            <td>May 20, 2010
+            </td>
+            <td>3.2.25 (October 2014)
+            </td></tr>
+            <tr>
+            <td rowspan="2"><a href="/wiki/Android_Gingerbread" title="Android Gingerbread">Android Gingerbread</a>
+            </td>
+            <td rowspan="2">Gingerbread
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="2.3 – 2.3.2"><span style="display: none;">Old version, no longer maintained:</span> 2.3 – 2.3.2
+            </td>
+            <td>9
+            </td>
+            <td>December 6, 2010
+            </td>
+            <td rowspan="5">10.0.84 (November 2016)
+            </td></tr>
+            <tr>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="2.3.3 – 2.3.7"><span style="display: none;">Old version, no longer maintained:</span> 2.3.3 – 2.3.7
+            </td>
+            <td>10
+            </td>
+            <td>February 9, 2011
+            </td></tr>
+            <tr>
+            <td rowspan="3"><a href="/wiki/Android_Honeycomb" title="Android Honeycomb">Android Honeycomb</a>
+            </td>
+            <td rowspan="3">Honeycomb
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="3.0"><span style="display: none;">Old version, no longer maintained:</span> 3.0
+            </td>
+            <td>11
+            </td>
+            <td>February 22, 2011
+            </td></tr>
+            <tr>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="3.1"><span style="display: none;">Old version, no longer maintained:</span> 3.1
+            </td>
+            <td>12
+            </td>
+            <td>May 10, 2011
+            </td></tr>
+            <tr>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="3.2 – 3.2.6"><span style="display: none;">Old version, no longer maintained:</span> 3.2 – 3.2.6
+            </td>
+            <td>13
+            </td>
+            <td>July 15, 2011
+            </td></tr>
+            <tr>
+            <td rowspan="2"><a href="/wiki/Android_Ice_Cream_Sandwich" title="Android Ice Cream Sandwich">Android Ice Cream Sandwich</a>
+            </td>
+            <td rowspan="2">Ice Cream Sandwich
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="4.0 – 4.0.2"><span style="display: none;">Old version, no longer maintained:</span> 4.0 – 4.0.2
+            </td>
+            <td>14
+            </td>
+            <td>October 18, 2011
+            </td>
+            <td rowspan="2">14.8.49 (February 2019)
+            </td></tr>
+            <tr>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="4.0.3 – 4.0.4"><span style="display: none;">Old version, no longer maintained:</span> 4.0.3 – 4.0.4
+            </td>
+            <td>15
+            </td>
+            <td>December 16, 2011
+            </td></tr>
+            <tr>
+            <td rowspan="3"><a href="/wiki/Android_Jelly_Bean" title="Android Jelly Bean">Android Jelly Bean</a>
+            </td>
+            <td rowspan="3">Jelly Bean
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="4.1 – 4.1.2"><span style="display: none;">Old version, no longer maintained:</span> 4.1 – 4.1.2
+            </td>
+            <td>16
+            </td>
+            <td>July 9, 2012
+            </td>
+            <td rowspan="3">21.33.56 (September 2021)
+            </td></tr>
+            <tr>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="4.2 – 4.2.2"><span style="display: none;">Old version, no longer maintained:</span> 4.2 – 4.2.2
+            </td>
+            <td>17
+            </td>
+            <td>November 13, 2012
+            </td></tr>
+            <tr>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="4.3 – 4.3.1"><span style="display: none;">Old version, no longer maintained:</span> 4.3 – 4.3.1
+            </td>
+            <td>18
+            </td>
+            <td>July 24, 2013
+            </td></tr>
+            <tr>
+            <td rowspan="2"><a href="/wiki/Android_KitKat" title="Android KitKat">Android KitKat</a>
+            </td>
+            <td rowspan="2">Key Lime Pie
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="4.4 – 4.4.4"><span style="display: none;">Old version, no longer maintained:</span> 4.4 – 4.4.4
+            </td>
+            <td>19
+            </td>
+            <td>October 31, 2013
+            </td>
+            <td>October 2017
+            </td>
+            <td rowspan="2">23.30.13 (August 2023)
+            </td></tr>
+            <tr>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="4.4W – 4.4W.2"><span style="display: none;">Old version, no longer maintained:</span> 4.4W – 4.4W.2
+            </td>
+            <td>20
+            </td>
+            <td>June 25, 2014
+            </td>
+            <td style="background: var(--background-color-interactive, #EEE); color: var(--color-base, black); vertical-align: middle; white-space: nowrap; text-align: center;" class="table-Un­known">?
+            </td></tr>
+            <tr>
+            <td rowspan="2"><a href="/wiki/Android_Lollipop" title="Android Lollipop">Android Lollipop</a>
+            </td>
+            <td rowspan="2">Lemon Meringue Pie
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="5.0 – 5.0.2"><span style="display: none;">Old version, no longer maintained:</span> 5.0 – 5.0.2
+            </td>
+            <td>21
+            </td>
+            <td>November 4, 2014
+            </td>
+            <td>November 2017
+            </td>
+            <td rowspan="2">24.28.35 (August 2024)
+            </td></tr>
+            <tr>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="5.1 – 5.1.1"><span style="display: none;">Old version, no longer maintained:</span> 5.1 – 5.1.1
+            </td>
+            <td>22
+            </td>
+            <td>March 2, 2015
+            </td>
+            <td>March 2018
+            </td></tr>
+            <tr>
+            <td><a href="/wiki/Android_Marshmallow" title="Android Marshmallow">Android Marshmallow</a>
+            </td>
+            <td>Macadamia Nut Cookie
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="6.0 – 6.0.1"><span style="display: none;">Old version, no longer maintained:</span> 6.0 – 6.0.1
+            </td>
+            <td>23
+            </td>
+            <td>September 29, 2015
+            </td>
+            <td>August 2018
+            </td>
+            <td rowspan="14">24.35.30 (September 2024)
+            </td></tr>
+            <tr>
+            <td rowspan="2"><a href="/wiki/Android_Nougat" title="Android Nougat">Android Nougat</a>
+            </td>
+            <td rowspan="2">New York Cheesecake
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="7.0"><span style="display: none;">Old version, no longer maintained:</span> 7.0
+            </td>
+            <td>24
+            </td>
+            <td>August 22, 2016
+            </td>
+            <td>August 2019
+            </td></tr>
+            <tr>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="7.1 – 7.1.2"><span style="display: none;">Old version, no longer maintained:</span> 7.1 – 7.1.2
+            </td>
+            <td>25
+            </td>
+            <td>October 4, 2016
+            </td>
+            <td>October 2019
+            </td></tr>
+            <tr>
+            <td rowspan="2"><a href="/wiki/Android_Oreo" title="Android Oreo">Android Oreo</a>
+            </td>
+            <td rowspan="2">Oatmeal Cookie
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="8.0"><span style="display: none;">Old version, no longer maintained:</span> 8.0
+            </td>
+            <td>26
+            </td>
+            <td>August 21, 2017
+            </td>
+            <td>January 2021
+            </td></tr>
+            <tr>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="8.1"><span style="display: none;">Old version, no longer maintained:</span> 8.1
+            </td>
+            <td>27
+            </td>
+            <td>December 5, 2017
+            </td>
+            <td>October 2021
+            </td></tr>
+            <tr>
+            <td><a href="/wiki/Android_Pie" title="Android Pie">Android Pie</a>
+            </td>
+            <td>Pistachio Ice Cream
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="9"><span style="display: none;">Old version, no longer maintained:</span> 9
+            </td>
+            <td>28
+            </td>
+            <td>August 6, 2018
+            </td>
+            <td>January 2022
+            </td></tr>
+            <tr>
+            <td><a href="/wiki/Android_10" title="Android 10">Android 10</a>
+            </td>
+            <td>Quince Tart
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="10"><span style="display: none;">Old version, no longer maintained:</span> 10
+            </td>
+            <td>29
+            </td>
+            <td>September 3, 2019
+            </td>
+            <td>February 2023
+            </td></tr>
+            <tr>
+            <td><a href="/wiki/Android_11" title="Android 11">Android 11</a>
+            </td>
+            <td>Red Velvet Cake
+            </td>
+            <td style="color:black; background-color: #FDB3AB;" title="Old version, no longer maintained" data-sort-value="11"><span style="display: none;">Old version, no longer maintained:</span> 11
+            </td>
+            <td>30
+            </td>
+            <td>September 8, 2020
+            </td>
+            <td>February 2024
+            </td></tr>
+            <tr>
+            <td><a href="/wiki/Android_12" title="Android 12">Android 12</a>
+            </td>
+            <td>Snow Cone
+            </td>
+            <td class="templateVersion co" style="color:black; background-color: #FEF8C6;" title="Old version, yet still maintained" data-sort-value="12"><span style="display: none;">Old version, yet still maintained:</span> 12
+            </td>
+            <td>31
+            </td>
+            <td>October 4, 2021
+            </td>
+            <td rowspan="6">September 2024
+            </td></tr>
+            <tr>
+            <td><a href="/wiki/Android_12L" class="mw-redirect" title="Android 12L">Android 12L</a>
+            </td>
+            <td>Snow Cone v2
+            </td>
+            <td class="templateVersion co" style="color:black; background-color: #FEF8C6;" title="Old version, yet still maintained" data-sort-value="12.1"><span style="display: none;">Old version, yet still maintained:</span> 12.1
+            </td>
+            <td>32
+            </td>
+            <td>March 7, 2022
+            </td></tr>
+            <tr>
+            <td><a href="/wiki/Android_13" title="Android 13">Android 13</a>
+            </td>
+            <td>Tiramisu
+            </td>
+            <td class="templateVersion co" style="color:black; background-color: #FEF8C6;" title="Old version, yet still maintained" data-sort-value="13"><span style="display: none;">Old version, yet still maintained:</span> 13
+            </td>
+            <td>33
+            </td>
+            <td>August 15, 2022
+            </td></tr>
+            <tr>
+            <td><a href="/wiki/Android_14" title="Android 14">Android 14</a>
+            </td>
+            <td>Upside Down Cake
+            </td>
+            <td class="templateVersion co" style="color:black; background-color: #FEF8C6;" title="Old version, yet still maintained" data-sort-value="14"><span style="display: none;">Old version, yet still maintained:</span> 14
+            </td>
+            <td>34
+            </td>
+            <td>October 4, 2023
+            </td></tr>
+            <tr>
+            <td><a href="/wiki/Android_15" title="Android 15">Android 15</a>
+            </td>
+            <td>Vanilla Ice Cream
+            </td>
+            <td class="templateVersion c" style="color:black; background-color: #D4F4B4;" title="Current stable version" data-sort-value="15"><span style="display: none;">Current stable version:</span> <b>15</b>
+            </td>
+            <td>35
+            </td>
+            <td>October 15, 2024
+            </td></tr>
+            <tr>
+            <td><a href="/wiki/Android_16" title="Android 16">Android 16</a>
+            </td>
+            <td>Baklava
+            </td>
+            <td class="templateVersion cp" style="color:black; background-color: #FED1A0;" title="Latest preview version of a future release" data-sort-value="16 DP 1"><span style="display: none;">Latest preview version of a future release:</span> 16 DP 1
+            </td>
+            <td>36
+            </td>
+            <td>November 19, 2024
+            </td></tr>
+            <tr>
+            <td colspan="7"><div class="templateVersion l" style="margin-left: -1em;"><div style="float: left; margin-left: 1em;"><span style="white-space: nowrap;"><b>Legend:</b></span></div><div style="float: left; margin-left: 1em;"><span style="border-left: 1.2em solid #FDB3AB; padding-left: 0.3em; white-space: nowrap;" title="Old version, no longer maintained">Old version, not maintained</span></div><div style="float: left; margin-left: 1em;"><span style="border-left: 1.2em solid #FEF8C6; padding-left: 0.3em; white-space: nowrap;" title="Old version, yet still maintained">Old version, still maintained</span></div><div style="float: left; margin-left: 1em;"><span style="border-left: 1.2em solid #D4F4B4; padding-left: 0.3em; white-space: nowrap;" title="Latest stable version"><b>Latest version</b></span></div><div style="float: left; margin-left: 1em; display: none;"><span style="border-left: 1.2em solid #FED1A0; padding-left: 0.3em; white-space: nowrap;" title="Latest preview of a future release">Latest preview version</span></div><div style="float: left; margin-left: 1em; display: none;"><span style="border-left: 1.2em solid #C1E6F5; padding-left: 0.3em; white-space: nowrap;" title="A future release">Future release</span></div><div style="clear: left;"></div></div>
+            </td></tr></tbody></table>
+    </div> 
+    <div>
+        <p class="cursiva" style="text-align: center;">Android versions/API version</p>
+    </div>
+    <br><br>
+
+    <a href="UD4/images/ud_4-2024-11-21-10-43-43.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-10-43-43.png" /><br><figcaption>Android version usage</figcaption></figure></a>
     <br>
+    
     
     
     <br>
     <p>To conclude this section, it's worth mentioning the fragmentation that exists between brands/models (2015).</p>
 
-    <figure><img src="UD4/images/ud4-2023-09-13-09-59-01.png" /><br><figcaption>Brand fragmentation. OpenSignal study</figcaption></figure>
+    <a href="UD4/images/ud_4-2024-11-21-10-41-28.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-10-41-28.png" /><br><figcaption>Brand fragmentation. OpenSignal study</figcaption></figure></a>
     <br>
-
+    
+    <a href="UD4/images/ud_4-2024-11-21-10-42-11.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-10-42-11.png" /><br><figcaption>Device fragmentation. OpenSignal study</figcaption></figure></a>
+    <br>
     
 
 
@@ -335,15 +759,16 @@
         to system hardware resources.
     </p>
     <p>
-        The current version (Android Studio Ladybug | 2024.2.1 Patch 1) looks as shown below. We can mainly observe the top menu bar, the project tree on the left,
+        The current version (Android Studio Ladybug | 2024.2.1 Patch 2) looks as shown below. We can mainly observe the top menu bar, the project tree on the left,
         the code in the central tabbed area, and the interface design on the right. 
         We also see resource consumption being displayed; typically, we'll use the notification area for Event Logs, Logcat, and the Terminal.
         The palette window for components or their respective attributes is also crucial.
     </p>
 
-    <figure><img src="UD4/images/2021-09-12-20-36-58.png" /><br><figcaption>AS screenshot</figcaption></figure>
+    
+    <a href="UD4/images/2021-09-12-20-36-58.png" target="_BLANK"><figure><img src="UD4/images/2021-09-12-20-36-58.png" /><br><figcaption>AS screenshot</figcaption></figure></a>
     <br>
-
+    
     <br>
 
     <p><span class="negrita">NOTE</span>: Throughout this course, we will refer intensively to the official Android documentation. <br>
@@ -373,8 +798,10 @@
     </p>
     <br><span class="negrita">Download Link:</span> <a class="enlace" target="_blank" href="https://developer.android.com/studio?hl=es&gclid=CjwKCAjw7fuJBhBdEiwA2lLMYS2tJIQIHNyuQYOZFHskPetu2H4f2dY-Fo3Sy7xUoMZHAr8RNcCdyxoC4IsQAvD_BwE&gclsrc=aw.ds#downloads">https://developer.android.com/studio?hl=es&gclid=CjwKCAjw7fuJBhBdEiwA2lLMYS2tJIQIHNyuQYOZFHskPetu2H4f2dY-Fo3Sy7xUoMZHAr8RNcCdyxoC4IsQAvD_BwE&gclsrc=aw.ds#downloads</a> <br><br>
 
-    <figure><img src="UD4/images/ud4-2023-09-13-10-09-47.png" /><br><figcaption>Android Studio Versions</figcaption></figure>
+    
+    <a href="UD4/images/ud_4-2024-11-21-11-00-32.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-11-00-32.png" /><br><figcaption>Android Studio Versions</figcaption></figure></a>
     <br>
+    
     
     <p>Current hardware requirements for each version are:</p>
 
@@ -382,7 +809,7 @@
     <br>
    
     <p>
-        For this course, we will use the latest version of AS as of today, Android Studio Giraffe 2022.3.1 for 64-bit Windows.
+        For this course, we will use the latest version of AS as of today, Android Studio Ladybug | 2024.2.1 Patch 2 for 64-bit Windows.
         The reason for using Windows in the explanations is that it has fewer issues recognizing our real mobile device via USB for real simulations using 
         the ADB driver or others. However, you can use the version for your preferred OS. If our real device gives us problems, we can use the Android Emulator 
         for testing or a third-party one.
@@ -396,11 +823,19 @@
     </p>
 
     <p>
-        Once <span class="negrita">android-studio-2020.3.1.24-windows.exe</span> is downloaded, right-click and run as administrator; simply double-clicking would result in an error, as shown below.
+        Once <span class="negrita">android-studio-2024.2.1.11-windows.exe</span> is downloaded, right-click and run as administrator; simply double-clicking would result in an error, as shown below.
     </p>
 
     <figure><img src="UD4/images/ud4-2021-09-13-10-59-17.png" /><br><figcaption>Installation Error</figcaption></figure>
     <br>
+
+    <section class="marco-t warn">
+        <span class="icono warning"> </span> Warning! this part maybe a little different in the newer version, if you have any problem installing latest version, please let me know.
+        </section>
+    <section class="marco-b">
+            
+    </section>
+    
     <p>
         Select <span class="negrita">YES</span> to allow changes, then select both components (AS itself and the <span class="negrita">AVD</span>, 
         the Android emulator). Click next, choose the destination folder, and click next again, then press <span class="negrita">install</span> to begin the installation.
@@ -409,6 +844,11 @@
     <figure><img src="UD4/images/ud4-2021-09-13-11-00-36.png" /><br><figcaption></figcaption></figure>
 <br>
 <br>
+<a href="UD4/images/ud_4-2024-11-21-12-53-58.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-12-53-58.png" /><br><figcaption>Iniciando instalación</figcaption></figure></a>
+<br>
+
+
+
 
 <figure><img src="UD4/images/ud4-2021-09-13-11-01-23.png" /><br><figcaption>Choose components</figcaption></figure>
 <br><br>
@@ -419,15 +859,15 @@
 <figure><img src="UD4/images/ud4-2021-09-13-11-03-02.png" /><br><figcaption>Start installation</figcaption></figure>
 <br>
 <br>
-<figure><img src="UD4/images/ud4-2021-09-13-11-05-50.png" /><br><figcaption>Installation finished</figcaption></figure>
+<a href="UD4/images/ud_4-2024-11-21-12-55-54.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-12-55-54.png" /><br><figcaption>Installation finished</figcaption></figure></a>
 <br>
+
 <br>
 
 <p>
     Once the process is complete, press <span class="negrita">Next</span> and then press <span class="negrita">Finish</span> to start AS.
 </p>
-
-<figure><img src="UD4/images/ud4-2021-09-13-11-06-20.png" /><br><figcaption>Finishing and launching AS</figcaption></figure>
+<a href="UD4/images/ud_4-2024-11-21-12-56-37.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-12-56-37.png" /><br><figcaption>Finishing and launching AS</figcaption></figure></a>
 <br>
 <br>
 
@@ -517,8 +957,12 @@
     the programming language (either Java or Kotlin --the default--), and the minimum SDK on which our application will run.
 </p>
 
-<figure><img src="UD4/images/ud4-2023-09-13-10-45-15.png" /><br><figcaption>Project Info</figcaption></figure>
+
+<a href="UD4/images/ud_4-2024-11-21-11-34-39.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-11-34-39.png" /><br><figcaption>Project Info</figcaption></figure></a>
 <br>
+
+
+
 <br>
 
 <p><span class="negrita">App Name</span>: Hello World <br>
@@ -537,7 +981,7 @@ Pérez, then <span class="negrita">xxyyzz = rogape</span>.
 
 <p><span class="negrita">Destination Folder</span>: The folder containing our project. You can leave the default. <br>
     <span class="negrita">Language</span>: You can choose between Java or Kotlin. We select Kotlin. <br>
-    <span class="negrita">Minimum SDK</span>: For now, the default value is: <span class="d-word">API 24: Android 7.0 (Nougat)</span>, which works on approximately 95.4% of devices.
+    <span class="negrita">Minimum SDK</span>: For now, the default value is: <span class="d-word">API 26: Android 8.0 (Oreo)</span>, which works on approximately 95.4% of devices. As you can see, the newer is minimun SDK less devices can work with it
 </p>
 
 <section class="marco-t inf">
@@ -551,10 +995,10 @@ Pérez, then <span class="negrita">xxyyzz = rogape</span>.
     A "few" seconds later, the AS IDE will appear. Take a few minutes to explore some of the menu options.
 </p>
 
+<a href="UD4/images/ud_4-2024-11-21-12-58-56.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-12-58-56.png" /><br><figcaption>AS IDE</figcaption></figure></a>
+<br>
 
      
-<figure><img src="UD4/images/ud4-2023-09-13-11-07-16.png" /><br><figcaption>AS IDE</figcaption></figure>
-<br>
 <br>
 
 <p>Now let's talk about the main files and folders of the project. Select the project view and expand all options.</p>
@@ -638,13 +1082,11 @@ Pérez, then <span class="negrita">xxyyzz = rogape</span>.
 </p>
 
 <p>Open the AVD Manager</p>
-<figure><img src="UD4/images/ud4-2021-09-13-13-04-28.png" /><br><figcaption></figcaption></figure>
+
+<a href="UD4/images/ud_4-2024-11-21-13-10-40.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-10-40.png" /><br><figcaption>Device Manager</figcaption></figure></a>
 <br>
 
-<p>Or from the <span class="negrita">Tools menu</span></p>
-<figure><img src="UD4/images/ud4-2021-09-13-13-05-44.png" /><br><figcaption></figcaption></figure>
-<br>
-<br>
+
 <p>Create a new virtual device</p>
 <figure><img src="UD4/images/ud4-2021-09-13-13-07-03.png" /><br><figcaption>New Virtual Device</figcaption></figure>
 <br>
@@ -815,48 +1257,71 @@ Pérez, then <span class="negrita">xxyyzz = rogape</span>.
     </table>
 </p>
 
-    
-    
+<h3>Wireless debugging</h3>
+    <p>In latest versions of AS we can debug our apps without usb cable. That is using wireless and it's very simple. You simply have to enable Wireless debugging in developer mode
+     and then Scan de QR code that AS shows you</p>
+
+     <a href="UD4/images/ud_4-2024-11-21-13-19-41.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-19-41.png" /><br><figcaption>Pairing wireless mobile</figcaption></figure></a>
+     <br>
+     
+     <section class="marco-t warn">
+        <span class="icono warning"> </span> Obviously you have to be connected at the same network that computer and that your real device had to use Android 11 or bigger.
+        </section>
+     <section class="marco-b">
+            
+     </section>
+     
 
     <!--************************Third Party Emulators**************************-->
     <a name="sThirdPartyEmulators"></a>
 <h2>Third-Party Emulators</h2>
 
-<h3>BlueStacks 4</h3>
+<h3>BlueStacks 10</h3>
 <p>
     We are going to download BlueStacks using this link: <a class="enlace" target="_blank" href="https://www.bluestacks.com/es/index.html">https://www.bluestacks.com/es/index.html</a>. 
-    Once the installer is downloaded, we run it. <span class="negrita">BlueStacksInstaller_4.190.0.5002_native_29f58463653ea660bf50c11c52fa2a25.exe</span> is an online installer. Allow it to make changes.
+    Once the installer is downloaded, we run it. <span class="negrita">BlueStacksInstaller_10.190.0.5002_native_29f58463653ea660bf50c11c52fa2a25.exe</span> is an online installer. Allow it to make changes.
 </p>
 
-<figure><img src="UD4/images/2021-09-12-20-59-59.png" /><br><figcaption>BlueStacks 4 Installation Step 1</figcaption></figure>
+<a href="UD4/images/ud_4-2024-11-21-13-24-24.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-24-24.png" /><br><figcaption>BlueStacks 10 Installation Step 1</figcaption></figure></a>
 <br>
 
-<p>Click on <span class="negrita">Install Now</span></p>
 
-<figure><img src="UD4/images/2021-09-12-21-00-59.png" /><br><figcaption>BlueStacks 4 Installation Step 2</figcaption></figure>
+
+<p>Click on <span class="negrita">Install Now and accept terms</span></p>
+
+<a href="UD4/images/ud_4-2024-11-21-13-25-37.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-25-37.png" /><br><figcaption>BlueStacks 10 Installation Step 2</figcaption></figure></a>
 <br>
 
-<p>Completing the installation process</p>
-<figure><img src="UD4/images/2021-09-12-21-02-43.png" /><br><figcaption>Completing Installation</figcaption></figure>
+
+
+
+<p>Completing the installation process. Push next</p>
+<a href="UD4/images/ud_4-2024-11-21-13-28-02.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-28-02.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-<p>We will skip the sign-in for now, by clicking on <span class="negrita">I'll do it later</span></p>
 
-<figure><img src="UD4/images/2021-09-12-21-05-41.png" /><br><figcaption>Skip Sign-In</figcaption></figure>
+<p>We can now launch the emulator</p>
+<a href="UD4/images/ud_4-2024-11-21-13-31-49.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-31-49.png" /><br><figcaption></figcaption></figure></a>
+<br>
+<a href="UD4/images/ud_4-2024-11-21-13-32-42.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-32-42.png" /><br><figcaption>Bluestack</figcaption></figure></a>
 <br>
 
-<p>
-    In my case, after loading the OpenGL that was configured by default, I encountered some issues. I switched to <span class="negrita">DirectX</span> in the <span class="negrita">Settings</span> 
-    under the <span class="negrita">Engine</span> section.
-</p>
-
-<figure><img src="UD4/images/2021-09-12-21-08-09.png" /><br><figcaption>Select Graphics Mode</figcaption></figure>
-<br>
 
 <p>Once loaded, drag and drop the APK directly onto the emulator’s <span class="negrita">home screen</span>, and it will install.</p>
-
-<figure><img src="UD4/images/ud4-2021-09-12-21-10-21.png" /><br><figcaption>Installing APK</figcaption></figure>
+<p>We can get the apk from AS in the <span class="negrita">Build</span> menu </p>
+<a href="UD4/images/ud_4-2024-11-21-13-37-51.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-37-51.png" /><br><figcaption></figcaption></figure></a>
 <br>
+
+<p>After building and generating the APK AS shows us a message indicating the path. Normally it would be <span class="inline-folder">Project_Folder &rAarr; app &rAarr; outputs &rAarr; apk &rAarr; debug</span></p>
+<a href="UD4/images/ud_4-2024-11-21-13-35-22.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-35-22.png" /><br><figcaption>APK located</figcaption></figure></a>
+<br>
+
+<a href="UD4/images/ud_4-2024-11-21-13-39-57.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-39-57.png" /><br><figcaption>Installing APK</figcaption></figure></a>
+<br>
+<a href="UD4/images/ud_4-2024-11-21-13-40-54.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-40-54.png" /><br><figcaption>APK copied</figcaption></figure></a>
+<br>
+
+
 
 <p>
     In addition to being installed within the emulator, a shortcut will also be created on the desktop.
@@ -869,13 +1334,18 @@ Pérez, then <span class="negrita">xxyyzz = rogape</span>.
     Click on your app’s icon and… <span class="negrita">HelloThere!</span>
 </p>
 
-<figure><img src="UD4/images/ud4-2021-09-12-21-12-46.png" /><br><figcaption>Hello There! Running</figcaption></figure>
+<a href="UD4/images/ud_4-2024-11-21-13-40-29.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-40-29.png" /><br><figcaption>APK launched</figcaption></figure></a>
 <br>
 
 <h3>Genymotion</h3>
 
-<a class="tarea" target="_blank" href="https://aules.edu.gva.es/fp/mod/assign/view.php?id=4466622">Follow this link to install the Genymotion emulator and integrate it with Android Studio</a> <br>
-<a class="enlace" target="_blank" href="https://desarrollador-android.com/desarrollo/herramientas/herramientas-de-ayuda/genymotion-emulador/">https://desarrollador-android.com/desarrollo/herramientas/herramientas-de-ayuda/genymotion-emulador/</a>
+<div>
+    <p>
+        <a class="tarea" target="_blank" href="https://aules.edu.gva.es/fp/mod/assign/view.php?id=4466622">Follow this link to install the Genymotion emulator and integrate it with Android Studio</a> <br>
+        <a class="enlace" target="_blank" href="https://desarrollador-android.com/desarrollo/herramientas/herramientas-de-ayuda/genymotion-emulador/">https://desarrollador-android.com/desarrollo/herramientas/herramientas-de-ayuda/genymotion-emulador/</a> (a little bit deprecated link but it may be still useful)
+    </p>
+</div>
+
 
 <!--************************Other Systems**************************-->
 <a name="sOtherSystems"></a>
