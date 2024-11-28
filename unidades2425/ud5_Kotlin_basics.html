@@ -177,7 +177,7 @@
   </section>
   <section class="marco-b"></section>
   
-  <figure><img src="UD2/images/test_code.gif" /><br><figcaption>Test File</figcaption></figure>
+  <figure><img src="UD5/images/test_code.gif" /><br><figcaption>Test File</figcaption></figure>
   <br>
   
   <p>Let's see a simple example of input and output:</p>
@@ -190,7 +190,7 @@
   
   <p>After executing it, it waits for us to type something and press enter, then it writes it on the screen.</p>
   
-  <figure><img src="UD2/images/Test_IO.gif" /><br><figcaption>Input/Output</figcaption></figure>
+  <figure><img src="UD5/images/Test_IO.gif" /><br><figcaption>Input/Output</figcaption></figure>
   <br>
   
   <section class="marco-t inf">
@@ -226,7 +226,7 @@
     Keep in mind that a scratch file executes from top to bottom as we can see.
   </p>
   
-  <figure><img src="UD2/images/Scratch_example.gif" /><br><figcaption></figcaption></figure>
+  <figure><img src="UD5/images/Scratch_example.gif" /><br><figcaption></figcaption></figure>
   <br>
   
   <h3>Kotlin Style Guide</h3>
@@ -461,8 +461,14 @@ lines"""
 
 <p class="sub-section">Declaring Simple Type Variables</p>
 
-<a href="UD5/images/ud5-2023-09-16-12-58-32.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-12-58-32.png" /><br><figcaption></figcaption></figure></a>
-<br>
+<section><pre><code class="language-kotlin">var name: String = "Rick Sanchez"
+var dimension = "c-137" // the data type is inferred
+var gender: Char = 'h'
+var age: Int
+age = 70
+var isAlive: Boolean = true
+</code></pre>
+</section><br><br>
 
 
 <p class="sub-section">Array Declaration</p>
@@ -472,16 +478,31 @@ lines"""
   but for convenience, square brackets <span class="negrita">[ ]</span> can also be used.
 </p>
 
-<a href="UD5/images/ud5-2023-09-16-13-00-16.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-00-16.png" /><br><figcaption></figcaption></figure></a>
-<br>
+<section><pre><code class="language-kotlin">// The data type of the array is specified
+var numbers: Array<Int> = arrayOf(1, 2, 3, 4, 5)
+
+// The data type of the array is inferred
+var names = arrayOf("Rick", "Morty", "Summer")
+
+println(numbers[1])      // numbers.get(1)
+numbers[3] = 12          // numbers.set(3, 12)
+
+println("There are ${names.size} names")
+</code></pre>
+</section><br><br>
 
 
 <p>
   You can use the Array class constructor to specify the size and even a <span class="negrita">lambda function</span> to fill the elements.
 </p>
 
-<a href="UD5/images/ud5-2023-09-16-13-01-35.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-01-35.png" /><br><figcaption></figcaption></figure></a>
-<br>
+<section><pre><code class="language-kotlin">var array = Array(size = 10) { }          // array of 10 empty elements (Unit)
+var zeros = Array(size = 5) { 0 }        // array of 5 integers, all 0
+var emptys = Array(size = 5) { "" }      // array of 5 strings, all ""
+var serie = Array(size = 100) { it }     // array of 100 integers: 0, 1, 2, ... 99
+var reverse = Array(size = 50) { 50 - it } // array of 50 integers: 50, 49, 48, ... 0
+</code></pre>
+</section><br><br>
 
 
 <p>
@@ -525,8 +546,22 @@ for(b in a) print("$b ")</code></pre>
   Accessing matrix elements is done <span class="negrita">using row and column indices.</span>
 </p>
 
-<a href="UD5/images/ud5-2023-09-16-13-19-41.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-19-41.png" /><br><figcaption></figcaption></figure></a>
-<br>
+<section><pre><code class="language-kotlin">val matrix = arrayOf(
+    arrayOf(5, 3, 2, 0),
+    arrayOf(4, 9, 4, 5),
+    arrayOf(8, 1, 7, 6)
+)
+
+matrix[1][3] = 8 // Sets the value at row 1, column 3 to 8
+
+for (row in matrix) {
+    for (column in row) {
+        print("$column ") // Prints each element in the row followed by a space
+    }
+    println() // Moves to the next line after printing a row
+}
+</code></pre>
+</section><br><br>
 
 
 
@@ -538,8 +573,12 @@ for(b in a) print("$b ")</code></pre>
   You can declare a variable using the Any type and then assign any kind of data to it. This can be useful in certain cases, as will be explained later.
 </p>
 
-<a href="UD5/images/ud5-2023-09-16-13-23-47.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-23-47.png" /><br><figcaption></figcaption></figure></a>
-<br>
+<section><pre><code class="language-kotlin">var number: Any = 6
+var name: Any = "Rick Sanchez"
+var isAlive: Any = true
+var numbers = arrayOf(1, 2, 3)
+</code></pre>
+</section><br><br>
 
 
 <p>
@@ -548,8 +587,15 @@ for(b in a) print("$b ")</code></pre>
   There is a data type that allows a variable to be left empty, known as <span class="r-word">Unit</span> (similar to void in Java).
 </p>
 
-<a href="UD5/images/ud5-2023-09-16-13-25-14.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-25-14.png" /><br><figcaption></figcaption></figure></a>
-<br>
+<section><pre><code class="language-kotlin">val variable1: Any
+// Produces an error because the variable has not been initialized
+println("variable value: $variable1")
+
+val variable2: Any = Unit
+// Works correctly
+println("variable value: $variable2")
+</code></pre>
+</section><br><br>
 
 
 <p class="sub-section">Variable Scope</p>
@@ -574,9 +620,12 @@ for(b in a) print("$b ")</code></pre>
   This will also truncate the value, meaning the decimal part will be lost.
 </p>
 
-<a href="UD5/images/ud5-2023-09-16-13-29-00.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-29-00.png" /><br><figcaption></figcaption></figure></a>
-<br>
+<section><pre><code class="language-kotlin">var decimalNumber: Double = 12.34
+var intNumber: Int
 
+intNumber = decimalNumber.toInt()
+</code></pre>
+</section><br><br>
 
 <p>
   Conversion methods typically start with "to":
@@ -619,9 +668,14 @@ toChar()		toShort()		toByte()		toString()</code></pre>
   This is because they are objects, and with <span class="negrita">val</span>, the reference stored cannot be changed, but the values within the object can be modified.
 </p>
 
-<a href="UD5/images/ud5-2023-09-16-13-37-37.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-37-37.png" /><br><figcaption></figcaption></figure></a>
-<br>
+<section><pre><code class="language-kotlin">val numbers = arrayOf(1, 2, 3, 4, 0)
+// The content of the elements can be changed
+numbers[4] = 5
 
+// Since it is declared as val, the object itself cannot be reassigned
+numbers = arrayOf(1, 2) // This will produce an error
+</code></pre>
+</section><br><br>
 
 <p>
   You can use the reserved word <span class="r-word">const</span> before the <span class="negrita">val</span> declaration to define constants with known values.
@@ -676,9 +730,9 @@ toChar()		toShort()		toByte()		toString()</code></pre>
   </ul>
 </p>
 
-<h3>Exercises</h3>
+<h3>Exercises 1</h3>
 
-<a class="tarea" target="_blank" href="UD2/exercises/PrimerosProgramasKotlin.pdf">Exercises</a>
+<a class="tarea" target="_blank" href="UD5/exercises/FirstProgramsInKotlin.pdf">Exercises</a>
 
 </section> <!-- END SECTION-->
 
@@ -712,13 +766,22 @@ toChar()		toShort()		toByte()		toString()</code></pre>
 
 
 <p>As in Java, for variables that can store null, a prior check can be done before trying to access it.</p>
-<a href="UD5/images/ud5-2023-09-16-13-50-59.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-50-59.png" /><br><figcaption></figcaption></figure></a>
-<br>
+<section><pre><code class="language-kotlin">var nullableName: String? = "Morty Smith"
+
+if (nullableName != null) {
+    println("Hello $nullableName!")
+} else {
+    println("Hello guest!")
+}
+</code></pre>
+</section><br><br>
 
 
 <p>The <span class="r-word">?</span> operator also allows performing these checks in a simpler way, reducing code.</p>
-<a href="UD5/images/ud5-2023-09-16-13-51-28.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-51-28.png" /><br><figcaption></figcaption></figure></a>
-<br>
+<section><pre><code class="language-kotlin">var nullableName: String? = "Morty Smith"
+println("${nullableName?.length}")
+</code></pre>
+</section><br><br>
 
 
 <p>This operator allows for simultaneous checks.</p>
@@ -749,8 +812,13 @@ toChar()		toShort()		toByte()		toString()</code></pre>
 The last statement in the block should be the value to assign if the variable is null.
 </p>
 
-<a href="UD5/images/ud5-2023-09-16-13-57-36.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-13-57-36.png" /><br><figcaption></figcaption></figure></a>
-<br>
+<section><pre><code class="language-kotlin">val a = b ?: run {
+    val valueWhenBIsNull = c.notNullValue()
+    storeValue(valueWhenBIsNull)
+    valueWhenBIsNull // This is the default value returned by the Elvis operator
+}
+</code></pre>
+</section><br><br>
 
 
 <h3>The !! Operator</h3>
@@ -759,8 +827,10 @@ The last statement in the block should be the value to assign if the variable is
 <br><br>
 In this case, if the variable stores null, a <span class="negrita">NullPointerException</span> will be thrown.
 
-<a href="UD5/images/ud5-2023-09-16-14-04-53.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-14-04-53.png" /><br><figcaption></figcaption></figure></a>
-<br>
+<section><pre><code class="language-kotlin">var nullableName: String? = "Morty Smith"
+println(nullableName!!.uppercase())
+</code></pre>
+</section><br><br>
 
 This operator often appears in Java-to-Kotlin migrations.
 </p>
@@ -879,8 +949,17 @@ This operator often appears in Java-to-Kotlin migrations.
   
   <p>To check if a variable matches a pattern defined by a regular expression, you can use methods from both the <span class="r-word">String</span> class and the <span class="r-word">Regex</span> class:</p>
   
-  <a href="UD5/images/ud5-2023-09-16-14-21-54.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-16-14-21-54.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  <section><pre><code class="language-kotlin">val name = "Rick"
+// Starts with an uppercase letter followed by at least two lowercase letters
+val checkName = Regex(pattern = "^[A-Z][a-z]{2,}$")
+
+// String verification
+println(name.contains(checkName))
+
+// Regex verification
+println(checkName.matches(name))
+</code></pre>
+  </section><br><br>
   
   
   <p>The Regex class also has additional methods with different functionalities, such as:
@@ -912,7 +991,7 @@ This operator often appears in Java-to-Kotlin migrations.
   
   <h3>Exercises</h3>
   
-  <a class="tarea" target="_blank" href="UD2/exercises/ValidandoDatos.pdf">Exercises</a>
+  <a class="tarea" target="_blank" href="UD5/exercises/ValidatingData.pdf">Exercises 2</a>
   
 
 </section> <!-- FIN SECCION Expresiones Regulares-->
@@ -962,10 +1041,12 @@ This operator often appears in Java-to-Kotlin migrations.
   <p class="sub-section">if as an expression</p>
   
   <p>The <span class="negrita">if</span> statement can be used as an expression, for example, to assign a value to a variable, as seen in the example:
+   <br>
+
   
   <a href="UD5/images/ud5-2023-09-17-00-01-02.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-01-02.png" /><br><figcaption></figcaption></figure></a>
   <br>
-  
+
   
   In this case, you can write the expression like this, but it's mandatory to include the else branch.
   
@@ -982,8 +1063,17 @@ This operator often appears in Java-to-Kotlin migrations.
   If used as an expression with code blocks, the last expression must be the value to assign without needing to equal it to the variable.
   </p>
   
-  <a href="UD5/images/ud5-2023-09-17-00-04-00.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-04-00.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  <section><pre><code class="language-kotlin">var highNumber = if (number1 > number2) {
+    // instructions
+    number1
+} else {
+    // instructions
+    number2
+}
+
+println("The highest number is $highNumber")
+</code></pre>
+  </section><br><br>
   
   
   <h3>when</h3>
@@ -993,8 +1083,16 @@ This operator often appears in Java-to-Kotlin migrations.
   
   
   If there are multiple statements in any branch, curly braces should be used for all branches:
-  <a href="UD5/images/ud5-2023-09-17-00-06-05.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-06-05.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  <section><pre><code class="language-kotlin">when (number) {
+    1 -> {
+        // instructions
+    }
+    2 -> {
+        // instructions
+    }
+}
+</code></pre>
+  </section><br><br>
   
   </p>
   
@@ -1109,8 +1207,15 @@ This operator often appears in Java-to-Kotlin migrations.
   
   <h3>repeat</h3>
   <p>The <span class="r-word">repeat</span> function repeats the body’s code the specified number of times, internally executing a for loop.
-  <a href="UD5/images/ud5-2023-09-17-00-27-52.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-27-52.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  <section><pre><code class="language-kotlin">repeat(times = 100) { 
+    println("The 'Bart Bills' are not legal tender.") 
+}
+
+repeat(times = 100) { index ->
+    println("${index + 1}.- The 'Bart Bills' are not legal tender.")
+}
+</code></pre>
+  </section><br><br>
   
   
   </p>
@@ -1128,15 +1233,22 @@ This operator often appears in Java-to-Kotlin migrations.
   <p>In Kotlin, statements can be labeled using the <span class="negrita">@</span> character as <span class="d-word">labelName@</span>, allowing you to break the flow of any series of nested loops.
   <br>
   By adding labels, a break will terminate the loop that is labeled.
-  <a href="UD5/images/ud5-2023-09-17-00-29-59.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-29-59.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  
+  <section><pre><code class="language-kotlin">firstFor@ for (i in 1..10) {
+    for (j in 1..5) {
+        if (i % 2 == 0 && j == 2) break@firstFor
+        println("$i - $j")
+    }
+}
+</code></pre>
+  </section><br><br>
   
   
   </p>
   
   <h3>Exercises</h3>
   
-  <a class="tarea" target="_blank" href="UD2/exercises/ControlFlujoKotlin.pdf">Exercises</a>
+  <a class="tarea" target="_blank" href="UD5/exercises/ControlFlujoKotlin.pdf">Exercises 3</a>
   
 
 </section> <!-- FIN SECCION Control de Flujo-->
@@ -1228,8 +1340,34 @@ This operator often appears in Java-to-Kotlin migrations.
   <section class="marco-b">
       
   </section>
-  <a href="UD5/images/ud5-2023-09-17-00-43-24.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-43-24.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  <section><pre><code class="language-kotlin">val list = listOf("uno", "dos", "tres", "cuatro", "cinco")
+list.size                    // Returns the value 5
+list[2]                      // Returns the string "tres"
+list.indexOf("cuatro")       // Returns the value 3
+list.lastIndexOf("dos")      // Returns the value 1
+list.subList(1, 3)           // Returns the list ["dos", "tres"]
+
+val mutableList = mutableListOf(1, 2, 3, 4, 5)
+mutableList.add(6)           // Adds the element 6 to the end of the list
+mutableList.add(index = 2, element = 100)  // Adds the element 100 at position 2, shifting the rest to the right
+mutableList.removeAt(index = 4)  // Removes the element at position 4
+mutableList[1] = 99          // Changes the value at position 1 to 99
+mutableList.contains(3)      // Returns true/false if the value is found or not
+mutableList.sort()           // Sorts the elements of the array in ascending order
+mutableList.sortDescending() // Sorts the elements of the array in descending order
+mutableList.max()            // Returns the largest element
+mutableList.min()            // Returns the smallest element
+mutableList.isEmpty()        // Returns true/false depending on whether the list is empty or not
+mutableList.isNotEmpty()     // Returns true/false depending on whether the list is not empty
+mutableList.shuffle()        // Randomly shuffles the elements of the array
+mutableList.shuffled()       // Returns an array with the elements randomly shuffled
+mutableList.first()          // Returns the first element of the array
+mutableList.last()           // Returns the last element of the array
+mutableList.count()          // Returns the count of elements in the array
+mutableList.reverse()        // Reverses the elements of the array
+mutableList.reversed()       // Returns an array with the elements in reverse order
+</code></pre>
+  </section><br><br>
   
   </p>
   
@@ -1251,8 +1389,38 @@ This operator often appears in Java-to-Kotlin migrations.
   <section class="marco-b">
       
   </section>
-  <a href="UD5/images/ud5-2023-09-17-00-47-36.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-47-36.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  <section><pre><code class="language-kotlin">val names = mutableSetOf("Ana", "Jorge", "Lucía")
+names.add("Lucas")          // Adds a new element
+names.add("Ana")            // Does not add the element as it already exists
+names.add("ana")            // Adds the element -> "ana" != "Ana"
+names.remove(element = "Jorge") // Removes the element if found. Returns true/false
+names.contains("ana")       // Checks if the element exists. Returns true/false
+
+names.min()                 // Returns the smallest element
+names.max()                 // Returns the largest element
+names.isEmpty()             // Returns true/false if the set is empty
+names.isNotEmpty()          // Returns true/false if the set is not empty
+names.first()               // Returns the first element in the set
+names.last()                // Returns the last element in the set
+names.reversed()            // Returns a set with the elements in reverse order
+names.shuffled()            // Returns a set with the elements in random order
+names.isEmpty()             // Returns true/false if the set is empty
+names.isNotEmpty()          // Returns true/false if the set is not empty
+names.count()               // Returns the number of elements in the set
+
+val set1 = setOf(1, 3, 4, 8, 7, 12, 15)
+val set2 = setOf(24, 7, 5, 1, 8, 6)
+
+// Returns a set with the elements from both groups without repetitions
+val joinedGroups = set1 union set2
+
+// Returns a set with the common elements in both groups
+val commonElements = set1 intersect set2
+
+// Returns a set with the elements of group2 that are found in group1
+val differentElements = set1 subtract set2
+</code></pre>
+  </section><br><br>
   
   
   </p>
@@ -1264,8 +1432,14 @@ This operator often appears in Java-to-Kotlin migrations.
   
   
   <p>Creating a MutableMap</p>
-  <a href="UD5/images/ud5-2023-09-17-00-49-46.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-49-46.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  <section><pre><code class="language-kotlin">val person: MutableMap<String, Any> = mutableMapOf(
+    "name" to "Rick Sanchez",
+    "age" to 70,
+    "alive" to true,
+    "dimension" to "c-137"
+)
+</code></pre>
+  </section><br><br>
   
   
   <p>Some operations on Map and MutableMap
@@ -1275,8 +1449,26 @@ This operator often appears in Java-to-Kotlin migrations.
   <section class="marco-b">
       
   </section>
-  <a href="UD5/images/ud5-2023-09-17-00-50-37.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-50-37.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  
+  <section><pre><code class="language-kotlin">val person = mutableMapOf(
+    "name" to "Rick Sanchez",
+    "age" to 70,
+    "alive" to true
+)
+
+person.put("dimension", "c-137")  // Adds the key-value pair to the Map
+person.remove(key = "age")       // Removes and returns the element that matches the key
+person.keys                      // Returns a list of keys
+person.values                    // Returns a list of values
+person.size                      // Returns the number of key-value pairs
+person.clear()                   // Clears the Map
+
+// Iterate through a Map or MutableMap
+for ((key, value) in person) {
+    println("$key -> $value")
+}
+</code></pre>
+  </section><br><br>
   
   
   </p>
@@ -1324,29 +1516,45 @@ This operator often appears in Java-to-Kotlin migrations.
   
   <h3>Sequences</h3>
   
-  <p>Sequences allow optimizing operations on collections.
+  <p>Sequences allow optimizing operations on collections.</p>
   
-  <a href="UD5/images/ud5-2023-09-17-00-56-41.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-56-41.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  <section><pre><code class="language-kotlin">val list = listOf("Uno", "Dos", "Tres", "Cuatro", "Cinco")
+val secondList = list.filter { it.length > 3 }
+    .map { it.uppercase() }
+</code></pre>
+  </section><br><br>
   
-  
+  <p>
   In the previous example, both operations are performed on all elements of the list, generating intermediate lists that don't disappear until all operations are complete.
   
   This behavior, when the collection has many elements and/or many operations are performed on it, will penalize application performance.
   </p>
   <p>To improve this behavior, you can convert the collection to a sequence, perform all the operations, and finally generate the collection again.
     The sequence does not generate intermediate collections.
-    <a href="UD5/images/ud5-2023-09-17-00-58-03.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-58-03.png" /><br><figcaption></figcaption></figure></a>
-    <br>
+    
+  <section><pre><code class="language-kotlin">val list = listOf("Uno", "Dos", "Tres", "Cuatro", "Cinco")
+val secondList = list.asSequence()
+    .filter { it.length > 3 }
+    .map { it.uppercase() }
+    .toList()
+</code></pre>
+  </section><br><br>
     
   </p>
   
   <p>Sequences only generate their elements when used, allowing them to generate an infinite number of values, which can then be used.
   You must be careful, as the application could get stuck waiting for the sequence to finish.
-  <a href="UD5/images/ud5-2023-09-17-00-59-57.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-00-59-57.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  
   
   </p>
+
+  <section><pre><code class="language-kotlin">// Generates an infinite sequence of odd numbers
+val oddNumbers = generateSequence(seed = 1) { it + 2 }
+
+// Iterates through the sequence and generates a list with elements less than 200
+val oddNumbersTo200 = oddNumbers.takeWhile { it &lt; 200 }.toList()
+</code></pre>
+  </section><br><br>
   
 </section> <!-- Fin Sección Colecciones-->
 
@@ -1387,10 +1595,20 @@ This operator often appears in Java-to-Kotlin migrations.
   </p>
   
   <p>Parameters are separated by commas, and the use of the <span class="negrita">trailing comma</span> is allowed (final comma).
-  <a href="UD5/images/ud5-2023-09-17-01-08-13.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-08-13.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  
   
   </p>
+
+  <section><pre><code class="language-kotlin">fun areEqual(
+    num1: Int,
+    num2: Int,
+): Boolean {
+    return if (num1 == num2) true else false
+}
+
+areEqual(num1 = 26, num2 = 123)
+</code></pre>
+  </section><br><br>
   
   <p><span class="subrayado">Input parameters are immutable</span>, meaning their values cannot be changed within the function body, as if they were declared with <span class="r-word">val</span>.
   
@@ -1405,8 +1623,23 @@ This operator often appears in Java-to-Kotlin migrations.
   <br>
   
   Other Functions:
-  <a href="UD5/images/ud5-2023-09-17-01-11-15.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-11-15.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  <section><pre><code class="language-kotlin">fun greeting(nombre: String) = println("¡Hola $nombre!") 
+// Prints a greeting with the provided name
+
+fun addition(num1: Int, num2: Int): Int = num1 + num2
+// Adds two numbers and returns the result
+
+fun isEven(num: Int): Boolean = num % 2 == 0
+// Checks if a number is even and returns true/false
+
+// If the return type is not specified, Kotlin infers it
+fun inRange(num: Int, min: Int, max: Int) = num in min..max
+// Checks if the number is within the range defined by min and max
+
+fun inRange(num: Int, range: IntRange) = num in range
+// Checks if the number is within the given IntRange
+</code></pre>
+  </section><br><br>
   
   </p>
   
@@ -1430,8 +1663,22 @@ This operator often appears in Java-to-Kotlin migrations.
   
   <p>If default values are used in the function definition and named parameters in the function call, intermediate parameters can be omitted.
   
-    <a href="UD5/images/ud5-2023-09-17-01-15-37.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-15-37.png" /><br><figcaption></figcaption></figure></a>
-    <br>
+    <section><pre><code class="language-kotlin">fun finalPrice(
+    price: Double,
+    vat: Int = 21,
+    discount: Int = 0,
+): Double {
+    var finalPrice: Double = price
+    if (discount != 0) finalPrice -= price * discount / 100
+    return finalPrice + finalPrice * vat / 100
+}
+
+// Examples of calling the function:
+finalPrice(price = 355.0, vat = 10, discount = 5)  // Discount and VAT explicitly set
+finalPrice(price = 355.0, vat = 10)               // Default discount value
+finalPrice(price = 355.0, discount = 20)          // Default VAT value
+</code></pre>
+    </section><br><br>
     
   </p>
   
@@ -1523,8 +1770,19 @@ This operator often appears in Java-to-Kotlin migrations.
   <p>
   Kotlin allows you to extend the functionality of classes by adding functions to them.
   These functions only exist within the scope in which they are defined.
-  <a href="UD5/images/ud5-2023-09-17-01-27-55.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-01-27-55.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+
+  <section><pre><code class="language-kotlin">fun main() {
+    val number = (0..100).random() // Generate a random number between 0 and 100
+    if (number.isOdd()) println("$number is odd") // Check if the number is odd
+    else println("$number is even") // Otherwise, it's even
+}
+
+// Adds a function to the Int class
+fun Int.isOdd(): Boolean {
+    return this % 2 != 0 // Returns true if the number is not divisible by 2
+}
+</code></pre>
+  </section><br><br>
   
   </p>
   
@@ -1548,7 +1806,7 @@ This operator often appears in Java-to-Kotlin migrations.
   
   <h3>Exercises</h3>
   
-  <a class="tarea" target="_blank" href="UD2/exercises/Actividades Reutilizar código.pdf">Exercises</a>
+  <a class="tarea" target="_blank" href="UD5/exercises/Actividades Reutilizar código.pdf">Exercises 4</a>
   
 
   </section><!-- End section Funciones-->
@@ -1603,8 +1861,30 @@ This operator often appears in Java-to-Kotlin migrations.
   <span class="negrita">Getters</span> and <span class="negrita">setters</span> are defined after each property.
   
   The constructor is defined with the word constructor.
-  <a href="UD5/images/ud5-2023-09-17-13-17-34.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-17-34.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  <section><pre><code class="language-kotlin">class Product {
+    var name: String
+        get() {
+            return field // Returns the value of the property
+        }
+        set(name: String) {
+            field = name // Updates the value of the property
+        }
+
+    var price: Double
+        get() {
+            return field // Returns the value of the property
+        }
+        set(price: Double) {
+            field = price // Updates the value of the property
+        }
+
+    constructor(name: String, price: Double) {
+        this.name = name // Initializes the name property
+        this.price = price // Initializes the price property
+    }
+}
+</code></pre>
+  </section><br><br>
   
   
   Its usage is also similar to Java:
@@ -1723,8 +2003,23 @@ This operator often appears in Java-to-Kotlin migrations.
       <li>Overloading inherited functions</li>
     </ul>
   
-    <a href="UD5/images/ud5-2023-09-17-13-42-53.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-13-42-53.png" /><br><figcaption></figcaption></figure></a>
-    <br>
+    <section><pre><code class="language-kotlin">class Product(var name: String) {
+    var price: Double = -1.0 // Default price set to -1.0
+
+    init {
+        name = name.uppercase() // Convert name to uppercase during initialization
+    }
+
+    constructor(name: String, price: Double) : this(name) {
+        this.price = price // Assigns the provided price
+    }
+
+    override fun toString(): String {
+        return "$name: $price €" // Returns the string representation of the product
+    }
+}
+</code></pre>
+    </section><br><br>
     
   </p>
   
@@ -2010,8 +2305,32 @@ If declared globally in the .kt file, you can add extension functions in the sam
   
   <p>To declare an abstract class, you use the reserved word <span class="r-word">abstract</span> before the word <span class="r-word">class</span>.</p>
   <p>Abstract classes cannot be instantiated.</p>
-  <a href="UD5/images/ud5-2023-09-17-19-35-01.png" target="_BLANK"><figure><img src="UD5/images/ud5-2023-09-17-19-35-01.png" /><br><figcaption></figcaption></figure></a>
-  <br>
+  <section><pre><code class="language-kotlin">abstract class Product(var name: String, var trademark: String) {
+    abstract var price: Double // Abstract property that must be implemented by subclasses
+    abstract fun powerOn() // Abstract method that must be implemented by subclasses
+    abstract fun powerOff() // Abstract method that must be implemented by subclasses
+
+    fun information() {
+        println("$name ($trademark): $price €") // Prints the product's information
+    }
+}
+
+class Monitor(
+    name: String,
+    trademark: String,
+    var color: String,
+    override var price: Double
+) : Product(name, trademark) {
+    override fun powerOn() {
+        println("Powered On") // Prints when the monitor is turned on
+    }
+
+    override fun powerOff() {
+        println("Powered Off") // Prints when the monitor is turned off
+    }
+}
+</code></pre>
+  </section><br><br>
   
   
   <div class="tarea">
