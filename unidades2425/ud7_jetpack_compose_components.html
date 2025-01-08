@@ -60,24 +60,24 @@
     <div class="fila">
       <a href="#sComponentesSearchBar" title="25.- SearchBar Components">25.- SearchBar Components</a>
       <a href="#sComponenteAlertDialog" title="26.- AlertDialog Component">26.- AlertDialog Component</a>
-      <a href="#sLayout" title="27.- Layout" class="oculto">27.- Layout</a>
+      <a href="#sLayout" title="27.- Layout" class="">27.- Layout</a>
     </div>
-    <div class="oculto">
+    <div class="fila">
       <a href="#sComponenteSurface" title="28.- Surface Component">28.- Surface Component</a>
       <a href="#sComponenteCard" title="29.- Card Component">29.- Card Component</a>
       <a href="#sComponenteBox" title="30.- Box Component">30.- Box Component</a>
     </div>
-    <div class="oculto">
+    <div class="fila">
       <a href="#sComponentesColumnyRow" title="31.- Column and Row Components">31.- Column and Row Components</a>
       <a href="#sScroll" title="32.- Scroll">32.- Scroll</a>
       <a href="#sComponenteListItem" title="33.- ListItem Component">33.- ListItem Component</a>
     </div>
-    <div class="oculto">
+    <div class="fila">
       <a href="#sComponenteScaffold" title="34.- Scaffold Component">34.- Scaffold Component</a>
       <a href="#sComponenteConstraintLayout" title="35.- ConstraintLayout Component">35.- ConstraintLayout Component</a>
       <a href="#sComponentesModal" title="36.- Modal Components">36.- Modal Components</a>
     </div>
-    <div class="oculto">
+    <div class="fila">
       <a href="#sComponentesPager" title="37.- Pager Components">37.- Pager Components</a>
       <a href="#sComponentesTooltipBox" title="38.- TooltipBox Components">38.- TooltipBox Components</a>
       <a href="" class="relleno"></a>
@@ -131,24 +131,24 @@
     <div class="fila">
       <a href="#sComponentesSearchBar" title="25.- SearchBar Components">25.- SearchBar Components</a>
       <a href="#sComponenteAlertDialog" title="26.- AlertDialog Component">26.- AlertDialog Component</a>
-      <a href="#sLayout" title="27.- Layout" class="relleno">27.- Layout</a>
+      <a href="#sLayout" title="27.- Layout" class="">27.- Layout</a>
     </div>
-    <div class="oculto">
+    <div class="fila">
       <a href="#sComponenteSurface" title="28.- Surface Component">28.- Surface Component</a>
       <a href="#sComponenteCard" title="29.- Card Component">29.- Card Component</a>
       <a href="#sComponenteBox" title="30.- Box Component">30.- Box Component</a>
     </div>
-    <div class="oculto">
+    <div class="fila">
       <a href="#sComponentesColumnyRow" title="31.- Column and Row Components">31.- Column and Row Components</a>
       <a href="#sScroll" title="32.- Scroll">32.- Scroll</a>
       <a href="#sComponenteListItem" title="33.- ListItem Component">33.- ListItem Component</a>
     </div>
-    <div class="oculto">
+    <div class="fila">
       <a href="#sComponenteScaffold" title="34.- Scaffold Component">34.- Scaffold Component</a>
       <a href="#sComponenteConstraintLayout" title="35.- ConstraintLayout Component">35.- ConstraintLayout Component</a>
       <a href="#sComponentesModal" title="36.- Modal Components">36.- Modal Components</a>
     </div>
-    <div class="oculto">
+    <div class="fila">
       <a href="#sComponentesPager" title="37.- Pager Components">37.- Pager Components</a>
       <a href="#sComponentesTooltipBox" title="38.- TooltipBox Components">38.- TooltipBox Components</a>
       <a href="" class="relleno"></a>
@@ -2618,7 +2618,6 @@ fun showToast(ctx:Context, txt:String){
 
 </section><!-- End section Componente AlertDialog-->
 
-<div class="oculto">
 <!--*********************************************************Layout***********************************************************-->
 <section class="apartado">
   <a name="sLayout"></a>
@@ -2683,21 +2682,25 @@ fun showToast(ctx:Context, txt:String){
 <section class="apartado">
   <a name="sComponenteSurface"></a>
   <h2>Surface Component</h2>
+  <p><span class="negrita">Surface</span> is a container with a predefined style that follows the default Material Design theme.</p>
+  
+  <p>The <span class="negrita">Surface</span> component is the central axis upon which the <span class="negrita">Material Design</span> philosophy is based. 
+    In fact, if you look at the documentation for <span class="negrita">Scaffold</span>, you can see that it internally makes use of a Surface.</p>
 
-  <p>The <span class="r-word">Surface</span> component is the central element of <span
-      class="negrita">Material Design</span> philosophy.</p>
+<a href="UD7/images/ud_7-2025-01-07-13-30-06.png" target="_BLANK"><figure><img src="UD7/images/ud_7-2025-01-07-13-30-06.png" /><br><figcaption></figcaption></figure></a>
+<br>
 
-  <p>Surface is a container with a predefined style aligned with <span class="negrita">Material Design</span>
-    by default.</p>
 
   <p>You can change its default style, as Surface has parameters for shape, elevation, border, and colors for the
     content and container.</p>
 
   <p>It is recommended to use Surface as the parent element of the entire UI.</p>
-  <figure><img src="UD7/images/ud7-2023-10-24-20-24-23.png" /><br>
-    <figcaption></figcaption>
-  </figure>
+
+  <p>The <span class="negrita">Surface</span> component by itself does not serve to organize interface elements.</p>
+
+  <a href="UD7/images/ud_7-2025-01-07-13-32-24.png" target="_BLANK"><figure><img src="UD7/images/ud_7-2025-01-07-13-32-24.png" /><br><figcaption></figcaption></figure></a>
   <br>
+  
 
   <p>You can use Surface as many times as you need, each time requiring a surface distinct from the rest of the UI.</p>
   <figure><img src="UD7/images/ud7-2023-10-24-20-26-32.png" /><br>
@@ -2715,6 +2718,11 @@ fun showToast(ctx:Context, txt:String){
     <figcaption></figcaption>
   </figure>
   <br>
+
+  
+  <p>Inside the content of <span class="negrita">Surface</span>, you must use another layout component such as 
+    <span class="cursiva">Row</span> or <span class="cursiva">Column</span>...</p>
+
 
 </section><!-- End section Componente Surface-->
 
@@ -2748,18 +2756,17 @@ fun showToast(ctx:Context, txt:String){
     one on top of another.</p>
 
   <p>A possible use case would be showing some content or a different one when a button is clicked.</p>
-  <figure><img src="UD7/images/ud7-2023-10-24-20-40-32.png" /><br>
-    <figcaption></figcaption>
-  </figure>
+  <a href="UD7/images/ud_7-2025-01-07-13-44-22.png" target="_BLANK"><figure><img src="UD7/images/ud_7-2025-01-07-13-44-22.png" /><br><figcaption></figcaption></figure></a>
   <br>
+  
 
   <h3>BoxWithConstraints Component</h3>
   <p>The <span class="r-word">BoxWithConstraints</span> component is a special version of Box that passes
     the component’s dimensions to its content so you can use them if needed.</p>
-  <figure><img src="UD7/images/ud7-2023-10-24-20-48-45.png" /><br>
-    <figcaption></figcaption>
-  </figure>
-  <br>
+  
+    <a href="UD7/images/ud_7-2025-01-07-13-45-38.png" target="_BLANK"><figure><img src="UD7/images/ud_7-2025-01-07-13-45-38.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
 
 </section><!-- End section Componente Box-->
 
@@ -2772,8 +2779,8 @@ fun showToast(ctx:Context, txt:String){
 
   <p>To align content vertically or horizontally within these components, you use:
   <ul>
-    <li>Arrangement: main axis (columns: vertical, rows: horizontal).</li>
-    <li>Alignment: cross axis (columns: horizontal, rows: vertical).</li>
+    <li><span class="negrita">Arrangement</span>: main axis (columns: vertical, rows: horizontal).</li>
+    <li><span class="negrita">Alignment</span>: cross axis (columns: horizontal, rows: vertical).</li>
   </ul>
   </p>
   <figure><img src="UD7/images/ud7-2023-10-24-20-51-08.png" /><br>
@@ -2819,26 +2826,6 @@ fun showToast(ctx:Context, txt:String){
   </ul>
   </p>
 
-</section><!-- End section Componentes Column y Row-->
-
-
-<!--*********************************************************Scroll***********************************************************-->
-<section class="apartado">
-  <a name="sScroll"></a>
-  <h2>Scroll</h2>
-
-  <p>As seen so far, when there are too many components on the screen, some may end up outside the user’s view
-    (beyond the visible screen area).</p>
-
-  <p>When we discussed the <span class="negrita">modifier</span> parameter, we mentioned that if a component’s content doesn’t fit on the screen, you can use the <span class="negrita">verticalScroll</span> and <span class="negrita">horizontalScroll</span> modifiers to scroll and reach everything.
-    However, this approach isn’t ideal because it <span class="subrayado">loads all the component’s content into RAM, regardless of whether it’s visible</span>.
-  </p>
-
-  <p>The <span class="negrita">Lazy</span> components described below solve this issue.</p>
-
-  <p><span class="negrita">Lazy</span> components automatically have a parameter that, by default, creates a <span class="negrita">rememberSaveable</span> state
-    to manage their scroll states automatically.</p>
-
   <h3>Flow Components</h3>
 
   <p>The <span class="r-word">FlowColumn</span> and <span class="r-word">FlowRow</span> components are similar to <span class="negrita">Column</span> and <span class="negrita">Row</span> but will wrap items to a new column or row when they no longer fit in a single column/row.</p>
@@ -2866,6 +2853,29 @@ FlowRow(
     <figcaption></figcaption>
   </figure>
   <br>
+  
+
+</section><!-- End section Componentes Column y Row-->
+
+
+<!--*********************************************************Scroll***********************************************************-->
+<section class="apartado">
+  <a name="sScroll"></a>
+  <h2>Scroll</h2>
+
+  <p>As seen so far, when there are too many components on the screen, some may end up outside the user’s view
+    (beyond the visible screen area).</p>
+
+  <p>When we discussed the <span class="negrita">modifier</span> parameter, we mentioned that if a component’s content doesn’t fit on the screen, you can use the <span class="negrita">verticalScroll</span> and <span class="negrita">horizontalScroll</span> modifiers to scroll and reach everything.
+    However, this approach isn’t ideal because it <span class="subrayado">loads all the component’s content into RAM, regardless of whether it’s visible</span>.
+  </p>
+
+  <p>The <span class="negrita">Lazy</span> components described below solve this issue.</p>
+
+  <p><span class="negrita">Lazy</span> components automatically have a parameter that, by default, creates a <span class="negrita">rememberSaveable</span> state
+    to manage their scroll states automatically.</p>
+
+  
 
   <h3>Lazy Components</h3>
 
@@ -3046,20 +3056,19 @@ LazyColumn(
 </code></pre>
   </section><br><br>
 
-  <section class="marco-t warn">
+  <section class="marco-t warn oculto">
     <span class="icono warning"> </span> stickyHeader is still in experimental mode, so you should add the annotation in the component
   </section>
-  <section class="marco-b">
+  <section class="marco-b oculto">
     <section>
       <pre><code class="language-kotlin">@OptIn(ExperimentalFoundationApi::class)</code></pre>
     </section>
   </section>
 
   <p>The result looks like this:</p>
-  <figure><img src="UD7/images/ud7-2023-10-25-10-57-32.png" /><br>
-    <figcaption></figcaption>
-  </figure>
+  <a href="UD7/images/ud7-2023-10-25-10-57-32.png" target="_BLANK"><figure><img src="UD7/images/ud7-2023-10-25-10-57-32.png" /><br><figcaption></figcaption></figure></a>
   <br>
+  
 
 
   <h3>LazyVerticalGrid and LazyHorizontalGrid Components</h3>
@@ -3080,17 +3089,17 @@ LazyColumn(
 
   <p class="sub-section">LazyVerticalGrid Component</p>
   <p>Example:</p>
-  <figure><img src="UD7/images/ud7-2023-10-25-11-02-12.png" /><br>
-    <figcaption>LazyVerticalGrid</figcaption>
-  </figure>
+  
+  <a href="UD7/images/ud7-2023-10-25-11-02-12.png" target="_BLANK"><figure><img src="UD7/images/ud7-2023-10-25-11-02-12.png" /><br><figcaption>LazyVerticalGrid</figcaption></figure></a>
   <br>
+  
 
   <p class="sub-section">LazyHorizontalGrid Component</p>
 
-  <figure><img src="UD7/images/ud7-2023-10-25-11-03-39.png" /><br>
-    <figcaption>LazyHorizontalGrid</figcaption>
-  </figure>
+  
+  <a href="UD7/images/ud7-2023-10-25-11-03-39.png" target="_BLANK"><figure><img src="UD7/images/ud7-2023-10-25-11-03-39.png" /><br><figcaption>LazyHorizontalGrid</figcaption></figure></a>
   <br>
+  
 
   <h3>Staggered Components</h3>
   <p>The <span class="r-word">LazyVerticalStaggeredGrid</span> and <span class="r-word">LazyHorizontalStaggeredGrid</span>
@@ -3120,23 +3129,24 @@ LazyColumn(
   </p>
 
   <p class="sub-section">LazyVerticalStaggeredGrid Component</p>
-  <p>Example:</p>
-  <figure><img src="UD7/images/ud7-2023-10-25-11-07-28.png" /><br>
-    <figcaption>LazyVerticalStaggeredGrid</figcaption>
+  <p>Example:</p><a href="UD7/images/ud7-2023-10-25-11-07-28.png" target="_BLANK"><figure><img src="UD7/images/ud7-2023-10-25-11-07-28.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
   </figure>
   <br>
 
   <p class="sub-section">LazyHorizontalStaggeredGrid Component</p>
-  <p>Example:</p>
-  <figure><img src="UD7/images/ud7-2023-10-25-11-08-30.png" /><br>
-    <figcaption>LazyHorizontalStaggeredGrid</figcaption>
+  <p>Example:</p><a href="UD7/images/ud7-2023-10-25-11-08-30.png" target="_BLANK"><figure><img src="UD7/images/ud7-2023-10-25-11-08-30.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
   </figure>
   <br>
 
   <h3>Managing the State in Lazy Components</h3>
   <p>As seen in the definition of Lazy components, Android automatically manages scroll state:</p>
-  <figure><img src="UD7/images/ud7-2023-10-25-11-10-16.png" /><br>
-    <figcaption></figcaption>
+  <a href="UD7/images/ud7-2023-10-25-11-10-16.png" target="_BLANK"><figure><img src="UD7/images/ud7-2023-10-25-11-10-16.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
   </figure>
   <br>
 
@@ -3235,9 +3245,9 @@ LazyColumn(
     }
 }
 </code></pre>
-  </section><br><br>
-  <figure><img src="UD7/images/EjemploLazyStaggerdState.gif" /><br>
-    <figcaption></figcaption>
+  </section><br><br><a href="UD7/images/EjemploLazyStaggerdState.gif" target="_BLANK"><figure><img src="UD7/images/EjemploLazyStaggerdState.gif" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
   </figure>
   <br>
   <p>In the example, a custom state is created to manage scroll for <span class="cursiva">LazyVerticalStaggeredGrid</span> and assigned to that component.</p>
@@ -3269,14 +3279,14 @@ LazyColumn(
     will align at the top; if there is no <span class="negrita">overLineContent</span>, they will align vertically
     centered.</p>
 
-  <p>Component definition:</p>
-  <figure><img src="UD7/images/ud7-2023-10-25-12-55-45.png" /><br>
-    <figcaption></figcaption>
+  <p>Component definition:</p><a href="UD7/images/ud7-2023-10-25-12-55-45.png" target="_BLANK"><figure><img src="UD7/images/ud7-2023-10-25-12-55-45.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
   </figure>
   <br>
-  <p>Example:</p>
-  <figure><img src="UD7/images/ud7-2023-10-25-12-56-09.png" /><br>
-    <figcaption></figcaption>
+  <p>Example:</p><a href="UD7/images/ud7-2023-10-25-12-56-09.png" target="_BLANK"><figure><img src="UD7/images/ud7-2023-10-25-12-56-09.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
   </figure>
   <br>
 
@@ -3285,8 +3295,9 @@ LazyColumn(
     end with Text
   </section>
   <section class="marco-b">
-      <figure><img src="UD7/images/ud7-2023-11-29-12-44-54.png" /><br><figcaption></figcaption></figure>
-      <br>
+  <a href="UD7/images/ud7-2023-11-29-12-44-54.png" target="_BLANK"><figure><img src="UD7/images/ud7-2023-11-29-12-44-54.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
   </section>
 
 </section><!-- End section Componente ListItem-->
@@ -3316,6 +3327,11 @@ LazyColumn(
 
   <p>The only required parameter is <span class="negrita">content</span>, and being the last parameter and a lambda, it
     can be extracted from the parentheses.</p>
+
+  <p>As we see previously, an Android Studio project uses <span class="negrita">Scaffold</span> component by default</p>
+    <a href="UD7/images/ud_7-2025-01-07-14-19-10.png" target="_BLANK"><figure><img src="UD7/images/ud_7-2025-01-07-14-19-10.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
 
   <p>If you decide to use Scaffold, you must choose one of the following options:
   <ul>
@@ -3533,6 +3549,9 @@ LazyColumn(
   </figure>
   <br>
 
+  <p>In any part of the interface where a block of instructions can be placed, the Snackbar can be launched with any desired message.</p>
+
+
 </section><!-- End section Componente Scaffold-->
 
 
@@ -3554,13 +3573,21 @@ LazyColumn(
 
   <p>It’s also important to know because it offers a lot of freedom when creating user interfaces in Android.</p>
 
-  <p>To use this component, you must first add a dependency to <span
-      class="inline-file">build.gradle.kts (Module)</span>
-    and sync.</p>
+  <p>To use this component, you must first add a dependency:
+    <ul>
+      <li>
+        <span class="inline-file">libs.versions.toml</span> <ul>
+          <li><span class="cursiva">[versions]</span> section. <br><img style="vertical-align: baseline"  src="UD7/images/ud_7-2025-01-07-14-35-34.png" /></li>
+          <li><span class="cursiva">[libraries]</span> section. <br><img style="vertical-align: baseline"  src="UD7/images/ud_7-2025-01-07-14-35-54.png" /></li>
+        </ul>
+      </li>
+      <li><span class="inline-file">build.graddle.kts (Module: app)</span>
+      <ul>
+        <li>Dependencies section: <br> <img style="vertical-align: baseline"  src="UD7/images/ud_7-2025-01-07-14-38-43.png" /></li>
+      </ul></li>
+    </ul> </p>
 
-  <section>
-    <pre><code class="language-kotlin">implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")</code></pre>
-  </section><br><br>
+  <p>Remember <span class="d-word">sync gradle</span>  and then you can use <span class="negrita">ConstraintLayout</span></p>
 
 
   <p>After adding the dependency, you can use the <span class="r-word">ConstraintLayout</span> component
@@ -3721,10 +3748,9 @@ LazyColumn(
   <p>The best-known one is <span class="r-word">ModalNavigationDrawer</span>, also called a
     <span class="negrita">hamburger menu</span>, which appears as a lateral menu when tapped.</p>
 
-  <figure><img src="UD7/images/ud7-2023-11-05-19-15-54.png" /><br>
-    <figcaption></figcaption>
-  </figure>
+  <a href="UD7/images/ud_7-2025-01-07-14-47-52.png" target="_BLANK"><figure><img src="UD7/images/ud_7-2025-01-07-14-47-52.png" /><br><figcaption></figcaption></figure></a>
   <br>
+  
 
   <p>On devices with large screens, this menu should be replaced by another one that remains permanently visible, such
     as a <span class="negrita">NavigationDrawer</span> or a <span class="negrita">NavigationRail</span>.</p>
@@ -4008,7 +4034,7 @@ fun MComp() {
 
 <!--*********************************************************PRACTICA***********************************************************-->
 <section class="apartado">  
-  <h2 id="sP2">P2 Practice Master/Detail</h2>
+  <h2 id="sP5">P5 Practice Master/Detail</h2>
 
   <div class="tarea">
     <p>In this practice, you will create a Master/Detail application. To make it more visible, we’ll force the
@@ -4029,8 +4055,8 @@ fun MComp() {
           <figure><img src="UD7/images/ud7-2023-11-13-11-00-34.png" /><br><figcaption>TopAppBar</figcaption></figure>
           <br>
           <ul>
-            <li>You can get the title image from <a class="enlace" target="_blank" href="UD4/p2/dragonball.webp">here</a>.</li>
-            <li>You can get the ball image from <a class="enlace" target="_blank" href="UD4/p2/fourstarball.webp">here</a>.</li>
+            <li>You can get the title image from <a class="enlace" target="_blank" href="UD7/p5/dragonball.webp">here</a>.</li>
+            <li>You can get the ball image from <a class="enlace" target="_blank" href="UD7/p5/fourstarball.webp">here</a>.</li>
           </ul>
         </li>
         <li>
@@ -4068,7 +4094,7 @@ fun MComp() {
           </ul>
         </li>
         <li>
-          The list content and detail content will come from the file <a class="enlace" target="_blank" href="UD4/p2/Character.kt">Character</a> I’ve attached, which you’ll put in the “model” package:
+          The list content and detail content will come from the file <a class="enlace" target="_blank" href="UD7/p5/Character.kt">Character</a> I’ve attached, which you’ll put in the “model” package:
           <figure><img src="UD7/images/ud7-2023-11-13-11-20-45.png" /><br><figcaption>File structure</figcaption></figure>
           <br>
           This file has a data class Character containing the information for each character, plus a Companion Object
@@ -4088,12 +4114,13 @@ fun MComp() {
       </ul>
     </p>
 
-    <p>Submit the practice <a class="enlace" target="_blank" href="https://aules.edu.gva.es/fp/mod/assign/view.php?id=5316376">here</a> in a compressed ZIP file with the entire folder content.<br>
+    <p>Submit the practice <a class="enlace" target="_blank" href="https://aules.edu.gva.es/semipresencial/mod/assign/view.php?id=2379031">here</a> in a compressed ZIP file with the entire folder content.<br>
     Remember to comment your code, structure it, and do build -> Clean Project before submission.</p>
     
   </div>
 </section><!-- End section PRACTICA-->
-</div>
+
+
 
   <!---BTM_MENU--->
   <script src="../script/prism.js"></script>
