@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Themes and Navigation with Jetpack Compose</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../styles/prism.css">
+  <link rel="stylesheet" href="../styles/styles.css">
+  <script src="../script/script.js"></script>
+</head>
+
+
+<body class="line-numbers">
+  <!--*********************************************************Navegación***********************************************************-->
+<section class="apartado">
+  <a name="sNavegacion"></a>
+  <h2>Navigation</h2>
+  
+<p>With the traditional <span class="negrita">Android (Views)</span> programming, each screen of the application was implemented in a
+  <span class="negrita">different Activity</span>.</p>
+
+<p>This required the use of navigation graphs, instructions for starting Activities,
+  creating elements to send information to the new window, and to receive information upon closing the window.</p>
+
+<p>With <span class="negrita">Jetpack Compose</span>, the entire navigation process is simplified because the structure of a 
+  <span class="subrayado">Compose-developed application is based on a <span class="negrita">Single Activity</span></span>.</p>
+
+<p>Single Activity means that <span class="negrita">there is only one Activity managing all interface elements</span>,
+  which are divided into different Compose components in Jetpack Compose.</p>
+
+<p>From this point on, it is very important to have all your application code organized into folders.</p>
+
+<p>To do this, you can create a folder named <span class="negrita">screens</span> inside <span class="negrita">ui</span> where you place the different components of each screen.</p>
+<p>Inside the <span class="negrita">screens</span> folder, you can directly keep the <span class="d-word">.kt</span> files for each screen, or you can create new folders if each screen is composed of multiple <span class="d-word">.kt</span> files.</p>
+
+<figure><img src="UD8/images/ud8-2023-11-20-16-13-29.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>The example to be studied is an application with two screens.</p>
+<p>The first screen will show a <span class="r-word">TextField</span> for entering a <span class="cursiva">name</span> and a <span class="cursiva">button</span> to <span class="subrayado">navigate to the second screen while sending it the name</span>.</p>
+<p>The second screen will display the received name and a button to go back.</p>
+
+<figure><img src="UD8/images/ud8-2023-11-20-17-20-47.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>To implement navigation with Jetpack Compose, you must add the following dependency in <span class="inline-file">build.gradle.kts (Module)</span>
+   and then <span class="negrita">synchronize</span>:</p>
+
+<section><pre><code class="language-kotlin">implementation("androidx.navigation:navigation-compose:2.7.5")
+</code></pre>
+</section><br>
+
+<p>Navigation in Jetpack Compose requires two elements:
+  <ul>
+    <li><span class="r-word">NavController</span>: it controls the navigation.</li>
+    <li><span class="r-word">NavHost</span>: it displays each of the screens to which navigation occurs.</li>
+  </ul>
+</p>
+
+<p>The element <span class="r-word">NavHost</span> defines the different screens to which you can navigate
+   and also needs the <span class="r-word">NavController</span>.</p>
+
+<p>The first step is to create a folder named <span class="inline-folder">navigation</span> and
+   inside it create a file named <span class="inline-file">Routes</span> that will contain a <span class="negrita">sealed class</span> 
+   where all the application screens are defined for centralization.</p>
+<figure><img src="UD8/images/ud8-2023-11-20-17-29-39.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">Routes.kt</span>
+</section>
+<section class="marco-b">
+  <section><pre><code class="language-kotlin">sealed class Routes(val route:String){
+    object FirstScreen: Routes("first_screen")
+    object Secondcreen: Routes("second_screen/{name}"){
+        fun createRoute(name:String) = "second_screen/$name"
+    }
+}
+</code></pre></section>
+</section><br>
+
+<p>Because the second screen receives a parameter, it must be specified in the route. Also, a function is created to work more easily with the route that receives the parameter.</p>
+   
+<p>Next, within the navigation folder, create a file that contains a 
+<span class="r-word">@Composable</span> component named <span class="inline-file">Navigation</span>. 
+In this file, you define the <span class="negrita">NavController</span> and the <span class="negrita">NavHost</span>.</p>
+
+<section><pre><code class="language-kotlin">@Composable
+fun Navigation() {
+    //Constant to manage the state, which must be propagated across all screens
+    val navController = rememberNavController()
+
+    //Element that knows the different screens and which is launched first
+    NavHost(
+        navController = navController,
+        startDestination = Routes.FirstScreen.route
+    ){
+        //Definition of the first screen
+        composable(
+            route = Routes.FirstScreen.route
+        ){
+            FirstScreen(navController)
+        }
+
+        //Definition of a screen that receives a String parameter
+        composable(
+            route = Routes.Secondcreen.route,
+            arguments = listOf(
+                navArgument(name = "name"){
+                    type= NavType.StringType
+                }
+            )
+        ){
+                val argument = it.arguments?.getString("name")
+                requireNotNull(argument)
+                SecondScreen(navController, argument)
+            }        
+    }
+
+}
+</code></pre></section><br>
+
+<p>The parameter can be any primitive type.</p>
+<figure><img src="UD8/images/ud8-2023-10-20-17-41-13.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>It must match the parameter specified in the function that creates the route.</p>
+
+<p>In the example, two screens have been defined:</p>
+
+<p>The first will load the <span class="negrita">FirstScreen</span> component receiving the <span class="negrita">NavController</span>.</p>
+<p>The second will load the <span class="negrita">SecondScreen</span> component receiving the <span class="negrita">NavController</span> 
+   and also a <span class="negrita">String</span> argument. This argument must be passed when navigating to that screen.</p>
+<p>The <span class="negrita">NavController</span> object should be passed to any component where interacting with it triggers a screen change (navigation).</p>
+
+<figure><img src="UD8/images/ud8-2023-10-22-23-29-40.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>It’s impossible for the argument to be <span class="negrita">null</span> because it’s defined in the route and
+  whenever you navigate programmatically, you will pass the argument. But Android Studio still forces you to indicate that it could 
+  be null, so you need to use <span class="r-word">requireNotNull(variable)</span> in your screen component before calling it.</p>
+<p>For the second screen, you also retrieve the parameter with <span class="r-word">it.arguments?.getString("name")</span>.</p>
+
+<figure><img src="UD8/images/ud8-2023-11-21-13-22-43.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>The next step is to indicate in the <span class="inline-file">MainActivity</span> file that you are going to use the 
+  <span class="negrita">Navigation</span> component.</p>
+<figure><img src="UD8/images/ud8-2023-11-21-13-23-03.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Recall that the <span class="negrita">AppContent</span> component was the one created to hold the basic structure of the application 
+  with its theme and <span class="negrita">Surface</span>.</p>
+
+<figure><img src="UD8/images/ud8-2023-11-21-13-50-27.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>This completes the navigation system. All that remains is to create the content of the application’s screens.</p>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">FirstScreen</span>
+</section>
+<section class="marco-b">
+  <section><pre><code class="language-kotlin">@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FirstScreen(navController: NavController) {
+    Scaffold(
+        topBar = {
+            TopAppBar(title = {
+                Text(text = "First Screen")
+            })
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(text = "App to navigate")
+
+            var namState by rememberSaveable {
+                mutableStateOf("")
+            }
+
+            TextField(
+                value = namState,
+                onValueChange = {namState = it},
+                placeholder = { Text(text = "Enter your name")}
+            )
+            Button(onClick = {
+                navController.navigate(route = Routes.Secondcreen.createRoute(namState))
+                namState = ""
+            },
+                enabled = namState.isNotEmpty()
+            ) {
+                Text(text = "Navigate to the second screen")
+            }
+        }
+    }
+}
+</code></pre>
+  </section><br>
+  <figure><img src="UD8/images/ud8-2023-11-21-13-37-20.png" /><br><figcaption></figcaption></figure>
+  <br>
+</section>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">SecondScreen</span>
+</section>
+<section class="marco-b">
+  <section><pre><code class="language-kotlin">@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SecondScreen(navController: NavController, name:String) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { 
+                    Text(text = "Second Screen")
+                }, 
+                navigationIcon = {
+                    IconButton(onClick = {
+                        //Go back to the previous element in the navigation stack
+                        navController.popBackStack()
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Arrow Back"
+                        )
+                            
+                    }
+                })
+        }
+    ) {
+        
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            Text(text = "I have navigated")
+            Text(text = "Parameter: $name")
+            Button(onClick = {
+                navController.popBackStack()
+            }) {
+                Text(text = "Go back")
+            }
+        }
+        
+    }
+}
+</code></pre>
+  </section><br><br>
+</section>
+
+<figure><img src="UD8/images/ud8-2023-11-21-13-50-27.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>In Android, when navigating between screens, they accumulate in the screen stack. So, to go back, we used the 
+  <span class="r-word">popBackStack</span> function of the <span class="negrita">navController</span>, which takes you to the previous screen.</p>
+
+<figure><img src="UD8/images/ud8-2023-11-21-13-53-14.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<section class="marco-t warn">
+  <span class="icono warning"> </span> If we had navigated to FirstScreen again, we would again be adding that screen to the stack.
+</section>
+<section class="marco-b"></section>
+
+<h3>Sending Multiple Arguments to a Screen</h3>
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">Routes.kt</span>
+</section>
+<section class="marco-b">
+  <figure><img src="UD8/images/ud8-2023-11-21-13-57-24.png" /><br><figcaption></figcaption></figure>
+</section>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">Navigation.kt</span>
+</section>
+<section class="marco-b">
+  <figure><img src="UD8/images/ud8-2023-11-21-13-58-01.png" /><br><figcaption></figcaption></figure>
+</section>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">FirstScreen</span>
+</section>
+<section class="marco-b">
+  <figure><img src="UD8/images/ud8-2023-11-21-13-58-26.png" /><br><figcaption></figcaption></figure>
+</section>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">SecondScreen</span>
+</section>
+<section class="marco-b">
+  <figure><img src="UD8/images/ud8-2023-11-21-13-59-11.png" /><br><figcaption></figcaption></figure>
+</section>
+
+<h3>Default Parameters</h3>
+
+<p>Because parameters are defined, they are required. If you want them optional, you must specify it in both the
+  <span class="negrita">Routes</span> and <span class="negrita">Navigation</span> files as follows:</p>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">Routes.kt</span>
+</section>
+<section class="marco-b">
+  <figure><img src="UD8/images/ud8-2023-11-21-14-06-03.png" /><br><figcaption></figcaption></figure>
+</section>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">Navigation.kt</span>
+</section>
+<section class="marco-b">
+  <figure><img src="UD8/images/ud8-2023-11-21-14-07-04.png" /><br><figcaption></figcaption></figure>
+</section>
+
+<p>Obviously, you can specify multiple optional parameters or mix mandatory with optional ones.</p>
+
+<h3>BackHandler</h3>
+
+<p>Android devices generally have a button that takes you back to the previous screen. Additionally, apps sometimes show
+  a back arrow in the top bar to do the same thing.</p>
+<figure><img src="UD8/images/ud8-2023-11-21-14-15-38.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>These buttons always execute <span class="negrita">navController.popBackStack()</span>.</p>
+<figure><img src="UD8/images/ud8-2023-11-21-14-19-54.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>This action always returns to the previous screen, whether it’s from your app or from somewhere else; in fact, if
+  you just opened one operation from the home screen, pressing the back arrow would bring you back to the home
+  screen.</p>
+
+<p>You can change this behavior by using the <span class="negrita">BackHandler</span> component.</p>
+<p>If you set the property <span class="negrita">enabled = true</span>, the back buttons will remain disabled all the
+  time.</p>
+
+<figure><img src="UD8/images/ud8-2023-11-21-14-23-35.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>It’s not advisable to keep <span class="r-word">enabled</span> always as true, because in that case you’d never be
+  able to exit the application.</p>
+
+<p>Typically, you’ll link <span class="r-word">enabled</span> to a state variable:</p>
+
+<figure><img src="UD8/images/ud8-2023-11-21-14-24-32.png" /><br><figcaption></figcaption></figure>
+<br>
+
+</section><!-- End section Navegación-->
+
+
+
+  <!--*********************************************************Diseños adaptativos***********************************************************-->
+<section class="apartado">
+  <a name="sDisenosAdaptativos"></a>
+  <h2>Adaptive Layouts</h2>
+  
+  <p>Mobile devices come in different screen sizes and resolutions.</p>
+  <p>If we know the screen size and orientation, we can decide which components to display on the screen.</p>
+  <p>For example, master-detail applications might show certain components or others depending on the width.</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-14-47-20.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>There are several ways to determine the screen size and orientation.</p>
+
+  <h3>From setContent</h3>
+  <p>First, we must add the material dependency in <span class="inline-file">build.gradle (Module: app)</span>:</p>
+
+  <section><pre><code class="language-kotlin">implementation("androidx.compose.material3:material3-android:1.2.0-alpha11")</code></pre>
+  </section><br>
+
+  <p>Then, in <span class="negrita">setContent</span> we obtain the width and height values:</p>
+  <section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            val widthSizeClass = calculateWindowSizeClass(this).widthSizeClass
+            val heightSizeClass = calculateWindowSizeClass(this).heightSizeClass
+            AppContent {
+                Navigation()
+            }
+        }
+    }
+}
+</code></pre></section><br>
+
+  <p>This way we obtain the <span class="negrita">window size classes</span>, which we can pass to the 
+    <span class="negrita">Navigation</span> component to decide which elements to display.</p>
+
+  <p>Window size classes are <a class="enlace" target="_blank" href="https://developer.android.com/guide/topics/large-screens/support-different-screen-sizes?hl=es-419">categorized in the Jetpack Compose documentation</a>. There it’s explained how to organize the elements.</p>
+
+  <figure><img src="UD8/images/ud8-2023-11-21-17-01-48.png" /><br><figcaption>Width</figcaption></figure>
+  <br>
+  <figure><img src="UD8/images/ud8-2023-11-21-17-03-55.png" /><br><figcaption>Height</figcaption></figure>
+  <br>
+  <figure><img src="UD8/images/ud8-2023-11-21-17-04-14.png" /><br><figcaption>Summary table</figcaption></figure>
+  <br>
+
+  <p>For example, a Pixel 4 device with API 30 yields:
+    <ul>
+      <li><span class="negrita">WindowWidthSizeClass.Compact</span></li>
+      <li><span class="negrita">WindowHeightSizeClass.Medium</span></li>
+    </ul>
+  </p>
+
+  <figure><img src="UD8/images/ud8-2023-11-21-18-08-08.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p>There are several ways to find out the screen size and orientation:</p>
+
+  <h3>From any <span class="negrita">@Composable</span>: getting orientation</h3>
+  <section><pre><code class="language-kotlin">
+//Inside a composable element
+if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT) {
+    Log.i("--->", "Vertical")
+} else {
+    Log.i("--->", "Horizontal")
+}
+</code></pre></section><br>
+
+  <p>This way, we know if the device is in portrait or landscape orientation. Note that the user may have locked the orientation.</p>
+
+  <h3>From any <span class="negrita">@Composable</span>: getting screen size</h3>
+  <section><pre><code class="language-kotlin">BoxWithConstraints {
+    Log.i("---", "width: $maxWidth - height: $maxHeight")
+    
+    when {
+        maxWidth &lt;= 600.dp -> {
+            Log.i("--->", "Vertical")
+        }
+        else -> {
+            Log.i("--->", "Horizontal")
+        }
+    }
+}
+</code></pre></section><br><br>
+
+  <p>This way, we know the maximum available dimensions. This check <span class="negrita">should be done at the highest possible level</span>, 
+    for example in the <span class="cursiva">composable</span> function of NavHost when defining the route, so as to have the maximum value.</p>
+
+  <p>Once we know the screen size/orientation, we can load one set of components or another. For example:</p>
+  <p>Depending on the width, we show either one component or two.</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-17-18-35.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <p>Depending on the width, we either show one component or another. The second component includes both <span class="cursiva">MainScreen</span> and <span class="cursiva">DetailContent</span> inside it.</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-17-19-46.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <div class="tarea">
+    <p>Exercise: <br>
+    Modify the DragonBall practice app so that it has an adaptive design. That is, it displays as it is in landscape mode, 
+    but in portrait mode it shows separate screens: one with the list and another with the detail.
+    </p>
+  </div>
+
+</section><!-- End section Diseños adaptativos-->
+
+
+
+  <!--*********************************************************SplashScreen***********************************************************-->
+<section class="apartado">
+  <a name="sSplashScreen"></a>
+  <h2>SplashScreen</h2>
+  
+  <p>A <span class="d-word">Splash Screen</span> is a window that appears when launching an Activity in an app or a game.</p>
+  <p>The <span class="d-word">Splash Screen</span> only appears:
+    <ul>
+      <li>When opening an app if the process associated with that app is not already running.</li>
+      <li>If the Activity associated with that <span class="d-word">Splash Screen</span> is not in the stack (with Jetpack Compose and Single Activity, this never happens).</li>
+    </ul>
+  </p>
+
+  <p>The <span class="d-word">Splash Screen</span> disappears once all the necessary items for the app have been loaded.</p>
+  <p>A typical <span class="d-word">Splash Screen</span> includes:
+    <ul>
+      <li>An image or logo.</li>
+      <li>The name of the application.</li>
+      <li>The version of the application.</li>
+      <li>The names of the developers.</li>
+      <li>The engine used for development.</li>
+    </ul>
+  </p>
+
+  <p>It is not mandatory to add a Splash Screen, but it is a good resource to avoid a blank screen while the app is launching and while necessary data are being loaded.</p>
+
+  <p>With Jetpack Compose navigation, implementing a Splash Screen is very straightforward:
+    <ul>
+      <li>Create a route for the Splash Screen in <span class="inline-file">Routes.kt</span>.</li>
+      <li>Add the Splash Screen route to <span class="inline-file">Navigation.kt</span>.</li>
+      <li>Specify in the <span class="negrita">NavHost</span> (<span class="inline-file">Navigation.kt</span>) that the Splash Screen is the <span class="r-word">startDestination</span>.</li>
+      <li>Create a <span class="negrita">@Composable</span> component with the Splash Screen content.</li>
+      <li>In the Splash Screen <span class="negrita">@Composable</span>, specify that once loading is finished, it navigates to the next screen.</li>
+    </ul>
+  </p>
+
+  <p>Here is an example of a SplashScreen:</p>
+  <section><pre><code class="language-kotlin">@Composable
+fun SplashScreen(navController: NavController) {
+    LaunchedEffect(key1 = true){
+        //Here we should perform the system load.
+        //Access a DB, connect to an API, etc.
+        //We simulate it with a 5-second delay
+        delay(5000)
+        //We remove it from the stack so if the user goes back, they won't return to the SplashScreen
+        navController.popBackStack()
+        navController.navigate(Routes.FirstScreen.route)
+    }
+
+    Splash()
+}
+
+@Composable
+fun Splash() {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = "logo",
+            modifier = Modifier.size(200.dp,150.dp),
+            contentScale = ContentScale.Fit
+        )
+        Text(
+            text = "Bienvenidos",
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold,
+            color = GreenSerra
+        )
+    }
+}
+</code></pre>
+  </section><br><br>
+
+  <p>We use <span class="negrita cursiva">LaunchedEffect</span> (to be studied later) to execute that code in the background.</p>
+  <p>In a real application, instead of the <span class="negrita cursiva">delay(5000)</span> instruction, you'd implement the steps to get all necessary application data, for example from a database or an API.</p>
+  <p>You can design very eye-catching Splash Screens using the animations that will be covered at the end of this unit.</p>
+
+
+  <div class="tarea">
+    <p>Modify the DragonBall application to include a <span class="cursiva">SplashScreen</span>. This will display the dragon ball from the app and the text "DragonBall" for 3 seconds.</p>
+  </div>
+
+  <p>Here is the <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2324/tree/master/UD5/dragonball_navigation">Github link</a> with the Dragon Ball app updated for Navigation, adapted to <span class="cursiva">Portrait</span> and <span class="cursiva">Landscape</span>, and with a <span class="cursiva">Splash Screen</span>.</p>
+
+</section><!-- End section SplashScreen-->
+
+<!--*********************************************************Onboarding***********************************************************-->
+<section class="apartado">
+  <a name="sOnboarding"></a>
+  <h2>Onboarding</h2>
+  
+  <p><span class="negrita">Onboarding</span> refers to a set of screens displayed in the app as an introduction to how it works.</p>
+  <p>Via <span class="cursiva">Onboarding</span>, you can quickly explain to the user how the app works.</p>
+  <p>You can also request data from the user, for example, in <span class="cursiva">Telegram/WhatsApp</span>, the <span class="cursiva">Onboarding</span> requests the phone number, the confirmation code, and the username.</p>
+  <p>There are many techniques for <span class="cursiva">Onboarding</span>. In some cases it’s mandatory to go through all steps, in others you can skip them and go directly into the main application.</p>
+  <p>The <span class="cursiva">Onboarding</span> should only be shown the first time you run the app after installing it.</p>
+  <p>If, in <span class="cursiva">Onboarding</span>, mandatory data is requested for the app to function, the Onboarding will continue to be displayed until that data is obtained.</p>
+  <p>In apps where you can log out, the <span class="cursiva">Onboarding</span> will be displayed each time the current user logs out.</p>
+  <p>You can find numerous online resources and best practices on designing a good Onboarding process.</p>
+  <p>Below are a couple of examples:</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-19-11-40.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <figure><img src="UD8/images/ud8-2023-11-21-19-11-54.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>Creating Onboarding with Jetpack Compose and Navigation is quite simple using navigation. You can choose one of these approaches:
+    <ul>
+      <li>Create as many Screens as there are onboarding pages and control navigation among them.</li>
+      <li>Create a single screen with a HorizontalPager (if mandatory data is collected, you must control navigation between pages with buttons).</li>
+    </ul>
+  </p>
+
+  <p>When Onboarding is finished, you must navigate to a screen that already shows the app’s functionality.</p>
+
+  <p>To show the Onboarding only the first time you launch the app (or whenever it’s needed—for example, if the user logs out), you must store that information somehow.</p>
+  <p>In <span class="cursiva">UD7 Persistence</span>, you’ll learn how to save app preferences, allowing you to store this data.</p>
+
+</section><!-- End section Onboarding-->
+
+
+  <!--*********************************************************Temas***********************************************************-->
+<section class="apartado">
+  <a name="sTemas"></a>
+  <h2>Themes</h2>
+
+  <p>In the previous unit, we studied how to centralize values and thus how to create a color palette within the <span class="negrita">res -> values -> colors.xml</span> file that can be used to build a theme for the entire application.</p>
+
+  <p>Although that file is fully functional, it <span class="subrayado">does not follow the foundations of Material Design and should be avoided</span>.</p>
+
+  <p>Within the same folder is the file <span class="inline-file">themes.xml</span>, which specifies the base theme on which the <span class="negrita">Jetpack Compose</span> theme is built.</p>
+  
+  <figure><img src="UD8/images/ud8-2023-11-21-19-31-22.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>When creating a project in Android Studio, by default it creates its own <span class="negrita">Jetpack Compose theme</span> based on Material Design, which you can customize.</p>
+  <p>The files for this theme can be found in the <span class="negrita">ui --> theme</span> folder.</p>
+
+  <p>From now on, to configure the application’s theme, we will use these files.</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-19-33-14.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>The theme is defined in the file <span class="inline-file">Theme.kt</span>. Its content is as follows:</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-19-34-56.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>The <span class="negrita">Theme.kt</span> is divided into three subsystems:
+    <ul>
+      <li><span class="negrita">Color.kt</span>: color palette</li>
+      <li><span class="negrita">Type.kt</span>: text typography</li>
+      <li><span class="negrita">Shape.kt</span>: shapes (this file is not created by default)</li>
+    </ul>
+  </p>
+  <figure><img src="UD8/images/ud8-2023-11-21-19-38-46.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>Whenever you make any changes to any of these three files, you will see them immediately in the Jetpack Compose application components that implement Material3.</p>
+
+  <h3>Color Palette</h3>
+
+  <p>This palette consists of <span class="negrita">6 key colors</span>. The following image shows the 5 key colors of the default Material 3 theme plus an additional key color for errors.</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-21-07-34.png" /><br><figcaption>Color palette</figcaption></figure>
+  <br>
+
+  <p>Each color must be defined in 13 different tones, from 0 (black) to 100 (white).</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-21-07-57.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>For each of the 6 key colors, you must <span class="negrita">choose 4 color shades</span>, which are the ones that will be <span class="negrita">specified in the app theme</span>.</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-21-08-59.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>The roles for the Primary, Secondary, and Tertiary colors are:
+    <ul>
+      <li><span class="negrita">Primary</span>: The base color used for main components, such as prominent buttons, active states, and elevated surface tone.</li>
+      <li><span class="negrita">Secondary</span>: Used for less prominent UI components, such as filter chips.</li>
+      <li><span class="negrita">Tertiary</span>: Used to provide contrasts. You can find more information on when to use each key color in the official Material documentation:
+        <a class="enlace" target="_blank" href="https://m3.material.io/styles/color/roles#19e75989-7485-4f5b-a769-940c4e4364bc">Color roles</a></li>
+    </ul>
+  </p>
+  <figure><img src="UD8/images/ud8-2023-11-21-21-10-44.png" /><br><figcaption>Color roles</figcaption></figure>
+  <br>
+
+  <p class="sub-section">Using the Material Theme Colors</p>
+  <p>To use the Material-defined colors, whether it’s the default theme or a customized palette, you must use the class <span class="negrita">MaterialTheme</span>.</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-00-29.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p class="sub-section">Modifying the Color Palette</p>
+
+  <p>Choosing a color palette is critical in an application, requiring thorough study.</p>
+  <p>If you have enough design knowledge, you can manually create the palette.</p>
+  <p>If not, you can use the tool offered by Material3: <a class="enlace" target="_blank" href="https://m3.material.io/theme-builder#/custom">https://m3.material.io/theme-builder#/custom</a></p>
+  <p>In this tool, you select the key colors you want, and it automatically generates the required shades and shows you how they will look in the application.</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-07-11.png" /><br><figcaption>Material web color editing</figcaption></figure>
+  <br>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-07-30.png" /><br><figcaption>Material web color editing</figcaption></figure>
+  <br>
+
+  <p>Once you have decided on the color palette, you must place it in the app within the file <span class="inline-file">Color.kt</span>.</p>
+  <p>By default, this file has some color definitions as examples.</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-08-47.png" /><br><figcaption>Colores.kt</figcaption></figure>
+  <br>
+
+  <p>The best approach is to define all palette colors for both light and dark modes in the manner in which you will later use them in the application’s theme.</p>
+
+  <p>Below are all the required variables to modify the entire default Material 3 color palette.</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-10-35.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <p>You get the same code using the <a class="enlace" target="_blank" href="https://m3.material.io/theme-builder#/custom">Material 3 palette generation tool</a>.</p>
+
+  <p>Once you have added the entire palette, you must specify that palette in the application’s theme color subsystem in the file <span class="inline-file">Theme.kt</span>.</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-12-39.png" /><br><figcaption>Theme.kt</figcaption></figure>
+  <br>
+
+  <h3>Dynamic Color</h3>
+  <p>A very important feature in Material 3 is <span class="d-word">Dynamic Color</span>, an algorithm that generates derived colors from the device’s wallpaper.</p>
+
+  <p>By default, Android Studio projects with Jetpack Compose enable Dynamic Color if the device’s Android version supports it. You can see this in the <span class="inline-file">Theme.kt</span> file:</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-16-13.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>If you want to disable it, just remove those lines of code that enable it.</p>
+
+  <h3>Typography</h3>
+  <p>Material 3 defines five different typography roles, each with three sizes:</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-17-25.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>Each of the <a class="enlace" target="_blank" href="https://m3.material.io/styles/typography/applying-type#fea95f28-348c-42ae-95e1-1c5bfd819524">five roles has a specific function</a>.</p>
+
+  <p>For each role, three different sizes are defined:</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-19-03.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>You can consult <a class="enlace" target="_blank" href="https://m3.material.io/styles/typography/type-scale-tokens#a734c6ed-634c-4abb-adb2-35daf0aed06a">the detailed features of each role</a>.</p>
+
+  <p class="sub-section">Using Material Theme Typography</p>
+  <p>Just like with colors, to use the typographies, you must use the <span class="r-word">MaterialTheme</span> class:</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-20-52.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p class="sub-section">Modifying Typography --> Type.kt</p>
+  <p>To modify the typography of the Material 3 theme, add your own styles in the <span class="inline-file">Type.kt</span> file.</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-23-35.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <h3>Shapes</h3>
+  <p>Material 3 defines a set of shapes that can be applied to components.</p>
+  <p>With components like <span class="cursiva">Button</span>, <span class="cursiva">TextField</span>, <span class="cursiva">Card</span>, etc., you can see that a shape is applied around them.</p>
+  <p>By default, the shape defined in the material theme is rounded, although you can customize the shapes.</p>
+
+  <p class="sub-section">Using Material Theme Shapes</p>
+  <p>Like with colors, to use shapes you must do so through the <span class="r-word">MaterialTheme</span> class:</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-26-41.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>The shapes you can define can be rounded or angular and can be symmetrical or not.</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-28-10.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p class="sub-section">Modifying Shapes --> Shape.kt</p>
+  <p>By default, Android Studio does not create a file to customize shapes.</p>
+  <p>You must manually create it inside the theme folder and then add your custom shapes there.</p>
+  <p>There are different constructors for <span class="negrita">RoundedCornerShape</span> and <span class="negrita">CutCornerShape</span>.</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-29-56.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>Then, you need to indicate in the <span class="inline-file">Theme.kt</span> file that you’ve created the <span class="inline-file">Shape.kt</span> file so the application theme uses it.</p>
+  <p>At this point, you can see that it’s loading all three subsystems (color, typography, and shapes) for the app theme.</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-32-22.png" /><br><figcaption>Theme.kt</figcaption></figure>
+  <br>
+
+  <h3>Inline Modifications of Theme Parameters</h3>
+  <p>Sometimes you need to <span class="negrita">make variations</span> to the Material theme values 
+    but <span class="negrita">without changing the theme values or adding new ones</span>.</p>
+  <p>By using the <span class="r-word">copy</span> function, you make a “temporary copy” of a theme property, applying whatever adjustments you want to that property.</p>
+  <p>Depending on the type of property (<span class="cursiva">colorScheme, typography, shapes</span>) you use the <span class="negrita">copy</span> function on, you can specify different parameters.</p>
+  <section><pre><code class="language-kotlin">Text(
+    text = "Hola Rick!",
+    style = MaterialTheme.typography.bodyLarge.copy(
+        shadow = Shadow(
+            offset = Offset(5f,5f),
+            blurRadius = 2f,
+            color = Color(0xFFFF8000)
+        )
+    )
+)</code></pre>
+  </section><br>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-36-44.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <h3>Status and Navigation Bars</h3>
+  <p>The Android operating system offers two bars by default in apps:
+    <ul>
+      <li>The status bar (top).</li>
+      <li>The navigation bar (bottom).</li>
+    </ul>
+  </p>
+  <p>The style of these bars is configured based on the application’s theme colors, but since these bars are provided by the operating system, you must follow a specific procedure if you want to style them independently of the theme.</p>
+  <p>The first step is to add the following dependency in <span class="inline-file">build.gradle.kts (Module)</span> and synchronize:</p>
+
+  <section><pre><code class="language-kotlin">implementation("com.google.accompanist:accompanist-systemuicontroller:0.32.0")</code></pre>
+  </section><br>
+
+  <p>To modify the status and navigation bars, you can choose between two approaches:
+    <ul>
+      <li>Modify them universally for the entire app -> <span class="negrita">Theme.kt</span>.</li>
+      <li>Modify them for a single Activity -> <span class="negrita">MainActivity.kt</span>.</li>
+    </ul>
+  </p>
+
+  <p>If you modify them in both places, the configuration you applied in the Activity takes precedence.</p>
+
+  <p class="sub-section">Modifying the Status and Navigation Bars from Theme.kt</p>
+  <p>To modify the appearance of the status and navigation bars, you need a state variable for accessing those bars’ properties.</p>
+  <p>The code to modify those bars must go inside the SideEffect component, so remove any code that appears in it and replace it with your own.</p>
+  <p>Here are some examples:</p>
+  <section><pre><code class="language-kotlin">val systemUiController = rememberSystemUiController()
+SideEffect {
+    systemUiController.setSystemBarsColor(
+        color = Color(0xFFFF8000),
+        darkIcons = true
+    )
+}</code></pre>
+  </section><br>
+
+  <p>This would look like:</p>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-50-44.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <p>Another example modifying both bars:</p>
+  <section><pre><code class="language-kotlin">val systemUiController = rememberSystemUiController()
+SideEffect {
+    systemUiController.setStatusBarColor(
+        color = Color(0xFF0080FF),
+        darkIcons = true
+    )
+
+    systemUiController.setNavigationBarColor(
+        color = Color(0xFF00FF80),
+        darkIcons = true
+    )
+}
+</code></pre>
+  </section><br>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-52-16.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>You can also hide one or both bars. When you hide the status and/or navigation bars, Android Studio leaves that space blank, so you have to indicate to the application that it can use that free space.</p>
+
+  <section><pre><code class="language-kotlin">val systemUiController = rememberSystemUiController()
+SideEffect {
+    val window = (view.context as Activity).window
+    window.statusBarColor = colorScheme.primary.toArgb()
+    WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+
+    systemUiController.isStatusBarVisible = false
+    systemUiController.isNavigationBarVisible = false
+}</code></pre>
+  </section><br>
+  <figure><img src="UD8/images/ud8-2023-11-21-23-59-55.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p class="sub-section">Modifying the Status and Navigation Bars from the Activity</p>
+
+  <p>Modifying the status and/or navigation bars from an Activity is similar to doing it from <span class="cursiva">Theme.kt</span>, but in this case, the code goes inside the Activity’s Theme component.</p>
+  <section><pre><code class="language-kotlin">setContent {
+    TemasTheme {
+        val systemUiController = rememberSystemUiController()
+        SideEffect {
+            systemUiController.setStatusBarColor(
+                color = Color(0xFF0080FF),
+                darkIcons = true
+            )
+        }
+        // A surface container using the 'background' color from the theme
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            Greeting()
+        }
+    }
+}</code></pre>
+  </section><br>
+  <figure><img src="UD8/images/ud8-2023-11-22-00-04-33.png" /><br><figcaption>Modifying the status bar from the Activity</figcaption></figure>
+  <br>
+
+  <p>To hide the status bars from the Activity is similar to how it’s done from Theme.kt, but in this case, you don’t need to create the <span class="negrita">window</span> variable since Android automatically provides it in the Activity.</p>
+  <section><pre><code class="language-kotlin">val systemUiController = rememberSystemUiController()
+SideEffect {
+    systemUiController.setStatusBarColor(
+        color = Color(0xFF0080FF),
+        darkIcons = true
+    )
+    
+    systemUiController.isStatusBarVisible = false
+}</code></pre>
+  </section><br>
+</section><!-- End section Temas-->
+
+
+  
+  <!--*********************************************************Animaciones***********************************************************-->
+  <section class="apartado">
+  <a name="sAnimaciones"></a>
+  <h2>Animations</h2>
+
+  <p>
+    Jetpack Compose provides a series of <a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/animation?hl=es-419">APIs for creating animations</a> in the interface components.
+  </p>
+
+  <figure>
+    <img src="UD8/images/ud8-2023-11-22-00-12-02.png" /><br>
+    <figcaption></figcaption>
+  </figure>
+  <br>
+
+  <p>
+    Below are a few examples of how to use these animation APIs. If more information is needed on how they work—for instance, changing the animation type or duration—please refer to the <a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/animation?hl=es-419">documentation</a>.
+  </p>
+
+  <h3>animate*AsState</h3>
+  <p>
+    This API can create an animation between two values, with Android handling the animation from the initial value to the final value. The <span class="negrita">*</span> can be replaced by any of the following types:
+  </p>
+  <ul>
+    <li>Int</li>
+    <li>Float</li>
+    <li>Color</li>
+    <li>Dp</li>
+    <li>Size</li>
+    <li>Offset</li>
+    <li>Rect</li>
+    <li>IntOffset</li>
+    <li>IntSize</li>
+  </ul>
+
+  <section>
+    <pre><code class="language-kotlin">var animateColor by rememberSaveable {
+    mutableStateOf(false)
+}
+val backgroundColor by animateColorAsState(
+    if (animateColor) Color(0xFFFFA020) else Color(0xFF40C0FF)
+)
+Column(
+    modifier = Modifier.fillMaxSize(),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally
+) {
+    Button(onClick = { animateColor = !animateColor }) {
+        Text(text = "Change Color")
+    }
+    Spacer(modifier = Modifier.height(10.dp))
+    Text(
+        text = "Hello Rick!",
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier
+            .background(backgroundColor)
+            .padding(20.dp)
+    )
+}</code></pre>
+  </section>
+  <br>
+
+  <figure>
+    <img src="UD8/images/ud8-2023-11-22-00-24-39.png" /><br>
+    <figcaption></figcaption>
+  </figure>
+  <br>
+
+  <p>Changing opacity:</p>
+  <section>
+    <pre><code class="language-kotlin">var animateAlpha by rememberSaveable {
+    mutableStateOf(true)
+}
+val alpha: Float by animateFloatAsState(
+    if (animateAlpha) 1f else 0.3f
+)
+Column(
+    modifier = Modifier.fillMaxSize(),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally
+) {
+    Button(onClick = { animateAlpha = !animateAlpha }) {
+        Text(text = "Change Opacity")
+    }
+    Spacer(modifier = Modifier.height(10.dp))
+    Box(
+        modifier = Modifier
+            .graphicsLayer(alpha = alpha)
+            .fillMaxWidth()
+            .background(Color(0xFFFFA020))
+    ) {
+        Text(
+            text = "Hello Rick!",
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(20.dp)
+        )
+    }
+}</code></pre>
+  </section>
+  <br>
+
+  <figure>
+    <img src="UD8/images/OpacityDemo.gif" /><br>
+    <figcaption></figcaption>
+  </figure>
+  <br>
+
+  <h3>AnimatedVisibility</h3>
+  <p>
+    Lets you hide and show components.
+  </p>
+
+  <section>
+    <pre><code class="language-kotlin">var visible by rememberSaveable {
+    mutableStateOf(false)
+}
+
+Column(
+    modifier = Modifier.fillMaxSize(),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally
+) {
+    Button(onClick = { visible = !visible }) {
+        Text(text = if (visible) "Hide" else "Show")
+    }
+    Spacer(modifier = Modifier.height(10.dp))
+    AnimatedVisibility(visible = visible) {
+        Text(
+            text = "Hello Rick!",
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .background(Color(0xFFFFA020))
+                .padding(20.dp)
+                .fillMaxWidth()
+        )
+    }
+}</code></pre>
+  </section>
+  <br>
+
+  <figure>
+    <img src="UD8/images/VisibilityDemo.gif" /><br>
+    <figcaption></figcaption>
+  </figure>
+  <br>
+
+  <p>
+    According to the documentation, the default entering animation is <span class="negrita">fade in–expand</span> and the default exiting animation is <span class="negrita">fade out–shrink</span>.
+  </p>
+
+  <p>
+    You can configure these animations via the <span class="r-word">enter</span> and <span class="r-word">exit</span> parameters. Some possible options include:
+  </p>
+  <ul>
+    <li>fadeIn</li>
+    <li>fadeOut</li>
+    <li>slideIn</li>
+    <li>slideOut</li>
+    <li>slideInHorizontally</li>
+    <li>slideOutHorizontally</li>
+    <li>slideInVertically</li>
+    <li>slideOutVertically</li>
+    <li>scaleIn</li>
+    <li>scaleOut</li>
+    <li>expandIn</li>
+    <li>shrinkOut</li>
+    <li>expandHorizontally</li>
+    <li>shrinkHorizontally</li>
+    <li>expandVertically</li>
+    <li>shrinkVertically</li>
+  </ul>
+
+  <p>
+    <a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/animation?hl=es-419#enter-exit-transition">See example animations</a>
+  </p>
+
+  <h3>AnimatedContent</h3>
+  <p>
+    Animates all the content of a component; by default, it is a fade-and-grow animation.
+  </p>
+  <section class="marco-t warn">
+    <span class="icono warning"> </span> experimental, it may undergo changes or disappear in the future
+  </section>
+  <section class="marco-b">
+    <p>Add this dependency in <span class="inline-file">build.gradle (Module:app)</span></p>
+    <section><pre><code class="language-kotlin">implementation("androidx.compose.animation:animation-android:1.5.4")</code></pre>
+    </section>
+  </section>
+  
+
+  <section>
+    <pre><code class="language-kotlin">
+  var times by rememberSaveable {
+      mutableStateOf(0)
+  }
+  Row {
+      Button(onClick = { times++ }) {
+          Text(text = "+1")
+      }
+      Spacer(modifier = Modifier.width(10.dp))
+      Button(onClick = { times-- }) {
+          Text(text = "-1")
+      }
+  
+      AnimatedContent(targetState = times, label ="") {
+          Text(
+              text = "Count $it",
+              modifier = Modifier.padding(10.dp)
+          )
+      }
+  
+      AnimatedContent(
+          targetState = times,
+          // Customizing the animation
+          transitionSpec = {
+              //targetState: new value of the state variable
+              //initialState: previous value of the state variable
+  
+              if (targetState < initialState) {
+                  (slideInVertically { height -> height } + fadeIn())
+                      .togetherWith(slideOutVertically { height -> -height } + fadeOut())
+              } else {
+                  (slideInVertically { height -> -height } + fadeIn())
+                      .togetherWith(slideOutVertically { height -> height } + fadeOut())
+              }
+          },
+          label =""
+      ) { targetCount ->
+          Text(
+              text = "$targetCount",
+              modifier = Modifier.padding(10.dp)
+          )
+      }
+  }
+    </code></pre>
+  </section>
+  <br>
+  <figure><img src="UD8/images/AnimatedContentDemo.gif" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <h3>Crossfade</h3>
+  
+  <p>Turns one component’s content into another, blending them during the transition.</p>
+  
+  <section>
+    <pre><code class="language-kotlin">
+  var visibleContent by rememberSaveable {
+      mutableStateOf("Manga")
+  }
+  Crossfade(
+      targetState = visibleContent,
+      label = "",
+      modifier = Modifier.clickable {
+          visibleContent = if (visibleContent == "Manga") "Anime" else "Manga"
+      }
+  ) { screen ->
+      when (screen) {
+          "Manga" -> Text(text = "Manga")
+          "Anime" -> Text(text = "Anime")
+      }
+  }
+    </code></pre>
+  </section>
+  <br>
+  <figure><img src="UD8/images/CrossFadeDemo1.gif" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p>Let’s look at another example:</p>
+  
+  <section>
+    <pre><code class="language-kotlin">
+  Column(
+      modifier = Modifier.fillMaxSize(),
+      verticalArrangement = Arrangement.Center,
+      horizontalAlignment = Alignment.CenterHorizontally
+  ) {
+      val sections = arrayOf("Anime", "Manga", "Others")
+      var visibleContent by rememberSaveable {
+          mutableStateOf(sections[0])
+      }
+      Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.SpaceBetween
+      ) {
+          for (section in sections) {
+              Button(onClick = { visibleContent = section }) {
+                  Text(text = section)
+              }
+          }
+      }
+  
+      Crossfade(
+          targetState = visibleContent,
+          label = ""
+      ) { screen ->
+          when (screen) {
+              "Manga" -> Text(text = "Show Manga")
+              "Anime" -> Text(text = "Show Anime")
+              "Others" -> Text(text = "Show others")
+          }
+      }
+  }
+    </code></pre>
+  </section>
+  <br><br>
+  
+  <figure><img src="UD8/images/CrossFadeDemo2.gif" /><br><figcaption></figcaption></figure>
+  <br>
+
+
+  <h3>Modifier.animateContentSize</h3>
+  <p>Android will animate the component when its size changes due to a change in its content.</p>
+  
+  <section><pre><code class="language-kotlin">var expanded by rememberSaveable {
+      mutableStateOf(false)
+  }
+  Column(
+      verticalArrangement = Arrangement.Top,
+      modifier = Modifier
+          .fillMaxWidth()
+          .wrapContentHeight()
+          .animateContentSize(animationSpec = tween(
+              durationMillis = 2000,
+              easing = LinearEasing
+          ))
+          .background(Color(0xFFFFA0C0))
+          //.padding(10.dp)
+  
+  ) {
+      Row(
+          modifier = Modifier
+              .background(Color.White)
+              .fillMaxWidth(),
+          horizontalArrangement = Arrangement.SpaceBetween,
+          verticalAlignment = Alignment.CenterVertically
+      ) {
+          Text(text = "Son Goku")
+          TextButton(onClick = {
+              expanded = !expanded
+          }) {
+              Text(text = if(expanded) "Less." else "Read more...")
+          }
+      }
+  
+      Text(text = "Hey!")
+      if(expanded){
+          Spacer(modifier = Modifier.height(8.dp))
+  
+          Text(
+              text = "Child Goku: A little one with a tail who has an innate ability to transform " +
+                  "into a giant ape lacking reasoning skills and destroys everything in his path. " +
+                  "His main defeated enemies were Pilaf, the Red Army soldiers, and the well-known " +
+                  "Piccolo Daimao.\n\n" +
+                  "Young Goku: Milk, a maiden heiress to the throne of a small town, marries Goku " +
+                  "and they have their first son, Gohan, together. However, after a few years, his " +
+                  "brother Raditz arrives on Earth with the sole mission of completely colonizing it, " +
+                  "and a group of warriors unites to stop him. Goku loses his life for the first time " +
+                  "and discovers the Kingdom of the Heavens.\n\n" +
+                  "Adult Goku: Perhaps the most important moment in the history of this alien. Over " +
+                  "about 10 years, Goku gains the superpower to transform into Super Saiyan 1, 2, 3, " +
+                  "and the God forms.\n\n" +
+                  "After the arrival of Beerus, the God of Destruction, Kakarot’s transformation " +
+                  "rituals go beyond the mystical, reaching a power that measures up to the very " +
+                  "creator of the entire universe.",
+              textAlign = TextAlign.Justify
+          )
+      }
+  }
+  </code></pre></section>
+  
+  <figure><img src="UD8/images/ExpandedDemo.gif" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  </section><br>
+  
+  <h3>Customizing animations</h3>
+  <p>Default animations come configured in a particular way, but they can be customized.</p>
+  
+  <p class="sub-section"><span class="negrita">animationSpec</span> parameter</p>
+  <p>This parameter can be used in:</p>
+  <ul>
+    <li><span class="cursiva">animate*AsState</span>, <span class="cursiva">Crossfade</span>, and <span class="cursiva">Modifier.animateContentSize</span></li>
+    <li><span class="cursiva">fadeX</span>, <span class="cursiva">slideX</span>, <span class="cursiva">scaleX</span>,
+        <span class="cursiva">expandX</span>, and <span class="cursiva">shrinkX</span>
+        allowed in the <span class="r-word">transitionSpec</span> parameter of <span class="r-word">AnimatedContent</span>.</li>
+    <li><span class="cursiva">fadeX</span>, <span class="cursiva">slideX</span>, <span class="cursiva">scaleX</span>,
+        <span class="cursiva">expandX</span>, and <span class="cursiva">shrinkX</span>
+        allowed in the <span class="negrita">enter</span> and <span class="negrita">exit</span> parameters of <span class="cursiva">AnimatedContent</span>.</li>
+  </ul>
+  </p>
+  
+  <p>All the details about customizing animations can be found in the
+  <a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/animation/customize?hl=es-419">documentation</a>.</p>
+  
+  <p>Below are some basic examples:</p>
+  
+  <p>Physics-based animation: <a class="enlace" target="_blank" 
+    href="https://developer.android.com/jetpack/compose/animation/customize?hl=es-419#spring">spring</a> (spring effect)
+  </p>
+  <figure><img src="UD8/images/ud8-2023-11-23-12-10-00.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <ul>
+    <li><span class="negrita">dampingRatio</span> indicates the bounce when reaching the target value.</li>
+    <li><span class="negrita">stiffness</span> indicates the speed at which it moves toward the target value.</li>
+  </ul>
+  
+  <p class="sub-section">Duration-based animation: <span class="negrita">tween</span> (between)</p>
+  
+  <figure><img src="UD8/images/ud8-2023-11-23-12-18-30.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p>Where:
+  <ul>
+    <li><span class="negrita">durationMillis</span>: animation duration.</li>
+    <li><span class="negrita">easing</span>: indicates how the animation progresses between the two values.</li>
+    <li><span class="negrita">delayMillis</span>: wait time before the animation starts.</li>
+  </ul>  
+  </p>
+  
+  <p class="sub-section">Repeating a duration-based animation (<span class="cursiva">tween</span>)</p>
+  
+  <p><span class="subrayado">With a set number of repetitions:</span></p>
+  <figure><img src="UD8/images/ud8-2023-11-23-12-21-16.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p><span class="subrayado">With infinite repetitions:</span></p>
+  <figure><img src="UD8/images/ud8-2023-11-23-12-22-41.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+
+  </section><!-- End section Animaciones-->
+
+  <!--*********************************************************Práctica***********************************************************-->
+  <section class="apartado">
+    <a name="sP03"></a>
+    <h2>Practice 03. Free Application</h2>
+  
+    <a class="tarea" target="_blank" href="https://aules.edu.gva.es/fp/mod/assign/view.php?id=5367280">
+      <p>
+        Choose a theme and create a free application around that theme.
+      </p>
+      <p>The application does not need to be fully functional, but it must contain at least the following elements:
+        <ul>
+          <li>A SplashScreen. Find a logo and some text to display when starting the application. <br><span class="negrita">1 point</span></li>
+          <li>An onboarding of 4 screens: in the first three, there will be an option to go to the next one or jump directly to the last. 
+            On the fourth screen, we'll go directly to the app’s home. <br><span class="negrita">2 points</span>
+          </li>
+          <li>Application: It will have at least two screens in which information is passed from one to the other. <br><span class="negrita">1.5 points</span></li>
+          <li>Implement two versions of the app’s screens (portrait and landscape). 
+            (Not for the SplashScreen or Onboarding, but ensure these display correctly in both orientations.) <br>
+            <span class="negrita">1.5 points</span>
+          </li>
+          <li>It must include at least one animation. <br><span class="negrita">1 point</span></li>
+          <li>Change the default theme to colors and shapes of your choice. <br><span class="negrita">1 point</span></li>
+        </ul>
+      </p>
+      <p><span class="negrita">Note:</span> In addition to meeting the above requirements, the app's visual appeal will be considered, as well as the organization of components and folders, code structure, and use of comments. 
+        <br><span class="negrita">2 points</span></p>
+    </a>
+  
+  </section><!-- End section Práctica-->
+  
+  <!---BTM_MENU--->
+  <script src="../script/prism.js"></script>
+</body>
+
+</html>
