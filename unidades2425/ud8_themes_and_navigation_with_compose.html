@@ -14,6 +14,37 @@
 
 
 <body class="line-numbers">
+  <div class="logos"></div>
+
+  <nav id="menu-lateral" class="main-menu-lateral oculto">
+    <div class="fila">
+      <a href="#sNavegacion" title="1. Navigation">1.- Navigation</a>
+      <a href="#sDisenosAdaptativos" title="2. Adaptive Designs">2.- Adaptive Designs</a>
+      <a href="#sSplashScreen" title="3. Splash Screen">3.- Splash Screen</a>
+    </div>
+    <div class="fila">
+      <a href="#sOnboarding" title="4. Onboarding">4.- Onboarding</a>
+      <a href="#sTemas" title="5. Themes">5.- Themes</a>
+      <a href="#sAnimaciones" title="6. Animations">6.- Animations</a>
+    </div>
+
+  </nav> <!-- BTM_MENU-->
+
+  <h1>U8.- Themes and Navigation with Jetpack Compose</h1>  
+
+  <div class="main-menu">
+    <div class="fila">
+      <a href="#sNavegacion" title="1. Navigation">1.- Navigation</a>
+      <a href="#sDisenosAdaptativos" title="2. Adaptive Designs">2.- Adaptive Designs</a>
+      <a href="#sSplashScreen" title="3. Splash Screen">3.- Splash Screen</a>
+    </div>
+    <div class="fila">
+      <a href="#sOnboarding" title="4. Onboarding">4.- Onboarding</a>
+      <a href="#sTemas" title="5. Themes">5.- Themes</a>
+      <a href="#sAnimaciones" title="6. Animations">6.- Animations</a>
+    </div>
+  </div>
+
   <!--*********************************************************Navegación***********************************************************-->
 <section class="apartado">
   <a name="sNavegacion"></a>
@@ -28,7 +59,7 @@
 <p>With <span class="negrita">Jetpack Compose</span>, the entire navigation process is simplified because the structure of a 
   <span class="subrayado">Compose-developed application is based on a <span class="negrita">Single Activity</span></span>.</p>
 
-<p>Single Activity means that <span class="negrita">there is only one Activity managing all interface elements</span>,
+<p><span class="negrita">Single Activity</span> means that <span class="negrita">there is only one Activity managing all interface elements</span>,
   which are divided into different Compose components in Jetpack Compose.</p>
 
 <p>From this point on, it is very important to have all your application code organized into folders.</p>
@@ -46,12 +77,42 @@
 <figure><img src="UD8/images/ud8-2023-11-20-17-20-47.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<p>To implement navigation with Jetpack Compose, you must add the following dependency in <span class="inline-file">build.gradle.kts (Module)</span>
-   and then <span class="negrita">synchronize</span>:</p>
-
-<section><pre><code class="language-kotlin">implementation("androidx.navigation:navigation-compose:2.7.5")
+<p>To implement navigation with Jetpack Compose, you must add the following dependency:
+  <ul>
+    <li><span class="inline-file">libs.versions.toml</span><ul>
+      <li><span class="cursiva">[version]</span> section
+        <section><pre><code class="language-kotlin">navigation = "2.8.5"
+serialization = "1.6.3"
 </code></pre>
-</section><br>
+        </section>
+      </li>
+      <li><span class="cursiva">[libraries]</span> section
+      <section><pre><code class="language-kotlin">androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref="navigation" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}</code></pre>
+      </section></li>
+      <li><span class="cursiva">[plugins]</span> section.
+      <section><pre><code class="language-kotlin">kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }</code></pre>
+      </section></li>
+    </ul></li>
+    <li><span class="inline-file">build.gradle.kts (Module:app)</span><ul>
+      <li>Plugins section:
+        <section><pre><code class="language-kotlin">alias(libs.plugins.kotlin.serialization)</code></pre>
+        </section>
+      </li>
+      <li>Dependencies section:
+        <section><pre><code class="language-kotlin">implementation(libs.androidx.navigation)
+implementation(libs.kotlinx.serialization.json)</code></pre>
+        </section>
+      </li>
+    </ul></li>
+  </ul>
+   <br> <section class="marco-t warn">
+    <span class="icono warning"> </span> Remember push <span class="negrita">sync now</span> to apply changes
+    </section>
+   <section class="marco-b">      
+   </section>
+   </p>
+
 
 <p>Navigation in Jetpack Compose requires two elements:
   <ul>
@@ -63,265 +124,237 @@
 <p>The element <span class="r-word">NavHost</span> defines the different screens to which you can navigate
    and also needs the <span class="r-word">NavController</span>.</p>
 
-<p>The first step is to create a folder named <span class="inline-folder">navigation</span> and
-   inside it create a file named <span class="inline-file">Routes</span> that will contain a <span class="negrita">sealed class</span> 
-   where all the application screens are defined for centralization.</p>
-<figure><img src="UD8/images/ud8-2023-11-20-17-29-39.png" /><br><figcaption></figcaption></figure>
-<br>
+   <p>The first step is to create a package named <span class="negrita">navigation</span>, and inside it, create a file called <span class="inline-file">Screens.kt</span>
+    which will contain a <span class="negrita">reference to each screen of the application</span> in order to keep them <span class="negrita">centralized</span>.</p>
+ 
+ <section>
+   <pre><code class="language-kotlin">
+ // If the screen DOES NOT need to receive values, it is defined with: object
+ @Serializable
+ object First
+ 
+ // If the screen NEEDS to receive values, it is defined with: data class
+ @Serializable
+ data class Second(
+     // mandatory parameter
+     val name: String,
+     // optional parameter
+     val age: Int = 0
+ )
+ </code></pre>
+ </section>
+ 
+ <br><br>
+ 
+ <p>If the screen does <span class="negrita">not need</span> to receive values, define the route with: <span class="r-word">object</span></p>
+ <p>If the screen <span class="negrita">needs</span> to receive values, define the route with: <span class="r-word">data class</span></p>
+ <p><span class="negrita">Optional parameters</span> are indicated by assigning them a <span class="negrita">default value</span>.</p>
+ 
 
-<section class="marco-t file-">
-  <span class="icono file"> </span> <span class="negrita">Routes.kt</span>
-</section>
-<section class="marco-b">
-  <section><pre><code class="language-kotlin">sealed class Routes(val route:String){
-    object FirstScreen: Routes("first_screen")
-    object Secondcreen: Routes("second_screen/{name}"){
-        fun createRoute(name:String) = "second_screen/$name"
-    }
-}
-</code></pre></section>
-</section><br>
-
-<p>Because the second screen receives a parameter, it must be specified in the route. Also, a function is created to work more easily with the route that receives the parameter.</p>
    
 <p>Next, within the navigation folder, create a file that contains a 
-<span class="r-word">@Composable</span> component named <span class="inline-file">Navigation</span>. 
+<span class="r-word">@Composable</span> component named <span class="inline-file">Navigation.kt</span>. 
 In this file, you define the <span class="negrita">NavController</span> and the <span class="negrita">NavHost</span>.</p>
 
 <section><pre><code class="language-kotlin">@Composable
 fun Navigation() {
-    //Constant to manage the state, which must be propagated across all screens
+    // Constant to manage the state, must be propagated across all screens
     val navController = rememberNavController()
 
-    //Element that knows the different screens and which is launched first
+    // Element that knows the different screens and which is the first to launch
     NavHost(
         navController = navController,
-        startDestination = Routes.FirstScreen.route
-    ){
-        //Definition of the first screen
-        composable(
-            route = Routes.FirstScreen.route
-        ){
+        startDestination = First // Route where the application starts
+    ) {
+        // Definition of the first screen
+        composable&lt;First&gt; {
             FirstScreen(navController)
         }
 
-        //Definition of a screen that receives a String parameter
-        composable(
-            route = Routes.Secondcreen.route,
-            arguments = listOf(
-                navArgument(name = "name"){
-                    type= NavType.StringType
-                }
-            )
-        ){
-                val argument = it.arguments?.getString("name")
-                requireNotNull(argument)
-                SecondScreen(navController, argument)
-            }        
-    }
-
-}
-</code></pre></section><br>
-
-<p>The parameter can be any primitive type.</p>
-<figure><img src="UD8/images/ud8-2023-10-20-17-41-13.png" /><br><figcaption></figcaption></figure>
-<br>
-
-<p>It must match the parameter specified in the function that creates the route.</p>
-
-<p>In the example, two screens have been defined:</p>
-
-<p>The first will load the <span class="negrita">FirstScreen</span> component receiving the <span class="negrita">NavController</span>.</p>
-<p>The second will load the <span class="negrita">SecondScreen</span> component receiving the <span class="negrita">NavController</span> 
-   and also a <span class="negrita">String</span> argument. This argument must be passed when navigating to that screen.</p>
-<p>The <span class="negrita">NavController</span> object should be passed to any component where interacting with it triggers a screen change (navigation).</p>
-
-<figure><img src="UD8/images/ud8-2023-10-22-23-29-40.png" /><br><figcaption></figcaption></figure>
-<br>
-
-<p>It’s impossible for the argument to be <span class="negrita">null</span> because it’s defined in the route and
-  whenever you navigate programmatically, you will pass the argument. But Android Studio still forces you to indicate that it could 
-  be null, so you need to use <span class="r-word">requireNotNull(variable)</span> in your screen component before calling it.</p>
-<p>For the second screen, you also retrieve the parameter with <span class="r-word">it.arguments?.getString("name")</span>.</p>
-
-<figure><img src="UD8/images/ud8-2023-11-21-13-22-43.png" /><br><figcaption></figcaption></figure>
-<br>
-
-<p>The next step is to indicate in the <span class="inline-file">MainActivity</span> file that you are going to use the 
-  <span class="negrita">Navigation</span> component.</p>
-<figure><img src="UD8/images/ud8-2023-11-21-13-23-03.png" /><br><figcaption></figcaption></figure>
-<br>
-
-<p>Recall that the <span class="negrita">AppContent</span> component was the one created to hold the basic structure of the application 
-  with its theme and <span class="negrita">Surface</span>.</p>
-
-<figure><img src="UD8/images/ud8-2023-11-21-13-50-27.png" /><br><figcaption></figcaption></figure>
-<br>
-
-<p>This completes the navigation system. All that remains is to create the content of the application’s screens.</p>
-
-<section class="marco-t file-">
-  <span class="icono file"> </span> <span class="negrita">FirstScreen</span>
-</section>
-<section class="marco-b">
-  <section><pre><code class="language-kotlin">@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun FirstScreen(navController: NavController) {
-    Scaffold(
-        topBar = {
-            TopAppBar(title = {
-                Text(text = "First Screen")
-            })
-        }
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(text = "App to navigate")
-
-            var namState by rememberSaveable {
-                mutableStateOf("")
-            }
-
-            TextField(
-                value = namState,
-                onValueChange = {namState = it},
-                placeholder = { Text(text = "Enter your name")}
-            )
-            Button(onClick = {
-                navController.navigate(route = Routes.Secondcreen.createRoute(namState))
-                namState = ""
-            },
-                enabled = namState.isNotEmpty()
-            ) {
-                Text(text = "Navigate to the second screen")
-            }
+        // Definition of the second screen
+        composable&lt;Second&gt; { 
+            // Parameters are obtained from the route to use them when loading the screen
+            val args = it.toRoute&lt;Second&gt;()
+            SecondScreen(navController, args.name, args.age)
         }
     }
 }
 </code></pre>
-  </section><br>
-  <figure><img src="UD8/images/ud8-2023-11-21-13-37-20.png" /><br><figcaption></figcaption></figure>
-  <br>
-</section>
+</section><br><br>
 
-<section class="marco-t file-">
-  <span class="icono file"> </span> <span class="negrita">SecondScreen</span>
-</section>
-<section class="marco-b">
-  <section><pre><code class="language-kotlin">@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SecondScreen(navController: NavController, name:String) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { 
-                    Text(text = "Second Screen")
-                }, 
-                navigationIcon = {
-                    IconButton(onClick = {
-                        //Go back to the previous element in the navigation stack
-                        navController.popBackStack()
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Arrow Back"
-                        )
-                            
-                    }
-                })
+<p>In the example, two screens have been defined:
+  <ul>
+    <li>The first will load the <span class="d-word">FirstScreen</span> component that will receive the <span class="r-word">NavController</span> object.</li>
+    <li>The second will load the <span class="d-word">SecondScreen</span> component that will receive the <span class="r-word">NavController</span> object and also a <span class="r-word">String</span> argument. 
+      This argument must be specified when you want to navigate to this screen.</li>    
+  </ul>
+</p>
+<p>The <span class="r-word">NavController</span> object must be passed to all components in which interacting with them will cause a screen change (navigation).</p>
+
+<p>Since there will now be several screens and all will be managed by the <span class="r-word">Navigation</span> component, 
+  in the <span class="inline-file">MainActivity</span> file, it must be indicated that this component is loaded.</p>
+
+<section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            NavigationTestsTheme {
+                Navigation()
+            }
         }
-    ) {
-        
+    }
+}</code></pre>
+</section><br><br>
+
+<p>With all this, the navigation system is created; the only thing left is to create the content for the app's screens.</p>
+
+<a href="UD8/images/ud_8-2025-01-20-10-06-29.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-06-29.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<p>Inside the <span class="inline-folder">screens</span> folder, create a new package called <span class="inline-folder">layout</span> 
+  and inside it, create a new Kotlin file called <span class="inline-file">AppScaffold.kt</span>.</p>
+
+<p>This file will contain the structure for all the app's screens.</p>
+
+<p>This component receives: <ul>
+  <li>The title to display in the <span class="negrita">TopBar</span>.</li>
+  <li>The <span class="negrita">NavController</span> to allow navigation from the <span class="negrita">TopBar</span>.</li>
+  <li>A lambda function for the content of the <span class="r-word">Scaffold</span>, 
+    which returns the <span class="r-word">paddingValues</span> parameter that should always be assigned to the first component of a <span class="negrita">Scaffold</span>.</li>
+</ul></p>
+
+<a href="UD8/images/ud_8-2025-01-20-10-09-02.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-09-02.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<p>As seen in <span class="inline-file">AppScaffold</span>, using <span class="r-word">navController.popStackBack</span> 
+it is indicated that we should go to the previous screen in the screen stack.</p>
+
+<a href="UD8/images/ud_8-2025-01-20-10-10-37.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-10-37.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<p>The <span class="r-word">navController.navigateUp</span> instruction performs the same action.</p>
+
+<a href="UD8/images/ud_8-2025-01-20-10-10-52.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-10-52.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<p><span class="negrita"><span class="cursiva">FirstScreen</span></span></p>
+
+<section><pre><code class="language-kotlin">@Composable
+fun FirstScreen(navController: NavController) {
+    AppScaffold(
+        title = "First Screen",
+        navController = navController
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier.fillMaxSize().padding(paddingValues),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "App for navigation")
+            Spacer(modifier = Modifier.height(20.dp))
+            var nameState by rememberSaveable { mutableStateOf("")}
+            TextField(
+                value = nameState,
+                onValueChange = { nameState = it },
+                placeholder = { Text(text = "Type your name") }
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            var ageState by rememberSaveable { mutableStateOf("")}
+            TextField(
+                value = ageState,
+                onValueChange = { ageState = it },
+                placeholder = { Text(text = "Type your age") }
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            Button(
+                onClick = {
+                    navController.navigate(
+                        Second(
+                            name = nameState,
+                            age = ageState.toIntOrNull() ?: 0
+                        )
+                    )
+                }
+            ) {
+                Text(text = "Move next window")
+            }
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<p>Using <span class="r-word">navController.navigate</span>, it is indicated that we should go to the Second screen, passing the necessary parameters.</p>
+
+<a href="UD8/images/ud_8-2025-01-20-10-15-55.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-15-55.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<p>Since <span class="negrita">ageState</span> is a state variable that stores an integer value, it tries to convert it to <span class="negrita">Int</span>, and 
+   if the conversion fails, it will use the value <span class="negrita">0</span>.</p>
+
+<p><span class="negrita"><span class="cursiva">SecondScreen</span></span></p>
+
+<section><pre><code class="language-kotlin">@Composable
+fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
+    AppScaffold(
+        title = "Second Screen",
+        navController = navController
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(it),
+                .padding(paddingValues),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            Text(text = "I have navigated")
-            Text(text = "Parameter: $name")
+        ) {
+            Text(text = "I've navigated")
+            Text(text = "Data entered:")
+            //Text(text = "Name: ${if (name.isNotEmpty()) name else "No input"}")
+            Text(text = "Name: ${name.ifEmpty { "No input" }}")
+            Text(text = "Age: ${if (age != 0) age else "No input"}")
+
             Button(onClick = {
-                navController.popBackStack()
+//                navController.popBackStack()
+
+                // Goes to the indicated one (if it is the previous one it will be a new instance: empty fields)
+                // Also, cleans the stack
+                navController.navigate(First) {
+                    popUpTo&lt;First> {
+                        inclusive = true
+                    }
+                }
+
+//                navController.navigateUp()
             }) {
                 Text(text = "Go back")
             }
         }
-        
     }
-}
-</code></pre>
-  </section><br><br>
-</section>
+}</code></pre>
+</section><br><br>
 
-<figure><img src="UD8/images/ud8-2023-11-21-13-50-27.png" /><br><figcaption></figcaption></figure>
+<p>Since the <span class="d-word">age</span> parameter has been defined as optional in the route, 
+    in the screen component, a default value must be assigned in case the screen is navigated to without that parameter being specified.</p>
+  
+    <a href="UD8/images/ud_8-2025-01-20-10-19-31.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-19-31.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+<p>In Android, when navigating between screens, 
+  they are accumulated in the screen stack, which is why the <span class="r-word">popBackStack</span> function is used to return to the previous screen.</p>
+
+<p>If you navigate directly to First, that screen would be added again to the stack.</p>
+
+<p>If you want to navigate to a specific screen, indicating that intermediate screens should be removed, you should do it as follows:</p>
+  
+<a href="UD8/images/ud_8-2025-01-20-10-21-10.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-21-10.png" /><br><figcaption></figcaption></figure></a>
 <br>
+  
+<p>The <span class="r-word">inclusive</span> parameter indicates that the screen you navigate to should be removed so that it doesn't remain duplicated.</p>
 
-<p>In Android, when navigating between screens, they accumulate in the screen stack. So, to go back, we used the 
-  <span class="r-word">popBackStack</span> function of the <span class="negrita">navController</span>, which takes you to the previous screen.</p>
+  
+    
 
-<figure><img src="UD8/images/ud8-2023-11-21-13-53-14.png" /><br><figcaption></figcaption></figure>
-<br>
 
-<section class="marco-t warn">
-  <span class="icono warning"> </span> If we had navigated to FirstScreen again, we would again be adding that screen to the stack.
-</section>
-<section class="marco-b"></section>
-
-<h3>Sending Multiple Arguments to a Screen</h3>
-<section class="marco-t file-">
-  <span class="icono file"> </span> <span class="negrita">Routes.kt</span>
-</section>
-<section class="marco-b">
-  <figure><img src="UD8/images/ud8-2023-11-21-13-57-24.png" /><br><figcaption></figcaption></figure>
-</section>
-
-<section class="marco-t file-">
-  <span class="icono file"> </span> <span class="negrita">Navigation.kt</span>
-</section>
-<section class="marco-b">
-  <figure><img src="UD8/images/ud8-2023-11-21-13-58-01.png" /><br><figcaption></figcaption></figure>
-</section>
-
-<section class="marco-t file-">
-  <span class="icono file"> </span> <span class="negrita">FirstScreen</span>
-</section>
-<section class="marco-b">
-  <figure><img src="UD8/images/ud8-2023-11-21-13-58-26.png" /><br><figcaption></figcaption></figure>
-</section>
-
-<section class="marco-t file-">
-  <span class="icono file"> </span> <span class="negrita">SecondScreen</span>
-</section>
-<section class="marco-b">
-  <figure><img src="UD8/images/ud8-2023-11-21-13-59-11.png" /><br><figcaption></figcaption></figure>
-</section>
-
-<h3>Default Parameters</h3>
-
-<p>Because parameters are defined, they are required. If you want them optional, you must specify it in both the
-  <span class="negrita">Routes</span> and <span class="negrita">Navigation</span> files as follows:</p>
-
-<section class="marco-t file-">
-  <span class="icono file"> </span> <span class="negrita">Routes.kt</span>
-</section>
-<section class="marco-b">
-  <figure><img src="UD8/images/ud8-2023-11-21-14-06-03.png" /><br><figcaption></figcaption></figure>
-</section>
-
-<section class="marco-t file-">
-  <span class="icono file"> </span> <span class="negrita">Navigation.kt</span>
-</section>
-<section class="marco-b">
-  <figure><img src="UD8/images/ud8-2023-11-21-14-07-04.png" /><br><figcaption></figcaption></figure>
-</section>
-
-<p>Obviously, you can specify multiple optional parameters or mix mandatory with optional ones.</p>
 
 <h3>BackHandler</h3>
 
@@ -352,6 +385,13 @@ fun SecondScreen(navController: NavController, name:String) {
 <figure><img src="UD8/images/ud8-2023-11-21-14-24-32.png" /><br><figcaption></figcaption></figure>
 <br>
 
+<div class="tarea">
+  <p>Activity 1:</p>
+  <p>Study of the example Navigation application.</p>
+</div>
+
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM225/tree/main/UD8/NavigationTests">Here</a> you have the link to github with the complete example </p>
+
 </section><!-- End section Navegación-->
 
 
@@ -369,92 +409,96 @@ fun SecondScreen(navController: NavController, name:String) {
 
   <p>There are several ways to determine the screen size and orientation.</p>
 
-  <h3>From setContent</h3>
-  <p>First, we must add the material dependency in <span class="inline-file">build.gradle (Module: app)</span>:</p>
-
-  <section><pre><code class="language-kotlin">implementation("androidx.compose.material3:material3-android:1.2.0-alpha11")</code></pre>
-  </section><br>
-
-  <p>Then, in <span class="negrita">setContent</span> we obtain the width and height values:</p>
-  <section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            val widthSizeClass = calculateWindowSizeClass(this).widthSizeClass
-            val heightSizeClass = calculateWindowSizeClass(this).heightSizeClass
-            AppContent {
-                Navigation()
-            }
-        }
-    }
-}
-</code></pre></section><br>
-
-  <p>This way we obtain the <span class="negrita">window size classes</span>, which we can pass to the 
-    <span class="negrita">Navigation</span> component to decide which elements to display.</p>
-
-  <p>Window size classes are <a class="enlace" target="_blank" href="https://developer.android.com/guide/topics/large-screens/support-different-screen-sizes?hl=es-419">categorized in the Jetpack Compose documentation</a>. There it’s explained how to organize the elements.</p>
-
-  <figure><img src="UD8/images/ud8-2023-11-21-17-01-48.png" /><br><figcaption>Width</figcaption></figure>
-  <br>
-  <figure><img src="UD8/images/ud8-2023-11-21-17-03-55.png" /><br><figcaption>Height</figcaption></figure>
-  <br>
-  <figure><img src="UD8/images/ud8-2023-11-21-17-04-14.png" /><br><figcaption>Summary table</figcaption></figure>
-  <br>
-
-  <p>For example, a Pixel 4 device with API 30 yields:
-    <ul>
-      <li><span class="negrita">WindowWidthSizeClass.Compact</span></li>
-      <li><span class="negrita">WindowHeightSizeClass.Medium</span></li>
-    </ul>
-  </p>
-
-  <figure><img src="UD8/images/ud8-2023-11-21-18-08-08.png" /><br><figcaption></figcaption></figure>
+  <h3>Window size classes</h3>
+  <p>The <span class="negrita">Window Size Classes</span> are 
+    <a class="enlace" target="_blank" href="https://developer.android.com/develop/ui/compose/layouts/adaptive/support-different-display-sizes?hl=es-419">categorized in the Jetpack Compose documentation</a>
+     and it explains <a class="enlace" target="_blank" href="https://developer.android.com/develop/ui/compose/layouts/adaptive/use-window-size-classes">how the elements should be organized</a>.</p>
+  
+  <a href="UD8/images/ud_8-2025-01-20-10-56-18.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-56-18.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  <p>There are several ways to find out the screen size and orientation:</p>
-
-  <h3>From any <span class="negrita">@Composable</span>: getting orientation</h3>
-  <section><pre><code class="language-kotlin">
-//Inside a composable element
-if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT) {
-    Log.i("--->", "Vertical")
-} else {
-    Log.i("--->", "Horizontal")
-}
-</code></pre></section><br>
-
-  <p>This way, we know if the device is in portrait or landscape orientation. Note that the user may have locked the orientation.</p>
-
-  <h3>From any <span class="negrita">@Composable</span>: getting screen size</h3>
-  <section><pre><code class="language-kotlin">BoxWithConstraints {
-    Log.i("---", "width: $maxWidth - height: $maxHeight")
+  <p>For example, the Pixel 6a with API 35 gets the following values:
+    <ul>
+      <li><span class="negrita">Vertical</span>:	 width &rarr; Compact		and	height  &rarr; Expanded</li>
+      <li><span class="negrita">Horizontal</span>:	 width &rarr; Expanded	and	height  &rarr; Compact</li>
+    </ul>
+  </p>
+  
+  <p>To know the <span class="negrita">Window size classes</span>, the following dependency must be added:
+  <ul>
+    <li>
+      File <span class="inline-file">libs.versions.toml</span> <ul>
+        <li>
+          <span class="cursiva">[version]</span> Section
+          <section><pre><code class="language-kotlin">adaptiveAndroid = "1.0.0"</code></pre>
+          </section>
+        </li>
+        <li>
+          <span class="cursiva">[libraries]</span> Section
+          <section><pre><code class="language-kotlin">androidx-adaptive-android = { group = "androidx.compose.material3.adaptive", name = "adaptive-android", version.ref = "adaptiveAndroid" }</code></pre>
+          </section>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <span class="inline-file">build.graddle.kts (Module: app) </span> file. Dependencies Section: 
+      <section><pre><code class="language-kotlin">implementation(libs.androidx.adaptive.android)</code></pre>
+      </section>
+    </li>
+  </ul></p>
+  <p>Remember to press <span class="negrita">Sync Now</span> after adding the dependency.</p>
+  
+  <p>Once the above dependency is added, the following instructions can be used to get the device's window size classes:</p>
+  
+  <a href="UD8/images/ud_8-2025-01-20-11-08-18.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-08-18.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  <p>These instructions will return one of the following values:</p>
+  <p>
+    <pre>
+      Window<span class="negrita">Width</span>SizeClass.COMPACT 		Window<span class="negrita">Height</span>SizeClass.COMPACT
+      Window<span class="negrita">Width</span>SizeClass.MEDIUM			Window<span class="negrita">Height</span>SizeClass.MEDIUM
+      Window<span class="negrita">Width</span>SizeClass.EXPANDED		Window<span class="negrita">Height</span>SizeClass.EXPANDED
+    </pre>
+  </p>
+  <h3>LocalConfiguration class</h3>
+  
+  <p>The screen dimensions and orientation can also be obtained using the <span class="r-word">LocalConfiguration</span> class.
+  <ul>
+  <li>Dimensions in Dp:
+    <a href="UD8/images/ud_8-2025-01-20-11-12-29.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-12-29.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <a href="UD8/images/ud_8-2025-01-20-11-12-59.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-12-59.png" /><br><figcaption></figcaption></figure></a>
+    <br>
     
-    when {
-        maxWidth &lt;= 600.dp -> {
-            Log.i("--->", "Vertical")
-        }
-        else -> {
-            Log.i("--->", "Horizontal")
-        }
-    }
-}
-</code></pre></section><br><br>
-
-  <p>This way, we know the maximum available dimensions. This check <span class="negrita">should be done at the highest possible level</span>, 
-    for example in the <span class="cursiva">composable</span> function of NavHost when defining the route, so as to have the maximum value.</p>
-
-  <p>Once we know the screen size/orientation, we can load one set of components or another. For example:</p>
-  <p>Depending on the width, we show either one component or two.</p>
-  <figure><img src="UD8/images/ud8-2023-11-21-17-18-35.png" /><br><figcaption></figcaption></figure>
+  </li>
+  <li>Screen orientation:
+    <a href="UD8/images/ud_8-2025-01-20-11-12-20.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-12-20.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+  </li>
+  </ul></p>
+  
+  <h3>BoxWithConstraints Component</h3>
+  <p>Another option is to use the <span class="r-word">BoxWithConstraints</span> Layout component, which automatically injects the dimensions.</p>
+  <a href="UD8/images/ud_8-2025-01-20-11-14-44.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-14-44.png" /><br><figcaption></figcaption></figure></a>
   <br>
-  <p>Depending on the width, we either show one component or another. The second component includes both <span class="cursiva">MainScreen</span> and <span class="cursiva">DetailContent</span> inside it.</p>
-  <figure><img src="UD8/images/ud8-2023-11-21-17-19-46.png" /><br><figcaption></figcaption></figure>
+  <a href="UD8/images/ud_8-2025-01-20-11-15-12.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-15-12.png" /><br><figcaption></figcaption></figure></a>
   <br>
+  
+  <p>If this method is used outside of a Scaffold, higher values are obtained, as it includes margins and the top and bottom status bars in the dimensions.</p>
+  
+  <p>Once the screen size/orientation is known, different components can be loaded accordingly.</p>
+  
+  <p>For example:</p>
+  
+  <a href="UD8/images/ud_8-2025-01-20-11-15-59.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-15-59.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+
+
 
   <div class="tarea">
-    <p>Exercise: <br>
+    <p>Activity 2: <br>
     Modify the DragonBall practice app so that it has an adaptive design. That is, it displays as it is in landscape mode, 
     but in portrait mode it shows separate screens: one with the list and another with the detail.
     </p>
@@ -469,87 +513,244 @@ if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT
   <a name="sSplashScreen"></a>
   <h2>SplashScreen</h2>
   
-  <p>A <span class="d-word">Splash Screen</span> is a window that appears when launching an Activity in an app or a game.</p>
-  <p>The <span class="d-word">Splash Screen</span> only appears:
-    <ul>
-      <li>When opening an app if the process associated with that app is not already running.</li>
-      <li>If the Activity associated with that <span class="d-word">Splash Screen</span> is not in the stack (with Jetpack Compose and Single Activity, this never happens).</li>
-    </ul>
-  </p>
+  <p>A <span class="negrita">Splash Screen</span> is a window that appears when an Activity of an application or a game is launched, 
+    provided that the associated process of the application is not running.</p>
+ 
+ <p>By default, <span class="negrita">the Splash Screen of an application consists of the application icon on a white/black background</span> 
+    (depending on the activated mode).</p>
+ 
+ <p>The Splash Screen is a good resource to <span class="negrita">avoid the blank screen</span> while the application opens and 
+    <span class="negrita">loads necessary data</span> for the app.</p>
+ 
+ <p>Android Studio offers a library that allows you to customize the default Splash Screen, but its configuration is quite complex.</p>
+ 
+ <p>If the application needs to load a lot of data, the default Splash Screen might not last long enough.</p>
+ 
+ <p>Thanks to Jetpack Compose and the Single Activity technique, a second Splash Screen can be created to load the data with it.</p>
+ 
+ <p>In this unit, the two techniques will be studied:
+   <ul>
+     <li>Modify the default Splash Screen.</li>
+     <li>Create a Splash Screen with Jetpack Compose.</li>
+   </ul>
+ </p>
+ 
+ <p>A Splash Screen typically includes:
+   <ul>
+     <li>Image or logo.</li>
+     <li>Application name.</li>
+     <li>Application version.</li>
+     <li>Developers' names.</li>
+     <li>Engine used for development.</li>
+   </ul>
+ </p>
+ 
+ <p>Additionally, animations are often used.</p>
+ 
+ <a href="UD8/images/ud_8-2025-01-20-11-36-23.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-36-23.png" /><br><figcaption>Some SplashScreen samples</figcaption></figure></a>
+ <br>
+ 
+ <p>Starting from Android 12, the default Splash Screen is implemented as follows:</p>
+ 
+ <p>Documentation:
+   <ul>
+     <li>
+       <a class="enlace" target="_blank" href="https://developer.android.com/develop/ui/views/launch/splash-screen">English</a>
+     </li>
+     <li>
+       <a class="enlace" target="_blank" href="https://developer.android.com/develop/ui/views/launch/splash-screen?hl=es-419">Spanish</a>
+     </li>
+   </ul>
+ </p>
+ 
+ <a href="UD8/images/ud_8-2025-01-20-11-40-32.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-40-32.png" /><br><figcaption></figcaption></figure></a>
+ <br>
+ 
+ <p>The process of showing the Splash Screen consists of the following sequence:
+   <ul>
+     <li><span class="negrita">Entry animation</span>: the Splash Screen is shown. <span class="negrita">Android controls this animation and it cannot be customized</span>.</li>
+     <li><span class="negrita">Splash Screen</span>: the <span class="negrita">content of the Splash Screen is displayed</span>, automatically animating the image if it is an animated vector image (xml) and the Android version is 12 or higher.</li>
+     <li><span class="negrita">Exit animation</span>: the way the Splash Screen disappears. 
+       By default, it is controlled by the system, but it can be customized. <span class="negrita">If customized, it is mandatory to manually remove the Splash Screen</span> 
+       when the animation finishes. The image and/or the Splash Screen itself can be animated in this step.</li>
+   </ul>
+ </p>
+ <a href="UD8/images/ud_8-2025-01-20-11-43-25.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-43-25.png" /><br><figcaption>SplashScreen sequence</figcaption></figure></a>
+ <br>
+ 
+ <p>To customize the default Splash Screen, the following dependency must be added:
+   <ul>
+     <li>
+       File <span class="inline-file">libs.versions.toml</span> <ul>
+         <li><span class="cursiva">[version]</span> section
+         <section><pre><code class="language-kotlin">coreSplashscreen = "1.0.1"</code></pre>
+         </section></li>
+       <li><span class="cursiva">[libraries]</span> section
+       <section><pre><code class="language-kotlin">androidx-core-splashscreen = {group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen"}</code></pre>
+       </section></li>
+       </ul>
+     </li>
+     <li>
+       <span class="inline-file">build.graddle.kts (Module: app)</span> file. Dependencies section:
+       <section><pre><code class="language-kotlin">implementation(libs.androidx.core.splashscreen)</code></pre>
+       </section>
+     </li>
+   </ul>
+ </p>
+ 
+ <p>Remember to press <span class="negrita">Sync Now</span> after adding the dependency.</p>
 
-  <p>The <span class="d-word">Splash Screen</span> disappears once all the necessary items for the app have been loaded.</p>
-  <p>A typical <span class="d-word">Splash Screen</span> includes:
-    <ul>
-      <li>An image or logo.</li>
-      <li>The name of the application.</li>
-      <li>The version of the application.</li>
-      <li>The names of the developers.</li>
-      <li>The engine used for development.</li>
-    </ul>
-  </p>
-
-  <p>It is not mandatory to add a Splash Screen, but it is a good resource to avoid a blank screen while the app is launching and while necessary data are being loaded.</p>
-
-  <p>With Jetpack Compose navigation, implementing a Splash Screen is very straightforward:
-    <ul>
-      <li>Create a route for the Splash Screen in <span class="inline-file">Routes.kt</span>.</li>
-      <li>Add the Splash Screen route to <span class="inline-file">Navigation.kt</span>.</li>
-      <li>Specify in the <span class="negrita">NavHost</span> (<span class="inline-file">Navigation.kt</span>) that the Splash Screen is the <span class="r-word">startDestination</span>.</li>
-      <li>Create a <span class="negrita">@Composable</span> component with the Splash Screen content.</li>
-      <li>In the Splash Screen <span class="negrita">@Composable</span>, specify that once loading is finished, it navigates to the next screen.</li>
-    </ul>
-  </p>
-
-  <p>Here is an example of a SplashScreen:</p>
-  <section><pre><code class="language-kotlin">@Composable
-fun SplashScreen(navController: NavController) {
-    LaunchedEffect(key1 = true){
-        //Here we should perform the system load.
-        //Access a DB, connect to an API, etc.
-        //We simulate it with a 5-second delay
-        delay(5000)
-        //We remove it from the stack so if the user goes back, they won't return to the SplashScreen
-        navController.popBackStack()
-        navController.navigate(Routes.FirstScreen.route)
-    }
-
-    Splash()
-}
-
-@Composable
-fun Splash() {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.logo),
-            contentDescription = "logo",
-            modifier = Modifier.size(200.dp,150.dp),
-            contentScale = ContentScale.Fit
-        )
-        Text(
-            text = "Bienvenidos",
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold,
-            color = GreenSerra
-        )
-    }
-}
-</code></pre>
-  </section><br><br>
-
-  <p>We use <span class="negrita cursiva">LaunchedEffect</span> (to be studied later) to execute that code in the background.</p>
-  <p>In a real application, instead of the <span class="negrita cursiva">delay(5000)</span> instruction, you'd implement the steps to get all necessary application data, for example from a database or an API.</p>
-  <p>You can design very eye-catching Splash Screens using the animations that will be covered at the end of this unit.</p>
-
+ <section class="marco-t inf">
+  <span class="icono info"> </span> In newer versions we don't need to add dependencies. They're already added by default
+  </section>
+ <section class="marco-b">
+    
+ </section>
+  
+ 
+ <p>If you want to use an image, it should be added to the project in the <span class="inline-folder">resources</span> folder:</p>
+ 
+ <a href="UD8/images/ud_8-2025-01-20-12-23-04.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-12-23-04.png" /><br><figcaption></figcaption></figure></a>
+ <br>
+ 
+ <p>It is preferable to use vector graphics, but bitmap images (png or jpg) converted to webp can also be used.</p>
+ 
+ <p>The image dimensions should meet the following:
+   <ul>
+     <li><span class="negrita">Without transparency</span>: 240x240 (a 160 radius circle is displayed)</li>
+     <li><span class="negrita">With transparency</span>: 288x288 (a 192 radius circle is displayed)</li>
+   </ul>
+ </p>
+ 
+ <p>If it is a vector graphic, the dimension will be in dp, if it is a bitmap image, the dimension will be in px.</p>
+ 
+ <p>The next step is to create the style for the Splash Screen, for which a resource file <span class="inline-file">res/values/splash.xml</span> should be created:</p>
+ 
+ <a href="UD8/images/ud_8-2025-01-20-12-26-08.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-12-26-08.png" /><br><figcaption></figcaption></figure></a>
+ <br>
+ 
+ <p>with the following code:</p>
+ <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+ &lt;resources&gt;
+     &lt;style name="Theme.MySplashScreen" parent="Theme.SplashScreen"&gt;
+         &lt;item name="windowSplashScreenBackground"&gt;#FF9800&lt;/item&gt;
+         &lt;item name="windowSplashScreenAnimatedIcon"&gt;@drawable/fourstarball&lt;/item&gt;
+     &lt;/style&gt;
+ &lt;/resources&gt;
+ </code></pre>
+ </section><br><br>
+ 
+ <a href="UD8/images/ud_8-2025-01-20-12-29-59.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-12-29-59.png" /><br><figcaption></figcaption></figure></a>
+ <br>
+ <section class="marco-t inf">
+  <span class="icono info"> </span> In newer versions postSplashScreenTheme is not necessary
+  </section>
+ <section class="marco-b">
+    
+ </section>
+  
+ <p>The theme to load after finishing is the one already existing in <span class="inline-file">res/values/themes.xml</span>.</p>
+ 
+ <p>In the manifest file, it should be indicated that the Activity will use the Splash Screen defined in the new theme:</p>
+ 
+ <a href="UD8/images/ud_8-2025-01-20-12-30-45.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-12-30-45.png" /><br><figcaption></figcaption></figure></a>
+ <br>
+ 
+ <p>Finally, it should be indicated in the Kotlin file <span class="inline-file">MainActivity.kt</span> of the activity that the Splash Screen will be used:</p>
+ 
+ <a href="UD8/images/ud_8-2025-01-20-12-32-04.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-12-32-04.png" /><br><figcaption></figcaption></figure></a>
+ <br>
+ 
+ <p>If, after the Splash Screen finishes, the screen stays blank until the main screen of the app appears, 
+   the following code should be added to the previous line:</p>
+ 
+ <a href="UD8/images/ud_8-2025-01-20-12-32-45.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-12-32-45.png" /><br><figcaption></figcaption></figure></a>
+ <br>
+ 
+ <p>With the steps above, the Splash Screen will work correctly on all devices.</p>
+ 
+ <p>Starting from Android 12 (API 31), new features are introduced for the Splash Screen:
+   <ul>
+     <li>Animated images (only vector graphics in xml format)</li>
+     <li>Display a secondary image (branding image) at the bottom.</li>
+     <li>Splash Screen exit animation.</li>
+   </ul>
+ </p>
+ 
+ <p>In the <a class="enlace" target="_blank" href="https://developer.android.com/develop/ui/views/launch/splash-screen?hl=es-419#launch">documentation</a> 
+   you can find all the information and examples for these features.</p>
+ 
+ <h3>SplashScreen with Jetpack Compose</h3>
+ 
+ <p>With Jetpack Compose navigation, implementing a Splash Screen is very simple.
+   <ol>
+     <li>Create a route for the Splash Screen in Routes.kt.</li>
+     <li>Add the Splash Screen route to the Navigation.kt file.</li>
+     <li>Indicate in the NavHost (Navigation.kt) that the Splash Screen is the "startDestination".</li>
+     <li>Create a @Composable component with the Splash Screen content.</li>
+     <li>Indicate in the @Composable of the Splash Screen that after it finishes loading, it should navigate to the next screen.</li>
+   </ol>
+ </p>
+ 
+ <p>The <span class="r-word">LaunchedEffect</span> is used (it will be studied later) to run that code in the background (coroutine).</p>
+ 
+ <section><pre><code class="language-kotlin">@Composable
+ fun SplashScreen(navController: NavHostController) {
+     LaunchedEffect(key1 = true) { // this: CoroutineScope
+         delay(timeMillis = 5000) //Change this for real instructions, getting data from API, BDD, etc
+         navController.popBackStack() // Prevent going back to the Splash Screen
+         navController.navigate(Routes.MainScreen.route)
+     }
+ 
+     Splash()
+ }
+ 
+ @Composable
+ fun Splash() {
+     Column(
+         modifier = Modifier.fillMaxSize(),
+         horizontalAlignment = Alignment.CenterHorizontally,
+         verticalArrangement = Arrangement.Center
+     ) { // this: ColumnScope
+         Image(
+             painter = painterResource(id = R.drawable.logo),
+             contentDescription = "logo",
+             modifier = Modifier.size(200.dp, 200.dp)
+         )
+         Text(
+             text = "Welcomed",
+             fontSize = 30.sp,
+             fontWeight = FontWeight.Bold
+         )
+     }
+ }
+ </code></pre>
+ </section><br><br>
+ <p>In a real application, instead of the delay(5000) instruction, the code that retrieves the information needed by the application should be written, 
+   for example, from a database or an API.</p>
+ 
+ <p>Very attractive Splash Screens can be designed using the animations that will be covered at the end of this unit.</p>
+ 
+ <p>By adding a Splash Screen with Jetpack Compose, the application opening flow will be as follows:
+   <ol>
+     <li>Default Splash Screen (with the application icon).</li>
+     <li>Jetpack Compose Splash Screen.</li>
+     <li>Main screen.</li>
+   </ol>
+ </p>
+ 
+ <p>Using this technique, you take advantage of the design ease that Jetpack Compose offers.</p>
+ 
+ <p>Additionally, the Jetpack Compose Splash Screen can be started to initially display the app icon in the center, providing continuity between the two Splash Screens.</p>
+ 
+ <p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM225/tree/main/UD8/SplashScreen">Here</a>, there is an example of a combined SplashScreen</p>
+ 
 
   <div class="tarea">
     <p>Modify the DragonBall application to include a <span class="cursiva">SplashScreen</span>. This will display the dragon ball from the app and the text "DragonBall" for 3 seconds.</p>
   </div>
 
-  <p>Here is the <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2324/tree/master/UD5/dragonball_navigation">Github link</a> with the Dragon Ball app updated for Navigation, adapted to <span class="cursiva">Portrait</span> and <span class="cursiva">Landscape</span>, and with a <span class="cursiva">Splash Screen</span>.</p>
+  <p class="oculto">Here is the <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2324/tree/master/UD5/dragonball_navigation">Github link</a> with the Dragon Ball app updated for Navigation, adapted to <span class="cursiva">Portrait</span> and <span class="cursiva">Landscape</span>, and with a <span class="cursiva">Splash Screen</span>.</p>
 
 </section><!-- End section SplashScreen-->
 
