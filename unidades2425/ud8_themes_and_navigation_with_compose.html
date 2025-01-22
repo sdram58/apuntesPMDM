@@ -124,23 +124,25 @@ implementation(libs.kotlinx.serialization.json)</code></pre>
 <p>The element <span class="r-word">NavHost</span> defines the different screens to which you can navigate
    and also needs the <span class="r-word">NavController</span>.</p>
 
-   <p>The first step is to create a package named <span class="negrita">navigation</span>, and inside it, create a file called <span class="inline-file">Screens.kt</span>
-    which will contain a <span class="negrita">reference to each screen of the application</span> in order to keep them <span class="negrita">centralized</span>.</p>
+   <p>The first step is to create a package named <span class="negrita">navigation</span>, and inside it, create a file called <span class="inline-file">Routes</span>
+    which will contain a <span class="negrita">reference to each route of the application</span> in order to keep them <span class="negrita">centralized</span>. 
+  To encapsulate the routes we put them inside a sealed class</p>
  
  <section>
-   <pre><code class="language-kotlin">
- // If the screen DOES NOT need to receive values, it is defined with: object
- @Serializable
- object First
- 
- // If the screen NEEDS to receive values, it is defined with: data class
- @Serializable
- data class Second(
-     // mandatory parameter
-     val name: String,
-     // optional parameter
-     val age: Int = 0
- )
+   <pre><code class="language-kotlin">sealed class Routes{
+    // If the screen DOES NOT need to receive values, it is defined with: object
+    @Serializable
+    object First
+
+    // If the screen NEEDS to receive values, it is defined with: data class
+    @Serializable
+    data class Second(
+        // mandatory parameter
+        val name: String,
+        // optional parameter
+        val age: Int = 0
+    )
+}
  </code></pre>
  </section>
  
@@ -164,17 +166,17 @@ fun Navigation() {
     // Element that knows the different screens and which is the first to launch
     NavHost(
         navController = navController,
-        startDestination = First // Route where the application starts
+        startDestination = Routes.First // Route where the application starts
     ) {
         // Definition of the first screen
-        composable&lt;First&gt; {
+        composable&lt;Routes.First&gt; {
             FirstScreen(navController)
         }
 
         // Definition of the second screen
-        composable&lt;Second&gt; { 
+        composable&lt;Routes.Second&gt; { 
             // Parameters are obtained from the route to use them when loading the screen
-            val args = it.toRoute&lt;Second&gt;()
+            val args = it.toRoute&lt;Routes.Second&gt;()
             SecondScreen(navController, args.name, args.age)
         }
     }
@@ -270,7 +272,7 @@ fun FirstScreen(navController: NavController) {
             Button(
                 onClick = {
                     navController.navigate(
-                        Second(
+                        Routes.Second(
                             name = nameState,
                             age = ageState.toIntOrNull() ?: 0
                         )
@@ -318,8 +320,8 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
 
                 // Goes to the indicated one (if it is the previous one it will be a new instance: empty fields)
                 // Also, cleans the stack
-                navController.navigate(First) {
-                    popUpTo&lt;First> {
+                navController.navigate(Routes.First) {
+                    popUpTo&lt;Routes.First> {
                         inclusive = true
                     }
                 }
