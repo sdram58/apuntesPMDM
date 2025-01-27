@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>U9.- Coroutines, Side Effects y MVVM</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../styles/prism.css">
+  <link rel="stylesheet" href="../styles/styles.css">
+  <script src="../script/script.js"></script>
+</head>
+
+<body class="line-numbers">
+  <div class="logos"></div>
+
+<nav id="menu-lateral" class="main-menu-lateral oculto">
+  <div class="fila">
+    <a href="#sCorrutinas" title="1.- Corrutinas">1.- Coroutines</a>
+    <a href="#sSideEffects" title="2.- Side Effects">2.- Side Effects</a>
+    <a href="#sArquitecturasAndroid" title="3.- Arquitecturas Android">3.- Android Architectures</a>      
+  </div>
+  <div class="fila">
+    <a href="#sCasopractico" title="4.- Caso práctico">4.- Practical Case</a>      
+    <a href="#sActividades" title="5.- Actividades">5.- Activities</a>      
+  </div>
+
+</nav> <!-- BTM_MENU-->
+
+<h1>U9.- Coroutines, Side Effects, and MVVM</h1>
+
+<div class="main-menu">
+  <div class="fila">
+    <a href="#sCorrutinas" title="1.- Coroutines">1.- Coroutines</a>
+    <a href="#sSideEffects" title="2.- Side Effects">2.- Side Effects</a>
+    <a href="#sArquitecturasAndroid" title="3.- Android Architectures">3.- Android Architectures</a>
+  </div>
+  <div class="fila">
+    <a href="#sCasopractico" title="4.- Practical Case">4.- Practical Case</a>      
+    <a href="#sActividades" title="5.- Activities">5.- Activities</a>  <a href="" class="relleno"></a>
+  </div>
+</div>
+
+<!--*********************************************************Coroutines***********************************************************-->
+<section class="apartado">
+  <a name="sCorrutinas"></a>
+  <h2>Coroutines</h2>
+  <h3>Introduction</h3>
+  <p>In Android, the <span class="negrita">main thread</span> is responsible for displaying the user interface and <span class="negrita">managing the interactions</span> with the application.</p>
+
+  <p>This means that <span class="negrita">if the main thread runs a heavy or asynchronous task, the user interface will freeze</span> 
+    and the user won't be able to interact with the device until the task finishes.
+   <ul>
+    <li><span class="negrita">Heavy tasks</span>: tasks that take a long time.</li>
+    <li><span class="negrita">Asynchronous tasks</span>: tasks that can be performed in the background.</li>
+   </ul>
+  </p>
+
+  <h3>Coroutines</h3>
+
+  <p>Kotlin provides <span class="d-word">coroutines</span> to perform actions without blocking the main thread.</p>
+  <p>Coroutines are more efficient than threads because they group available threads to execute instructions with different 
+  configurations (<span class="cursiva">context + dispatcher</span>).</p>
+  <p>Additionally, the number of threads is limited, but the number of coroutines that can be launched is almost infinite.</p>
+  <p>So when you want to execute a set of instructions and avoid blocking the main thread, you need to create a coroutine 
+  and specify the configuration in which it will run, allowing the system to manage the coroutine using as many threads as needed.</p>
+  <p>More information: <a class="enlace" target="_blank" href="https://kotlinlang.org/docs/coroutines-overview.html">Kotlin coroutines</a> and 
+  <a class="enlace" target="_blank" href="https://developer.android.com/kotlin/coroutines?hl=es-419">Kotlin coroutines in Android</a>.</p>
+
+  
+  <h3>Suspending Functions</h3>
+  <p>Suspending functions are those that block the execution of the function until a specific instruction is finished.</p>
+  <p>These functions must always be executed inside a coroutine or within a coroutine scope (<span class="cursiva">coroutine scope</span>)
+  or inside another <span class="negrita">suspend function</span>.</p>
+
+  <figure><img src="UD9/images/ud9-2023-12-03-20-00-23.png" /><br><figcaption>Android Studio notifies that an instruction may block the function's execution.</figcaption></figure>
+  <br>
+
+  <p class="sub-section">Usage</p>
+<p>A suspend function is a function that can be "paused" and then resumed without blocking the current thread. This makes them ideal for time-consuming operations, such as:
+  <ul>
+    <li>Database queries.</li>
+    <li>Web service calls.</li>
+    <li>Input/output (I/O) operations.</li>
+    <li>Complex tasks that need to run in the background.</li>
+  </ul>
+</p>
+
+<p class="sub-section">Basic Syntax</p>
+
+<section><pre><code class="language-kotlin">suspend fun functionName(): ReturnType {
+    // Function code
+}
+</code></pre>
+</section><br><br>
+<p>Suspend functions simplify the handling of asynchronous operations by eliminating the need for complex callbacks.</p>
+
+<p>Example: Imagine you are simulating a data download that takes 2 seconds.</p>
+<section><pre><code class="language-kotlin">suspend fun downloadData(): String {
+    delay(2000) // Simulates a 2-second delay
+    return "Data downloaded"
+}
+
+fun main() {
+    runBlocking { //This is an special coroutine that do that main thread waits for it.
+        println("Download starting...")
+        val result = downloadData() //Here the coroutine is blocked
+        println("Result: $result")
+    }
+}</code></pre>
+</section><br><br>
+<p>Explanation:
+  <ol>
+    <li>The <span class="d-word">downloadData</span> function is a suspend function. 
+        <span class="r-word">delay(2000)</span> pauses the execution for 2 seconds without blocking the current thread.</li>
+    <li>The <span class="r-word">runBlocking</span> function is used to start a coroutine in the main thread. This is only for testing; 
+        in a real environment (e.g., Android), you would use other contexts such as <span class="r-word">launch</span> or <span class="r-word">async</span>.</li>
+    <li>The program prints "Download starting...", waits for 2 seconds, and then prints the result.</li>
+  </ol>
+</p>
+
+
+  <h3>Coroutine Context</h3>
+  <p>Defines, among other things, the work and dispatcher (sets of threads) that will be used to perform the task.</p>
+  <section><pre><code class="language-kotlin">var job=Job()
+val coroutineContext: CoroutineContext = Dispatchers.IO + job
+
+launch(coroutineContext){
+  //Actions
+}
+</code></pre>
+  </section><br>
+
+  <h3>Coroutine Scope</h3>
+
+  <p>Sets the execution scope for the coroutine, i.e., where the coroutine will be used.</p>
+  <section><pre><code class="language-kotlin">var job=Job()
+val coroutineContext: CoroutineContext = Dispatchers.IO + job
+val coroutineScope = CoroutineScope(coroutineContext)
+
+coroutineScope.launch{
+  //Actions
+}
+....
+coroutineScope.cancel("....")
+</code></pre>
+  </section><br>
+
+  <p>Typically, the <span class="negrita">CoroutineScope</span> is provided 
+     (<span class="negrita">rememberCoroutineScope</span>, <span class="negrita">viewModelScope</span>, ...) where it's used, but we can create our own.</p>
+  
+
+  <h3>Canceling Coroutines</h3>
+
+  <p>Using <span class="negrita">rememberCoroutineScope</span> and <span class="negrita">viewModelScope</span>
+   you can execute coroutines with <span class="negrita">launch</span> (among other builders).</p>
+  
+  <p>When the coroutine is executed inside a <span class="cursiva">@Composable</span> element, the coroutine will be canceled if the screen is no longer visible on the screen.</p>
+
+  <p>With the <span class="negrita">launch</span> method, you can store the coroutine's identifier to cancel it later if needed.
+  This is especially useful for coroutines executed inside a ViewModel.</p>
+
+<section><pre><code class="language-kotlin">var myCoroutinJob:Job = Job()
+myCoroutinJob = viewModelScope.launch{
+  //Actions to perform in the coroutine
+}
+
+....
+//You can cancel the coroutine using its job. (Among other actions)
+myCoroutinJob.cancel()</code></pre>
+</section><br>
+
+<h3>Asynchronous Requests</h3>
+
+<p>They allow you to execute several actions in the background and wait for them concurrently, avoiding unnecessary time wastage
+  since they are executed in parallel.</p>
+
+<section><pre><code class="language-kotlin">//runBlocking creates a coroutine that blocks the thread until the others finish
+//It is only advised for testing.
+fun main() = runBlocking{
+    //Note: It's not an integer, it's a deferred
+    val datoA = async{
+        println("Start A")
+        delay(2000)
+        println("End A")
+        25
+    }
+
+    //Note: It's not an integer, it's a deferred
+    val datoB = async{
+        println("Start B")
+        delay(4000)
+        println("End B")
+        60
+    }
+
+    //Wait for both to finish, since they are deferred we use await()
+    val total = datoA.await() + datoB.await()
+
+    println("${datoA.await()} + ${datoB.await()} = $total")
+}</code></pre>
+</section><br>
+
+  
+</section><!-- End section Coroutines-->
+
+
+ <!--*********************************************************Side Effects***********************************************************-->
+<section class="apartado">
+  <a name="sSideEffects"></a>
+  <h2>Side Effects</h2>
+  <p>As previously studied, Jetpack Compose performs <span class="negrita">recompositions</span> of the user interface <span class="negrita">when state changes occur</span>.</p>
+  <p>Sometimes <span class="negrita">the application recomposes more or fewer times than necessary</span> 
+    or even <span class="negrita">when recomposing, code that should not be executed runs</span>.</p>
+  <p>All these unwanted situations are called <span class="d-word">Side Effects</span>.</p>
+  <p>All components of the application should avoid side effects, 
+    but there are times when side effects are needed, such as for <span class="negrita">one-time events</span> like showing a notification or 
+    navigating to a screen if a state meets a condition.</p>
+
+  <p>The following code produces a <span class="negrita">side effect</span>:</p>
+
+  <figure><img src="UD9/images/ud9-2023-12-03-23-03-10.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>When the button is pressed, the message changes.</p>
+  <p>The <span class="cursiva">Toast</span> is shown whenever the message is not empty.</p>
+  <p>Once the button is pressed and the message is no longer empty, from then on, when the <span class="cursiva">TextField</span> changes,
+     the <span class="cursiva">Toast</span> will always be shown.</p>
+
+  <p>To solve these problems, <span class="negrita">Effects Handlers</span> were created 
+    <span class="negrita">which allow you to execute these actions in a controlled environment</span>.</p>
+  <p><span class="cursiva">Effects Handlers</span> also facilitate the use of coroutines in Jetpack Compose.</p>
+  <p>The available <span class="cursiva">Effects Handlers</span> are:
+  <ul>
+    <li><span class="negrita">LaunchedEffect</span></li>
+    <li><span class="negrita">RememberCoroutineScope</span></li>
+    <li><span class="negrita">derivedStateOf</span></li>
+    <li>SideEffect</li>
+    <li>RemindUpdatedState</li>
+    <li>DisposableEffect</li>
+    <li>produceState</li>
+    <li>snapshotFlow</li>
+  </ul>
+  </p>
+
+<h3>LaunchedEffect</h3>
+<p>A <span class="negrita">LaunchedEffect block is executed the first time the component it's included in is composed</span>.</p>
+<p><span class="negrita">After that, it will only execute (recompose) if any of the parameters it receives change.</span></p>
+<p>LaunchedEffect supports up to three parameters key (key1, key2, key3) or a list of keys.</p>
+
+<figure><img src="UD9/images/ud9-2023-12-03-23-09-36.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>In the previous example, <span class="subrayado">the block will only execute once (when the component is first composed) even if the </span>
+  <span class="cursiva">SplashScreen</span> function is recomposed, as the parameter it receives will always have the same value (<span class="cursiva">true</span>).</p>
+
+<p>A LaunchedEffect block is a coroutine, so it also <span class="negrita">allows you to execute suspending functions within a @Composable component</span>.</p>
+  
+<figure><img src="UD9/images/ud9-2023-12-03-23-10-32.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Thus, if the block is running and undergoes recomposition, the coroutine that was running is paused and starts over.</p>
+<p>The coroutine cancels its execution when the LaunchedEffect block leaves the composition (is no longer on screen).</p>
+
+<p>Applying it to the previous login example:</p>
+
+<figure><img src="UD9/images/ud9-2023-12-03-23-13-25.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>The LaunchedEffect block will execute every time the state <span class="negrita">message</span> changes.</p>
+
+<p>This first approach won't work properly because the message only changes when it goes from "<span class="cursiva">User logged in!</span>"
+   to "<span class="cursiva">Error</span>" and vice versa. So if an error occurs and
+    when the data changes, the error remains, the message won't be shown again.</p>
+
+<p>To fix this, simply clear the <span class="negrita">message</span> after showing the <span class="cursiva">Toast</span>.</p>
+
+<p>Complete Login Example:</p>
+<figure><img src="UD9/images/ud9-2023-12-03-23-15-45.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>RememberCoroutineScope</h3>
+
+<p><span class="negrita">RememberCoroutineScope</span> allows you to get a safe scope (<span class="cursiva">scope</span>) 
+  to execute a coroutine.</p>
+<p>It is used when you need to execute a suspending function <span class="negrita">outside the scope of a @Composable component</span>
+   such as inside <span class="cursiva">onClick</span>.</p>
+<p>You cannot use <span class="negrita">LaunchedEffect</span> if you're not inside a <span class="negrita">@Composable</span> context.</p>
+<figure><img src="UD9/images/ud9-2023-12-03-23-18-50.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>In this case, the scope of a coroutine is needed.</p>
+
+<p>First, you get the coroutine's scope with <span class="negrita">rememberCoroutineScope</span> and 
+  then to execute the coroutine, you use the <span class="r-word">launch</span> function.</p>
+<figure><img src="UD9/images/ud9-2023-12-03-23-20-33.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>This Effect Handler has already been used to move the scroll automatically</p>
+<figure><img src="UD9/images/ud9-2023-12-03-23-21-09.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Moving the scroll is a suspending function, and when performing this action by clicking a button, the scope of the coroutine is needed.</p>
+
+<p>When using the <span class="r-word">launch</span> function, the coroutine runs on the main thread, which can sometimes be problematic as it could block the user interface.</p>
+
+<p>The <span class="r-word">launch</span> function allows you to specify the context in which the coroutine should run:
+  <ul>
+    <li><span class="negrita">Dispatchers.Main</span>: main thread (used for the user interface).</li>
+    <li><span class="negrita">Dispatchers.IO</span>: primarily for input/output tasks.</li>
+    <li><span class="negrita">Dispatchers.Default</span>: managed by the operating system (same as not specifying any dispatcher).</li>
+    <li><span class="negrita">Dispatchers.Unconfined</span>: any thread without control over it (not recommended).</li>
+  </ul>
+</p>
+
+<p>If the actions performed in the <span class="r-word">launch</span> function are related to the user interface, it is best to either not specify anything or to specify <span class="r-word">Dispatchers.Main</span>.</p>
+
+<a href="UD9/images/ud_9-2025-01-27-13-38-12.png" target="_BLANK"><figure><img src="UD9/images/ud_9-2025-01-27-13-38-12.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<p>If the actions performed in the <span class="r-word">launch</span> function are intended to obtain data from external sources or storage, or if the actions are not related to the user interface, it is best to specify <span class="r-word">Dispatchers.IO</span>.</p>
+
+<a href="UD9/images/ud_9-2025-01-27-13-38-21.png" target="_BLANK"><figure><img src="UD9/images/ud_9-2025-01-27-13-38-21.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<h3>derivedStateOf</h3>
+
+<p>The handler <span class="r-word">derivedStateOf</span> allows you to create a state that depends on one or more other states.</p>
+<p>This way, unnecessary extra recompositions are avoided.</p>
+<p>It could be said that <span class="r-word">derivedStateOf</span> does not trigger recompositions until the state value changes from its previous value.</p>
+
+<p>To better understand the need for <span class="negrita">derivedStateOf</span>, let’s study the following example:</p>
+<figure><img src="UD9/images/ud9-2023-12-03-23-23-19.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>When the <span class="cursiva">username</span> state changes, the <span class="cursiva">isUsernameValid</span> function runs
+   which will change the value of <span class="cursiva">buttonEnabled</span>, and the button will recompose every time a letter is typed.</p>
+
+<p>Does it make sense to recompose the button if <span class="cursiva">buttonEnabled</span> is 
+  <span class="cursiva">true</span> and when you type another letter, it remains <span class="cursiva">true</span>?</p>
+
+  <p>By indicating that <span class="negrita">buttonEnabled</span> is a derived state of another, unnecessary recompositions are avoided.</p>
+  <figure><img src="UD9/images/ud9-2023-12-03-23-26-02.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+
+  <p>The button will only recompose when the value of <span class="negrita">buttonEnabled</span> changes from true to false or vice versa.</p>
+  
+  <p>If the value of <span class="negrita">buttonEnabled</span> is true and when typing another letter it remains true, the view will not be recomposed.</p>
+  
+</section><!-- End section Side Effects-->
+
+<!--*********************************************************Android Architectures***********************************************************-->
+<section class="apartado">
+  <a name="sArquitecturasAndroid"></a>
+  <h2>Android Architectures</h2>
+  
+  <p>When developing applications of any kind, choosing the right architecture to use is very important.</p>
+
+  <p>The most common approach is to use an architecture that separates the application logic (programming) from the views (graphical interface).</p>
+
+  <p>In this way, the views are responsible for displaying the interface (rendering), while the logic can be separated into other components where the application's functionality is programmed.</p>
+
+  <p>With this separation, it will be easier to work with the logic, make changes, and perform tests later on…</p>
+  <p>The architectures most commonly used in Android are:
+    <ul>
+      <li><span class="negrita">MVC</span> – Model View Controller</li>
+
+      <li><span class="negrita">MVP</span> – Model View Presenter</li>
+      
+      <li><span class="negrita">MVVM</span> – Model View ViewModel</li>
+    </ul>
+  </p>
+
+<h3>MVC</h3>
+
+<span class="negrita">MVC -> Model View Controller:</span>
+
+<p>The MVC architecture promotes organizing the application into <span class="negrita">three distinct</span>
+   and <span class="negrita">loosely coupled</span> parts.
+  <ul>
+    <li><span class="negrita">Model</span>: this component works with data (database access).</li>
+    <li><span class="negrita">View</span>: responsible for organizing the data obtained from the model and creating the graphical interface to display to the user.</li>
+    <li><span class="negrita">Controller</span>: manages requests to the application.</li>
+  </ul></p>
+
+
+<p>A <span class="subrayado">loose coupling</span> means that changes in one part of the code have minimal effect on other parts.</p>
+
+<p>In the best case, when using the MVC pattern, a change will not affect other parts.</p>
+
+<p>There are many implementations of the MVC architecture; in the Android implementation, both the controller and the view are defined in the same place (Activity or Fragment), and both depend on the model.</p>
+<figure><img src="UD9/images/ud9-2023-12-03-23-31-50.png" /><br><figcaption>MVC</figcaption></figure>
+<br>
+
+<p>One of the disadvantages of this architecture is that all responsibility falls on the same element (<span class="cursiva">Activity or Fragment</span>).</p>
+
+<p>This can cause performance issues if there is a heavy task running on the main thread.</p>
+
+<h3>MVP</h3>
+<p><span class="negrita">MVP -> Model View Presenter:</span></p>
+
+<p>It better organizes files and changes the way the three components work together.
+  <ul>
+    <li><span class="negrita">Model</span>: same as in MVC.</li>
+    <li><span class="negrita">View</span>: the <span class="cursiva">Activity</span> or <span class="cursiva">Fragment</span> is considered part of the view and 
+      is no longer located alongside the Controller.</li>
+    <li><span class="negrita">Presenter</span>: similar to the Controller in MVC, but is responsible for orchestrating everything that happens. 
+      Typically, there is one Presenter per <span class="cursiva">Activity</span> or <span class="cursiva">Fragment</span>.</li>
+  </ul>
+</p>
+
+<figure><img src="UD9/images/ud9-2023-12-03-23-34-29.png" /><br><figcaption>MVP</figcaption></figure>
+<br>
+
+<h3>MVVM</h3>
+<p><span class="negrita">MVVM -> Model View ViewModel:</span>
+<ul>
+  <li><span class="negrita">Model</span>: same as in MVC.</li>
+
+  <li><span class="negrita">View</span>: responsible for displaying the data.</li>
+  
+  <li><span class="negrita">ViewModel</span>: 
+  <ul>
+    <li>Wraps the model and prepares observable data for the view.</li>
+    <li>Provides bindings to the view to send events to the model.</li>
+    <li>Changes in it automatically update the view and vice versa.</li>
+  </ul></li>
+</ul>
+</p>
+
+<p>The <span class="negrita">ViewModel</span> is responsible for:
+  <ul>
+    <li>Responding to interactions in the view</li>
+    <li>Accessing data (model)</li>
+    <li>Notifying the view of changes in the data.</li>
+  </ul>
+</p>
+
+<p>Additionally, <span class="negrita">ViewModel survives configuration changes</span> like orientation changes,
+  meaning that the information stored in the ViewModel is preserved at all times.</p>
+
+<p class="sub-section">LiveData</p>
+
+<p>Although ViewModel can work with states as we've used them until now, 
+  <span class="subrayado">it is recommended to use the <span class="negrita">LiveData class</span> </span> because it is optimized for the lifecycle of the Activity.</p>
+
+<p><span class="negrita">LiveData</span> allows you to hold <span class="negrita">data that can be observed as states</span>.</p>
+
+<p>It is specifically designed to be used in <span class="cursiva">Activities</span>, <span class="cursiva">Fragments</span>, or 
+  <span class="cursiva">Services</span> so that <span class="negrita">it only notifies observers if they are currently running</span>
+   (active lifecycle state).</p>
+
+<p>It allows for device orientation changes without losing the observed data.</p>
+
+<p>Android provides the <span class="negrita">LiveData</span> and <span class="negrita">MutableLiveData</span> classes to store any type of data and observe its changes</p>
+
+<p>Android automatically provides two methods for storing data in a LiveData:
+  <ul>
+    <li>Using its <span class="r-word">value</span> property (uses the main thread).</li>
+    <li>Using its <span class="r-word">postValue</span> method (uses a background thread).</li>
+  </ul>
+</p>
+
+<p>The <span class="r-word">postValue</span> method should always be used when working from a coroutine, and the context <span class="negrita">Dispatchers.IO</span> should also be specified.</p>
+
+
+
+
+<p class="sub-section">ViewModel and LiveData</p>
+
+<p>From now on:
+  <ul>
+    <li>If a component needs a state and that state is not needed anywhere else in the application, 
+      the component will contain the state (stateful).</li>
+    <li>If a component needs a state and this state is needed in other parts of the application,
+      the component will not contain the state (stateless) and will subscribe to a LiveData provided by the ViewModel.</li>
+  </ul>
+</p>
+
+ </section><!-- End section Android Architectures-->
+
+
+<!--*********************************************************Practical Case***********************************************************-->
+<section class="apartado">
+  <a name="sCasopractico"></a>
+  <h2>Practical Case</h2>
+  <p>We will follow step by step how to create an application using <span class="negrita">ViewModel</span>, in this case, the application will be a 
+     <span class="cursiva">Book List</span>. The first thing we will do is create the project in the selected folder with the default Compose template.</p>
+
+   <h3>Add dependencies</h3>
+
+   <p>After creating the project, it's necessary to add the required dependencies. For this example, the dependencies for navigation, serialization, extended icons, and livedata will be added:</p>
+
+<p>
+  <ul>
+    <li><span class="inline-file">libs.versions.toml</span>
+      <ul>
+        <li><span class="negrita">[version] section</span>:
+          <section><pre><code class="language-kotlin">navigation = "2.8.5"
+serialization = "1.6.3"
+runtimeLivedata = "1.7.6"
+</code></pre>
+          </section>
+        </li>
+        <li><span class="negrita">[libraries] section</span>:
+          <section><pre><code class="language-kotlin">androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+androidx-material-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
+androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
+</code></pre>
+          </section>
+        </li>
+        <li><span class="negrita">[plugins] section</span>:
+          <section><pre><code class="language-kotlin">kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }</code></pre>
+          </section>
+        </li> 
+      </ul>
+    </li>
+    <li><span class="inline-file">build.gradle.kts (Module: app) </span> 
+      <ul>
+        <li><span class="cursiva">plugins</span> section:
+          <section><pre><code class="language-kotlin">alias(libs.plugins.kotlin.serialization)</code></pre>
+          </section>
+        </li>
+        <li><span class="cursiva">dependencies</span> section:
+          <section><pre><code class="language-kotlin">implementation(libs.androidx.navigation)
+implementation(libs.kotlinx.serialization.json)
+implementation(libs.androidx.material.icons)
+implementation(libs.androidx.runtime.livedata)
+</code></pre>
+          </section>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</p>
+
+<section class="marco-t inf">
+  <span class="icono info"> </span> Remember to click <span class="negrita">Sync Now</span> after making these changes.
+  </section>
+<section class="marco-b">
+    
+</section>
+  
+
+     
+   <h3>Data Model</h3>
+   <p>To store the data, create the file <span class="inline-file">Book.kt</span> in a package called <span class="inline-folder">model</span>, 
+      which will contain a <span class="r-word">data class</span> defining the <span class="d-word">Book</span> object and a static method to retrieve all books.</p>
+   
+   <section><pre><code class="language-kotlin">data class Book(
+       val title: String = "",
+       val author: String = "",
+       var favorite: Boolean = false,
+       var visible: Boolean = true,
+   ) {
+       companion object{
+           fun getData() : List<Book> {
+               return listOf(
+                   Book("Ready Player One", "Ernest Cline"),
+                   Book("Ender's Game", "Orson Scott Card"),
+                   Book("The Lord of the Rings", "J. R. R. Tolkien"),
+                   Book("The Neverending Story", "Michael Ende"),
+                   Book("Game of Thrones", "George R. R. Martin"),
+                   Book("The Color of Magic", "Terry Pratchett"),
+                   Book("Blood of Elves", "Andrzej Sapkowski"),
+                   Book("Dune", "Frank Herbert"),
+                   Book("A Deadly Education: First Lesson of Scholomance", "Naomi Novik"),
+                   Book("The Name of the Wind", "Patrick Rothfuss"),
+                   Book("Harry Potter and the Philosopher's Stone", "J. K. Rowling"),
+                   Book("The Fifth Wave", "Rick Yancey"),
+                   Book("The Chronicles of Narnia", "C. S. Lewis"),
+               )
+           }
+       }
+   }</code></pre></section><br>
+   
+   <h3>View Model</h3>
+   <p>In a package called <span class="inline-folder">viewmodel</span>, create the file <span class="inline-file">BookViewModel.kt</span>, 
+      which will contain a <span class="r-word">class</span> for the <span class="negrita">ViewModel</span> with all the necessary <span class="negrita">LiveData</span> 
+      (states) and the <span class="negrita">methods to modify those LiveData</span>.</p>
+
+   <section><pre><code class="language-kotlin">class BookViewModel : ViewModel() {
+     // LiveData (states) should only be able to change from the ViewModel, so they are declared private.
+     // To access the values of the states from outside the ViewModel, a non-mutable variable is created
+     //  that will store the same value as the private variable
+
+     // List of books
+     private val _books = MutableLiveData&lt;List&lt;Book>>()
+     val books: LiveData&lt;List&lt;Book>> = _books
+
+     // Selected book
+     private val _selectedBook = MutableLiveData&lt;Book>()
+     val selectedBook: LiveData&lt;Book> = _selectedBook
+
+     // Variable to indicate that data is being fetched from the repository
+     private var _isLoading = MutableLiveData&lt;Boolean>()
+     val isLoading: LiveData&lt;Boolean> = _isLoading
+
+     // When a BookViewModel object is instantiated, the init block is executed
+     init {
+         // Coroutine: coroutineScope
+         viewModelScope.launch {
+             _isLoading.value = true
+             delay(2000)
+             _books.value = Book.getData()
+             _isLoading.value = false
+         }
+     }
+
+     fun deleteBook(book: Book) {
+         // With API or DB, you would send the id and delete it.
+         //  Then you would get the updated list and update the LiveData
+
+         // In this case, the book is removed from the list, and the LiveData is updated
+         _books.value = _books.value?.filter { it != book }
+     }
+
+     // When a book is clicked, it is stored as selected.
+     fun onBookClicked(book: Book) {
+           _selectedBook.value = book
+       }
+   }</code></pre></section><br>
+   
+   <h3>Navigation and Routes</h3>
+
+   <p>In a package called <span class="inline-folder">navigation</span>, create the files <span class="inline-file">Routes.kt</span> 
+      and <span class="inline-file">Navigation.kt</span>, where the application's navigation will be defined.</p>
+      
+   <section class="marco-t file-">
+     <span class="icono file"> </span> <span class="negrita">Routes.kt</span>
+   </section>
+   <section class="marco-b">
+       <section><pre><code class="language-kotlin">sealed class Routes(val route: String) {
+   object MainScreen: Routes("main_screen")
+   object BookInfo: Routes("book_info_screen")
+   }</code></pre>
+       </section>
+   </section>
+   <section class="marco-t file-">
+     <span class="icono file"> </span> <span class="negrita">Navigation.kt</span>
+   </section>
+   <section class="marco-b">
+       <section><pre><code class="language-kotlin">@Composable
+   fun Navigation(bookViewModel: BookViewModel) {
+     val navController = rememberNavController()
+     NavHost(
+         navController = navController,
+         startDestination = Routes.MainScreen.route,
+     ) {
+         composable(Routes.MainScreen.route) {
+             MainScreen(navController, bookViewModel)
+         }
+
+         composable(Routes.BookInfo.route) {
+             BookInfo(navController, bookViewModel)
+         }
+     }
+   }</code></pre>
+       </section>
+   </section>
+      
+   </p>
+    
+   <h3>MainActivity</h3>
+   <p>In the file <span class="inline-file">MainActivity.kt</span>, create a <span class="d-word">BookViewModel</span> 
+      that is passed to the <span class="d-word">Navigation</span> component, which will be the content of the <span class="cursiva">Activity</span>.</p>
+  
+   <section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
+       override fun onCreate(savedInstanceState: Bundle?) {
+           super.onCreate(savedInstanceState)
+
+           // If the ViewModel is needed in a variable, it cannot be declared inside a @Composable component
+           val bookViewModel by viewModels&lt;BookViewModel>()
+
+           setContent {
+               BooksViewModelTheme {
+                   // A surface container using the 'background' color from the theme
+                   Surface(
+                       modifier = Modifier.fillMaxSize(),
+                       color = MaterialTheme.colorScheme.background
+                   ) {
+                       Navigation(bookViewModel)
+                       // If the ViewModel is needed in only one place, it can be declared when calling the component
+                       //Navigation(BookViewModel())
+                   }
+               }
+           }
+       }
+   }</code></pre></section><br>
+
+   <h3>Main Screen</h3>
+   <p>In a package called <span class="inline-folder">screens</span>, create the file <span class="inline-file">MainScreen.kt</span> 
+      for the main screen interface that will display the list of books.</p>
+
+   <section class="marco-t file-">
+     <span class="icono file"> </span> <span class="negrita">MainScreen.kt</span>
+   </section>
+   <section class="marco-b">
+     <figure><img src="UD9/images/ud9-2023-12-04-12-53-50.png" /><br><figcaption>MainScreen</figcaption></figure>
+   </section>
+
+   <h3>Book Info Screen</h3>
+   <p>In a package called <span class="inline-folder">screens</span>, create the file <span class="inline-file">BookInfo.kt</span> 
+      to display detailed information about the book from the list that was clicked.</p>
+
+   <section class="marco-t file-">
+     <span class="icono file"> </span> <span class="negrita">BookInfo.kt</span>
+   </section>
+   <section class="marco-b">
+     <figure><img src="UD9/images/ud9-2023-12-04-12-56-45.png" /><br><figcaption>BookInfo</figcaption></figure>   
+   </section>
+    
+
+   <h3>Problem with ViewModel and LiveData</h3>
+
+   <p>When <span class="negrita">LiveData</span> stores a list of objects, even if the list is modified, the changes are not notified to the observers 
+      so no recomposition happens:</p>
+   <figure><img src="UD9/images/ud9-2023-12-04-12-59-09.png" /><br><figcaption></figcaption></figure>
+   <br>
+
+   <p>This happens because although the list has been modified, the instance is the same. To solve this, a new list must be created 
+      and copies of the elements in the list must be made, modified, and added to the new list.</p>
+
+   <figure><img src="UD9/images/ud9-2023-12-04-12-59-55.png" /><br><figcaption></figcaption></figure>
+   <br>
+   <section class="marco-t inf">
+     <span class="icono info"> </span> About LiveData
+   </section>
+   <section class="marco-b">
+       <p>If we are going to modify the value from another thread other than the main, we must do it with <span class="negrita">myLiveData.postValue(value)</span>
+          instead of <span class="negrita">myLiveData.value = value</span>. That is, if we are inside a coroutine and change the value of LiveData, we will use
+         postValue to notify correctly.</p>
+       <section><pre><code class="language-kotlin">_usernameLD.postValue("Another value")</code></pre>
+       </section><br><br>
+   </section>
+    
+   <section class="marco-t inf">
+     <span class="icono info"> </span> About ViewModel
+   </section>
+   <section class="marco-b">
+       <p>If there is a ViewModel that is shared by all Screens, you can create the ViewModel in MainActivity using "by"</p>
+       <section><pre><code class="language-kotlin">val workoutViewModel by viewModels<WorkoutViewModel>()</code></pre>
+       </section><br>
+       <p>Or in the Navigation component using "=remember":</p>
+       <section><pre><code class="language-kotlin">val workoutViewModel = remember {
+     WorkoutViewModel()
+   }</code></pre>
+       </section><br>
+     <p>If there is a ViewModel that is used only by some Screens (not all), create the ViewModel in Navigation using "=remember" and pass it to the Screens that need it</p>
+     <p>If there is a ViewModel that is only used in one Screen, create the ViewModel in that Screen using "=remember". (You can also use the <span class="negrita">viewModel()</span>
+       function)</p>
+       <section><pre><code class="language-kotlin">val workoutViewModel= viewModel(){
+         //If our ViewModel constructor has an input parameter.
+       WorkoutViewModel(3)
+   }</code></pre>
+       </section><br>
+       <p>Or simply</p>
+       <section><pre><code class="language-kotlin">//No initial input parameter
+   val workoutViewModel = viewModel(WorkoutViewModel::class.java)</code></pre>
+       </section><br><br>
+   </section>
+  
+
+ </section><!-- End section Practical Case-->
+
+
+<!--*********************************************************Activities***********************************************************-->
+<section class="apartado">
+  <a name="sActividades"></a>
+  <h2>Activities</h2>
+ 
+  <div class="tarea">
+   <p><span class="negrita">Activity 1</span></p>
+   <p>Replicate the book list example from the notes, but in the main window, add a photo of yourself (ID style) at the bottom and your full name.</p>
+   <p>Additionally, add the necessary functionality to mark/unmark an item as a favorite from the item information screen. The main screen should display whether the item is marked as a favorite.</p>
+   <p>It should look similar to this:</p>
+   <figure><img src="UD9/images/BookListDemo.gif" /><br><figcaption></figcaption></figure>
+   <br>
+
+   <p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2324/tree/master/UD6/BooksViewModel">Here</a> is a possible implementation. Note that a search element has been added.</p>
+     
+  </div>
+  <br>
+  <hr><br>
+  
+  <a class="tarea" id="P07" href="https://aules.edu.gva.es/fp/mod/assign/view.php?id=5408111" target="_blank" class="tarea">
+   <p><span class="negrita">Practice 4</span></p>
+
+   <p>Create a project in Android Studio called <span class="negrita">WorkoutYourName</span>.</p>
+
+   <p>The app will allow the user to enter their name and the number of repetitions to perform exercise sets. When the user presses the start button, a gif of the exercise will appear and the repetitions will decrease (every 2 seconds). Once it reaches zero, the gif will change to a new exercise, and the repetition count will restart.</p>
+
+   <p>The app will have two screens and routes/navigation should be used.</p>
+
+   <p><span class="negrita">Main Window</span>:
+   <ul>
+     <li>A motivational phrase.</li>
+     <li>A field for the user to enter their name.</li>
+     <li>A method by which the user can enter the number of repetitions for the exercises. Negative numbers should not be allowed. It doesn't make sense to perform only one repetition, so a minimum of 3 repetitions should be required to begin.</li>
+     <li>A button to navigate to the next window. This button should not be active unless the name field has a value.</li>
+     <li>A photo of yourself (ID style) at the bottom, along with your first and last name.</li>
+   </ul></p>
+
+   <p><span class="negrita">Exercise Window</span>:
+   <ul>
+     <li>The user's name should be displayed.</li>
+     <li>The number of repetitions.</li>
+     <li>An area where the gif of the exercise to be performed will appear.</li>
+     <li>A button to start the exercise.</li>
+     <li>A button to go back to the previous window (popBackStack).</li>
+   </ul></p>
+
+   <p>To make data available on both windows, a ViewModel should be used.</p>
+
+   <p><span class="negrita">ViewModel</span>:</p>
+   <p>The ViewModel should contain <span class="negrita">LiveData</span> to store the data and all the necessary methods for the app to function properly.</p>
+
+   <p>The required data in the ViewModel are: "username", "number of repetitions", "current exercise" (to notify which exercise should be performed), 
+      and "doing exercise" (to indicate that exercise is ongoing).</p>
+
+   <p>The methods needed in the <span class="negrita">ViewModel</span> are:
+     <ul>
+       <li>One to update the username</li>
+       <li>One to update the number of repetitions</li>
+       <li>One to stop the exercise</li>
+       <li>One to start the exercise</li>
+     </ul>
+   </p>
+
+   <p>Below is a possible algorithm for the method to start the exercise:
+     <ul>
+       <li>Create a list of drawables with all the exercise gifs.</li>
+       <li>Update "doing exercise" to indicate that the user is doing exercise.</li>
+       <li>Update "current exercise" with a random drawable from the previously created list.</li>
+       <li>Create a coroutine with a loop that repeats while "doing exercise" is true:</li>
+       <li>Wait for 2 seconds.</li>
+       <li>Subtract one from "number of repetitions".</li>
+       <li>If "number of repetitions" is zero, reset "number of repetitions" and update "current exercise" with a random drawable from the list.</li>
+     </ul>
+   </p>
+
+   <p>Additional <span class="negrita">LiveData</span> and methods can be created if necessary.</p>
+
+   <p>Submission Instructions:
+     <ul>
+       <li>To run the app if it's running.</li>
+       <li>Click the menu option: Build -> Clean Project.</li>
+       <li>Close Android Studio.</li>
+       <li>Compress the project folder into a .rar or .zip file. (Select the folder, not the files inside it).</li>
+       <li>Attach the compressed file to the task.</li>
+     </ul>
+   </p>
+
+   <p>To use a GIF, you can use the following @Composable by passing an integer (drawable reference):
+   <section><pre><code class="language-kotlin">@Composable
+   fun GifImage(gifImage: Int) {
+       val imageLoader = ImageLoader.Builder(LocalContext.current)
+           .components {
+               if (Build.VERSION.SDK_INT >= 28) {
+                   add(ImageDecoderDecoder.Factory())
+               } else {
+                   add(GifDecoder.Factory())
+               }
+           }
+           .build()
+
+       Image(
+           painter = rememberAsyncImagePainter(
+               ImageRequest.Builder(LocalContext.current)
+                   .data(data = gifImage)
+                   .apply(
+                       block = fun ImageRequest.Builder.() {
+                           size(Size.ORIGINAL)
+                       }
+                   )
+                   .build(),
+               imageLoader = imageLoader
+           ),
+           contentDescription = null,
+       )
+   }</code></pre>
+   </section><br><br>
+   </p>
+   <p>Remember to add the following dependencies:
+     <section><pre><code class="language-kotlin">implementation("io.coil-kt:coil-compose:2.5.0")
+   implementation("io.coil-kt:coil-gif:2.5.0")</code></pre>
+     </section><br><br>
+   </p>
+
+   <p>Here's an example of how the app might look:</p>
+   <figure><img src="UD9/images/WorkoutDemo.gif" /><br><figcaption></figcaption></figure>
+   <br>
+ </a>
+ 
+</section><!-- End section Activities-->
+
+
+ 
+  <!---BTM_MENU--->
+  <script src="../script/prism.js"></script>
+</body>
+
+</html>
