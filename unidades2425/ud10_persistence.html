@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>U10. Persistence</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../styles/prism.css">
+  <link rel="stylesheet" href="../styles/styles.css">
+  <script src="../script/script.js"></script>
+</head>
+
+<body class="line-numbers">
+  <div class="logos"></div>
+
+  <nav id="menu-lateral" class="main-menu-lateral oculto">
+    <div class="fila">
+      <a href="#sIntroduccion" title="1.- Introduction">1.- Introduction</a>
+      <a href="#sFileSystem" title="2.- File System">2.- File System</a>
+      <a href="#sAlamacenamientoEspecificodelaapp" title="3.- App-specific Storage">3.- App-specific Storage</a>
+    </div>
+    
+    <div class="fila">
+      <a href="#sAccesoalalmacenamientoexterno" title="4.- Access to external storage">4.- Access to external storage</a>
+      <a href="#sDataStore" title="5.- DataStore">5.- DataStore</a>
+      <a href="#sROOM" title="6.- Room">6.- Room</a>
+    </div>
+    
+    <div class="fila">
+      <a href="#sP05" title="7.- P05. Shopping List">7.- P05. Shopping List</a>
+    </div>
+</nav> <!-- BTM_MENU-->
+
+<h1>U10.- Persistence</h1>  
+
+<div class="main-menu">
+    <div class="fila">
+      <a href="#sIntroduccion" title="1.- Introduction">1.- Introduction</a>
+      <a href="#sFileSystem" title="2.- File System">2.- File System</a>
+      <a href="#sAlamacenamientoEspecificodelaapp" title="3.- App-specific Storage">3.- App-specific Storage</a>
+    </div>
+    
+    <div class="fila">
+      <a href="#sAccesoalalmacenamientoexterno" title="4.- Access to external storage">4.- Access to external storage</a>
+      <a href="#sDataStore" title="5.- DataStore">5.- DataStore</a>
+      <a href="#sROOM" title="6.- Room">6.- Room</a>
+    </div>
+    <div class="fila">
+      <a href="#sP05" title="7.- P05. Shopping List">7.- P05. Shopping List</a>
+      <a href="" class="relleno"></a><a href="" class="relleno"></a>
+    </div>
+</div>
+
+
+  
+ <!--*********************************************************Access to External Storage***********************************************************-->
+<section class="apartado">
+  <a name="sAccesoalalmacenamientoexterno"></a>
+  <h2>Access to External Storage</h2>
+  <p>If extra space is needed to store app-specific files, external storage can be used, provided it is available.</p>
+
+  <p>External storage can either be part of the internal memory or a connected external storage device, such as an SD card or even a USB drive connected via USB.</p>
+
+  <p>In cases where external storage is located on a connected storage device, this storage can become unavailable, for example, if an SD card is removed from the device.</p>
+
+  <p>Therefore, it is not advisable to create files in external storage that the app relies on for correct operation.</p>
+
+  <h3>Check Availability of External Storage</h3>
+  <p>It is important to verify that external storage is available before attempting to read or save information to it.</p>
+
+  <p>You can check the availability of external storage and its permissions using the <span class="r-word">Environment</span> class and its <span class="r-word">getExternalStorageState</span> method.</p>
+
+  <p>If the state is <span class="d-word">MEDIA_MOUNTED</span>, the app has <span class="negrita">read and write</span> permissions, while if the state is <span class="d-word">MEDIA_MOUNTED_READ_ONLY</span>, only <span class="negrita">read</span> permissions are available.</p>
+  <p>A good way to check this would be with the following functions:</p>
+
+  <section><pre><code class="language-kotlin">fun isExternalStorageWritable(): Boolean {
+    return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
+}
+
+fun isExternalStorageReadable(): Boolean {
+    return Environment.getExternalStorageState() in
+        setOf(Environment.MEDIA_MOUNTED, Environment.MEDIA_MOUNTED_READ_ONLY)
+}
+</code></pre></section><br><br>
+
+  <h3>Select an External Storage Location</h3>
+
+  <p>Since external storage may be located on either internal memory or a connected device, it is important to choose the location when storing data.</p>
+  <p>To access the locations, you should use the <span class="r-word">ContextCompat</span> class and its <span class="r-word">getExternalFilesDirs</span> method.</p>
+  <p>This will return an array containing all the available volumes.</p>
+  <p>In most cases, the first element of the array will be the primary external storage volume, and it should be used unless it is full or unavailable.</p>
+
+  <p>The following code shows how to obtain the path for the primary external storage volume.</p>
+
+  <section><pre><code class="language-kotlin">val externalStorageVolumes: Array<out File> =
+    ContextCompat.getExternalFilesDirs(applicationContext, null)
+
+val primaryExternalStorage = externalStorageVolumes[0]
+</code></pre></section><br><br>
+
+  <p>By checking the size of the <span class="negrita">externalStorageVolumes</span> array, you can determine if there are any additional volumes.</p>
+  
+  <p>The first element (index 0) is the internal storage.</p>
+
+  <p>The microSD card is usually the second element (index 1).</p>
+
+  <p>If other devices like USB drives are connected, they will appear next.</p>
+
+  <p>With index 1, you can access all external storage.</p>
+  <section><pre><code class="language-kotlin">val externalStorage = applicationContext.getExternalFilesDirs(null)[1]</code></pre></section><br><br>
+
+  <p>You can specify a particular directory within the external storage:</p>
+
+  <section><pre><code class="language-kotlin">val externalDownloads = applicationContext.getExternalFilesDirs(Environment.DIRECTORY_DOWNLOADS)</code></pre></section><br><br>
+  <a href="UD10/images/ud_10-2025-01-28-17-35-17.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-01-28-17-35-17.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+
+  <h3>Access External Storage Files</h3>
+  <p>To access files in external storage, you should use the <span class="negrita">getExternalFilesDir</span> method from a <span class="negrita">context</span> object.</p>
+
+  <p>To avoid affecting the app's performance, you should not open and close the same file many times.</p>
+
+  <section><pre><code class="language-kotlin">val fileName = "myFile"
+
+val appSpecificExternalDir = File(applicationContext.getExternalFilesDir(null), fileName)
+</code></pre></section><br><br>
+  <p>In Android 11 (API 30) and higher, creating subdirectories in external storage is not allowed.</p>
+
+  <h3>Create Files in External Storage Cache</h3>
+  <p>To create a file in the external storage cache, you use the <span class="r-word">externalCacheDir</span> property from a <span class="negrita">context</span> object:</p>
+
+  <section><pre><code class="language-kotlin">val cacheFileName = "myTempFile"
+
+val externalCacheFile = File(applicationContext.externalCacheDir, cacheFileName)
+</code></pre></section><br><br>
+  
+  <h3>Delete Files from External Storage Cache</h3>
+
+  <p>Use the <span class="r-word">delete</span> method on a <span class="negrita">File</span> object that represents the file to be deleted.</p>
+  <figure><img src="UD10/images/ud10-2023-12-17-23-16-13.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <h3>Multimedia Content</h3>
+
+  <p>If the app works with multimedia files that are not essential but add value to the user experience, it's best to store them in external storage:</p>
+  <section><pre><code class="language-kotlin">fun getAppSpecificAlbumStorageDir(context: Context, albumName: String): File? {
+    // Get the directory for images within the app-specific directory
+    // of external storage
+    val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), albumName)
+
+    // The following statement attempts to create the directory if
+    // it doesn't already exist
+    if (!file.mkdirs()) {
+        // Error creating the directory
+    }
+
+    return file
+}
+</code></pre></section><br><br>
+  <p>For proper app functionality, it's important to use the directory names provided by the API with the constants from the <span class="r-word">Environment</span> class:</p>
+  <figure><img src="UD10/images/ud10-2023-12-17-23-19-32.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p><a class="enlace" target="_blank" href="https://developer.android.com/reference/android/os/Environment#fields">https://developer.android.com/reference/android/os/Environment#fields</a></p>
+
+  <p>If none of the predefined names suit the app's needs, you can pass null to the <span class="r-word">getExternalFilesDir</span> method.</p>
+
+  <p>In this way, files will be stored directly in the root directory of the app's specific external storage.</p>
+
+  <h3>Check Free Space</h3>
+  <p>Some devices have very limited storage, so when developing an app, special care must be taken with the space it occupies.</p>
+
+  <p>A good practice before storing a file is to check if the file will fit within the available space.</p>
+
+  <p>However, it's not always necessary to check free space because sometimes it's unknown how much space the file will occupy. In these cases, you can attempt to store the file and catch the <span class="r-word">IOException</span> that will be thrown if the file cannot be saved.</p>
+
+  <p>To check free space, use the <span class="r-word">getAllocatableBytes</span> method.</p>
+
+  <p>This method may sometimes show more capacity than is actually available because the system may detect files in other apps' caches that could be cleared if necessary.</p>
+
+  <p>If there's enough space, the <span class="r-word">allocateBytes</span> method should be used. If this method isn't used, the app may ask the user to delete files or clear the device's cache.</p>
+
+  <p>The following code shows how to get the free space on the device:</p>
+
+  <section><pre><code class="language-kotlin">// 10 MB of storage needed
+val NUM_BYTES_NEEDED_FOR_MY_APP = 1024 * 1024 * 10L;
+
+val storageManager = applicationContext.getSystemService&lt;StorageManager&gt;()!!
+val appSpecificInternalDirUuid: UUID = storageManager.getUuidForPath(filesDir)
+val availableBytes: Long = storageManager.getAllocatableBytes(appSpecificInternalDirUuid)
+
+if (availableBytes >= NUM_BYTES_NEEDED_FOR_MY_APP) {
+    storageManager.allocateBytes(appSpecificInternalDirUuid, NUM_BYTES_NEEDED_FOR_MY_APP)
+} else {
+    val storageIntent = Intent().apply {
+        // To ask the user to delete all app cache, use
+        // ACTION_CLEAR_APP_CACHE
+        action = ACTION_MANAGE_STORAGE
+    }
+}
+</code></pre></section><br><br>
+</section><!-- End section Access to External Storage-->
+
+
+
+  <!--*********************************************************DataStore***********************************************************-->
+  <section class="apartado">
+  <a name="sDataStore"></a>
+  <h2>DataStore</h2>
+  
+  <p><span class="d-word">DataStore</span> permite almacenar en el dispositivo conjuntos de datos pequeños o simples.</p>
+
+
+<p>Los datos almacenados con <span class="negrita">DataStore</span> se guardan en el almacenamiento interno específico de la aplicación 
+  por lo que ninguna otra aplicación podrá acceder a ellos.</p>
+
+<p>DataStore tiene dos implementaciones:
+<ul>
+  <li><span class="negrita">Preferences DataStore</span>: almacenar pares clave-valor.</li>
+<li><span class="negrita">Proto DataStore</span>: almacenar objetos (instancias de clases).</li>
+</ul>
+</p>
+
+
+<p>Debido a la complejidad de desarrollo de <span class="negrita">Proto DataStore</span>, en clase solo se estudiará <span class="negrita">Preferences DataStore</span>.</p>
+
+<p>DataStore permite crear archivos para guardar información, generalmente preferencias.
+
+<p>La ventaja de <span class="negrita">DataStore</span> radica en que es el sistema operativo el que maneja toda la gestión de los archivos de preferencias.</p>
+
+<p><span class="negrita">Reglas para usar DataStore</span>:
+  <ul>
+    <li>Solo mantener una instancia de DataStore abierta sobre el mismo archivo.</li>
+<li>El tipo genérico de DataStore debe ser inmutable.</li>
+<li>No mezclar nunca SingleProcessDataStore y MultiProcessDataStore para el mismo archivo.</li>
+  </ul>
+</p>
+<h3>Preferences DataStore</h3>
+<p><span class="negrita">Preferences DataStore</span> permite almacenar pares clave-valor.</p>
+
+<p>Los datos que se pueden almacenar serán de tipos básicos:
+  <ul>
+    <li>Int</li>
+    <li>Double</li>
+    <li>String</li>
+    <li>Boolean</li>
+    <li>Float</li>
+    <li>Long</li>
+  </ul>
+</p>
+
+<p>Además se ofrece la posibilidad de almacenar un conjunto de cadenas:
+  <ul>
+    <li>Set&lt;String></li>
+  </ul>
+</p>
+
+<p>Lo más habitual es que las preferencias se guarden y recuperen desde el <span class="cursiva">ViewModel</span> para poder mantener las variables de estado de manera correcta.</p>
+
+<p>Así, para mantener una buena estructura de archivos en el proyecto se recomienda crear un paquete llamado <span class="inline-folder">preferences</span> 
+  donde se ubicará una la clase en la que se implementará toda la lógica de guardado y recuperación de los valores de las preferencias.</p>
+
+<p>Esta nueva clase se utilizará desde el <span class="cursiva">ViewModel</span> correspondiente.</p>
+
+<p><span class="negrita">Preferences DataStore</span> hace uso de corrutinas y de Flows (flujos de datos).</p>
+
+<p>Los <span class="negrita">Flow</span> permiten emitir varios valores de manera secuencial que se recogerán desde una corrutina, por ejemplo, 
+  se pueden usar para recibir actualizaciones en vivo desde una base de datos.</p>
+
+<p>Un <span class="negrita">Flow</span> es similar a un Iterator pero que usa funciones de suspensión para producir y consumir los valores.</p>
+
+<p>En Preferences DataStore se usa un Flow para recuperar los datos.</p>
+
+<p>Preferences DataStore también necesita el contexto de la aplicación para la correcta gestión de los archivos de preferencias.</p>
+
+<h3>Creación de Ejemplo</h3>
+<p>El primer paso para poder usar Preferences DataStore es añadir la dependencia en <span class="inline-file">build.gradle.kts (Module)</span> y sincronizar</p>
+<section><pre><code class="language-kotlin">implementation("androidx.datastore:datastore-preferences:1.0.0")</code></pre>
+</section><br>
+<p class="sub-section">Clase para guardar y recuperar preferencias</p>
+
+<section><pre><code class="language-kotlin">class AppPreferences(val context: Context) {
+    //Variables estáticas para representar las calves de los valores a guardar
+    companion object{
+        val NAME = stringPreferencesKey("NAME")
+    }
+
+    //Variable DataStore a la que se le pasa el nombre del archivo de preferencias "preferences"
+    //Al declararla con el delegado "by" la variable será un singleton: solo habrá una instancia
+    private val Context.dataStore: DataStore&lt;Preferences> by preferencesDataStore(name = "preferences")
+
+    //Función que recibe un String y lo almacena en el archivo de preferencias declarado en el DataStore
+    //El guardado se debe realizar en segundo plano por lo que necesitará una corrutina para ello
+    //se añade la palabra suspend para indicar que cuando se realice la llamada se use una corrutina
+    suspend fun saveFullName(name: String){
+        context.dataStore.edit {preferences ->
+            preferences[NAME] = name
+        }
+    }
+
+    //Función que recupera un String del archivo de preferencias declarado en el DataStore.
+    //Esta función devuelve un Flow
+    fun loadName()= context.dataStore.data.map { preferences ->
+        preferences[NAME] ?: ""
+    }
+}</code></pre>
+</section><br>
+
+<p class="sub-section">ViewModel que hace uso de la clase anterior</p>
+<section><pre><code class="language-kotlin">//Como se necessita el contexto el viewModel se extiende de AndroidViewModel para que el propio
+//Sistema operativa le pase el objeto Application del que se recuperará el contexto
+class PreferencesViewModel(application: Application):AndroidViewModel(application) {
+    //Declaración del objeto para guardar/almacenar preferencias
+    private val preferences = AppPreferences(application.applicationContext)
+
+    private val _fullName = MutableLiveData&lt;String>()
+    val fullname: LiveData&lt;String> = _fullName
+
+    fun onFullNameChange(fullName:String){
+        _fullName.value = fullName
+    }
+
+    //Método que llama a AppPreferences para almacenar la preferencia en el archivo de preferencias
+    fun saveFullName(name: String){
+        viewModelScope.launch {
+            preferences.saveFullName(name)
+            _fullName.postValue("")
+        }
+    }
+    
+    //Método que llama a Appreferences para recuperar la preferencia del archivo de preferencias
+    fun loadFullName(){
+        viewModelScope.launch { 
+            //Como loadName devuelve un Flow para recuparar sus datos se usa el método collect()
+            preferences.loadName().collect(){
+                _fullName.postValue(it)
+            }
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<p>En las diferentes pantallas de la aplicación si se necesita guardar o recuperar datos del archivo de preferencias se hará uso de los métodos del ViewModel:</p>
+
+
+
+<p>Si se quieren guardar datos de más complejidad como son objetos, en la clase que almacena las preferencias se debe deconstruir y construir ese objeto. <br>
+Clase para guardar/recuperar preferencias:</p>
+
+<p class="sub-section">Datos complejos</p>
+
+<p>Si se quieren guardar datos de más complejidad como son objetos, en la clase que almacena las preferencias se debe deconstruir y construir ese objeto.</p>
+<p>La clase a almacenar podría ser algo así:</p>
+<section><pre><code class="language-kotlin">data class User(
+    val username:String,
+    val email:String,
+    val id: Int
+) </code></pre>
+</section><br><br>
+<p>Clase para guardar/recuperar preferencias:	</p>
+<section><pre><code class="language-kotlin">class AppPreferences(val context: Context) {
+    //Variables estáticas para representar las calves de los valores a guardar
+    companion object{
+        val FULL_NAME = stringPreferencesKey("FULL_NAME")
+        val EMAIL = stringPreferencesKey("EMAIL")
+        val ID = intPreferencesKey("ID")
+    }
+
+    //Variable DataStore a la que se le pasa el nombre del archivo de preferencias "preferences"
+    //Al declararla con el delegado "by" la variable será un singleton: solo habrá una instancia
+    private val Context.dataStore: DataStore&lt;Preferences> by preferencesDataStore(name = "preferences")
+
+    //Función que recibe un String y lo almacena en el archivo de preferencias declarado en el DataStore
+    //El guardado se debe realizar en segundo plano por lo que necesitará una corrutina para ello
+    //se añade la palabra suspend para indicar que cuando se realice la llamada se use una corrutina
+    suspend fun saveUser(user: User){
+        context.dataStore.edit {preferences ->
+            preferences[FULL_NAME] = user.username
+            preferences[EMAIL] = user.email
+            preferences[ID] = user.id            
+        }
+    }
+
+    //Función que recupera un String del archivo de preferencias declarado en el DataStore.
+    //Esta función devuelve un Flow
+    fun loadUser()= context.dataStore.data.map { preferences ->
+        User(
+            username = preferences[FULL_NAME] ?: "",
+            email = preferences[EMAIL] ?: "",
+            id = preferences[ID] ?: 0
+        )
+    }
+}</code></pre>
+</section><br><br>
+
+<p>Y el ViewModel podría quedar de la siguiente manera:</p>
+<section><pre><code class="language-kotlin">//Como se necessita el contexto el viewModel se extiende de AndroidViewModel para que el propio
+//Sistema operativa le pase el objeto Application del que se recuperará el contexto
+class PreferencesViewModel(application: Application):AndroidViewModel(application) {
+    //Declaración del objeto para guardar/almacenar preferencias
+    private val preferences = AppPreferences(application.applicationContext)
+
+    private var _id = MutableLiveData&lt;Int>()
+    val id:LiveData&lt;Int> get() = _id
+
+    private val _username = MutableLiveData&lt;String>()
+    val username: LiveData&lt;String> = _username
+
+    private var _email = MutableLiveData&lt;String>()
+    val email:LiveData&lt;String> get() = _email
+    fun onUserNameChange(username:String){
+        _username.value = username
+    }
+
+    fun onEmailChange(email:String){
+        _email.value = email
+    }
+
+    //Método que llama a AppPreferences para almacenar la preferencia en el archivo de preferencias
+    fun saveUser(user: User){
+        viewModelScope.launch {
+            preferences.saveUser(user)
+            _username.postValue("")
+        }
+    }
+
+    //Método que llama a Appreferences para recuperar la preferencia del archivo de preferencias
+    fun loadFullName(){
+        viewModelScope.launch {
+            //Como loadName devuelve un Flow para recuparar sus datos se usa el método collect()
+            preferences.loadUser().collect(){
+                _username.postValue(it.username)
+                _email.postValue(it.email)
+                _id.postValue(it.id)
+            }
+        }
+    }
+}</code></pre>
+</section><br><br>
+  
+<div class="tarea">
+  <p>Crea una aplicación que tenga un <span class="cursiva">SplashScreen</span> y un <span class="cursiva">onboarding</span>
+     donde se piden datos del usuario, nombre, email, etc...</p>
+  
+  <p>Estos datos se guardarán en un DataStore, y la aplicación detectará si no hay datos mostrará el onboarding y si hubiera datos iría a la pantalla principal.
+    La aplicación no ha de ser funcional, es decir, la pantalla principal puede ser sólo un texto.
+  </p>
+
+</div>
+
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2324/tree/master/UD7/DataStoreOnboarding">Aquí</a> puedes ver un ejemplo</p>
+  </section><!-- End section DataStore-->
+  
+
+  <!--*********************************************************ROOM***********************************************************-->
+  <section class="apartado">
+  <a name="sROOM"></a>
+  <h2>ROOM</h2>
+  
+  <h3>Introducción</h3>
+
+  <p>Las apps que controlan grandes cantidades de datos estructurados pueden beneficiarse con la posibilidad de conservar esos datos localmente. 
+    El caso de uso más común consiste en almacenar en caché datos relevantes para que el dispositivo no pueda acceder a la red, 
+    de modo que el usuario pueda explorar ese contenido mientras está sin conexión.</p>
+  
+<p>La biblioteca de persistencias <span class="negrita">Room</span> brinda una capa de abstracción para <span class="negrita">SQLite</span>
+   que permite acceder a la base de datos sin problemas y, al mismo tiempo, aprovechar toda la tecnología de SQLite. 
+   En particular, Room brinda los siguientes beneficios:
+  <ul>
+    <li>Verificación del tiempo de compilación de las consultas en SQL</li>
+    <li>Anotaciones de conveniencia que minimizan el código estándar repetitivo y propenso a errores</li>
+    <li>Rutas de migración de bases de datos optimizadas</li>
+  </ul></p>
+  
+
+<p>Debido a estas consideraciones, se recomendamos que uses Room en lugar de usar las APIs de SQLite directamente.</p>
+<figure><img src="UD10/images/ud10-2023-12-20-10-03-17.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Puedes completar la información <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage/room?hl=es-419">aquí</a></p>
+
+
+<h3>Configuració de Room</h3>
+
+<p>Para usar Room en tu app, agrega las siguientes dependencias al archivo <span class="inline-file">build.gradle</span> de la app:</p>
+
+<p class="sub-section">Sección de plugins añadir ksp</p>
+<p>KSP (Kotlin Symbol Processing) se usa para desarrollar código a partir de anotaciones.</p>
+<section><pre><code class="language-kotlin">plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    //Añadir KSP
+    id("com.google.devtools.ksp") version "1.9.21-1.0.15"
+}</code></pre>
+</section><br><br>
+<p class="sub-section">Sección dependecies</p>
+<p>Una vez añadido KSP, añadimos las dependencias:</p>
+<section><pre><code class="language-kotlin">//Room
+implementation("androidx.room:room-runtime:2.6.1")
+ksp("androidx.room:room-compiler:2.6.1")
+implementation("androidx.room:room-ktx:2.6.1")</code></pre>
+</section><br><br>
+
+
+<h3>Componentes Principales</h3>
+
+<p>Estos son los tres componentes principales de Room:
+  <ul>
+    <li>La clase de la base de datos que contiene la base de datos y sirve como punto de acceso principal para la conexión subyacente a los datos persistentes de la app</li>
+    <li>Las entidades de datos que representan tablas de la base de datos de tu app</li>
+    <li>Los objetos de acceso a datos (DAOs) que proporcionan métodos que tu app puede usar para consultar, actualizar, insertar y borrar datos en la base de datos</li>
+  </ul>
+</p>
+
+<p>La clase de base de datos proporciona a tu app instancias de los DAOs asociados con esa base de datos. 
+  A su vez, la app puede usar los DAOs para recuperar datos de la base de datos como instancias de objetos de entidad de datos asociados. 
+  La app también puede usar las entidades de datos definidas para actualizar filas de las tablas correspondientes o crear filas nuevas para su inserción.
+  En la siguiente imagen, se muestran las relaciones entre los diferentes componentes de Room.</p>
+
+  <figure><img src="UD10/images/ud10-2023-12-20-10-39-31.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+
+<h3>Ejemplo de implementación</h3>
+
+<p>En esta sección vamos a crear una aplicación para guardar tareas, cada tarea tendrá un nombre, y podremos indicar si la tarea está hecha o no y eliminarla.</p>
+
+<p class="sub-section">Entidad de datos</p>
+
+<p>Crearemos la entidad <span class="d-word">TaskEntity</span> que será el objeto que hará referencia a la información que queremos almacenar.
+  Cada instancia de TaskEntity representar una fila. En este fichero, definiremos la tabla</p>
+
+  <section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">TaskEntity.kt</span>
+    </section>
+  <section class="marco-b">
+    <section><pre><code class="language-kotlin">@Entity(tableName = "tasks")
+data class TaskEntity(
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
+    @ColumnInfo(name ="name" ) var name: String,
+    @ColumnInfo(name ="isDone" ) var isDone: Boolean = false
+)</code></pre>
+      </section>
+  </section>
+  
+  <p>Donde:
+    <ul>
+      <li><span class="negrita">@Entity</span> indica que es una entidad de Room y le indicamos el nombre real que tendrá la tabla</li>
+      <li><span class="negrita">@PrimaryKey</span> indica que ese campo (id) actuará de clave primaria y además, en este caso se auntoincrementará</li>
+      <li><span class="negrita">@ColumInfo</span> podemos indicarle el nombre del campo de la tabla asociado al atributo de la clase. Si queremos que sea el mismo no sería necesario</li>
+    </ul> 
+
+  </p>
+    <p><a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage/room/defining-data?hl=es-419">Aquí</a> más sobre definir entidades</p>
+
+    <p class="sub-section">Objeto de Acceso a Datos (DAO)</p>
+    
+    <p>El siguiente código define un DAO llamado <span class="d-word">TaskDao.kt</span>. 
+      TaskDao proporciona los métodos que el resto de la app usa para interactuar con los datos de la tabla tasks.</p>
+    
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">TaskDao</span>
+  </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">@Dao
+interface TaskDAO : GeneralDAO {
+    @Query("SELECT * FROM tasks ORDER BY name")
+    override fun getAllTasks(): LiveData&lt;MutableList&lt;TaskEntity>>
+
+    @Query("SELECT count(*) FROM tasks WHERE name = :name")
+    override suspend fun taskExists(name: String): Int
+
+    @Query("SELECT * FROM tasks WHERE id LIKE :id")
+    override suspend fun getTaskById(id: Long): TaskEntity
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    override suspend fun addTask(taskEntity: TaskEntity): Long
+
+    @Update
+    override suspend fun updateTask(taskEntity: TaskEntity): Int
+
+    @Delete
+    override suspend fun deleteTask(taskEntity: TaskEntity): Int
+}</code></pre>
+    </section>
+</section>
+
+<p>Observa el decorador <span class="r-word">@Dao</span> que indica que es el DAO de Room</p>
+<p>Por otra parte presta atención a los demás decoradores para consultas, actualziaciones, inserciones y borrado. Los números que devuelven son las filas afectadas.
+  Podemos también, indicar la estrategia a seguir en caso de conflicto. Por ejemplo, en este caso, si añadimos algo que ya existe, lo reemplazaría.
+</p>
+<p>También presta atención cómo podemos parametrizar las consultas. <span class="cursiva">WHERE name = :name</span> donde :name es el nombre del parámetro de la función</p>
+<p>Finalmente en las queries podemos devolver, los valores que deseemos pero además podemos hacerlo mediante LiveDatas o Flows. En este caso, 
+  usaremos LiveData al cual nos subscriviremos, de manera que cada vez que haya una cambio en la consulta (es decir, se modifique la tabla), el LiveData nos lo emitirá,
+  y se podrá actualizar automáticamente sin tener que realizar de nuevo la consulta.
+</p>
+
+<p>Vemos que en este caso extiende de <span class="r-word">GeneralDAO</span> que es una interfaz general por si utilizamos otro DataSource (ficheros, APIs, etc)
+que tengan los mismos métodos, minimizando el cambio en el código.</p>
+<p>GeneralDAO tendría el siguiente código.</p>
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">GeneralDAO</span>
+  </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">interface GeneralDAO {
+    // Devuelve la lista de tareas dentro de un LiveData
+    fun getAllTasks(): LiveData&lt;MutableList&lt;TaskEntity>>
+
+    // Devuelve la cantidad de elementos que su name coincida con el argumento
+    suspend fun taskExists(name: String): Int
+
+    // Devuelve una tarea a partir de su id
+    suspend fun getTaskById(id: Long): TaskEntity
+
+    // Añade una tarea y devuelve su id
+    suspend fun addTask(taskEntity: TaskEntity): Long
+
+    // Actualiza la tarea y devuelve el nº de filas afectadas
+    suspend fun updateTask(taskEntity: TaskEntity): Int
+
+    // Borra la tarea y devuelve el nº de filas afectadas
+    suspend fun deleteTask(taskEntity: TaskEntity): Int
+}</code></pre>
+    </section>
+</section>
+
+<p class="sub-section">Base de datos</p>
+
+<p>Con el siguiente código, se define una clase <span class="d-word">TaskDatabase</span> para contener la base de datos. 
+  TaskDatabase define la configuración de la base de datos y sirve como el punto de acceso principal de la app a los datos persistentes. 
+  La clase de la base de datos debe cumplir con las siguientes condiciones:
+<ul>
+  <li>La clase debe tener una anotación <span class="r-word">@Database</span> que incluya un array entities que enumere todas las entidades de datos 
+    asociados con la base de datos.</li>
+  <li>Debe ser una <span class="negrita">clase abstracta</span> que <span class="negrita">extienda</span> <span class="r-word">RoomDatabase</span>.</li>
+  <li>Para cada clase DAO que se asoció con la base de datos, 
+    esta base de datos debe definir un método abstracto que tenga cero argumentos y muestre una instancia de la clase DAO.</li>
+</ul></p>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">TaskDatabase</span>
+  </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">@Database(entities = arrayOf(TaskEntity::class), version = 1)
+abstract class TasksDatabase : RoomDatabase() {
+    abstract fun taskDAO(): TaskDAO
+
+    companion object {  // Patrón Singleton
+        private var instance: TaskDAO? = null
+
+        fun getInstance(context: Context): TaskDAO {
+            // el método databaseBuilder devuelve una referencia a la base de datos
+            return instance ?: Room.databaseBuilder(context, TasksDatabase::class.java, "tasks-db")
+                .build().taskDAO().also { instance = it }
+        }
+    }
+}</code></pre>
+    </section>
+</section>
+
+<p>Para usar la base de datos usames el método de la clase estática de Room: <span class="cursiva">Room.databaseBuilder(context, TasksDatabase::class.java, "tasks-db")</span>
+  Fíjate que le pasamos el contexto.
+</p>
+
+<p>Luego podemos obtener el DAO usando el método abstracto <span class="d-word">taskDAO()</span> y con éste usar sus métodos.</p>
+
+<p>Si lo hicieramos por pasos separados haríamos algo así:</p>
+
+<section><pre><code class="language-kotlin">val db = Room.databaseBuilder(
+    applicationContext,
+    TasksDatabase::class.java, "tasks-db"
+).build()
+
+val taskDAO = db.taskDAO()
+
+val tasks = taskDAO.getAllTask()
+</code></pre>
+</section>
+
+<p>En nuestro caso hemos implementado el patrón Singleton de manera que haya una única instancia de la BD y además nos devuelve directamente el DAO. Para acceder haremos algo así:
+</p>
+
+<section><pre><code class="language-kotlin">val taskDAO = TasksDatabase.getInstance(context)
+val tasks = taskDAO.getAllTask()
+</code></pre>
+</section>
+
+
+<h3>Resto de la App</h3>
+
+<p>Como hemos comentado vamos a construir una App que sea un gestor de tareas, indicando si la tarea está realizada o no y además podamos eliminarla.
+  A continuación, mostraremos los archivos requeridos para la aplicación completa.
+</p>
+<p class="sub-section">ViewModel</p>
+
+<p>Primero creamos un ViewModel para gestionar la BDD y la UI</p>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">TaskViewModel</span>
+  </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">class TaskViewModel(application: Application) : AndroidViewModel(application) {
+
+    // Se crea una instancia del DAO
+    val taskDAO: TaskDAO = TasksDatabase.getInstance(application)
+
+    // Se crea un LiveData para la lista de tareas que observará al "SELECT *" del DAO
+    var taskList: LiveData&lt;MutableList&lt;TaskEntity>> = MutableLiveData()
+
+    // Función que inicializa la lista de tareas desde la BBDD
+    fun getAllTasks(){
+        viewModelScope.launch(Dispatchers.IO) {
+            taskList = taskDAO.getAllTasks()
+        }
+    }
+
+    // Función que añade una tarea a la base de datos
+    fun addTask(task: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (taskDAO.taskExists(task) == 0) {
+                taskDAO.addTask(TaskEntity(name = task))
+            }
+        }
+    }
+
+    // Función que elimina una tarea de la base de datos
+    fun deleteTask(task: TaskEntity){
+        viewModelScope.launch(Dispatchers.IO) {
+            taskDAO.deleteTask(task)
+        }
+    }
+
+    // Función que actualiza una tarea de la base de datos.
+    fun updateTask(task: TaskEntity, isDone: Boolean){
+        viewModelScope.launch(Dispatchers.IO) {
+            taskDAO.updateTask(task.copy(isDone = isDone))
+        }
+    }
+}</code></pre>
+    </section>
+</section>
+
+<p>Observamos que extiende de <span class="r-word">AndroidViewModel</span> porque necesitamos el contexto</p>
+
+<p class="sub-section">Navigation</p>
+
+<p>Creamos las rutas</p>
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">Routes</span>
+  </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">sealed class Routes(val route: String) {
+    object SplashScreen: Routes("splash_screen")
+    object MainScreen: Routes("main_screen")
+    object TaskInfo: Routes("task_info_screen")
+}</code></pre>
+    </section><br><br>
+</section>
+
+<p>Y el componente Navigation</p>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">Navigation</span>
+  </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">@Composable
+fun Navigation(taskViewModel: TaskViewModel) {
+    val navController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = Routes.SplashScreen.route,
+    ) {
+        composable(Routes.SplashScreen.route) {
+            SplashScreen(navController, taskViewModel)
+        }
+
+        composable(Routes.MainScreen.route) {
+            MainScreen(navController, taskViewModel)
+        }
+    }
+}</code></pre>
+    </section>
+</section>
+
+<p>Podemos observar que tendremos 2 pantallas, SplashScreen, MainScreen</p>
+
+<p class="sub-section">Creación de Screens</p>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">MainScreen</span>
+  </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">@Composable
+fun MainScreen(
+    navController: NavHostController,
+    taskViewModel: TaskViewModel
+) {
+    val taskList by taskViewModel.taskList.observeAsState(initial = emptyList())
+
+    val mainScreenViewModel = remember {
+        MainScreenViewModel()
+    }
+    val inputTaskName by mainScreenViewModel.taskName.observeAsState(initial = "")
+    val showDeleteIcon = remember {
+        derivedStateOf {
+            inputTaskName.isNotEmpty()
+        }
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        Text(
+            text = "Lista de tareas:",
+            fontSize = 26.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp)
+        )
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            TextField(
+                value = inputTaskName,
+                onValueChange = { mainScreenViewModel.onTaskNameChange(it) },
+                label = { Text(text = "Tarea a añadir") },
+                trailingIcon = {
+                    if(showDeleteIcon.value) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Eliminar tarea",
+                            modifier = Modifier.clickable { mainScreenViewModel.onTaskNameDelete() }
+                        )
+                    }
+                }
+            )
+            Button(
+                onClick = {
+                    taskViewModel.addTask(inputTaskName)
+                    mainScreenViewModel.onTaskNameDelete()
+                },
+                enabled = showDeleteIcon.value
+            ) {
+                Text(text = "Añadir")
+            }
+        }
+
+        Divider(
+            thickness = 2.dp,
+            color = MaterialTheme.colorScheme.onPrimary,
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .weight(7.7f)
+        ) {
+
+            LazyColumn(
+                Modifier.fillMaxSize()
+            ) {
+                items(taskList) { task ->
+                    TaskItem(
+                        task = task,
+                        onUpdate = {
+                            taskViewModel.updateTask(task, it)
+                        },
+                        onDelete = {
+                            taskViewModel.deleteTask(task)
+                        }
+                    )
+                }
+            }
+        }
+
+        AuthorInfo(modifier = Modifier.weight(1f))
+    }
+}
+
+@Composable
+fun TaskItem(
+    task: TaskEntity,
+    onUpdate: (Boolean) -> Unit,
+    onDelete: () -> Unit,
+) {
+    ListItem(
+        headlineContent = { Text(text = task.name)},
+        colors = ListItemDefaults.colors(
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+        ),
+        leadingContent = {
+            Checkbox(
+                checked = task.isDone,
+                onCheckedChange = {
+                    onUpdate(it)
+                }
+            )
+        },
+        trailingContent = {
+            IconButton(onClick = {
+                onDelete()
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Eliminar tarea",
+                )
+            }
+        },
+        modifier = Modifier.padding(4.dp)
+    )
+}</code></pre>
+    </section>
+</section>
+
+<p>Vemos que se le pasa el navController por si quisieramos ir a otra pantalla por ejemplo una de detalle. 
+  Y además recibe el TaskViewModel para poder llamar a los métodos del ViewModel y subscrivirse y observar los LiveData de éste.
+  Con este LiveData "pintaremos" en la <span class="cursiva">LazyColumn</span> tantos items como tenga la BDD
+</p>
+
+  <p>También vemos que tiene su propio ViewModel el <span class="cursiva">MainScreenViewModel</span> para algún estado propio que definiremos a continuación:</p>
+
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">MainScreenViewModel</span>
+  </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">class MainScreenViewModel() : ViewModel() {
+    private val _taskName = MutableLiveData&lt;String>()
+    val taskName: LiveData&lt;String> = _taskName
+
+    fun onTaskNameChange(taskName: String) {
+        _taskName.value = taskName
+    }
+
+    fun onTaskNameDelete() {
+        _taskName.value = ""
+    }
+}</code></pre>
+    </section><br><br>
+</section>
+
+<p>Por otra parte tenemos la SplashScreen</p>
+
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">SplashScreen</span>
+  </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">@Composable
+fun SplashScreen(navController: NavHostController, taskViewModel: TaskViewModel) {
+    Splash()
+
+    LaunchedEffect(key1 = true) {
+        delay(5000)
+        taskViewModel.getAllTasks()
+        navController.popBackStack() // Evitar volver a la Splash Screen
+        navController.navigate(Routes.MainScreen.route)
+    }
+}
+
+@Composable
+fun Splash() {
+    var animateAlpha by rememberSaveable { mutableStateOf(false) }
+    val alpha by animateFloatAsState(
+        targetValue = if(animateAlpha) 1f else 0f,
+        animationSpec = tween(
+            durationMillis = 3000
+        ),
+        label = "alpha animation"
+    )
+    var greetingVisible by rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(key1 = true) {
+        animateAlpha = true
+        delay(2000)
+        greetingVisible = true
+    }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            "Gestor de tareas",
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Image(
+            painter = painterResource(id= R.drawable.rick),
+            contentDescription = "Rick Sanchez",
+            modifier = Modifier
+                .size(200.dp, 200.dp)
+                .alpha(alpha)
+                .clip(CircleShape)
+                .border(
+                    width = 10.dp,
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = CircleShape
+                )
+        )
+        AnimatedVisibility(visible = greetingVisible) {
+            Text(
+                "By Rick Sanchez",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+    }
+}</code></pre>
+    </section>
+</section>
+
+<p>Vemos como tiene una serie de animaciones y lo más importante, activamos el LiveData de consulta de todas las tareas.</p>
+<figure><img src="UD10/images/ud10-2023-12-20-12-28-24.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p class="sub-section">MainActivity</p>
+
+<p>Por último tenemos el MainActivity</p>
+<section class="marco-t file-">
+  <span class="icono file"> </span> <span class="negrita">MainActivity</span>
+  </section>
+<section class="marco-b">
+    <section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val taskViewModel by viewModels&lt;TaskViewModel>()
+
+
+        setContent {
+            GestorTareasTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    Navigation(taskViewModel)
+                }
+            }
+        }
+    }
+}</code></pre>
+    </section>
+</section>
+
+<p>Creamos una instancia del ViewModel y se la pasamos al componente <span class="negrita">Navigation</span></p>
+
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2324/tree/master/UD7/GestorTareas">Aquí</a> podéis ver el ejemplo completo en github</p>
+
+
+  </section><!-- End section ROOM-->
+
+  <!--*********************************************************Shopping List***********************************************************-->
+  <section class="apartado">
+  <a name="sP05"></a>
+  <h2>P05 Shopping List</h2>
+  
+  <a class="tarea" target="_blank" href="https://aules.edu.gva.es/fp/mod/assign/view.php?id=5463526">
+    <p>La práctica consistirá en realizar una applicación de la lista de la compra. La aplicación tendrá los siguientes requisitos:
+      <ul>
+        <li><span class="negrita">SplashScreen:</span> Realiza una SplashScreen adecuada a la aplicación, en la SplashScreen, cargarás aquí los datos si los hubiera</li>
+        <li><span class="negrita">OnBoarding:</span> Crea una simple pantalla de Onboarding donde pidas el nombre al usuario, este nombre se guardará en un <span class="negrita">DataStore</span>. 
+          Si ya hubiera uno guardado, esta pantalla no debe aparecer y después del SplashScreen ir directamente al MainScreen.</li>
+        <li><span class="negrita">MainScreen:</span> Esta pantalla tendrá los siguientes componentes (Usa un Scaffold):
+        <ul>
+          <li><span class="negrita">FloatingActionButton</span>: Con el símbolo de + nos llevará a otra pantalla (<span class="negrita">AddScreen</span>) donde habrá un formulario para 
+          crear un nuevo producto.</li>
+          <li><span class="negrita">Lista Elementos</span>: Será una <span class="cursiva">LazyColumn</span> con un item por cada elemento guardado en la BDD. 
+            Mostrará la información de cada producto:
+          Nombre producto, cantidad, precio unitario (cuánto vale uno solo), precio total producto (precio unitario x cantidad). Ejemplo: Si tenemos leche, que vale 1€ y hemos apuntado 3uds, el total será 3€. Además, si hacemos clic sobre el producto iremos a la pantalla (<span class="negrita">EditScreen</span>, puede ser la misma que AddScreen
+           y que actualice o inserte según el caso). También tendrá un icono de papelera que borrará el producto.</li>
+           <li><span class="negrita">Saludo</span>: Encima de la lista deberá aparecer un mensaje de bienvenida al usuario logeado. Algo como "Bienvenido Carlos"</li>
+           <li><span class="negrita">Total lista:</span> En la parte inferior habrá un cuadro que nos mostrará el total de la lista, es decir, la suma de todos los
+          productos, por el precio unitario de cada producto multiplicado por la cantidad de ese producto. Este componente estará abajo y será siempre visible </li>
+          <li><span class="negrita">ModalNavigationDrawer:</span> Al desplegarlo tendrá una única opción que será <span class="negrita">Logout</span>. 
+            Al pulsarla, eliminaremos el usuario del DataStore, volveremos a la pantalla de OnBoarding y borraremos los datos de la BDD.</li>
+        </ul></li>
+        <li><span class="negrita">AddScreen / EditScreen</span>: Será un formulario en el que pondremos el nombre del producto, el precio unitario, y la cantidad que queremos de ese producto. 
+          (Estos son los campos de nuestra entidad junto con un ID). Tendrá también un botón para añadir o actualizar según el caso.
+        Puedes implementarlo con una única screen para las dos cosas o una screen para cada cosa (insert/update)</li>
+      </ul>
+    </p>
+
+    <p><span class="negrita">Extra</span>: Puedes hacer que al darle a logout no borre los datos de la BDD, simplemente con cada usuario nuevo creas una nueva BDD, y cada uno se conectará a la suya.</p>
+  </a>
+  
+  </section><!-- End section Shopping List-->
+ 
+  <!---BTM_MENU--->
+  <script src="../script/prism.js"></script>
+</body>
+
+</html>
