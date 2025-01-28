@@ -486,7 +486,8 @@ fun main() = runBlocking{
 <section class="apartado">
   <a name="sCasopractico"></a>
   <h2>Practical Case</h2>
-  <p>We will follow step by step how to create an application using <span class="negrita">ViewModel</span>, in this case, the application will be a 
+
+   <p>We will follow step by step how to create an application using <span class="negrita">ViewModel</span>, in this case, the application will be a 
      <span class="cursiva">Book List</span>. The first thing we will do is create the project in the selected folder with the default Compose template.</p>
 
    <h3>Add dependencies</h3>
@@ -551,31 +552,33 @@ implementation(libs.androidx.runtime.livedata)
       which will contain a <span class="r-word">data class</span> defining the <span class="d-word">Book</span> object and a static method to retrieve all books.</p>
    
    <section><pre><code class="language-kotlin">data class Book(
-       val title: String = "",
-       val author: String = "",
-       var favorite: Boolean = false,
-       var visible: Boolean = true,
-   ) {
-       companion object{
-           fun getData() : List<Book> {
-               return listOf(
-                   Book("Ready Player One", "Ernest Cline"),
-                   Book("Ender's Game", "Orson Scott Card"),
-                   Book("The Lord of the Rings", "J. R. R. Tolkien"),
-                   Book("The Neverending Story", "Michael Ende"),
-                   Book("Game of Thrones", "George R. R. Martin"),
-                   Book("The Color of Magic", "Terry Pratchett"),
-                   Book("Blood of Elves", "Andrzej Sapkowski"),
-                   Book("Dune", "Frank Herbert"),
-                   Book("A Deadly Education: First Lesson of Scholomance", "Naomi Novik"),
-                   Book("The Name of the Wind", "Patrick Rothfuss"),
-                   Book("Harry Potter and the Philosopher's Stone", "J. K. Rowling"),
-                   Book("The Fifth Wave", "Rick Yancey"),
-                   Book("The Chronicles of Narnia", "C. S. Lewis"),
-               )
-           }
-       }
-   }</code></pre></section><br>
+    val title: String = "",
+    val author: String = "",
+    var favorite: Boolean = false,
+    var visible: Boolean = true,
+) {
+    companion object{
+        fun getData() : List&lt;Book> {
+            return listOf(
+                Book("Ready Player One", "Ernest Cline"),
+                Book("El juego de Ender", "Orson Scott Card"),
+                Book("El señor de los anillos", "J. R. R. Tolkien"),
+                Book("La historia interminable", "Michael Ende"),
+                Book("Juego de tronos", "George R. R. Martin"),
+                Book("El color de la magia", "Terry Pratchett"),
+                Book("La sangre de los elfos", "Andrzej Sapkowski"),
+                Book("Dune", "Frank Herbert"),
+                Book("Una educación mortal: Primera lección de Escolomancia", "Naomi Novik"),
+                Book("El nombre del viento", "Patrick Rothfuss"),
+                Book("Harry Potter y la piedra filosofal", "J. K. Rowling"),
+                Book("La quinta ola", "Rick Yancey"),
+                Book("Las crónicas de Narnia", "C. S. Lewis"),
+            )
+        }
+    }
+}
+
+   </code></pre></section><br>
    
    <h3>View Model</h3>
    <p>In a package called <span class="inline-folder">viewmodel</span>, create the file <span class="inline-file">BookViewModel.kt</span>, 
@@ -583,46 +586,82 @@ implementation(libs.androidx.runtime.livedata)
       (states) and the <span class="negrita">methods to modify those LiveData</span>.</p>
 
    <section><pre><code class="language-kotlin">class BookViewModel : ViewModel() {
-     // LiveData (states) should only be able to change from the ViewModel, so they are declared private.
-     // To access the values of the states from outside the ViewModel, a non-mutable variable is created
-     //  that will store the same value as the private variable
+    // Los LiveData (estados) solo deben de poder cambiar desde el View Model, por ello se declaran private.
+    // Para acceder al valor de los estados desde el exterior del View Model se crea una variable no mutable
+    //  que almacenará el mismo valor que la variable privada
 
-     // List of books
-     private val _books = MutableLiveData&lt;List&lt;Book>>()
-     val books: LiveData&lt;List&lt;Book>> = _books
+    // Lista de libros
+    private val _books = MutableLiveData&lt;List&lt;Book&gt;&gt;()
+    val books: LiveData&lt;List&lt;Book&gt;&gt; = _books
 
-     // Selected book
-     private val _selectedBook = MutableLiveData&lt;Book>()
-     val selectedBook: LiveData&lt;Book> = _selectedBook
+    // Libro seleccionado
+    private val _selectedBook = MutableLiveData&lt;Book&gt;()
+    val selectedBook: LiveData&lt;Book&gt; = _selectedBook
 
-     // Variable to indicate that data is being fetched from the repository
-     private var _isLoading = MutableLiveData&lt;Boolean>()
-     val isLoading: LiveData&lt;Boolean> = _isLoading
+    // Variable para indicar que se están obteniendo los datos del repositorio
+    private var _isLoading = MutableLiveData&lt;Boolean&gt;()
+    val isLoading: LiveData&lt;Boolean&gt; = _isLoading
 
-     // When a BookViewModel object is instantiated, the init block is executed
-     init {
-         // Coroutine: coroutineScope
-         viewModelScope.launch {
-             _isLoading.value = true
-             delay(2000)
-             _books.value = Book.getData()
-             _isLoading.value = false
-         }
-     }
+    init {  // Cuando se instancia un objeto BookViewModel tras llamar al constructor se ejecuta el bloque init
+        loadBookList()
+    }
 
-     fun deleteBook(book: Book) {
-         // With API or DB, you would send the id and delete it.
-         //  Then you would get the updated list and update the LiveData
+    // Función para reutilizar este código en una futura mejora en la que se podrá recargar la lista de libros
+    fun loadBookList() {
+        // Corrutina: coroutineScope
+        viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.postValue(true)
+            delay(2000)
+            _books.postValue(Book.getData())
+            _isLoading.postValue(false)
+        }
+    }
 
-         // In this case, the book is removed from the list, and the LiveData is updated
-         _books.value = _books.value?.filter { it != book }
-     }
+    fun deleteBook(book: Book) {
+        // Con API o BBDD se mandaría el id y se borraría de la BBDD
+        // A continuación se actualiza la lista de libros eliminando el libro
+        _books.value = _books.value?.filter { it != book }
+    }
 
-     // When a book is clicked, it is stored as selected.
-     fun onBookClicked(book: Book) {
-           _selectedBook.value = book
-       }
-   }</code></pre></section><br>
+    // Al pulsar sobre un libro se almacena como seleccionado.
+    fun onBookClicked(book: Book) {
+        _selectedBook.value = book
+    }
+
+    // Para marcar/desmarcar el libro como favorito
+    fun markAsFavorite(book: Book) {
+        _books.value?.map {
+            if (it == book) it.favorite = !it.favorite
+        }
+    }
+
+    fun searchBook(searchString: String) {
+        val searchList = mutableListOf&lt;Book&gt;()
+        _books.value?.forEach {
+//            val book = it.copy()
+//            book.visible = book.title.contains(searchString, true)
+//            searchList.add(book)
+
+            // Estas líneas son similares a las comentadas
+            val book = it.copy(visible = it.title.contains(searchString, true))
+            searchList.add(book)
+        }
+        _books.value = searchList
+    }
+
+    fun resetSearchList() {
+        val searchList = mutableListOf&lt;Book&gt;()
+        _books.value?.forEach {
+//            book.visible = true
+//            searchList.add(book)
+
+            // Estas líneas son similares a las comentadas
+            val book = it.copy(visible = true)
+            searchList.add(book)
+        }
+        _books.value = searchList
+    }
+}</code></pre></section><br>
    
    <h3>Navigation and Routes</h3>
 
@@ -633,10 +672,15 @@ implementation(libs.androidx.runtime.livedata)
      <span class="icono file"> </span> <span class="negrita">Routes.kt</span>
    </section>
    <section class="marco-b">
-       <section><pre><code class="language-kotlin">sealed class Routes(val route: String) {
-   object MainScreen: Routes("main_screen")
-   object BookInfo: Routes("book_info_screen")
-   }</code></pre>
+       <section><pre><code class="language-kotlin">sealed class Routes {
+    // Ruta para la lista de libros
+    @Serializable
+    object Main
+
+    // Ruta para la información de un libro
+    @Serializable
+    object BookInfo
+}</code></pre>
        </section>
    </section>
    <section class="marco-t file-">
@@ -644,74 +688,407 @@ implementation(libs.androidx.runtime.livedata)
    </section>
    <section class="marco-b">
        <section><pre><code class="language-kotlin">@Composable
-   fun Navigation(bookViewModel: BookViewModel) {
-     val navController = rememberNavController()
-     NavHost(
-         navController = navController,
-         startDestination = Routes.MainScreen.route,
-     ) {
-         composable(Routes.MainScreen.route) {
-             MainScreen(navController, bookViewModel)
-         }
+fun Navigation() {
+    val navController = rememberNavController()
 
-         composable(Routes.BookInfo.route) {
-             BookInfo(navController, bookViewModel)
-         }
-     }
-   }</code></pre>
+    val bookViewModel = remember { BookViewModel() }
+
+    NavHost(
+        navController = navController,
+        startDestination = Routes.Main, // Ruta por la que comenzará la aplicación,
+        enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
+        exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+        popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
+        popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
+    ) {
+        composable&lt;Routes.Main&gt; {
+            MainScreen(
+                onBookClick = {
+                    navController.navigate(Routes.BookInfo)
+                },
+                bookViewModel = bookViewModel
+            )
+        }
+
+        composable&lt;Routes.BookInfo&gt; {
+            BookInfoScreen(
+                onBackArrowClick = {
+                    navController.popBackStack()
+                },
+                bookViewModel = bookViewModel
+            )
+        }
+    }
+}</code></pre>
        </section>
    </section>
       
    </p>
     
    <h3>MainActivity</h3>
-   <p>In the file <span class="inline-file">MainActivity.kt</span>, create a <span class="d-word">BookViewModel</span> 
-      that is passed to the <span class="d-word">Navigation</span> component, which will be the content of the <span class="cursiva">Activity</span>.</p>
+   <p>In the file <span class="inline-file">MainActivity.kt</span>, it call the <span class="d-word">Navigation</span> component, which will be the content of the <span class="cursiva">Activity</span>.</p>
   
    <section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
-       override fun onCreate(savedInstanceState: Bundle?) {
-           super.onCreate(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            BooksViewModelTheme {
+                Navigation()
+            }
+        }
+    }
+}</code></pre></section><br>
 
-           // If the ViewModel is needed in a variable, it cannot be declared inside a @Composable component
-           val bookViewModel by viewModels&lt;BookViewModel>()
+<h3>File structure for screens</h3>
+<a href="UD9/images/ud_9-2025-01-28-14-31-50.png"><figure><img src="UD9/images/ud_9-2025-01-28-14-31-50.png" /><br><figcaption></figcaption></figure></a>
+<br>
 
-           setContent {
-               BooksViewModelTheme {
-                   // A surface container using the 'background' color from the theme
-                   Surface(
-                       modifier = Modifier.fillMaxSize(),
-                       color = MaterialTheme.colorScheme.background
-                   ) {
-                       Navigation(bookViewModel)
-                       // If the ViewModel is needed in only one place, it can be declared when calling the component
-                       //Navigation(BookViewModel())
-                   }
-               }
-           }
-       }
-   }</code></pre></section><br>
+<h3><span class="inline-folder">Layout</span></h3>
 
-   <h3>Main Screen</h3>
-   <p>In a package called <span class="inline-folder">screens</span>, create the file <span class="inline-file">MainScreen.kt</span> 
+<a href="UD9/images/ud_9-2025-01-28-14-36-38.png"><figure><img src="UD9/images/ud_9-2025-01-28-14-36-38.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<p class="sub-section">AppScaffold</p>
+
+<section><pre><code class="language-kotlin">// Componente propio para tener un Scaffold unificado en toda la aplicación
+
+@Composable
+fun AppScaffold(
+    showBackArrow: Boolean = false,
+    onBlackArrowClick: () -> Unit = {},
+    content: @Composable () -> Unit
+) {
+    Scaffold(
+        topBar = {
+            AppTopBar(
+                showBackArrow = showBackArrow,
+                onClickBlackArrow = onBlackArrowClick,
+            )
+        },
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            Box(
+                modifier = Modifier.weight(9f).fillMaxWidth()
+            ) {
+                content()
+            }
+            HorizontalDivider(
+                modifier = Modifier.background(MaterialTheme.colorScheme.onPrimary).height(2.dp)
+            )
+            AuthorInfo(modifier = Modifier.padding(vertical = 4.dp).weight(1f))
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<p class="sub-section">AppTopBar</p>
+<section><pre><code class="language-kotlin">// Componente propio para la TopAppBar del Scaffold usado en la APP
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AppTopBar(
+    showBackArrow: Boolean = false,     // Sirve para indicar si se mostrará o no la flecha atrás
+    onClickBlackArrow: () -> Unit,
+) {
+    CenterAlignedTopAppBar(
+        title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(imageVector = Icons.Default.LocalLibrary, contentDescription = null)
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(
+                    text = "Lista de libros",
+                    fontSize = 30.sp
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Icon(imageVector = Icons.Default.LocalLibrary, contentDescription = null)
+
+            }
+        },
+        navigationIcon = {
+            if (showBackArrow) {
+                IconButton(
+//                    onClick = { onClickBlackArrow() }
+                    onClick = onClickBlackArrow
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Go back",
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+            }
+        },
+        colors = TopAppBarDefaults.largeTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary
+        )
+    )
+}</code></pre>
+</section><br><br>
+
+<p class="sub-section">AuthorInfo</p>
+<section><pre><code class="language-kotlin">// Componente propio para mostrar la información del autor
+
+@Composable
+fun AuthorInfo(modifier: Modifier = Modifier) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.primary)
+            .then(modifier),
+        horizontalArrangement = Arrangement.spacedBy(
+            20.dp,
+            Alignment.CenterHorizontally
+        ),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.rick),
+            contentDescription = "Foto de Rick",
+            modifier = Modifier
+                .clip(CircleShape)
+                .border(
+                    width = 3.dp,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    shape = CircleShape
+                )
+                .width(60.dp)
+        )
+        Text(
+            text = "Rick Sanchez",
+            fontSize = 35.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onPrimary
+        )
+    }
+}</code></pre>
+</section><br><br>
+
+   <h3><span class="inline-folder">MainScreen</span></h3>
+   <a href="UD9/images/ud_9-2025-01-28-14-37-58.png"><figure><img src="UD9/images/ud_9-2025-01-28-14-37-58.png" /><br><figcaption></figcaption></figure></a>
+   <br>
+   <p class="sub-section">MainScreen</p>
+   
+   <p>In a package called <span class="inline-folder">mainscreens</span>, create the file <span class="inline-file">MainScreen.kt</span> 
       for the main screen interface that will display the list of books.</p>
 
-   <section class="marco-t file-">
-     <span class="icono file"> </span> <span class="negrita">MainScreen.kt</span>
-   </section>
-   <section class="marco-b">
-     <figure><img src="UD9/images/ud9-2023-12-04-12-53-50.png" /><br><figcaption>MainScreen</figcaption></figure>
-   </section>
+      <section><pre><code class="language-kotlin">@Composable
+fun MainScreen(
+    onBookClick: (Book) -> Unit = {},
+    bookViewModel: BookViewModel
+) {
+    AppScaffold(showBackArrow = false) {
+        // Suscripción a la lista de libros del ViewModel
+        val books: List&lt;Book&gt; by bookViewModel.books.observeAsState(initial = emptyList())
+        // Suscripción a la variable que indica si se están consiguiendo la lista de libros
+        val isLoadingBooks: Boolean by bookViewModel.isLoading.observeAsState(initial = false)
 
-   <h3>Book Info Screen</h3>
-   <p>In a package called <span class="inline-folder">screens</span>, create the file <span class="inline-file">BookInfo.kt</span> 
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.primary)
+        ) {
+            HorizontalDivider(
+                thickness = 2.dp,
+                color = MaterialTheme.colorScheme.onPrimary,
+            )
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.primary)
+                    .padding(vertical = 8.dp)
+                    .weight(7.7f)
+            ) {
+                items(books) { book ->
+                    if (book.visible) {
+                        BookCard(
+                            book = book,
+                            onBookClick = {
+                                // Al clicar sobre el libro se actualiza en el ViewModel el libro seleccionado
+                                bookViewModel.onBookClicked(book)
+                                // Se ejecuta el código recibido en la lamnda: navegar a la ventana de información
+                                onBookClick(it)
+                            },
+                            onBookDelete = {
+                                // Al clicar sobre el icono de papelera se elimina el libro de la lista del ViewModel
+                                bookViewModel.deleteBook(book)
+                            }
+                        )
+                    }
+                }
+            }
+
+            Row(
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth().weight(.3f)
+            ) {
+                Text(
+                    text = "Recarga la lista de libros",
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+                IconButton(onClick = {
+                    bookViewModel.loadBookList()
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Refresh,
+                        contentDescription = "Recargar",
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+            }
+
+            // Cuando la variable del ViewModel es true es que se está cargando la lista de libros
+            //  en ese caso se mostrará un texto y una línea de progreso indicando la carga
+            if (isLoadingBooks) {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.primary)
+                ) {
+                    Text(
+                        text = "Loading...",
+                        fontSize = 40.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+            }
+        }
+    }
+}</code></pre>
+      </section><br><br>
+   
+      <p class="sub-section">BookCard</p>
+<section><pre><code class="language-kotlin">@Composable
+fun BookCard(
+    book: Book,
+    onBookClick: (Book) -> Unit,
+    onBookDelete: (Book) -> Unit,
+) {
+    OutlinedCard(
+        modifier = Modifier
+            .padding(vertical = 4.dp, horizontal = 8.dp)
+            .clickable {
+                onBookClick(book)
+            }
+    ) {
+        ListItem(
+            headlineContent = { Text(text = book.title) },
+            supportingContent = { Text(text = book.author) },
+            leadingContent = {
+                if (book.favorite) {
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = "book",
+                        tint = Color(0xFFFB8C00)
+                    )
+                }
+            },
+            trailingContent = {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "book",
+                    modifier = Modifier.clickable {
+                        onBookDelete(book)
+                    }
+                )
+            }
+        )
+    }
+}</code></pre>
+</section><br><br>  
+
+   <h3><span class="inline-folder">BookInfoScreen</span></h3>
+   <p>In a package called <span class="inline-folder">screens</span>, create the file <span class="inline-file">BookInfoScreen.kt</span> 
       to display detailed information about the book from the list that was clicked.</p>
 
-   <section class="marco-t file-">
-     <span class="icono file"> </span> <span class="negrita">BookInfo.kt</span>
-   </section>
-   <section class="marco-b">
-     <figure><img src="UD9/images/ud9-2023-12-04-12-56-45.png" /><br><figcaption>BookInfo</figcaption></figure>   
-   </section>
+   <section><pre><code class="language-kotlin">@Composable
+fun BookInfoScreen(
+    onBackArrowClick: () -> Unit = {},
+    bookViewModel: BookViewModel
+) {
+    AppScaffold(
+        showBackArrow = true,
+        onBlackArrowClick = onBackArrowClick
+    ) {
+        // Suscripción al libro seleccionado del ViewModel
+        val book: Book by bookViewModel.selectedBook.observeAsState(Book())
+        var favorite by rememberSaveable { mutableStateOf(book.favorite) }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.primaryContainer)
+                .padding(8.dp)
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.MenuBook,
+                        contentDescription = "book"
+                    )
+                    if (favorite) {
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Icon(
+                            imageVector = Icons.Default.Star,
+                            contentDescription = "book",
+                            tint = Color(0xFFFB8C00)
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.width(20.dp))
+                Text(
+                    text = book.title,
+                    fontSize = 30.sp,
+                    lineHeight = 38.sp
+                )
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = book.author,
+                fontSize = 16.sp
+            )
+
+            TextButton(onClick = {
+//                bookViewModel.markAsFavorite(book)
+                favorite = !favorite
+            }) {
+                Text(text = if (favorite) "Quitar favorito" else "Marcar favorito")
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.tertiary)
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = "Aquí se mostrará la información detallada del libro.",
+                    color = MaterialTheme.colorScheme.onTertiary
+                )
+            }
+        }
+    }
+}</code></pre>
+   </section><br><br>
     
 
    <h3>Problem with ViewModel and LiveData</h3>
@@ -771,16 +1148,20 @@ implementation(libs.androidx.runtime.livedata)
 <section class="apartado">
   <a name="sActividades"></a>
   <h2>Activities</h2>
+  <div class="tarea">
+    <p>Replicate the practical case above.</p>
+    <p>You have <a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM225/tree/main/UD9/booksviewmodel">here</a>  the implementation</p>
+  </div>
  
   <div class="tarea">
-   <p><span class="negrita">Activity 1</span></p>
+   <p><span class="negrita">Activity 2</span></p>
    <p>Replicate the book list example from the notes, but in the main window, add a photo of yourself (ID style) at the bottom and your full name.</p>
    <p>Additionally, add the necessary functionality to mark/unmark an item as a favorite from the item information screen. The main screen should display whether the item is marked as a favorite.</p>
    <p>It should look similar to this:</p>
    <figure><img src="UD9/images/BookListDemo.gif" /><br><figcaption></figcaption></figure>
    <br>
 
-   <p><a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2324/tree/master/UD6/BooksViewModel">Here</a> is a possible implementation. Note that a search element has been added.</p>
+   <p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM225/tree/main/UD9/booksviewmodelfavorites">Here</a> is a possible implementation. Note that a search element has been added.</p>
      
   </div>
   <br>
