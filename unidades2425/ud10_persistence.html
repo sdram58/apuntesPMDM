@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>U10. Persistence</title>
+  <title>U10. Persistencia</title>
   <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
   <link rel="stylesheet" href="../styles/prism.css">
   <link rel="stylesheet" href="../styles/styles.css">
@@ -55,154 +55,415 @@
 
 
   
- <!--*********************************************************Access to External Storage***********************************************************-->
+<!--*********************************************************Introduction***********************************************************-->
 <section class="apartado">
-  <a name="sAccesoalalmacenamientoexterno"></a>
-  <h2>Access to External Storage</h2>
-  <p>If extra space is needed to store app-specific files, external storage can be used, provided it is available.</p>
-
-  <p>External storage can either be part of the internal memory or a connected external storage device, such as an SD card or even a USB drive connected via USB.</p>
-
-  <p>In cases where external storage is located on a connected storage device, this storage can become unavailable, for example, if an SD card is removed from the device.</p>
-
-  <p>Therefore, it is not advisable to create files in external storage that the app relies on for correct operation.</p>
-
-  <h3>Check Availability of External Storage</h3>
-  <p>It is important to verify that external storage is available before attempting to read or save information to it.</p>
-
-  <p>You can check the availability of external storage and its permissions using the <span class="r-word">Environment</span> class and its <span class="r-word">getExternalStorageState</span> method.</p>
-
-  <p>If the state is <span class="d-word">MEDIA_MOUNTED</span>, the app has <span class="negrita">read and write</span> permissions, while if the state is <span class="d-word">MEDIA_MOUNTED_READ_ONLY</span>, only <span class="negrita">read</span> permissions are available.</p>
-  <p>A good way to check this would be with the following functions:</p>
-
-  <section><pre><code class="language-kotlin">fun isExternalStorageWritable(): Boolean {
-    return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
-}
-
-fun isExternalStorageReadable(): Boolean {
-    return Environment.getExternalStorageState() in
-        setOf(Environment.MEDIA_MOUNTED, Environment.MEDIA_MOUNTED_READ_ONLY)
-}
-</code></pre></section><br><br>
-
-  <h3>Select an External Storage Location</h3>
-
-  <p>Since external storage may be located on either internal memory or a connected device, it is important to choose the location when storing data.</p>
-  <p>To access the locations, you should use the <span class="r-word">ContextCompat</span> class and its <span class="r-word">getExternalFilesDirs</span> method.</p>
-  <p>This will return an array containing all the available volumes.</p>
-  <p>In most cases, the first element of the array will be the primary external storage volume, and it should be used unless it is full or unavailable.</p>
-
-  <p>The following code shows how to obtain the path for the primary external storage volume.</p>
-
-  <section><pre><code class="language-kotlin">val externalStorageVolumes: Array<out File> =
-    ContextCompat.getExternalFilesDirs(applicationContext, null)
-
-val primaryExternalStorage = externalStorageVolumes[0]
-</code></pre></section><br><br>
-
-  <p>By checking the size of the <span class="negrita">externalStorageVolumes</span> array, you can determine if there are any additional volumes.</p>
+  <a name="sIntroduccion"></a>
+  <h2>Introduction</h2>
   
-  <p>The first element (index 0) is the internal storage.</p>
+<p>Data persistence is a very important issue in mobile applications.</p>
+<p>The first reason is well known to everyone and happens when the device's orientation/configuration changes. This has been solved with the use of states and <span class="cursiva">ViewModel</span>.</p>
+<p>However, there are other situations where it is interesting to be able to store data for later use.</p>
+<p>In this unit, the following tools for implementing data persistence will be studied:
+  <ul>
+    <li><span class="negrita">File System</span>.</li>
+    <li><span class="negrita">Datastore</span>.</li>
+    <li><span class="negrita">Room</span>.</li>
+  </ul>
+</p>
+ 
+</section><!-- End section Introduction-->
 
+
+<!--*********************************************************File System***********************************************************-->
+<section class="apartado">
+  <a name="sFileSystem"></a>
+  <h2>File System</h2>
+  
+  <p>As with any operating system, Android uses a file system.</p>
+  
+<p>This file system allows several options for storing application data:
+  <ul>
+    <li>App-specific storage (<span class="cursiva">App-specific storage</span>).</li>
+    <li>Shared storage (<span class="cursiva">Shared storage</span>).</li>
+    <li>Preferences.</li>
+    <li>Databases.</li>
+  </ul>
+</p>
+
+<h3>App-specific storage</h3>
+<p>Stores files intended for use only by the application itself.</p>
+<p>You can create dedicated folders in both internal and external storage.</p>
+<p>Internal storage should be used for confidential information (other apps will not have access to it).</p>
+
+<h3>Shared storage</h3>
+  <p>Stores files that the application can share with other apps, such as documents, media (audio, video…), or other files.</p>
+  
+
+  <h3>Preferences</h3>
+  <p>Private storage for the application. Allows key-value pairs.</p>
+
+  <h3>Databases</h3>
+
+  <p>Stores structured data privately using the Room library (a framework that uses SQLite).</p>
+  
+
+  <p>You can consult the following summary table in the <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage?hl=es-419">official documentation</a>:</p>
+  
+  <figure><img src="UD10/images/ud10-2023-12-17-20-11-08.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <figure><img src="UD10/images/ud10-2023-12-17-20-13-05.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <h3>Which option to choose?</h3>
+<p>When choosing a storage type, several variables come into play:
+  <ul>
+    <li><span class="negrita">Size of the data to be stored</span>: internal storage has limited space.</li>
+    <li><span class="negrita">Ensuring access to the data</span>: internal storage or a database is better, as external storage is not always accessible.</li>
+    <li><span class="negrita">Type of data</span>: if the files should not be shared, app-specific storage should be used.</li>
+    <li><span class="negrita">Data privacy</span>: if working with sensitive data, it should be stored in preferences, a database, or internal storage. The latter also hides the data from users.</li>
+  </ul>
+</p>
+
+</section><!-- End section File System-->
+
+
+  <!--*********************************************************App-Specific Storage***********************************************************-->
+  <section class="apartado">
+    <a name="sAlamacenamientoEspecificodelaapp"></a>
+    <h2>App-Specific Storage</h2>
+    
+    <p>Android offers the following locations for exclusive use by the application.</p>  
+  
+  <p>Directories in <span class="negrita">internal storage</span>:
+    <ul>
+      <li>Android prevents other applications from accessing these locations.</li>
+      <li>Starting with Android 10 (API 29) and higher, these locations are encrypted.</li>
+      <li>They are a good place to store sensitive data.</li>
+      <li>They typically have limited capacity.</li>
+    </ul>
+  </p>
+  
+  <p>Directories in <span class="negrita">external storage</span>:
+  <ul>
+    <li>These locations are intended for exclusive use by the application, although other applications with the proper permissions may access them.</li>
+    <li>If files are to be created that are intended to be shared with other applications, they should be created in the shared space of external storage.</li>
+  </ul></p>
+  
+  <p>Both options include a directory for storing <span class="negrita">persistent files</span> and another for <span class="negrita">cache</span>.</p>
+  
+  <h3>Access to files in internal storage</h3>
+  <p>Common and persistent files are located in a directory that can be accessed using the <span class="r-word">filesDir</span> property of a <span class="negrita">context</span> object (as shown earlier, the context can be obtained in various ways).</p>
+  
+  <p>Using the <span class="r-word">File</span> API (similar to Java), you can access and store files.</p>
+  
+  <p>To avoid affecting the app's performance, the same file should not be opened and closed multiple times.</p>
+  
+  <p>Here’s how to open a file using the API:</p>
+  
+  <section><pre><code class="language-kotlin">val file = File(applicationContext.filesDir, "file_name")</code></pre>
+  </section><br><br>
+  
+  <p class="sub-section">Storing a file using a Stream</p>
+  <p>As an alternative to the File API, you can use the <span class="r-word">openFileOutput()</span> method to get a <span class="r-word">FileOutputStream</span> object, which allows writing to a file inside the <span class="r-word">filesDir</span> directory.</p>
+  <section><pre><code class="language-kotlin">val myFile = "myFile"
+  val content = "My first Android file!"
+  
+  applicationContext.openFileOutput(myFile, Context.MODE_PRIVATE).use {
+      it.write(content.toByteArray())
+  }
+  </code></pre>
+  </section><br><br>
+  
+  <p>From Android Studio, you can view the created files using the <span class="negrita">Device File Explorer</span>:
+    <ul>
+      <li><span class="negrita">data -> data -> package_name -> files</span></li>
+    </ul>
+  </p>
+  <figure><img src="UD10/images/ud10-2023-12-17-20-41-46.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <figure><img src="UD10/images/ud10-2023-12-17-20-42-26.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p>In Android 7 (API 24) or higher, if you don’t specify <span class="negrita">Context.MODE_PRIVATE</span>, a security exception will be thrown</p>
+  
+  <figure><img src="UD10/images/ud10-2023-12-17-20-43-21.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p>If you want to allow other applications to access internal storage files, you need to use a 
+  <a class="enlace" target="_blank" href="https://developer.android.com/reference/androidx/core/content/FileProvider">FileProvider</a> 
+  with the <span class="negrita">FLAG_GRANT_READ_URI_PERMISSION</span> attribute.</p>
+  
+  <p>To read the content of a file, use the <span class="r-word">openFileOutput()</span> method 
+    to get a <span class="r-word">BufferedReader</span> object that returns a sequence of strings (one for each line of the file):</p>
+  
+  <section><pre><code class="language-kotlin">// Access file using Stream
+  applicationContext.openFileInput(myFile).bufferedReader().useLines { fileContent ->
+      var text = ""
+      content.forEach { 
+          text += it
+      }
+      Text(text = text)
+  }
+  </code></pre>
+  </section><br><br>
+    
+  <p class="sub-section">Visualize file list</p>
+  
+  <p>You can get an array of file names in the <span class="r-word">filesDir</span> directory using the <span class="r-word">fileList()</span> method:</p>
+  
+  <section><pre><code class="language-kotlin">val files: Array<String> = applicationContext.fileList()
+  
+  Column() {
+      files.forEach { 
+          Text(text = it)
+      }
+  }
+  </code></pre>
+  </section><br><br>
+  
+  <p class="sub-section">Subdirectories</p>
+  
+  <p>If necessary, you can create subdirectories using the <span class="r-word">getDir()</span> method.</p>
+  
+  <p>This method also allows you to access the created subdirectories.</p>
+  <section><pre><code class="language-kotlin">applicationContext.getDir("subdirectory", Context.MODE_PRIVATE)</code></pre>
+  </section><br><br>
+  
+  <p>This method has a small drawback: it creates the directory with the <span class="negrita">app_</span> prefix 
+     and outside the <span class="negrita">files</span> directory:</p>
+  
+  <figure><img src="UD10/images/ud10-2023-12-17-20-50-18.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p>To create subdirectories within <span class="negrita">files</span>, you can use the methods of the <span class="r-word">File</span> class as in <span class="d-word">Java</span>.</p>
+  <section><pre><code class="language-kotlin">val appDir: File = applicationContext.filesDir
+  val subDir = File(appDir, "subDirectory")
+  if (!subDir.exists()) subDir.mkdir()
+  </code></pre>
+  </section><br><br>
+  <figure><img src="UD10/images/ud10-2023-12-17-21-33-45.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  
+  <h3>Cache</h3>
+  <p>If you need to temporarily store files with sensitive data, they should be stored in the <span class="inline-folder">cache</span> directory.</p>
+  
+  <p>To create a file in cache storage, use 
+    <span class="r-word">File.createTempFile()</span>, specify the prefix (name), 
+    the suffix (extension, by default .tmp), and a context object:</p>
+    <section><pre><code class="language-kotlin">File.createTempFile("temporaryFile", null, applicationContext.cacheDir)</code></pre>
+    </section><br><br>
+  <a href="UD10/images/ud_10-2025-01-28-17-15-04.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-01-28-17-15-04.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>To access files located in the cache directory, use the <span class="r-word">cacheDir</span> property on a context and the <span class="negrita">File</span> class:</p>
+  
+  <section><pre><code class="language-kotlin">val cacheFile = File(applicationContext.cacheDir, "fileName")</code></pre>
+  </section><br><br>
+  
+  <p>The <span class="inline-folder">cache</span> directory is managed by Android, 
+    if the app runs out of space, Android will delete files stored in that directory.</p>
+  
+  <p>You can delete files from the cache directory using one of the following methods.
+    <ul>
+      <li>If the file is located in the <span class="inline-folder">files</span> folder:
+  <section><pre><code class="language-kotlin">applicationContext.deleteFile("fileName")</code></pre>
+  </section><br><br>
+  
+      </li>
+      <li>Using a <span class="r-word">File</span> object depending on the file’s location:
+        <section><pre><code class="language-kotlin">val fileToDelete = File(applicationContext.filesDir, "fileName")
+  
+  fileToDelete.delete()
+  </code></pre>
+        </section>
+  
+        <section><pre><code class="language-kotlin">//In cache
+  val cacheFile = File(applicationContext.cacheDir, "fileName")
+  
+  cacheFile.delete()
+  </code></pre>
+        </section><br><br>
+  
+      </li>
+    </ul>
+  </p>
+  
+    
+    </section><!-- End section App-Specific Storage-->
+  
+
+  <!--*********************************************************Access to External Storage***********************************************************-->
+  <section class="apartado">
+    <a name="sAccesoalalmacenamientoexterno"></a>
+    <h2>Access to External Storage</h2>
+  <p>If additional space is needed to store application-specific files, external storage can be used, provided it is available.</p>
+  
+  <p>External storage can be a partition in the internal memory, but it can also be located on an external storage device such as an SD card or even a USB flash drive connected to the USB.</p>
+  
+  <p>In cases where external storage is located on a connected storage device, this storage may become unavailable, for example, if an SD card is removed from the device.</p>
+  
+  <p>Therefore, it is not advisable to create files in external storage that the proper functioning of the application depends on.</p>
+  
+  <h3>Checking the Availability of External Storage</h3>
+  <p>It is important to check that external storage is available before attempting to read or write data to it.</p>
+  
+  <p>Using the <span class="r-word">Environment</span> class and its <span class="r-word">getExternalStorageState</span> method, 
+     you can check the availability of external storage as well as the permissions on it.</p>
+  
+  <p>If the state is <span class="d-word">MEDIA_MOUNTED</span>, you will have <span class="negrita">read and write</span> permissions, 
+    if the state is <span class="d-word">MEDIA_MOUNTED_READ_ONLY</span>, you will only have <span class="negrita">read</span> permissions.</p>
+  <p>A good way to check this would be with the following functions:</p>
+  
+  <section><pre><code class="language-kotlin">fun isExternalStorageWritable(): Boolean {
+      return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
+  }
+  
+  fun isExternalStorageReadable(): Boolean {
+      return Environment.getExternalStorageState() in
+          setOf(Environment.MEDIA_MOUNTED, Environment.MEDIA_MOUNTED_READ_ONLY)
+  }
+  </code></pre>
+  </section><br><br>
+  <h3>Selecting a Location on External Storage</h3>
+  
+  <p>Since external storage can be either in internal memory or on a connected device, 
+    when storing information in external storage, you must choose the location.</p>
+  <p>To access the locations, use the <span class="r-word">ContextCompat</span> class and its <span class="r-word">getExternalFilesDirs</span> method.</p>
+  <p>This will return an array with all the available volumes.</p>
+  <p>Generally, the first element in the array will be the primary external storage volume, 
+    and this should be used unless it is full or unavailable.</p>
+  
+    <p>The following code would get the path to the primary external storage volume.</p>
+  
+  <section><pre><code class="language-kotlin">val externalStorageVolumes: Array<out File> =
+      ContextCompat.getExternalFilesDirs(applicationContext, null)
+  
+  val primaryExternalStorage = externalStorageVolumes[0]
+  </code></pre>
+  </section><br><br>
+  
+    <p>By checking the size of the <span class="negrita">externalStorageVolumes</span> array, you can determine if there are additional volumes.</p>
+    
+  <p>The first element (index 0) is internal storage.</p>
+  
   <p>The microSD card is usually the second element (index 1).</p>
-
-  <p>If other devices like USB drives are connected, they will appear next.</p>
-
+  
+  <p>If other devices like flash drives are connected, they will appear after that.</p>
+  
   <p>With index 1, you can access all external storage.</p>
-  <section><pre><code class="language-kotlin">val externalStorage = applicationContext.getExternalFilesDirs(null)[1]</code></pre></section><br><br>
-
-  <p>You can specify a particular directory within the external storage:</p>
-
-  <section><pre><code class="language-kotlin">val externalDownloads = applicationContext.getExternalFilesDirs(Environment.DIRECTORY_DOWNLOADS)</code></pre></section><br><br>
+  <section><pre><code class="language-kotlin">val externalStorage = applicationContext.getExternalFilesDirs(null)[1]</code></pre>
+  </section><br><br>
+  
+  <p>You can specify a particular directory within external storage:</p>
+  
+  <section><pre><code class="language-kotlin">val externalDownloads = applicationContext.getExternalFilesDirs(Environment.DIRECTORY_DOWNLOADS)</code></pre>
+  </section><br><br>
   <a href="UD10/images/ud_10-2025-01-28-17-35-17.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-01-28-17-35-17.png" /><br><figcaption></figcaption></figure></a>
   <br>
-
-  <h3>Access External Storage Files</h3>
-  <p>To access files in external storage, you should use the <span class="negrita">getExternalFilesDir</span> method from a <span class="negrita">context</span> object.</p>
-
-  <p>To avoid affecting the app's performance, you should not open and close the same file many times.</p>
-
-  <section><pre><code class="language-kotlin">val fileName = "myFile"
-
-val appSpecificExternalDir = File(applicationContext.getExternalFilesDir(null), fileName)
-</code></pre></section><br><br>
-  <p>In Android 11 (API 30) and higher, creating subdirectories in external storage is not allowed.</p>
-
-  <h3>Create Files in External Storage Cache</h3>
-  <p>To create a file in the external storage cache, you use the <span class="r-word">externalCacheDir</span> property from a <span class="negrita">context</span> object:</p>
-
-  <section><pre><code class="language-kotlin">val cacheFileName = "myTempFile"
-
-val externalCacheFile = File(applicationContext.externalCacheDir, cacheFileName)
-</code></pre></section><br><br>
   
-  <h3>Delete Files from External Storage Cache</h3>
-
-  <p>Use the <span class="r-word">delete</span> method on a <span class="negrita">File</span> object that represents the file to be deleted.</p>
+  <h3>Accessing Files in External Storage</h3>
+      <p>To access files in external storage, use the <span class="negrita">getExternalFilesDir</span> method 
+         of a <span class="negrita">context</span> object.</p>
+  
+    <p>To avoid affecting the application's performance, the same file should not be opened and closed multiple times.</p>
+  
+  <section><pre><code class="language-kotlin">val fileName = "myFile"
+  
+  val appSpecificExternalDir = File(applicationContext.getExternalFilesDir(null), fileName)
+  </code></pre>
+  </section><br><br>
+  <p>On Android 11 (API 30) and higher, creating subdirectories in external storage is not allowed.</p>
+  
+  <h3>Creating Files in External Storage Cache</h3>
+  
+  
+  <p>To create a file in the external storage cache, use the <span class="r-word">externalCacheDir</span> property of a <span class="negrita">context</span> object:</p>
+  
+     <section><pre><code class="language-kotlin">val cacheFileName = "myTemporaryFile"
+  
+  val externalCacheFile = File(applicationContext.externalCacheDir, cacheFileName)
+  </code></pre>
+     </section><br><br>
+     
+  <h3>Deleting Files from External Storage Cache</h3>
+  
+  <p>You should use the <span class="r-word">delete</span> method on a <span class="negrita">File</span> object representing the file to be deleted.</p>
   <figure><img src="UD10/images/ud10-2023-12-17-23-16-13.png" /><br><figcaption></figcaption></figure>
   <br>
-
+  
   <h3>Multimedia Content</h3>
-
-  <p>If the app works with multimedia files that are not essential but add value to the user experience, it's best to store them in external storage:</p>
+  
+  <p>If the app works with multimedia files that are not essential but add value to the user experience, 
+    it is best to store them in external storage:</p>
   <section><pre><code class="language-kotlin">fun getAppSpecificAlbumStorageDir(context: Context, albumName: String): File? {
-    // Get the directory for images within the app-specific directory
-    // of external storage
-    val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), albumName)
-
-    // The following statement attempts to create the directory if
-    // it doesn't already exist
-    if (!file.mkdirs()) {
-        // Error creating the directory
-    }
-
-    return file
-}
-</code></pre></section><br><br>
-  <p>For proper app functionality, it's important to use the directory names provided by the API with the constants from the <span class="r-word">Environment</span> class:</p>
+      // Get the directory for images within the application's specific
+      // external storage directory
+      val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), albumName)
+  
+      // The following instruction attempts to create the directory if it doesn't
+      // already exist
+      if (!file.mkdirs()) {
+          // Error creating the directory
+      }
+  
+      return file
+  }
+  </code></pre>
+  </section><br><br>
+  <p>For the proper functioning of the application, it is important to use the directory names provided by the API 
+    with the constants of the <span class="r-word">Environment</span> class:</p>
   <figure><img src="UD10/images/ud10-2023-12-17-23-19-32.png" /><br><figcaption></figcaption></figure>
   <br>
-
+  
   <p><a class="enlace" target="_blank" href="https://developer.android.com/reference/android/os/Environment#fields">https://developer.android.com/reference/android/os/Environment#fields</a></p>
-
-  <p>If none of the predefined names suit the app's needs, you can pass null to the <span class="r-word">getExternalFilesDir</span> method.</p>
-
-  <p>In this way, files will be stored directly in the root directory of the app's specific external storage.</p>
-
-  <h3>Check Free Space</h3>
-  <p>Some devices have very limited storage, so when developing an app, special care must be taken with the space it occupies.</p>
-
-  <p>A good practice before storing a file is to check if the file will fit within the available space.</p>
-
-  <p>However, it's not always necessary to check free space because sometimes it's unknown how much space the file will occupy. In these cases, you can attempt to store the file and catch the <span class="r-word">IOException</span> that will be thrown if the file cannot be saved.</p>
-
-  <p>To check free space, use the <span class="r-word">getAllocatableBytes</span> method.</p>
-
-  <p>This method may sometimes show more capacity than is actually available because the system may detect files in other apps' caches that could be cleared if necessary.</p>
-
-  <p>If there's enough space, the <span class="r-word">allocateBytes</span> method should be used. If this method isn't used, the app may ask the user to delete files or clear the device's cache.</p>
-
-  <p>The following code shows how to get the free space on the device:</p>
-
-  <section><pre><code class="language-kotlin">// 10 MB of storage needed
-val NUM_BYTES_NEEDED_FOR_MY_APP = 1024 * 1024 * 10L;
-
-val storageManager = applicationContext.getSystemService&lt;StorageManager&gt;()!!
-val appSpecificInternalDirUuid: UUID = storageManager.getUuidForPath(filesDir)
-val availableBytes: Long = storageManager.getAllocatableBytes(appSpecificInternalDirUuid)
-
-if (availableBytes >= NUM_BYTES_NEEDED_FOR_MY_APP) {
-    storageManager.allocateBytes(appSpecificInternalDirUuid, NUM_BYTES_NEEDED_FOR_MY_APP)
-} else {
-    val storageIntent = Intent().apply {
-        // To ask the user to delete all app cache, use
-        // ACTION_CLEAR_APP_CACHE
-        action = ACTION_MANAGE_STORAGE
-    }
-}
-</code></pre></section><br><br>
-</section><!-- End section Access to External Storage-->
-
+  
+  <p>If none of the predefined names fit the application's needs, you can pass null to the <span class="r-word">getExternalFilesDir</span> method.</p>
+  
+  <p>This will store the files directly in the root directory of the specific external storage for the application.</p>
+  
+  
+  <h3>Checking Free Space</h3>
+  <p>Some devices have very limited storage space, so when developing an application, special care should be taken with the space the app occupies.</p>
+  
+  <p>A good practice before storing a file is to check if the file fits in the available space.</p>
+  
+  <p>However, it is not always necessary to check free space because there are times when it is not known how much space the file will occupy. 
+    In these cases, you can attempt to save the file and catch the <span class="r-word">IOException</span> that will be thrown if the file cannot be stored.</p>
+  
+  <p>To check the free space the device can provide, use the <span class="r-word">getAllocatableBytes</span> method.</p>
+  
+  <p>This method may sometimes show more capacity than the real one because the system may have detected files in other applications' caches and may delete them if necessary.</p>
+  
+  <p>If there is enough space, the <span class="r-word">allocateBytes</span> method should be used. 
+    If this method is not used, the app can request the user to delete files or clear the device's entire cache.</p>
+  
+  <p>The following code shows how to obtain the device's free space:</p>
+  
+  <section><pre><code class="language-kotlin">// 10 MB of storage is needed.
+  val NUM_BYTES_NEEDED_FOR_MY_APP = 1024 * 1024 * 10L;
+  
+  val storageManager = applicationContext.getSystemService&lt;StorageManager&gt;()!!
+  val appSpecificInternalDirUuid: UUID = storageManager.getUuidForPath(filesDir)
+  val availableBytes: Long = storageManager.getAllocatableBytes(appSpecificInternalDirUuid)
+  
+  if (availableBytes >= NUM_BYTES_NEEDED_FOR_MY_APP) {
+      storageManager.allocateBytes(appSpecificInternalDirUuid, NUM_BYTES_NEEDED_FOR_MY_APP)
+  } else {
+      val storageIntent = Intent().apply {
+          // To ask the user to delete all app cache, the value ACTION_CLEAR_APP_CACHE should be used
+          action = ACTION_MANAGE_STORAGE
+      }
+  }
+  </code></pre>
+  </section><br><br>
+  
+  
+  
+    </section><!-- End section Access to External Storage-->
+  
 
 
   <!--*********************************************************DataStore***********************************************************-->
