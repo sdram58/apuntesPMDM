@@ -22,8 +22,9 @@
     <a href="#sArquitecturasAndroid" title="3.- Arquitecturas Android">3.- Android Architectures</a>      
   </div>
   <div class="fila">
-    <a href="#sCasopractico" title="4.- Caso práctico">4.- Practical Case</a>      
-    <a href="#sActividades" title="5.- Actividades">5.- Activities</a>      
+    <a href="#sCasopractico" title="4.- Caso práctico">4.- Practical Case</a> 
+    <a href="#sFlows" title="5.- Flows">5.- Flows</a>
+    <a href="#sActividades" title="6.- Actividades">5.- Activities</a>      
   </div>
 
 </nav> <!-- BTM_MENU-->
@@ -37,8 +38,9 @@
     <a href="#sArquitecturasAndroid" title="3.- Android Architectures">3.- Android Architectures</a>
   </div>
   <div class="fila">
-    <a href="#sCasopractico" title="4.- Practical Case">4.- Practical Case</a>      
-    <a href="#sActividades" title="5.- Activities">5.- Activities</a>  <a href="" class="relleno"></a>
+    <a href="#sCasopractico" title="4.- Practical Case">4.- Practical Case</a>
+    <a href="#sFlows" title="5.- Flows">5.- Flows</a>    
+    <a href="#sActividades" title="6.- Activities">6.- Activities</a>
   </div>
 </div>
 
@@ -1143,6 +1145,742 @@ fun BookInfoScreen(
 
  </section><!-- End section Practical Case-->
 
+ <!--*********************************************************FLOWS***********************************************************-->
+ <section class="apartado">
+  <a name="sFlows"></a>
+  <h2>INTRODUCTION TO FLOWS</h2>
+
+  <h3>Introduction</h3>
+
+  <p>Flow is a component of the coroutine library that allows us to implement reactive programming. </p>
+
+
+  <p>It is the natural substitute for RxJava, since the vast majority of things that can be done are here, generally simpler, 
+      since they are based on concepts that we already know about <span class="d-word">coroutines</span> , <span class="d-word">sequences</span> , 
+      and <span class="d-word">collections</span>  to give us a very easy solution.</p>
+  
+  <h3>What are the Flows?</h3>
+
+  <p>Flows are asynchronous sequences.</p>
+  
+  <p class="sub-section">The Flows are lazy</p>
+  
+  <p>Like sequences, Flows are lazy, which means that until someone requests the Flow's values, the operations on them are not executed. </p>
+  <p>This causes them to be called <span class="negrita">cold streams</span>, because they will not start providing data until someone asks to collect them. 
+      Also, if another element connects to the Flow, it starts from the first value of the flow.</p>
+  <p>It is important to understand this, because <span class="negrita">if a Flow performs heavy operations, 
+      they will be repeated every time someone collects its values</span>.</p>
+
+  
+  
+  <p class="sub-section">Flows are asynchronous</p>
+  
+  <p>Unlike sequences, which are processed one element after another, in Flow this is not necessarily the case. It can take a long time between one value and the next.</p>
+
+  <p>That's why we won't normally run them on the main thread.</p>
+
+  <p>Since all this happens in a coroutine context, think that the thread management is going to be very easy to manage.</p>
+
+
+  <p class="sub-section">Flows are sequential</p>
+  
+  <p>This means that if a Flow is going to generate x elements, and these consist of heavy processing, they will be executed one after the other: 
+      until the previous one finishes, the next one will not start.</p>
+  
+  <p>This, which is often an advantage, can sometimes be a disadvantage. 
+      Imagine that you have to make 10 requests to servers and that each one is independent of the previous one. Even so, 
+      you would have to wait for the previous one to finish to launch the next one.</p>
+
+  <p>This can be modified, and we'll see later. But keep in mind that they work like this by default</p>
+      
+  
+
+  <h3>Flow Builders</h3>
+
+  <p>We have 3 ways to build a Flow:</p>
+  
+  <p class="sub-section">asFlow()</p>
+  
+  <p>Perhaps this is the easiest way to generate a Flow. All collections, including sequences, can be converted to a Flow using this function</p>
+  
+  <section><pre><code class="language-kotlin">val flow = listOf(1, 2, 3, 4).asFlow()</code></pre>
+  </section><br><br>
+  
+  <p class="sub-section">flowOf()</p>
+  
+  <p>A Flow is generated with a sequence of predefined values, the equivalent of <span class="d-word">listOf()</span> 
+      or <span class="d-word">sequenceOf()</span> </p>
+
+      <section><pre><code class="language-kotlin">val flow = flowOf(1, 2, 3, 4)</code></pre>
+      </section><br><br>
+
+  <p class="sub-section">flow { }</p>
+  
+  <p>The most versatile of all, and the one you will surely use most often. </p>
+  <p>We create a <span class="negrita">flow { }</span>  block and add values ​​with the <span class="negrita">emit()</span> function.</p>
+
+  <p>Also, here we add the advantage that this block receives a coroutine context, so we can call suspend functions without any problem within it.</p>
+  
+  <section><pre><code class="language-kotlin">flow {
+for (i in (0..3)) {
+  delay(200)
+  emit(i)
+}
+}</code></pre>
+  </section><br><br>
+
+<h3>Types of operators</h3>
+
+<p>Flows can be transformed just like collections, making them very easy to use.</p>
+
+<p>We can filter, map, combine, transform... and a large number of operations that allow you to adapt these flows to the needs you have in the place where you use them.</p>
+
+<p>As with sequences, there are two types of operators</p>
+
+<p class="sub-section">Intermediate operators</p>
+
+<p>They are operators that do not launch any operation, regardless of their complexity. What they do is return a <span class="negrita">new Flow</span> that is
+   the combination of the previous one with the new operation.</p>
+
+
+<p>For example, we can use the <span class="negrita"><span class="r-word">filter()</span> </span> operation:</p>
+
+<section><pre><code class="language-kotlin">fun makeFlow() = flow{
+emit(1)
+delay(500)
+emit(2)
+delay(500)
+emit(3)
+delay(500)
+emit(4)
+delay(500)
+}
+
+makeFlow() //user function that returns a flow
+.filter { it % 2 == 0 }  //Only emit the even elements of the flow
+</code></pre>
+</section><br><br>
+
+<p>And then do a <span class="negrita"><span class="r-word">map()</span> </span>  to transform the results:</p>
+<section><pre><code class="language-kotlin">makeFlow()
+.filter { it % 2 == 0 }
+.map { "Value is $it" } //Emits the even elements and map them to a String</code></pre>
+</section><br><br>
+
+
+<p>But there is a particularly interesting operator, which is <span class="negrita"><span class="r-word">transform()</span></span> , and which allows us to make as complex transformations 
+  as we need. All we have to do is call <span class="negrita">emit()</span>  with the values ​​we want to return:</p>
+
+  <section><pre><code class="language-kotlin">flowOf(1,2,3,4,5).transform{
+  if(it % 2 ==0 ) emit("Value -> $it")
+}.collect(){
+  println("$it")
+}</code></pre>
+  </section>
+
+<p>Output:</p>
+
+<section><pre><code class="language-kotlin">Value -> 2
+Value -> 4</code></pre>
+</section><br><br>
+
+
+
+<p>You can also combine multiple Flows with operations like <span class="negrita"><span class="r-word">zip()</span> </span>  or <span class="negrita"><span class="r-word">combine()</span> </span> :</p>
+
+<section><pre><code class="language-kotlin">val flow1 = flowOf(1, 2, 3, 4)
+val flow2 = flowOf("1", "2", "3", "4")
+flow1.zip(flow2) { a, b -> "$a -> $b" }</code></pre>
+</section><br><br>
+
+
+<section><pre><code class="language-kotlin">val flow1 = flowOf(1, 2, 3, 4)
+val flow2 = flowOf("1", "2", "3", "4", "5")
+flow1.combine(flow2) { a, b -> "$a -> $b" }.collect(){
+println(it)
+}</code></pre>
+</section>
+
+<p>Result</p>
+<section><pre><code class="language-kotlin">1 -> 1
+2 -> 2
+3 -> 3
+4 -> 4
+4 -> 5</code></pre>
+</section><br><br>
+
+
+<p>We can apply some action to each of the flow elements with <span class="negrita"><span class="r-word">onEach()</span> </span></p>
+
+<section><pre><code class="language-kotlin">val f1 = flowOf(1,2,3,4,5).onEach { delay(300) }
+val f2 = flowOf("a", "b", "c", "d").onEach { delay(500) }
+
+f1.combine(f2){f1, f2 ->
+"$f1 -> $f2"
+}.collect(){
+println("$it")
+}</code></pre>
+</section>
+
+<p>Result</p>
+<section><pre><code class="language-kotlin">1 -> a
+2 -> a
+3 -> a
+3 -> b
+4 -> b
+4 -> c
+5 -> c
+5 -> d</code></pre>
+</section><br><br>
+
+
+
+<p>Remember that all of these operators can have suspend functions inside them, 
+  so those operations can be as simple as addition or as complex as calling a server and saving the result to a database.</p>
+
+
+<p class="sub-section">Terminal operators</p>
+
+<p>These do launch the execution and cause the production of values begins and these to be emitted.</p>
+
+<p>The most common terminal operator is <span class="negrita"><span class="r-word">collect()</span> </span> , 
+  which tells Flow that there is already someone on the other side (the collector) waiting for results, and that it can start emitting them.</p>
+
+<section><pre><code class="language-kotlin">val flow= flowOf(1,2,3,4,5,6)
+
+flow.collect(){
+println(it)
+}</code></pre>
+  </section><br><br>
+
+<p>Another interesting terminal function is <span class="negrita"><span class="r-word">toList()</span></span> . It will wait for the entire flow to finish emitting and turn it into a list.</p>
+<p>In this example we are going to take a previous flow and convert it into a list and print its result.</p>
+<section><pre><code class="language-kotlin">val flow1 = flowOf(1, 2, 3, 4)
+val flow2 = flowOf("1", "2", "3", "4", "5")
+
+println(
+flow1.combine(flow2) { a, b -> "$a -> $b" }.toList()
+)</code></pre>
+</section>
+<p>Output:</p>
+<section><pre><code class="language-kotlin">[1 -> 1, 2 -> 2, 3 -> 3, 4 -> 4, 4 -> 5]</code></pre>
+</section><br><br>
+
+
+<p>But there is not only this one, we have several more like <span class="negrita">toSet(), first(), single(), reduce()</span>  or <span class="negrita">fold()</span> .</p>
+
+<h3>Constraints on contexts and exceptions</h3>
+<p>Flow has some restrictions, to make the whole system work properly.</p>
+
+<p>The first is that we cannot switch context within the code of a flow. If we do this, we'll get an exception:</p>
+
+<section><pre><code class="language-kotlin">fun makeFlow() = flow {
+withContext(Dispatchers.IO) {
+  for (i in (0..3)) {
+      delay(200)
+      emit(i)
+  }
+}
+}</code></pre>
+</section><br><br>
+
+<p>Flow will always run in the context of the coroutine that launched it. 
+But many times it won't be what we want, how do we then change the execution context? We can use the <span class="negrita">flowOn()</span> function:</p>
+
+<section><pre><code class="language-kotlin">val flow = flowOf(1,2,3,4)
+
+flow.flowOn(Dispatchers.IO)
+.collect { print(it) }</code></pre>
+</section><br><br>
+
+<p>With respect to exceptions, it happens a bit the same. Exceptions should not be caught within the flows, 
+  so as not to hide them and the rest of the code does not find out. There is a special function for this:</p>
+
+
+<section><pre><code class="language-kotlin">makeFlow()
+.catch { throwable -> println(throwable.message) }
+.collect { print(it) }
+}</code></pre>
+</section><br><br>
+
+<p>If we don't catch the exception, it will continue to propagate normally, as it happens with the rest of the coroutine components.</p>
+
+<br><br>
+<h3>Types or specializations of FLows</h3>
+
+<p>So far we have seen the general behavior of the flows and the main characteristics. 
+  Now we will see some types of flow specialization that can be interesting for certain cases.</p>
+
+<p class="sub-section">StateFlow</p>
+
+<p>Remember that we said that generic flows were <span class="cursiva">cold streams</span> , that is, until someone starts collecting their values, 
+  the flow doesn't start emitting.</p>
+
+<p>The <span class="d-word">StateFlows</span>  are <span class="cursiva">hot streams</span> , that is, whether there is someone listening or not, they are going to emit values.
+If we connect to a <span class="d-word">Stateflow</span> , it will give us the last value, it will not start with the first one.</p>
+
+
+<p><span class="d-word">StateFlows</span>  are especially interesting for saving the state of the UI, when we connect to it, it will tell us what the last state the UI should be in is.
+  From there if the state changes, the UI will receive the new state. <br>
+  As you have seen, this would be the equivalent of <span class="d-word">LiveData</span> .
+</p>
+
+<p>Let's do an example in which we simulate a use case in which the UI is going to be updated (in this case the console), we will update the UI every second by passing it a new <span class="negrita">note</span> .
+For this, we will use a <span class="r-word">MutableStateFlow</span>  that will be of the <span class="negrita">note</span>  type.</p>
+
+<section><pre><code class="language-kotlin">data class Note(
+val title:String,
+val description:String
+)
+
+class ViewModel(){ //It would simulate a ViewModel but for this example is a simple class
+
+var state: MutableStateFlow&lt;Note> = MutableStateFlow(Note("Title 1", "Description 1"))
+
+suspend fun update(){
+  var counter = 1
+  while(true){
+      state.value = Note("Title $counter", "Description $counter")
+      counter++
+      delay(500)
+  }
+}
+}
+
+//This main function is just for running the example
+fun main():Unit = runBlocking {
+
+val viewModel = ViewModel()
+launch {
+  viewModel.update()
+}
+viewModel.state.collect(){
+  println(it)
+}
+
+}</code></pre>
+</section><br><br>
+
+<p>Note that to update the value of the <span class="d-word">StateFlow</span> , the new value is passed through the <span class="r-word">value</span>  property of the <span class="d-word">status</span> variable. 
+  Notice that to start the value of the StateFlow we pass a note in the constructor.</p>
+
+
+<section class="marco-t inf">
+  <span class="icono info"> </span> Since the <span class="negrita">println</span>  function receives the same arguments that the <span class="negrita">lambda</span> passes, 
+  we can abbreviate it using the function reference (::)
+  </section>
+<section class="marco-b">
+      <section><pre><code class="language-kotlin">viewModel.state.collect(::println)</code></pre>
+      </section>
+</section>
+  
+<p>The code above has a problem and that is that from the UI we could change the value of the state flow by doing this.</p>
+
+<section><pre><code class="language-kotlin">viewModel.state.value = Note("Fake title", "Fake description")</code></pre>
+</section><br>
+
+<p>That is, it is poorly encapsulated. To avoid that we must make the property that is accessed from outside read-only. Let's see how we could do it.</p>
+
+<section><pre><code class="language-kotlin">private val _state: MutableStateFlow<Note> = MutableStateFlow(Note("Title 1", "Description 1"))
+val state:StateFlow<Note> = _state.asStateFlow()</code></pre>
+</section><br>
+
+<p>We see that our MutableStateFlow variable is private and offer a public one that cannot be changed, nor can the value property be modified.
+  This is called <span class="cursiva">backing property</span>  </p>
+
+<p class="sub-section">Collect Flow in a Composable</p>
+<p>If we need to collect a flow and have it be a state variable for recomposition, 
+we should use <span class="r-word">collectAsState()</span> from the <span class="negrita">flow</span>. We can do this as follows:</p>
+
+<section><pre><code class="language-kotlin">val books: List<Book> by bookViewModel.books.collectAsState()</code></pre>
+</section><br><br>
+
+
+<a class="tarea" name="exercise_flow" target="_blank" href="#exercise_flow">Exercise:
+Do the practical case using flows instead of live data.</a> 
+  <br> <br>
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM225/tree/main/UD9/BookViewModelFlows">A possible solution</a> </p>
+
+
+<p class="sub-section">SharedFlow</p>
+
+
+<p><span class="r-word">StateFlow</span>  is a specialization of <span class="r-word">SharedFlow</span>. <span class="r-word">SharedFlow</span> is much more configurable.
+When the exact conditions of a StateFlow are not enough for us, we can configure the <span class="r-word">SharedFlow</span>  to behave exactly as we need.</p>
+
+
+<p><span class="r-word">SharedFlow</span>  has a series of configuration values ​​to be more flexible in the number of values ​​we store,
+   what happens when we are consuming those values ​​more slowly than at the rate at which they are being emitted,
+and what is the maximum number of values ​​that we want to store.</p>
+
+
+<p>Let's see how we would use these options. We go back to the previous example of Notes.
+In this case we use a <span class="negrita">MutableSharedFlow</span> </p>
+
+
+<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>()
+val state:SharedFlow&lt;Note> = _state.asSharedFlow()</code></pre>
+</section><br>
+
+<p>We can see that the <span class="r-word">SharedFlows</span>  do not pass an initial value in the constructor.</p>
+
+<p>To change values ​​we do not use the <span class="negrita">value</span> property, since it is not a single value, but we use the <span class="negrita">emit</span> function. </p>
+<section><pre><code class="language-kotlin">_state.emit(Note("Title $counter", "Description $counter"))</code></pre>
+</section><br>
+
+<p>To collect it we do it in the same way.</p>
+
+
+<section><pre><code class="language-kotlin">viewModel.state.collect(::println)</code></pre>
+</section><br>
+
+<p>For now, the complete code looks like this:</p>
+
+
+<section><pre><code class="language-kotlin">data class Note(
+val title:String,
+val description:String
+)
+
+class ViewModel(){ //It would simulate a ViewModel but for this example is a simple class
+
+private val _state = MutableSharedFlow&lt;Note>()
+val state:SharedFlow&lt;Note> = _state.asSharedFlow()
+
+suspend fun update(){
+  var counter = 1
+  while(true){
+      _state.emit(Note("Title $counter", "Description $counter"))
+      counter++
+      delay(500)
+  }
+}
+}
+
+
+//This main function is just for running the example
+fun main():Unit = runBlocking {
+
+val viewModel = ViewModel()
+launch {
+  viewModel.update()
+}
+viewModel.state.collect(::println)
+}</code></pre>
+</section><br>
+
+<p>Output:</p>
+<section><pre><code class="language-kotlin">Note(title=Title 1, description=Description 1)
+Note(title=Title 2, description=Description 2)
+Note(title=Title 3, description=Description 3)
+Note(title=Title 4, description=Description 4)
+Note(title=Title 5, description=Description 5)
+Note(title=Title 6, description=Description 6)
+Note(title=Title 7, description=Description 7)
+....</code></pre>
+</section><br>
+
+<p>At the moment it is working exactly the same as we had it before. Now let's see what happens if we start collecting after a second (line 7)</p>
+
+
+<section><pre><code class="language-kotlin">fun main():Unit = runBlocking {
+
+val viewModel = ViewModel()
+launch {
+  viewModel.update()
+}
+delay(1000)
+viewModel.state.collect(::println)
+}</code></pre>
+</section><br>
+
+<p>In this case we see that we have lost the first two values, it starts cocllecting from 3.</p>
+
+
+<section><pre><code class="language-kotlin">Note(title=Title 3, description=Description 3)
+Note(title=Title 4, description=Description 4)
+Note(title=Title 5, description=Description 5)
+....</code></pre>
+</section><br>
+
+<p>If we do not tell it anything, by default this <span class="r-word">SharedFlow</span>  will not store any value and therefore the old values ​​are not emitted.</p>
+
+
+<p>How can we configure this? If we go to the creation of the <span class="negrita">MutableSharedFlow</span> we will see that it has 3 arguments, 
+<span class="negrita">replay</span>, <span class="negrita">extraBufferCapacity</span> , <span class="negrita">onBufferOverflow</span>.</p>
+
+
+<p>Let's see what each of them is for:</p>
+
+
+<p><span class="r-word">replay</span> . Of integer type, we can tell it how many values ​​we want it to store so that when we subscribe it
+starts with the first one stored. Default value is 0.
+In this case we are going to set it to 1</p>
+
+
+<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>(
+  replay = 1
+)</code></pre>
+</section><br>
+
+<p>We see as a result, that before it issued us from 3, and when we put 1 it also recovers 2.</p>
+
+<section><pre><code class="language-kotlin">Note(title=Title 2, description=Description 2)
+Note(title=Title 3, description=Description 3)
+Note(title=Title 4, description=Description 4)
+.....</code></pre>
+</section><br>
+
+<p>If instead of <span class="negrita">replay=1</span>  we set 2,
+then it will return the 2 stored, that is, the first and the second, then it already emits the third normally.</p>
+
+
+<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>(
+replay = 2
+)</code></pre>
+</section><br>
+
+<p>Output: </p>
+
+<section><pre><code class="language-kotlin">Note(title=Title 1, description=Description 1)
+Note(title=Title 2, description=Description 2)
+Note(title=Title 3, description=Description 3)
+Note(title=Title 4, description=Description 4)
+.....</code></pre>
+</section><br>
+
+
+<p><span class="r-word">extraBufferCapacity</span> . It will store values ​​in a buffer. 
+  Let's imagine that the values ​​are being collected more slowly than they are being emitted.
+To do the test we will add a println to see when the values ​​are being emitted (line 4).</p>
+
+
+<section><pre><code class="language-kotlin">while(true){
+delay(500)
+_state.emit(Note("Title $counter", "Description $counter"))
+println("Emitting Title= $counter")
+counter++
+}</code></pre>
+</section><br>
+
+<p>Also, when we collect we will set a delay of 1 second. For this we pass the lambda.</p>
+
+
+<section><pre><code class="language-kotlin">viewModel.state.collect {
+delay(1000)
+println(it)
+}</code></pre>
+</section><br>
+
+<p>Let's see the output</p>
+
+
+<section><pre><code class="language-kotlin">Emitting Title= 1
+Emitting Title= 2
+Emitting Title= 3
+Note(title=Title 1, description=Description 1)
+Emitting Title= 4
+Note(title=Title 2, description=Description 2)
+Emitting Title= 5
+Note(title=Title 3, description=Description 3)
+Emitting Title= 6
+Note(title=Title 4, description=Description 4)
+Emitting Title= 7</code></pre>
+</section><br><br>
+
+<p>We see that, since we have a <span class="negrita">replay</span>  of 2, the first 2 are broadcast without being collected, a third is broadcast and we collect the first, 
+once the first is collected a fourth is broadcast, once the second is collected a fifth is broadcast.
+In other words, once the replay capacity is exhausted, no more are broadcast until one of the replays is collected, the broadcast function remains suspended.</p>
+
+
+<p>To give it more storage capacity we use the <span class="r-word">extraBufferCapacity</span> parameter, 
+we are going to give it a value of two so that it stores 4 elements in total (2 replay + 2 extraBufferCapacity).</p>
+
+
+<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>(
+replay = 2,
+extraBufferCapacity = 2
+)</code></pre>
+</section><br>
+
+<p>Output:</p>
+
+<section><pre><code class="language-kotlin">Emitting Title= 1
+Emitting Title= 2
+Emitting Title= 3
+Note(title=Title 1, description=Description 1)
+Emitting Title= 4
+Emitting Title= 5
+Note(title=Title 2, description=Description 2)
+Emitting Title= 6
+Emitting Title= 7
+Note(title=Title 3, description=Description 3)
+Emitting Title= 8
+Note(title=Title 4, description=Description 4)
+Emitting Title= 9
+....</code></pre>
+</section><br>
+
+<p>We see that it is emitting until the buffer is full, once it is full it is suspended until one is collected to be able to emit another.</p>
+
+
+<p>It may be that we want the emit function to be suspended but simply discard the old or the new ones. We can do this with the third parameter,
+<span class="negrita">onBufferOverflow</span></p>
+
+
+<p><span class="r-word">onBufferOverflow</span> . Its default value is configured with <span class="negrita">BuffeOverFlow.SUSPEND</span>, that is, if the buffer is full, 
+it is suspended and does not continue emitting until some element is collected.
+Other values ​​of this parameter are:</p>
+
+
+<p><span class="negrita">BufferOverFlow.DROP_OLDEST</span> , that is, it eliminates the oldest ones in order to have room in the buffer and continue emitting.</p>
+
+
+<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>(
+replay = 2,
+extraBufferCapacity = 2,
+onBufferOverflow = BufferOverflow.DROP_OLDEST
+)</code></pre>
+</section><br>
+
+<p>If we put this value in our example we see the following output.</p>
+
+<section><pre><code class="language-kotlin">Emitting Title= 5
+Note(title=Title 2, description=Description 2)
+Emitting Title= 6
+Emitting Title= 7
+Note(title=Title 3, description=Description 3)
+Emitting Title= 8
+Emitting Title= 9
+Note(title=Title 4, description=Description 4)
+Emitting Title= 10
+Emitting Title= 11
+Note(title=Title 6, description=Description 6)
+Emitting Title= 12
+Emitting Title= 13
+Note(title=Title 8, description=Description 8)
+Emitting Title= 14
+....
+</code></pre>
+</section><br>
+
+<p>If we look at element 5 (which was the oldest) it has not been collected, it has been discarded in order to emit element 10</p>
+
+
+<p><span class="negrita">BufferOverFlow.DROP_LATEST</span>. In this case we will discard the new ones that enter until we consume the old ones.</p>
+
+
+<p>Let's see the examples:</p>
+
+<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>(
+replay = 2,
+extraBufferCapacity = 2,
+onBufferOverflow = BufferOverflow.DROP_LATEST
+)</code></pre>
+</section><br>
+
+<p>Output:</p>
+
+<section><pre><code class="language-kotlin">Emitting Title= 8
+Emitting Title= 9
+Note(title=Title 4, description=Description 4)
+Emitting Title= 10
+Emitting Title= 11
+Note(title=Title 5, description=Description 5)
+Emitting Title= 12
+Emitting Title= 13
+Note(title=Title 6, description=Description 6)
+Emitting Title= 14
+Emitting Title= 15
+Note(title=Title 7, description=Description 7)
+Emitting Title= 16
+Emitting Title= 17
+Note(title=Title 8, description=Description 8)
+Emitting Title= 18
+Emitting Title= 19
+Note(title=Title 10, description=Description 10)
+Emitting Title= 20
+....</code></pre>
+</section><br>
+
+<p>In this case he had to discard the 9 to be able to issue the 10.</p>
+
+
+<p>Another difference with the <span class="r-word">StateFlow</span>  is that if we emit the same value with the <span class="r-word">SharedFlow</span>
+it will emit it again, while with the <span class="r-word">StateFlow</span> it would not emit the same value again.</p>
+
+
+<p>How do we make a <span class="r-word">SharedFlow</span>  behave exactly like a <span class="r-word">StateFlow</span>?</p>
+
+
+<p>For this, we only store the last value, <span class="negrita">replay=1</span>, we don't give extra buffer capacity, and if we delete the oldest one.</p>
+
+
+<section><pre><code class="language-kotlin"> private val _state = MutableSharedFlow<Note>(
+replay = 1,
+extraBufferCapacity = 0,
+onBufferOverflow = BufferOverflow.DROP_OLDEST
+)</code></pre>
+</section><br>
+
+<p>We would only need one thing, so that it behaves exactly like a <span class="r-word">StateFlow</span>, 
+and that is precisely that it does not emit again if the value does not change. </p>
+<p>If we always emit the same value, it continues to be emitted.</p>
+
+
+<section><pre><code class="language-kotlin">_state.emit(Note("Title 1", "Description 1"))</code></pre>
+</section><br>
+
+<p>Output:</p>
+
+<section><pre><code class="language-kotlin">Note(title=Title 1, description=Description 1)
+Emitting Title= 4
+Emitting Title= 5
+Note(title=Title 1, description=Description 1)
+Emitting Title= 6
+Emitting Title= 7
+Note(title=Title 1, description=Description 1)
+Emitting Title= 8
+Emitting Title= 9
+Note(title=Title 1, description=Description 1)</code></pre>
+</section><br>
+
+
+<section class="marco-t inf">
+<span class="icono info"> </span> Remember that one data class is equal to another if its properties are the same.
+</section>
+<section class="marco-b">
+  
+</section>
+
+<p>We could check before emitting that the element has changed to emit it, but SharedFlow provides us with a function that allows us to do this. <span class="r-word">distinctUntilChanged()</span> .</p>
+
+
+<section><pre><code class="language-kotlin">viewModel.state.distinctUntilChanged().collect {
+delay(1000)
+println(it)
+}</code></pre>
+</section><br>
+
+<p>Now we see that it continues to be issued but it does not collect it.</p>
+
+<section><pre><code class="language-kotlin">Emitting Title= 1
+Emitting Title= 2
+Emitting Title= 3
+Note(title=Title 1, description=Description 1)
+Emitting Title= 4
+Emitting Title= 5
+Emitting Title= 6
+Emitting Title= 7
+Emitting Title= 8</code></pre>
+</section><br>
+
+<p>Obviously if what we want to do is that, it is best to use a <span class="r-word">StateFlow</span> ,
+we simply wanted to show that <span class="r-word">StateFlow</span>  is a specialization of <span class="r-word">SharedFlow</span>.</p>
+
+
+</section><!-- End section -->
+
 
 <!--*********************************************************Activities***********************************************************-->
 <section class="apartado">
@@ -1265,12 +2003,13 @@ fun BookInfoScreen(
    }</code></pre>
    </section><br><br>
    </p>
-   <p>Remember to add the following dependencies:
-     <section><pre><code class="language-kotlin">implementation("io.coil-kt:coil-compose:2.5.0")
-   implementation("io.coil-kt:coil-gif:2.5.0")</code></pre>
-     </section><br><br>
-   </p>
-
+   <section class="marco-t warn">
+    <span class="icono warning"> </span> Remember to add coil dependencies
+    </section>
+   <section class="marco-b">
+      
+   </section>
+   
    <p>Here's an example of how the app might look:</p>
    <figure><img src="UD9/images/WorkoutDemo.gif" /><br><figcaption></figcaption></figure>
    <br>
