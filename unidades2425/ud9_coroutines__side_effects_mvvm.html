@@ -1975,39 +1975,47 @@ we simply wanted to show that <span class="r-word">StateFlow</span>  is a specia
   </a>
    <p>To use a GIF, you can use the following @Composable by passing an integer (drawable reference):
    <section><pre><code class="language-kotlin">@Composable
-   fun GifImage(gifImage: Int) {
-       val imageLoader = ImageLoader.Builder(LocalContext.current)
-           .components {
-               if (Build.VERSION.SDK_INT >= 28) {
-                   add(ImageDecoderDecoder.Factory())
-               } else {
-                   add(GifDecoder.Factory())
-               }
-           }
-           .build()
-
-       Image(
-           painter = rememberAsyncImagePainter(
-               ImageRequest.Builder(LocalContext.current)
-                   .data(data = gifImage)
-                   .apply(
-                       block = fun ImageRequest.Builder.() {
-                           size(Size.ORIGINAL)
-                       }
-                   )
-                   .build(),
-               imageLoader = imageLoader
-           ),
-           contentDescription = null,
-       )
-   }</code></pre>
+    fun GifImage(gifImage: Int) {
+        val imageLoader = ImageLoader.Builder(LocalContext.current)
+            .components {
+                if (Build.VERSION.SDK_INT >= 28) {
+                    add(AnimatedImageDecoder.Factory())
+                } else {
+                    add(GifDecoder.Factory())
+                }
+            }
+            .build()
+    
+        Image(
+            painter = rememberAsyncImagePainter(
+                ImageRequest.Builder(LocalContext.current)
+                    .data(data = gifImage)
+                    .apply(
+                        block = fun ImageRequest.Builder.() {
+                            size(Size.ORIGINAL)
+                        }
+                    )
+                    .build(),
+                imageLoader = imageLoader
+            ),
+            contentDescription = null,
+        )
+    }</code></pre>
    </section><br><br>
    </p>
    <section class="marco-t warn">
     <span class="icono warning"> </span> Remember to add coil dependencies
     </section>
    <section class="marco-b">
-      
+    <p><span class="inline-file">libs.versions.tomsl</span> &rarr; <span class="cursiva">[libraries]</span> section:</p>
+    <section><pre><code class="language-kotlin">coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
+coil-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coilCompose" }</code></pre>
+    </section><br><br>
+
+    <p><span class="inline-file">build.gradle.kts (Module:app)</span> &rarr; <span class="cursiva">dependencies</span> section</p>
+    <section><pre><code class="language-kotlin">implementation(libs.coil.compose)
+implementation(libs.coil.gif)</code></pre>
+    </section><br><br>
    </section>
    
    <p>Here's an example of how the app might look:</p>
@@ -2016,7 +2024,7 @@ we simply wanted to show that <span class="r-word">StateFlow</span>  is a specia
 
  
 </section><!-- End section Activities-->
-
+    
 
  
   <!---BTM_MENU--->
