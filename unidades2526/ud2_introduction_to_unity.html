@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UD2.- Introduction to Unity</title>
+  <title>UD2.- Introducción a Unity</title>
   <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
   <link rel="stylesheet" href="../styles/prism.css">
   <link rel="stylesheet" href="../styles/styles.css">
@@ -17,56 +17,65 @@
 
   <nav id="menu-lateral" class="main-menu-lateral oculto">
     <div class="fila">
-      <a href="#sIntroduccion" title="1.- Introduction">1.- Introduction</a>
+      <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
       <a href="#sUnityHub" title="2.- Unity Hub">2.- Unity Hub</a>
-      <a href="#sInstalacionUnity" title="3.- Unity Installation">3.- Unity Installation</a>
+      <a href="#sInstalacionUnity" title="3.- Instalación de Unity">3.- Instalación de Unity</a>
     </div>    
     <div class="fila">
-      <a href="#sCrear_Proyecto_Unity" title="4.- Create Unity Project">4.- Create Unity Project</a>
-      <a href="#sEditor_Unity" title="5.- Unity Editor">5.- Unity Editor</a>
-      <a href="#sEjecución_del_juego" title="6.- Game Execution">6.- Game Execution</a>
+      <a href="#sCrear_Proyecto_Unity" title="4.- Crear proyecto Unity">4.- Crear proyecto Unity</a>
+      <a href="#sEditor_Unity" title="5.- Editor de Unity">5.- Editor de Unity</a>
+      <a href="#sEjecución_del_juego" title="6.- Ejecución del juego">6.- Ejecución del juego</a>
     </div>
     
     <div class="fila">
-      <a href="#sAnyadiendo_codigo_ejecutable" title="7.- Adding Executable Code">7.- Adding Executable Code</a>
+      <a href="#sAnyadiendo_codigo_ejecutable" title="7.- Añadiendo código ejecutable">7.- Añadiendo código ejecutable</a>
       <a href="#sScripting" title="8.- Scripting">8.- Scripting</a>
-      <a class="oculto" href="#sManejo_de_Unity" title="9.- Handling Unity">9.- Handling Unity</a>
+      <a href="#sManejo_de_Unity" title="9.- Manejo de Unity">9.- Manejo de Unity</a>
     </div>
     
   </nav> <!-- BTM_MENU-->
   
-  <h1>UD2.- Introduction to Unity</h1> 
+  <h1>UD2.- Introducción a Unity</h1> 
 
   
   <div class="main-menu">    
     <div class="fila">
-      <a href="#sIntroduccion" title="1.- Introduction">1.- Introduction</a>
+      <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
       <a href="#sUnityHub" title="2.- Unity Hub">2.- Unity Hub</a>
-      <a href="#sInstalacionUnity" title="3.- Unity Installation">3.- Unity Installation</a>
+      <a href="#sInstalacionUnity" title="3.- Instalación de Unity">3.- Instalación de Unity</a>
     </div>    
     <div class="fila">
-      <a href="#sCrear_Proyecto_Unity" title="4.- Create Unity Project">4.- Create Unity Project</a>
-      <a href="#sEditor_Unity" title="5.- Unity Editor">5.- Unity Editor</a>
-      <a href="#sEjecución_del_juego" title="6.- Game Execution">6.- Game Execution</a>
+      <a href="#sCrear_Proyecto_Unity" title="4.- Crear proyecto Unity">4.- Crear proyecto Unity</a>
+      <a href="#sEditor_Unity" title="5.- Editor de Unity">5.- Editor de Unity</a>
+      <a href="#sEjecución_del_juego" title="6.- Ejecución del juego">6.- Ejecución del juego</a>
     </div>
     
     <div class="fila">
-      <a href="#sAnyadiendo_codigo_ejecutable" title="7.- Adding Executable Code">7.- Adding Executable Code</a>
+      <a href="#sAnyadiendo_codigo_ejecutable" title="7.- Añadiendo código ejecutable">7.- Añadiendo código ejecutable</a>
       <a href="#sScripting" title="8.- Scripting">8.- Scripting</a>
-      <a class="relleno" href="#sManejo_de_Unity" title="9.- Handling Unity">9.- Handling Unity</a>
+      <a class="relleno" href="#sManejo_de_Unity" title="9.- Manejo de Unity">9.- Manejo de Unity</a>
     </div>
 </div>
   
   <!--*********************************************************Introducción***********************************************************-->
   <section class="apartado">
     <a name="sIntroduccion"></a>
-    <h2>Introduction</h2>
-    <h3>What is Unity?</h3>
-    <p>Unity is a cross-platform game engine.</p>
-    <p>Its origin dates back to 2005.</p>
-    <p>It allows for the development of 2D and 3D games.</p>
-    <p>Currently, Unity supports development for around 20 platforms, with the most popular being PC, iOS, and Android.</p>
-    <p>Unity offers such a comprehensive set of tools that it minimizes the need for external tools to complete projects.</p>
+    <h2>Introducción</h2>
+    <h3>¿Qué es Unity?</h3>
+    <p>Unity es un motor de videojuegos multiplataforma.</p>
+    <p>Su origen se remonta a 2005.</p>
+    <p>Permite el desarrollo de juegos 2D y 3D.</p>
+    <p>Actualmente, Unity admite desarrollo para alrededor de 20 plataformas, siendo las más populares PC, iOS y Android.</p>
+    <p>Unity ofrece un conjunto de herramientas tan completo que minimiza la necesidad de herramientas externas para completar proyectos.</p>
+
+    <!-- NUEVO (Unity 6.2) -->
+    <h3>NUEVO (Unity 6.2): pilares del flujo moderno</h3>
+    <ul>
+      <li><span class="negrita">Input System</span>: reemplaza al antiguo Input Manager para entradas multiplataforma.</li>
+      <li><span class="negrita">Addressables</span>: gestión de <span class="negrita">assets</span> con carga bajo demanda.</li>
+      <li><span class="negrita">URP/HDRP</span>: pipelines de render actuales (el built-in queda en legado).</li>
+      <li><span class="negrita">UI Toolkit</span>: UI escalable para editor y runtime.</li>
+    </ul>
  
 </section><!-- End section Introducción-->
 
@@ -75,34 +84,39 @@
   <a name="sUnityHub"></a>
   <h2>Unity Hub</h2>
   
-  <p>The <a class="enlace" target="_blank" href="https://unity.com/es/pricing?check_logged_in=1#plans-student-and-hobbyist">Unity Hub</a> 
-    program allows you to manage the versions of the Unity editor that you want to use.</p>
+  <p>El programa <a class="enlace" target="_blank" href="https://unity.com/es/pricing?check_logged_in=1#plans-student-and-hobbyist">Unity Hub</a> 
+    permite gestionar las versiones del editor de Unity que quieras utilizar.</p>
   <a href="UD2/images/ud2-2024-01-24-12-08-33.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-12-08-33.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
   <br>
-  <p>To use Unity Hub, you need to have a <span class="negrita">Unity ID</span></p>
+  <p>Para usar Unity Hub, necesitas disponer de un <span class="negrita">Unity ID</span></p>
   <a href="UD2/images/ud2-2024-01-24-12-09-03.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-12-09-03.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
   <br>
-  <p>You can also create the Unity ID from the Unity website:
+  <p>También puedes crear el Unity ID desde la web de Unity:
   <a class="enlace" target="_blank" href="https://id.unity.com/es/">https://id.unity.com/es/</a>
   </p>
   <a href="UD2/images/ud2-2024-01-24-12-09-38.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-12-09-38.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
   <br>
-  <p>By having a Unity ID, in addition to being able to use the game engine (license for use), you can also access the <span class="negrita">Unity Asset Store</span>
-     where you can download both free and paid assets.</p>
+  <p>Con un Unity ID, además de poder usar el motor (licencia de uso), puedes acceder a la <span class="negrita">Unity Asset Store</span>,
+     donde podrás descargar assets gratuitos y de pago.</p>
   
      <p><a class="enlace" target="_blank" href="https://assetstore.unity.com/">https://assetstore.unity.com/</a></p>
      
   <a href="UD2/images/ud2-2024-01-24-12-10-47.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-12-10-47.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  <br>
-  
+  <!-- NUEVO (Unity 6.2) -->
+  <h3>Recomendación (Unity 6.2)</h3>
+  <ul>
+    <li>Instala una versión reciente de <span class="negrita">Unity 6.x</span> (ideal para nuevos proyectos).</li>
+    <li>Añade módulos de destino según plataforma (Android/iOS/Windows/Linux/WebGL/Consolas).</li>
+    <li>Para proyectos mobile: marca <span class="negrita">Android Build Support</span> (SDK &amp; NDK) y/o iOS.</li>
+  </ul>
   
   </section><!-- End section Unity Hub-->
   
@@ -110,59 +124,66 @@
   <!--*********************************************************Unity Installation***********************************************************-->
   <section class="apartado">
   <a name="sInstalacionUnity"></a>
-  <h2>Unity Installation</h2>
-  <p>To develop video games, you need the <span class="negrita">Unity editor</span>.</p>
+  <h2>Instalación de Unity</h2>
+  <p>Para desarrollar videojuegos, necesitas el <span class="negrita">editor de Unity</span>.</p>
   
-  <p>The first time you log in to Unity Hub with your Unity ID, you will be prompted to install a Unity editor.</p>
+  <p>La primera vez que inicias sesión en Unity Hub con tu Unity ID, se te invitará a instalar un editor de Unity.</p>
   
-  <p>By default, the Unity editor that will be installed is the latest stable version, <span class="negrita">LTS</span> (Long Term Support).</p>
+  <p>Por defecto, se propone instalar la versión estable más reciente, <span class="negrita">LTS</span> (Long Term Support).</p>
   
-  <p>This default installation is not recommended as it does not allow for installation customization.</p>
+  <p>Esta instalación por defecto no es recomendable si deseas personalizar los módulos.</p>
   <a href="UD2/images/ud2-2024-01-24-12-12-31.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-12-12-31.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
   <br>
   
-  <p>From the <span class="negrita">Installs</span> section in <span class="negrita">Unity Hub</span>, you can install different versions of the available Unity editor:</p>
+  <p>Desde la sección <span class="negrita">Installs</span> de <span class="negrita">Unity Hub</span>, puedes instalar diferentes versiones del editor disponibles:</p>
   
   <a href="UD2/images/ud2-2024-01-24-12-35-16.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-12-35-16.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
   <br>
   
-  <p>You must choose which configuration you want for the Unity editor that will allow you to create game executables for each platform, add Asian languages, and include Unity documentation.</p>
-  <p>We can install the LTS version <span class="negrita">2022.3.47f1</span>, which is the last LTS released before <span class="cursiva">Unity 6</span>, 
-    at the time of writing these notes.</p>
-  <p>For class purposes, if you're using Linux, it will be enough to select <span class="negrita">Linux Build Support (IL2CPP)</span> </p>
+  <p>Debes elegir la configuración de módulos para crear ejecutables por plataforma, añadir idiomas y documentación de Unity.</p>
+
+  <!-- MODERNIZA (Unity 6.2) -->
+  <h3>NUEVO (Unity 6.2): módulos recomendados</h3>
+  <ul>
+    <li><span class="negrita">Windows/Mac/Linux Build Support (IL2CPP)</span>.</li>
+    <li><span class="negrita">Android Build Support</span> (SDK, NDK, OpenJDK) y/o <span class="negrita">iOS Build Support</span>.</li>
+    <li><span class="negrita">WebGL Build Support</span> si se requiere web.</li>
+    <li>Plantillas con <span class="negrita">URP</span> para proyectos 2D/3D ligeros.</li>
+  </ul>
+
+  <p>Para clase, si usas Linux, suele bastar con seleccionar <span class="negrita">Linux Build Support (IL2CPP)</span>.</p>
 
   <a href="UD2/images/ud2-2024-01-24-12-36-15.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-12-36-15.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
   <br>
   
-  <h3>Code Editor</h3>
-  <p>Unity requires a code editor for scripting, and during the installation on Windows, <span class="negrita">Microsoft Visual Studio Community</span> is included. 
-    In class, those who have it will detect <span class="negrita">Visual Studio Code</span> and set it as the default editor.</p>
+  <h3>Editor de código</h3>
+  <p>Unity requiere un editor para scripting; en Windows, la instalación incluye <span class="negrita">Microsoft Visual Studio Community</span>. 
+    En clase, quien lo tenga detectará <span class="negrita">Visual Studio Code</span> y podrá establecerlo como editor por defecto.</p>
   
-  <p>If you do not have that editor installed and do not want to install it, you should uncheck it.</p>
+  <p>Si no quieres instalar ese editor, desmárcalo.</p>
   
-  <p>If you use <span class="negrita">Microsoft Visual Studio Community</span> or <span class="negrita">Visual Studio Code</span>
-     as the default editor, you can install the extensions for the <span class="negrita">C#</span> programming language, which is used with Unity.</p>
+  <p>Si usas <span class="negrita">Microsoft Visual Studio Community</span> o <span class="negrita">Visual Studio Code</span>
+     como editor por defecto, instala las extensiones para <span class="negrita">C#</span>, el lenguaje utilizado con Unity.</p>
   
   <a href="UD2/images/ud2-2024-01-24-12-38-44.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-12-38-44.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
   <br>
   
-  <p>If you do not have <span class="negrita">Microsoft Visual Studio Community</span> installed and do not want to install it, you should uncheck it.</p>
-  <p>You can use any other code editor by changing the Unity editor's settings once installed. 
-    In <span class="negrita">Menu &rarr; Edit &rarr; Preferences</span>.</p>
+  <p>Si no tienes <span class="negrita">Microsoft Visual Studio Community</span> y no deseas instalarlo, desmárcalo.</p>
+  <p>Puedes usar cualquier otro editor cambiando la configuración del editor de Unity una vez instalado, en <span class="negrita">Menu &rarr; Edit &rarr; Preferences</span>.</p>
   
     <a href="UD2/images/ud2-2024-01-24-12-40-06.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-12-40-06.png" /><br><figcaption></figcaption></figure></a>
     <br>
     
     <br>
-    <p>If needed later in the development process, you can add/remove modules to the editor.</p>
+    <p>Si lo necesitas más adelante, puedes añadir o quitar módulos al editor.</p>
     
   <a href="UD2/images/ud_2-2024-09-23-10-26-53.png" target="_BLANK"><figure><img src="UD2/images/ud_2-2024-09-23-10-26-53.png" /><br><figcaption></figcaption></figure></a>
   <br>
@@ -173,14 +194,14 @@
 <!--*********************************************************Create Unity Project***********************************************************-->
 <section class="apartado">
   <a name="sCrear_Proyecto_Unity"></a>
-  <h2>Create Unity Project</h2>
+  <h2>Crear proyecto Unity</h2>
   
-  <p>Unity HUB will be the starting point for any Unity project. In its window, you can see the sections:
+  <p><span class="negrita">Unity Hub</span> será el punto de partida de cualquier proyecto. En su ventana, verás las secciones:
     <ul>
-      <li><span class="negrita">Projects</span>: project manager.</li>
-      <li><span class="negrita">Installs</span>: manager of installed Unity editors.</li>
-      <li><span class="negrita">Learn</span>: self-learning section</li>
-      <li><span class="negrita">Community</span>: access to the community with sections such as Asset Store or Forums.</li>
+      <li><span class="negrita">Projects</span>: gestor de proyectos.</li>
+      <li><span class="negrita">Installs</span>: gestor de editores instalados.</li>
+      <li><span class="negrita">Learn</span>: autocurso.</li>
+      <li><span class="negrita">Community</span>: acceso a la comunidad (Asset Store, foros).</li>
     </ul>
   </p>
   <a href="UD2/images/ud_2-2024-09-23-10-32-35.png" target="_BLANK"><figure><img src="UD2/images/ud_2-2024-09-23-10-32-35.png" /><br><figcaption></figcaption></figure></a>
@@ -189,27 +210,33 @@
   <a href="UD2/images/ud_2-2024-09-23-10-33-02.png" target="_BLANK"><figure><img src="UD2/images/ud_2-2024-09-23-10-33-02.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  
-  <p>From <span class="negrita">Unity Hub</span>, in the <span class="negrita">Projects</span> section, 
-    you can create projects by clicking the <span class="d-word">New project</span> button.</p>
+  <p>Desde <span class="negrita">Unity Hub</span>, en la sección <span class="negrita">Projects</span>, 
+    puedes crear proyectos con el botón <span class="d-word">New project</span>.</p>
 
   <a href="UD2/images/ud_2-2024-09-23-10-34-57.png" target="_BLANK"><figure><img src="UD2/images/ud_2-2024-09-23-10-34-57.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  <p>When creating a project, you need to <span class="negrita">choose the type of project</span> so that the necessary libraries are loaded.</p>
+  <p>Al crear un proyecto, debes <span class="negrita">elegir el tipo de proyecto</span> para cargar las librerías necesarias.</p>
   <a href="UD2/images/ud_2-2024-09-23-10-36-36.png" target="_BLANK"><figure><img src="UD2/images/ud_2-2024-09-23-10-36-36.png" /><br><figcaption></figcaption></figure></a>
   <br>
+
+  <!-- NUEVO (Unity 6.2) -->
+  <h3>Sugerencia (Unity 6.2)</h3>
+  <ul>
+    <li>Plantillas <span class="negrita">3D (URP)</span> o <span class="negrita">2D (URP)</span> para empezar con el render pipeline moderno.</li>
+    <li>Añade el paquete <span class="negrita">Input System</span> desde Package Manager y actívalo en Project Settings.</li>
+    <li>Para gestión de recursos, añade <span class="negrita">Addressables</span>.</li>
+  </ul>
   
-  <p>Once the project is created, it will be available in Unity Hub.</p>
+  <p>Una vez creado, el proyecto quedará disponible en Unity Hub.</p>
   <a href="UD2/images/ud_2-2024-09-23-10-37-39.png" target="_BLANK"><figure><img src="UD2/images/ud_2-2024-09-23-10-37-39.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  
-  <p>During creation, <span class="subrayado">the Unity editor will open</span> for that project.</p>
+  <p>Durante la creación, <span class="subrayado">se abrirá el editor de Unity</span> para ese proyecto.</p>
   
   <div class="tarea">
-    <p><span class="negrita">Activity 1:</span> <br>Installation of a Unity editor.</p>
-    <p><span class="negrita">Activity 2:</span> <br>Create the project <span class="negrita">TestYourName</span>.</p>
+    <p><span class="negrita">Actividad 1:</span> <br>Instalación de un editor de Unity.</p>
+    <p><span class="negrita">Actividad 2:</span> <br>Crea el proyecto <span class="negrita">TestYourName</span>.</p>
   </div>
   
   </section><!-- End section Create Unity Project-->
@@ -217,98 +244,97 @@
 <!--*********************************************************Unity Editor***********************************************************-->
 <section class="apartado">
   <a name="sEditor_Unity"></a>
-  <h2>Unity Editor</h2>
-  <p>By default, the Unity editor window looks like this:</p>
+  <h2>Editor de Unity</h2>
+  <p>Por defecto, la ventana del editor de Unity se muestra así:</p>
   <a href="UD2/images/ud_2-2024-09-23-10-44-36.png" target="_BLANK"><figure><img src="UD2/images/ud_2-2024-09-23-10-44-36.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
+  <p>Unity utiliza <span class="negrita">Programación Orientada a Objetos</span>, 
+    por lo que todos los elementos del juego se incluyen en la jerarquía de objetos.</p>
   
-  <p>Unity uses <span class="negrita">Object-Oriented Programming</span>, 
-    which is why all game elements are included in the object hierarchy.</p>
+  <p>El <span class="negrita">juego</span> ocupa la posición más alta de la jerarquía y, dentro de él, están las <span class="negrita">scenes</span>, 
+    que pueden considerarse las pantallas del juego.</p>
   
-  <p>The <span class="negrita">game</span> occupies the highest position in the hierarchy and 
-    within it are the <span class="negrita">scenes</span>, which can be considered the screens of the game.</p>
-  
-  <p>The <span class="negrita">hierarchy</span> shows all the elements in a scene.</p>
+  <p>La <span class="negrita">hierarchy</span> muestra todos los elementos de una scene.</p>
   <figure><img src="UD2/images/ud2-2024-01-24-12-49-46.png" /><br><figcaption></figcaption></figure>
   <br>
   
-  <p>Within each scene, you must add all the necessary elements, 
-    these elements are <span class="d-word">GameObjects</span>. Scenes also follow a hierarchical structure, allowing <span class="negrita">GameObjects</span>
-    to be grouped within each other.</p>
+  <p>En cada scene debes añadir todos los elementos necesarios; estos elementos son <span class="d-word">GameObjects</span>. 
+    Las scenes también siguen una estructura jerárquica, permitiendo agrupar <span class="negrita">GameObjects</span> entre sí.</p>
   
-  <p>By default, a Unity project contains a <span class="negrita">Scene</span> that contains a <span class="negrita">GameObject</span>
-     of type <span class="negrita">camera</span> called <span class="d-word">Main Camera</span> and a <span class="negrita">GameObject</span> of type 
-     <span class="negrita">light</span> called <span class="d-word">Directional Light</span>.</p>
+  <p>Por defecto, un proyecto de Unity contiene una <span class="negrita">Scene</span> con un <span class="negrita">GameObject</span>
+     de tipo <span class="negrita">camera</span> llamado <span class="d-word">Main Camera</span> y un <span class="negrita">GameObject</span> de tipo 
+     <span class="negrita">light</span> llamado <span class="d-word">Directional Light</span>.</p>
   
-    <p>In the central part of the editor, you can see a <span class="negrita">scene view</span> which,
-      when you press the play button, will become <span class="negrita">the view from the camera configured in the game</span>.</p>
+  <p>En la parte central del editor puedes ver la <span class="negrita">scene view</span> que,
+      al pulsar el botón de reproducción, pasará a ser <span class="negrita">la vista desde la cámara configurada en el juego</span>.</p>
       <figure><img src="UD2/images/ud2-2024-01-24-12-52-56.png" /><br><figcaption></figcaption></figure>
       <br>
       
-      
-      <p>When you select an object in the scene, the <span class="negrita">Inspector</span> displays all its characteristics.</p>
-      
+  <p>Al seleccionar un objeto de la scene, el <span class="negrita">Inspector</span> muestra todas sus características.</p>
   <figure><img src="UD2/images/ud2-2024-01-24-12-53-48.png" /><br><figcaption></figcaption></figure>
   <br>
   
-      <p>From the scripting code, you can access the components of each object.</p>
+  <p>Desde el código de scripting puedes acceder a los componentes de cada objeto.</p>
      
-    <p>Each type of object will have default components, and additional components can be added if needed.</p>
-    <figure><img src="UD2/images/ud2-2024-01-24-12-54-33.png" /><br><figcaption>Main Camera</figcaption></figure>
-    <br>
-    <figure><img src="UD2/images/ud2-2024-01-24-12-54-55.png" /><br><figcaption>Directional Light</figcaption></figure>
-    <br>
-    <p>The <span class="negrita">File Manager</span> allows you to view and perform all required actions on the project files.</p>
-    <p>It is recommended that all folders and files you want to create be created from the file manager in the editor.</p>
+  <p>Cada tipo de objeto tendrá componentes por defecto, y se pueden añadir más si es necesario.</p>
+  <figure><img src="UD2/images/ud2-2024-01-24-12-54-33.png" /><br><figcaption>Main Camera</figcaption></figure>
+  <br>
+  <figure><img src="UD2/images/ud2-2024-01-24-12-54-55.png" /><br><figcaption>Directional Light</figcaption></figure>
+  <br>
+  <p>El <span class="negrita">File Manager</span> permite ver y realizar acciones sobre los archivos del proyecto.</p>
+  <p>Se recomienda crear desde el administrador las carpetas y archivos que necesites.</p>
     
-     <figure><img src="UD2/images/ud2-2024-01-24-12-55-54.png" /><br><figcaption></figcaption></figure>
-     <br>
-    <p>The official documentation contains all the information about the Unity interface: 
+  <figure><img src="UD2/images/ud2-2024-01-24-12-55-54.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <p>La documentación oficial detalla la interfaz de Unity: 
       <a class="enlace" target="_blank" href="https://docs.unity3d.com/2023.3/Documentation/Manual/UsingTheEditor.html">https://docs.unity3d.com/2023.3/Documentation/Manual/UsingTheEditor.html</a>
-    </p>
+  </p>
     
-    <a href="UD2/images/ud2-2024-01-24-12-56-39.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-12-56-39.png" /><br><figcaption></figcaption></figure></a>
-    <br>
-    
+  <a href="UD2/images/ud2-2024-01-24-12-56-39.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-12-56-39.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+
+  <!-- NUEVO (Unity 6.2) -->
+  <h3>Consejo de productividad</h3>
+  <p>En <span class="negrita">Project Settings &rarr; Editor &rarr; Enter Play Mode Settings</span>, puedes desactivar <em>Domain Reload</em>/<em>Scene Reload</em> 
+    para acelerar la entrada en Play Mode (ten en cuenta efectos colaterales y reinicializa estados manualmente cuando proceda).</p>
       
-     
-  </section><!-- End section Unity Editor-->
+</section><!-- End section Unity Editor-->
   
 
 <!--*********************************************************Game Execution***********************************************************-->
 <section class="apartado">
   <a name="sEjecución_del_juego"></a>
-  <h2>Game Execution</h2>
-  <p>When the <span class="negrita">game is running</span> (the "Play" ▶ button on the top bar), the view section changes to the camera view and
-     the entire interface darkens.</p>
+  <h2>Ejecución del juego</h2>
+  <p>Cuando el <span class="negrita">juego está en ejecución</span> (botón "Play" ▶ en la barra superior), la vista cambia a la cámara y
+     la interfaz se oscurece.</p>
   
-  <p>While the game is running, you can work with the project to see how it reacts to different values, 
-    but <span class="negrita">changes only persist during the game execution</span>.</p>
+  <p>Durante la ejecución puedes modificar valores para ver reacciones, 
+    pero <span class="negrita">los cambios solo persisten mientras el juego está en ejecución</span>.</p>
   
-  <p>Since there is almost no difference in style between the two states, sometimes it’s easy to forget that the game is running and lose changes.</p>
+  <p>Como hay poca diferencia visual entre estados, a veces se olvida que el juego está corriendo y se pierden cambios.</p>
   <a href="UD2/images/ud2-2024-01-24-12-59-27.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-12-59-27.png" /><br><figcaption></figcaption></figure></a>
   <br>
 
   <section class="marco-t warn">
-    <span class="icono warning"> </span> Please note that when we are running we can change parameters, but when we return to editing mode
-     these parameters will return to their original state. Be careful when making changes during execution, as they will not be saved. You must make sure which state you are in.
+    <span class="icono warning"> </span> Ten en cuenta que en ejecución puedes cambiar parámetros, pero al volver al modo edición
+     dichos parámetros recuperarán su estado original. Verifica siempre en qué modo estás.
     </section>
   <section class="marco-b">
       
   </section>
-  <p>From the <span class="negrita">Menu &rarr; Edit &rarr; Preferences</span> in the <span class="negrita">Colors</span> section,
-     you can decide which color will overlay the interface when the game is running: <span class="negrita">Playmode tint</span>.</p>
+  <p>Desde <span class="negrita">Menu &rarr; Edit &rarr; Preferences</span>, en la sección <span class="negrita">Colors</span>,
+     puedes decidir el color de superposición cuando el juego está en ejecución: <span class="negrita">Playmode tint</span>.</p>
   
-  <p>It's helpful to choose a mode that provides high contrast so you can always know if the game is running or not.</p>
+  <p>Es útil elegir un color de alto contraste para distinguir fácilmente si el juego está corriendo o no.</p>
   <a href="UD2/images/ud2-2024-01-24-13-00-34.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-13-00-34.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
  
-  <p>Once the color is changed, it’s much easier to see that the game is running.</p>
+  <p>Una vez cambiado, será más fácil ver que el juego está en ejecución.</p>
   <a href="UD2/images/ud2-2024-01-24-13-01-12.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-13-01-12.png" /><br><figcaption></figcaption></figure></a>
   <br>
-  <a href="UD2/images/set_running_color.gif" target="_BLANK"><figure><img src="UD2/images/set_running_color.gif" /><br><figcaption>Color changes when running mode is active</figcaption></figure></a>
+  <a href="UD2/images/set_running_color.gif" target="_BLANK"><figure><img src="UD2/images/set_running_color.gif" /><br><figcaption>Cambios de color con el modo de ejecución activo</figcaption></figure></a>
   <br>
   
   </section><!-- End section Game Execution-->
@@ -317,18 +343,16 @@
 <!--*********************************************************Adding Executable Code***********************************************************-->
 <section class="apartado">
   <a name="sAnyadiendo_codigo_ejecutable"></a>
-  <h2>Adding Executable Code</h2>
+  <h2>Añadiendo código ejecutable</h2>
 
-  <p>To add executable code to the project, you need to create files to contain the code; these files are called <span class="negrita">scripts</span>.</p>
-  <p>There are several ways to add scripts to the project, but the most appropriate method is through the file manager.</p>
-  <p>Additionally, it is important to maintain good file organization, so it is common to create a folder named <span class="inline-folder">Scripts</span> 
-    within the <span class="inline-folder">Assets</span> folder and place all necessary scripts there.</p>
+  <p>Para añadir código ejecutable al proyecto, debes crear archivos que lo contengan; estos archivos se denominan <span class="negrita">scripts</span>.</p>
+  <p>Hay varias formas de añadir scripts, pero lo más apropiado es hacerlo desde el administrador de archivos.</p>
+  <p>Además, conviene mantener una buena organización: es habitual crear la carpeta <span class="inline-folder">Scripts</span> 
+    dentro de <span class="inline-folder">Assets</span> y ubicar allí todos los scripts necesarios.</p>
   <a href="UD2/images/ud2-2024-01-24-13-14-52.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-13-14-52.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
- 
-
-  <p>Once the <span class="inline-folder">Scripts</span> folder is created, right-click on it or on the folder icon in the manager and select <span class="negrita">Create &rarr; C# Script</span></p>
+  <p>Con la carpeta <span class="inline-folder">Scripts</span> creada, haz clic derecho sobre ella o sobre el icono de carpeta y selecciona <span class="negrita">Create &rarr; C# Script</span></p>
 
   <a href="UD2/images/ud2-2024-01-24-13-15-46.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-13-15-46.png" /><br><figcaption></figcaption></figure></a>
   <br>
@@ -336,16 +360,16 @@
   <br>
   
 
-  <p>At this point, you should type the name of the file, <span class="subrayado">following C# naming conventions similar to Java</span>
-     (<span class="negrita">CamelCase</span> with the first letter capitalized).</p>
+  <p>En este punto, escribe el nombre del archivo <span class="subrayado">siguiendo las convenciones de C# similares a Java</span>
+     (<span class="negrita">CamelCase</span> con la primera letra en mayúscula).</p>
 
-  <p>Also, the script should have a name that clearly identifies the actions it performs.</p>
+  <p>Además, el script debe tener un nombre que identifique claramente lo que hace.</p>
 
-  <p>When a Script is selected in the File Manager, you can see its code in the Inspector, but it cannot be edited from there.</p>
+  <p>Al seleccionar un Script en el File Manager verás su código en el Inspector, pero no se puede editar desde ahí.</p>
   <a href="UD2/images/ud_2-2024-09-23-11-04-35.png" target="_BLANK"><figure><img src="UD2/images/ud_2-2024-09-23-11-04-35.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  <p>Double-clicking the Script will open it in the configured code editor.</p>
+  <p>Haciendo doble clic sobre el Script, se abrirá en el editor de código configurado.</p>
   <a href="UD2/images/ud2-2024-01-24-13-37-10.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-13-37-10.png" /><br><figcaption>Microsoft Visual Studio Community</figcaption></figure></a>
   <br>
   
@@ -353,16 +377,15 @@
   <br>
   
 
-  <h3>Default Structure of a Unity Script</h3>
-  <p>A default Unity Script has the following structure:</p>
+  <h3>Estructura por defecto de un Script de Unity</h3>
+  <p>Un Script por defecto de Unity tiene la siguiente estructura:</p>
 
   <a href="UD2/images/ud_2-2024-09-23-11-12-52.png" target="_BLANK"><figure><img src="UD2/images/ud_2-2024-09-23-11-12-52.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  
-  <p>The frequency with which a game loop executes can vary, so the <span class="r-word">Update</span> method does not always run the same number of times.</p>
+  <p>La frecuencia del game loop puede variar, por lo que el método <span class="r-word">Update</span> no se ejecuta siempre el mismo número de veces.</p>
 
-  <p>The following code will make messages appear in the console when the script runs.</p>
+  <p>El siguiente código mostrará mensajes en la consola cuando se ejecute el script.</p>
   <section><pre><code class="language-csharp">using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -383,51 +406,58 @@ public class HelloThere : MonoBehaviour
 }</code></pre>
   </section><br><br>
 
-  <p>To test this, click the "Play" ▶ button in the top center of the Unity editor.</p>
+  <p>Para probarlo, pulsa el botón "Play" ▶ en la parte superior del editor.</p>
   <a href="UD2/images/ud2-2024-01-24-13-40-42.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-13-40-42.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
 
-  <p>As seen, no messages appear in the <span class="negrita">Console</span> tab.</p>
+  <p>Como se ve, no aparecen mensajes en la pestaña <span class="negrita">Console</span>.</p>
   <a href="UD2/images/ud2-2024-01-24-13-41-31.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-13-41-31.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
   <br>
-  <p>This is because <span class="negrita">to run a script, it must be attached to a GameObject</span>.</p>
+  <p>Esto se debe a que <span class="negrita">para ejecutar un script, debe estar adjunto a un GameObject</span>.</p>
 
-  <p>You can attach a script to a GameObject by dragging the script from the task manager to the GameObject in various ways:
+  <p>Puedes adjuntar un script a un GameObject arrastrándolo desde el administrador al GameObject de varias formas:
     <ul>
-      <li>Dragging the script onto the GameObject in the hierarchy.
+      <li>Arrastrando el script sobre el GameObject en la jerarquía.
         <a href="UD2/images/dragging_script.gif" target="_BLANK"><figure><img src="UD2/images/dragging_script.gif" /><br><figcaption></figcaption></figure></a>
-        
-
       </li>
-      <li>Dragging the script onto the GameObject in the scene view.
+      <li>Arrastrando el script sobre el GameObject en la vista de la scene.
         <a href="UD2/images/dragging_script_to_object_in_view.gif" target="_BLANK"><figure><img src="UD2/images/dragging_script_to_object_in_view.gif" /><br><figcaption></figcaption></figure></a>
       </li>
-      <li>Selecting the GameObject and dragging the script onto the Inspector.
+      <li>Seleccionando el GameObject y arrastrando el script al Inspector.
         <a href="UD2/images/dragging_script_to_inspector.gif" target="_BLANK"><figure><img src="UD2/images/dragging_script_to_inspector.gif" /><br><figcaption></figcaption></figure></a>
       </li>
     </ul>
   </p>
 
-  <p>Once a script is attached to a GameObject, it becomes a component of the GameObject and appears in the Inspector.</p>
+  <p>Una vez adjunto, el script se convierte en un componente del GameObject y aparece en el Inspector.</p>
   <figure><img src="UD2/images/ud2-2024-01-24-13-42-50.png" /><br><figcaption></figcaption></figure>
   <br>
-  <p>Now, when running the game, the created script will execute.</p>
+  <p>Ahora, al ejecutar el juego, el script se ejecutará.</p>
   <figure><img src="UD2/images/ud2-2024-01-24-13-45-10.png" /><br><figcaption></figcaption></figure>
   <br>
 
-  <p>It is important to check the <span class="negrita">Collapse</span> option, which will consolidate messages with the same content into a single line and increase the count of occurrences.</p>
+  <p>Es importante marcar la opción <span class="negrita">Collapse</span>, que consolida mensajes iguales en una sola línea e incrementa el recuento.</p>
 
-  <p>Also, enabling the <span class="negrita">Stats</span> option in the view can provide information such as the <span class="negrita">FPS</span> (frames per second) at which the game is running.</p>
+  <p>También, activando <span class="negrita">Stats</span> en la vista, puedes ver información como los <span class="negrita">FPS</span> (frames por segundo).</p>
   
   <figure><img src="UD2/images/ud2-2024-01-24-13-45-54.png" /><br><figcaption></figcaption></figure>
   <br>
+
+  <!-- NUEVO (Unity 6.2) Buenas prácticas -->
+  <h3>Buenas prácticas (Unity 6.2)</h3>
+  <ul>
+    <li>Expón propiedades privadas con <span class="negrita">[SerializeField]</span> en lugar de hacerlas <em>public</em>.</li>
+    <li>Usa <span class="negrita">[RequireComponent]</span> para dependencias (p. ej., Rigidbody).</li>
+    <li>Cachea referencias con <span class="negrita">GetComponent&lt;T&gt;()</span> en <span class="negrita">Awake</span>/<span class="negrita">Start</span>, evita llamarlo cada frame en <span class="negrita">Update</span>.</li>
+  </ul>
+
   <hr>
   <div class="tarea">
-    <p>Activity 3: <br>Create a Script named MyFirstScript that displays "Hello, world!" and attach it to the Main Camera. Then remove it and attach it to the Directional Light, 
-      and finally create an EmptyObject and attach it to that. Is there any difference?</p>
+    <p>Actividad 3: <br>Crea un Script llamado <span class="negrita">MyFirstScript</span> que muestre "Hello, world!" y adjúntalo a la <span class="negrita">Main Camera</span>. 
+      Luego quítalo y adjúntalo a la <span class="negrita">Directional Light</span>, y finalmente crea un <span class="negrita">EmptyObject</span> y adjúntalo ahí. ¿Hay alguna diferencia?</p>
   </div>
 
 </section><!-- End section Adding Executable Code-->
@@ -437,86 +467,88 @@ public class HelloThere : MonoBehaviour
 <section class="apartado">
 <a name="sScripting"></a>
 <h2>Scripting</h2>
-<p>Like any software application, games need their functionality to be coded.</p>
+<p>Como en cualquier aplicación software, los juegos necesitan que su funcionalidad sea programada.</p>
 
-<p>In Unity, functionality is coded through <span class="negrita">scripts</span>.</p>
+<p>En Unity, la funcionalidad se programa mediante <span class="negrita">scripts</span>.</p>
 
-<p>With scripts, you can:
+<p>Con scripts puedes:
   <ul>
-    <li>Respond to player inputs.</li>
-    <li>Execute events at the right moment.</li>
-    <li>Create graphical effects.</li>
-    <li>Control the physical behavior of GameObjects.</li>
-    <li>Implement an AI system for game NPCs.</li>
+    <li>Responder a entradas del jugador.</li>
+    <li>Ejecutar eventos en el momento adecuado.</li>
+    <li>Crear efectos gráficos.</li>
+    <li>Controlar el comportamiento físico de GameObjects.</li>
+    <li>Implementar un sistema de IA para NPCs del juego.</li>
     <li>…</li>
   </ul>
 </p>
 
-<p>Currently, the only recommended programming language for creating projects with Unity is <span class="r-word">C#</span>.</p>
-<p>There is also support for <span class="negrita">UnityScript</span>, which was designed from JavaScript specifically for Unity, but its use is discouraged. It is possible that some current projects may still have scripts in UnityScript.</p>
-<p>Previously, the language <span class="negrita">Boo</span>, which had a syntax similar to Python, could also be used. Today, it is no longer supported.</p>
+<p>Actualmente, el único lenguaje recomendado para crear proyectos con Unity es <span class="r-word">C#</span>.</p>
 
-<p><span class="negrita">C#</span> was created in 2000 to be compatible with the <span class="cursiva">.NET platform from Microsoft</span>.</p>
+<!-- MODERNIZA: UnityScript/Boo ya no -->
+<p><span class="negrita">UnityScript</span> (derivado de JavaScript) y <span class="negrita">Boo</span> (similar a Python) 
+  forman parte del legado y <span class="negrita">ya no se usan ni se recomiendan</span> en proyectos modernos.</p>
 
-<p>It inherits the best features from C++, Java, and Visual Basic.</p>
+<p><span class="negrita">C#</span> se creó en 2000 para ser compatible con la <span class="cursiva">plataforma .NET de Microsoft</span>.</p>
 
-<p>It is a native object-oriented language.</p>
+<p>Hereda buenas características de C++, Java y Visual Basic.</p>
 
-<p>Thanks to the IL2CPP library, scripts created in Unity are converted to C++ scripts so that the native compiler can complete the compilation on the target platform.</p>
+<p>Es un lenguaje nativo orientado a objetos.</p>
 
-<p>A Unity script has the following basic structure:
+<p>Gracias a la librería IL2CPP, los scripts creados en Unity se convierten a C++ para compilar nativamente en la plataforma de destino.</p>
+
+<p>Un script de Unity tiene la siguiente estructura básica:
   <ul>
-    <li><span class="negrita">UnityEngine</span>: imports the MonoBehaviour class needed to define scripts associated with GameObjects.</li>
-    <li><span class="negrita">System.Collections</span>: .NET library with lists, arrays, hash tables, etc.</li>
-    <li> Defined class that extends MonoBehaviour:
+    <li><span class="negrita">UnityEngine</span>: importa la clase MonoBehaviour para definir scripts asociados a GameObjects.</li>
+    <li><span class="negrita">System.Collections</span>: librería .NET con listas, arrays, tablas hash, etc.</li>
+    <li> Clase definida que extiende de MonoBehaviour:
       <ul>
-        <li><span class="negrita">Start Method</span>: used to initialize the GameObject.</li>  
-        <li><span class="negrita">Update Method</span>: executed once per frame, also known as the game loop.</li>
+        <li><span class="negrita">Método Start</span>: se usa para inicializar el GameObject.</li>  
+        <li><span class="negrita">Método Update</span>: se ejecuta una vez por frame (game loop).</li>
       </ul>
     </li>
   </ul>
 </p>
 
-<p>In C#, all instructions must end with <span class="d-word">;</span> <span class="subrayado">just like in Java</span>.</p>
+<p>En C#, todas las instrucciones deben terminar con <span class="d-word">;</span> <span class="subrayado">igual que en Java</span>.</p>
 <a href="UD2/images/ud2-2024-01-24-13-54-35.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-13-54-35.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<h3>Data Types in C#</h3>
-<p class="sub-section">Basic data types in C# are:</p>
+<h3>Tipos de datos en C#</h3>
+<p class="sub-section">Los tipos de datos básicos en C# son:</p>
 
 <a href="UD2/images/ud2-2024-01-24-13-55-57.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-13-55-57.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p class="sub-section">Compound data types:</p>
+<p class="sub-section">Tipos de datos compuestos:</p>
 
 <p>
     <ul>
-      <li><span class="negrita">Array</span>: a collection of one data type.</li>
-      <li><span class="negrita">List</span>: dynamic lists (can modify their size).</li>
+      <li><span class="negrita">Array</span>: colección de un mismo tipo de dato.</li>
+      <li><span class="negrita">List</span>: listas dinámicas (pueden modificar su tamaño).</li>
     </ul>
   </p>
   
-<p class="sub-section">Data types specific to C# for Unity are:</p>
+<p class="sub-section">Tipos de datos específicos de C# para Unity:</p>
 
 <p>
   <ul>
-    <li><span class="negrita">Vector3</span>: a package of three floats (x, y, z) that facilitates working with points, vectors, and directions within 3D space.</li>
-    <li><span class="negrita">GameObject</span>: reference to a GameObject in the scene or a prefab from the project.</li>
-    <li><span class="negrita">Transform, Rigidbody, or any other component</span>: reference to such a component within a GameObject.</li>
-    <li><span class="negrita">Texture, Material, or any other type of asset</span>: reference to an asset from the project.</li>
+    <li><span class="negrita">Vector3</span>: paquete de tres floats (x, y, z) que facilita trabajar con puntos, vectores y direcciones en 3D.</li>
+    <li><span class="negrita">GameObject</span>: referencia a un GameObject de la scene o un prefab del proyecto.</li>
+    <li><span class="negrita">Transform, Rigidbody u otro componente</span>: referencia a dicho componente dentro de un GameObject.</li>
+    <li><span class="negrita">Texture, Material u otro tipo de asset</span>: referencia a un asset del proyecto.</li>
   </ul>
 </p>
 
-<h3>Operators</h3>
-<p>The operators are similar to those used in Java:</p>
+<h3>Operadores</h3>
+<p>Los operadores son similares a los de Java:</p>
 <a href="UD2/images/ud2-2024-01-25-10-27-24.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-10-27-24.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-<p>The <span class="r-word">Mathf</span> class allows calculations with <span class="r-word">float</span> numbers:</p>
+<p>La clase <span class="r-word">Mathf</span> permite cálculos con números <span class="r-word">float</span>:</p>
 
-<p>Examples:
+<p>Ejemplos:
   <ul>
     <li>Mathf.Abs(number)</li>
     <li>Mathf.Round(number)</li>
@@ -533,28 +565,28 @@ public class HelloThere : MonoBehaviour
 
 <h3>Variables</h3>
 
-<p>Variables in C# are defined just like in Java:</p>
+<p>Las variables en C# se definen igual que en Java:</p>
 
 	<section><pre><code class="language-kotlin">int age;</code></pre>
   </section><br>
 
-<p>They can also be initialized at declaration:</p>
+<p>También pueden inicializarse en la declaración:</p>
 
 	<section><pre><code class="language-kotlin">int age = 21;</code></pre>
   </section><br>
 
-<p>Once declared, their value can be changed at any time:</p>
+<p>Una vez declarada, su valor puede cambiarse en cualquier momento:</p>
 
 	<section><pre><code class="language-kotlin">age = 22;</code></pre>
   </section><br>
 
-<p>If variables are declared for the class as properties, their access can be set as <span class="negrita">public</span> or <span class="negrita">private</span>.</p>
-<p>If a variable is declared within a method, the access type should not be declared as it will only be visible within that method.</p>
+<p>Si las variables se declaran como propiedades de clase, su acceso puede establecerse como <span class="negrita">public</span> o <span class="negrita">private</span>.</p>
+<p>Si una variable se declara dentro de un método, no debe indicarse el tipo de acceso; solo será visible en ese método.</p>
 
 <a href="UD2/images/ud2-2024-01-25-10-30-33.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-10-30-33.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-<p>Variables declared as <span class="negrita">public</span> properties <span class="subrayado">will be visible from the Unity Inspector</span> during runtime, allowing their values to be changed from there during execution.</p>
+<p>Las variables declaradas como propiedades <span class="negrita">public</span> <span class="subrayado">serán visibles en el Inspector</span> durante la ejecución, permitiendo cambiar su valor desde ahí.</p>
 <a href="UD2/images/ud2-2024-01-25-10-31-18.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-10-31-18.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
@@ -562,196 +594,195 @@ public class HelloThere : MonoBehaviour
 <br>
 
 
-<p>It should be noted that changes made during execution are temporary, and when execution stops, it will return to the initial state.</p>
+<p>Recuerda que los cambios hechos durante la ejecución son temporales: al detener, se vuelve al estado inicial.</p>
 
-<h3>Control Structures</h3>
+<h3>Estructuras de control</h3>
 
 <a href="UD2/images/ud2-2024-01-25-10-48-49.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-10-48-49.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
 <h3>Arrays</h3>
-<p class="sub-section">Declare an <span class="negrita">Array</span></p>
-<p>You can specify its size and then assign values:</p>
+<p class="sub-section">Declarar un <span class="negrita">Array</span></p>
+<p>Puedes indicar su tamaño y luego asignar valores:</p>
 <a href="UD2/images/ud2-2024-01-25-10-49-57.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-10-49-57.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p>You can declare it by directly assigning values:</p>
+<p>También puedes declararlo asignando valores directamente:</p>
 <a href="UD2/images/ud2-2024-01-25-10-50-13.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-10-50-13.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-<p class="sub-section">Iterate through an <span class="negrita">Array</span></p>
-<p>Using a <span class="negrita">for</span> loop:</p>
+<p class="sub-section">Recorrer un <span class="negrita">Array</span></p>
+<p>Con un bucle <span class="negrita">for</span>:</p>
 <a href="UD2/images/ud2-2024-01-25-10-51-21.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-10-51-21.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p>Using a <span class="negrita">foreach</span> loop:</p>
+<p>Con un bucle <span class="negrita">foreach</span>:</p>
 <a href="UD2/images/ud2-2024-01-25-10-51-40.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-10-51-40.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-<h3>Lists</h3>
-<p><span class="negrita">Lists</span> allow modification of their size and addition/removal of elements.</p>
+<h3>Listas</h3>
+<p>Las <span class="negrita">List</span> permiten modificar su tamaño y añadir/eliminar elementos.</p>
 
-<p>You need to import the library:</p>
+<p>Debes importar la librería:</p>
 <a href="UD2/images/ud2-2024-01-25-10-56-04.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-10-56-04.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p>Declare an empty list:</p>
+<p>Declarar una lista vacía:</p>
 <a href="UD2/images/ud2-2024-01-25-10-56-18.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-10-56-18.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p>Declare a list by assigning data:</p>
+<p>Declarar una lista asignando datos:</p>
 <a href="UD2/images/ud2-2024-01-25-10-56-33.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-10-56-33.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p><span class="negrita">Lists</span> allow modification of their size and addition/removal of elements.</p>
+<p>Las <span class="negrita">List</span> permiten modificar su tamaño y añadir/eliminar elementos.</p>
 <a href="UD2/images/ud2-2024-01-25-10-57-17.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-10-57-17.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p>Modifying elements is done similarly to Arrays:</p>
+<p>Modificar elementos se hace de forma similar a los Arrays:</p>
 <a href="UD2/images/ud2-2024-01-25-10-57-36.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-10-57-36.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p>Add elements to a list:</p>
+<p>Añadir elementos a una lista:</p>
 <a href="UD2/images/ud2-2024-01-25-10-57-57.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-10-57-57.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p>Remove elements from a list:</p>
+<p>Eliminar elementos de una lista:</p>
 <a href="UD2/images/ud2-2024-01-25-10-58-16.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-10-58-16.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p>Get the length of a list:</p>
+<p>Obtener la longitud de una lista:</p>
 <a href="UD2/images/ud2-2024-01-25-10-58-36.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-10-58-36.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p>Remove all elements from a list:</p>
+<p>Eliminar todos los elementos de una lista:</p>
 <a href="UD2/images/ud2-2024-01-25-11-00-32.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-11-00-32.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p>Check if a value is in a list:</p>
+<p>Comprobar si un valor está en una lista:</p>
 <a href="UD2/images/ud2-2024-01-25-11-00-50.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-11-00-50.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p>Sort a list:</p>
+<p>Ordenar una lista:</p>
 <a href="UD2/images/ud2-2024-01-25-11-01-05.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-11-01-05.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p>Reverse the order of a list:</p>
+<p>Invertir el orden de una lista:</p>
 <a href="UD2/images/ud2-2024-01-25-11-01-21.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-11-01-21.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p>Iterate through a list:</p>
+<p>Recorrer una lista:</p>
 <a href="UD2/images/ud2-2024-01-25-11-02-23.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-11-02-23.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p>Convert a list to an array:</p>
+<p>Convertir una lista a array:</p>
 <a href="UD2/images/ud2-2024-01-25-11-02-38.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-11-02-38.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
-<p>Convert an array to a list:</p>
+<p>Convertir un array a lista:</p>
 <a href="UD2/images/ud2-2024-01-25-11-02-58.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-11-02-58.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
 
 <h3>ArrayList</h3>
-<p>In an Array or a List, you can only store data of one type.</p>
+<p>En un Array o una List solo puedes almacenar datos de un tipo.</p>
 
-<p>In <span class="r-word">ArrayList</span>, you can store data of different types and it does not have a predefined size like lists.</p>
+<p>En <span class="r-word">ArrayList</span> puedes almacenar datos de distintos tipos y no tiene tamaño predefinido como las listas.</p>
 <a href="UD2/images/ud2-2024-01-25-11-04-31.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-11-04-31.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-
-<p>You should be careful when changing data because the compiler does not perform any type checking:</p>
+<p>Debes tener cuidado al cambiar datos porque el compilador no realiza comprobación de tipos:</p>
 <a href="UD2/images/ud2-2024-01-25-11-05-06.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-11-05-06.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
+<!-- AVISO moderno -->
+<p><span class="negrita">Aviso (Unity 6.2):</span> <span class="negrita">ArrayList</span> es una colección no genérica. 
+  Para código moderno, prefiere <span class="negrita">List&lt;T&gt;</span> (tipada) por seguridad y rendimiento.</p>
 
 <h3>HashTable</h3>
-<p><span class="r-word">HashTable</span>, also known as <span class="negrita">dictionaries</span>, is a composite data type 
-  where each element is a <span class="negrita">key-value</span> pair.</p>
+<p><span class="r-word">HashTable</span>, también conocida como <span class="negrita">diccionarios</span>, es un tipo compuesto 
+  donde cada elemento es un par <span class="negrita">clave-valor</span>.</p>
 
-<p>In HashTables, data is accessed through the key.</p>
+<p>En las HashTables, el acceso a los datos se realiza mediante la clave.</p>
 <a href="UD2/images/ud2-2024-01-25-11-06-39.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-11-06-39.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
+<p>Las claves deben ser siempre de tipo <span class="negrita">string</span>.</p>
 
-<p>Keys must always be of type <span class="negrita">string</span>.</p>
+<p>El tamaño de una HashTable es dinámico, como en las listas.</p>
 
-<p>The size of a HashTable is dynamic, like lists.</p>
-
-<p>You can check if a key exists with the <span class="negrita">Contains</span> method, and to use the value you need to perform a casting:</p>
+<p>Puedes comprobar si existe una clave con el método <span class="negrita">Contains</span>; para usar el valor, realiza un casting:</p>
 <a href="UD2/images/ud2-2024-01-25-11-07-37.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-11-07-37.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-
-<p>Iterating through a HashTable:</p>
+<p>Recorrer una HashTable:</p>
 <a href="UD2/images/ud2-2024-01-25-11-08-34.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-11-08-34.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
+<!-- AVISO moderno -->
+<p><span class="negrita">Aviso (Unity 6.2):</span> usa <span class="negrita">Dictionary&lt;TKey, TValue&gt;</span> en lugar de <span class="negrita">Hashtable</span> 
+  para colecciones tipadas (mejor legibilidad, menos castings, mejor rendimiento).</p>
 
-<h3>Methods</h3>
-<p>Like in any object-oriented language, you can create methods within classes.</p>
+<h3>Métodos</h3>
+<p>Como en cualquier lenguaje orientado a objetos, puedes crear métodos dentro de las clases.</p>
 
-<p>In C#, to create a method, you should follow this structure:
+<p>En C#, para crear un método, sigue esta estructura:
   <ul>
-    <li>Access modifier (if none is specified, it defaults to private).</li>
-    <li>Return type (void if it returns nothing).</li>
-    <li>Method name (first letter capitalized and CamelCase).</li>
-    <li>Parentheses to indicate parameters, if any.</li>
-    <li>Braces to indicate the method's code block.</li>
+    <li>Modificador de acceso (si no se especifica, por defecto es private).</li>
+    <li>Tipo de retorno (void si no devuelve nada).</li>
+    <li>Nombre del método (primera letra en mayúscula y CamelCase).</li>
+    <li>Paréntesis para los parámetros, si los hay.</li>
+    <li>Llaves para el bloque de código.</li>
   </ul>
 </p>
-<p>Method declaration:</p>
+<p>Declaración de un método:</p>
 <a href="UD2/images/ud2-2024-01-25-11-10-37.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-11-10-37.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-
-<p>Calling a method is done the same way as in any programming language:</p>
+<p>La llamada a un método se realiza como en cualquier lenguaje:</p>
 <a href="UD2/images/ud2-2024-01-25-11-11-02.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-11-11-02.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
+<h3>Clase MonoBehaviour</h3>
+<p>Al crear un script C# en Unity, verás que la clase hereda de <span class="r-word">MonoBehaviour</span>.</p>
 
-<h3>MonoBehaviour Class</h3>
-<p>When creating a C# script in Unity, you will notice that the class containing the script inherits from the <span class="r-word">MonoBehaviour</span> class.</p>
-
-<p>The <span class="negrita">MonoBehaviour</span> class is necessary for scripts that are associated with the project's <span class="negrita">GameObjects</span>.</p>
+<p>La clase <span class="negrita">MonoBehaviour</span> es necesaria para scripts asociados a <span class="negrita">GameObjects</span> del proyecto.</p>
 <a href="UD2/images/ud2-2024-01-25-11-12-47.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-11-12-47.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
+<p>Unity funciona por eventos, por lo que en clases que heredan de MonoBehaviour puedes incluir métodos predefinidos 
+  que se ejecutarán cuando ocurran los eventos asociados.</p>
 
-<p>Since Unity operates on events, within classes inheriting from MonoBehaviour, you can include a series of default-defined methods that will execute when the events associated with those methods occur.</p>
-
-<p>By default, two methods are added that execute with specific events:
+<p>Por defecto, se añaden dos métodos que se ejecutan con eventos específicos:
   <ul>
-    <li><span class="negrita">Start</span>: is called in the frame when the script is activated and just before the first call to any Update method.</li>
-    <li><span class="negrita">Update</span>: is called every frame.</li>
+    <li><span class="negrita">Start</span>: se llama en el frame en que se activa el script y justo antes de la primera llamada a cualquier Update.</li>
+    <li><span class="negrita">Update</span>: se llama en cada frame.</li>
   </ul>
 </p>
 
-
-
-<p>There are many more methods that can be consulted in the documentation: 
+<p>Hay muchos más métodos en la documentación: 
   <a class="enlace" target="_blank" href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.html">https://docs.unity3d.com/ScriptReference/MonoBehaviour.html</a></p>
 
 <h3>Game Loop</h3>
 
-<p>The game loop can be defined as the different phases a script goes through during execution:
+<p>El game loop puede definirse como las distintas fases por las que pasa un script durante la ejecución:
   <ul>
     <li>Initialization</li>
     <li>Physics Update</li>
@@ -761,14 +792,14 @@ public class HelloThere : MonoBehaviour
   </ul>
 </p>
 
-<p>Each of these phases is associated with a set of methods from the MonoBehaviour class:</p>
+<p>Cada fase se asocia con un conjunto de métodos de MonoBehaviour:</p>
 <a href="UD2/images/ud2-2024-01-25-11-15-54.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-25-11-15-54.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
+<p>Al ejecutar el juego, Unity inicia el game loop y, en cada fase, llamará a los métodos correspondientes 
+  que se encuentren en los scripts añadidos a los GameObjects de la scene.</p>
 
-<p>When the game is executed, Unity starts running the game loop, and in each phase, it will call the corresponding methods that are found in the scripts added to the GameObjects in the scene.</p>
-
-<p>Example of a script implementing some of the MonoBehaviour class methods:</p>
+<p>Ejemplo de script implementando algunos métodos de MonoBehaviour:</p>
 
 <section><pre><code class="language-csharp">using System.Collections;
 using System.Collections.Generic;
@@ -800,8 +831,8 @@ public class SphereEvents : MonoBehaviour
 </section><br><br>
 
 <br>
-<div class="tarea">Activity 4: Create a spherical GameObject, rename it MySphere. 
-  Create the SphereEvents script, assign it to the sphere and run the scene.</a>
+<div class="tarea">Actividad 4: Crea un GameObject esférico y renómbralo <span class="negrita">MySphere</span>. 
+  Crea el script <span class="negrita">SphereEvents</span>, asígnalo a la esfera y ejecuta la scene.</a>
 
   <a href="UD2/images/sphere_script_sample.gif" target="_BLANK"><figure><img src="UD2/images/sphere_script_sample.gif" /><br><figcaption></figcaption></figure></a>
   <br>
