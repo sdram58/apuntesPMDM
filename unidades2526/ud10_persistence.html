@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>U10. Persistencia</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../styles/prism.css">
+  <link rel="stylesheet" href="../styles/styles.css">
+  <script src="../script/script.js"></script>
+</head>
+
+<body class="line-numbers">
+  <div class="logos"></div>
+
+  <nav id="menu-lateral" class="main-menu-lateral oculto">
+    <div class="fila">
+      <a href="#sIntroduccion" title="1.- Introduction">1.- Introduction</a>
+      <a href="#sFileSystem" title="2.- File System">2.- File System</a>
+      <a href="#sAlamacenamientoEspecificodelaapp" title="3.- App-specific Storage">3.- App-specific Storage</a>
+    </div>
+    
+    <div class="fila">
+      <a href="#sAccesoalalmacenamientoexterno" title="4.- Access to external storage">4.- Access to external storage</a>
+      <a href="#sDataStore" title="5.- DataStore">5.- DataStore</a>
+      <a href="#sROOM" title="6.- Room">6.- Room</a>
+    </div>
+    
+    <div class="fila oculto">
+      <a href="#sP05" title="7.- P05. Shopping List">7.- P05. Shopping List</a>
+    </div>
+</nav> <!-- BTM_MENU-->
+
+<h1>U10.- Persistence</h1>  
+
+<div class="main-menu">
+    <div class="fila">
+      <a href="#sIntroduccion" title="1.- Introduction">1.- Introduction</a>
+      <a href="#sFileSystem" title="2.- File System">2.- File System</a>
+      <a href="#sAlamacenamientoEspecificodelaapp" title="3.- App-specific Storage">3.- App-specific Storage</a>
+    </div>
+    
+    <div class="fila">
+      <a href="#sAccesoalalmacenamientoexterno" title="4.- Access to external storage">4.- Access to external storage</a>
+      <a href="#sDataStore" title="5.- DataStore">5.- DataStore</a>
+      <a href="#sROOM" title="6.- Room">6.- Room</a>
+    </div>
+    <div class="fila oculto">
+      <a href="#sP05" title="7.- P05. Shopping List">7.- P05. Shopping List</a>
+      <a href="" class="relleno"></a><a href="" class="relleno"></a>
+    </div>
+</div>
+
+
+  
+<!--*********************************************************Introduction***********************************************************-->
+<section class="apartado">
+  <a name="sIntroduccion"></a>
+  <h2>Introduction</h2>
+  
+<p>Data persistence is a very important issue in mobile applications.</p>
+<p>The first reason is well known to everyone and happens when the device's orientation/configuration changes. This has been solved with the use of states and <span class="cursiva">ViewModel</span>.</p>
+<p>However, there are other situations where it is interesting to be able to store data for later use.</p>
+<p>In this unit, the following tools for implementing data persistence will be studied:
+  <ul>
+    <li><span class="negrita">File System</span>.</li>
+    <li><span class="negrita">Datastore</span>.</li>
+    <li><span class="negrita">Room</span>.</li>
+  </ul>
+</p>
+ 
+</section><!-- End section Introduction-->
+
+
+<!--*********************************************************File System***********************************************************-->
+<section class="apartado">
+  <a name="sFileSystem"></a>
+  <h2>File System</h2>
+  
+  <p>As with any operating system, Android uses a file system.</p>
+  
+<p>This file system allows several options for storing application data:
+  <ul>
+    <li>App-specific storage (<span class="cursiva">App-specific storage</span>).</li>
+    <li>Shared storage (<span class="cursiva">Shared storage</span>).</li>
+    <li>Preferences.</li>
+    <li>Databases.</li>
+  </ul>
+</p>
+
+<h3>App-specific storage</h3>
+<p>Stores files intended for use only by the application itself.</p>
+<p>You can create dedicated folders in both internal and external storage.</p>
+<p>Internal storage should be used for confidential information (other apps will not have access to it).</p>
+
+<h3>Shared storage</h3>
+  <p>Stores files that the application can share with other apps, such as documents, media (audio, video…), or other files.</p>
+  
+
+  <h3>Preferences</h3>
+  <p>Private storage for the application. Allows key-value pairs.</p>
+
+  <h3>Databases</h3>
+
+  <p>Stores structured data privately using the Room library (a framework that uses SQLite).</p>
+  
+
+  <p>You can consult the following summary table in the <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage?hl=es-419">official documentation</a>:</p>
+  
+  <figure><img src="UD10/images/ud10-2023-12-17-20-11-08.png" /><br><figcaption></figcaption></figure>
+  <br>
+  <figure><img src="UD10/images/ud10-2023-12-17-20-13-05.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <h3>Which option to choose?</h3>
+<p>When choosing a storage type, several variables come into play:
+  <ul>
+    <li><span class="negrita">Size of the data to be stored</span>: internal storage has limited space.</li>
+    <li><span class="negrita">Ensuring access to the data</span>: internal storage or a database is better, as external storage is not always accessible.</li>
+    <li><span class="negrita">Type of data</span>: if the files should not be shared, app-specific storage should be used.</li>
+    <li><span class="negrita">Data privacy</span>: if working with sensitive data, it should be stored in preferences, a database, or internal storage. The latter also hides the data from users.</li>
+  </ul>
+</p>
+
+</section><!-- End section File System-->
+
+
+  <!--*********************************************************App-Specific Storage***********************************************************-->
+  <section class="apartado">
+    <a name="sAlamacenamientoEspecificodelaapp"></a>
+    <h2>App-Specific Storage</h2>
+    
+    <p>Android offers the following locations for exclusive use by the application.</p>  
+  
+  <p>Directories in <span class="negrita">internal storage</span>:
+    <ul>
+      <li>Android prevents other applications from accessing these locations.</li>
+      <li>Starting with Android 10 (API 29) and higher, these locations are encrypted.</li>
+      <li>They are a good place to store sensitive data.</li>
+      <li>They typically have limited capacity.</li>
+    </ul>
+  </p>
+  
+  <p>Directories in <span class="negrita">external storage</span>:
+  <ul>
+    <li>These locations are intended for exclusive use by the application, although other applications with the proper permissions may access them.</li>
+    <li>If files are to be created that are intended to be shared with other applications, they should be created in the shared space of external storage.</li>
+  </ul></p>
+  
+  <p>Both options include a directory for storing <span class="negrita">persistent files</span> and another for <span class="negrita">cache</span>.</p>
+  
+  <h3>Access to files in internal storage</h3>
+  <p>Common and persistent files are located in a directory that can be accessed using the <span class="r-word">filesDir</span> property of a <span class="negrita">context</span> object (as shown earlier, the context can be obtained in various ways).</p>
+  
+  <p>Using the <span class="r-word">File</span> API (similar to Java), you can access and store files.</p>
+  
+  <p>To avoid affecting the app's performance, the same file should not be opened and closed multiple times.</p>
+  
+  <p>Here’s how to open a file using the API:</p>
+  
+  <section><pre><code class="language-kotlin">val file = File(applicationContext.filesDir, "file_name")</code></pre>
+  </section><br><br>
+  
+  <p class="sub-section">Storing a file using a Stream</p>
+  <p>As an alternative to the File API, you can use the <span class="r-word">openFileOutput()</span> method to get a <span class="r-word">FileOutputStream</span> object, which allows writing to a file inside the <span class="r-word">filesDir</span> directory.</p>
+  <section><pre><code class="language-kotlin">val myFile = "myFile"
+  val content = "My first Android file!"
+  
+  applicationContext.openFileOutput(myFile, Context.MODE_PRIVATE).use {
+      it.write(content.toByteArray())
+  }
+  </code></pre>
+  </section><br><br>
+  
+  <p>From Android Studio, you can view the created files using the <span class="negrita">Device File Explorer</span>:
+    <ul>
+      <li><span class="negrita">data -> data -> package_name -> files</span></li>
+    </ul>
+  </p>
+  <figure><img src="UD10/images/ud10-2023-12-17-20-41-46.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <figure><img src="UD10/images/ud10-2023-12-17-20-42-26.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p>In Android 7 (API 24) or higher, if you don’t specify <span class="negrita">Context.MODE_PRIVATE</span>, a security exception will be thrown</p>
+  
+  <figure><img src="UD10/images/ud10-2023-12-17-20-43-21.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p>If you want to allow other applications to access internal storage files, you need to use a 
+  <a class="enlace" target="_blank" href="https://developer.android.com/reference/androidx/core/content/FileProvider">FileProvider</a> 
+  with the <span class="negrita">FLAG_GRANT_READ_URI_PERMISSION</span> attribute.</p>
+  
+  <p>To read the content of a file, use the <span class="r-word">openFileOutput()</span> method 
+    to get a <span class="r-word">BufferedReader</span> object that returns a sequence of strings (one for each line of the file):</p>
+  
+  <section><pre><code class="language-kotlin">// Access file using Stream
+  applicationContext.openFileInput(myFile).bufferedReader().useLines { fileContent ->
+      var text = ""
+      content.forEach { 
+          text += it
+      }
+      Text(text = text)
+  }
+  </code></pre>
+  </section><br><br>
+    
+  <p class="sub-section">Visualize file list</p>
+  
+  <p>You can get an array of file names in the <span class="r-word">filesDir</span> directory using the <span class="r-word">fileList()</span> method:</p>
+  
+  <section><pre><code class="language-kotlin">val files: Array<String> = applicationContext.fileList()
+  
+  Column() {
+      files.forEach { 
+          Text(text = it)
+      }
+  }
+  </code></pre>
+  </section><br><br>
+  
+  <p class="sub-section">Subdirectories</p>
+  
+  <p>If necessary, you can create subdirectories using the <span class="r-word">getDir()</span> method.</p>
+  
+  <p>This method also allows you to access the created subdirectories.</p>
+  <section><pre><code class="language-kotlin">applicationContext.getDir("subdirectory", Context.MODE_PRIVATE)</code></pre>
+  </section><br><br>
+  
+  <p>This method has a small drawback: it creates the directory with the <span class="negrita">app_</span> prefix 
+     and outside the <span class="negrita">files</span> directory:</p>
+  
+  <figure><img src="UD10/images/ud10-2023-12-17-20-50-18.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p>To create subdirectories within <span class="negrita">files</span>, you can use the methods of the <span class="r-word">File</span> class as in <span class="d-word">Java</span>.</p>
+  <section><pre><code class="language-kotlin">val appDir: File = applicationContext.filesDir
+  val subDir = File(appDir, "subDirectory")
+  if (!subDir.exists()) subDir.mkdir()
+  </code></pre>
+  </section><br><br>
+  <figure><img src="UD10/images/ud10-2023-12-17-21-33-45.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  
+  <h3>Cache</h3>
+  <p>If you need to temporarily store files with sensitive data, they should be stored in the <span class="inline-folder">cache</span> directory.</p>
+  
+  <p>To create a file in cache storage, use 
+    <span class="r-word">File.createTempFile()</span>, specify the prefix (name), 
+    the suffix (extension, by default .tmp), and a context object:</p>
+    <section><pre><code class="language-kotlin">File.createTempFile("temporaryFile", null, applicationContext.cacheDir)</code></pre>
+    </section><br><br>
+  <a href="UD10/images/ud_10-2025-01-28-17-15-04.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-01-28-17-15-04.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <p>To access files located in the cache directory, use the <span class="r-word">cacheDir</span> property on a context and the <span class="negrita">File</span> class:</p>
+  
+  <section><pre><code class="language-kotlin">val cacheFile = File(applicationContext.cacheDir, "fileName")</code></pre>
+  </section><br><br>
+  
+  <p>The <span class="inline-folder">cache</span> directory is managed by Android, 
+    if the app runs out of space, Android will delete files stored in that directory.</p>
+  
+  <p>You can delete files from the cache directory using one of the following methods.
+    <ul>
+      <li>If the file is located in the <span class="inline-folder">files</span> folder:
+  <section><pre><code class="language-kotlin">applicationContext.deleteFile("fileName")</code></pre>
+  </section><br><br>
+  
+      </li>
+      <li>Using a <span class="r-word">File</span> object depending on the file’s location:
+        <section><pre><code class="language-kotlin">val fileToDelete = File(applicationContext.filesDir, "fileName")
+  
+  fileToDelete.delete()
+  </code></pre>
+        </section>
+  
+        <section><pre><code class="language-kotlin">//In cache
+  val cacheFile = File(applicationContext.cacheDir, "fileName")
+  
+  cacheFile.delete()
+  </code></pre>
+        </section><br><br>
+  
+      </li>
+    </ul>
+  </p>
+  
+    
+    </section><!-- End section App-Specific Storage-->
+  
+
+  <!--*********************************************************Access to External Storage***********************************************************-->
+  <section class="apartado">
+    <a name="sAccesoalalmacenamientoexterno"></a>
+    <h2>Access to External Storage</h2>
+  <p>If additional space is needed to store application-specific files, external storage can be used, provided it is available.</p>
+  
+  <p>External storage can be a partition in the internal memory, but it can also be located on an external storage device such as an SD card or even a USB flash drive connected to the USB.</p>
+  
+  <p>In cases where external storage is located on a connected storage device, this storage may become unavailable, for example, if an SD card is removed from the device.</p>
+  
+  <p>Therefore, it is not advisable to create files in external storage that the proper functioning of the application depends on.</p>
+  
+  <h3>Checking the Availability of External Storage</h3>
+  <p>It is important to check that external storage is available before attempting to read or write data to it.</p>
+  
+  <p>Using the <span class="r-word">Environment</span> class and its <span class="r-word">getExternalStorageState</span> method, 
+     you can check the availability of external storage as well as the permissions on it.</p>
+  
+  <p>If the state is <span class="d-word">MEDIA_MOUNTED</span>, you will have <span class="negrita">read and write</span> permissions, 
+    if the state is <span class="d-word">MEDIA_MOUNTED_READ_ONLY</span>, you will only have <span class="negrita">read</span> permissions.</p>
+  <p>A good way to check this would be with the following functions:</p>
+  
+  <section><pre><code class="language-kotlin">fun isExternalStorageWritable(): Boolean {
+      return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
+  }
+  
+  fun isExternalStorageReadable(): Boolean {
+      return Environment.getExternalStorageState() in
+          setOf(Environment.MEDIA_MOUNTED, Environment.MEDIA_MOUNTED_READ_ONLY)
+  }
+  </code></pre>
+  </section><br><br>
+  <h3>Selecting a Location on External Storage</h3>
+  
+  <p>Since external storage can be either in internal memory or on a connected device, 
+    when storing information in external storage, you must choose the location.</p>
+  <p>To access the locations, use the <span class="r-word">ContextCompat</span> class and its <span class="r-word">getExternalFilesDirs</span> method.</p>
+  <p>This will return an array with all the available volumes.</p>
+  <p>Generally, the first element in the array will be the primary external storage volume, 
+    and this should be used unless it is full or unavailable.</p>
+  
+    <p>The following code would get the path to the primary external storage volume.</p>
+  
+  <section><pre><code class="language-kotlin">val externalStorageVolumes: Array<out File> =
+      ContextCompat.getExternalFilesDirs(applicationContext, null)
+  
+  val primaryExternalStorage = externalStorageVolumes[0]
+  </code></pre>
+  </section><br><br>
+  
+    <p>By checking the size of the <span class="negrita">externalStorageVolumes</span> array, you can determine if there are additional volumes.</p>
+    
+  <p>The first element (index 0) is internal storage.</p>
+  
+  <p>The microSD card is usually the second element (index 1).</p>
+  
+  <p>If other devices like flash drives are connected, they will appear after that.</p>
+  
+  <p>With index 1, you can access all external storage.</p>
+  <section><pre><code class="language-kotlin">val externalStorage = applicationContext.getExternalFilesDirs(null)[1]</code></pre>
+  </section><br><br>
+  
+  <p>You can specify a particular directory within external storage:</p>
+  
+  <section><pre><code class="language-kotlin">val externalDownloads = applicationContext.getExternalFilesDirs(Environment.DIRECTORY_DOWNLOADS)</code></pre>
+  </section><br><br>
+  <a href="UD10/images/ud_10-2025-01-28-17-35-17.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-01-28-17-35-17.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <h3>Accessing Files in External Storage</h3>
+      <p>To access files in external storage, use the <span class="negrita">getExternalFilesDir</span> method 
+         of a <span class="negrita">context</span> object.</p>
+  
+    <p>To avoid affecting the application's performance, the same file should not be opened and closed multiple times.</p>
+  
+  <section><pre><code class="language-kotlin">val fileName = "myFile"
+  
+  val appSpecificExternalDir = File(applicationContext.getExternalFilesDir(null), fileName)
+  </code></pre>
+  </section><br><br>
+  <p>On Android 11 (API 30) and higher, creating subdirectories in external storage is not allowed.</p>
+  
+  <h3>Creating Files in External Storage Cache</h3>
+  
+  
+  <p>To create a file in the external storage cache, use the <span class="r-word">externalCacheDir</span> property of a <span class="negrita">context</span> object:</p>
+  
+     <section><pre><code class="language-kotlin">val cacheFileName = "myTemporaryFile"
+  
+  val externalCacheFile = File(applicationContext.externalCacheDir, cacheFileName)
+  </code></pre>
+     </section><br><br>
+     
+  <h3>Deleting Files from External Storage Cache</h3>
+  
+  <p>You should use the <span class="r-word">delete</span> method on a <span class="negrita">File</span> object representing the file to be deleted.</p>
+  <figure><img src="UD10/images/ud10-2023-12-17-23-16-13.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <h3>Multimedia Content</h3>
+  
+  <p>If the app works with multimedia files that are not essential but add value to the user experience, 
+    it is best to store them in external storage:</p>
+  <section><pre><code class="language-kotlin">fun getAppSpecificAlbumStorageDir(context: Context, albumName: String): File? {
+      // Get the directory for images within the application's specific
+      // external storage directory
+      val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), albumName)
+  
+      // The following instruction attempts to create the directory if it doesn't
+      // already exist
+      if (!file.mkdirs()) {
+          // Error creating the directory
+      }
+  
+      return file
+  }
+  </code></pre>
+  </section><br><br>
+  <p>For the proper functioning of the application, it is important to use the directory names provided by the API 
+    with the constants of the <span class="r-word">Environment</span> class:</p>
+  <figure><img src="UD10/images/ud10-2023-12-17-23-19-32.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p><a class="enlace" target="_blank" href="https://developer.android.com/reference/android/os/Environment#fields">https://developer.android.com/reference/android/os/Environment#fields</a></p>
+  
+  <p>If none of the predefined names fit the application's needs, you can pass null to the <span class="r-word">getExternalFilesDir</span> method.</p>
+  
+  <p>This will store the files directly in the root directory of the specific external storage for the application.</p>
+  
+  
+  <h3>Checking Free Space</h3>
+  <p>Some devices have very limited storage space, so when developing an application, special care should be taken with the space the app occupies.</p>
+  
+  <p>A good practice before storing a file is to check if the file fits in the available space.</p>
+  
+  <p>However, it is not always necessary to check free space because there are times when it is not known how much space the file will occupy. 
+    In these cases, you can attempt to save the file and catch the <span class="r-word">IOException</span> that will be thrown if the file cannot be stored.</p>
+  
+  <p>To check the free space the device can provide, use the <span class="r-word">getAllocatableBytes</span> method.</p>
+  
+  <p>This method may sometimes show more capacity than the real one because the system may have detected files in other applications' caches and may delete them if necessary.</p>
+  
+  <p>If there is enough space, the <span class="r-word">allocateBytes</span> method should be used. 
+    If this method is not used, the app can request the user to delete files or clear the device's entire cache.</p>
+  
+  <p>The following code shows how to obtain the device's free space:</p>
+  
+  <section><pre><code class="language-kotlin">// 10 MB of storage is needed.
+  val NUM_BYTES_NEEDED_FOR_MY_APP = 1024 * 1024 * 10L;
+  
+  val storageManager = applicationContext.getSystemService&lt;StorageManager&gt;()!!
+  val appSpecificInternalDirUuid: UUID = storageManager.getUuidForPath(filesDir)
+  val availableBytes: Long = storageManager.getAllocatableBytes(appSpecificInternalDirUuid)
+  
+  if (availableBytes >= NUM_BYTES_NEEDED_FOR_MY_APP) {
+      storageManager.allocateBytes(appSpecificInternalDirUuid, NUM_BYTES_NEEDED_FOR_MY_APP)
+  } else {
+      val storageIntent = Intent().apply {
+          // To ask the user to delete all app cache, the value ACTION_CLEAR_APP_CACHE should be used
+          action = ACTION_MANAGE_STORAGE
+      }
+  }
+  </code></pre>
+  </section><br><br>
+  
+  
+  
+    </section><!-- End section Access to External Storage-->
+  
+
+
+  <!--*********************************************************DataStore***********************************************************-->  
+<section class="apartado">
+  <a name="sDataStore"></a>
+  <h2>DataStore</h2>
+  
+  <p><span class="d-word">DataStore</span> allows storing small or simple datasets on the device.</p>
+
+  <p>Data stored with <span class="negrita">DataStore</span> is saved in the app's internal storage, 
+  so no other app will be able to access it.</p>
+
+  <p>DataStore has two implementations:
+  <ul>
+    <li><span class="negrita">Preferences DataStore</span>: stores key-value pairs.</li>
+    <li><span class="negrita">Proto DataStore</span>: stores objects (instances of classes).</li>
+  </ul>
+  </p>
+
+  <p>Due to the complexity of developing <span class="negrita">Proto DataStore</span>, in class we will only study <span class="negrita">Preferences DataStore</span>.</p>
+
+  <p>DataStore allows creating files to store information, generally preferences.</p>
+
+  <p>The advantage of <span class="negrita">DataStore</span> is that the operating system handles all the management of preference files.</p>
+
+  <p><span class="negrita">Rules for using DataStore</span>:
+  <ul>
+    <li>Only maintain one open instance of DataStore on the same file.</li>
+    <li>The generic type of DataStore must be immutable.</li>
+    <li>Never mix SingleProcessDataStore and MultiProcessDataStore for the same file.</li>
+  </ul>
+  </p>
+  
+<h3>Preferences DataStore</h3>
+<p><span class="negrita">Preferences DataStore</span> allows storing key-value pairs.</p>
+
+<p>The data that can be stored will be of basic types:
+  <ul>
+    <li>Int</li>
+    <li>Double</li>
+    <li>String</li>
+    <li>Boolean</li>
+    <li>Float</li>
+    <li>Long</li>
+  </ul>
+</p>
+
+<p>Additionally, it offers the possibility of storing a set of strings:
+  <ul>
+    <li><span class="negrita">Set&lt;String></span></li>
+  </ul>
+</p>
+
+<p>It is most common to store and retrieve preferences from the <span class="cursiva">ViewModel</span> to properly maintain state variables.</p>
+
+<p>Thus, to keep a good file structure in the project, it is recommended to create a package called <span class="inline-folder">preferences</span> 
+  where a class will be located, which will implement all the logic for storing and retrieving preference values.</p>
+
+<p>This new class will be used from the corresponding <span class="cursiva">ViewModel</span>.</p>
+
+<p><span class="negrita">Preferences DataStore</span> uses coroutines and Flows (data flows).</p>
+
+<p><span class="negrita">Flow</span> allows emitting several values sequentially, which are collected from a coroutine. For example, 
+  they can be used to receive live updates from a database.</p>
+
+<p>A <span class="negrita">Flow</span> is similar to an Iterator but uses suspension functions to produce and consume values.</p>
+
+<p>Since the data is stored in the device's internal storage, the most recommended dispatcher when launching the coroutine is to use the input-output thread set: 
+  <span class="r-word">Dispatchers.IO.</span></p>
+
+<p>In Preferences DataStore, a Flow is used to retrieve the data.</p>
+
+<p>Preferences DataStore also needs the application context for proper management of preference files.</p>
+
+<h3>Practical Case: ViewModel and Live Data</h3>
+<p>To use Preferences DataStore, the following dependency needs to be added:
+  <ul>
+    <li><span class="inline-file">libs.versions.toml</span>: <ul>
+      <li><span class="cursiva">[version]</span> section:
+        <section><pre><code class="language-kotlin">datastorePreferences = "1.1.2"</code></pre>
+        </section>
+      </li>
+      <li><span class="cursiva">[libraries]</span> section:
+        <section><pre><code class="language-kotlin">androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref="datastorePreferences" }</code></pre>
+        </section>
+      </li>
+    </ul></li>
+    <li><span class="inline-file">build.graddle.kts (Module: app) </span>:
+    <ul>
+      <li><span class="cursiva">plugins</span> section: 
+        <section><pre><code class="language-kotlin">implementation(libs.androidx.datastore)</code></pre>
+        </section><br>
+      </li>
+    </ul></li>
+  </ul>
+</p>
+
+<p>If other dependencies are required (<span class="negrita">Navigation</span>, <span class="negrita">LiveData</span>…) they should also be added.</p>
+
+<p>Remember to press <span class="negrita">Sync Now</span> after these changes.</p>
+
+<p class="sub-section">Class to save and retrieve preferences</p>
+
+<section><pre><code class="language-kotlin">class AppPreferences(val context: Context) {
+    //Static variables to represent the keys of the values to save
+    companion object{
+        val NAME = stringPreferencesKey("NAME")
+    }
+
+    //DataStore variable passed the preferences file name "preferences"
+    //By declaring it with the "by" delegate, the variable will be a singleton: only one instance will exist
+    private val Context.dataStore: DataStore&lt;Preferences> by preferencesDataStore(name = "preferences")
+
+    //Function that receives a String and stores it in the preferences file declared in DataStore
+    //Saving must be done in the background, so it requires a coroutine
+    //The suspend keyword is added to indicate that a coroutine should be used during the call
+    suspend fun saveFullName(name: String){
+        context.dataStore.edit {preferences ->
+            preferences[NAME] = name
+        }
+    }
+
+    //Function that retrieves a String from the preferences file declared in DataStore.
+    //This function returns a Flow
+    fun loadName()= context.dataStore.data.map { preferences ->
+        preferences[NAME] ?: ""
+    }
+}</code></pre>
+</section><br>
+
+<p class="sub-section">ViewModel that uses the previous class</p>
+<section><pre><code class="language-kotlin">//Since the context is needed, the ViewModel extends from AndroidViewModel so that the operating system
+//passes the Application object from which the context will be retrieved
+class PreferencesViewModel(application: Application):AndroidViewModel(application) {
+    //Declaring the object for saving/storing preferences
+    private val preferences = AppPreferences(application.applicationContext)
+
+    private val _fullName = MutableLiveData&lt;String>()
+    val fullname: LiveData&lt;String> = _fullName
+
+    fun onFullNameChange(fullName:String){
+        _fullName.value = fullName
+    }
+
+    //Method that calls AppPreferences to store the preference in the preferences file
+    fun saveFullName(name: String){
+        viewModelScope.launch {
+            preferences.saveFullName(name)
+            _fullName.postValue("")
+        }
+    }
+    
+    //Method that calls AppPreferences to retrieve the preference from the preferences file
+    fun loadFullName(){
+        viewModelScope.launch { 
+            //Since loadName returns a Flow, to collect its data, the collect() method is used
+            preferences.loadName().collect(){
+                _fullName.postValue(it)
+            }
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<p>On the different screens of the application, if data needs to be saved or retrieved from the preferences file, it will use the methods from the ViewModel:</p>
+
+<section><pre><code class="language-kotlin">val fullname by preferencesViewModel.fullname.observeAsState(initial = "")
+
+TextField(
+    value = fullname,
+    onValueChange = {
+        preferencesViewModel.onFullnameChange(it)
+    },
+    label = { Text(text = "Full Name") }
+)
+
+Button(
+    onClick = {
+        preferencesViewModel.saveFullname(fullname)
+    }
+) {
+    Text(text = "Save Name")
+}
+
+Button(
+    onClick = {
+        preferencesViewModel.loadFullname()
+    }
+) {
+    Text(text = "Retrieve Name")
+}
+</code></pre>
+</section><br><br>
+
+<a href="UD10/images/ud_10-2025-02-03-13-10-50.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-13-10-50.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<p class="sub-section">Complex Data</p>
+
+<p>If more complex data such as objects needs to be saved, the class that stores the preferences should deconstruct and reconstruct that object.</p>
+<p>The class to store could look like this:</p>
+<section><pre><code class="language-kotlin">data class User(
+    val username:String,
+    val email:String,
+    val id: Int
+) </code></pre>
+</section><br><br>
+<p>Class to save/retrieve preferences:</p>
+<section><pre><code class="language-kotlin">class AppPreferences(val context: Context) {
+    //Static variables to represent the keys of the values to save
+    companion object{
+        val FULL_NAME = stringPreferencesKey("FULL_NAME")
+        val EMAIL = stringPreferencesKey("EMAIL")
+        val ID = intPreferencesKey("ID")
+    }
+
+    //DataStore variable passed the preferences file name "preferences"
+    //By declaring it with the "by" delegate, the variable will be a singleton: only one instance will exist
+    private val Context.dataStore: DataStore&lt;Preferences> by preferencesDataStore(name = "preferences")
+
+    //Function that receives a String and stores it in the preferences file declared in DataStore
+    //Saving must be done in the background, so it requires a coroutine
+    //The suspend keyword is added to indicate that a coroutine should be used during the call
+    suspend fun saveUser(user: User){
+        context.dataStore.edit {preferences ->
+            preferences[FULL_NAME] = user.username
+            preferences[EMAIL] = user.email
+            preferences[ID] = user.id            
+        }
+    }
+
+    //Function that retrieves a String from the preferences file declared in DataStore.
+    //This function returns a Flow
+    fun loadUser()= context.dataStore.data.map { preferences ->
+        User(
+            username = preferences[FULL_NAME] ?: "",
+            email = preferences[EMAIL] ?: "",
+            id = preferences[ID] ?: 0
+        )
+    }
+}</code></pre>
+</section><br><br>
+
+<p>And the ViewModel could look like this:</p>
+<section><pre><code class="language-kotlin">//Since the context is needed, the ViewModel extends from AndroidViewModel so that the operating system
+//passes the Application object from which the context will be retrieved
+class PreferencesViewModel(application: Application):AndroidViewModel(application) {
+    //Declaring the object for saving/storing preferences
+    private val preferences = AppPreferences(application.applicationContext)
+
+    private var _id = MutableLiveData&lt;Int>()
+    val id:LiveData&lt;Int> get() = _id
+
+    private val _username = MutableLiveData&lt;String>()
+    val username: LiveData&lt;String> = _username
+
+    private var _email = MutableLiveData&lt;String>()
+    val email:LiveData&lt;String> get() = _email
+    fun onUserNameChange(username:String){
+        _username.value = username
+    }
+
+    fun onEmailChange(email:String){
+        _email.value = email
+    }
+
+    //Method that calls AppPreferences to store the preference in the preferences file
+    fun saveUser(user: User){
+        viewModelScope.launch {
+            preferences.saveUser(user)
+            _username.postValue("")
+        }
+    }
+
+    //Method that calls AppPreferences to retrieve the preference from the preferences file
+    fun loadFullName(){
+        viewModelScope.launch {
+            //Since loadName returns a Flow, to retrieve its data, the collect() method is used
+            preferences.loadUser().collect(){
+                _username.postValue(it.username)
+                _email.postValue(it.email)
+                _id.postValue(it.id)
+            }
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<div class="tarea">
+  <p>Create an application with a <span class="cursiva">SplashScreen</span> and an <span class="cursiva">onboarding</span>
+     where user data, such as name, email, etc., is requested.</p>
+  
+  <p>These data will be stored in a DataStore, and the app will detect if no data exists, showing the onboarding, and if data is found, it will go to the main screen.
+    The app does not need to be functional, meaning the main screen can just display some text.</p>
+
+</div>
+
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD10/DataStoreOnBoarding">Here</a> you can see an example</p>
+</section><!-- End section DataStore-->
+
+  
+
+  <!--*********************************************************ROOM***********************************************************-->
+  <section class="apartado">
+    <a name="sROOM"></a>
+    <h2>ROOM</h2>
+    
+    <h3>Introduction</h3>
+  
+    <p>Apps that manage large amounts of structured data can benefit from the ability to store that data locally. 
+      The most common use case is to cache relevant data so that the device can access it even when it is offline, 
+      allowing the user to browse that content while disconnected.</p>
+  
+      <p>Some examples of apps that use a database on the device: 
+        <ul>
+          <li>Contacts: personal and contact data of people.</li>
+          <li>Clock: alarms.</li>
+          <li>Google Maps: list of recent searches.</li>
+          <li>…</li>
+        </ul>
+  </p>
+      
+    
+  <p>The persistence library <span class="negrita">Room</span> provides an abstraction layer for <span class="negrita">SQLite</span>
+     that allows access to the database smoothly while still leveraging all of SQLite's technology. 
+     In particular, Room provides the following benefits:
+    <ul>
+      <li>Compilation-time verification of SQL queries</li>
+      <li>Convenience annotations that minimize repetitive and error-prone boilerplate code</li>
+      <li>Optimized database migration paths</li>
+    </ul></p>
+    
+  
+  <p>Due to these considerations, it is recommended to use Room instead of directly using the SQLite APIs.</p>
+  <figure><img src="UD10/images/ud10-2023-12-20-10-03-17.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+  <p>You can complete the information <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage/room?hl=es-419">here</a></p>
+  
+  
+  <h3>Main Components</h3>
+  
+  <p>These are the three main components of Room:
+    <ul>
+      <li>The <span class="negrita">database class</span> which contains the database and serves as the main access point for the app's connection to persistent data</li>
+      <li>The <span class="negrita">data entities</span> that represent tables in your app's database</li>
+      <li>The <span class="negrita">Data Access Objects (DAOs)</span> that provide methods your app can use to query, update, insert, and delete data in the database</li>
+    </ul>
+  </p>
+  
+  <p>The database class provides your app with instances of the DAOs associated with that database. 
+    In turn, the app can use the DAOs to retrieve data from the database as instances of the associated data entity objects. 
+    The app can also use the defined data entities to update rows in the corresponding tables or create new rows for insertion.
+    The following image shows the relationships between the different components of Room.</p>
+  
+    <figure><img src="UD10/images/ud10-2023-12-20-10-39-31.png" /><br><figcaption></figcaption></figure>
+    <br>
+    
+  
+  <h3>Setting up Room</h3>
+  
+  <p>To use Room in your app, you need to add the following dependencies:
+    <ul>
+      <li><span class="inline-file">libs.versions.toml</span>:
+      <ul>
+        <li><span class="cursiva">[version]</span> section: 
+        <section><pre><code class="language-kotlin">room = "2.6.1"
+  ksp = "2.0.0-1.0.24"</code></pre>
+        </section> <br>
+        <section class="marco-t warn">
+          <span class="icono warning"> </span> The <a class="enlace" target="_blank" href="https://github.com/google/ksp/releases">ksp version</a> must be compatible with the Kotlin version
+          </section>
+        <section class="marco-b">
+            
+        </section>
+        
+        </li>
+        <li><span class="cursiva">[libraries]</span> section:
+        <section><pre><code class="language-kotlin">androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+  androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+  androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }</code></pre>
+        </section></li>
+        <li><span class="cursiva">[plugins]</span> section:
+        <section><pre><code class="language-kotlin">ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }</code></pre>
+        </section></li>
+      </ul></li>
+      <li><span class="inline-file">build.graddle.kts (Module: app) </span>:
+        <ul>
+          <li>In <span class="cursiva">plugins</span> section: <section><pre><code class="language-kotlin">alias(libs.plugins.ksp) apply true</code></pre>
+          </section>
+          </li>
+          <li>In <span class="cursiva">dependencies</span> section:
+          <section><pre><code class="language-kotlin">implementation(libs.androidx.room.runtime)
+  implementation(libs.androidx.room.ktx)
+  ksp(libs.androidx.room.compiler)</code></pre>
+          </section><br><br></li>
+  
+        </ul>
+      </li>
+  
+    </ul>
+  
+  </p>
+  
+  <p>Remember to press <span class="negrita">sync now</span> to apply the changes</p>
+  
+  
+  
+  <h3>Case Study: Task Manager</h3>
+  
+  <p>In this section, we will create an application to save tasks, each task will have a name, and we will be able to indicate whether the task is done or not, and delete it.</p>
+  
+  <p>This application created in the case study will use the following concepts:
+    <ul>
+      <li><span class="negrita">LazyColumn</span>: tasks will be displayed as list items.</li>
+      <li><span class="negrita">ViewModel</span>: separates business logic from views.</li>
+      <li><span class="negrita">Coroutines</span>: database access tasks are performed in the background.</li>
+      <li><span class="negrita">Room</span>: creating and accessing the database.</li>
+      <li><span class="negrita">DAO pattern</span>: to separate persistence from logic.</li>
+      <li><span class="negrita">Clean Architecture</span>: an overview of this architecture will be introduced in software development.</li>
+    </ul>
+  </p>
+  
+  <p>After creating the project, you will need to add the necessary dependencies. 
+    For the example, dependencies for navigation, serialization, extended icons, and livedata, 
+    as well as <span class="negrita">Room</span> and <span class="negrita">Kps</span> will be added.</p>
+  
+    <p>For project organization, it has been decided to use the principles of <span class="negrita">Clean Architecture</span> 
+      which is a software development pattern where responsibilities are separated in such a way that the code becomes easier to 
+      <span class="subrayado">maintain, scale, and test</span>.</p>
+    
+  
+    <p>The image below shows the folder structure.</p>
+    <a href="UD10/images/ud_10-2025-02-03-18-35-10.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-18-35-10.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    
+    <p>Following Clean Architecture, the project is divided into functionalities, 
+      in this example, the only functionality is task management, so the package <span class="inline-folder">tasks</span> is created.</p>
+    
+    <p>Inside the <span class="inline-folder">tasks</span> package, the following subpackages are created:
+      <ul>
+        <li><span class="inline-folder">data</span>:
+          <ul>
+            <li><span class="inline-folder">local</span>: files for local data access. 
+              <ul>
+                <li><span class="inline-folder">database</span>  &rarr;	 definition of the SQLite database.</li>
+                <li><span class="inline-folder">entities</span>  &rarr; definitions of the database tables.</li>
+                <li><span class="inline-folder">dao</span> &rarr; definition of actions that can be performed on the database.</li>
+              </ul>          
+            </li>
+            <li><span class="inline-folder">remote</span> r&rarr; folder to include access to data via an API (not included in this project).</li>
+            <li><span class="inline-folder">repository</span> r&rarr; responsible for deciding whether data is retrieved locally or remotely, and converting the data to model classes (domain).</li>
+          </ul>
+        </li>
+        <li><span class="inline-folder">domain</span><ul>
+          <li><span class="inline-folder">model</span> &rarr; definition of classes that will represent the data from the tables.</li>
+          <li><span class="inline-folder">usecase</span> &rarr; contains business logic (for example, data validation before inserting into the database).</li>
+        </ul></li>
+        <li><span class="inline-folder">ui</span>
+        <ul>
+          <li>includes screens for this <span class="negrita">feature</span>.</li>
+          <li><span class="inline-folder">viewmodels</span> r&rarr; definition of the viewmodels required for the screens.</li>
+        </ul></li>
+      </ul>
+    </p>
+    <a href="UD10/images/ud_10-2025-02-03-18-47-24.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-18-47-24.png" /><br><figcaption>Clean Architecture</figcaption></figure></a>
+    <br>
+    
+    <p class="sub-section">Entities</p>
+    
+    <p>The first component of <span class="negrita">Room</span> to be implemented is the <span class="negrita">entity</span> which will represent <span class="negrita">the data of the table</span>.</p>
+    
+    <p>The entity should be a data class which in this case will be called <span class="inline-file">TaskEntity</span> :</p>
+    
+  <section><pre><code class="language-kotlin">@Entity(tableName = "tasks")
+  data class TaskEntity(
+      @PrimaryKey(autoGenerate = true)
+      var id: Int = 0,
+      var name: String,
+      var isDone: Boolean = false
+  )
+  </code></pre>
+  </section><br><br>
+  
+  <p>With the <span class="r-word">@</span> annotation in Room we indicate:
+    <ul>
+      <li><span class="negrita">@Entity</span>: the table name it refers to</li>
+      <li><span class="negrita">@PrimaryKey</span>: the following property corresponds to the primary key.</li>
+    </ul>
+  </p>
+  
+  <p>Another available option is <span class="r-word">@ColumnInfo</span>, which allows specifying a different column name in the database.</p>
+  <a href="UD10/images/ud_10-2025-02-03-18-51-51.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-18-51-51.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <p>In the image, the <code>firstName</code> property of the class corresponds to the <code>first_name</code> column in the database table.</p>
+  
+  <p>In the <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage/room/defining-data?hl=es-419">documentation</a> you can consult all possible options.</p>
+  
+  
+  <p class="sub-section">DAO – Data Access Object</p>
+
+  <p>The <span class="negrita">DAO</span> defines a set of actions on the database, so that these actions will receive or 
+    return an <span class="negrita">Entity</span> object containing a record from the database.</p>
+  
+  <p>The DAO must be an interface.</p>
+  
+  <p>Normally, a DAO is defined for each database table.</p>
+  
+  <p>Thus, within a DAO, all the actions needed to create the <span class="cursiva">CRUD</span> for the associated table are defined. 
+    This keeps a separation between the different accesses to the database.</p>
+  
+  <p>If a query needs to affect multiple tables, this action should be defined in the DAO of the most important table in the query.</p>
+  
+  <p>In the case study, the interface will be called <span class="inline-file">TaskDAO</span>:</p>
+  
+  <section><pre><code class="language-kotlin">@Dao
+  interface TaskDAO {
+      @Query("SELECT * FROM tasks ORDER BY name")
+      fun getAllTasks(): LiveData&lt;MutableList&lt;TaskEntity&gt;&gt;
+  
+      @Query("SELECT EXISTS (SELECT 1 FROM tasks WHERE name = :name)")
+      suspend fun taskExists(name: String): Boolean
+  
+      @Query("SELECT * FROM tasks WHERE id = :id")
+      suspend fun getTaskById(id: Long): TaskEntity
+  
+      @Insert(onConflict = OnConflictStrategy.REPLACE)
+      suspend fun addTask(item: TaskEntity): Long
+  
+      @Update
+      suspend fun updateTask(item: TaskEntity): Int
+  
+      @Delete
+      suspend fun deleteTask(item: TaskEntity): Int
+  }</code></pre>
+  </section><br><br>
+  
+  <p>The methods can return values directly or can return <span class="negrita">LiveData</span> or <span class="negrita">Flow</span>.</p>
+  
+  <p>In the case study, we use <span class="negrita">LiveData</span> so that whenever there is a change in the query (when the table is modified), 
+    LiveData will emit the change, and the UI can update without having to query again.</p>
+  
+  <p>Since the methods will access the database (storage), they must be suspension functions to ensure that coroutines are used (<span class="negrita">Dispatcher.IO</span>) when making calls to them.</p>
+  
+  
+  <p>In the case of the method <span class="d-word">getAllTask</span>, there is no need to specify it because returning a <span class="negrita">LiveData</span> 
+    already forces the use of a coroutine when calling this method.</p>
+  <a href="UD10/images/ud_10-2025-02-03-18-58-04.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-18-58-04.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <p>With Room annotations we indicate:
+    <ul>
+      <li><span class="negrita">@Dao</span>: it is a Room DAO</li>
+      <li><span class="negrita">@Query: custom query (can be of any type: SELECT, INSERT, UPDATE or DELETE).</span></li>
+      <li><span class="negrita">@Insert</span>: query that saves a record in the table using the received object data.</li>
+      <li><span class="negrita">@Delete</span>: query that deletes the record from the table that matches the received object.</li>
+    </ul>
+  </p>
+  
+  <p>In custom queries, parameters can be indicated with a <span class="r-word">:</span>, so if the query specifies <span class="d-word">:name</span>
+     this corresponds to the function parameter <span class="negrita">name: String</span>.</p>
+  <a href="UD10/images/ud_10-2025-02-03-19-00-47.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-19-00-47.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <p>In the <span class="r-word">insert</span> statement, the conflict strategy can be specified, 
+     in the case study, the strategy is to replace the record if a record with the same data already exists in the entity.</p>
+  <a href="UD10/images/ud_10-2025-02-03-19-01-02.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-19-01-02.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <p class="sub-section">Room Database</p>
+  
+  <p>The database must be defined as an <span class="negrita">abstract class</span> that extends <span class="r-word">RoomDatabase</span> 
+    where the database configuration will be defined, and access to the database will be obtained. If the database does not exist, it will also be created.</p>
+  
+  
+  <p>In the case study, the database is declared in the abstract class <span class="inline-file">TasksDatabase</span>:</p>
+  <section><pre><code class="language-kotlin">@Database(entities = [TaskEntity::class], version = 1)
+  abstract class TasksDatabase : RoomDatabase() {
+      abstract fun taskDAO(): TaskDAO
+  
+      companion object {  // Singleton pattern
+          private var instance: TasksDatabase? = null
+  
+          fun getInstance(context: Context): TasksDatabase {
+              return instance ?: synchronized(this) {
+                  val instance = Room.databaseBuilder(
+                      context.applicationContext,
+                      TasksDatabase::class.java,
+                      "task_database"
+                  ).build()
+                  instance
+              }
+          }
+      }
+  }</code></pre>
+  </section><br><br>
+  
+  <p>With Room annotations we indicate:
+    <ul>
+      <li><span class="negrita">@Database</span>: with an array, we specify all the entities associated with the database. 
+        You can use the <span class="r-word">[ ]</span> notation or the function <span class="r-word">arrayOf()</span>.</li>
+    </ul>
+  </p>
+  
+  <p>The <span class="d-word">getInstance</span> function requires the application context, and when calling the <span class="r-word">databaseBuilder</span> method, the database name must be specified. 
+    In this case study, it will be "<span class="d-word">task_database</span>".</p>
+  
+  <a href="UD10/images/ud_10-2025-02-03-19-06-19.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-19-06-19.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <p class="sub-section">Repository</p>
+  
+  <p>The repository is responsible for:
+    <ul>
+      <li>Deciding if data is retrieved locally or from an API (and keeping them synchronized).</li>
+      <li>Converting data between the interface model (domain) and the database model (Entity).</li>
+    </ul>
+  </p>
+  
+  <p>The repository must receive an instance of the DAO to perform the actions and must implement the same actions that are allowed in the DAO. 
+    In the case study, it is declared in the <span class="inline-file">TaskRepository</span> class:</p>
+  
+  <section><pre><code class="language-kotlin">class TaskRepository(private val taskDAO: TaskDAO) {
+      val tasks: LiveData&lt;MutableList&lt;Task&gt;&gt; = taskDAO.getAllTasks().map { items -&gt;
+          items.map { taskEntity-&gt;
+              Task(
+                  id = taskEntity.id,
+                  name = taskEntity.name,
+                  isDone = taskEntity.isDone
+              )
+          }.toMutableList()
+      }
+  
+      suspend fun taskExists(name: String): Boolean = taskDAO.taskExists(name)
+  
+      suspend fun addTask(task: Task) {
+          taskDAO.addTask(TaskEntity(name = task.name))
+      }
+  
+      suspend fun deleteTask(task: Task) = taskDAO.deleteTask(TaskEntity(id = task.id, name = task.name))
+  
+      suspend fun updateTask(task: Task) = taskDAO.updateTask(TaskEntity(id = task.id, name = task.name, isDone = task.isDone))
+  }</code></pre>
+  </section><br><br>
+  
+  <p class="sub-section">Domain</p>
+  
+  <p>The model is the representation of data used in the graphical interface, and it is declared in the <span class="inline-file">Task</span> class.</p>
+  <section><pre><code class="language-kotlin">data class Task(
+      val id: Int = 0,
+      val name: String,
+      val isDone: Boolean = false,
+  )</code></pre>
+  </section><br><br>
+  <p>The use cases are responsible for linking the model with the actions that can be performed in the database, adding the necessary business logic
+     such as data validation before inserting data into the database. This is declared in the <span class="inline-file">TaskUseCase</span> class.</p>
+  
+  <section><pre><code class="language-kotlin">class TaskUseCase(private val repository: TaskRepository) {
+      fun getAllTasks(): LiveData&lt;MutableList&lt;Task&gt;&gt; {
+          return repository.tasks
+      }
+  
+      suspend fun addTask(task: String) {
+          repository.addTask(Task(name= task))
+      }
+  
+      suspend fun taskExists(name: String): Boolean {
+          return repository.taskExists(name)
+      }
+  
+      suspend fun deleteTask(task: Task) {
+          repository.deleteTask(task)
+      }
+  
+      suspend fun updateTask(task: Task) {
+          repository.updateTask(task)
+      }
+  }
+  </code></pre>
+  </section><br><br>
+  
+  <p class="sub-section">ViewModel</p>
+  
+  <p>Two ViewModels will be defined, the first will be used to maintain the states of MainScreen and will be defined in the <span class="inline-file">MainScreenViewModel.kt</span> file.</p>
+  <section><pre><code class="language-kotlin">class MainScreenViewModel : ViewModel() {
+      private val _taskName = MutableLiveData&lt;String&gt;()
+      val taskName: LiveData&lt;String&gt; = _taskName
+  
+      fun onTaskNameChange(taskName: String) {
+          _taskName.value = taskName
+      }
+  
+      fun onTaskNameDelete() {
+          _taskName.postValue("")
+      }
+  }</code></pre>
+  </section><br><br>
+  
+  <p>The second ViewModel will be used for database access and will be defined in the <span class="inline-file">TasksViewModel.kt</span> file:</p>
+  
+  <p>It must extend <span class="r-word">AndroidViewModel</span> because the context is needed for database access.
+    <ul>
+      <li>Using <span class="d-word">TaskDatabase</span>, we get the database instance and with it, an instance of <span class="d-word">TaskDAO</span>.</li>
+      <li>Using the <span class="d-word">DAO</span>, we get the repository.</li>
+      <li>Using the repository, we initialize the <span class="subrayado">Use Case</span>.</li>
+    </ul>
+  </p>
+  
+  <section class="marco-t warn">
+    <span class="icono warning"> </span> These three actions are not recommended as they generate high coupling in the app.
+    </section>
+  <section class="marco-b">
+    To resolve this, it is recommended to use flows (Flow) to maintain data instead of LiveData, and dependency injection (Dagger Hilt), but these concepts are advanced for the purpose of this course.
+  </section>
+  
+  <section><pre><code class="language-kotlin">class TaskViewModel(application: Application) : AndroidViewModel(application) {
+      private val taskDAO: TaskDAO = TasksDatabase.getInstance(application).taskDAO()
+      private val repository = TaskRepository(taskDAO)
+      private val taskUseCase = TaskUseCase(repository)
+  
+      // Create a LiveData for the task list
+      var taskList: LiveData&lt;MutableList&lt;Task&gt;&gt; = MutableLiveData()
+  
+      // Function to initialize the task list from the database
+      fun getAllTasks(){
+          viewModelScope.launch(Dispatchers.IO) {
+              taskList = taskUseCase.getAllTasks()
+          }
+      }
+  
+      // Function to add a task to the database
+      fun addTask(task: String, onResult: (Boolean) -&gt; Unit) {
+          viewModelScope.launch(Dispatchers.IO) {
+              if (!taskUseCase.taskExists(task)) {
+                  taskUseCase.addTask(task)
+                  onResult(true)
+              } else {
+                  onResult(false)
+              }
+          }
+      }
+  
+      // Function to delete a task from the database
+      fun deleteTask(task: Task){
+          viewModelScope.launch(Dispatchers.IO) {
+              taskUseCase.deleteTask(task)
+          }
+      }
+  
+      // Function to update a task in the database.
+      fun updateTask(task: Task, isDone: Boolean){
+          viewModelScope.launch(Dispatchers.IO) {
+              taskUseCase.updateTask(task.copy(isDone = isDone))
+          }
+      }
+  }</code></pre>
+  </section><br><br>
+  
+  <p class="sub-section">MainActivity and Navigation</p>
+  
+  <p>In <span class="d-word">MainActivity</span>, the <span class="d-word">taskViewModel</span> should be defined so it can be shared between the <span class="cursiva">SplashScreen</span> 
+    (during which the data will be initially loaded) and the MainScreen (task management).</p>
+  
+  <section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">MainActivity</span>
+    </section>
+  <section class="marco-b">
+      <section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
+      override fun onCreate(savedInstanceState: Bundle?) {
+          super.onCreate(savedInstanceState)
+          enableEdgeToEdge()
+          setContent {
+              TaskManagerTheme {
+                  val taskViewModel by viewModels&lt;TaskViewModel&gt;()
+                  Navigation(taskViewModel)
+              }
+          }
+      }
+  }</code></pre>
+      </section>
+  </section>
+  
+  <section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">Routes</span>
+    </section>
+  <section class="marco-b">
+      <section><pre><code class="language-kotlin">sealed class Routes {
+      @Serializable
+      object Splash
+  
+      @Serializable
+      object Main
+  }</code></pre>
+      </section>
+  </section>
+  
+  <section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">Navigation</span>
+    </section>
+  <section class="marco-b">
+   <section><pre><code class="language-kotlin">@Composable
+  fun Navigation(taskViewModel: TaskViewModel) {
+      val navController = rememberNavController()
+  
+      NavHost(
+          navController = navController,
+          startDestination = Routes.Splash
+      ) {
+          composable&lt;Routes.Splash&gt; {
+              SplashScreen(navController, taskViewModel)
+          }
+  
+          composable&lt;Routes.Main&gt; {
+              MainScreen(taskViewModel)
+          }
+      }
+  }</code></pre>
+   </section>  
+  </section>
+  
+  <p class="sub-section">SplashScreen</p>
+  <p>The <span class="negrita">Splash Screen</span> is the first destination in the navigation, and here <span class="d-word">taskViewModel</span> is used to fetch the task list from the database.</p>
+  <a href="UD10/images/ud_10-2025-02-03-19-23-04.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-19-23-04.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">SplashScreen.kt</span>
+    </section>
+  <section class="marco-b">
+     <section><pre><code class="language-kotlin">@Composable
+  fun SplashScreen(navController: NavHostController, taskViewModel: TaskViewModel) {
+      Splash()
+  
+      LaunchedEffect(key1 = true) {
+          delay(5000)
+          taskViewModel.getAllTasks()
+          navController.popBackStack() // Avoid going back to Splash Screen
+          navController.navigate(Routes.Main)
+      }
+  }
+  
+  @Composable
+  fun Splash() {
+      var animateAlpha by rememberSaveable { mutableStateOf(false) }
+      val alpha by animateFloatAsState(
+          targetValue = if(animateAlpha) 1f else 0f,
+          animationSpec = tween(
+              durationMillis = 3000
+          ),
+          label = "alpha animation"
+      )
+      var greetingVisible by rememberSaveable { mutableStateOf(false) }
+      LaunchedEffect(key1 = true) {
+          animateAlpha = true
+          delay(2000)
+          greetingVisible = true
+      }
+  
+      Column(
+          modifier = Modifier.fillMaxSize(),
+          horizontalAlignment = Alignment.CenterHorizontally,
+          verticalArrangement = Arrangement.Center
+      ) {
+          Text(
+              "Task Manager",
+              fontSize = 30.sp,
+              fontWeight = FontWeight.Bold
+          )
+          Image(
+              painter = painterResource(id= R.drawable.rick),
+              contentDescription = "Rick Sanchez",
+              modifier = Modifier
+                  .size(200.dp, 200.dp)
+                  .alpha(alpha)
+                  .clip(CircleShape)
+                  .border(
+                      width = 10.dp,
+                      color = MaterialTheme.colorScheme.primary,
+                      shape = CircleShape
+                  )
+          )
+          AnimatedVisibility(visible = greetingVisible) {
+              Text(
+                  text ="By Rick Sanchez",
+                  fontSize = 20.sp,
+                  fontWeight = FontWeight.Bold
+              )
+          }
+      }
+  }</code></pre>
+     </section> 
+  </section>
+  
+  <p class="sub-section">Common components</p>
+  <a href="UD10/images/ud_10-2025-02-03-19-23-04.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-19-23-04.png" /><br><figcaption></figcaption></figure></a>
+  <section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">AppScaffold.kt</span>
+    </section>
+  <section class="marco-b">
+      <section><pre><code class="language-kotlin">@Composable
+  fun AppScaffold(
+      showBackArrow: Boolean = false,
+      onBlackArrowClick: () -> Unit = {},
+      content: @Composable () -> Unit
+  ) {
+      Scaffold(
+          topBar = {
+              AppTopBar(
+                  showBackArrow = showBackArrow,
+                  onClickBlackArrow = onBlackArrowClick,
+              )
+          },
+      ) { paddingValues ->
+          Column(
+              modifier = Modifier.padding(paddingValues)
+          ) {
+              Box(
+                  modifier = Modifier
+                      .weight(9f)
+                      .fillMaxWidth()
+              ) {
+                  content()
+              }
+              HorizontalDivider(
+                  modifier = Modifier
+                      .background(MaterialTheme.colorScheme.onPrimary)
+                      .height(2.dp)
+              )
+              AuthorInfo(modifier = Modifier
+                  .padding(vertical = 4.dp)
+                  .weight(1f))
+          }
+      }
+  }</code></pre>
+      </section>
+  </section>
+  
+  <section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">AuthorInfo.kt</span>
+    </section>
+  <section class="marco-b">
+      <section><pre><code class="language-kotlin">// Custom component to display author information
+  
+  @Composable
+  fun AuthorInfo(modifier: Modifier = Modifier) {
+      Row(
+          modifier = Modifier
+              .fillMaxWidth()
+              .background(MaterialTheme.colorScheme.primary)
+              .then(modifier),
+          horizontalArrangement = Arrangement.spacedBy(
+              20.dp,
+              Alignment.CenterHorizontally
+          ),
+          verticalAlignment = Alignment.CenterVertically,
+      ) {
+          Image(
+              painter = painterResource(id = R.drawable.rick),
+              contentDescription = "Photo of Rick",
+              modifier = Modifier
+                  .clip(CircleShape)
+                  .border(
+                      width = 3.dp,
+                      color = MaterialTheme.colorScheme.onPrimary,
+                      shape = CircleShape
+                  )
+                  .width(60.dp)
+          )
+          Text(
+              text = "Rick Sanchez",
+              fontSize = 35.sp,
+              fontWeight = FontWeight.Bold,
+              color = MaterialTheme.colorScheme.onPrimary
+          )
+      }
+  }</code></pre>
+      </section>
+  </section>
+  
+  
+  <section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">AppToBar.kt</span>
+    </section>
+  <section class="marco-b">
+      <section><pre><code class="language-kotlin">// Custom component for the TopAppBar of the Scaffold used in the APP
+  
+  @OptIn(ExperimentalMaterial3Api::class)
+  @Composable
+  fun AppTopBar(
+      showBackArrow: Boolean = false,
+      onClickBlackArrow: () -> Unit,
+  ) {
+      CenterAlignedTopAppBar(
+          title = {
+              Row(
+                  verticalAlignment = Alignment.CenterVertically
+              ) {
+                  Icon(imageVector = Icons.Default.TaskAlt, contentDescription = null)
+                  Spacer(modifier = Modifier.width(16.dp))
+                  Text(
+                      text = "Task Manager",
+                      fontSize = 30.sp
+                  )
+                  Spacer(modifier = Modifier.width(16.dp))
+                  Icon(imageVector = Icons.Default.TaskAlt, contentDescription = null)
+  
+              }
+          },
+          navigationIcon = {
+              if (showBackArrow) {
+                  IconButton(
+  //                    onClick = { onClickBlackArrow() }
+                      onClick = onClickBlackArrow
+                  ) {
+                      Icon(
+                          imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                          contentDescription = "Go back",
+                          tint = MaterialTheme.colorScheme.onPrimary
+                      )
+                  }
+              }
+          },
+          colors = TopAppBarDefaults.largeTopAppBarColors(
+              containerColor = MaterialTheme.colorScheme.primary,
+              titleContentColor = MaterialTheme.colorScheme.onPrimary
+          )
+      )
+  }</code></pre>
+      </section>
+  </section>
+  
+  <section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">MainScreen.kt</span>
+    </section>
+  <section class="marco-b">
+    <section><pre><code class="language-kotlin">@Composable
+  fun MainScreen(taskViewModel: TaskViewModel) {
+      AppScaffold { // Using the custom Scaffold
+          val taskList by taskViewModel.taskList.observeAsState(emptyList())
+          val mainScreenViewModel = remember { MainScreenViewModel() }
+          val inputTaskName by mainScreenViewModel.taskName.observeAsState(initial = "")
+          val showDeleteIcon = remember {
+              derivedStateOf {
+                  inputTaskName.isNotEmpty()
+              }
+          }
+  
+          var showInsertTaskError by rememberSaveable { mutableStateOf(false) }
+          Box {
+              Column(
+                  modifier = Modifier.fillMaxWidth()
+              ) {
+                  Row(
+                      horizontalArrangement = Arrangement.SpaceEvenly,
+                      verticalAlignment = Alignment.CenterVertically,
+                      modifier = Modifier
+                          .fillMaxWidth()
+                          .padding(vertical = 8.dp)
+                  ) {
+                      TextField(value = inputTaskName,
+                          onValueChange = { mainScreenViewModel.onTaskNameChange(it) },
+                          label = { Text(text = "Task to add") },
+                          trailingIcon = {
+                              if (showDeleteIcon.value) {
+                                  Icon(imageVector = Icons.Default.Delete,
+                                      contentDescription = "Delete task",
+                                      modifier = Modifier.clickable { mainScreenViewModel.onTaskNameDelete() })
+                              }
+                          })
+  
+                      Button(
+                          onClick = {
+                              taskViewModel.addTask(task = inputTaskName,
+                                  onResult = { taskAdded ->
+                                      showInsertTaskError = !taskAdded
+                                      if (taskAdded) mainScreenViewModel.onTaskNameDelete()
+                                  }
+                              )
+                          },
+                          enabled = showDeleteIcon.value
+                      ) {
+                          Text(text = "Add")
+                      }
+                  }
+  
+                  LazyColumn(
+                      Modifier
+                          .fillMaxSize()
+                          .padding(horizontal = 8.dp)
+                  ) {
+                      items(
+                          items = taskList,
+                          key = {
+                              it.id
+                          }
+                      ) { task ->
+                          TaskItem(task = task,
+                              onUpdate = { isEnded ->
+                                  taskViewModel.updateTask(task, isEnded)
+                              },
+                              onDelete = {
+                                  taskViewModel.deleteTask(task)
+                              }
+                          )
+                      }
+                  }
+              }
+  
+              if (showInsertTaskError) {
+                  Box(
+                      modifier = Modifier
+                          .fillMaxSize()
+                          .clickable(enabled = false,
+                              onClick = {}),
+                      contentAlignment = Alignment.Center
+                  ) {
+  
+                      Box(modifier = Modifier
+                          .fillMaxSize()
+                          .background(Color(0xccFFFFFF)))
+                      Column(
+                          modifier = Modifier
+                              .clip(RoundedCornerShape(20.dp))
+                              .background(MaterialTheme.colorScheme.error)
+                              .padding(20.dp),
+                          verticalArrangement = Arrangement.spacedBy(16.dp),
+                          horizontalAlignment = Alignment.CenterHorizontally
+                      ) {
+                          Text(
+                              text = """The task "$inputTaskName" already exists.""",
+                              color = MaterialTheme.colorScheme.onSecondary
+                          )
+                          Button(onClick = { showInsertTaskError = false }) {
+                              Text(text = "Accept")
+                          }
+                      }
+                  }
+              }
+          }
+      }
+  }
+  
+  
+  //Each task item in the list.
+  @Composable
+  fun TaskItem(
+      task: Task,
+      onUpdate: (Boolean) -> Unit,
+      onDelete: () -> Unit,
+  ) {
+      var showDeleteIcon by rememberSaveable { mutableStateOf(false) }
+      ListItem(
+          headlineContent = {
+              Text(
+                  text = task.name,
+                  color = MaterialTheme.colorScheme.onPrimaryContainer
+              )
+          },
+          modifier = Modifier
+              .padding(4.dp)
+              .clip(RoundedCornerShape(4.dp))
+              .pointerInput(Unit) {
+                  detectTapGestures(
+                      onLongPress = {
+                          showDeleteIcon = !showDeleteIcon
+                      },
+                      onPress = {
+                          showDeleteIcon = false
+                      }
+                  )
+              }
+          ,
+          colors = ListItemDefaults.colors(
+              containerColor = MaterialTheme.colorScheme.primaryContainer,
+          ),
+          leadingContent = {
+              Checkbox(
+                  checked = task.isDone,
+                  onCheckedChange = { isEnded ->
+                      onUpdate(isEnded)
+                      showDeleteIcon = false
+                  },
+                  colors = CheckboxDefaults.colors(
+                      uncheckedColor = MaterialTheme.colorScheme.onPrimaryContainer
+                  )
+              )
+          },
+          trailingContent = {
+              if (showDeleteIcon) {
+                  IconButton(
+                      onClick = onDelete,
+                  ) {
+                      Icon(
+                          imageVector = Icons.Default.Delete,
+                          contentDescription = "Delete task",
+                          tint = MaterialTheme.colorScheme.onPrimaryContainer
+                      )
+                  }
+              }
+          }
+      )
+  }</code></pre>
+    </section>
+  </section>
+  
+  <a href="UD10/images/TaskManagerRunning.gif" target="_BLANK"><figure><img src="UD10/images/TaskManagerRunning.gif" /><br><figcaption>Running App</figcaption></figure></a>
+  
+  
+  <br><br>
+  <p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD10/taskmanager">Here</a> you can see the full example on github</p>
+  
+  
+  </section><!-- End section ROOM-->
+  
+
+  <!--*********************************************************Shopping List Practice***********************************************************-->
+  <section class="apartado oculto">
+  <a name="sP05"></a>
+  <h2>P05 Shopping List</h2>
+  
+  <a class="tarea" target="_blank" href="https://aules.edu.gva.es/fp/mod/assign/view.php?id=5463526">
+    <p>La práctica consistirá en realizar una applicación de la lista de la compra. La aplicación tendrá los siguientes requisitos:
+      <ul>
+        <li><span class="negrita">SplashScreen:</span> Realiza una SplashScreen adecuada a la aplicación, en la SplashScreen, cargarás aquí los datos si los hubiera</li>
+        <li><span class="negrita">OnBoarding:</span> Crea una simple pantalla de Onboarding donde pidas el nombre al usuario, este nombre se guardará en un <span class="negrita">DataStore</span>. 
+          Si ya hubiera uno guardado, esta pantalla no debe aparecer y después del SplashScreen ir directamente al MainScreen.</li>
+        <li><span class="negrita">MainScreen:</span> Esta pantalla tendrá los siguientes componentes (Usa un Scaffold):
+        <ul>
+          <li><span class="negrita">FloatingActionButton</span>: Con el símbolo de + nos llevará a otra pantalla (<span class="negrita">AddScreen</span>) donde habrá un formulario para 
+          crear un nuevo producto.</li>
+          <li><span class="negrita">Lista Elementos</span>: Será una <span class="cursiva">LazyColumn</span> con un item por cada elemento guardado en la BDD. 
+            Mostrará la información de cada producto:
+          Nombre producto, cantidad, precio unitario (cuánto vale uno solo), precio total producto (precio unitario x cantidad). Ejemplo: Si tenemos leche, que vale 1€ y hemos apuntado 3uds, el total será 3€. Además, si hacemos clic sobre el producto iremos a la pantalla (<span class="negrita">EditScreen</span>, puede ser la misma que AddScreen
+           y que actualice o inserte según el caso). También tendrá un icono de papelera que borrará el producto.</li>
+           <li><span class="negrita">Saludo</span>: Encima de la lista deberá aparecer un mensaje de bienvenida al usuario logeado. Algo como "Bienvenido Carlos"</li>
+           <li><span class="negrita">Total lista:</span> En la parte inferior habrá un cuadro que nos mostrará el total de la lista, es decir, la suma de todos los
+          productos, por el precio unitario de cada producto multiplicado por la cantidad de ese producto. Este componente estará abajo y será siempre visible </li>
+          <li><span class="negrita">ModalNavigationDrawer:</span> Al desplegarlo tendrá una única opción que será <span class="negrita">Logout</span>. 
+            Al pulsarla, eliminaremos el usuario del DataStore, volveremos a la pantalla de OnBoarding y borraremos los datos de la BDD.</li>
+        </ul></li>
+        <li><span class="negrita">AddScreen / EditScreen</span>: Será un formulario en el que pondremos el nombre del producto, el precio unitario, y la cantidad que queremos de ese producto. 
+          (Estos son los campos de nuestra entidad junto con un ID). Tendrá también un botón para añadir o actualizar según el caso.
+        Puedes implementarlo con una única screen para las dos cosas o una screen para cada cosa (insert/update)</li>
+      </ul>
+    </p>
+
+    <p><span class="negrita">Extra</span>: Puedes hacer que al darle a logout no borre los datos de la BDD, simplemente con cada usuario nuevo creas una nueva BDD, y cada uno se conectará a la suya.</p>
+  </a>
+  
+  </section><!-- End section Shopping List-->
+ 
+  <!---BTM_MENU--->
+  <script src="../script/prism.js"></script>
+</body>
+
+</html>

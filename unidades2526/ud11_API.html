@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>U11.- APIs</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../styles/prism.css">
+  <link rel="stylesheet" href="../styles/styles.css">
+  <script src="../script/script.js"></script>
+</head>
+
+<body class="line-numbers">
+  <div class="logos"></div>
+
+  <nav id="menu-lateral" class="main-menu-lateral oculto">
+    <div class="fila">
+      <a href="#sIntroduccion" title="1.- Introduction">1.- Introduction</a>
+      <a href="#sArquitecturaorientadaaServicios" title="2. Service-Oriented Architecture">2. Service-Oriented Architecture</a>
+      <a href="#sAPI_Rest" title="3.- REST API">3.- REST API</a>      
+    </div>    
+    <div class="fila">
+      <a href="#sCoil" title="4.- Coil">4.- Coil</a>
+      <a href="#sConexionainternet" title="5.- Internet Connection">5.- Internet Connection</a>
+      <a href="#sHttpURLConnection" title="6.- HttpURLConnection">6.- HttpURLConnection</a>
+    </div>
+    <div class="fila">
+      <a href="#sLibreriasparaconexionesHTTP" title="7.- Libraries for HTTP connections">7.- Libraries for HTTP connections</a>
+      <a href="#sRetrofit" title="8.- Retrofit">8.- Retrofit</a>
+      
+    </div>
+  </nav> <!-- BTM_MENU-->
+
+  <h1>U11.- APIs</h1>  
+
+  <div class="main-menu">
+    <div class="fila">
+      <a href="#sIntroduccion" title="1.- Introduction">1.- Introduction</a>
+      <a href="#sArquitecturaorientadaaServicios" title="2. Service-Oriented Architecture">2. Service-Oriented Architecture</a>
+      <a href="#sAPI_Rest" title="3.- REST API">3.- REST API</a>      
+    </div>    
+    <div class="fila">
+      <a href="#sCoil" title="4.- Coil">4.- Coil</a>
+      <a href="#sConexionainternet" title="5.- Internet Connection">5.- Internet Connection</a>
+      <a href="#sHttpURLConnection" title="6.- HttpURLConnection">6.- HttpURLConnection</a>
+    </div>
+    <div class="fila">
+      <a href="#sLibreriasparaconexionesHTTP" title="7.- Libraries for HTTP connections">7.- Libraries for HTTP connections</a>
+      <a href="#sRetrofit" title="8.- Retrofit">8.- Retrofit</a>
+      <a href="" class="relleno"></a>
+    </div>
+  </div>
+  
+  <!--*********************************************************Introduction***********************************************************-->
+  <section class="apartado">
+  <a name="sIntroduccion"></a>
+  <h2>Introduction</h2>
+  <p>In the previous unit, we studied how to store and access information on the device itself.</p>
+  
+  <p>In this unit, we will study the different techniques for accessing information available on the internet via REST APIs.</p>
+  
+  <p>We will learn the techniques to obtain and send information to/from existing APIs.</p>
+  
+
+
+</section><!-- End section Introduction-->
+
+<!--*********************************************************Service-Oriented Architecture***********************************************************-->
+<section class="apartado">
+<a name="sArquitecturaorientadaaServicios"></a>
+<h2>Service-Oriented Architecture</h2>
+
+<h3><span class="negrita">Service-Oriented Architecture</span> → <span class="negrita">SOA (Service Oriented Architecture)</span></h3>
+
+<p><span class="negrita">Web services</span> are a set of protocols and standards that allow different applications to exchange data.</p>
+
+<p>One of the main features is that these applications can be developed with different programming languages 
+  and can be running on different platforms.</p>
+
+<p>They can even be developed by different entities.</p>
+
+<figure><img src="UD11/images/ud11-2024-03-06-13-06-31.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>When using a service-oriented architecture, the development of applications <span class="negrita">is not based on generating complete applications</span>.</p>
+
+<p>With SOA, services (applications) are developed that <span class="negrita">generate results</span> and 
+  these services can be <span class="negrita">used</span> both in the <span class="negrita">own application</span> and in <span class="negrita">third-party applications</span>.</p>
+
+<h3>Standards Used in SOA</h3>
+<p>For the implementation of services, different technologies can be used depending on the characteristics of the service being developed.
+  Some of the most used ones are:
+<ul>
+  <li><span class="negrita">HTML</span>: HyperText Markup Language</li>
+  <li><span class="negrita">XML</span>: eXtensible Markup Language</li>
+  <li><span class="negrita">JSON</span>: JavaScript Object Notation</li>
+  <li><span class="negrita">SOAP</span>: Simple Object Access Protocol</li>
+  <li><span class="negrita">WSDL</span>: Web Services Description Language</li>
+  <li><span class="negrita">REST</span>: Representational State Transfer</li>
+</ul>
+</p>
+
+</section><!-- End section Service-Oriented Architecture-->
+
+<!--*********************************************************REST API***********************************************************-->
+<section class="apartado">
+<a name="sAPI_Rest"></a>
+<h2>REST API</h2>
+
+<h3>API (Application Programming Interface)</h3>
+
+<p>An <span class="negrita">API</span> is a <span class="negrita">set of functionalities</span> already developed 
+  and prepared to be used within other technologies by making use of SOA principles.</p>
+
+<p>Its purpose is to offer an <span class="negrita">abstraction layer</span> when performing different tasks 
+  (calculations, obtaining/saving data…) so that it facilitates tasks for developers.</p>
+
+<h3>REST</h3>
+<p><span class="negrita">REST</span> → REpresentational State Transfer</p>
+<p>It is an architecture based on <span class="negrita">HTTP requests</span>
+   to work with web application data (stored in the database) through well-defined operations:
+<ul>
+  <li><span class="negrita">GET</span>: retrieve one or more records from a table.</li>
+  <li><span class="negrita">POST</span>: store a new record in a table.</li>
+  <li><span class="negrita">PUT</span>: change all fields of a record in a table.</li>
+  <li><span class="negrita">PATCH</span>: change a field of a record in a table.</li>
+  <li><span class="negrita">DELETE</span>: delete a record from a table.</li>
+</ul>
+</p>
+
+<h3>REST API</h3>
+<p><span class="negrita">REST API</span> is a web service implementation where the primary technologies used are 
+  <span class="negrita">REST</span> and <span class="negrita">JSON</span> for data access.</p>
+
+<p>To develop REST API web services, you must:
+  <ul>
+    <li>Define the <span class="negrita">URLs</span> (friendly) accepted by the REST API.</li>
+    <li>Define the <span class="negrita">request type</span> accepted for each URL.</li>
+    <li>Create scripts that handle requests to the defined URLs and generate the resulting data.</li>
+  </ul>
+</p>
+
+<p>Each "URL-request type" is known as an <span class="negrita">endpoint</span>.</p>
+
+<p>Currently, many companies offer their APIs for integrating their data and functionalities into any application.</p>
+
+
+<figure><img src="UD11/images/ud11-2024-03-06-13-15-22.png" /><br><figcaption>News from February 2023</figcaption></figure>
+<br>
+<p>There are countless public APIs, some require registration:
+  <ul>
+    <li><span class="negrita">Open Data Valencia</span>: <a class="enlace" target="_blank" href="https://valencia.opendatasoft.com/pages/home/">https://valencia.opendatasoft.com/pages/home/</a></li>
+    <li><span class="negrita">Rick and Morty</span>: <a class="enlace" target="_blank" href="https://rickandmortyapi.com/">https://rickandmortyapi.com/</a></li>
+    <li><span class="negrita">Star Wars</span>: <a class="enlace" target="_blank" href="https://swapi.dev/">https://swapi.dev/</a></li>
+    <li><span class="negrita">Disney</span>: <a class="enlace" target="_blank" href="https://disneyapi.dev/">https://disneyapi.dev/</a></li>
+    <li>…</li>
+  </ul>
+</p>
+
+<p>Public APIs lists:
+  <ul>
+    <li><a class="enlace" target="_blank" href="https://github.com/public-apis/public-apis">https://github.com/public-apis/public-apis</a></li>
+    <li><a class="enlace" target="_blank" href="https://rapidapi.com/collection/list-of-free-apis">https://rapidapi.com/collection/list-of-free-apis</a></li>
+  </ul>
+</p>
+
+<p>APIs with fake data for testing:
+  <li><a class="enlace" target="_blank" href="https://httpbin.org">https://httpbin.org</a>: provides a wide range of available requests.</li>
+	<li><a class="enlace" target="_blank" href="https://app.mocklab.io">https://app.mocklab.io</a>: by creating an account, you can configure requests as you like.</li>
+</p>
+
+<p>As mentioned earlier, to use an API, it is necessary to know its <span class="negrita">endpoints</span>.</p>
+
+<p>Next, we show an endpoint along with the JSON data it generates:
+  <a class="enlace" target="_blank" href="https://swapi.dev/api/starships/10/?format=json">https://swapi.dev/api/starships/10/?format=json</a></p>
+
+<section><pre><code class="language-json">{
+    "name": "Millennium Falcon",
+    "model": "YT-1300 light freighter",
+    "manufacturer": "Corellian Engineering Corporation",
+    "cost_in_credits": "100000",
+    "length": "34.37",
+    "max_atmosphering_speed": "1050",
+    "crew": "4",
+    "passengers": "6",
+    "cargo_capacity": "100000",
+    "consumables": "2 months",
+    "hyperdrive_rating": "0.5",
+    "MGLT": "75",
+    "starship_class": "Light freighter",
+    "pilots": [
+        "https://swapi.dev/api/people/13/",
+        "https://swapi.dev/api/people/14/",
+        "https://swapi.dev/api/people/25/",
+        "https://swapi.dev/api/people/31/"
+    ],
+    "films": [
+        "https://swapi.dev/api/films/1/",
+        "https://swapi.dev/api/films/2/",
+        "https://swapi.dev/api/films/3/"
+    ],
+    "created": "2014-12-10T16:59:45.094000Z",
+    "edited": "2014-12-20T21:23:49.880000Z",
+    "url": "https://swapi.dev/api/starships/10/"
+}
+</code></pre>
+</section><br><br>
+
+</section><!-- End section REST API-->
+
+<!--*********************************************************Coil***********************************************************-->
+<section class="apartado">
+<a name="sCoil"></a>
+<h2>Coil</h2>
+<h3>Coil Library</h3>
+
+<p>In a previous unit we studied the use of the Coil library for accessing images located on the internet.</p>
+
+<p>The Coil library requires a URL to retrieve the image. This URL can either be a direct path to an image 
+  or an <span class="negrita">API endpoint</span> as shown in the examples:</p>
+
+<figure><img src="UD11/images/ud11-2024-03-06-13-21-06.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+</section><!-- End section Coil-->
+
+<!--*********************************************************5.- Internet Connection***********************************************************-->
+<section class="apartado">
+<a name="sConexionainternet"></a>
+<h2>Internet Connection</h2>
+<p>It is important to note that if the application is going to access the internet, permissions must be granted by specifying it in the manifest file
+   <span class="negrita">manifest</span> → <span class="inline-file">AndroidManifest.xml</span>
+with the following line:</p>
+
+<figure><img src="UD11/images/ud11-2024-03-06-13-23-27.png" /><br><figcaption></figcaption></figure>
+<br>
+<section><pre><code class="language-xml">&lt;uses-permission android:name="android.permission.INTERNET"/&gt;</code></pre>
+</section><br><br>
+
+</section><!-- End section 5.- Internet Connection-->
+
+<!--*********************************************************HttpURLConnection***********************************************************-->
+<section class="apartado">
+<a name="sHttpURLConnection"></a>
+<h2>HttpURLConnection</h2>
+<p>Android provides the <span class="negrita">HttpURLConnection</span> class for making HTTP connections manually.</p>
+
+<p>Connections with HttpURLConnection should be made in a coroutine off the main thread.</p>
+
+<p>Requests of any type allowed by the HTTP protocol can be made.</p>
+
+<p>The following code performs a GET request in Jetpack Compose.</p>
+
+<section><pre><code class="language-kotlin">Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top,
+        modifier = Modifier.fillMaxWidth().padding(4.dp)
+    ) {
+        // Variables to maintain the state
+        var searchedCharacter by rememberSaveable { mutableStateOf("") }
+        var responseJSON by rememberSaveable { mutableStateOf("") }
+        val coroutineScope = rememberCoroutineScope()
+
+        // Row for the search bar
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            OutlinedTextField(
+                value = searchedCharacter,
+                onValueChange = { searchedCharacter = it },
+                modifier = Modifier.weight(1.5f)
+            )
+        }
+
+        // Search Button
+        Button(
+            onClick = {
+                coroutineScope.launch(Dispatchers.IO) {
+                    val apiURL = "https://rickandmortyapi.com/api/character/"
+                    val regParam = "name=${URLEncoder.encode(searchedCharacter, "UTF-8")}"
+                    val endpoint = URL("$apiURL?$regParam")
+
+                    with(endpoint.openConnection() as HttpURLConnection) {
+                        requestMethod = "GET"
+                        Log.i("INFO", "URL: $url")
+                        Log.i("INFO", "Response code: $responseCode")
+
+                        val reader = BufferedReader(InputStreamReader(inputStream))
+                        val response = StringBuilder()
+                        var inputLine = reader.readLine()
+
+                        while (inputLine != null) {
+                            response.append(inputLine)
+                            inputLine = reader.readLine()
+                        }
+                        reader.close()
+                        responseJSON = response.toString()
+                        Log.i("INFO", "Response: $responseJSON")
+                    }
+                }
+            },
+            modifier = Modifier.weight(0.5f)
+        ) {
+            Text(text = "Buscar")
+        }
+
+        // Display JSON response
+        Text(
+            text = responseJSON,
+            modifier = Modifier.weight(0.8f).verticalScroll(rememberScrollState())
+        )
+    }</code></pre>
+</section><br><br>
+<p>Example of running the previous code:</p>
+<figure><img src="UD11/images/ud11-2024-03-06-13-29-05.png" /><br><figcaption></figcaption></figure>
+<br>
+<figure><img src="UD11/images/ud11-2024-03-06-13-29-20.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>In a real application, data should be parsed to display it in a comprehensible and attractive way to users.</p>
+
+
+
+
+</section><!-- End section HttpURLConnection-->
+
+<!--*********************************************************Libraries for HTTP connections***********************************************************-->
+<section class="apartado">
+<a name="sLibreriasparaconexionesHTTP"></a>
+<h2>Libraries for HTTP Connections</h2>
+
+<p>Although we have previously seen how to use the HttpURLConnection class to make HTTP connections from Android, 
+  there are also several libraries to facilitate and speed up these actions.</p>
+  <p>Android Libraries:
+    <ul>
+      <li><span class="negrita">Retrofit</span> (This is the one we will cover)</li>
+      <li>Volley</li>
+    </ul>
+  </p>
+  
+  <p>Kotlin Libraries (available in Android and Kotlin projects):
+    <ul>
+      <li>Ktor</li>
+      <li>http4k</li>
+    </ul>
+  </p>
+  
+
+</section><!-- End section Libraries for HTTP connections-->
+
+<!--*********************************************************Retrofit***********************************************************-->
+<section class="apartado">
+<a name="sRetrofit"></a>
+<h2>Retrofit</h2>
+<p>Retrofit is an open-source library for Java and Android that simplifies making HTTP requests and processing the retrieved data.</p>
+<p>Features:
+  <ul>
+    <li><span class="negrita">Type safety</span>: it ensures safety by automatically converting JSON responses to Java/Kotlin objects and Java/Kotlin objects to JSON in requests.</li>
+    <li><span class="negrita">Readable and maintainable code</span>: thanks to annotations in interfaces, HTTP requests are defined, simplifying their use.</li>
+    <li>Allows <span class="negrita">adding parameters, headers, and variables</span> to the endpoint.</li>
+    <li>Handles <span class="negrita">different response formats</span> besides JSON.</li>
+  </ul>
+</p>
+
+In the  <a class="enlace" target="_blank" href="https://square.github.io/retrofit/">official website</a>, you can find all the information.
+
+<h3>Case Study</h3>
+<p>To study the use of the <span class="r-word">Retrofit</span> library, we will perform a case study that will involve an application making requests to a public API.</p>
+
+<p>We will use the <a class="enlace" target="_blank" href="https://rickandmortyapi.com">https://rickandmortyapi.com</a> API to retrieve characters from the show.</p>
+
+<p>The endpoint we will use is the following, replacing the <span class="negrita">name</span> parameter with the value the user enters:
+  <br>
+  <a class="enlace" target="_blank" href="https://rickandmortyapi.com/api/character/?name=rick">https://rickandmortyapi.com/api/character/?name=rick</a>
+</p>
+ 	
+
+<p>This API returns character information in JSON format.</p>
+
+<p>Retrofit will allow us to make the request to the API and store the received information in easily usable objects from Kotlin code.</p>
+
+<p>The application will have a search field to enter a name and a search button.</p>
+
+<p>With the data obtained from the API, we will display the information of the found characters.</p>
+<figure><img src="UD11/images/ud11-2024-03-06-13-37-09.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Obviously, using Retrofit to retrieve data from an API can serve tasks different from those used in the case study.</p>
+
+<p class="sub-section">Examples of requests to the API and data received from it:</p>
+
+<p><a class="enlace" target="_blank" href="https://rickandmortyapi.com/api/character/?name=frank">https://rickandmortyapi.com/api/character/?name=frank</a></p>
+
+<figure><img src="UD11/images/ud11-2024-03-06-13-38-02.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>With the image attribute, we have the image URL</p>
+<figure><img src="UD11/images/ud11-2024-03-06-13-38-42.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p><a class="enlace" target="_blank" href="https://rickandmortyapi.com/api/character/?name=felipe">https://rickandmortyapi.com/api/character/?name=felipe</a></p>
+<p>If it doesn't find the character, it returns the following message</p>
+<figure><img src="UD11/images/ud11-2024-03-06-13-38-56.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>After creating a project, you should:</p>
+
+<p>Add the permission for internet connection in the <span class="inline-file">AndroidManifest.xml</span>.</p>
+<figure><img src="UD11/images/ud11-2024-03-06-13-39-54.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Add the dependency in <span class="inline-file">libs.versions.toml</span> </p>
+<section><pre><code class="language-kotlin">[versions]
+  .....
+compose-runtime-livedata = "1.7.8"
+retrofit = "2.11.0"
+gson-converter = "2.9.0"
+coil-compose = "2.6.0"
+
+[libraries]
+....
+androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "compose-runtime-livedata" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+gson-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "gson-converter" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-compose" }
+</code></pre>
+</section><br><br>
+<p>And in the <span class="inline-file">build.gradle.kts (Módulo app)</span></p>
+<section><pre><code class="language-kotlin">dependencies {
+  ...
+    // LiveData dependency
+    implementation(libs.androidx.runtime.livedata)
+
+    // Retrofit dependencies
+    implementation(libs.retrofit)
+    implementation(libs.gson.converter)
+
+    // Image loading with Coil
+    implementation(libs.coil.compose)
+}
+</code></pre>
+</section><br><br>
+<p>The response from the API is in JSON format, so <span class="negrita">you must analyze the structure of that JSON</span> 
+   to create the necessary data models.</p>
+
+<p>To store these models, <span class="negrita">Data classes</span> will be used.</p>
+
+<p>It's advisable to create the structure of Data classes inside a folder (package) that could be named <span class="negrita">model</span>.</p>
+
+<p>For the example, you could create the following Data classes:
+  <ul>
+    <li><span class="negrita">Response</span>: to represent the entire response.</li>
+    <li><span class="negrita">Info</span>: to represent the "info" element of the response.</li>
+    <li><span class="negrita">Results</span>: to represent the character information.</li>
+  </ul>
+</p>
+<section><pre><code class="language-kotlin">{
+  "info": {
+    "count": 3,
+    "pages": 1,
+    "next": null,
+    "prev": null
+  },
+  "results": [
+    {
+      "id": 127,
+      "name": "Frank Palicky",
+      "status": "Dead",
+      "species": "Human",
+      "type": "",
+      "gender": "Male",
+      "origin": {},
+      "location": {},
+      "image": "https://rickandmortyapi.com/api/character/avatar/127.jpeg",
+      "episode": [],
+      "url": "https://rickandmortyapi.com/api/character/127",
+      "created": "2017-12-26T19:22:48.474Z"
+    },
+    {
+      "id": 128,
+      "name": "Frankenstein's Monster",
+      "status": "Dead",
+      "species": "Alien",
+      "type": "",
+      "gender": "Male",
+      "origin": {},
+      "location": {},
+      "image": "https://rickandmortyapi.com/api/character/avatar/128.jpeg",
+      "episode": [],
+      "url": "https://rickandmortyapi.com/api/character/128",
+      "created": "2017-12-26T19:24:56.679Z"
+    },
+    {
+      "id": 756,
+      "name": "Franklin D. Roosevelt"
+    }
+  ]
+}
+</code></pre>
+</section><br><br>
+
+<h3>Necessary Data classes</h3>
+<section><pre><code class="language-kotlin">data class Response(var info: Info, var results: List&lt;Results>)
+
+data class Info(var count: Int, var pages: Int)
+
+data class Results(var name: String, var image: String)
+</code></pre>
+</section><br><br>
+<figure><img src="UD11/images/ud11-2024-03-06-13-43-31.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>You can see that it's not necessary to use all the data from the response, Retrofit will take care of selecting only the necessary ones.</p>
+
+<p>The task of creating the necessary Data Classes can be tedious, so you can use the <span class="negrita">JSON To Kotlin Class</span> plugin 
+   to automatically detect the data structure from the response of an API request.</p>
+
+<p><span class="negrita">File → Settings…</span></p>
+<figure><img src="UD11/images/ud11-2024-03-06-13-44-37.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Inside the <span class="negrita">model</span> folder, right-click and select the option 
+  <span class="negrita">New → Kotlin data class File from JSON</span>.</p>
+
+<figure><img src="UD11/images/ud11-2024-03-06-13-45-23.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>In the window that opens, you must copy the entire response from the endpoint you want.</p>
+
+<p>For the case study, we will use the example endpoint:
+<a class="enlace" target="_blank" href="https://rickandmortyapi.com/api/character/?name=Morty">https://rickandmortyapi.com/api/character/?name=Morty</a> </p>
+
+<figure><img src="UD11/images/ud11-2024-03-06-13-46-04.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>The generated Data class structure is as follows:</p>
+<figure><img src="UD11/images/ud11-2024-03-06-13-47-22.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>If any of the response data will not be used, it can be removed from the generated Data class structure.</p>
+
+<p>With Kotlin data class File from JSON, the property names are directly taken from the JSON response.</p>
+
+<p>Sometimes the names may not be ideal, in which case you can change them using the <span class="r-word">@SerializedName</span> annotation:</p>
+<figure><img src="UD11/images/ud11-2024-03-06-13-48-13.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>To make using the received data easier, change the property name <span class="negrita">results</span> 
+   to <span class="d-word">characters</span> and the Data class name <span class="negrita">Results</span> to <span class="d-word">CharacterInfo</span>:</p>
+
+<figure><img src="UD11/images/ud11-2024-03-06-13-49-03.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>The next step is to create an <span class="negrita">interface</span> to make the requests.</p>
+
+<p>To do this, create a file named <span class="inline-file">RetrofitService.kt</span> within the <span class="negrita">data</span> package with the following code:</p>
+
+<section><pre><code class="language-kotlin">interface RetrofitService {
+    // If the value to pass is a parameter: ?parameter=value
+    @GET("character/")
+    suspend fun getCharactersByName(
+        @Query("name") name: String
+    ): APIResponse
+
+    // If the value to pass is part of the path
+    @GET("character/{name}")
+    suspend fun getCharactersByNamePath(
+        @Path("name") name: String
+    ): APIResponse
+}</code></pre>
+</section><br><br>
+<p>In this file, create as many functions as needed for different endpoint requests that will be made in the app.</p>
+
+<p>If the app <span class="negrita">also uses a local SQLite database</span>, you will have created at least one general DAO 
+  and one specific DAO.</p>
+
+<p>In this case, it's recommended that the <span class="inline-file">RetrofitService.kt</span> file follows the DAO structure.</p>
+
+<p>The app should check the internet connection status to decide whether to make API requests or use the local database.</p>
+
+<p>Also, consider the backup of data in both directions.</p>
+
+<p>To use the previously created <span class="negrita">interface</span>, you must have an object that returns the <span class="negrita">Retrofit service</span>.</p>
+
+<p>To do this, create a file named RetrofitServiceFactory.kt inside the <span class="negrita">data</span> package with the following code:</p>
+<section><pre><code class="language-kotlin">object RetrofitServiceFactory {
+    // Function to create the instance of Retrofit
+    fun getRetrofit(): RetrofitService {
+        return Retrofit.Builder()
+            .baseUrl("https://rickandmortyapi.com/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(RetrofitService::class.java)
+    }
+}</code></pre>
+</section><br><br>
+<p>The app will use a ViewModel and LiveData to maintain the data during execution.</p>
+
+<p>In a package named <span class="negrita">viewmodel</span>, create the file <span class="inline-file">CharacterViewModel</span> with the following code:</p>
+<section><pre><code class="language-kotlin">class CharacterViewModel() : ViewModel() {
+
+    // List of characters
+    private val _characters = MutableLiveData&lt;List&lt;CharacterInfo>>()
+    val characters: LiveData&lt;List&lt;CharacterInfo>> = _characters
+
+    // Variable to indicate that data is being fetched from the API
+    private var _isLoading = MutableLiveData&lt;Boolean>(false)
+    val isLoading: LiveData&lt;Boolean> = _isLoading
+
+    // Variable to indicate if an error occurred in the API request
+    private var _responseError = MutableLiveData&lt;Boolean>(false)
+    val responseError: LiveData&lt;Boolean> = _responseError
+
+    fun loadCharacterList(searchedCharacter: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.postValue( true)
+            delay(2000) // Delay time to display the ProgressIndicator
+            val service = RetrofitServiceFactory.getRetrofit()
+            try {
+                val searchResults = service.getCharactersByName(searchedCharacter)
+                _characters.postValue(searchResults.characters)
+                _responseError.postValue( false)
+            } catch (e: Exception) {
+                _responseError.postValue( true)
+            }
+            _isLoading.postValue( false)
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<p>Finally, here is the code for the main screen in the <span class="inline-file">MainActivity.kt</span> file:</p>
+<section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            RetrofitexampleTheme{
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    Content()
+                }
+            }
+        }
+    }
+}</code></pre>
+</section><br><br>
+<section><pre><code class="language-kotlin">@Composable
+fun Content() {
+    // ViewModel
+    val characterViewModel = remember { CharacterViewModel() }
+
+    // State variables observed from ViewModel
+    val characters: List&lt;CharacterInfo> by characterViewModel.characters.observeAsState(initial = emptyList())
+    val isLoadingBooks: Boolean by characterViewModel.isLoading.observeAsState(initial = false)
+    val responseError: Boolean by characterViewModel.responseError.observeAsState(initial = false)
+
+    // State variable for search input
+    var searchedCharacter by rememberSaveable { mutableStateOf(value = "") }
+
+    // State variable for the list/grid switch
+    var listViewChecked by rememberSaveable { mutableStateOf(value = false) }
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top,
+        modifier = Modifier.fillMaxWidth().padding(4.dp)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.rick),
+            contentDescription = "Rick & Morty logo",
+            modifier = Modifier.weight(1f)
+        )
+
+        SearchBox(
+            searchedCharacter = searchedCharacter,
+            onValueChange = { searchedCharacter = it },
+            onClickPress = { characterViewModel.loadCharacterList(searchedCharacter) },
+            modifier = Modifier.weight(1f)
+        )
+
+        // Box to show loading or fetched information
+        Box(modifier = Modifier.weight(8f)) {
+            if (isLoadingBooks) {
+                LoadingInfo()
+            } else if (responseError) {
+                Text(text = "\"$searchedCharacter\" does not match any character")
+            } else {
+                if (characters.isNotEmpty()) {
+                    Column {
+                        GridListSwitch(
+                            listViewChecked = listViewChecked,
+                            onValueChange = { listViewChecked = it }
+                        )
+                        if (listViewChecked)
+                            CharactersLazyColumn(characters = characters)
+                        else
+                            CharactersVerticalGrid(characters = characters)
+                    }
+                }
+            }
+        }
+    }
+}</code></pre>
+</section><br><br>
+<h3>Used components</h3>
+<p class="sub-section">GridListSwitch</p>
+
+<section><pre><code class="language-kotlin">@Composable
+fun GridListSwitch(
+    listViewChecked: Boolean,
+    onValueChange: (Boolean) -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(text = "Ver como: Cuadrícula")
+        Switch(
+            checked = listViewChecked,
+            onCheckedChange = { onValueChange(it) },
+            modifier = Modifier.padding(horizontal = 8.dp)
+        )
+        Text(text = "Lista")
+    }
+}</code></pre>
+</section><br><br>
+<p class="sub-section">SearchBox</p>
+
+<section><pre><code class="language-kotlin">@Composable
+fun SearchBox(
+    searchedCharacter: String,
+    onValueChange: (String) -> Unit,
+    onClickPress: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    // Variables para controlar el Foco/Teclado
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier.padding(bottom = 8.dp).then(modifier)
+    ) {
+        OutlinedTextField(
+            value = searchedCharacter,
+            onValueChange = onValueChange,
+            modifier = Modifier.weight(3f)
+        )
+        Button(
+            onClick = {
+                onClickPress()
+                // Ocultar el teclado borrando el foco de donde esté
+                focusManager.clearFocus()
+                // También se puede cerrar el teclado directamente
+                // keyboardController?.hide()
+            },
+            modifier = Modifier.weight(1f)
+        ) {
+            Text(text = "Buscar")
+        }
+    }
+}</code></pre>
+</section><br><br>
+<p class="sub-section">LoadingInfo</p>
+
+<section><pre><code class="language-kotlin">@Composable
+fun LoadingInfo() {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.primary)
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.size(200.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.rick),
+                contentDescription = "Rick",
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .border(width = 5.dp, color = Color.Black, shape = CircleShape)
+                    .fillMaxSize()
+            )
+            CircularProgressIndicator(
+                color = MaterialTheme.colorScheme.onPrimary,
+                strokeWidth = 6.dp,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+        Text(
+            text = "Loading...",
+            fontSize = 40.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onPrimary
+        )
+    }
+}</code></pre>
+</section><br><br>
+<p class="sub-section">CharactersVerticalGrid</p>
+
+<section><pre><code class="language-kotlin">@Composable
+fun CharactersVerticalGrid(characters: List&lt;CharacterInfo>) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        items(characters) { character ->
+            CharacterInfoGrid(character = character)
+        }
+    }
+}</code></pre>
+</section><br><br>
+<p class="sub-section">CharacterInfoGrid</p>
+
+<section><pre><code class="language-kotlin">@Composable
+fun CharacterInfoGrid(character: CharacterInfo) {
+    Card(
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+        modifier = Modifier.padding(4.dp)
+    ) {
+        Column {
+            AsyncImage(
+                model = character.image,
+                contentDescription = "Character avatar",
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+            Text(
+                text = character.name,
+                fontSize = 12.sp,
+                maxLines = 1,
+                softWrap = false,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+            )
+        }
+    }
+}</code></pre>
+</section><br><br>
+<p class="sub-section">CharactersLazyColumn</p>
+
+<section><pre><code class="language-kotlin">@Composable
+fun CharactersLazyColumn(characters: List&lt;CharacterInfo>) {
+    LazyColumn {
+        items(characters) { character ->
+            CharacterInfoList(character = character)
+        }
+    }
+}</code></pre>
+</section><br><br>
+<p class="sub-section">CharacterInfoList</p>
+
+<section><pre><code class="language-kotlin">@Composable
+fun CharacterInfoList(character: CharacterInfo) {
+    ListItem(
+        headlineContent = { Text(text = character.name, fontWeight = FontWeight.Bold) },
+        overlineContent = { Text(text = character.species) },
+        supportingContent = {
+            Text(
+                text = """
+                    |Origen: ${character.origin.name}
+                    |Localización: ${character.location.name}
+                """.trimMargin(),
+                fontSize = 12.sp,
+            )
+        },
+        leadingContent = {
+            AsyncImage(
+                model = character.image,
+                contentDescription = "Character avatar",
+                modifier = Modifier.clip(RoundedCornerShape(8.dp)).size(80.dp),
+            )
+        },
+        colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+        modifier = Modifier.padding(4.dp).clip(RoundedCornerShape(8.dp))
+    )
+}</code></pre>
+</section><br><br>
+<figure><img src="UD11/images/RetrofitExample.gif" /><br><figcaption>App running</figcaption></figure>
+<br>
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/retrofitexample">Here</a> you have the example</p>
+<p>The app developed in the case study can be expanded in the following ways.</p>
+
+<p>If you analyze the JSON response, you can see that the data is not received all at once but is paginated in chunks of 20.</p>
+
+<p>With the variables <span class="negrita">pages</span> and <span class="negrita">next</span>, you can know if additional requests are needed to keep getting data.</p>
+
+<p>This way, you can add a button at the end of the character list that, when pressed, loads the next set of results for the character being searched.</p>
+
+<figure><img src="UD11/images/ud11-2024-03-06-13-56-53.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Another improvement would be to create a screen to show the full information for each character.</p>
+
+<p>This way, you could make it so that when a character is pressed, the app navigates to that screen and passes all the character's data as a parameter.</p>
+
+<p>If you modified the Data classes to remove unnecessary fields from the response, 
+  on the character information screen, a new request could be made to the API 
+  to get only the information for that character using its endpoint. </p>
+
+<p>In the JSON, you can also see that each character has its own endpoint:</p>
+<figure><img src="UD11/images/ud11-2024-03-06-13-57-46.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+</section><!-- End section Retrofit-->
+
+
+
+  <!---BTM_MENU--->
+  <script src="../script/prism.js"></script>
+</body>
+
+</html>

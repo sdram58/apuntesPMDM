@@ -1,0 +1,3374 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UD3.- Managing Unity</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../styles/prism.css">
+  <link rel="stylesheet" href="../styles/styles.css">
+  <script src="../script/script.js"></script>
+</head>
+
+<body class="line-numbers">
+  <div class="logos"></div>
+
+  <nav id="menu-lateral" class="main-menu-lateral oculto">    
+      
+    <div class="fila">      
+      <a href="#sManejo_de_Unity" title="1.- Handling Unity">1.- Handling Unity</a>
+      <a href="#sAgregando_GameObjects_a_la_escena" title="2.- Adding GameObjects to the Scene">2.- Adding GameObjects to the Scene</a>
+      <a href="#sMateriales" title="3.- Materials">3.- Materials</a>
+    </div>
+    <div class="fila">      
+      <a href="#sComponentes_de_GameObject" title="4.- GameObject Components">4.- GameObject Components</a>
+      <a href="#sUI" title="5.- UI">5.- UI</a>
+      <a href="#sPrefabs" title="6.- Prefabs">6.- Prefabs</a>
+    </div>
+    <div class="fila">      
+      <a href="#sLa_Clase_GameObject" title="7.- The GameObject Class">7.- The GameObject Class</a>
+      <a href="#sEl_componente_Transform" title="8.- The Transform Component">8.- The Transform Component</a>
+      <a href="#sLa_clase_Input" title="9.- The Input Class">9.- The Input Class</a>
+    </div>
+    <div class="fila">
+      <a href="#sMovimiento_cinematico_y_movimiento_fisico" title="10.- Kinematic and Physical Movement">10.- Kinematic and Physical Movement</a>
+      <a href="#sColisiones" title="11.- Collisions">11.- Collisions</a>
+      <a href="#sMetodos_Intersantes" title="12.- Interesting Methods">12.- Interesting Methods</a>
+    </div>
+    <div class="fila">      
+      <a href="#sComponenteCharacterController" title="13.- CharacterController Component">13.- CharacterController Component</a>
+      <a href="#sCamaraprofesional" title="14.- Professional Camera">14.- Professional Camera</a>
+      <a href="#sMovimientoProgramado" title="15.- Programmed Movement">15.- Programmed Movement</a>
+    </div>
+    
+    <div class="fila">      
+      <a href="#sRaycast" title="16.- Raycast">16.- Raycast</a>
+      <a href="#sNPCs" title="17.- NPCs">17.- NPCs</a>
+      <a href="#sCambiodeescenas" title="18.- Scene Switching">18.- Scene Switching</a>
+    </div>
+    <div class="fila">      
+      <a href="#sPlayerPrefs" title="19.- PlayerPrefs">19.- PlayerPrefs</a>
+      <a href="#sMenus" title="20.- Menus">20.- Menus</a>
+      <a href="#sComunicacion" title="21.- Communication between GameObjects">21.- Communication between GameObjects</a>
+    </div>
+    
+  </nav> <!-- BTM_MENU-->
+  
+  <h1>UD3.- Managing Unity</h1> 
+
+  
+  <div class="main-menu">  
+    
+    <div class="fila">      
+      <a href="#sManejo_de_Unity" title="1.- Handling Unity">1.- Handling Unity</a>
+      <a href="#sAgregando_GameObjects_a_la_escena" title="2.- Adding GameObjects to the Scene">2.- Adding GameObjects to the Scene</a>
+      <a href="#sMateriales" title="3.- Materials">3.- Materials</a>
+    </div>
+    <div class="fila">      
+      <a href="#sComponentes_de_GameObject" title="4.- GameObject Components">4.- GameObject Components</a>
+      <a href="#sUI" title="5.- UI">5.- UI</a>
+      <a href="#sPrefabs" title="6.- Prefabs">6.- Prefabs</a>
+    </div>
+    <div class="fila">      
+      <a href="#sLa_Clase_GameObject" title="7.- The GameObject Class">7.- The GameObject Class</a>
+      <a href="#sEl_componente_Transform" title="8.- The Transform Component">8.- The Transform Component</a>
+      <a href="#sLa_clase_Input" title="9.- The Input Class">9.- The Input Class</a>
+    </div>
+    <div class="fila">
+      <a href="#sMovimiento_cinematico_y_movimiento_fisico" title="10.- Kinematic and Physical Movement">10.- Kinematic and Physical Movement</a>
+      <a href="#sColisiones" title="11.- Collisions">11.- Collisions</a>
+      <a href="#sMetodos_Intersantes" title="12.- Interesting Methods">12.- Interesting Methods</a>
+    </div>
+    <div class="fila">      
+      <a href="#sComponenteCharacterController" title="13.- CharacterController Component">13.- CharacterController Component</a>
+      <a href="#sCamaraprofesional" title="14.- Professional Camera">14.- Professional Camera</a>
+      <a href="#sMovimientoProgramado" title="15.- Programmed Movement">15.- Programmed Movement</a>
+    </div>
+    
+    <div class="fila">      
+      <a href="#sRaycast" title="16.- Raycast">16.- Raycast</a>
+      <a href="#sNPCs" title="17.- NPCs">17.- NPCs</a>
+      <a href="#sCambiodeescenas" title="18.- Scene Switching">18.- Scene Switching</a>
+    </div>
+    <div class="fila">      
+      <a href="#sPlayerPrefs" title="19.- PlayerPrefs">19.- PlayerPrefs</a>
+      <a href="#sMenus" title="20.- Menus">20.- Menus</a>
+      <a href="#sComunicacion" title="21.- Communication between GameObjects">21.- Communication between GameObjects</a>
+    </div>
+
+  </div>
+
+
+  <section class="apartado">
+    <a name="sManejo_de_Unity"></a>
+    <h2>Handling Unity</h2>
+    <p>It is very important to learn how Unity's Scene View window works to correctly work with GameObjects.</p>
+    
+    <p>The Scene View window is where you can see the objects that are part of the scene.</p>
+    
+    <p>In this window, gizmos often appear. A gizmo is a graphic that helps the developer by providing information about the GameObject within the scene.</p>
+    
+    <p>For example, if you select the light in the scene, you will see a gizmo indicating the direction of the light.</p>
+    <a href="UD3/images/ud3-2024-01-25-11-22-45.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-11-22-45.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <p>The coordinate system is what allows all GameObjects to be positioned in the scene.</p>
+    
+    <p>Each GameObject will have coordinates that indicate its position.</p>
+    
+    <p>Unity uses a <span class="negrita">Y-Up</span> coordinate system:
+      <ul>
+        <li><span class="negrita">x</span>: horizontal axis</li>
+        <li><span class="negrita">y</span>: vertical axis</li>
+        <li><span class="negrita">z</span>: depth axis</li>
+      </ul>
+    </p>
+    <a href="UD3/images/ud3-2024-01-25-11-59-29.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-11-59-29.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>Unreal and Blender use the Z-Up system where the vertical axis is z, and the depth axis is y.</p>
+    <p>In the <span class="negrita">top-right corner of the Scene View window</span>, a very useful <span class="negrita">gizmo</span> appears indicating the direction in which the scene is being viewed.</p>
+    <a href="UD3/images/ud3-2024-01-25-12-00-40.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-12-00-40.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>Clicking on the cones changes the view to align with that axis.</p>
+
+    
+    <p>At the bottom of this gizmo, the current view is displayed, which can indicate "Persp" or any other direction such as "Back." If you click on the central cube or the icon below it with the current view, the view changes to an isometric one.</p>
+    
+    <p>If you're developing a 3D game, the view will change constantly, but if you're developing a 2D game, the default view may not be correct and should be changed.</p>
+    
+    <p>The following tools can be found at the top of the window.</p>
+    <a href="UD3/images/ud3-2024-01-25-12-01-47.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-12-01-47.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>On the left:
+      <ul>
+        <li>The first two options control how the "hand" tool works.
+          <ul>
+            <li><span class="negrita">Center</span> controls whether the manipulation point of the objects is located at the center of the selection or at the pivot of each object.</li>
+            <li><span class="negrita">Global</span> controls whether the transformation axes are based on the world’s global coordinates or on the object’s local axes.</li>
+            
+          </ul>
+        </li>
+        <li>The third toggles the grid display on or off.</li>
+        <li>The fourth allows GameObjects to "snap" to grid points when moved.</li>
+        <li>The fifth indicates the movement steps when moving a GameObject.</li>
+      </ul>
+    </p>
+    
+    <p>On the right:
+      <ul>
+        <li>The first indicates how the GameObjects in the scene will be viewed (solid, wireframe, etc.).</li>
+        <li>The second allows you to switch between a 3D or 2D (orthographic) view.</li>
+        <li>The third toggles the scene's lighting on or off.</li>
+        <li>The fourth toggles sound on or off.</li>
+        <li>The fifth toggles effects like sky, fog, etc.</li>
+        <li>The sixth shows/hides the number of hidden GameObjects in the scene.</li>
+        <li>The seventh allows camera configuration.</li>
+        <li>The eighth allows gizmo visibility configuration.</li>
+      </ul>
+    </p>
+    
+    <p>In the top-left corner, the following tools are available to navigate the scene and manipulate its GameObjects:</p>
+    <a href="UD3/images/ud3-2024-01-25-12-09-50.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-12-09-50.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <p>The above tools, which allow modifying a GameObject in the scene, will display a gizmo on the selected GameObject to assist in manipulation.</p>
+    <a href="UD3/images/ud3-2024-01-25-12-11-24.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-12-11-24.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <a href="UD3/images/movement_shample.gif" target="_BLANK"><figure><img src="UD3/images/movement_shample.gif" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>All GameObjects have a <span class="negrita">pivot point</span>, from which any changes will be applied to the object.</p>
+    
+    <p>The pivot point is located in the <span class="negrita">center of the GameObject by default</span>, which is why the gizmo for the above tools is drawn from the center of the selected GameObject.</p>
+    
+      <a href="UD3/images/ud3-2024-01-25-13-50-41.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-13-50-41.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      <p>The pivot point cannot be moved.</p>
+    
+      <h3>Moving the Scene View Camera</h3>
+    
+      <p class="sub-section">With keys:</p>
+      <p>
+        <ul>
+          <li>Arrow keys ⬅ ➡: moves the camera left and right.</li>
+          <li>Arrow keys ⬆ ⬇: zooms in and out.</li>
+        </ul>
+      </p>
+      
+      
+      <p class="sub-section">With mouse:</p>
+      <p>
+        <ul>
+          <li>With the hand tool selected <img style="vertical-align: baseline"  src="UD3/images/ud_3-2024-09-30-10-53-07.png" />, click and drag: moves the camera horizontally and vertically.</li>
+          <li>Middle mouse button (scroll wheel): same action as the previous line.</li>
+          <li>CTRL + ALT + left-click: same action as the previous line.</li>
+          <li>Right-click and hold: rotates the camera around its axis.</li>
+          <li>ALT + left-click: rotates the camera around the center point of the view.</li>
+        </ul>
+      </p>
+    
+      <p>All GameObjects can be moved/aligned with the view.</p>
+    
+      <p>This is useful with cameras because it allows aligning the camera to the view so that when the game is run, the current view will be the one seen.</p>
+      
+      <a href="UD3/images/ud3-2024-01-25-13-53-48.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-13-53-48.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      
+      <p>As mentioned earlier, if you're developing a 2D game, it's useful to change the scene view so that it matches the game view, where the z-axis is horizontal, and the y-axis is vertical.</p>
+      <a href="UD3/images/ud3-2024-01-25-13-54-45.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-13-54-45.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      
+  </section><!-- End section Manejo de Unity-->
+  
+  
+  <section class="apartado">
+    <a name="sAgregando_GameObjects_a_la_escena"></a>
+    <h2>Adding GameObjects to the Scene</h2>
+    
+    <p>To add GameObjects to the scene, you can right-click on the scene element area (hierarchy) or select the option from the GameObject menu.</p>
+    
+    <p>The menu option also provides actions to perform on a GameObject if it is selected.</p>
+    <a href="UD3/images/ud3-2024-01-25-13-56-44.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-13-56-44.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <p>Depending on the type of project, different types of GameObjects will be available to add to the scene (packages can be added from the Package Manager to expand the catalog).</p>
+    
+    <p>Empty GameObjects can be added, which serve to group other GameObjects, helping to keep the hierarchy organized.</p>
+    
+    <p>There are also 3D objects, which will be the first ones used in class.</p>
+    
+    <a href="UD3/images/ud3-2024-01-25-13-58-59.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-13-58-59.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <a href="UD3/images/ud3-2024-01-25-13-59-21.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-13-59-21.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <p>When adding a GameObject to the scene, you can rename it in the hierarchy (later, you can rename it by right-clicking on it in the hierarchy).</p>
+    
+    <p>Additionally, when adding the GameObject, it is positioned at the center of the scene, regardless of the coordinates.</p>
+    <a href="UD3/images/ud3-2024-01-25-14-00-24.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-14-00-24.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>When selecting the GameObject in the inspector, you can see its components, including <span class="r-word">Transform</span>, which indicates the values for <span class="negrita">position, rotation, and scale</span>.</p>
+    
+    <p>GameObjects are added to the hierarchy as children of the scene.</p>
+    
+    <p>In the hierarchy, you can organize GameObjects within each other by dragging them onto the one that should contain them or dragging them out of the one that contains them.</p>
+    
+    <p>If you right-click on an object in the hierarchy and add a GameObject, it will be added directly as a child of the selected one.</p> 
+    <a href="UD3/images/ud3-2024-01-25-14-01-59.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-14-01-59.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <section class="marco-t warn">
+      <span class="icono warning"> </span>All modifications made to a GameObject affect all GameObjects contained within it in the hierarchy.
+    </section>
+    <section class="marco-b">
+        
+    </section>
+    
+    <h3>GameObject Pivot Point</h3>
+    <p><span class="negrita">All GameObjects have a pivot point located at their center.</span></p>
+    
+    <p>The coordinates of this pivot point in the scene are what Unity uses to perform all necessary calculations.</p>
+    
+    <p>The pivot point <span class="negrita">cannot be moved</span>. Except with design programs like Blender</p>
+    
+    <p>The pivot point is also the reference when one GameObject follows another, for example, a camera following a character. In this case, the camera will track the pivot point of the GameObject.</p>
+    
+    <p>If you want a different tracking center, you can create an empty GameObject, add it to the main GameObject at the desired coordinates, and then set the camera to follow the empty GameObject.</p>
+    
+    <h3>Modifying GameObjects</h3>
+    <p>To modify a GameObject, you must select it either by clicking on it in the hierarchy or by clicking on it in the scene view.</p>
+    
+    <p>If you double-click a GameObject in the hierarchy, it will not only select the GameObject, but the view will also focus on it.</p>
+    
+    <p>If you click on a GameObject in the scene view, it will both select the GameObject and center the view where you clicked.</p>
+    
+    <p><span class="negrita">All modifications made to a GameObject use the pivot point as the reference.</span></p>
+    
+    <p>There are several ways to modify a GameObject in the scene:</p>
+    
+    <p class="sub-section">Manually changing its values in the inspector</p>
+    
+    <a href="UD3/images/ud3-2024-01-25-14-06-47.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-14-06-47.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <p>You can set the GameObject to be positioned at the origin coordinates (0,0,0).</p>
+    
+    <a href="UD3/images/ud3-2024-01-25-14-07-26.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-14-07-26.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>This action can be problematic because the pivot point is centered by default. So when moved to (0,0,0), the GameObject might appear as in the image below, where half of it is below the point (0,0,0).</p>
+    <a href="UD3/images/ud3-2024-01-25-14-07-47.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-14-07-47.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p class="sub-section">Using the inspector by hovering over one of the coordinates</p>
+    <p>The cursor will change, and you can click and drag to change the value.</p>
+    <a href="UD3/images/ud3-2024-01-25-14-08-44.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-14-08-44.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <p class="sub-section">With the tools mentioned earlier</p>
+    <p>You can modify a GameObject using the mouse.</p>
+    
+    <p>When selected, a gizmo appears, and interacting with it using the mouse allows you to perform the required actions.</p>
+    
+    <p>Each gizmo works differently.</p>
+    <a href="UD3/images/ud3-2024-01-25-14-09-56.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-14-09-56.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <p>Movement only along the X-axis</p>
+    <a href="UD3/images/ud3-2024-01-25-14-10-56.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-14-10-56.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>Movement along non-Y axes (X, Z plane):</p>
+    <a href="UD3/images/ud3-2024-01-25-14-10-43.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-25-14-10-43.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <p>When using tools with gizmos, you can use <span class="negrita">snaps</span>.</p>
+    
+    <p>The default step sizes or snaps can be changed:</p>
+    <a href="UD3/images/ud3-2024-01-26-09-28-26.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-09-28-26.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>To apply snap modifications while using gizmos, hold down the control key.</p>
+    
+    <p>All modifications use the pivot point as the reference.</p>
+    
+    <p>You can make modifications by snapping the reference point to a vertex on the GameObject’s mesh. To do this, press the V key after selecting the tool.</p>
+    
+    <p>When pressing the V key, you’ll see the gizmo move to the closest vertex as you hover over the GameObject with the mouse.</p>
+    
+    <p>This action is known as vertex snap and allows you to align GameObjects by matching one of their vertices to a vertex of another GameObject.</p>
+    
+    <a href="UD3/images/ud3-2024-01-26-09-29-17.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-09-29-17.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <h3>Units of Measurement</h3>
+    <p>By default, the units of measurement used in Unity are:
+      <ul>
+        <li><span class="negrita">Distances</span>: meters.</li>
+        <li><span class="negrita">Sizes</span>: meters.</li>
+        <li><span class="negrita">Weight (mass)</span>: kilograms.</li>
+        <li><span class="negrita">Time</span>: seconds.</li>
+      </ul>
+    </p>
+    
+    <p>It's important to keep this in mind, as the behavior of GameObjects with physics depends on their size and weight.</p>
+    
+  </section><!-- End section Agregando GameObjects -->
+  
+  <section class="apartado">
+    <a name="sMateriales"></a>
+    <h2>Materials</h2>
+    <p><span class="negrita">Materials</span> allow you to give appearance to the GameObjects.</p>
+    
+    <p>To create a material, right-click in the file manager and select <span class="negrita">Create &rarr; Material</span>. When created, you will be able to assign it a name.</p>
+    <a href="UD3/images/ud3-2024-01-26-09-32-28.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-09-32-28.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>It is important to remember that to maintain file organization, materials should be placed in a folder named <span class="inline-folder">Materials</span> inside the <span class="inline-folder">Assets</span> folder.</p>
+    
+    <p>A material in the file manager is represented by a sphere, and depending on the settings applied in the inspector, it will have a different appearance.</p>
+       
+    <a href="UD3/images/ud3-2024-01-26-09-33-59.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-09-33-59.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <p>With good configuration, you can achieve a realistic material.</p>
+    
+    <p>Materials can also be obtained from the Unity Asset Store and from repositories on the internet.</p>
+    <a href="UD3/images/ud3-2024-01-26-09-53-50.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-09-53-50.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>You can apply a material to a GameObject in several ways:
+      <ul>
+        <li>Drag the material onto the GameObject in the hierarchy.</li>
+        <li>Drag the material onto the GameObject in the scene view.</li>  
+        <li>Drag the material onto the GameObject in the inspector in the "Add Component" area.</li>
+      </ul>
+    </p>
+    
+    <a href="UD3/images/ud3-2024-01-26-09-54-59.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-09-54-59.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <div class="tarea">
+      <span class="negrita subrayado">Activity 1</span>: Create 3 materials and apply them to the cubes like in the image above</div>
+    <br>
+    <h3>Physical Materials</h3>
+    <p>Physical materials (Physic Material) allow control over how GameObjects physically interact when they collide with each other.</p>
+    
+    <p>They are commonly used to make GameObjects bounce or to create friction between them.</p>
+    
+    <p>To create a physical material, right-click in the file manager and choose the option <span class="negrita">Create &rarr; Physic Material</span>.</p>
+    
+    <p>Upon creation, you will need to give it a name.</p>
+    <a href="UD3/images/ud3-2024-01-26-10-05-23.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-05-23.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <p>The parameters that can be configured in a physical material are:</p>
+    <a href="UD3/images/ud3-2024-01-26-10-05-53.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-05-53.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <p>You can apply a physical material to a GameObject in several ways:
+      <ul>
+        <li>Drag the material onto the GameObject in the hierarchy.</li>
+        <li>Drag the material onto the GameObject in the scene view.</li>
+        <li>Drag the material onto the GameObject in the inspector in the "Add Component" area.</li>
+      </ul>
+    </p>
+    
+    <a href="UD3/images/ud3-2024-01-26-10-06-48.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-06-48.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <hr>
+    <br>
+    <div class="tarea">
+      <p><span class="subrayado negrita">Activity 2: Building the Scene</span> <br>
+        Create a 3D project in Unity called <span class="subrayado">SceneYourName</span>. <br>
+        Set the view camera as if developing a 2D game (Z-axis pointing backwards).<br>
+        Add a plane to the scene and modify its size so that it is shallow but very wide (like a horizontal platform from left to right). <br>
+        Add a cube, a sphere, a capsule, and a cylinder to the scene. Arrange them in the scene as you wish, but they should all be on the same Z coordinate as the plane. <br>
+        Only one object should touch the surface of the plane. <br>
+        Of the GameObjects not touching the plane’s surface, position one at the same Z coordinate as the one touching the surface, but with a slightly shifted X coordinate (still above the other), and the Y coordinate should be higher, at the top of the scene. <br>
+        Create 5 materials with different colors and appearances, and assign each one to a GameObject. <br>
+    
+        Set the view to a different angle than the camera’s perspective—you can rotate and move it, but both the plane and all objects must appear in the view.
+        <span class="oculto">Take a screenshot of the scene view and name it YourNameUnity1.png</span>
+        <span class="oculto">Take a screenshot of the game view when the game is running, name it YourNameUnity2.png. Compress the two screenshots into a rar or zip file named YourName and attach the compressed file to the assignment.</span>
+      </p>
+    </div>
+    
+    <br>
+    <hr>
+    <br>
+    <div class="tarea">
+      <p><span class="subrayado negrita">Activity 3: MonoBehaviour Events</span> <br>
+        Open the SceneYourName project. <br>
+        Create a script called EventsScript and attach it to the GameObject that is touching the surface. <br>
+        In the script, add instructions to display console messages with Debug.Log for the following events: Start, Update, OnMouseEnter (when the mouse is over the GameObject), and OnMouseDrag (when the GameObject is clicked and dragged with the mouse). <br>
+        The messages should follow this format: "YourName (EventName): YourMessage".<br>
+        <span class="oculto">
+        Click on the script in the file manager so the code appears in the inspector, then run the game and take a screenshot showing both the console and the inspector (remember to activate the Collapse option in the console). 
+        Name the screenshot YourNameUnity3.png. <br>
+        Compress the screenshot into a rar or zip file named YourName and attach it to the assignment.</span>
+      </p>
+    </div>
+    
+    <br>
+    <hr>
+    <br>
+    <div class="tarea">
+      <p><span class="subrayado negrita">Activity 4: Gravity</span> <br>
+        Open the SceneYourName project. <br>
+        One of the GameObjects is vertically aligned with the one that was touching the surface. Add a RigidBody component to the object at the top of the scene. <br>
+        Run the game and observe what happens. <br>
+        Change the weight of that GameObject and run the game again to observe the changes.<br>
+        Change other RigidBody settings and run the game to see what happens. <br>
+        <div class="oculto">Take a screenshot of the game window before the cube falls, and name it YourNameUnity4.png. <br>
+          Take a screenshot of the game window when the cube hits the object below it, and name it YourNameUnity5.png. <br>
+          Take a screenshot of the game window when the cube stops moving, and name it YourNameUnity6.png. <br>
+          Compress the screenshots into a rar or zip file named YourName and attach them to the assignment.</div>
+      </p>
+    </div>
+
+    <br><br>
+    <a href="UD3/images/demo_act_2_4.gif" target="_BLANK"><figure><img src="UD3/images/demo_act_2_4.gif" /><br><figcaption></figcaption></figure></a>
+    
+  </section><!-- End section Materials -->
+  
+  
+  <!--*********************************************************GameObject Components***********************************************************-->
+<section class="apartado">
+  <a name="sComponentes_de_GameObject"></a>
+  <h2>GameObject Components</h2>
+  <p>GameObjects can contain different components.</p>
+  
+  <p>At a minimum, all GameObjects have the Transform component, which is used to indicate the position, rotation, and size of the GameObject.</p>
+  
+  <p>Geometric GameObjects also have a Mesh and a Mesh Renderer to allow them to be drawn.</p>
+  
+  <p>GameObjects that are visible in the cameras have a Collider to detect collisions.</p>
+  
+  <a href="UD3/images/ud3-2024-01-26-10-00-53.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-00-53.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>Other components can be added to GameObjects from the <span class="negrita">Menu &rarr; GameObject</span> or from the inspector using the "<span class="negrita">Add Component</span>" button at the bottom.</p>
+  
+  <p>Using the "Add Component" button opens a search bar where you can type the component you're looking for.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-02-02.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-02-02.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>When developing a video game, it is often necessary for some GameObjects to be <span class="negrita">affected by physics</span> (gravity, forces, etc.), for which they need to have a component called <span class="r-word">RigidBody</span>.</p>
+  
+  <p>In the configuration of <span class="r-word">RigidBody</span>, the weight of the GameObject in the scene is specified, along with other parameters.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-03-05.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-03-05.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+</section><!-- End section GameObject Components-->
+
+<!--*********************************************************UI (User Interface)***********************************************************-->
+<section class="apartado">
+  <a name="sUI"></a>
+  <h2>UI (User Interface)</h2>
+  <p>The user interface (UI) consists of elements added to the scene to provide information to the user.</p>
+  
+  <p>The user interface can be used to create menus and the HUD (Head-Up Display).</p>
+  
+  <p>The user interface can be created with either 2D or 3D GameObjects, but 2D GameObjects are commonly used.</p>
+  
+  <p>The user interface can include GameObjects such as text, images, sliders, scrollbars, buttons, or text fields.</p>
+  
+  <p>UI GameObjects must be children of a <span class="negrita">Canvas</span> GameObject.</p>
+  
+  <p>When a UI GameObject is added to the scene, if there is no <span class="negrita">Canvas</span> in the scene, one will be created to contain the UI GameObject.</p>
+  
+  <a href="UD3/images/ud3-2024-01-26-10-09-35.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-09-35.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+
+  <h3>UI - Text</h3>
+  <p>There are two GameObjects for adding text to the scene:
+    <ul>
+      <li><span class="negrita">Text</span>: basic text with limited configuration options.</li>
+      <li><span class="negrita">TextMeshPro</span>: advanced text with many configuration options.</li>
+    </ul>
+  </p>
+  
+  <p>There are other MeshPro GameObjects that enhance the primitive types.</p>
+  
+  <p>It is recommended to use MeshPro whenever available.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-11-13.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-11-13.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>When adding a <span class="negrita">TextMeshPro</span> for the first time to the project, a window will appear indicating that the necessary packages must be imported. Click on the "<span class="cursiva">Import TMP Essentials</span>" button.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-12-31.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-12-31.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>It also indicates that example and extra packages can be imported.</p>
+  
+  <p>To correctly display Canvas elements on the screen, some configuration changes must be made in the inspector.</p>
+  
+  <p>Select "<span class="negrita">Render Mode</span>" as "<span class="negrita">Screen Space - Camera</span>" and then drag the camera from the hierarchy to the "<span class="negrita">Render Camera</span>" box.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-14-41.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-14-41.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <a href="UD3/images/ud3-2024-01-26-10-15-02.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-15-02.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <a href="UD3/images/demo_canvas_text.gif" target="_BLANK"><figure><img src="UD3/images/demo_canvas_text.gif" /><br><figcaption></figcaption></figure></a>
+    <br>
+  
+  <h3>UI - Images</h3>
+  <p>To add images to the user interface, the images must be <span class="d-word">sprites</span>.</p>
+  
+  <p>Sprites are bitmap images that contain a minimal unit of information, such as a button image or a character image.</p>
+  
+  <p>An image may contain one or more sprites.</p>
+  
+  <p>Each sprite can be added to the scene directly as an independent GameObject.</p>
+  
+  <p>If an image contains multiple sprites, it optimizes image loading in the game.</p>
+  
+  <p>Sprites can be used to form a complete character and animate each sprite independently.</p>
+  
+  <p>They can also be used to create the animation of a character or object by changing the sprite of a GameObject as it moves.</p>
+  
+  <a href="UD3/images/ud3-2024-01-26-10-28-46.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-28-46.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>An image with multiple sprites is also useful for containing different world or UI elements.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-29-31.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-29-31.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>The first step to adding sprites to the Unity project is to add the 2D Sprite package from the <span class="negrita">Menu &rarr; Window &rarr; Package Manager</span>.</p>
+  
+  <a href="UD3/images/ud3-2024-01-26-10-30-33.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-30-33.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>This installs the <span class="negrita">Unity Sprite Editor</span> tool.</p>
+  
+  <p>The next step is to drag the images into the file manager into a folder called <span class="inline-folder">Sprites</span>.</p>
+  
+  <p>By selecting an image from the file manager, you can indicate its texture type in the inspector. To convert it into a sprite, select the <span class="negrita">Sprite (2D and UI)</span> option.</p>
+  
+  <a href="UD3/images/ud3-2024-01-26-10-31-40.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-31-40.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>By doing this, the <span class="negrita">Sprite Editor</span> button will become available. Clicking it will open the editor, allowing you to create the sprite from the image.</p>
+  
+  <p>If the image contains only one sprite, with the default "<span class="cursiva">Single</span>" mode selected, opening the editor will automatically convert the image into a sprite.</p>
+  
+  <p>Once an image is converted into a sprite, a small arrow will appear on it in the file manager.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-32-54.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-32-54.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>The sprite editor allows you to modify the sprite.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-33-21.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-33-21.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>If an image contains multiple sprites, set the <span class="negrita">Sprite Mode</span> option to <span class="negrita">Multiple</span> in the inspector.</p>
+  
+  <p>It's important that the background of the image is transparent for better results with the sprites.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-34-18.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-34-18.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>This way, the sprite editor allows multiple sprites to be created from the image.</p>
+  
+  <p>In the sprite editor, you can manually select the different sprites with the mouse. Once a sprite is selected, you need to name it for future reference:</p>
+  <a href="UD3/images/ud3-2024-01-26-10-35-15.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-35-15.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>Once a sprite is created, the <span class="negrita">Trim</span> option adjusts the sprite to fit the content of the image (the background should be transparent).</p>
+  <a href="UD3/images/ud3-2024-01-26-10-35-48.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-35-48.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>You can change the way the sprite is selected if you want to better fit the image.</p>
+  
+  <p>With <span class="negrita">Outline Tolerance</span>, the outline can be adjusted to the image. <span class="negrita">Generate</span> creates the outline, and <span class="negrita">Apply</span> finalizes the sprite with that outline.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-37-14.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-37-14.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>If the sprites are organized in the image in an orderly manner, in the editor's <span class="negrita">Slice</span> dropdown, you can select how the image will be divided so the editor can automatically create the sprites:</p>
+  <a href="UD3/images/ud3-2024-01-26-10-37-42.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-37-42.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p><ul>
+    <li><span class="negrita">Automatic</span>: The editor detects the sprites based on the content.</li>
+    <li><span class="negrita">Grid By Cell Size</span>: The sprites in the image are organized in a grid, and this option requires specifying the size of each cell in the grid.</li>
+    <li><span class="negrita">Grid By Cell Count</span>: The sprites in the image are organized in a grid, and this option requires specifying the number of rows and columns.</li>
+  </ul></p>
+  
+  <p>After selecting the desired option, click the Slice button to generate all the sprites.</p>
+  
+  <a href="UD3/images/ud3-2024-01-26-10-39-10.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-39-10.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <a href="UD3/images/ud3-2024-01-26-10-39-17.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-39-17.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <a href="UD3/images/ud3-2024-01-26-10-40-12.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-40-12.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>If the image contains sprites for character animations, like in the example, when using the options in the <span class="negrita">Slice</span> button, you must consider the content of the image to ensure the pivot is correct for the animation to work properly.</p>
+  
+  <p>In most cases, the sprites are arranged in a grid, and the pivot is in the center, although this may vary between sprite sheets.</p>
+  
+  <p>Once the sprites are created, clicking the arrow on the image in the file manager will display all the sprites along with their names.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-41-11.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-41-11.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>Once an image is converted into one or more sprites, you can drag one of the sprites into the hierarchy or scene view to add a GameObject displaying that sprite.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-52-04.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-52-04.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>You can also add a <span class="negrita">UI &rarr; Image</span> GameObject and assign the sprite by dragging it to the Source Image field.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-52-56.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-52-56.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <a href="UD3/images/ud3-2024-01-26-10-53-10.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-53-10.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+</section><!-- End section UI (User Interface) -->
+
+  
+  <!--*********************************************************Prefabs***********************************************************-->
+<section class="apartado">
+  <a name="sPrefabs"></a>
+  <h2>Prefabs</h2>
+  <p>A <span class="r-word">Prefab</span> is a GameObject with all its characteristics (size, rotation, scale, material, textures, physics, etc.) stored as an asset.</p>
+  
+  <p>Once a GameObject is saved as a prefab, it <span class="negrita">can be instantiated from a script</span>.</p>
+  
+  <p>A typical example of a prefab in a game would be objects dropped by enemies when they disappear after being hit.</p>
+  
+  <p>Prefabs are also easy to export for use in other projects.</p>
+  
+  <p>To create a prefab, drag the object from the hierarchy to the file manager.</p>
+  
+  <p>For better organization, all prefabs should be placed in a folder called <span class="inline-folder">Prefabs</span>.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-55-31.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-55-31.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>In the hierarchy, it is indicated that the GameObject originates from a prefab by displaying its name in <span class="negrita">blue</span>.</p>
+  
+  <p>A preview of the prefab appears in the file manager.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-56-18.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-56-18.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>When selecting the prefab in the inspector, you can view its characteristics and components.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-56-46.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-56-46.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>A GameObject in the hierarchy that comes from a prefab can be edited in the current scene without affecting the prefab itself.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-57-23.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-57-23.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>To edit a prefab, double-click on it in the file manager.</p>
+  
+  <p>Changes to the prefab will be replicated in all GameObjects in the project that were created from the prefab.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-57-56.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-57-56.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>You can add as many copies of a prefab to a scene as needed.</p>
+  
+  <p>From a script, you can also add GameObjects that are prefabs.</p>
+  <a href="UD3/images/ud3-2024-01-26-10-58-35.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-26-10-58-35.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <br>
+  <hr>
+  <br>
+  <div class="tarea">
+    <p><span class="subrayado negrita">Activity 5. Images and Prefabs</span> <br>
+  Open the project <span class="subrayado">SceneYourName</span>. <br>
+  Add a Cube GameObject, create a new material for it, and assign it. <br>
+  Create 5 copies of this cube and arrange them into a figure however you'd like (you can rotate and scale them). <br>
+  Create an empty GameObject and add the 6 cubes that form the figure, being careful with the coordinates. <br>
+  Create a Prefab from this empty GameObject. <br>
+  Add text to the scene with your name. <br>
+  Add a passport-style photo of yourself to the scene (current). <br>
+  
+  <div class="oculto">Take a screenshot of the entire Unity window during execution, showing the prefab in the file manager, and the GameObjects in the scene in the scene view. Name it TuNombreUnity7.png. <br>
+    Compress the screenshot into a rar or zip file named TuNombre and attach the compressed file to the assignment.</div>
+  </p>
+    
+  </div>
+</section><!-- End section Prefabs-->
+
+<!--*********************************************************The GameObject Class***********************************************************-->
+<section class="apartado">
+  <a name="sLa_Clase_GameObject"></a>
+  <h2>The GameObject Class</h2>
+  <h3>Accessing GameObject Properties</h3>
+  <p>From a script added to a GameObject, you can access the properties of the GameObject itself and all the components added to it.</p>
+  
+  <p>To access this information, you use the <span class="r-word">gameObject</span> variable (note that it starts with lowercase), which <span class="negrita">is directly injected</span> when inheriting from the <span class="r-word">MonoBehaviour</span> class.</p>
+  <a href="UD3/images/ud3-2024-01-29-10-56-27.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-10-56-27.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <a href="UD3/images/ud3-2024-01-29-10-56-54.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-10-56-54.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <a href="UD3/images/ud3-2024-01-29-10-57-11.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-10-57-11.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <a href="UD3/images/ud3-2024-01-29-10-57-50.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-10-57-50.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>All GameObjects have at least one <span class="negrita">Transform</span> component, which <span class="negrita">indicates the position, rotation, and size of the GameObject</span>.</p>
+  
+  <p>Since it is a component present <span class="subrayado">in all</span> GameObjects, Unity directly injects the <span class="negrita">transform property</span>, which can be used directly, or accessed through the gameObject property.</p>
+  <a href="UD3/images/ud3-2024-01-29-11-00-07.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-00-07.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>To access a <span class="negrita">component other than Transform</span>, you need to create a property to store that component using the <span class="negrita">GetComponent</span> method, allowing you to access it.</p>
+  
+  <p>For example, to access the <span class="negrita">Collider</span> component:</p>
+  
+  <a href="UD3/images/ud3-2024-01-29-11-01-57.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-01-57.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <h3>Accessing Other GameObjects</h3>
+  <p>To access other GameObjects from a script, you <span class="negrita">declare a GameObject property</span> and then <span class="negrita">assign the desired GameObject to it</span> (e.g., Sphere<span class="negrita">GO</span>  &rarr; <span class="negrita">G</span>ame<span class="negrita">O</span>bject).</p>
+  
+  <a href="UD3/images/ud3-2024-01-29-11-03-58.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-03-58.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>There are several ways to assign the GameObject to the property:
+    <ul>
+      <li>If the property is <span class="negrita">public</span>, you can <span class="negrita">drag and drop</span> the GameObject from the hierarchy to the variable in the Inspector.
+        <a href="UD3/images/ud3-2024-01-29-11-06-10.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-06-10.png" /><br><figcaption></figcaption></figure></a>
+        <br>
+        
+      </li>
+      <li>From the script itself, using the <span class="negrita">Find</span> method of the <span class="negrita">GameObject</span> class to search by <span class="negrita">name</span> (in these cases, the property is usually private).
+         <a href="UD3/images/ud3-2024-01-29-11-07-41.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-07-41.png" /><br><figcaption></figcaption></figure></a>
+         <br>
+         
+      </li>
+      <li><span class="negrita">Assign tags</span> to GameObjects and use the <span class="r-word">FindGameObjectsWithTag</span> method of the <span class="negrita">GameObject</span> class to search by <span class="negrita">tag</span>.
+         <a href="UD3/images/ud3-2024-01-29-11-09-22.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-09-22.png" /><br><figcaption></figcaption></figure></a>
+         <br>
+         
+         <br>
+         <p>In this case, the variable <span class="negrita">should be declared as an array</span> because there could be more than one GameObject with that tag (the property is usually private).</p>
+         <a href="UD3/images/ud3-2024-01-29-11-11-20.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-11-20.png" /><br><figcaption></figcaption></figure></a>
+         <br>
+<section><pre><code class="language-csharp">public class Test : MonoBehaviour
+{
+    public GameObject[] blueCubesGO;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        blueCubesGO = GameObject.FindGameObjectsWithTag("blueCubes");
+        foreach (GameObject cubeGO in blueCubesGO)
+        {
+            Debug.Log("Cubo: " + cubeGO.name );
+        }
+    }
+
+    // Update is called once per frame
+    void Update(){
+    }
+}</code></pre>
+</section><br><br>
+         <br>    
+         
+         <a href="UD3/images/ud3-2024-01-29-11-12-54.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-12-54.png" /><br><figcaption></figcaption></figure></a>
+         <br>
+         
+         <br>
+         
+        </li>
+    </ul>
+  </p>
+  
+  <p>When accessing other GameObjects, you can access their properties. For example, the following script, added to the MainCamera, would access the <span class="negrita">Text</span> property of a GameObject of type TextMeshPro and modify its value.</p>
+  
+  <p>To access the GameObject, you must drag it to the appropriate slot in the Inspector after selecting the MainCamera.</p>
+  <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+public class Test : MonoBehaviour
+{
+    public int points = 0;
+
+    public TextMeshProUGUI pointsTMP;
+    // Start is called before the first frame update
+    void Start()
+    {
+        pointsTMP.text ="Points: " + points;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space)){
+            pointsTMP.text ="Points: " + ++points;
+        }
+    }
+}</code></pre>
+  </section><br><br>
+  <br>
+  
+  <h3>Accessing Components of Other GameObjects</h3>
+  <p>Once you have a reference to another GameObject using any of the techniques mentioned earlier, you can access the components of that GameObject using the <span class="negrita">GetComponent</span> method, just as you would access components of the current GameObject.</p>
+  
+  <a href="UD3/images/ud3-2024-01-29-11-15-43.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-15-43.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>If the property to access the component is declared as public, <span class="negrita">when you drag the GameObject</span> to the slot in the Inspector, <span class="negrita">the specified component type will be automatically assigned</span> to the property.</p>
+  <a href="UD3/images/ud3-2024-01-29-11-16-38.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-16-38.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>You can access scripts on other GameObjects by referencing the target GameObject and specifying the <span class="negrita">script name</span>.</p>
+  
+  <p>You can use any of the techniques mentioned earlier to obtain the reference to the other GameObject.</p>
+  <a href="UD3/images/ud3-2024-01-29-11-18-28.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-18-28.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+</section><!-- End section The GameObject Class-->
+
+  
+  <!--*********************************************************The Transform Component***********************************************************-->
+<section class="apartado">
+  <a name="sEl_componente_Transform"></a>
+  <h2>The Transform Component</h2>
+  <p>The <span class="r-word">Transform</span> component is structured into three elements:
+    <ul>
+      <li><span class="negrita">Position</span></li>
+      <li><span class="negrita">Rotation</span></li>
+      <li><span class="negrita">Scale</span></li>
+    </ul>
+  </p>
+  <a href="UD3/images/ud3-2024-01-29-11-20-46.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-20-46.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>Each element specifies a value for each coordinate, which can be accessed as shown earlier.</p>
+  
+  <a href="UD3/images/ud3-2024-01-29-11-20-54.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-20-54.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>To modify <span class="negrita">position</span>, <span class="negrita">rotation</span>, and <span class="negrita">scale</span>, 
+     you use objects of the <span class="r-word">Vector3</span> class.</p>
+  <a href="UD3/images/ud3-2024-01-29-11-22-06.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-22-06.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>The code in the image represents the coordinates: x=3, y=8, z=1.</p>
+  
+  <p>The accepted parameters are decimal numbers (float), although integers can also be used.</p>
+  
+  <p>If you indicate a decimal number, you must add the letter "f" at the end:</p>
+  <a href="UD3/images/ud3-2024-01-29-11-22-20.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-22-20.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <h3>Changing a GameObject's Position</h3>
+  
+  <p>To <span class="negrita">change the position</span> of a GameObject:
+  <ul>
+    <li>
+      Assign <span class="negrita">a new Vector3</span> to the <span class="negrita">position</span> property of its <span class="negrita">Transform</span>:
+      <a href="UD3/images/ud3-2024-01-29-11-23-18.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-23-18.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+    </li>
+    <li>
+      Perform operations on the <span class="negrita">position</span> property of the <span class="negrita">Transform</span> using a <span class="negrita">Vector3</span>:
+      <a href="UD3/images/ud3-2024-01-29-11-24-03.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-24-03.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+    </li>
+    <li>
+      Use the <span class="r-word">Translate</span> method on the <span class="negrita">Transform</span>:
+      <a href="UD3/images/ud3-2024-01-29-11-24-40.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-24-40.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      <p>With <span class="r-word">Translate</span>, you can specify whether to use the object's own transform (default) or the world origin (0, 0, 0):</p>
+      <a href="UD3/images/ud3-2024-01-29-11-25-39.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-25-39.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      
+    </li>
+  </ul>
+  </p>
+  
+  <p>Additionally, the <span class="r-word">Vector3</span> class includes some properties that return Vector3 objects aligned with the unit axes:</p>
+  <a href="UD3/images/ud3-2024-01-29-11-26-32.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-26-32.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>You can find everything available in the documentation:
+  <a class="enlace" target="_blank" href="https://docs.unity3d.com/ScriptReference/Vector3.html">https://docs.unity3d.com/ScriptReference/Vector3.html</a>
+  </p>
+  
+  <p><span class="r-word">Vector3</span> objects can also be operated on:</p>
+  <a href="UD3/images/ud3-2024-01-29-11-27-08.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-27-08.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <h3>Rotating a GameObject</h3>
+  <p class="sub-section">Around Its Own Axis</p>
+  
+  <p>Assign a <span class="negrita">new Vector3</span> to the <span class="negrita">rotation</span> property of its <span class="negrita">Transform</span>
+     using the <span class="negrita">Euler</span> method of the <span class="negrita">Quaternion</span> class:</p>
+  
+  <a href="UD3/images/ud3-2024-01-29-11-29-15.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-29-15.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  <p>Second option is a bit more verbose but useful if you already have a Vector3 variable or if you want to manipulate the rotation using vector operations before passing it to the function.</p>
+  <br>
+  
+  <p>Use the <span class="negrita">eulerAngles</span> property (similar behavior to the method above):</p>
+  
+  <a href="UD3/images/ud3-2024-01-29-11-30-49.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-30-49.png" /><br><figcaption></figcaption></figure></a>
+  <br>  
+  
+  <br>
+  
+  <p>Use the <span class="negrita">Rotate</span> method on the <span class="negrita">Transform</span>.</p>
+  <a href="UD3/images/ud3-2024-01-29-11-30-56.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-30-56.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>With <span class="negrita">Rotate</span>, you can specify whether to use the object's own transform (default) or the world origin (0, 0, 0).</p>
+  
+  <p class="sub-section">Rotating Around Another Object</p>
+  
+  <p>With the <span class="r-word">RotateAround(origin, axis, speed)</span> method, you can make a GameObject rotate around another:</p>
+  <a href="UD3/images/ud3-2024-01-29-11-32-50.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-32-50.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>Using the <span class="r-word">LookAt(transformOtherGameObject)</span> method, you can make a GameObject always face another GameObject:</p>
+  <a href="UD3/images/ud3-2024-01-29-11-33-16.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-33-16.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>These two techniques should be used within the script's Update method.</p>
+  
+  <h3>Scaling a GameObject</h3>
+  <p>To <span class="negrita">scale</span> a GameObject, it only makes sense to scale it relative to its pivot point.</p>
+  <p>For this reason, you use the <span class="r-word">localScale</span> property:</p>
+  <a href="UD3/images/ud3-2024-01-29-11-34-06.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-34-06.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <h3>The Transform Component in the Hierarchy</h3>
+  <p>When GameObjects are grouped, the Transform component allows access to all the Transforms and GameObjects in the group.</p>
+  <a href="UD3/images/ud3-2024-01-29-11-35-02.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-35-02.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <a href="UD3/images/ud3-2024-01-29-11-35-14.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-35-14.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>The access order of child GameObjects is the same as the order in which they appear in the hierarchy.</p>
+  <a href="UD3/images/ud3-2024-01-29-11-38-33.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-38-33.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>You can also access the parent from a grouped GameObject.</p>
+  <a href="UD3/images/ud3-2024-01-29-11-39-18.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-39-18.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <h3>Movement Using the Update and FixedUpdate Methods</h3>
+  <p class="sub-section">Update Method</p>
+  
+  <p>The <span class="r-word">Update</span> method runs once per frame.</p>
+  
+  <p>When a modification is applied to the Transform component of a GameObject in the Update method, <span class="negrita">movement occurs</span>, for example: 
+    adding 0.01 units to the x position in each Update.</p>
+  
+    <a href="UD3/images/ud3-2024-01-29-11-40-35.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-40-35.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>The problem with using the <span class="negrita">Update</span> method is that the number of FPS generated depends on many factors, 
+      from the capabilities of the computer running the game to the number of elements displayed at any given moment.</p>
+      <a href="UD3/images/ud_3-2024-10-01-13-11-35.png" target="_BLANK"><figure><img src="UD3/images/ud_3-2024-10-01-13-11-35.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+    <a href="UD3/images/ud3-2024-01-29-11-41-57.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-41-57.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>For this reason, it is not advisable to move objects directly in this way. It may be that on one computer it runs much faster than on another, or 
+      depending on performance, it may run faster or slower depending on the system load.</p>
+    
+    <p>There are two ways to solve this problem:
+      <ul>
+        <li>The <span class="r-word">Time</span> class and its <span class="r-word">deltaTime</span> method. <br>
+  If you multiply a movement by <span class="negrita">Time.deltaTime</span>, the movement will be consistent regardless of the frame rate at any given time.
+  <span class="negrita">Time.deltaTime</span> returns the value 0.02 (corresponding to 20 milliseconds).
+  (This technique was used until the introduction of the next method). What Time.deltaTime does is calculate the time between the current frame and the previous one, 
+  and generate a number so that when multiplied by that time, it always gives the same result. This makes it independent of the frame rate.</li>
+  <li>The <span class="r-word">FixedUpdate</span> method of the <span class="negrita">MonoBehaviour</span> class.
+    It runs at regular intervals of 20 ms (50 times per second).</li>
+      </ul>
+    </p>
+    
+  <p>It is also common to create a float property called <span class="negrita">speed</span> to use as a multiplier to control the speed.</p>
+  
+  <p>Move an object along the x-axis based on the value of the <span class="negrita">speed</span> property from the <span class="negrita">Update</span> method.</p>
+  <a href="UD3/images/ud3-2024-01-29-11-44-47.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-44-47.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p class="sub-section">FixedUpdate Method</p>
+  <p>By default, the <span class="negrita">FixedUpdate</span> method runs every 20 ms, but this behavior can be adjusted from <span class="negrita">Menu &rarr; Edit &rarr; Project Settings</span>… under the <span class="negrita">Time</span> section.</p>
+  <a href="UD3/images/ud3-2024-01-29-11-45-47.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-45-47.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>Move an object along the x-axis based on the value of the <span class="negrita">speed</span> property from the <span class="r-word">FixedUpdate</span> method.</p>
+  <a href="UD3/images/ud3-2024-01-29-11-46-19.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-46-19.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>Both methods, Update and FixedUpdate, can achieve the same result if multiplied by the same value.</p>
+  <a href="UD3/images/ud3-2024-01-29-11-47-06.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-47-06.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <a href="UD3/images/ud3-2024-01-29-11-47-21.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-47-21.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>The advantage of FixedUpdate is that it can be configured from the project settings.</p>
+  
+</section><!-- End section The Transform Component-->
+
+  
+  <!--*********************************************************The Input Class***********************************************************-->
+<section class="apartado">
+  <a name="sLa_clase_Input"></a>
+  <h2>The Input Class</h2>
+  <p>With the <span class="r-word">Input</span> class, <span class="negrita">input events</span> from the user’s device (keyboard, mouse, gamepad, etc.) can be captured.</p>
+  
+  <p>The <span class="negrita">Input class unifies</span> all available input devices into a single point of control.</p>
+  
+  <p>Unity provides a tool to configure input devices.</p>
+  
+  <p>In many games, users are also allowed to change this configuration for a personalized experience.</p>
+  
+  <p>From the <span class="negrita">Menu &rarr; Edit &rarr; Project Settings…</span>, 
+     the project settings open, and in the <span class="negrita">Input Manager</span> section, input devices can be viewed and configured:</p>
+  <a href="UD3/images/ud3-2024-01-29-19-19-18.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-19-19-18.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>The <span class="r-word">MonoBehaviour</span> class provides some methods that allow code execution when mouse events occur:
+  <ul>
+    <li><span class="negrita">OnMouseDown</span></li>
+    <li><span class="negrita">OnMouseDrag</span></li>
+    <li><span class="negrita">OnMouseEnter</span></li>
+    <li><span class="negrita">OnMouseExit</span></li>
+    <li><span class="negrita">OnMouseOver</span></li>
+    <li><span class="negrita">OnMouseUp</span></li>
+    <li><span class="negrita">OnMouseUpAsButton</span></li>
+  </ul>
+  </p>
+  <p>The <span class="negrita">Input class</span> has a series of methods that return a boolean value when the user interacts with a <span class="negrita">key</span>, 
+    <span class="negrita">mouse button</span>, or a <span class="negrita">virtual button</span> like "<span class="cursiva">Fire1</span>".</p>
+  
+  <p>These methods are typically used inside the script's Update method, as it runs much more frequently than other methods.</p>
+  <a href="UD3/images/ud3-2024-01-29-19-21-12.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-19-21-12.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p>
+    <ul>
+      <li>Input.GetKeyDown(KeyCode.E)</li>
+  <li>Input.GetKey(KeyCode.V)</li>
+  <li>Input.GetKeyUp(KeyCode.Space)</li>
+  <li>Input.GetMouseButtonDown(0)</li>
+  <li>Input.GetMouseButton(1)</li>
+  <li>Input.GetMouseButtonUp(2)</li>
+  <li>Input.GetMouseButtonUp("Fire1")</li>
+  <li>Input.GetMouseButton("Jump")</li>
+    </ul>
+  </p>
+  
+  <p>All methods can be found in the <a class="enlace" target="_blank" href="https://docs.unity3d.com/ScriptReference/Input.html">documentation</a>.</p>
+  
+  <p>The <span class="negrita">Input class</span> also has methods to capture movement axis values.</p>
+  
+  <p>These methods return a float decimal value. When the axis is at rest, the value is 0, and when pressed, it returns a value between -1 and 1, depending on acceleration (duration of key press or joystick movement range).</p>
+  <p>There are axes:
+    <ul>
+      <li>Horizontal and Vertical: w, a, s, d, arrows, joystick, d-pad.
+        <ul>
+            <li>Input.GetAxis("Horizontal")</li>
+            <li>Input.GetAxis("Vertical")</li>
+        </ul>
+      </li>
+      <li>Mouse X and Mouse Y: assigned to mouse movement.
+        <ul>
+  <li>Input.GetAxis("Mouse X")</li>
+  <li>Input.GetAxis("Mouse Y")</li>
+        </ul>
+      </li>
+    </ul>
+  </p>
+  
+  
+  <h3>Movement Using the Input Class</h3>
+  <p>Thanks to the <span class="negrita">Input class</span>, <span class="negrita">GameObjects can be moved</span> when the user interacts with the <span class="negrita">input devices</span>.</p>
+  
+  <p>In the code, with the camera oriented as indicated by the gizmo:
+    <ul>
+      <li>up arrow or w	 &rarr;	<span class="negrita">move</span> forward (away from the camera).</li>
+      <li>down arrow or s	 &rarr;	<span class="negrita">move</span> backward (toward the camera).</li>
+      <li>left arrow or a &rarr;	<span class="negrita">move</span> left.</li>
+      <li>right arrow or d &rarr;	<span class="negrita">move</span> right.</li>
+    </ul>
+  </p>
+  <a href="UD3/images/ud3-2024-01-31-12-50-54.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-12-50-54.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  <section><pre><code class="language-csharp">public class CubeTransformScript : MonoBehaviour
+{
+    public float translationSpeed = 5;
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Debug.Log("Input.GetAxis(\"Horizontal\"): " + Input.GetAxis("Horizontal"));
+        transform.Translate(
+            Input.GetAxis("Horizontal") * translationSpeed * Time.deltaTime,
+            0,
+            Input.GetAxis("Vertical") * translationSpeed * Time.deltaTime * -1
+        );
+    }
+}</code></pre>
+  </section><br><br>
+  <br>
+  <a href="UD3/images/ud3-2024-01-31-12-51-05.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-12-51-05.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <p><ul>
+    <li>up arrow or w		&rarr;	<span class="negrita">move</span> forward.</li>
+    <li>down arrow or s		&rarr;	<span class="negrita">move</span> backward.</li>
+    <li>left arrow or a	&rarr;	<span class="negrita">rotate</span> left.</li>
+    <li>right arrow or d	&rarr;	<span class="negrita">rotate</span> right.</li>
+  </ul></p>
+  <section><pre><code class="language-csharp">transform.Translate(Vector3.forward * Input.GetAxis("Vertical") * translationSpeed * Time.deltaTime);
+transform.Rotate(Vector3.up * Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime);</code></pre>
+  </section><br><br>
+  <a href="UD3/images/ud3-2024-01-31-12-55-05.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-12-55-05.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>With either of the two codes above, if the camera is positioned behind the GameObject in the same x-orientation and is added as a child of the GameObject, 
+    the camera will follow the GameObject as it moves.</p>
+  
+  <a href="UD3/images/ud3-2024-01-31-12-55-32.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-12-55-32.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  <br>
+  <hr>
+  <br>
+  <div class="tarea">
+    <p>
+      <span class="subrayado negrita">Activity 6. Modifying GameObjects via Inputs</span> <br>
+  Create a 3D project in Unity called <span class="subrayado">InputsYourName</span>. <br>
+  Set the camera view as if a 2D game is being developed (z-axis facing backward). <br>
+  Add a plane to the scene and modify its size to be 15x15x15, positioned at coordinates (0, 0, 0). <br>
+  Add a Capsule GameObject and place it at coordinates (0, 1, 0). <br>
+  Add a Cube GameObject and place it at coordinates (3, 0.5, 0). <br>
+  Add a Sphere GameObject and place it at coordinates (6, 0.5, 0). <br>
+  Create an orange material and assign it to the Capsule GameObject. <br>
+  Create a blue material and assign it to the Cube. <br>
+  Create a green material and assign it to the Sphere. <br>
+  Duplicate the Cube and move them across the plane (you can make about 20 copies). <br>
+  Create a script for the capsule and add the necessary code to perform the following actions:
+  <ul>
+    <li>Pressing the Horizontal and Vertical axes should move the capsule across the plane.</li>
+    <li>Pressing the E key should scale the sphere up by 0.5 on all axes.</li>
+    <li>Pressing the Q key should scale the sphere down by -0.5 on all axes. Ensure that the sphere never scales smaller than 0.5.</li>
+  </ul>
+   <br>
+  Create a script for the camera and add code to make it always face the capsule.
+  
+    </p>
+  </div>
+  
+</section><!-- End section The Input Class-->
+
+  <!--*********************************************************Kinematic and Physical Movement***********************************************************-->
+<section class="apartado">
+  <a name="sMovimiento_cinematico_y_movimiento_fisico"></a>
+  <h2>Kinematic and Physical Movement</h2>
+  <p>Types of movement in Unity:
+    <ul>
+      <li><span class="negrita">Kinematic</span>:
+        <ul>
+          <li>Movement applied directly to the GameObject's transform component.</li>
+          <li>These movements are independent of the game's physics (gravity, acceleration, impulses, inertia, friction…).</li>
+        </ul>
+      </li>
+      <li><span class="negrita">Physical</span>:
+        <ul>
+          <li>Movements that use the game’s physics engine.</li>
+          <li>The GameObject must have the <span class="negrita">Rigidbody</span> component.</li>
+        </ul>
+      </li>
+    </ul>
+  </p>
+  
+  <p>When adding the <span class="r-word">Rigidbody</span> component to a GameObject, its configuration can be seen in the inspector.</p>
+  <a href="UD3/images/ud3-2024-01-31-13-00-16.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-00-16.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>Properties of <span class="negrita">Rigidbody</span>:
+  <ul>
+      <li><span class="negrita">Mass</span>: the object's weight in kilograms.</li>
+    <li><span class="negrita">Drag</span>: resistance to linear movement.</li>
+    <li><span class="negrita">Angular Drag</span>: resistance to rotations.</li>
+    <li><span class="negrita">Use Gravity</span>: indicates whether it is affected by gravity.</li>
+    <li><span class="negrita">Is Kinematic</span>: if enabled, the GameObject will not be affected by the physics engine.
+      It is often enabled to detect collisions. (It can only be manipulated using its Transform).</li>
+    <li><span class="negrita">Constraints</span>: allows locking coordinates.</li>
+  </ul>
+  </p>
+  <a href="UD3/images/ud3-2024-01-31-13-02-08.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-02-08.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>With kinematic movements (without physics), when moving a GameObject, what happens is that the GameObject is <span class="negrita">teleported</span> to the new position.</p>
+  
+  <p>When a GameObject has the <span class="negrita">Rigidbody</span> component, it is not recommended to modify its position using its Transform, as teleporting to the new position could cause it to partially appear inside another object, causing unwanted collisions.</p>
+  
+  <p>To move a GameObject with a Rigidbody, <span class="negrita">forces need to be applied to push</span> the GameObject in a direction.</p>
+  
+  <p>If the <span class="negrita">forces are applied without interaction with Input</span>, the <span class="negrita">FixedUpdate</span> method is used.</p>
+  
+  <p>If the <span class="negrita">forces are applied with Input interaction</span>, the <span class="negrita">Update</span> method is used.</p>
+  
+  <h3>Physical Movement</h3>
+  <p>Example of physical movement:</p>
+  
+  <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using System.Net.Security;
+using UnityEngine;
+
+public class CubeScript : MonoBehaviour
+{
+    public float linealForce;
+    public float angularForce;
+
+    private Rigidbody rb;
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        //Get a reference to the Rigibody component
+        rb = GetComponent&lt;Rigidbody&gt;        
+    }
+
+    private void FixedUpdate()
+    {
+        float acceleration = Input.GetAxis("Vertical");
+        float spin = Input.GetAxis("Horizontal");
+
+        //Thrust and turning forces are applied
+        rb.AddForce(transform.forward * acceleration * linealForce);
+        rb.AddTorque(transform.up * spin * angularForce);
+    }
+}</code></pre>
+  </section><br><br>
+  
+  <br>
+  
+  <p>With the above code, care must be taken with the physical materials of the GameObjects as friction can cause the GameObject not to behave as expected.</p>
+  
+  <p>The floor provides friction, and when pushing the GameObject, it tips forward.</p>
+  
+  <p>Additionally, due to friction, when applying forces, the GameObject takes some time to move, and when stopping the force, it slows down gradually.</p>
+  <a href="UD3/images/ud_3-2024-10-03-10-50-48.png" target="_BLANK"><figure><img src="UD3/images/ud_3-2024-10-03-10-50-48.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+  <br>
+  <p>To solve these problems, you can choose one of the following options:
+    <ul>
+      <li>Create <span class="negrita">Physical Materials</span> for more realism.
+        These physical materials should be properly configured and assigned to GameObjects that affect movement, such as surfaces or characters.</li>
+      <li>Add <span class="negrita">Constraints</span> to the Rigidbody component to lock position and/or rotation on any of the three axes.</li>
+    </ul>
+  </p>
+  <a href="UD3/images/ud3-2024-01-31-13-32-07.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-32-07.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>As mentioned, to apply forces, you need a Rigidbody property in the code.</p>
+  
+  <p>Some of the methods that can be used are:
+    <ul>
+      <li><span class="negrita">AddForce</span>: applies push forces in world coordinates.</li>
+      <li><span class="negrita">AddTorque</span>: applies rotational forces in world coordinates.</li>
+      <li><span class="negrita">AddRelativeForce</span>: applies push forces in local coordinates.</li>
+      <li><span class="negrita">AddRelativeTorque</span>: applies rotational forces in local coordinates.</li>
+      <li><span class="negrita">AddForceAtPosition</span>: applies push forces at a specific position.</li>
+      <li><span class="negrita">AddExplosionForce</span>: simulates explosions.</li>
+    </ul>
+  </p>
+  
+  <p>These methods have a version that, in addition to receiving a Vector3, can also specify the type of force to apply using the following properties:
+    <ul>
+      <li><span class="negrita">ForceMode.Force</span>: depends on the object. Force = mass * acceleration.</li>
+      <li><span class="negrita">ForceMode.Acceleration</span>: acceleration, ignoring the GameObject's mass.</li>
+      <li><span class="negrita">ForceMode.Impulse</span>: applies the force instantly in one frame (used in Update).</li>
+      <li><span class="negrita">ForceMode.VelocityChange</span>: directly applies a velocity.</li>
+    </ul>
+  </p>
+  
+  <p>By using only physical movements, inertia of movements can be maintained on any axis.</p>
+  <section><pre><code class="language-csharp">public class CubeScript : MonoBehaviour
+    {    
+        public float speed = 2;
+        public float translationSpeed = 5;
+        public float rotationSpeed = 180;
+        public float jumpForce = 8f;
+        private Rigidbody rb;
+        
+        void Start()
+        {
+            rb = GetComponent<Rigidbody>();        
+        }
+    
+        // Update is called once per frame
+        void Update()
+        {
+            transform.Translate(Vector3.forward * Input.GetAxis("Vertical") * translationSpeed * Time.deltaTime);
+    
+            transform.Translate(Vector3.up * Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime);
+    
+            if(Input.GetButtonDown("Jump")){
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            }
+        }
+    }</code></pre>
+      </section><br><br>
+  
+  <br>
+  
+  <h3>Combining Kinematic and Physical Movements</h3>
+  <p>Although not recommended, both types of movement can be combined:
+    <ul>
+      <li><span class="negrita">Kinematic</span>: move the character/enemies along surfaces.</li>
+      <li><span class="negrita">Physical</span>: apply upward force to make the character jump.</li>
+    </ul>
+  </p>
+  <a href="UD3/images/ud3-2024-01-31-13-36-07.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-36-07.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  <br>
+  
+  <p>The problem with this code is that if the character stops moving mid-jump, it won't retain its jump inertia.</p>
+   <br><br>
+   <hr>
+   <br>
+   <div class="tarea">
+    <p>
+      <span class="subrayado negrita">Activity 7. Rigidbody and Camera Tracking</span> <br>
+      Open the project <span class="subrayado">InputsYourName</span>.
+      Add the Rigidbody component to the capsule. <br>
+      Configure the Rigidbody constraints for the capsule so it doesn’t tip over when colliding. <br>
+      When programming the capsule's movement, there were two options: one that rotated with the a and d keys and one that didn’t. 
+      If you used the non-rotating option, change the code to use the rotating option. <br>
+      Add the Rigidbody component to the sphere. <br>
+      Disable the camera script. <br>
+      Position the view behind the capsule as shown in the image (z-axis pointing backward). <br>
+       <a href="UD3/images/ud3-2024-02-01-10-37-56.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-01-10-37-56.png" /><br><figcaption></figcaption></figure></a>
+       <br>
+       
+       <br>
+       
+      Select the camera and choose the option Menu &rarr; GameObject &rarr; Align With View. <br> <br>
+      Make the camera a child of the capsule. <br> <br>
+      Run the game and move the capsule to observe that the camera now follows the capsule and that the capsule collides with other GameObjects thanks to the Rigidbody.
+      
+    </p>
+   </div>
+  
+  
+</section><!-- End section Kinematic and Physical Movement-->
+
+<!--*********************************************************Collisions***********************************************************-->
+<section class="apartado">
+<a name="sColisiones"></a>
+<h2>Collisions</h2>
+<p>To detect collisions between GameObjects, they must have a <span class="r-word">Collider</span> component 
+  (usually present on all GameObjects).</p>
+
+<p>Unity offers two mechanisms to detect collisions between GameObjects:
+  <ul>
+    <li>Via <span class="negrita">Collider</span>.</li>
+    <li>Via <span class="negrita">Trigger</span> (Collider marked as Is Trigger, generally used for GameObjects without a graphical representation on screen).</li>
+  </ul>
+</p>
+
+<p>It is common to use the GameObject's name or <span class="negrita">Tag</span> to detect collisions.</p>
+
+<h3>Collisions with Collider</h3>
+<p><span class="negrita">Collider collisions</span> are used when one GameObject touches another.</p>
+
+<p>For example:
+  <ul>
+    <li>The player pushes another GameObject.</li>
+    <li>A GameObject impacts another GameObject, such as a shot.</li>
+    <li>…</li>
+  </ul>
+</p>
+
+<p>Colliders can be 3D or 2D, and thus the MonoBehaviour class offers methods that will be triggered when a collision between colliders is detected.</p>
+
+<p class="sub-section">3D Versions:</p>
+<p>
+  <ul>
+    <li><span class="negrita">void OnCollisionEnter(Collision collision)</span>: triggers on the frame the collision starts.</li>
+    <li><span class="negrita">void OnCollisionStay(Collision collision)</span>: active while the collision persists.</li>
+    <li><span class="negrita">void OnCollisionExit(Collision collision)</span>: triggers on the frame the collision ends.</li>
+  </ul>
+</p>
+
+<p class="sub-section">2D Versions:</p>
+<p>
+  <ul>
+    <li><span class="negrita">void OnCollisionEnter2D(Collision collision)</span></li>
+    <li><span class="negrita">void OnCollisionStay2D(Collision collision)</span></li>
+    <li><span class="negrita">void OnCollisionExit2D(Collision collision)</span></li>
+  </ul>
+</p>
+
+<p>In the methods, a Collision object is received, allowing access to all aspects of the collision and the other GameObject.</p>
+
+<p>Actions can be executed upon colliding with other GameObjects.</p>
+<a href="UD3/images/ud3-2024-01-31-13-40-49.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-40-49.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<br>
+
+<p>Through the collision object, you can access all elements of the GameObject involved in the collision.</p>
+<a href="UD3/images/ud3-2024-01-31-13-41-02.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-41-02.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<br>
+
+<h3>Collisions with Trigger</h3>
+<p><span class="negrita">Trigger collisions</span> are used to determine if a GameObject is in a specific zone.</p>
+<p>For example:
+  <ul>
+    <li>A GameObject has a collider larger than its size to detect if the player is within range so that when a key is pressed, it can be collected (consumable) or activated (switch).</li>
+    <li>An empty GameObject has a collider to detect if the player is inside it.</li>
+    <li>…</li>
+  </ul>
+</p>
+
+<p>To act as a Trigger, a GameObject must have the <span class="negrita">Is Trigger</span> option checked in the Inspector within the Collider component.</p>
+
+<p>Sometimes GameObjects that act as Triggers only have the Transform and Collider components, as they don't need to be visible on screen.</p>
+
+<p>If a collider is set as Is Trigger, the MonoBehaviour class offers the following methods:</p>
+
+
+<p class="sub-section">3D Versions:</p>
+<p>
+  <ul>
+    <li><span class="negrita">void OnTriggerEnter(Collider other)</span>: triggers on the frame the collision starts.</li>
+    <li><span class="negrita">void OnTriggerStay(Collider other)</span>: active while the collision persists.</li>
+    <li><span class="negrita">void OnTriggerExit(Collider other)</span>: triggers on the frame the collision ends.</li>
+  </ul>
+</p>
+
+
+<p class="sub-section">2D Versions:</p>
+<p>
+  <ul>
+    <li><span class="negrita">void OnTriggerEnter2D(Collider other)</span></li>
+    <li><span class="negrita">void OnTriggerStay2D(Collider other)</span></li>
+    <li><span class="negrita">void OnTriggerExit2D(Collider other)</span></li>
+  </ul>
+</p>
+
+<p>In these cases, the other object is received in the methods as a Collider object, which is the Collider of the other GameObject involved.</p>
+<p>For the GameObject that moves:</p>
+<a href="UD3/images/ud3-2024-01-31-13-44-02.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-44-02.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<br>
+
+
+<p>For the GameObject set as <span class="negrita">is Trigger</span>:</p>
+<a href="UD3/images/ud3-2024-01-31-13-44-10.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-44-10.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<br>
+
+<p>In the following example, an invisible GameObject with a Collider applies a force to make another GameObject float inside it, 
+  provided the other GameObject has a Rigidbody component:</p>
+<a href="UD3/images/ud3-2024-01-31-13-45-12.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-45-12.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<br>
+
+
+
+</section><!-- End section Collisions-->
+
+  
+  <!--*********************************************************Interesting Methods***********************************************************-->
+  <section class="apartado">
+    <a name="sMetodos_Intersantes"></a>
+    <h2>Interesting Methods</h2>
+    <h3>Destroy Method</h3>
+    <p>The <span class="r-word">Destroy</span> method removes the GameObject. If no time is specified, it will be removed immediately. If time is specified, it will be removed after those seconds have passed.</p>
+    <a href="UD3/images/ud3-2024-01-31-13-47-43.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-47-43.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <h3>Instantiate Method</h3>
+    <p>The <span class="r-word">Instantiate</span> method allows creating GameObjects during runtime.</p>
+    
+    <p>Examples of usage:
+      <ul>
+        <li>When the player shoots, the projectile should be created at that point and move in the direction they are aiming.</li>
+        <li>In a zone of the scene, an enemy appears at the top, falls, and disappears when it reaches the bottom 
+          (loop with Instantiate, movement, detection by trigger upon reaching the bottom, and Destroy).</li>
+      </ul>
+    </p>
+    
+    <p>An object is created when the "<span class="cursiva">Fire1</span>" button (left mouse button) is pressed.</p>
+    <a href="UD3/images/ud3-2024-01-31-13-49-03.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-49-03.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <p>When the player touches the GameObject, it replicates itself 10 times.</p>
+    <a href="UD3/images/ud3-2024-01-31-13-49-19.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-49-19.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <p>An object is created at fixed time intervals without any action required.
+    A force is applied to the created GameObject at the moment of creation, launching it forward.
+    </p>
+    <a href="UD3/images/ud3-2024-01-31-13-49-37.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-49-37.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <a href="UD3/images/ud3-2024-01-31-13-49-55.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-49-55.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <h3>Utilities</h3>
+    <p>With the <span class="r-word">Invoke</span> and <span class="r-word">InvokeRepeating</span> methods, you can specify the waiting time before calling another method.</p>
+    
+    <a href="UD3/images/ud3-2024-01-31-13-50-28.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-50-28.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <p>Active invocations can be canceled with the <span class="r-word">CancelInvoke</span> method.</p>
+    <p>If no parameter is provided, all invocations will be canceled. If a method name is passed as a parameter, that specific invocation will be canceled.</p>
+    
+    <a href="UD3/images/ud3-2024-01-31-13-50-52.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-50-52.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>Another way to perform tasks similar to <span class="r-word">InvokeRepeating</span> is through the use of <span class="negrita">Coroutines</span>.</p>
+    <a href="UD3/images/ud3-2024-01-31-13-51-28.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-51-28.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>Coroutines can be canceled using the methods <span class="negrita">StopAllCoroutines</span> and <span class="negrita">StopCoroutine("MethodName")</span>.</p>
+    
+    
+    <br><br>
+    <hr>
+    <br>
+    <div id="task1" class="tarea">
+      <p><span class="subrayado negrita">Practice 1 – Pachinko</span></p>
+      
+    <p>A Pachinko is a Japanese arcade machine in which the player has a large number of steel balls that are introduced into the machine. <br>
+    The pachinko machine has a system that launches the balls from below through a side to reach the top, from where they begin to fall. <br>
+    On the board, there are a series of pins where the metallic balls bounce, taking random paths. <br>
+    Additionally, on the board, there can be different gates through which the balls can fall to earn points, and sometimes gates that return the ball to the player for reuse. <br>
+    Lastly, the balls that reach the bottom do not award prizes. <br></p>
+    
+    
+    <p>Below, you can see some real examples and video game versions.</p>
+    <a href="UD3/images/ud3-2024-02-01-11-00-27.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-01-11-00-27.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <a href="UD3/images/ud3-2024-02-01-11-00-52.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-01-11-00-52.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    
+            
+    <p>Create a 3D project in Unity called <span class="subrayado">PachinkoYourName</span>. <br>
+    Install the Unity package that is <a class="enlace" target="_blank" href="./UD3/resources/pr-pachinko.unitypackage">attached</a> 
+    to the task in one of the following ways: 
+    <ul>
+      <li>Double-clicking the package file will open the dialog to import all elements of the package. </li>
+      <li>Dragging the package file will open the dialog to import all elements of the package.</li>
+    </ul> <br>
+    </p>
+    <p>The package includes, besides the board, an image with sprites and 
+      a series of materials that you can apply to the board and the metal balls. <br> 
+    
+    All elements of the board include a Collider to prevent balls from passing through them. Additionally, a Collider 
+    is included in front to prevent balls from being shot forward (leaving space for the metallic balls).</p>
+    <a href="UD3/images/ud3-2024-02-01-11-04-26.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-01-11-04-26.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+     <p>In the following link, you can find the same metallic materials package that is included with the task. 
+    You can use any of these materials for the metallic balls. 
+    <a class="enlace" target="_blank" href="https://assetstore.unity.com/packages/2d/textures-materials/metals/yughues-free-metal-materials-12949">https://assetstore.unity.com/packages/2d/textures-materials/metals/yughues-free-metal-materials-12949</a></p>
+    
+    
+    <p>First, you should create the following prefabs (pay attention to the scale of the elements to avoid collision issues):
+    <ul>
+      <li>A metallic ball with physics and collisions.</li>
+      <li>A static pin (it could be a cylinder) with metallic material and physical material for the balls to bounce off.</li>
+      <li>A rotating pin (it could be a cylinder with an elongated cube or two elongated cubes forming a cross, or anything else you can think of) 
+        that won't have a bouncing material. When the ball hits this pin, it should rotate around its center.</li>
+       <a href="UD3/images/ud3-2024-02-01-11-09-34.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-01-11-09-34.png" /><br><figcaption></figcaption></figure></a>
+       <br>
+       
+       <br>
+       
+      <li>A gate that awards 5 points if the ball falls into it.</li>
+      <li>A gate that awards 10 points if a ball falls into it. This gate should be smaller than the previous one.</li>
+      <li>A gate that grants an extra ball if the ball falls into it.</li>
+    </ul></p>
+    
+    
+    <p>The gate prefabs should have sprites included to indicate to the player what happens when the ball falls into them.
+    In the scene, you should add:
+    <li>At the top center, a current passport-like photo of yourself, your name, the current points, and the number of remaining balls should be displayed.</li>
+     <a href="UD3/images/ud3-2024-02-01-11-12-11.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-01-11-12-11.png" /><br><figcaption></figcaption></figure></a>
+     <br>
+     
+     <br>
+     
+    <li>As many static and rotating pins as you want to make the game look dynamic.</li>
+    <li>Two 5-point gates.</li>
+    <li>One 10-point gate.</li>
+    <li>Two extra ball gates.</li></p>
+    
+    
+    
+    <p><span class="subrayado">Game Mechanics:</span> 
+    <ul>
+      <li>The game will start with 100 balls and 0 points.</li>
+      <li>Pressing the left arrow key will release a ball from the top left slot, and one ball will be deducted from the remaining count.</li>
+      <li>Pressing the right arrow key will release a ball from the top right slot, and one ball will be deducted from the remaining count.</li>
+      <li>When a ball falls into any gate, the corresponding points or an extra ball should be added to the remaining count.</li>
+      <li>When a ball falls into any gate or the bottom, it should be destroyed.</li>
+      <li>The HUD should always be updated with the current points and the remaining number of balls.</li>
+    </ul></p>
+    
+    
+    
+    <p>All GameObjects in the scene should have appropriate names. <br>
+    Create and assign all the necessary tags. <br>
+    Create the necessary scripts and add them to the GameObjects or Prefabs for the game to work correctly.</p>
+    
+    
+    <p>
+    <span class="subrayado">Extras:</span>
+    <ul>
+      <li>Each time a ball is created, it will have a random material from all the metallic ball materials included in the package.</li>
+      <li>Create a gate prefab that rewards the player with 50 extra balls. This should be a gate that's difficult for a ball to fall into. 
+        Once created, add the gate to the board.</li>
+      <li>Modify the board to resemble the original pachinko machines, where the ball is launched from the bottom through the side toward the top of the board. 
+        In this case, the arrow keys will be replaced by the spacebar, and pressing it will launch a ball. 
+        You should create a mechanism to adjust the force of the ball, such as a wheel that rotates with the arrow keys to indicate power.</li>
+    </ul></p>
+    
+    
+    
+    </div>
+    
+    </section><!-- End section Interesting Methods-->
+  
+  <div class="oculto2">
+  <!--*********************************************************CharacterController Component***********************************************************-->
+  <section class="apartado">
+    <a name="sComponenteCharacterController"></a>
+    <h2>CharacterController Component</h2>
+    <p>In many first- or third-person games, physics is needed to control certain collisions, such as ensuring the character doesn't pass through the floor or walls.</p>
+    
+    <p>Additionally, in these games, the movement is intentionally unrealistic, allowing the character to start moving or change direction instantly, without being affected by inertia.</p>
+    
+    <p>For these cases, Unity offers the <span class="r-word">CharacterController</span> class, which has its own functions, is affected by collisions, and doesn't require a <span class="r-word">Rigidbody</span>, making it easier to use.</p>
+    
+    <p>When adding the <span class="negrita">CharacterController</span> component to a GameObject, a <span class="subrayado">capsule-shaped collider</span> is automatically added to the GameObject and is associated with the <span class="negrita">CharacterController</span> component.</p>
+    
+    <a href="UD3/images/ud3-2024-02-20-18-19-30.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-19-30.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <a href="UD3/images/ud3-2024-02-20-18-19-46.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-19-46.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <p>All GameObjects that are graphically represented in the scene have a <span class="negrita">Collider</span> component. It may be useful to remove or disable it if the capsule-shaped collider from the CharacterController is sufficient.</p>
+    <a href="UD3/images/ud3-2024-02-20-18-21-17.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-21-17.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>The <span class="negrita">properties of the CharacterController component</span> are as follows:
+      <ul>
+        <li><span class="negrita">Slope Limit</span>: the character can climb slopes up to the specified degree.</li>
+        <li><span class="negrita">Step Offset</span>: the character can climb steps up to 0.3 meters high.</li>
+        <li><span class="negrita">Skin Width</span>: the collider's skin width (margin where collisions don't apply).</li>
+        <li><span class="negrita">Min Move Distance</span>: the minimum value for the character to move.</li>
+        <li><span class="negrita">Center</span>: the position of the collider relative to the GameObject.</li>
+        <li><span class="negrita">Radius</span>: the capsule's radius.</li>
+        <li><span class="negrita">Height</span>: the capsule's height.</li>
+      </ul>
+    </p>
+    <a href="UD3/images/ud3-2024-03-05-09-59-36.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-05-09-59-36.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>Since <span class="negrita">CharacterController is not affected by physics</span>, 
+      the component provides several properties and methods to gather information about the 
+      GameObject, such as the <span class="r-word">isGrounded</span> property, which indicates if the character
+       touched the ground during its last movement.</p>
+    
+    <p>The ground will be any other GameObject with a collider that the CharacterController can stand on.</p>
+    
+    <p>To move the character, two methods are available:
+      <ul>
+        <li><span class="negrita">Move</span>: allows full control of the character's movement, including gravity, jumping, horizontal movement, etc.</li>
+        <li><span class="negrita">SimpleMove</span>: moves the character while automatically applying gravity.</li>
+      </ul>
+    </p>
+    
+    <p>The technique used with the <span class="r-word">Move</span> method involves gathering data from <span class="negrita">Input</span> and other GameObjects in the scene that affect movement and using them to calculate the movement vector to be applied to the character.</p>
+    
+    <p>Some data that should be gathered include:
+      <ul>
+        <li>Is the character touching the ground?</li>
+        <li>Is any key or button being pressed?</li>
+        <li>Should an upward force be applied because the character is jumping?</li>
+        <li>…</li>
+      </ul>
+    </p>
+    
+    <p>An initial approach for character movement using CharacterController, where the character can move on a surface, could be the following:</p>
+    
+    <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public float horizontalMove;
+    public float verticalMove;
+    public Vector3 playerInput;
+
+    public CharacterController player;
+
+    public float playerSpeed;
+    // Start is called before the first frame update
+    void Start()
+    {  
+        player = GetComponent&lt;CharacterController>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //Getting the player's input values
+        horizontalMove = Input.GetAxis("Horizontal");
+        verticalMove = Input.GetAxis("Vertical");
+
+        playerInput = new Vector3(horizontalMove,0, verticalMove);
+
+        // ClampMagnitude creates a new Vector3, but limits the values to the specified maximum.
+        // Since GetAxis Horizontal/Vertical returns a maximum of 1, that value is specified here.
+        // This way, diagonal movement will be at the same speed as movement in a single direction.
+
+        playerInput = Vector3.ClampMagnitude(playerInput, 1);
+
+        // The player's movement is assigned based on the control input and speed.
+        player.Move(playerInput * playerSpeed * Time.deltaTime);
+    }
+}</code></pre>
+    </section><br><br>
+    
+    <p>The properties are public so their values can be checked in the <span class="cursiva">Inspector</span> when the script is executed.</p>
+    
+    <p>This approach is very basic since it doesn't account for the camera, gravity, or other important factors. 
+      Additionally, when moving diagonally, the two forces add up, making the movement faster, which doesn't make sense.</p>
+    
+    <h3>Character Control with CharacterController</h3>
+    
+    <p>Below, there are a series of scripts for:
+      <ul>
+        <li>Full player movement, including jumping and sliding on steep slopes.</li>
+        <li>Camera following the player.</li>
+        <li>Being able to push GameObjects affected by physics (with Rigidbody).</li>
+      </ul>
+    </p>
+    <p>These scripts are based on Unity tutorials and can be improved in various ways.</p>
+    <p class="sub-section">PlayerController.cs</p>
+    
+    <a href="UD3/images/ud3-2024-02-20-18-37-45.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-37-45.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    // Properties to get the Input
+    private float horizontalMove;
+    private float verticalMove;
+    
+    // Property to indicate where the player wants to move based on previous values
+    private Vector3 playerInput;
+    
+    // Property to access the CharacterController component
+    private CharacterController player;
+    
+    // Property to indicate the movement speed
+    public float playerSpeed;
+    
+    // Variable to indicate where the player is going to move
+    private Vector3 movePlayer;
+    
+    // Property to indicate the gravity force
+    public float gravity = 9.807f;
+    
+    // Property to store the velocity to apply during a fall
+    public float fallVelocity;
+    
+    // Property to store the jump force
+    public float jumpForce;
+    
+    // Properties to access the camera and know its direction
+    public Camera mainCamera;
+    private Vector3 camForward;
+    private Vector3 camRight;
+    
+    // Property to know if the character is on a slope
+    public bool isOnSlope = false;
+    private Vector3 hitNormal;
+    
+    // Properties to indicate the sliding speed and falling force
+    // On a slope steeper than allowed (that cannot be climbed)
+    public float slideVelocity;
+    public float slopeForceDown;
+
+    void Start()
+    {
+        player = GetComponent&lt;CharacterController>();
+    }
+
+    void Update()
+    {
+        // The values of the player's input are obtained
+        horizontalMove = Input.GetAxis("Horizontal");
+        verticalMove = Input.GetAxis("Vertical");
+
+        playerInput = new Vector3(horizontalMove, 0, verticalMove);
+
+        // ClampMagnitude creates a new Vector3 but limits the values to the specified one
+        // Since GetAxis Horizontal/Vertical returns a maximum of 1, that value is used.
+        // Moving diagonally will behave the same as moving in a single direction.
+        playerInput = Vector3.ClampMagnitude(playerInput, 1);
+
+        // The camera's direction is obtained, and a vector is created indicating where
+        // the player should move based on the Input and the camera's direction.
+        camDirection();
+        movePlayer = playerInput.x * camRight + playerInput.z * camForward;
+
+        // The player's movement speed is applied
+        movePlayer *= playerSpeed;
+
+        // The character rotates towards the direction they are moving
+        player.transform.LookAt(player.transform.position + movePlayer);
+
+        // The falling velocity is calculated using gravity as the base
+        SetGravity();
+        SlideOnSlope();
+
+        // The jump force is applied
+        PlayerSkills();
+
+        // Movement is applied to the character
+        player.Move(movePlayer * Time.deltaTime);
+    }
+
+    // Method that calculates the direction the camera is pointing to move the character according to its direction
+    // Pressing W/S will always move up/down on the screen, respectively
+    // Pressing A/D will always move left/right on the screen, respectively
+    void camDirection()
+    {
+        camForward = mainCamera.transform.forward;
+        camRight = mainCamera.transform.right;
+
+        // Y is not needed here, so it is set to zero
+        camForward.y = 0;
+        camRight.y = 0;
+
+        // Normalizes the value to a magnitude of 1
+        camForward = camForward.normalized;
+        camRight = camRight.normalized;
+    }
+
+    // Method that calculates the force that should be applied during falls
+    void SetGravity()
+    {
+        // If the character is on the ground, gravity is a static force; if in the air, it's an acceleration (accumulates)
+        if (player.isGrounded)
+        {
+            // On the ground, gravity must start with the magnitude of gravity -9.807
+            fallVelocity = -gravity * Time.deltaTime;
+        }
+        else
+        {
+            fallVelocity -= gravity * Time.deltaTime;
+        }
+
+        // The calculated fall velocity is applied
+        movePlayer.y = fallVelocity;
+    }
+
+    // Method to apply forces based on the character's skills, for example, jumping
+    void PlayerSkills()
+    {
+        if (player.isGrounded && Input.GetButtonDown("Jump"))
+        {
+            fallVelocity = jumpForce;
+            movePlayer.y = fallVelocity;
+        }
+    }
+
+    // Method that detects if the character is on a slope that cannot be climbed,
+    // causing the player to slide
+    void SlideOnSlope()
+    {
+        // Calculates if the character is on a slope that cannot be climbed
+        isOnSlope = Vector3.Angle(Vector3.up, hitNormal) >= player.slopeLimit;
+        // If it cannot be climbed, forces are applied to slide downwards
+        if (isOnSlope)
+        {
+            movePlayer.x += (1 - hitNormal.y) * hitNormal.x * slideVelocity;
+            movePlayer.z += (1 - hitNormal.y) * hitNormal.z * slideVelocity;
+            movePlayer.y += slopeForceDown;
+        }
+    }
+
+    // Method inherited from MonoBehaviour that detects collisions
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        // When detecting a collision, the angle of the surface normal is obtained
+        hitNormal = hit.normal;
+    }
+
+
+
+}
+</code></pre>
+    </section><br>
+    <br>
+    <p class="sub-section">PushRigidBody.cs</p>
+    <a href="UD3/images/ud3-2024-02-20-18-40-38.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-40-38.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PushRigidBody : MonoBehaviour
+{
+    // Pushing force that the character has
+    public float pushPower = 2;
+    // Mass of the object being pushed
+    private float targetMass;
+
+    // When a collision is detected, a pushing force will be applied
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        // At this point, you could check to only push GameObjects with a specific tag.
+        // In this code, any object with a Rigidbody will be pushed.
+
+        // Rigidbody of the element that will be pushed
+        Rigidbody body = hit.collider.attachedRigidbody;
+
+        if (body != null && !body.isKinematic && hit.moveDirection.y > -0.3)
+        {
+            // The mass of the object to push is obtained
+            targetMass = body.mass;
+            // The direction in which the object will be pushed is calculated
+            Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+            // The pushing force is applied based on the direction, character's force, and object's weight
+            body.velocity = pushDir * pushPower / targetMass;
+        }
+    }
+}</code></pre>
+    </section><br><br>
+    
+    <p class="sub-section">ThirdPersonCamera.cs</p>
+    <a href="UD3/images/ud3-2024-02-20-18-41-06.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-02-20-18-41-06.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+ <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ThirdPersonCamera : MonoBehaviour
+{
+    // Distance from the camera to the character
+    public Vector3 offset;
+    // Character's Transform (GameObject that the camera follows)
+    private Transform target;
+    // Smoothing applied when moving the camera. Allows values between 0 and 1 only
+    [Range(0, 1)] public float lerpValue;
+    // Mouse sensitivity to move the camera
+    public float sensitivity;
+
+    void Start()
+    {
+        target = GameObject.Find("Player").transform;
+    }
+
+    // Method executed after all Update calls, so all character adjustments
+    // have been made, and the camera is then updated.
+    void LateUpdate()
+    {
+        // Moves the GameObject from one position to another in a smooth way
+        transform.position = Vector3.Lerp(transform.position, target.position + offset, lerpValue);
+
+        offset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * sensitivity, Vector3.up) * offset;
+        transform.LookAt(target);
+    }
+}
+</code></pre>
+ </section><br><br>   
+    <p><a class="enlace" target="_blank" href="https://youtu.be/a9DEOeJxw9Y?si=OM8Kp5rI4AqE9KNV">Here</a> you've a youtube's playlist with a complete explanation</p>
+    <h3>CharacterController vs Physical Movement</h3>
+    <p>When implementing character movement, the choice is between:
+      <ul>
+        <li>Implementing movement using physics with Rigidbody. <br>
+          Using physics makes the movement more realistic, which can be an added value in simulators. <br>
+          Player control will be more challenging.</li>
+          <li>Implementing movement using kinematics with CharacterController. <br>
+    Using CharacterController provides easier use for developers, 
+    precise control of collisions, and overall more efficiency as it is optimized for characters. <br>
+    Additionally, the player will have more precise control, which is very useful for performing complex actions. <br>
+    In most cases, implementing with CharacterController is sufficient.</li>
+      </ul>
+    </p>
+    
+    </section><!-- End section CharacterController Component-->
+  
+  
+  <!--*********************************************************Professional Camera***********************************************************-->
+  <section class="apartado">
+    <a name="sCamaraprofesional"></a>
+    <h2>Professional Camera</h2>
+    <p>Unity offers a package called <span class="r-word">Cinemachine</span> which provides tools and 
+      virtual cameras that simulate a film studio, allowing full control of the camera.</p>
+    <a href="UD3/images/ud3-2024-03-11-10-24-06.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-24-06.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <a href="UD3/images/ud3-2024-03-11-10-24-16.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-24-16.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>Once the package is installed, you can find the virtual camera settings in the <span class="negrita">Menu &rArr; Component &rArr; Cinemachine</span>, 
+       which can be added to the camera in the scene.</p>
+    
+    <a href="UD3/images/ud3-2024-03-11-10-25-13.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-25-13.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <a href="UD3/images/ud3-2024-03-11-10-25-32.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-25-32.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    </section><!-- End section Professional Camera-->
+    
+    <!--*********************************************************Programmed Movement***********************************************************-->
+    <section class="apartado">
+    <a name="sMovimientoProgramado"></a>
+    <h2>Programmed Movement</h2>
+    
+    <p>In a video game, there may be elements that have pre-programmed movement, 
+      for example, an enemy that moves from side to side along the same path, or a platform that moves from one point to another.</p>
+    
+    <p>In these cases, the mechanics are always the same:
+      <ul>
+        <li>Create an empty GameObject.</li>
+        <li>Add the GameObject that will move (enemy, platform…) to that empty GameObject.</li>
+        <li>Add as many empty GameObjects as there are points the moving object must reach.</li>
+        <li>In a script added to the object that will move, indicate the point-to-point movement.</li>
+      </ul>
+    </p>
+    <p>The previous setup would look like this if the platform only needs to move between two points:</p>
+    <a href="UD3/images/ud3-2024-03-05-10-03-16.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-05-10-03-16.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <br>
+    <p>Add a script to the GameObject that needs to move with the following code:</p>
+    <section><pre><code class="language-csharp">public class Platform : MonoBehaviour
+{
+    // Starting point
+    public GameObject startGO;
+    // Ending point
+    public GameObject endGO;
+    // Platform speed
+    public float platformSpeed = 4;
+    // Platform movement direction
+    private Vector3 platformDestiny;
+
+    void Start()
+    {
+        // At the start, the initial destination point is set
+        platformDestiny = endGO.transform.position;
+    }
+
+    void Update()
+    {
+        // If the platform reaches a start/end destination point, the destination is set to the other point
+        if (transform.position == endGO.transform.position)
+        {
+            platformDestiny = startGO.transform.position;
+        }
+        else if (transform.position == startGO.transform.position)
+        {
+            platformDestiny = endGO.transform.position;
+        }
+
+        // Calculate the position to move the platform in the current frame
+        Vector3 newPosition = Vector3.MoveTowards(transform.position, platformDestiny, platformSpeed * Time.deltaTime);
+        transform.position = newPosition;
+    }
+}
+</code></pre>
+    </section><br><br>
+    
+    <p>This code uses kinematic movement to move the platform from one place to another.</p>
+    
+    <p>The code can be improved by creating an array of destination positions, 
+      allowing the GameObject to move through all positions repeatedly.</p>
+    
+    <p>You can also specify that the GameObject pauses when it reaches a destination.</p>
+    
+    <p>If you add a <span class="negrita">RigidBody to the platform</span> (without using gravity and set as kinematic), 
+      the player or any other GameObject can stand on the platform and move with it.</p>
+    
+    <p>When the platform has a Rigidbody, the movement should be done using physics.</p>
+    
+    <p>In this case, the script should be placed on the parent GameObject of the platform.</p>
+    
+    <p>This code should be added to the parent GameObject of the moving platform.</p>
+    <a href="UD3/images/ud3-2024-03-05-10-55-07.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-05-10-55-07.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <p>Additionally, you should drag the platform and the points it should pass through into the inspector.</p>
+    
+    <a href="UD3/images/ud3-2024-03-11-10-28-20.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-28-20.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>Since the platform has a Rigidbody, the movement must be physical.</p>
+    
+    <section><pre><code class="language-csharp">public class PlatformEnhanced : MonoBehaviour
+{
+    // Rigidbody of the GameObject that will move
+    public Rigidbody platformRB;
+    // Array of transforms for the positions (empty GameObjects as points)
+    public Transform[] platformPositions;
+    // Platform speed
+    public float platformSpeed;
+    // Indicates if it can move or not
+    public bool moveToTheNext = true;
+    // Variable indicating the time to wait upon reaching a target position
+    public float waitTime;
+
+    // Variable to calculate the positions between which it will move
+    private int actualPosition = 0;
+    private int nextPosition = 1;
+
+    void Start()
+    {
+        // The platform starts at the initial position
+        platformRB.position = platformPositions[0].position;
+    }
+
+    void Update()
+    {
+        // If it moves and hasn't waited the indicated time
+        if (moveToTheNext)
+        {
+            StopCoroutine(WaitForNext(0)); // Stop the coroutine when it can move (the wait time has passed)
+
+            // Move the platform to the indicated position
+            platformRB.MovePosition(Vector3.MoveTowards(platformRB.position, platformPositions[nextPosition].position, platformSpeed * Time.deltaTime));
+        }
+
+        // Check if the platform has reached the destination
+        if (Vector3.Distance(platformRB.position, platformPositions[nextPosition].position) == 0)
+        {
+            // Upon reaching the destination, a coroutine is launched to wait for the indicated time
+            StartCoroutine(WaitForNext(waitTime));
+            actualPosition = nextPosition;
+            // If it's the last destination, the next one will be the first
+            if (nextPosition + 1 == platformPositions.Length)
+            {
+                nextPosition = 0;
+            }
+            else
+            {
+                nextPosition++;
+            }
+        }
+    }
+
+    // Coroutine to wait upon reaching a destination
+    IEnumerator WaitForNext(float time)
+    {
+        moveToTheNext = false; // Indicates it cannot move
+        yield return new WaitForSeconds(time); // Waits the indicated time
+        moveToTheNext = true; // Indicates it can move again
+    }
+}
+</code></pre>
+    </section><br><br>
+    
+    <p>If the character's movement has been implemented using the <span class="negrita">CharacterController</span> component, 
+       and the previous example is used to move a platform, the character will not stay on the platform.</p>
+    
+    <p>This happens because the platform has a Rigidbody and moves with physics, but the character doesn't have a Rigidbody.</p>
+    
+    <p>To solve this, you need to detect the surface the character is standing on, and 
+      when they are on the platform, move the character along with the platform.</p>
+    
+    <p>You can use <span class="negrita">Raycasts</span> to achieve this.</p>
+    </section><!-- End section Programmed Movement-->
+  
+  
+  <!--*********************************************************Raycast***********************************************************-->
+  <section class="apartado">
+    <a name="s"></a>
+    <h2>Raycast</h2>
+    
+    <p>A <span class="negrita">Raycast</span> involves emitting a ray.</p>
+    
+    <p>A <span class="negrita">ray</span> is an <span class="negrita">imaginary</span> line that starts from a point and travels in a specific direction.</p>
+    
+    <p>By emitting rays using Raycast, you can detect GameObjects and triggers that are in the path of the ray.</p>
+    
+    <p>To emit a ray, you need:
+      <ul>
+        <li>An object of the class <span class="negrita">Ray</span>.</li>
+    
+        <li>An object of the class <span class="negrita">RaycastHit</span> that will indicate which GameObject the ray hits.</li>
+        
+        <li>Emit the ray using the <span class="negrita">Raycast</span> method from the <span class="negrita">Physics</span> class.</li>
+      </ul>
+    </p>
+    
+    <p>Some uses for Raycast include:
+      <ul>
+        <li>Detecting collisions.</li>
+        <li>Detecting if a GameObject is in another's path.</li>
+        <li>Selecting elements with the mouse.</li>
+        <li>Shooting mechanics.</li>
+        <li>…</li>
+      </ul>
+    </p>
+    
+    <p>In the following example, a ray is emitted, and when it hits something, a message is displayed:</p>
+    <section><pre><code class="language-csharp">public class Sphere : MonoBehaviour
+{
+    private float rotationSpeed = 30f;
+
+    void Update()
+    {
+        // Object rotation to emit rays in all 360 degrees
+        transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
+        
+        // Declare the ray (origin and direction)
+        Ray ray = new Ray(transform.position, transform.forward);
+        
+        // Visualize the ray in debug mode only
+        Debug.DrawRay(ray.origin, ray.direction * 5f);
+        
+        // If the ray hits another GameObject, a message is displayed
+        if (Physics.Raycast(ray))
+        {
+            Debug.Log("Hit detected");
+        }
+    }
+}
+</code></pre>
+    </section><br><br>
+    <a href="UD3/images/ud3-2024-03-11-10-29-32.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-29-32.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>If the rays are not visible when running the scene, you should activate them in the Gizmos section on the right-hand side of the Scene or Game view:</p>
+    <a href="UD3/images/ud3-2024-03-11-10-29-55.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-29-55.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>The <span class="negrita">Raycast</span> method has several versions.</p>
+    
+    <a href="UD3/images/ud3-2024-03-11-10-30-21.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-30-21.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>One version accepts a second parameter of the class <span class="negrita">RaycastHit</span>, 
+      where all information about the hit is stored, including the GameObject the ray impacts.</p>
+    
+    <p>The <span class="negrita">RaycastHit</span> object must be declared before calling the <span class="negrita">Raycast</span> method.</p>
+    
+      <section><pre><code class="language-csharp">public class Sphere : MonoBehaviour
+{
+    private float rotationSpeed = 30f;
+
+    void Update()
+    {
+        transform.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
+
+        // Variable to store the GameObject that the ray hits
+        RaycastHit hit;
+        Ray ray = new Ray(transform.position, transform.forward);
+        Debug.DrawRay(ray.origin, ray.direction * 5f);
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            Debug.Log("Distance: " + hit.distance);
+            Debug.Log("Hit point: " + hit.point);
+
+            // Change the color of the object that is hit
+            hit.transform.gameObject.GetComponent&lt;MeshRenderer>().material.color = Color.blue;
+        }
+    }
+}
+</code></pre>
+      </section><br><br>
+      
+      <a href="UD3/images/ud3-2024-03-11-10-31-08.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-31-08.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      
+      <p>You can apply <span class="negrita">filters</span> so that the ray only impacts GameObjects affected by those filters.
+        <ul>
+          <li><span class="negrita">By distance</span>: less than or equal to 7
+            <a href="UD3/images/ud3-2024-03-11-10-33-47.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-33-47.png" /><br><figcaption></figcaption></figure></a>
+            <br>
+            
+          </li>
+          <li><span class="negrita">By layers</span>: just like you can create tags, you can create layers and 
+            assign them to GameObjects. Layers can be indicated by creating a variable of the LayerMask class. 
+            In the inspector, you can select multiple layers.
+          <a href="UD3/images/ud3-2024-03-11-10-34-16.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-34-16.png" /><br><figcaption></figcaption></figure></a>
+          <br>
+          
+          <br>
+          
+          </li>
+        </ul>
+      </p>
+      
+      <p>You can specify that the ray does not impact Collider-type Triggers.</p>
+    
+      <a href="UD3/images/ud3-2024-03-11-10-34-47.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-34-47.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      
+      <p>By default, a ray only hits the first GameObject it encounters. 
+        You can change this behavior by using the <span class="negrita">RaycastAll</span> method from the <span class="negrita">Physics</span> class.</p>
+      <p>This method returns an array of all the GameObjects the ray impacts.</p>
+       <a href="UD3/images/ud3-2024-03-11-10-35-12.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-35-12.png" /><br><figcaption></figcaption></figure></a>
+       <br>
+       
+       <br>
+       
+      <p>Rays can be emitted from the camera, allowing functions like selecting objects with the mouse.</p>
+      
+    <p>The following script should be added to the camera. 
+      This script cannot be named Camera as it would overwrite Unity's built-in <span class="negrita">Camera</span> class.</p>
+    <section><pre><code class="language-csharp">// The script cannot be named Camera because it would override Unity's Camera class
+public class CameraRay : MonoBehaviour
+{
+    private Camera mainCamera;
+
+    void Start()
+    {
+        mainCamera = GetComponent&lt;Camera>();
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                hit.transform.gameObject.GetComponent&lt;MeshRenderer>().material.color = Color.green;
+                Debug.DrawRay(ray.origin, ray.direction * 10, Color.blue);
+            }
+        }
+    }
+}
+</code></pre>
+    </section><br><br>
+    <a href="UD3/images/ud3-2024-03-11-10-36-19.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-36-19.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+      <p>In many video games, Raycasts are used to detect collisions, such as determining if a character is touching the ground.</p>
+      
+      <p>To detect collisions between GameObjects using Raycast, you should cast a ray with a distance that doesn't greatly exceed the GameObject 
+        emitting the ray.</p>
+      <section><pre><code class="language-csharp">private bool GroundCheck()
+{
+    float rayLength = 0.6f;
+    Ray ray = new Ray(transform.position, Vector3.down);
+    Debug.DrawRay(ray.origin, ray.direction * rayLength, Color.red);
+
+    return Physics.Raycast(ray.origin, ray.direction, rayLength);
+}
+</code></pre>
+      </section><br><br>
+      
+      <a href="UD3/images/ud3-2024-03-11-10-36-48.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-36-48.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      
+      <p>In some video games, rays are emitted from different points on the character to control their movement.</p>
+    <section><pre><code class="language-csharp">private bool GroundCheck()
+{
+    float rayLength = 0.8f;
+
+    Vector3 rightRayPosition = transform.position + new Vector3(transform.localScale.x / 2 - 0.05f, 0, 0);
+    Ray rayRight = new Ray(rightRayPosition, Vector3.down);
+    Debug.DrawRay(rayRight.origin, rayRight.direction * rayLength, Color.green);
+
+    Vector3 leftRayPosition = transform.position - new Vector3(transform.localScale.x / 2 - 0.05f, 0, 0);
+    Ray rayLeft = new Ray(leftRayPosition, Vector3.down);
+    Debug.DrawRay(rayLeft.origin, rayLeft.direction * rayLength, Color.green);
+
+    return Physics.Raycast(rayRight.origin, rayRight.direction, rayLength) ||
+           Physics.Raycast(rayLeft.origin, rayLeft.direction, rayLength);
+}
+</code></pre>
+    </section><br><br>
+    <a href="UD3/images/ud3-2024-03-11-10-37-15.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-37-15.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+      <p>The Raycast method emits a ray, which is a line.</p>
+      
+    <p>The Physics class offers other types of casting with different shapes:
+      <ul>
+        <li><span class="negrita">BoxCast</span>: casts a ray with a cube shape</li>
+        <li><span class="negrita">CapsuleCast</span>: casts a ray with a capsule shape</li>
+        <li><span class="negrita">SphereCast</span>: casts a ray with a sphere shape</li>
+        <li><span class="negrita">LineCast</span>: returns true if there is any object the ray hits</li>
+      </ul>
+    </p>
+    
+    <p>The following script extends the functionality of the character controller with <span class="negrita">CharacterController</span>, 
+       checking if the GameObject is touching the ground using a <span class="negrita">SphereCast</span>.</p>
+    
+       <h3>Character Control – On Moving Platforms</h3>    
+       <p>Thus, for a character with a CharacterController to move along with a platform with a Rigidbody that it is standing on, 
+        the following script should be added to the character:</p>
+    
+        <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MoveWithFloor : MonoBehaviour
+{
+    // Variable to access the character controller
+    private CharacterController player;
+    // Variable to store the position of the last touched ground points
+    private Vector3 actualGroundPosition;
+    private Vector3 lastGroundPosition;
+    // Variable to store the name of the last touched ground object
+    private string groundName;
+    private string lastGroundName;
+    // Variable to store the last rotations of the platform
+    private Quaternion actualRotation;
+    private Quaternion lastRotation;
+
+    void Start()
+    {
+        player = GetComponent&lt;CharacterController>();
+    }
+
+    void Update()
+    {
+        // If the player is touching the ground, we check which element it is
+        if (player.isGrounded)
+        {
+            RaycastHit hit; // Variable to store the surface the player is on
+
+            // A SphereCast is used to check if there's a surface below
+            // The surface is stored in the variable hit
+            if (Physics.SphereCast(transform.position, player.height / 4.2f, -transform.up, out hit))
+            {
+                // If the surface has the "Platforms" tag, we need to calculate the surface's movement
+                // to apply it to the player
+                if (hit.collider.CompareTag("Platforms"))
+                {
+                    // Get the GameObject of the surface and retrieve its name, position, and rotation
+                    GameObject groundedIn = hit.collider.gameObject;
+                    groundName = groundedIn.name;
+                    actualGroundPosition = groundedIn.transform.position;
+                    actualRotation = groundedIn.transform.rotation;
+
+                    // If the platform has changed position and the player remains on it, update the player's position
+                    if (actualGroundPosition != lastGroundPosition && groundName == lastGroundName)
+                    {
+                        transform.position += actualGroundPosition - lastGroundPosition;
+                        player.enabled = false;
+                        player.transform.position = transform.position;
+                        player.enabled = true;
+                    }
+
+                    // If the platform has changed its rotation and the player remains on it, update the player's rotation
+                    if (actualRotation != lastRotation && groundName == lastGroundName)
+                    {
+                        var newRotation = transform.rotation * (actualRotation.eulerAngles - lastRotation.eulerAngles);
+                        transform.RotateAround(groundedIn.transform.position, Vector3.up, newRotation.y);
+                    }
+
+                    // After applying movements, update the variables
+                    lastGroundName = groundName;
+                    lastGroundPosition = actualGroundPosition;
+                    lastRotation = actualRotation;
+                }
+            }
+        }
+
+        // If no collision is detected, reset the variables to default values
+        else
+        {
+            lastGroundName = null;
+            lastGroundPosition = Vector3.zero;
+            lastRotation = Quaternion.Euler(Vector3.zero);
+        }            
+    }
+}</code></pre>
+        </section><br><br>
+        
+        <br>
+        
+    </section><!-- End section Raycast-->
+  
+  
+  
+  <!--*********************************************************NPCs***********************************************************-->
+  <section class="apartado">
+    <a name="sNPCs"></a>
+    <h2>NPCs</h2>
+    <p><span class="negrita">NPCs</span> (<span class="negrita">N</span>on-<span class="negrita">P</span>layable 
+    <span class="negrita">C</span>haracters) are characters controlled by the game itself, and the player cannot direct their actions.</p>
+    
+    <p>NPCs can be classified as:
+      <ul>
+        <li><span class="negrita">Enemies</span>: pose a challenge that must be overcome to progress.</li>
+        <li><span class="negrita">Allies</span>: accompany the player, potentially assisting in puzzles and combat.</li>
+        <li><span class="negrita">Influenceable</span>: depending on the player's actions, they can become allies or enemies.</li>
+        <li><span class="negrita">Merchants</span>: offer the possibility of trading items to improve and/or advance.</li>
+        <li><span class="negrita">Informative</span>: provide information, either important or trivial, for the mission.</li>
+        <li><span class="negrita">Decorative</span>: exist to enhance the realism of the game, completing the scene.</li>
+      </ul>
+    </p>
+    
+    <p>In general, an NPC can be:
+      <ul>
+        <li><span class="negrita">Active</span>: offers missions, information, or items that change as the player progresses.</li>
+        <li><span class="negrita">Passive</span>: repeats the same information or behavior each time the player interacts with them.</li>
+      </ul>
+    </p>
+    
+    <p>NPCs are expected to have a minimum of <span class="negrita">AI</span> (<span class="negrita">A</span>rtificial 
+      <span class="negrita">I</span>ntelligence), which consists of programming the behavior the NPC should exhibit.
+      AI can be programmed to be either simple or complex.</p>
+    
+    <p>In the following example, we will explore how to 
+      <span class="negrita">implement an NPC to move from one point to another using the most optimal path</span>.</p>
+    
+    <p>This technique can also be used to make the player character move to a selected point via mouse click 
+      or to have an enemy patrol the environment and chase the player upon sight.</p>
+    
+    <p>You need to install the <span class="r-word">AI Navigation</span> package.</p>
+    <a href="UD3/images/ud3-2024-03-11-10-38-48.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-38-48.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>Upon installing the AI Navigation package, a new option is added: <span class="negrita">Menu</span> &rarr; <span class="negrita">Window</span> &rarr;
+    <span class="negrita">AI</span> &rarr; <span class="negrita">Navigation</span>.</p>
+    <a href="UD3/images/ud3-2024-03-11-10-38-59.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-38-59.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>By selecting <span class="negrita">Menu</span> &rarr; <span class="negrita">Window</span> &rarr; <span class="negrita">AI</span> 
+       &rarr; <span class="negrita">Navigation</span>, the Navigation window appears.</p>
+    
+    <p>In the <span class="negrita">Agents</span> tab, you can define the characteristics of the GameObject 
+      that will move along the optimal path.</p>
+    
+      <a href="UD3/images/ud3-2024-03-11-10-39-33.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-39-33.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      
+    <p>You can create as many agents as needed; for example, some enemies may not be able to jump over walls, while others can.</p>
+    
+    <p>In the <span class="negrita">Areas</span> tab, you can define different areas and their priority (Cost),
+      with a lower number indicating higher priority for passing through that area.</p>
+    
+      <a href="UD3/images/ud3-2024-03-11-10-39-43.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-39-43.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      
+      <p>The GameObjects that need to move must be given the <span class="negrita">NavMeshAgent</span> component.</p>
+      
+      <p>In the example, the capsule will move to the position of the sphere via the most optimal path.</p>
+      
+      <p><span class="negrita">The NavMeshAgent component has been added to the capsule</span>. In the inspector, you can see its configuration options.</p>
+      
+      <a href="UD3/images/ud3-2024-03-11-10-40-08.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-40-08.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      <a href="UD3/images/ud3-2024-03-11-10-40-16.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-40-16.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      
+    
+    <p>Next, you need to add the <span class="negrita">NavMeshSurface</span> component to the GameObjects in the scene and assign it the desired area.</p>
+    
+    <p>This component defines <span class="negrita">where the agent is allowed to move</span>.</p>
+    
+    <p>In the example, the ground and all the blocks are inside a GameObject, and the NavMeshSurface component is added to that GameObject.</p>
+    <a href="UD3/images/ud3-2024-03-11-10-40-43.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-40-43.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    <a href="UD3/images/ud3-2024-03-11-10-40-50.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-40-50.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    
+    <p>Once the NavMeshSurface is configured, press the <span class="negrita">Bake</span> button.</p>
+    
+    <p>This generates the surface on which the character will be able to move. 
+      A margin is left around obstacles to avoid unexpected behaviors. 
+      You can modify this surface by adjusting the <span class="negrita">Agent</span> settings and pressing <span class="negrita">Clear</span> 
+       and <span class="negrita">Bake</span> again.</p>
+    
+       <a href="UD3/images/ud3-2024-03-11-10-41-12.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-41-12.png" /><br><figcaption></figcaption></figure></a>
+       <br>
+       
+       <br>
+       
+    
+      <p>Since the sphere is not part of the scenery, you need to add the <span class="negrita">NavMeshObstacle</span> component to it.</p>
+         
+      <p>The <span class="negrita">NavMeshObstacle</span> component is typically used for GameObjects that can move around the scene.</p>
+      <a href="UD3/images/ud3-2024-03-11-10-41-42.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-41-42.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      <a href="UD3/images/ud3-2024-03-11-10-41-55.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-41-55.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      
+      <p>The <span class="negrita">NavMeshObstacle</span> component is used for characters that move through the scene and 
+        for GameObjects that, when moved, can affect the navigation surface.</p>
+      
+      <p>Enemies will have the <span class="cursiva">NavMeshObstacle</span> component and should not affect the navigation surface.</p>
+      
+      <p>GameObjects like falling rocks that obstruct passage or doors that can close should affect the navigation surface.</p>
+      
+      <p>To configure a <span class="negrita">NavMeshObstacle</span> to affect the surface, check the <span class="negrita">Carve</span> option. 
+        If you only want it to affect the surface when the GameObject is stationary (for example, a large rock that falls), 
+        uncheck the <span class="negrita">Carve Only Stationary</span> option.</p>
+    
+        <a href="UD3/images/ud3-2024-03-11-10-42-37.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-42-37.png" /><br><figcaption></figcaption></figure></a>
+        <br>
+        
+        <br>
+        
+      <p>In the example, there is a cube with the NavMeshObstacle component and the Carve option enabled.</p>
+      <a href="UD3/images/ud3-2024-03-11-10-42-56.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-42-56.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      <a href="UD3/images/ud3-2024-03-11-10-43-06.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-43-06.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      <a href="UD3/images/ud3-2024-03-11-10-43-22.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-43-22.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      
+      <p>In navigation, you can create <span class="negrita">links</span>.</p>
+      <p>There are two types of links:
+        <ul>
+          <li><span class="negrita">NavMeshLink</span>: connects navigation zones on the same surface, such as allowing the player to step down a larger ledge than normally allowed.</li>
+          <li><span class="negrita">OffMeshLink</span>: connects two physically separate navigation zones.</li>
+        </ul>
+      </p>
+      <p>Links can be one-way or bidirectional.</p>
+      
+      <h3>NavMeshLink</h3>
+      <p>A NavMeshLink has two points and a visible surface between the two points.</p>
+      <p>For example, if you want the character to be able to step down the ledge but not climb it back up, uncheck the <span class="negrita">Bidirectional</span> option.</p>
+    <a href="UD3/images/ud3-2024-03-11-10-43-51.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-43-51.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+      <h3>OffMeshLink</h3>
+      <p>An OffMeshLink requires two GameObjects as reference points for navigation.</p>
+      
+      <p>The only thing left is to assign the following script to the GameObject that needs to move (the capsule).</p>
+      <p>Add the library at the top of the script.</p>
+      <a href="UD3/images/ud3-2024-03-11-10-44-24.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-44-24.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      <section><pre><code class="language-csharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+
+public class NavMeshController : MonoBehaviour
+{
+    // Target object to follow
+    public Transform aim;
+    // Variable to handle navigation through the scene
+    private NavMeshAgent agent;
+
+    void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
+
+    void Update()
+    {
+        // Each frame updates the target position
+        // so if the target moves, the path will be recalculated
+        agent.destination = aim.position;
+    }
+}</code></pre>
+      </section><br><br>
+      
+      
+      <p>From the above script, you can create a path for a GameObject:
+        <ul>
+          <li>In the scene, create empty GameObjects with a trigger collider and place them where needed.</li>
+          <li>Declare an array of targets in the script.</li>
+          <li>In the Start method, set the first target to be position zero of the array.</li>
+          <li>In the Update method, check if the target has been reached.</li>
+          <li>If the target has been reached, update the target to the next position in the array.</li>
+          <li>If the next array position equals the array's length, reset the target to position zero of the array.</li>
+          <li>In the inspector, add all the empty GameObjects to the script in the order you want for the movement path.</li>
+        </ul>
+      </p>
+      
+      <p>If you want the patrolling enemy to chase the player, add the following:
+        <ul>
+          <li>Declare a Transform for the player in the script.</li>
+          <li>Add the functionality of casting a Raycast from the enemy in the direction it walks, with a specific length 
+            (you can simulate human vision by having the Raycast rotate a few degrees to each side).</li>
+          <li>If the Raycast hits the player, save the current target in a variable and change the target to the player's transform.</li>
+          <li>If the Raycast no longer hits the player (the player moves out of range), 
+            update the target to the previously saved one (this can be improved by updating the target to the closest current point on the enemy's route).</li>
+        </ul>
+      </p>
+      
+    <p>If you want the player's character to move to the point clicked on the screen, you can use the following script:</p>
+    <section><pre><code class="language-csharp">public class NavMeshMouse : MonoBehaviour
+{
+    // Variable to handle navigation through the scene
+    private NavMeshAgent agent;
+
+    void Start()
+    {
+        agent = GetComponent&lt;NavMeshAgent>();
+    }
+
+    void Update()
+    {
+        // When clicking on a point on the screen, a ray is cast to determine where the click occurred
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+            {
+                // Sets the agent's destination to the point where the ray hit,
+                // which is where the mouse click occurred
+                agent.destination = hit.point;
+            }
+        }
+    }
+}
+</code></pre>
+    </section><br><br>
+    
+      
+      </section><!-- End section NPCs-->
+  
+  
+  
+    <!--*********************************************************Scene Switching***********************************************************-->
+    <section class="apartado">
+      <a name="sCambiodeescenas"></a>
+      <h2>Scene Switching</h2>
+    <p>In a video game, it's common to have more than one scene, mainly because each game level is usually a different scene.</p>
+    
+    <p>Additionally, games often feature an initial menu and options menu, which are also scenes.</p>
+    
+    <p>To switch to a scene, it must be added to the game's build settings.</p>
+    
+    <p>Scene transitions can occur at different times:
+    <ul>
+      <li>When pressing the Play button in the main menu.</li>
+      <li>Upon completing a level.</li>
+      <li>Within a level when entering a new zone.</li>
+      <li>...</li>
+    </ul>
+    </p>
+    
+    <p>The first step is to add all scenes to the build settings: 
+      <span class="negrita">File</span> &rarr; <span class="negrita">Build Settings…</span>.</p>
+    <a href="UD3/images/ud3-2024-03-11-10-45-40.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-45-40.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>By pressing the <span class="negrita">Add Open Scenes</span> button, the currently open scene will be added.</p>
+    
+    <p>To add other scenes, you need to drag them from the file manager.</p>
+    
+    <p>The scene at position zero (0) will be the one loaded when the game runs (after compiling and generating the executable).</p>
+    <a href="UD3/images/ud3-2024-03-11-10-46-03.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-46-03.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>To change scenes from a script, the following library needs to be added at the top of the script.</p>
+    <section><pre><code class="language-csharp">using UnityEngine.SceneManagement;</code></pre>
+    </section><br><br>
+    
+    <p>The instruction to switch scenes is as follows:</p>
+    <section><pre><code class="language-csharp">SceneManager.LoadScene("SceneName");</code></pre>
+    </section><br><br>
+    
+    <p>You can also use the scene identifier (Build settings):</p>
+    <section><pre><code class="language-csharp">SceneManager.LoadScene(2);</code></pre>
+    </section><br><br>
+    
+    <p>When switching scenes, you can tell specific GameObjects not to be destroyed and to persist in the new scene.</p>
+    
+    <p>This allows data to be transferred between scenes and saves time since the GameObjects are already loaded in memory.</p>
+    <section><pre><code class="language-csharp">public class DontDestroy : MonoBehaviour
+{
+    // Static variable to store the instance of this script
+    public static DontDestroy instance;
+
+    // When the script is loaded
+    void Awake()
+    {
+        // If an instance of the script already exists, destroy the GameObject
+        // that contains it to avoid duplicates
+        if (DontDestroy.instance != null)
+        {
+            Destroy(gameObject);
+            return; // Stop the execution of the Awake method
+        }
+
+        // If there is no instance of the script, store it in the variable
+        // This only happens the first time the GameObject is loaded
+        instance = this;
+
+        // Indicate that this GameObject should persist across scenes
+        DontDestroyOnLoad(gameObject);
+    }
+}
+</code></pre>
+    </section><br><br>
+    
+      </section><!-- End section Scene Switching-->
+    
+    
+      <!--*********************************************************PlayerPrefs***********************************************************-->
+      <section class="apartado">
+      <a name="sPlayerPrefs"></a>
+      <h2>PlayerPrefs</h2>
+      <p><span class="negrita">PlayerPrefs</span> allow storing information on the computer where the game is executed.</p>
+      
+    
+    <p>PlayerPrefs are typically used to save:
+    <ul>
+      <li>The player's name.</li>
+      <li>Scores.</li>
+      <li>Lives.</li>
+      <li>Game options such as resolution or keys defined by the user.</li>
+      <li>Last level (scene) played.</li>
+      <li>...</li>
+    </ul>
+    </p>
+    
+    <p><span class="negrita">PlayerPrefs</span> offers several methods for storing/retrieving information based on the data type:
+      <ul>
+        <li>SetFloat</li>
+        <li>SetInt</li>
+        <li>SetString</li>
+      </ul>
+      <a href="UD3/images/ud3-2024-03-11-10-47-30.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-47-30.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      
+      <ul>
+        <li>GetFloat</li>
+        <li>GetInt</li>
+        <li>GetString</li>
+      </ul>
+      <a href="UD3/images/ud3-2024-03-11-10-47-40.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-47-40.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      
+    </p>
+    
+    <p>The <span class="negrita">Get</span> methods can have one or two parameters; 
+      the second parameter will be the default value in case the preference doesn't exist.</p>
+      
+    
+    <p>To check if a preference exists, use the <span class="negrita">HasKey</span> method:</p>
+    <a href="UD3/images/ud3-2024-03-11-10-48-02.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-48-02.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>To remove a preference, use the <span class="negrita">DeleteKey</span> method:</p>
+    <a href="UD3/images/ud3-2024-03-11-10-48-11.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-48-11.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    <p>To delete all preferences, use the <span class="negrita">DeleteAll</span> method:</p>
+    <a href="UD3/images/ud3-2024-03-11-10-48-18.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-48-18.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+      </section><!-- End section PlayerPrefs-->
+  
+  
+    <!--*********************************************************Menus***********************************************************-->
+    <section class="apartado">
+      <a name="sMenus"></a>
+      <h2>Menus</h2>
+      
+      <p>There are two options for creating menus:
+        <ul>
+          <li>
+            <span class="negrita">Main Menu</span> (when no level is loaded): <br>
+            This is usually created in its own scene using UI elements.
+          </li>
+          <li><span class="negrita">In-game Menu</span>:<br>
+            It can be created similarly to the main menu, 
+            but when switching between the current level and the menu scene, the current state must be saved.</li>
+        </ul>
+        </p>
+      
+    <p>It can also be created within the level scene by creating a secondary camera with the UI elements. 
+      This camera is positioned far from the level elements. 
+      When accessing the menu, all elements in the scene are paused, and 
+      the active camera is switched to the one associated with the menu.</p>
+    
+      <p>While a menu can be created with GameObjects as if it were a game scene, 
+        it's more common to use UI GameObjects (User Interface).</p>
+        <a href="UD3/images/ud3-2024-03-11-10-48-49.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-48-49.png" /><br><figcaption></figcaption></figure></a>
+        <br>
+        
+        <br>
+        
+      <p>The handling of events in UI GameObjects is different from other GameObjects. 
+        The following steps explain how to interact with them.</p>
+      
+        <p>Each type of UI GameObject has specific events that can be viewed in the inspector.</p>
+        <a href="UD3/images/ud3-2024-03-11-10-49-25.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-49-25.png" /><br><figcaption></figcaption></figure></a>
+        <br>
+        
+        <br>
+        
+      <p>These events need to be linked to a method in a Unity script.</p>
+      <a href="UD3/images/ud3-2024-03-11-10-49-52.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-49-52.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      
+      <p>After creating the script and adding the necessary methods, which can be named as desired, 
+        this script must be added to the Canvas GameObject to select its methods later from the inspector for the UI GameObjects.</p>
+      
+      <p>Once the script is added to the <span class="negrita">Canvas</span>, 
+        to select a method from a UI GameObject, follow these steps in the inspector:
+      <ul>
+        <li>Click <span class="negrita">+</span> on the desired event.</li>
+        <li>In the new block, drag the Canvas GameObject from the hierarchy.</li>
+        <li>Select the method you want to execute when the event occurs.</li>
+      </ul></p>
+      <a href="UD3/images/ud3-2024-03-11-10-50-22.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-50-22.png" /><br><figcaption></figcaption></figure></a>
+      <br>
+      
+      
+        
+    
+    <p>This links the method to the event on the UI GameObject.</p>
+    
+    <a href="UD3/images/ud3-2024-03-11-10-51-21.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-51-21.png" /><br><figcaption></figcaption></figure></a>
+    <br>
+    
+    
+      </section><!-- End section Menus-->
+
+
+      <!--*********************************************************sComunicacion***********************************************************-->
+      <section class="apartado">
+      <a name="sComunicacion"></a>
+      <h2>Communication between GameObjects</h2>
+<p>Previously, we studied how one GameObject could access the script of another GameObject.</p>
+
+<p>To do this, a reference to the other object must be stored in a variable in order to access the Script component and thus be able to access its properties and methods.</p>
+
+<p>This method is very intrusive and goes against the principles of object-oriented programming.</p>
+
+<p>There is an alternative way of communication using <span class="d-word">delegates</span> and <span class="d-word">events</span>.</p>
+
+<p>Delegates can be considered as references to other methods.</p>
+
+<p>Events are an extension of delegates that allow the class defining them to notify other classes when an action occurs.</p>
+
+<p>In this way, a delegate and an event associated with that delegate can be defined within a GameObject.</p>
+
+<p>Other GameObjects can subscribe to that event by specifying their own method, so that when the event is triggered from the emitting GameObject, that method will be called.</p>
+
+<p>The best way to understand this is through an example.</p>
+
+<p><span class="subrayado">Scene explanation</span>:</p>
+<p>
+<ul>
+  <li><span class="negrita">Capsule</span>: character (Player tag) with RigidBody that can move across the plane.</li>
+<li><span class="negrita">Walls with doors</span>: the brown GameObjects are doors that rise up.</li>
+<li><span class="negrita">Blue tile</span>: switch that opens the doors when pressed.</li>
+</ul>
+</p>
+
+<a href="UD3/images/ud_3-2024-10-24-19-09-18.png" target="_BLANK"><figure><img src="UD3/images/ud_3-2024-10-24-19-09-18.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<a href="UD3/images/ud_3-2024-10-24-19-09-39.png" target="_BLANK"><figure><img src="UD3/images/ud_3-2024-10-24-19-09-39.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<p><span class="negrita">Script on the tile</span></p>
+<section><pre><code class="language-csharp">public class DoorSwitch : MonoBehaviour
+{
+    // Declare the delegate
+    public delegate void Activate();
+    // Declare an event of the same type as the delegate
+    // It is declared as static to allow subscription using the class name
+    public static event Activate OnActivate;
+
+    // Other GameObjects can subscribe to these events
+    // These events can be triggered from any function
+    // When the event is triggered, the rest of the subscribed GameObjects
+    // will be able to execute their own function
+    private void OnTriggerEnter(Collider other)
+    {
+        // Only trigger the event if some GameObject has subscribed to it
+        if (OnActivate != null)
+        {
+            OnActivate(true);
+        }
+    }
+}
+</code></pre>
+</section><br><br>
+
+<p><span class="negrita">Script on the door:</span></p>
+<section><pre><code class="language-csharp">public class Door : MonoBehaviour
+{
+    void Start()
+    {
+        // The door subscribes to the OnActivate event from the switch
+        // By subscribing, it indicates that if the event occurs, the Open method of this class will be executed
+        DoorSwitch.OnActivate += Open;
+    }
+
+    private void Open()
+    {
+        transform.Translate(Vector3.up * 3f);
+    }
+
+    void OnDisable()
+    {
+        // The door unsubscribes from the OnActivate event of the switch
+        DoorSwitch.OnActivate -= Open;
+    }
+}
+</code></pre>
+</section><br><br>
+<p>You can make the door lower when leaving the tile and add a cube with <span class="r-word">Rigidbody</span> to the scene to leave it on the tile.</p>
+
+<p>In this case, the tile will have two events, activate and deactivate.</p>
+
+<p>The doors will need to subscribe to both events, each with its own method.</p>
+<a href="UD3/images/ud_3-2024-10-24-19-11-31.png" target="_BLANK"><figure><img src="UD3/images/ud_3-2024-10-24-19-11-31.png" /><br><figcaption></figcaption></figure></a>
+<br>
+<p><span class="negrita">Script on the tile</span></p>
+<section><pre><code class="language-csharp">public class DoorSwitch : MonoBehaviour
+{
+    public delegate void Activate();
+    public static event Activate OnActivate;
+
+    public delegate void Disable();
+    public static event Disable OnDisable;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (OnActivate != null)
+        {
+            OnActivate();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (OnDisable != null)
+        {
+            OnDisable();
+        }
+    }
+}
+</code></pre>
+</section><br><br>
+<p><span class="negrita">Script on the door:</span></p>
+<section><pre><code class="language-csharp">public class Door : MonoBehaviour
+{
+    void Start()
+    {
+        DoorSwitch.OnActivate += Open;
+        DoorSwitch.OnDisable += Close;
+    }
+
+    private void Open()
+    {
+        transform.Translate(Vector3.up * 3f);
+    }
+
+    private void Close()
+    {
+        transform.Translate(Vector3.down * 3f);
+    }
+
+    void OnDisable()
+    {
+        DoorSwitch.OnActivate -= Open;
+        DoorSwitch.OnDisable -= Close;
+    }
+}
+</code></pre>
+</section><br><br>
+<a href="UD3/images/ud_3-2024-10-24-19-12-47.png" target="_BLANK"><figure><img src="UD3/images/ud_3-2024-10-24-19-12-47.png" /><br><figcaption></figcaption></figure></a>
+<br>
+<p>You can also use the same event for different actions, for this, the delegate should be defined to accept a parameter.</p>
+
+<p>This way, when the event is triggered, you can send that parameter, which can be used by the GameObjects subscribed to the event.</p>
+
+<p><span class="negrita">Script on the tile</span></p>
+<section><pre><code class="language-csharp">public class DoorSwitch : MonoBehaviour
+{
+    public delegate void Activate(bool open);
+    public static event Activate OnActivate;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (OnActivate != null)
+        {
+            OnActivate(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (OnActivate != null)
+        {
+            OnActivate(false);
+        }
+    }
+}
+</code></pre>
+</section><br><br>
+ 
+
+<p><span class="negrita">Script on the door:</span></p>
+    <section><pre><code class="language-csharp">public class Door : MonoBehaviour
+{
+    void Start()
+    {
+        DoorSwitch.OnActivate += Open;
+    }
+
+    private void Open(bool open)
+    {
+        if (open)
+        {
+            transform.Translate(Vector3.up * 3f);
+        }
+        else
+        {
+            transform.Translate(Vector3.down * 3f);
+        }
+    }
+
+    void OnDisable()
+    {
+        DoorSwitch.OnActivate -= Open;
+    }
+}
+</code></pre>
+    </section><br><br>
+<p>As seen in the examples, using delegates and events is a much less intrusive technique.</p>
+<p>Additionally, it allows multiple GameObjects to subscribe to the same event easily, and they can perform actions when that event is triggered.</p>
+<p>In the example, a system event was used, but from the script where the event is defined, the event can be triggered whenever an action occurs, simply by calling the event.</p>
+
+<section><pre><code class="language-csharp">void Start() {
+    OnActivate(true);
+}
+</code></pre>
+</section><br><br>
+
+
+      
+      </section><!-- End section sComunicacion-->
+
+      <!--*********************************************************FinalPractice***********************************************************-->
+      <section class="apartado">
+      <a name="sFinalPractice"></a>
+      <h2>FinalPractice</h2>
+
+      <div class="tarea">
+        <a class="tarea" target="_blank" href="https://aules.edu.gva.es/semipresencial/mod/assign/view.php?id=2332098">
+        <p>This project consists of a free-creation videogame with the following requirements:
+          <ol>
+            <li>The game should have an initial menu where the player can enter their name before starting. <span class="negrita">1pt</span></li>
+            <li>Include a scoring system, such as based on time to complete, collecting coins or other items, or defeating enemies. This score should be saved in <span class="cursiva">PlayerPref</span> along with the player’s name. <span class="negrita">1.5pts</span></li>
+            <li>The initial menu should display the player’s name along with their score. <span class="negrita">0.5pts</span></li>
+            <li>Besides the menu screen, the game should have at least two screens that can be navigated to after completing the first. Note, the screens don’t have to be very extensive. <span class="negrita">0.75pts</span></li>
+            <li>The camera should follow the player character. <span class="negrita">0.75pts</span></li>
+            <li>Include at least two types of enemies:
+              <ul>
+                <li>One that chases the player. <span class="negrita">1.5pts</span></li>
+                <li>Another that follows a set path. <span class="negrita">1pt</span></li>
+              </ul>
+            </li>
+            <li>Make use of prefabs where necessary.</li>
+            <li>Include gameplay mechanics such as player movement, jumps, lives, attacks, etc. <span class="negrita">1.5pts</span></li>
+            <li>Game design and characters (store assets are acceptable), background, sprites, animations, audio, etc. <span class="negrita">1.5pts</span></li>
+          </ol>
+        </p>
+      
+        <p>For submission, create a package with the necessary scene elements and record a video, maximum 5 minutes, demonstrating the game’s functionality and how you have implemented the most important functionalities.</p>
+      </a>
+      </div>
+      
+      
+      
+      
+      </section><!-- End section FinalPractice-->
+    
+  </div> <!--END OCULTO-->
+
+  <!---BTM_MENU--->
+  <script src="../script/prism.js"></script>
+</body>
+
+</html>

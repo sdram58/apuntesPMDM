@@ -1,0 +1,2039 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>U9.- Coroutines, Side Effects y MVVM</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../styles/prism.css">
+  <link rel="stylesheet" href="../styles/styles.css">
+  <script src="../script/script.js"></script>
+</head>
+
+<body class="line-numbers">
+  <div class="logos"></div>
+
+<nav id="menu-lateral" class="main-menu-lateral oculto">
+  <div class="fila">
+    <a href="#sCorrutinas" title="1.- Corrutinas">1.- Coroutines</a>
+    <a href="#sSideEffects" title="2.- Side Effects">2.- Side Effects</a>
+    <a href="#sArquitecturasAndroid" title="3.- Arquitecturas Android">3.- Android Architectures</a>      
+  </div>
+  <div class="fila">
+    <a href="#sCasopractico" title="4.- Caso práctico">4.- Practical Case</a> 
+    <a href="#sFlows" title="5.- Flows">5.- Flows</a>
+    <a href="#sActividades" title="6.- Actividades">5.- Activities</a>      
+  </div>
+
+</nav> <!-- BTM_MENU-->
+
+<h1>U9.- Coroutines, Side Effects, and MVVM</h1>
+
+<div class="main-menu">
+  <div class="fila">
+    <a href="#sCorrutinas" title="1.- Coroutines">1.- Coroutines</a>
+    <a href="#sSideEffects" title="2.- Side Effects">2.- Side Effects</a>
+    <a href="#sArquitecturasAndroid" title="3.- Android Architectures">3.- Android Architectures</a>
+  </div>
+  <div class="fila">
+    <a href="#sCasopractico" title="4.- Practical Case">4.- Practical Case</a>
+    <a href="#sFlows" title="5.- Flows">5.- Flows</a>    
+    <a href="#sActividades" title="6.- Activities">6.- Activities</a>
+  </div>
+</div>
+
+<!--*********************************************************Coroutines***********************************************************-->
+<section class="apartado">
+  <a name="sCorrutinas"></a>
+  <h2>Coroutines</h2>
+  <h3>Introduction</h3>
+  <p>In Android, the <span class="negrita">main thread</span> is responsible for displaying the user interface and <span class="negrita">managing the interactions</span> with the application.</p>
+
+  <p>This means that <span class="negrita">if the main thread runs a heavy or asynchronous task, the user interface will freeze</span> 
+    and the user won't be able to interact with the device until the task finishes.
+   <ul>
+    <li><span class="negrita">Heavy tasks</span>: tasks that take a long time.</li>
+    <li><span class="negrita">Asynchronous tasks</span>: tasks that can be performed in the background.</li>
+   </ul>
+  </p>
+
+  <h3>Coroutines</h3>
+
+  <p>Kotlin provides <span class="d-word">coroutines</span> to perform actions without blocking the main thread.</p>
+  <p>Coroutines are more efficient than threads because they group available threads to execute instructions with different 
+  configurations (<span class="cursiva">context + dispatcher</span>).</p>
+  <p>Additionally, the number of threads is limited, but the number of coroutines that can be launched is almost infinite.</p>
+  <p>So when you want to execute a set of instructions and avoid blocking the main thread, you need to create a coroutine 
+  and specify the configuration in which it will run, allowing the system to manage the coroutine using as many threads as needed.</p>
+  <p>More information: <a class="enlace" target="_blank" href="https://kotlinlang.org/docs/coroutines-overview.html">Kotlin coroutines</a> and 
+  <a class="enlace" target="_blank" href="https://developer.android.com/kotlin/coroutines?hl=es-419">Kotlin coroutines in Android</a>.</p>
+
+  
+  <h3>Suspending Functions</h3>
+  <p>Suspending functions are those that block the execution of the function until a specific instruction is finished.</p>
+  <p>These functions must always be executed inside a coroutine or within a coroutine scope (<span class="cursiva">coroutine scope</span>)
+  or inside another <span class="negrita">suspend function</span>.</p>
+
+  <figure><img src="UD9/images/ud9-2023-12-03-20-00-23.png" /><br><figcaption>Android Studio notifies that an instruction may block the function's execution.</figcaption></figure>
+  <br>
+
+  <p class="sub-section">Usage</p>
+<p>A suspend function is a function that can be "paused" and then resumed without blocking the current thread. This makes them ideal for time-consuming operations, such as:
+  <ul>
+    <li>Database queries.</li>
+    <li>Web service calls.</li>
+    <li>Input/output (I/O) operations.</li>
+    <li>Complex tasks that need to run in the background.</li>
+  </ul>
+</p>
+
+<p class="sub-section">Basic Syntax</p>
+
+<section><pre><code class="language-kotlin">suspend fun functionName(): ReturnType {
+    // Function code
+}
+</code></pre>
+</section><br><br>
+<p>Suspend functions simplify the handling of asynchronous operations by eliminating the need for complex callbacks.</p>
+
+<p>Example: Imagine you are simulating a data download that takes 2 seconds.</p>
+<section><pre><code class="language-kotlin">suspend fun downloadData(): String {
+    delay(2000) // Simulates a 2-second delay
+    return "Data downloaded"
+}
+
+fun main() {
+    runBlocking { //This is an special coroutine that do that main thread waits for it.
+        println("Download starting...")
+        val result = downloadData() //Here the coroutine is blocked
+        println("Result: $result")
+    }
+}</code></pre>
+</section><br><br>
+<p>Explanation:
+  <ol>
+    <li>The <span class="d-word">downloadData</span> function is a suspend function. 
+        <span class="r-word">delay(2000)</span> pauses the execution for 2 seconds without blocking the current thread.</li>
+    <li>The <span class="r-word">runBlocking</span> function is used to start a coroutine in the main thread. This is only for testing; 
+        in a real environment (e.g., Android), you would use other contexts such as <span class="r-word">launch</span> or <span class="r-word">async</span>.</li>
+    <li>The program prints "Download starting...", waits for 2 seconds, and then prints the result.</li>
+  </ol>
+</p>
+
+
+  <h3>Coroutine Context</h3>
+  <p>Defines, among other things, the work and dispatcher (sets of threads) that will be used to perform the task.</p>
+  <section><pre><code class="language-kotlin">var job=Job()
+val coroutineContext: CoroutineContext = Dispatchers.IO + job
+
+launch(coroutineContext){
+  //Actions
+}
+</code></pre>
+  </section><br>
+
+  <h3>Coroutine Scope</h3>
+
+  <p>Sets the execution scope for the coroutine, i.e., where the coroutine will be used.</p>
+  <section><pre><code class="language-kotlin">var job=Job()
+val coroutineContext: CoroutineContext = Dispatchers.IO + job
+val coroutineScope = CoroutineScope(coroutineContext)
+
+coroutineScope.launch{
+  //Actions
+}
+....
+coroutineScope.cancel("....")
+</code></pre>
+  </section><br>
+
+  <p>Typically, the <span class="negrita">CoroutineScope</span> is provided 
+     (<span class="negrita">rememberCoroutineScope</span>, <span class="negrita">viewModelScope</span>, ...) where it's used, but we can create our own.</p>
+  
+
+  <h3>Canceling Coroutines</h3>
+
+  <p>Using <span class="negrita">rememberCoroutineScope</span> and <span class="negrita">viewModelScope</span>
+   you can execute coroutines with <span class="negrita">launch</span> (among other builders).</p>
+  
+  <p>When the coroutine is executed inside a <span class="cursiva">@Composable</span> element, the coroutine will be canceled if the screen is no longer visible on the screen.</p>
+
+  <p>With the <span class="negrita">launch</span> method, you can store the coroutine's identifier to cancel it later if needed.
+  This is especially useful for coroutines executed inside a ViewModel.</p>
+
+<section><pre><code class="language-kotlin">var myCoroutinJob:Job = Job()
+myCoroutinJob = viewModelScope.launch{
+  //Actions to perform in the coroutine
+}
+
+....
+//You can cancel the coroutine using its job. (Among other actions)
+myCoroutinJob.cancel()</code></pre>
+</section><br>
+
+<h3>Asynchronous Requests</h3>
+
+<p>They allow you to execute several actions in the background and wait for them concurrently, avoiding unnecessary time wastage
+  since they are executed in parallel.</p>
+
+<section><pre><code class="language-kotlin">//runBlocking creates a coroutine that blocks the thread until the others finish
+//It is only advised for testing.
+fun main() = runBlocking{
+    //Note: It's not an integer, it's a deferred
+    val datoA = async{
+        println("Start A")
+        delay(2000)
+        println("End A")
+        25
+    }
+
+    //Note: It's not an integer, it's a deferred
+    val datoB = async{
+        println("Start B")
+        delay(4000)
+        println("End B")
+        60
+    }
+
+    //Wait for both to finish, since they are deferred we use await()
+    val total = datoA.await() + datoB.await()
+
+    println("${datoA.await()} + ${datoB.await()} = $total")
+}</code></pre>
+</section><br>
+
+  
+</section><!-- End section Coroutines-->
+
+
+ <!--*********************************************************Side Effects***********************************************************-->
+<section class="apartado">
+  <a name="sSideEffects"></a>
+  <h2>Side Effects</h2>
+  <p>As previously studied, Jetpack Compose performs <span class="negrita">recompositions</span> of the user interface <span class="negrita">when state changes occur</span>.</p>
+  <p>Sometimes <span class="negrita">the application recomposes more or fewer times than necessary</span> 
+    or even <span class="negrita">when recomposing, code that should not be executed runs</span>.</p>
+  <p>All these unwanted situations are called <span class="d-word">Side Effects</span>.</p>
+  <p>All components of the application should avoid side effects, 
+    but there are times when side effects are needed, such as for <span class="negrita">one-time events</span> like showing a notification or 
+    navigating to a screen if a state meets a condition.</p>
+
+  <p>The following code produces a <span class="negrita">side effect</span>:</p>
+
+  <figure><img src="UD9/images/ud9-2023-12-03-23-03-10.png" /><br><figcaption></figcaption></figure>
+  <br>
+
+  <p>When the button is pressed, the message changes.</p>
+  <p>The <span class="cursiva">Toast</span> is shown whenever the message is not empty.</p>
+  <p>Once the button is pressed and the message is no longer empty, from then on, when the <span class="cursiva">TextField</span> changes,
+     the <span class="cursiva">Toast</span> will always be shown.</p>
+
+  <p>To solve these problems, <span class="negrita">Effects Handlers</span> were created 
+    <span class="negrita">which allow you to execute these actions in a controlled environment</span>.</p>
+  <p><span class="cursiva">Effects Handlers</span> also facilitate the use of coroutines in Jetpack Compose.</p>
+  <p>The available <span class="cursiva">Effects Handlers</span> are:
+  <ul>
+    <li><span class="negrita">LaunchedEffect</span></li>
+    <li><span class="negrita">RememberCoroutineScope</span></li>
+    <li><span class="negrita">derivedStateOf</span></li>
+    <li>SideEffect</li>
+    <li>RemindUpdatedState</li>
+    <li>DisposableEffect</li>
+    <li>produceState</li>
+    <li>snapshotFlow</li>
+  </ul>
+  </p>
+
+<h3>LaunchedEffect</h3>
+<p>A <span class="negrita">LaunchedEffect block is executed the first time the component it's included in is composed</span>.</p>
+<p><span class="negrita">After that, it will only execute (recompose) if any of the parameters it receives change.</span></p>
+<p>LaunchedEffect supports up to three parameters key (key1, key2, key3) or a list of keys.</p>
+
+<figure><img src="UD9/images/ud9-2023-12-03-23-09-36.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>In the previous example, <span class="subrayado">the block will only execute once (when the component is first composed) even if the </span>
+  <span class="cursiva">SplashScreen</span> function is recomposed, as the parameter it receives will always have the same value (<span class="cursiva">true</span>).</p>
+
+<p>A LaunchedEffect block is a coroutine, so it also <span class="negrita">allows you to execute suspending functions within a @Composable component</span>.</p>
+  
+<figure><img src="UD9/images/ud9-2023-12-03-23-10-32.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Thus, if the block is running and undergoes recomposition, the coroutine that was running is paused and starts over.</p>
+<p>The coroutine cancels its execution when the LaunchedEffect block leaves the composition (is no longer on screen).</p>
+
+<p>Applying it to the previous login example:</p>
+
+<figure><img src="UD9/images/ud9-2023-12-03-23-13-25.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>The LaunchedEffect block will execute every time the state <span class="negrita">message</span> changes.</p>
+
+<p>This first approach won't work properly because the message only changes when it goes from "<span class="cursiva">User logged in!</span>"
+   to "<span class="cursiva">Error</span>" and vice versa. So if an error occurs and
+    when the data changes, the error remains, the message won't be shown again.</p>
+
+<p>To fix this, simply clear the <span class="negrita">message</span> after showing the <span class="cursiva">Toast</span>.</p>
+
+<p>Complete Login Example:</p>
+<figure><img src="UD9/images/ud9-2023-12-03-23-15-45.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<h3>RememberCoroutineScope</h3>
+
+<p><span class="negrita">RememberCoroutineScope</span> allows you to get a safe scope (<span class="cursiva">scope</span>) 
+  to execute a coroutine.</p>
+<p>It is used when you need to execute a suspending function <span class="negrita">outside the scope of a @Composable component</span>
+   such as inside <span class="cursiva">onClick</span>.</p>
+<p>You cannot use <span class="negrita">LaunchedEffect</span> if you're not inside a <span class="negrita">@Composable</span> context.</p>
+<figure><img src="UD9/images/ud9-2023-12-03-23-18-50.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>In this case, the scope of a coroutine is needed.</p>
+
+<p>First, you get the coroutine's scope with <span class="negrita">rememberCoroutineScope</span> and 
+  then to execute the coroutine, you use the <span class="r-word">launch</span> function.</p>
+<figure><img src="UD9/images/ud9-2023-12-03-23-20-33.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>This Effect Handler has already been used to move the scroll automatically</p>
+<figure><img src="UD9/images/ud9-2023-12-03-23-21-09.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Moving the scroll is a suspending function, and when performing this action by clicking a button, the scope of the coroutine is needed.</p>
+
+<p>When using the <span class="r-word">launch</span> function, the coroutine runs on the main thread, which can sometimes be problematic as it could block the user interface.</p>
+
+<p>The <span class="r-word">launch</span> function allows you to specify the context in which the coroutine should run:
+  <ul>
+    <li><span class="negrita">Dispatchers.Main</span>: main thread (used for the user interface).</li>
+    <li><span class="negrita">Dispatchers.IO</span>: primarily for input/output tasks.</li>
+    <li><span class="negrita">Dispatchers.Default</span>: managed by the operating system (same as not specifying any dispatcher).</li>
+    <li><span class="negrita">Dispatchers.Unconfined</span>: any thread without control over it (not recommended).</li>
+  </ul>
+</p>
+
+<p>If the actions performed in the <span class="r-word">launch</span> function are related to the user interface, it is best to either not specify anything or to specify <span class="r-word">Dispatchers.Main</span>.</p>
+
+<a href="UD9/images/ud_9-2025-01-27-13-38-12.png" target="_BLANK"><figure><img src="UD9/images/ud_9-2025-01-27-13-38-12.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<p>If the actions performed in the <span class="r-word">launch</span> function are intended to obtain data from external sources or storage, or if the actions are not related to the user interface, it is best to specify <span class="r-word">Dispatchers.IO</span>.</p>
+
+<a href="UD9/images/ud_9-2025-01-27-13-38-21.png" target="_BLANK"><figure><img src="UD9/images/ud_9-2025-01-27-13-38-21.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<h3>derivedStateOf</h3>
+
+<p>The handler <span class="r-word">derivedStateOf</span> allows you to create a state that depends on one or more other states.</p>
+<p>This way, unnecessary extra recompositions are avoided.</p>
+<p>It could be said that <span class="r-word">derivedStateOf</span> does not trigger recompositions until the state value changes from its previous value.</p>
+
+<p>To better understand the need for <span class="negrita">derivedStateOf</span>, let’s study the following example:</p>
+<figure><img src="UD9/images/ud9-2023-12-03-23-23-19.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>When the <span class="cursiva">username</span> state changes, the <span class="cursiva">isUsernameValid</span> function runs
+   which will change the value of <span class="cursiva">buttonEnabled</span>, and the button will recompose every time a letter is typed.</p>
+
+<p>Does it make sense to recompose the button if <span class="cursiva">buttonEnabled</span> is 
+  <span class="cursiva">true</span> and when you type another letter, it remains <span class="cursiva">true</span>?</p>
+
+  <p>By indicating that <span class="negrita">buttonEnabled</span> is a derived state of another, unnecessary recompositions are avoided.</p>
+  <figure><img src="UD9/images/ud9-2023-12-03-23-26-02.png" /><br><figcaption></figcaption></figure>
+  <br>
+  
+
+  <p>The button will only recompose when the value of <span class="negrita">buttonEnabled</span> changes from true to false or vice versa.</p>
+  
+  <p>If the value of <span class="negrita">buttonEnabled</span> is true and when typing another letter it remains true, the view will not be recomposed.</p>
+  
+</section><!-- End section Side Effects-->
+
+<!--*********************************************************Android Architectures***********************************************************-->
+<section class="apartado">
+  <a name="sArquitecturasAndroid"></a>
+  <h2>Android Architectures</h2>
+  
+  <p>When developing applications of any kind, choosing the right architecture to use is very important.</p>
+
+  <p>The most common approach is to use an architecture that separates the application logic (programming) from the views (graphical interface).</p>
+
+  <p>In this way, the views are responsible for displaying the interface (rendering), while the logic can be separated into other components where the application's functionality is programmed.</p>
+
+  <p>With this separation, it will be easier to work with the logic, make changes, and perform tests later on…</p>
+  <p>The architectures most commonly used in Android are:
+    <ul>
+      <li><span class="negrita">MVC</span> – Model View Controller</li>
+
+      <li><span class="negrita">MVP</span> – Model View Presenter</li>
+      
+      <li><span class="negrita">MVVM</span> – Model View ViewModel</li>
+    </ul>
+  </p>
+
+<h3>MVC</h3>
+
+<span class="negrita">MVC -> Model View Controller:</span>
+
+<p>The MVC architecture promotes organizing the application into <span class="negrita">three distinct</span>
+   and <span class="negrita">loosely coupled</span> parts.
+  <ul>
+    <li><span class="negrita">Model</span>: this component works with data (database access).</li>
+    <li><span class="negrita">View</span>: responsible for organizing the data obtained from the model and creating the graphical interface to display to the user.</li>
+    <li><span class="negrita">Controller</span>: manages requests to the application.</li>
+  </ul></p>
+
+
+<p>A <span class="subrayado">loose coupling</span> means that changes in one part of the code have minimal effect on other parts.</p>
+
+<p>In the best case, when using the MVC pattern, a change will not affect other parts.</p>
+
+<p>There are many implementations of the MVC architecture; in the Android implementation, both the controller and the view are defined in the same place (Activity or Fragment), and both depend on the model.</p>
+<figure><img src="UD9/images/ud9-2023-12-03-23-31-50.png" /><br><figcaption>MVC</figcaption></figure>
+<br>
+
+<p>One of the disadvantages of this architecture is that all responsibility falls on the same element (<span class="cursiva">Activity or Fragment</span>).</p>
+
+<p>This can cause performance issues if there is a heavy task running on the main thread.</p>
+
+<h3>MVP</h3>
+<p><span class="negrita">MVP -> Model View Presenter:</span></p>
+
+<p>It better organizes files and changes the way the three components work together.
+  <ul>
+    <li><span class="negrita">Model</span>: same as in MVC.</li>
+    <li><span class="negrita">View</span>: the <span class="cursiva">Activity</span> or <span class="cursiva">Fragment</span> is considered part of the view and 
+      is no longer located alongside the Controller.</li>
+    <li><span class="negrita">Presenter</span>: similar to the Controller in MVC, but is responsible for orchestrating everything that happens. 
+      Typically, there is one Presenter per <span class="cursiva">Activity</span> or <span class="cursiva">Fragment</span>.</li>
+  </ul>
+</p>
+
+<figure><img src="UD9/images/ud9-2023-12-03-23-34-29.png" /><br><figcaption>MVP</figcaption></figure>
+<br>
+
+<h3>MVVM</h3>
+<p><span class="negrita">MVVM -> Model View ViewModel:</span>
+<ul>
+  <li><span class="negrita">Model</span>: same as in MVC.</li>
+
+  <li><span class="negrita">View</span>: responsible for displaying the data.</li>
+  
+  <li><span class="negrita">ViewModel</span>: 
+  <ul>
+    <li>Wraps the model and prepares observable data for the view.</li>
+    <li>Provides bindings to the view to send events to the model.</li>
+    <li>Changes in it automatically update the view and vice versa.</li>
+  </ul></li>
+</ul>
+</p>
+
+<p>The <span class="negrita">ViewModel</span> is responsible for:
+  <ul>
+    <li>Responding to interactions in the view</li>
+    <li>Accessing data (model)</li>
+    <li>Notifying the view of changes in the data.</li>
+  </ul>
+</p>
+
+<p>Additionally, <span class="negrita">ViewModel survives configuration changes</span> like orientation changes,
+  meaning that the information stored in the ViewModel is preserved at all times.</p>
+
+<p class="sub-section">LiveData</p>
+
+<p>Although ViewModel can work with states as we've used them until now, 
+  <span class="subrayado">it is recommended to use the <span class="negrita">LiveData class</span> </span> because it is optimized for the lifecycle of the Activity.</p>
+
+<p><span class="negrita">LiveData</span> allows you to hold <span class="negrita">data that can be observed as states</span>.</p>
+
+<p>It is specifically designed to be used in <span class="cursiva">Activities</span>, <span class="cursiva">Fragments</span>, or 
+  <span class="cursiva">Services</span> so that <span class="negrita">it only notifies observers if they are currently running</span>
+   (active lifecycle state).</p>
+
+<p>It allows for device orientation changes without losing the observed data.</p>
+
+<p>Android provides the <span class="negrita">LiveData</span> and <span class="negrita">MutableLiveData</span> classes to store any type of data and observe its changes</p>
+
+<p>Android automatically provides two methods for storing data in a LiveData:
+  <ul>
+    <li>Using its <span class="r-word">value</span> property (uses the main thread).</li>
+    <li>Using its <span class="r-word">postValue</span> method (uses a background thread).</li>
+  </ul>
+</p>
+
+<p>The <span class="r-word">postValue</span> method should always be used when working from a coroutine, and the context <span class="negrita">Dispatchers.IO</span> should also be specified.</p>
+
+
+
+
+<p class="sub-section">ViewModel and LiveData</p>
+
+<p>From now on:
+  <ul>
+    <li>If a component needs a state and that state is not needed anywhere else in the application, 
+      the component will contain the state (stateful).</li>
+    <li>If a component needs a state and this state is needed in other parts of the application,
+      the component will not contain the state (stateless) and will subscribe to a LiveData provided by the ViewModel.</li>
+  </ul>
+</p>
+
+ </section><!-- End section Android Architectures-->
+
+
+<!--*********************************************************Practical Case***********************************************************-->
+<section class="apartado">
+  <a name="sCasopractico"></a>
+  <h2>Practical Case</h2>
+
+   <p>We will follow step by step how to create an application using <span class="negrita">ViewModel</span>, in this case, the application will be a 
+     <span class="cursiva">Book List</span>. The first thing we will do is create the project in the selected folder with the default Compose template.</p>
+
+   <h3>Add dependencies</h3>
+
+   <p>After creating the project, it's necessary to add the required dependencies. For this example, the dependencies for navigation, serialization, extended icons, and livedata will be added:</p>
+
+<p>
+  <ul>
+    <li><span class="inline-file">libs.versions.toml</span>
+      <ul>
+        <li><span class="negrita">[version] section</span>:
+          <section><pre><code class="language-kotlin">navigation = "2.8.5"
+serialization = "1.6.3"
+runtimeLivedata = "1.7.6"
+</code></pre>
+          </section>
+        </li>
+        <li><span class="negrita">[libraries] section</span>:
+          <section><pre><code class="language-kotlin">androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+androidx-material-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
+androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
+</code></pre>
+          </section>
+        </li>
+        <li><span class="negrita">[plugins] section</span>:
+          <section><pre><code class="language-kotlin">kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }</code></pre>
+          </section>
+        </li> 
+      </ul>
+    </li>
+    <li><span class="inline-file">build.gradle.kts (Module: app) </span> 
+      <ul>
+        <li><span class="cursiva">plugins</span> section:
+          <section><pre><code class="language-kotlin">alias(libs.plugins.kotlin.serialization)</code></pre>
+          </section>
+        </li>
+        <li><span class="cursiva">dependencies</span> section:
+          <section><pre><code class="language-kotlin">implementation(libs.androidx.navigation)
+implementation(libs.kotlinx.serialization.json)
+implementation(libs.androidx.material.icons)
+implementation(libs.androidx.runtime.livedata)
+</code></pre>
+          </section>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</p>
+
+<section class="marco-t inf">
+  <span class="icono info"> </span> Remember to click <span class="negrita">Sync Now</span> after making these changes.
+  </section>
+<section class="marco-b">
+    
+</section>
+  
+
+     
+   <h3>Data Model</h3>
+   <p>To store the data, create the file <span class="inline-file">Book.kt</span> in a package called <span class="inline-folder">model</span>, 
+      which will contain a <span class="r-word">data class</span> defining the <span class="d-word">Book</span> object and a static method to retrieve all books.</p>
+   
+   <section><pre><code class="language-kotlin">data class Book(
+    val title: String = "",
+    val author: String = "",
+    var favorite: Boolean = false,
+    var visible: Boolean = true,
+) {
+    companion object{
+        fun getData() : List&lt;Book> {
+            return listOf(
+                Book("Ready Player One", "Ernest Cline"),
+                Book("El juego de Ender", "Orson Scott Card"),
+                Book("El señor de los anillos", "J. R. R. Tolkien"),
+                Book("La historia interminable", "Michael Ende"),
+                Book("Juego de tronos", "George R. R. Martin"),
+                Book("El color de la magia", "Terry Pratchett"),
+                Book("La sangre de los elfos", "Andrzej Sapkowski"),
+                Book("Dune", "Frank Herbert"),
+                Book("Una educación mortal: Primera lección de Escolomancia", "Naomi Novik"),
+                Book("El nombre del viento", "Patrick Rothfuss"),
+                Book("Harry Potter y la piedra filosofal", "J. K. Rowling"),
+                Book("La quinta ola", "Rick Yancey"),
+                Book("Las crónicas de Narnia", "C. S. Lewis"),
+            )
+        }
+    }
+}
+
+   </code></pre></section><br>
+   
+   <h3>View Model</h3>
+   <p>In a package called <span class="inline-folder">viewmodel</span>, create the file <span class="inline-file">BookViewModel.kt</span>, 
+      which will contain a <span class="r-word">class</span> for the <span class="negrita">ViewModel</span> with all the necessary <span class="negrita">LiveData</span> 
+      (states) and the <span class="negrita">methods to modify those LiveData</span>.</p>
+
+   <section><pre><code class="language-kotlin">class BookViewModel : ViewModel() {
+    // Los LiveData (estados) solo deben de poder cambiar desde el View Model, por ello se declaran private.
+    // Para acceder al valor de los estados desde el exterior del View Model se crea una variable no mutable
+    //  que almacenará el mismo valor que la variable privada
+
+    // Lista de libros
+    private val _books = MutableLiveData&lt;List&lt;Book&gt;&gt;()
+    val books: LiveData&lt;List&lt;Book&gt;&gt; = _books
+
+    // Libro seleccionado
+    private val _selectedBook = MutableLiveData&lt;Book&gt;()
+    val selectedBook: LiveData&lt;Book&gt; = _selectedBook
+
+    // Variable para indicar que se están obteniendo los datos del repositorio
+    private var _isLoading = MutableLiveData&lt;Boolean&gt;()
+    val isLoading: LiveData&lt;Boolean&gt; = _isLoading
+
+    init {  // Cuando se instancia un objeto BookViewModel tras llamar al constructor se ejecuta el bloque init
+        loadBookList()
+    }
+
+    // Función para reutilizar este código en una futura mejora en la que se podrá recargar la lista de libros
+    fun loadBookList() {
+        // Corrutina: coroutineScope
+        viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.postValue(true)
+            delay(2000)
+            _books.postValue(Book.getData())
+            _isLoading.postValue(false)
+        }
+    }
+
+    fun deleteBook(book: Book) {
+        // Con API o BBDD se mandaría el id y se borraría de la BBDD
+        // A continuación se actualiza la lista de libros eliminando el libro
+        _books.value = _books.value?.filter { it != book }
+    }
+
+    // Al pulsar sobre un libro se almacena como seleccionado.
+    fun onBookClicked(book: Book) {
+        _selectedBook.value = book
+    }
+
+    // Para marcar/desmarcar el libro como favorito
+    fun markAsFavorite(book: Book) {
+        _books.value?.map {
+            if (it == book) it.favorite = !it.favorite
+        }
+    }
+
+    fun searchBook(searchString: String) {
+        val searchList = mutableListOf&lt;Book&gt;()
+        _books.value?.forEach {
+//            val book = it.copy()
+//            book.visible = book.title.contains(searchString, true)
+//            searchList.add(book)
+
+            // Estas líneas son similares a las comentadas
+            val book = it.copy(visible = it.title.contains(searchString, true))
+            searchList.add(book)
+        }
+        _books.value = searchList
+    }
+
+    fun resetSearchList() {
+        val searchList = mutableListOf&lt;Book&gt;()
+        _books.value?.forEach {
+//            book.visible = true
+//            searchList.add(book)
+
+            // Estas líneas son similares a las comentadas
+            val book = it.copy(visible = true)
+            searchList.add(book)
+        }
+        _books.value = searchList
+    }
+}</code></pre></section><br>
+   
+   <h3>Navigation and Routes</h3>
+
+   <p>In a package called <span class="inline-folder">navigation</span>, create the files <span class="inline-file">Routes.kt</span> 
+      and <span class="inline-file">Navigation.kt</span>, where the application's navigation will be defined.</p>
+      
+   <section class="marco-t file-">
+     <span class="icono file"> </span> <span class="negrita">Routes.kt</span>
+   </section>
+   <section class="marco-b">
+       <section><pre><code class="language-kotlin">sealed class Routes {
+    // Ruta para la lista de libros
+    @Serializable
+    object Main
+
+    // Ruta para la información de un libro
+    @Serializable
+    object BookInfo
+}</code></pre>
+       </section>
+   </section>
+   <section class="marco-t file-">
+     <span class="icono file"> </span> <span class="negrita">Navigation.kt</span>
+   </section>
+   <section class="marco-b">
+       <section><pre><code class="language-kotlin">@Composable
+fun Navigation() {
+    val navController = rememberNavController()
+
+    val bookViewModel = remember { BookViewModel() }
+
+    NavHost(
+        navController = navController,
+        startDestination = Routes.Main, // Ruta por la que comenzará la aplicación,
+        enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
+        exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+        popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
+        popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
+    ) {
+        composable&lt;Routes.Main&gt; {
+            MainScreen(
+                onBookClick = {
+                    navController.navigate(Routes.BookInfo)
+                },
+                bookViewModel = bookViewModel
+            )
+        }
+
+        composable&lt;Routes.BookInfo&gt; {
+            BookInfoScreen(
+                onBackArrowClick = {
+                    navController.popBackStack()
+                },
+                bookViewModel = bookViewModel
+            )
+        }
+    }
+}</code></pre>
+       </section>
+   </section>
+      
+   </p>
+    
+   <h3>MainActivity</h3>
+   <p>In the file <span class="inline-file">MainActivity.kt</span>, it call the <span class="d-word">Navigation</span> component, which will be the content of the <span class="cursiva">Activity</span>.</p>
+  
+   <section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            BooksViewModelTheme {
+                Navigation()
+            }
+        }
+    }
+}</code></pre></section><br>
+
+<h3>File structure for screens</h3>
+<a href="UD9/images/ud_9-2025-01-28-14-31-50.png"><figure><img src="UD9/images/ud_9-2025-01-28-14-31-50.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<h3><span class="inline-folder">Layout</span></h3>
+
+<a href="UD9/images/ud_9-2025-01-28-14-36-38.png"><figure><img src="UD9/images/ud_9-2025-01-28-14-36-38.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<p class="sub-section">AppScaffold</p>
+
+<section><pre><code class="language-kotlin">// Componente propio para tener un Scaffold unificado en toda la aplicación
+
+@Composable
+fun AppScaffold(
+    showBackArrow: Boolean = false,
+    onBlackArrowClick: () -> Unit = {},
+    content: @Composable () -> Unit
+) {
+    Scaffold(
+        topBar = {
+            AppTopBar(
+                showBackArrow = showBackArrow,
+                onClickBlackArrow = onBlackArrowClick,
+            )
+        },
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            Box(
+                modifier = Modifier.weight(9f).fillMaxWidth()
+            ) {
+                content()
+            }
+            HorizontalDivider(
+                modifier = Modifier.background(MaterialTheme.colorScheme.onPrimary).height(2.dp)
+            )
+            AuthorInfo(modifier = Modifier.padding(vertical = 4.dp).weight(1f))
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<p class="sub-section">AppTopBar</p>
+<section><pre><code class="language-kotlin">// Componente propio para la TopAppBar del Scaffold usado en la APP
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AppTopBar(
+    showBackArrow: Boolean = false,     // Sirve para indicar si se mostrará o no la flecha atrás
+    onClickBlackArrow: () -> Unit,
+) {
+    CenterAlignedTopAppBar(
+        title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(imageVector = Icons.Default.LocalLibrary, contentDescription = null)
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(
+                    text = "Lista de libros",
+                    fontSize = 30.sp
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Icon(imageVector = Icons.Default.LocalLibrary, contentDescription = null)
+
+            }
+        },
+        navigationIcon = {
+            if (showBackArrow) {
+                IconButton(
+//                    onClick = { onClickBlackArrow() }
+                    onClick = onClickBlackArrow
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Go back",
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+            }
+        },
+        colors = TopAppBarDefaults.largeTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary
+        )
+    )
+}</code></pre>
+</section><br><br>
+
+<p class="sub-section">AuthorInfo</p>
+<section><pre><code class="language-kotlin">// Componente propio para mostrar la información del autor
+
+@Composable
+fun AuthorInfo(modifier: Modifier = Modifier) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.primary)
+            .then(modifier),
+        horizontalArrangement = Arrangement.spacedBy(
+            20.dp,
+            Alignment.CenterHorizontally
+        ),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.rick),
+            contentDescription = "Foto de Rick",
+            modifier = Modifier
+                .clip(CircleShape)
+                .border(
+                    width = 3.dp,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    shape = CircleShape
+                )
+                .width(60.dp)
+        )
+        Text(
+            text = "Rick Sanchez",
+            fontSize = 35.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onPrimary
+        )
+    }
+}</code></pre>
+</section><br><br>
+
+   <h3><span class="inline-folder">MainScreen</span></h3>
+   <a href="UD9/images/ud_9-2025-01-28-14-37-58.png"><figure><img src="UD9/images/ud_9-2025-01-28-14-37-58.png" /><br><figcaption></figcaption></figure></a>
+   <br>
+   <p class="sub-section">MainScreen</p>
+   
+   <p>In a package called <span class="inline-folder">mainscreens</span>, create the file <span class="inline-file">MainScreen.kt</span> 
+      for the main screen interface that will display the list of books.</p>
+
+      <section><pre><code class="language-kotlin">@Composable
+fun MainScreen(
+    onBookClick: (Book) -> Unit = {},
+    bookViewModel: BookViewModel
+) {
+    AppScaffold(showBackArrow = false) {
+        // Suscripción a la lista de libros del ViewModel
+        val books: List&lt;Book&gt; by bookViewModel.books.observeAsState(initial = emptyList())
+        // Suscripción a la variable que indica si se están consiguiendo la lista de libros
+        val isLoadingBooks: Boolean by bookViewModel.isLoading.observeAsState(initial = false)
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.primary)
+        ) {
+            HorizontalDivider(
+                thickness = 2.dp,
+                color = MaterialTheme.colorScheme.onPrimary,
+            )
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.primary)
+                    .padding(vertical = 8.dp)
+                    .weight(7.7f)
+            ) {
+                items(books) { book ->
+                    if (book.visible) {
+                        BookCard(
+                            book = book,
+                            onBookClick = {
+                                // Al clicar sobre el libro se actualiza en el ViewModel el libro seleccionado
+                                bookViewModel.onBookClicked(book)
+                                // Se ejecuta el código recibido en la lamnda: navegar a la ventana de información
+                                onBookClick(it)
+                            },
+                            onBookDelete = {
+                                // Al clicar sobre el icono de papelera se elimina el libro de la lista del ViewModel
+                                bookViewModel.deleteBook(book)
+                            }
+                        )
+                    }
+                }
+            }
+
+            Row(
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth().weight(.3f)
+            ) {
+                Text(
+                    text = "Recarga la lista de libros",
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+                IconButton(onClick = {
+                    bookViewModel.loadBookList()
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Refresh,
+                        contentDescription = "Recargar",
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+            }
+
+            // Cuando la variable del ViewModel es true es que se está cargando la lista de libros
+            //  en ese caso se mostrará un texto y una línea de progreso indicando la carga
+            if (isLoadingBooks) {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.primary)
+                ) {
+                    Text(
+                        text = "Loading...",
+                        fontSize = 40.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+            }
+        }
+    }
+}</code></pre>
+      </section><br><br>
+   
+      <p class="sub-section">BookCard</p>
+<section><pre><code class="language-kotlin">@Composable
+fun BookCard(
+    book: Book,
+    onBookClick: (Book) -> Unit,
+    onBookDelete: (Book) -> Unit,
+) {
+    OutlinedCard(
+        modifier = Modifier
+            .padding(vertical = 4.dp, horizontal = 8.dp)
+            .clickable {
+                onBookClick(book)
+            }
+    ) {
+        ListItem(
+            headlineContent = { Text(text = book.title) },
+            supportingContent = { Text(text = book.author) },
+            leadingContent = {
+                if (book.favorite) {
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = "book",
+                        tint = Color(0xFFFB8C00)
+                    )
+                }
+            },
+            trailingContent = {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "book",
+                    modifier = Modifier.clickable {
+                        onBookDelete(book)
+                    }
+                )
+            }
+        )
+    }
+}</code></pre>
+</section><br><br>  
+
+   <h3><span class="inline-folder">BookInfoScreen</span></h3>
+   <p>In a package called <span class="inline-folder">screens</span>, create the file <span class="inline-file">BookInfoScreen.kt</span> 
+      to display detailed information about the book from the list that was clicked.</p>
+
+   <section><pre><code class="language-kotlin">@Composable
+fun BookInfoScreen(
+    onBackArrowClick: () -> Unit = {},
+    bookViewModel: BookViewModel
+) {
+    AppScaffold(
+        showBackArrow = true,
+        onBlackArrowClick = onBackArrowClick
+    ) {
+        // Suscripción al libro seleccionado del ViewModel
+        val book: Book by bookViewModel.selectedBook.observeAsState(Book())
+        var favorite by rememberSaveable { mutableStateOf(book.favorite) }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.primaryContainer)
+                .padding(8.dp)
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.MenuBook,
+                        contentDescription = "book"
+                    )
+                    if (favorite) {
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Icon(
+                            imageVector = Icons.Default.Star,
+                            contentDescription = "book",
+                            tint = Color(0xFFFB8C00)
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.width(20.dp))
+                Text(
+                    text = book.title,
+                    fontSize = 30.sp,
+                    lineHeight = 38.sp
+                )
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = book.author,
+                fontSize = 16.sp
+            )
+
+            TextButton(onClick = {
+//                bookViewModel.markAsFavorite(book)
+                favorite = !favorite
+            }) {
+                Text(text = if (favorite) "Quitar favorito" else "Marcar favorito")
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.tertiary)
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = "Aquí se mostrará la información detallada del libro.",
+                    color = MaterialTheme.colorScheme.onTertiary
+                )
+            }
+        }
+    }
+}</code></pre>
+   </section><br><br>
+    
+
+   <h3>Problem with ViewModel and LiveData</h3>
+
+   <p>When <span class="negrita">LiveData</span> stores a list of objects, even if the list is modified, the changes are not notified to the observers 
+      so no recomposition happens:</p>
+   <figure><img src="UD9/images/ud9-2023-12-04-12-59-09.png" /><br><figcaption></figcaption></figure>
+   <br>
+
+   <p>This happens because although the list has been modified, the instance is the same. To solve this, a new list must be created 
+      and copies of the elements in the list must be made, modified, and added to the new list.</p>
+
+   <figure><img src="UD9/images/ud9-2023-12-04-12-59-55.png" /><br><figcaption></figcaption></figure>
+   <br>
+   <section class="marco-t inf">
+     <span class="icono info"> </span> About LiveData
+   </section>
+   <section class="marco-b">
+       <p>If we are going to modify the value from another thread other than the main, we must do it with <span class="negrita">myLiveData.postValue(value)</span>
+          instead of <span class="negrita">myLiveData.value = value</span>. That is, if we are inside a coroutine and change the value of LiveData, we will use
+         postValue to notify correctly.</p>
+       <section><pre><code class="language-kotlin">_usernameLD.postValue("Another value")</code></pre>
+       </section><br><br>
+   </section>
+    
+   <section class="marco-t inf">
+     <span class="icono info"> </span> About ViewModel
+   </section>
+   <section class="marco-b">
+       <p>If there is a ViewModel that is shared by all Screens, you can create the ViewModel in MainActivity using "by"</p>
+       <section><pre><code class="language-kotlin">val workoutViewModel by viewModels<WorkoutViewModel>()</code></pre>
+       </section><br>
+       <p>Or in the Navigation component using "=remember":</p>
+       <section><pre><code class="language-kotlin">val workoutViewModel = remember {
+     WorkoutViewModel()
+   }</code></pre>
+       </section><br>
+     <p>If there is a ViewModel that is used only by some Screens (not all), create the ViewModel in Navigation using "=remember" and pass it to the Screens that need it</p>
+     <p>If there is a ViewModel that is only used in one Screen, create the ViewModel in that Screen using "=remember". (You can also use the <span class="negrita">viewModel()</span>
+       function)</p>
+       <section><pre><code class="language-kotlin">val workoutViewModel= viewModel(){
+         //If our ViewModel constructor has an input parameter.
+       WorkoutViewModel(3)
+   }</code></pre>
+       </section><br>
+       <p>Or simply</p>
+       <section><pre><code class="language-kotlin">//No initial input parameter
+   val workoutViewModel = viewModel(WorkoutViewModel::class.java)</code></pre>
+       </section><br><br>
+   </section>
+  
+
+ </section><!-- End section Practical Case-->
+
+ <!--*********************************************************FLOWS***********************************************************-->
+ <section class="apartado">
+  <a name="sFlows"></a>
+  <h2>INTRODUCTION TO FLOWS</h2>
+
+  <h3>Introduction</h3>
+
+  <p>Flow is a component of the coroutine library that allows us to implement reactive programming. </p>
+
+
+  <p>It is the natural substitute for RxJava, since the vast majority of things that can be done are here, generally simpler, 
+      since they are based on concepts that we already know about <span class="d-word">coroutines</span> , <span class="d-word">sequences</span> , 
+      and <span class="d-word">collections</span>  to give us a very easy solution.</p>
+  
+  <h3>What are the Flows?</h3>
+
+  <p>Flows are asynchronous sequences.</p>
+  
+  <p class="sub-section">The Flows are lazy</p>
+  
+  <p>Like sequences, Flows are lazy, which means that until someone requests the Flow's values, the operations on them are not executed. </p>
+  <p>This causes them to be called <span class="negrita">cold streams</span>, because they will not start providing data until someone asks to collect them. 
+      Also, if another element connects to the Flow, it starts from the first value of the flow.</p>
+  <p>It is important to understand this, because <span class="negrita">if a Flow performs heavy operations, 
+      they will be repeated every time someone collects its values</span>.</p>
+
+  
+  
+  <p class="sub-section">Flows are asynchronous</p>
+  
+  <p>Unlike sequences, which are processed one element after another, in Flow this is not necessarily the case. It can take a long time between one value and the next.</p>
+
+  <p>That's why we won't normally run them on the main thread.</p>
+
+  <p>Since all this happens in a coroutine context, think that the thread management is going to be very easy to manage.</p>
+
+
+  <p class="sub-section">Flows are sequential</p>
+  
+  <p>This means that if a Flow is going to generate x elements, and these consist of heavy processing, they will be executed one after the other: 
+      until the previous one finishes, the next one will not start.</p>
+  
+  <p>This, which is often an advantage, can sometimes be a disadvantage. 
+      Imagine that you have to make 10 requests to servers and that each one is independent of the previous one. Even so, 
+      you would have to wait for the previous one to finish to launch the next one.</p>
+
+  <p>This can be modified, and we'll see later. But keep in mind that they work like this by default</p>
+      
+  
+
+  <h3>Flow Builders</h3>
+
+  <p>We have 3 ways to build a Flow:</p>
+  
+  <p class="sub-section">asFlow()</p>
+  
+  <p>Perhaps this is the easiest way to generate a Flow. All collections, including sequences, can be converted to a Flow using this function</p>
+  
+  <section><pre><code class="language-kotlin">val flow = listOf(1, 2, 3, 4).asFlow()</code></pre>
+  </section><br><br>
+  
+  <p class="sub-section">flowOf()</p>
+  
+  <p>A Flow is generated with a sequence of predefined values, the equivalent of <span class="d-word">listOf()</span> 
+      or <span class="d-word">sequenceOf()</span> </p>
+
+      <section><pre><code class="language-kotlin">val flow = flowOf(1, 2, 3, 4)</code></pre>
+      </section><br><br>
+
+  <p class="sub-section">flow { }</p>
+  
+  <p>The most versatile of all, and the one you will surely use most often. </p>
+  <p>We create a <span class="negrita">flow { }</span>  block and add values ​​with the <span class="negrita">emit()</span> function.</p>
+
+  <p>Also, here we add the advantage that this block receives a coroutine context, so we can call suspend functions without any problem within it.</p>
+  
+  <section><pre><code class="language-kotlin">flow {
+for (i in (0..3)) {
+  delay(200)
+  emit(i)
+}
+}</code></pre>
+  </section><br><br>
+
+<h3>Types of operators</h3>
+
+<p>Flows can be transformed just like collections, making them very easy to use.</p>
+
+<p>We can filter, map, combine, transform... and a large number of operations that allow you to adapt these flows to the needs you have in the place where you use them.</p>
+
+<p>As with sequences, there are two types of operators</p>
+
+<p class="sub-section">Intermediate operators</p>
+
+<p>They are operators that do not launch any operation, regardless of their complexity. What they do is return a <span class="negrita">new Flow</span> that is
+   the combination of the previous one with the new operation.</p>
+
+
+<p>For example, we can use the <span class="negrita"><span class="r-word">filter()</span> </span> operation:</p>
+
+<section><pre><code class="language-kotlin">fun makeFlow() = flow{
+emit(1)
+delay(500)
+emit(2)
+delay(500)
+emit(3)
+delay(500)
+emit(4)
+delay(500)
+}
+
+makeFlow() //user function that returns a flow
+.filter { it % 2 == 0 }  //Only emit the even elements of the flow
+</code></pre>
+</section><br><br>
+
+<p>And then do a <span class="negrita"><span class="r-word">map()</span> </span>  to transform the results:</p>
+<section><pre><code class="language-kotlin">makeFlow()
+.filter { it % 2 == 0 }
+.map { "Value is $it" } //Emits the even elements and map them to a String</code></pre>
+</section><br><br>
+
+
+<p>But there is a particularly interesting operator, which is <span class="negrita"><span class="r-word">transform()</span></span> , and which allows us to make as complex transformations 
+  as we need. All we have to do is call <span class="negrita">emit()</span>  with the values ​​we want to return:</p>
+
+  <section><pre><code class="language-kotlin">flowOf(1,2,3,4,5).transform{
+  if(it % 2 ==0 ) emit("Value -> $it")
+}.collect(){
+  println("$it")
+}</code></pre>
+  </section>
+
+<p>Output:</p>
+
+<section><pre><code class="language-kotlin">Value -> 2
+Value -> 4</code></pre>
+</section><br><br>
+
+
+
+<p>You can also combine multiple Flows with operations like <span class="negrita"><span class="r-word">zip()</span> </span>  or <span class="negrita"><span class="r-word">combine()</span> </span> :</p>
+
+<section><pre><code class="language-kotlin">val flow1 = flowOf(1, 2, 3, 4)
+val flow2 = flowOf("1", "2", "3", "4")
+flow1.zip(flow2) { a, b -> "$a -> $b" }</code></pre>
+</section><br><br>
+
+
+<section><pre><code class="language-kotlin">val flow1 = flowOf(1, 2, 3, 4)
+val flow2 = flowOf("1", "2", "3", "4", "5")
+flow1.combine(flow2) { a, b -> "$a -> $b" }.collect(){
+println(it)
+}</code></pre>
+</section>
+
+<p>Result</p>
+<section><pre><code class="language-kotlin">1 -> 1
+2 -> 2
+3 -> 3
+4 -> 4
+4 -> 5</code></pre>
+</section><br><br>
+
+
+<p>We can apply some action to each of the flow elements with <span class="negrita"><span class="r-word">onEach()</span> </span></p>
+
+<section><pre><code class="language-kotlin">val f1 = flowOf(1,2,3,4,5).onEach { delay(300) }
+val f2 = flowOf("a", "b", "c", "d").onEach { delay(500) }
+
+f1.combine(f2){f1, f2 ->
+"$f1 -> $f2"
+}.collect(){
+println("$it")
+}</code></pre>
+</section>
+
+<p>Result</p>
+<section><pre><code class="language-kotlin">1 -> a
+2 -> a
+3 -> a
+3 -> b
+4 -> b
+4 -> c
+5 -> c
+5 -> d</code></pre>
+</section><br><br>
+
+
+
+<p>Remember that all of these operators can have suspend functions inside them, 
+  so those operations can be as simple as addition or as complex as calling a server and saving the result to a database.</p>
+
+
+<p class="sub-section">Terminal operators</p>
+
+<p>These do launch the execution and cause the production of values begins and these to be emitted.</p>
+
+<p>The most common terminal operator is <span class="negrita"><span class="r-word">collect()</span> </span> , 
+  which tells Flow that there is already someone on the other side (the collector) waiting for results, and that it can start emitting them.</p>
+
+<section><pre><code class="language-kotlin">val flow= flowOf(1,2,3,4,5,6)
+
+flow.collect(){
+println(it)
+}</code></pre>
+  </section><br><br>
+
+<p>Another interesting terminal function is <span class="negrita"><span class="r-word">toList()</span></span> . It will wait for the entire flow to finish emitting and turn it into a list.</p>
+<p>In this example we are going to take a previous flow and convert it into a list and print its result.</p>
+<section><pre><code class="language-kotlin">val flow1 = flowOf(1, 2, 3, 4)
+val flow2 = flowOf("1", "2", "3", "4", "5")
+
+println(
+flow1.combine(flow2) { a, b -> "$a -> $b" }.toList()
+)</code></pre>
+</section>
+<p>Output:</p>
+<section><pre><code class="language-kotlin">[1 -> 1, 2 -> 2, 3 -> 3, 4 -> 4, 4 -> 5]</code></pre>
+</section><br><br>
+
+
+<p>But there is not only this one, we have several more like <span class="negrita">toSet(), first(), single(), reduce()</span>  or <span class="negrita">fold()</span> .</p>
+
+<h3>Constraints on contexts and exceptions</h3>
+<p>Flow has some restrictions, to make the whole system work properly.</p>
+
+<p>The first is that we cannot switch context within the code of a flow. If we do this, we'll get an exception:</p>
+
+<section><pre><code class="language-kotlin">fun makeFlow() = flow {
+withContext(Dispatchers.IO) {
+  for (i in (0..3)) {
+      delay(200)
+      emit(i)
+  }
+}
+}</code></pre>
+</section><br><br>
+
+<p>Flow will always run in the context of the coroutine that launched it. 
+But many times it won't be what we want, how do we then change the execution context? We can use the <span class="negrita">flowOn()</span> function:</p>
+
+<section><pre><code class="language-kotlin">val flow = flowOf(1,2,3,4)
+
+flow.flowOn(Dispatchers.IO)
+.collect { print(it) }</code></pre>
+</section><br><br>
+
+<p>With respect to exceptions, it happens a bit the same. Exceptions should not be caught within the flows, 
+  so as not to hide them and the rest of the code does not find out. There is a special function for this:</p>
+
+
+<section><pre><code class="language-kotlin">makeFlow()
+.catch { throwable -> println(throwable.message) }
+.collect { print(it) }
+}</code></pre>
+</section><br><br>
+
+<p>If we don't catch the exception, it will continue to propagate normally, as it happens with the rest of the coroutine components.</p>
+
+<br><br>
+<h3>Types or specializations of FLows</h3>
+
+<p>So far we have seen the general behavior of the flows and the main characteristics. 
+  Now we will see some types of flow specialization that can be interesting for certain cases.</p>
+
+<p class="sub-section">StateFlow</p>
+
+<p>Remember that we said that generic flows were <span class="cursiva">cold streams</span> , that is, until someone starts collecting their values, 
+  the flow doesn't start emitting.</p>
+
+<p>The <span class="d-word">StateFlows</span>  are <span class="cursiva">hot streams</span> , that is, whether there is someone listening or not, they are going to emit values.
+If we connect to a <span class="d-word">Stateflow</span> , it will give us the last value, it will not start with the first one.</p>
+
+
+<p><span class="d-word">StateFlows</span>  are especially interesting for saving the state of the UI, when we connect to it, it will tell us what the last state the UI should be in is.
+  From there if the state changes, the UI will receive the new state. <br>
+  As you have seen, this would be the equivalent of <span class="d-word">LiveData</span> .
+</p>
+
+<p>Let's do an example in which we simulate a use case in which the UI is going to be updated (in this case the console), we will update the UI every second by passing it a new <span class="negrita">note</span> .
+For this, we will use a <span class="r-word">MutableStateFlow</span>  that will be of the <span class="negrita">note</span>  type.</p>
+
+<section><pre><code class="language-kotlin">data class Note(
+val title:String,
+val description:String
+)
+
+class ViewModel(){ //It would simulate a ViewModel but for this example is a simple class
+
+var state: MutableStateFlow&lt;Note> = MutableStateFlow(Note("Title 1", "Description 1"))
+
+suspend fun update(){
+  var counter = 1
+  while(true){
+      state.value = Note("Title $counter", "Description $counter")
+      counter++
+      delay(500)
+  }
+}
+}
+
+//This main function is just for running the example
+fun main():Unit = runBlocking {
+
+val viewModel = ViewModel()
+launch {
+  viewModel.update()
+}
+viewModel.state.collect(){
+  println(it)
+}
+
+}</code></pre>
+</section><br><br>
+
+<p>Note that to update the value of the <span class="d-word">StateFlow</span> , the new value is passed through the <span class="r-word">value</span>  property of the <span class="d-word">status</span> variable. 
+  Notice that to start the value of the StateFlow we pass a note in the constructor.</p>
+
+
+<section class="marco-t inf">
+  <span class="icono info"> </span> Since the <span class="negrita">println</span>  function receives the same arguments that the <span class="negrita">lambda</span> passes, 
+  we can abbreviate it using the function reference (::)
+  </section>
+<section class="marco-b">
+      <section><pre><code class="language-kotlin">viewModel.state.collect(::println)</code></pre>
+      </section>
+</section>
+  
+<p>The code above has a problem and that is that from the UI we could change the value of the state flow by doing this.</p>
+
+<section><pre><code class="language-kotlin">viewModel.state.value = Note("Fake title", "Fake description")</code></pre>
+</section><br>
+
+<p>That is, it is poorly encapsulated. To avoid that we must make the property that is accessed from outside read-only. Let's see how we could do it.</p>
+
+<section><pre><code class="language-kotlin">private val _state: MutableStateFlow<Note> = MutableStateFlow(Note("Title 1", "Description 1"))
+val state:StateFlow<Note> = _state.asStateFlow()</code></pre>
+</section><br>
+
+<p>We see that our MutableStateFlow variable is private and offer a public one that cannot be changed, nor can the value property be modified.
+  This is called <span class="cursiva">backing property</span>  </p>
+
+<p class="sub-section">Collect Flow in a Composable</p>
+<p>If we need to collect a flow and have it be a state variable for recomposition, 
+we should use <span class="r-word">collectAsState()</span> from the <span class="negrita">flow</span>. We can do this as follows:</p>
+
+<section><pre><code class="language-kotlin">val books: List<Book> by bookViewModel.books.collectAsState()</code></pre>
+</section><br><br>
+
+
+<a class="tarea" name="exercise_flow" target="_blank" href="#exercise_flow">Exercise:
+Do the practical case using flows instead of live data.</a> 
+  <br> <br>
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD9/BookViewModelFlows">A possible solution</a> </p>
+
+
+<p class="sub-section">SharedFlow</p>
+
+
+<p><span class="r-word">StateFlow</span>  is a specialization of <span class="r-word">SharedFlow</span>. <span class="r-word">SharedFlow</span> is much more configurable.
+When the exact conditions of a StateFlow are not enough for us, we can configure the <span class="r-word">SharedFlow</span>  to behave exactly as we need.</p>
+
+
+<p><span class="r-word">SharedFlow</span>  has a series of configuration values ​​to be more flexible in the number of values ​​we store,
+   what happens when we are consuming those values ​​more slowly than at the rate at which they are being emitted,
+and what is the maximum number of values ​​that we want to store.</p>
+
+
+<p>Let's see how we would use these options. We go back to the previous example of Notes.
+In this case we use a <span class="negrita">MutableSharedFlow</span> </p>
+
+
+<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>()
+val state:SharedFlow&lt;Note> = _state.asSharedFlow()</code></pre>
+</section><br>
+
+<p>We can see that the <span class="r-word">SharedFlows</span>  do not pass an initial value in the constructor.</p>
+
+<p>To change values ​​we do not use the <span class="negrita">value</span> property, since it is not a single value, but we use the <span class="negrita">emit</span> function. </p>
+<section><pre><code class="language-kotlin">_state.emit(Note("Title $counter", "Description $counter"))</code></pre>
+</section><br>
+
+<p>To collect it we do it in the same way.</p>
+
+
+<section><pre><code class="language-kotlin">viewModel.state.collect(::println)</code></pre>
+</section><br>
+
+<p>For now, the complete code looks like this:</p>
+
+
+<section><pre><code class="language-kotlin">data class Note(
+val title:String,
+val description:String
+)
+
+class ViewModel(){ //It would simulate a ViewModel but for this example is a simple class
+
+private val _state = MutableSharedFlow&lt;Note>()
+val state:SharedFlow&lt;Note> = _state.asSharedFlow()
+
+suspend fun update(){
+  var counter = 1
+  while(true){
+      _state.emit(Note("Title $counter", "Description $counter"))
+      counter++
+      delay(500)
+  }
+}
+}
+
+
+//This main function is just for running the example
+fun main():Unit = runBlocking {
+
+val viewModel = ViewModel()
+launch {
+  viewModel.update()
+}
+viewModel.state.collect(::println)
+}</code></pre>
+</section><br>
+
+<p>Output:</p>
+<section><pre><code class="language-kotlin">Note(title=Title 1, description=Description 1)
+Note(title=Title 2, description=Description 2)
+Note(title=Title 3, description=Description 3)
+Note(title=Title 4, description=Description 4)
+Note(title=Title 5, description=Description 5)
+Note(title=Title 6, description=Description 6)
+Note(title=Title 7, description=Description 7)
+....</code></pre>
+</section><br>
+
+<p>At the moment it is working exactly the same as we had it before. Now let's see what happens if we start collecting after a second (line 7)</p>
+
+
+<section><pre><code class="language-kotlin">fun main():Unit = runBlocking {
+
+val viewModel = ViewModel()
+launch {
+  viewModel.update()
+}
+delay(1000)
+viewModel.state.collect(::println)
+}</code></pre>
+</section><br>
+
+<p>In this case we see that we have lost the first two values, it starts cocllecting from 3.</p>
+
+
+<section><pre><code class="language-kotlin">Note(title=Title 3, description=Description 3)
+Note(title=Title 4, description=Description 4)
+Note(title=Title 5, description=Description 5)
+....</code></pre>
+</section><br>
+
+<p>If we do not tell it anything, by default this <span class="r-word">SharedFlow</span>  will not store any value and therefore the old values ​​are not emitted.</p>
+
+
+<p>How can we configure this? If we go to the creation of the <span class="negrita">MutableSharedFlow</span> we will see that it has 3 arguments, 
+<span class="negrita">replay</span>, <span class="negrita">extraBufferCapacity</span> , <span class="negrita">onBufferOverflow</span>.</p>
+
+
+<p>Let's see what each of them is for:</p>
+
+
+<p><span class="r-word">replay</span> . Of integer type, we can tell it how many values ​​we want it to store so that when we subscribe it
+starts with the first one stored. Default value is 0.
+In this case we are going to set it to 1</p>
+
+
+<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>(
+  replay = 1
+)</code></pre>
+</section><br>
+
+<p>We see as a result, that before it issued us from 3, and when we put 1 it also recovers 2.</p>
+
+<section><pre><code class="language-kotlin">Note(title=Title 2, description=Description 2)
+Note(title=Title 3, description=Description 3)
+Note(title=Title 4, description=Description 4)
+.....</code></pre>
+</section><br>
+
+<p>If instead of <span class="negrita">replay=1</span>  we set 2,
+then it will return the 2 stored, that is, the first and the second, then it already emits the third normally.</p>
+
+
+<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>(
+replay = 2
+)</code></pre>
+</section><br>
+
+<p>Output: </p>
+
+<section><pre><code class="language-kotlin">Note(title=Title 1, description=Description 1)
+Note(title=Title 2, description=Description 2)
+Note(title=Title 3, description=Description 3)
+Note(title=Title 4, description=Description 4)
+.....</code></pre>
+</section><br>
+
+
+<p><span class="r-word">extraBufferCapacity</span> . It will store values ​​in a buffer. 
+  Let's imagine that the values ​​are being collected more slowly than they are being emitted.
+To do the test we will add a println to see when the values ​​are being emitted (line 4).</p>
+
+
+<section><pre><code class="language-kotlin">while(true){
+delay(500)
+_state.emit(Note("Title $counter", "Description $counter"))
+println("Emitting Title= $counter")
+counter++
+}</code></pre>
+</section><br>
+
+<p>Also, when we collect we will set a delay of 1 second. For this we pass the lambda.</p>
+
+
+<section><pre><code class="language-kotlin">viewModel.state.collect {
+delay(1000)
+println(it)
+}</code></pre>
+</section><br>
+
+<p>Let's see the output</p>
+
+
+<section><pre><code class="language-kotlin">Emitting Title= 1
+Emitting Title= 2
+Emitting Title= 3
+Note(title=Title 1, description=Description 1)
+Emitting Title= 4
+Note(title=Title 2, description=Description 2)
+Emitting Title= 5
+Note(title=Title 3, description=Description 3)
+Emitting Title= 6
+Note(title=Title 4, description=Description 4)
+Emitting Title= 7</code></pre>
+</section><br><br>
+
+<p>We see that, since we have a <span class="negrita">replay</span>  of 2, the first 2 are broadcast without being collected, a third is broadcast and we collect the first, 
+once the first is collected a fourth is broadcast, once the second is collected a fifth is broadcast.
+In other words, once the replay capacity is exhausted, no more are broadcast until one of the replays is collected, the broadcast function remains suspended.</p>
+
+
+<p>To give it more storage capacity we use the <span class="r-word">extraBufferCapacity</span> parameter, 
+we are going to give it a value of two so that it stores 4 elements in total (2 replay + 2 extraBufferCapacity).</p>
+
+
+<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>(
+replay = 2,
+extraBufferCapacity = 2
+)</code></pre>
+</section><br>
+
+<p>Output:</p>
+
+<section><pre><code class="language-kotlin">Emitting Title= 1
+Emitting Title= 2
+Emitting Title= 3
+Note(title=Title 1, description=Description 1)
+Emitting Title= 4
+Emitting Title= 5
+Note(title=Title 2, description=Description 2)
+Emitting Title= 6
+Emitting Title= 7
+Note(title=Title 3, description=Description 3)
+Emitting Title= 8
+Note(title=Title 4, description=Description 4)
+Emitting Title= 9
+....</code></pre>
+</section><br>
+
+<p>We see that it is emitting until the buffer is full, once it is full it is suspended until one is collected to be able to emit another.</p>
+
+
+<p>It may be that we want the emit function to be suspended but simply discard the old or the new ones. We can do this with the third parameter,
+<span class="negrita">onBufferOverflow</span></p>
+
+
+<p><span class="r-word">onBufferOverflow</span> . Its default value is configured with <span class="negrita">BuffeOverFlow.SUSPEND</span>, that is, if the buffer is full, 
+it is suspended and does not continue emitting until some element is collected.
+Other values ​​of this parameter are:</p>
+
+
+<p><span class="negrita">BufferOverFlow.DROP_OLDEST</span> , that is, it eliminates the oldest ones in order to have room in the buffer and continue emitting.</p>
+
+
+<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>(
+replay = 2,
+extraBufferCapacity = 2,
+onBufferOverflow = BufferOverflow.DROP_OLDEST
+)</code></pre>
+</section><br>
+
+<p>If we put this value in our example we see the following output.</p>
+
+<section><pre><code class="language-kotlin">Emitting Title= 5
+Note(title=Title 2, description=Description 2)
+Emitting Title= 6
+Emitting Title= 7
+Note(title=Title 3, description=Description 3)
+Emitting Title= 8
+Emitting Title= 9
+Note(title=Title 4, description=Description 4)
+Emitting Title= 10
+Emitting Title= 11
+Note(title=Title 6, description=Description 6)
+Emitting Title= 12
+Emitting Title= 13
+Note(title=Title 8, description=Description 8)
+Emitting Title= 14
+....
+</code></pre>
+</section><br>
+
+<p>If we look at element 5 (which was the oldest) it has not been collected, it has been discarded in order to emit element 10</p>
+
+
+<p><span class="negrita">BufferOverFlow.DROP_LATEST</span>. In this case we will discard the new ones that enter until we consume the old ones.</p>
+
+
+<p>Let's see the examples:</p>
+
+<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>(
+replay = 2,
+extraBufferCapacity = 2,
+onBufferOverflow = BufferOverflow.DROP_LATEST
+)</code></pre>
+</section><br>
+
+<p>Output:</p>
+
+<section><pre><code class="language-kotlin">Emitting Title= 8
+Emitting Title= 9
+Note(title=Title 4, description=Description 4)
+Emitting Title= 10
+Emitting Title= 11
+Note(title=Title 5, description=Description 5)
+Emitting Title= 12
+Emitting Title= 13
+Note(title=Title 6, description=Description 6)
+Emitting Title= 14
+Emitting Title= 15
+Note(title=Title 7, description=Description 7)
+Emitting Title= 16
+Emitting Title= 17
+Note(title=Title 8, description=Description 8)
+Emitting Title= 18
+Emitting Title= 19
+Note(title=Title 10, description=Description 10)
+Emitting Title= 20
+....</code></pre>
+</section><br>
+
+<p>In this case he had to discard the 9 to be able to issue the 10.</p>
+
+
+<p>Another difference with the <span class="r-word">StateFlow</span>  is that if we emit the same value with the <span class="r-word">SharedFlow</span>
+it will emit it again, while with the <span class="r-word">StateFlow</span> it would not emit the same value again.</p>
+
+
+<p>How do we make a <span class="r-word">SharedFlow</span>  behave exactly like a <span class="r-word">StateFlow</span>?</p>
+
+
+<p>For this, we only store the last value, <span class="negrita">replay=1</span>, we don't give extra buffer capacity, and if we delete the oldest one.</p>
+
+
+<section><pre><code class="language-kotlin"> private val _state = MutableSharedFlow<Note>(
+replay = 1,
+extraBufferCapacity = 0,
+onBufferOverflow = BufferOverflow.DROP_OLDEST
+)</code></pre>
+</section><br>
+
+<p>We would only need one thing, so that it behaves exactly like a <span class="r-word">StateFlow</span>, 
+and that is precisely that it does not emit again if the value does not change. </p>
+<p>If we always emit the same value, it continues to be emitted.</p>
+
+
+<section><pre><code class="language-kotlin">_state.emit(Note("Title 1", "Description 1"))</code></pre>
+</section><br>
+
+<p>Output:</p>
+
+<section><pre><code class="language-kotlin">Note(title=Title 1, description=Description 1)
+Emitting Title= 4
+Emitting Title= 5
+Note(title=Title 1, description=Description 1)
+Emitting Title= 6
+Emitting Title= 7
+Note(title=Title 1, description=Description 1)
+Emitting Title= 8
+Emitting Title= 9
+Note(title=Title 1, description=Description 1)</code></pre>
+</section><br>
+
+
+<section class="marco-t inf">
+<span class="icono info"> </span> Remember that one data class is equal to another if its properties are the same.
+</section>
+<section class="marco-b">
+  
+</section>
+
+<p>We could check before emitting that the element has changed to emit it, but SharedFlow provides us with a function that allows us to do this. <span class="r-word">distinctUntilChanged()</span> .</p>
+
+
+<section><pre><code class="language-kotlin">viewModel.state.distinctUntilChanged().collect {
+delay(1000)
+println(it)
+}</code></pre>
+</section><br>
+
+<p>Now we see that it continues to be issued but it does not collect it.</p>
+
+<section><pre><code class="language-kotlin">Emitting Title= 1
+Emitting Title= 2
+Emitting Title= 3
+Note(title=Title 1, description=Description 1)
+Emitting Title= 4
+Emitting Title= 5
+Emitting Title= 6
+Emitting Title= 7
+Emitting Title= 8</code></pre>
+</section><br>
+
+<p>Obviously if what we want to do is that, it is best to use a <span class="r-word">StateFlow</span> ,
+we simply wanted to show that <span class="r-word">StateFlow</span>  is a specialization of <span class="r-word">SharedFlow</span>.</p>
+
+
+</section><!-- End section -->
+
+
+<!--*********************************************************Activities***********************************************************-->
+<section class="apartado">
+  <a name="sActividades"></a>
+  <h2>Activities</h2>
+  <div class="tarea">
+    <p>Replicate the practical case above.</p>
+    <p>You have <a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD9/booksviewmodel">here</a>  the implementation</p>
+  </div>
+ 
+  <div class="tarea">
+   <p><span class="negrita">Activity 2</span></p>
+   <p>Replicate the book list example from the notes, but in the main window, add a photo of yourself (ID style) at the bottom and your full name.</p>
+   <p>Additionally, add the necessary functionality to mark/unmark an item as a favorite from the item information screen. The main screen should display whether the item is marked as a favorite.</p>
+   <p>It should look similar to this:</p>
+   <figure><img src="UD9/images/BookListDemo.gif" /><br><figcaption></figcaption></figure>
+   <br>
+
+   <p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD9/BooksViewModelFavorites">Here</a> is a possible implementation. Note that a search element has been added.</p>
+     
+  </div>
+  <br>
+  <hr><br>
+  
+  <a class="tarea" id="sP07" href="https://aules.edu.gva.es/semipresencial/mod/assign/view.php?id=2399564" target="_blank" class="tarea">
+   <p><span class="negrita">Practice 7</span></p>
+
+   <p>Create a project in Android Studio called <span class="negrita">WorkoutYourName</span>.</p>
+
+   <p>The app will allow the user to enter their name and the number of repetitions to perform exercise sets. When the user presses the start button, a gif of the exercise will appear and the repetitions will decrease (every 2 seconds). Once it reaches zero, the gif will change to a new exercise, and the repetition count will restart.</p>
+
+   <p>The app will have two screens and routes/navigation should be used.</p>
+
+   <p><span class="negrita">Main Window</span>:
+   <ul>
+     <li>A motivational phrase.</li>
+     <li>A field for the user to enter their name.</li>
+     <li>A method by which the user can enter the number of repetitions for the exercises. Negative numbers should not be allowed. It doesn't make sense to perform only one repetition, so a minimum of 3 repetitions should be required to begin.</li>
+     <li>A button to navigate to the next window. This button should not be active unless the name field has a value.</li>
+     <li>A photo of yourself (ID style) at the bottom, along with your first and last name.</li>
+   </ul></p>
+
+   <p><span class="negrita">Exercise Window</span>:
+   <ul>
+     <li>The user's name should be displayed.</li>
+     <li>The number of repetitions.</li>
+     <li>An area where the gif of the exercise to be performed will appear.</li>
+     <li>A button to start the exercise.</li>
+     <li>A button to go back to the previous window (popBackStack).</li>
+   </ul></p>
+
+   <p>To make data available on both windows, a ViewModel should be used.</p>
+
+   <p><span class="negrita">ViewModel</span>:</p>
+   <p>The ViewModel should contain <span class="negrita">LiveData</span> to store the data and all the necessary methods for the app to function properly.</p>
+
+   <p>The required data in the ViewModel are: "username", "number of repetitions", "current exercise" (to notify which exercise should be performed), 
+      and "doing exercise" (to indicate that exercise is ongoing).</p>
+
+   <p>The methods needed in the <span class="negrita">ViewModel</span> are:
+     <ul>
+       <li>One to update the username</li>
+       <li>One to update the number of repetitions</li>
+       <li>One to stop the exercise</li>
+       <li>One to start the exercise</li>
+     </ul>
+   </p>
+
+   <p>Below is a possible algorithm for the method to start the exercise:
+     <ul>
+       <li>Create a list of drawables with all the exercise gifs.</li>
+       <li>Update "doing exercise" to indicate that the user is doing exercise.</li>
+       <li>Update "current exercise" with a random drawable from the previously created list.</li>
+       <li>Create a coroutine with a loop that repeats while "doing exercise" is true:</li>
+       <li>Wait for 2 seconds.</li>
+       <li>Subtract one from "number of repetitions".</li>
+       <li>If "number of repetitions" is zero, reset "number of repetitions" and update "current exercise" with a random drawable from the list.</li>
+     </ul>
+   </p>
+
+   <p>Additional <span class="negrita">LiveData</span> and methods can be created if necessary.</p>
+
+   <p>Submission Instructions:
+     <ul>
+       <li>To run the app if it's running.</li>
+       <li>Click the menu option: Build -> Clean Project.</li>
+       <li>Close Android Studio.</li>
+       <li>Compress the project folder into a .rar or .zip file. (Select the folder, not the files inside it).</li>
+       <li>Attach the compressed file to the task.</li>
+     </ul>
+   </p>
+  </a>
+   <p>To use a GIF, you can use the following @Composable by passing an integer (drawable reference):
+   <section><pre><code class="language-kotlin">@Composable
+    fun GifImage(gifImage: Int) {
+        val imageLoader = ImageLoader.Builder(LocalContext.current)
+            .components {
+                if (Build.VERSION.SDK_INT >= 28) {
+                    add(AnimatedImageDecoder.Factory())
+                } else {
+                    add(GifDecoder.Factory())
+                }
+            }
+            .build()
+    
+        Image(
+            painter = rememberAsyncImagePainter(
+                ImageRequest.Builder(LocalContext.current)
+                    .data(data = gifImage)
+                    .apply(
+                        block = fun ImageRequest.Builder.() {
+                            size(Size.ORIGINAL)
+                        }
+                    )
+                    .build(),
+                imageLoader = imageLoader
+            ),
+            contentDescription = null,
+        )
+    }</code></pre>
+   </section><br><br>
+   </p>
+   <section class="marco-t warn">
+    <span class="icono warning"> </span> Remember to add coil dependencies
+    </section>
+   <section class="marco-b">
+    <p><span class="inline-file">libs.versions.toml</span> &rarr; <ul>
+      <li><span class="cursiva">[versions]</span> section:</p>
+        <section><pre><code class="language-kotlin">coilCompose = "3.1.0"</code></pre>
+        </section></li>
+      <li><span class="cursiva">[libraries]</span> section:</p>
+        <section><pre><code class="language-kotlin">coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
+    coil-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coilCompose" }</code></pre>
+        </section></li>
+    </ul>
+
+    <p><span class="inline-file">build.gradle.kts (Module:app)</span> &rarr; <span class="cursiva">dependencies</span> section</p>
+    <section><pre><code class="language-kotlin">implementation(libs.coil.compose)
+implementation(libs.coil.gif)</code></pre>
+    </section><br><br>
+   </section>
+   
+   <p>Here's an example of how the app might look:</p>
+   <figure><img src="UD9/images/WorkoutDemo.gif" /><br><figcaption></figcaption></figure>
+   <br>
+
+ 
+</section><!-- End section Activities-->
+    
+
+ 
+  <!---BTM_MENU--->
+  <script src="../script/prism.js"></script>
+</body>
+
+</html>
