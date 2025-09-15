@@ -30,7 +30,7 @@
     <div class="fila">
       <a href="#sAnyadiendo_codigo_ejecutable" title="7.- Añadiendo código ejecutable">7.- Añadiendo código ejecutable</a>
       <a href="#sScripting" title="8.- Scripting">8.- Scripting</a>
-      <a href="#sManejo_de_Unity" title="9.- Manejo de Unity">9.- Manejo de Unity</a>
+      <a class="oculto" href="#sManejo_de_Unity" title="9.- Manejo de Unity">9.- Manejo de Unity</a>
     </div>
     
   </nav> <!-- BTM_MENU-->
@@ -174,6 +174,8 @@
   <p>Si no tienes <span class="negrita">Microsoft Visual Studio Community</span> y no deseas instalarlo, desmárcalo.</p>
   <p>Puedes usar cualquier otro editor cambiando la configuración del editor de Unity una vez instalado, en <span class="negrita">Menu &rarr; Edit &rarr; Preferences</span>.</p>
   
+  <a href="Casd" target="_BLANK"><figure><img src="UD2/images/CambiarEditor.gif" /><br><figcaption></figcaption></figure></a>
+  <br>
   
     
     <br>
@@ -196,28 +198,34 @@
       <li><span class="negrita">Projects</span>: gestor de proyectos.</li>
       <li><span class="negrita">Installs</span>: gestor de editores instalados.</li>
       <li><span class="negrita">Learn</span>: autocurso.</li>
-      <li><span class="negrita">Community</span>: acceso a la comunidad (Asset Store, foros).</li>
+      <li><span class="negrita">Resources</span>: acceso a la comunidad (Asset Store, foros).</li>
+      <li><span class="negrita">Licenses</span>: Licencias de uso.</li>
     </ul>
   </p>
-  <a href="UD2/images/ud_2-2024-09-23-10-32-35.png" target="_BLANK"><figure><img src="UD2/images/ud_2-2024-09-23-10-32-35.png" /><br><figcaption></figcaption></figure></a>
-   
+  <a href="UD2/images/UD2_2025-09-15-14-07-08.png" target="_BLANK"><figure><img src="UD2/images/UD2_2025-09-15-14-07-08.png" /><br><figcaption>Learn</figcaption></figure></a>
   <br>
-  <a href="UD2/images/ud_2-2024-09-23-10-33-02.png" target="_BLANK"><figure><img src="UD2/images/ud_2-2024-09-23-10-33-02.png" /><br><figcaption></figcaption></figure></a>
+  
+  <a href="UD2/images/UD2_2025-09-15-14-08-04.png" target="_BLANK"><figure><img src="UD2/images/UD2_2025-09-15-14-08-04.png" /><br><figcaption>Resources</figcaption></figure></a>
   <br>
+  
   
   <p>Desde <span class="negrita">Unity Hub</span>, en la sección <span class="negrita">Projects</span>, 
     puedes crear proyectos con el botón <span class="d-word">New project</span>.</p>
 
-  <a href="UD2/images/ud_2-2024-09-23-10-34-57.png" target="_BLANK"><figure><img src="UD2/images/ud_2-2024-09-23-10-34-57.png" /><br><figcaption></figcaption></figure></a>
+  <a href="UD2/images/UD2_2025-09-15-14-09-24.png" target="_BLANK"><figure><img src="UD2/images/UD2_2025-09-15-14-09-24.png" /><br><figcaption>New project</figcaption></figure></a>
   <br>
+   
   
   <p>Al crear un proyecto, debes <span class="negrita">elegir el tipo de proyecto</span> para cargar las librerías necesarias.</p>
-  <a href="UD2/images/ud_2-2024-09-23-10-36-36.png" target="_BLANK"><figure><img src="UD2/images/ud_2-2024-09-23-10-36-36.png" /><br><figcaption></figcaption></figure></a>
+  <a href="UD2/images/UD2_2025-09-15-15-05-31.png" target="_BLANK"><figure><img src="UD2/images/UD2_2025-09-15-15-05-31.png" /><br><figcaption></figcaption></figure></a>
   <br>
+   <p>En nuestro caso elegiremos la plantilla <span class="r-word">Universal 3D</span> y la versión 6.2 que tengamos instalada</p>
+  <p>Elige un nombre para el proyecto, por ejemplo, <span class="negrita">TestTuNombre</span>, y una ubicación en tu sistema de archivos.</p>
+    
 
   <!-- NUEVO (Unity 6.2) -->
-  <h3>Sugerencia (Unity 6.2)</h3>
-  <ul>
+  <h3 class="oculto">Sugerencia (Unity 6.2)</h3>
+  <ul class="oculto">
     <li>Plantillas <span class="negrita">3D (URP)</span> o <span class="negrita">2D (URP)</span> para empezar con el render pipeline moderno.</li>
     <li>Añade el paquete <span class="negrita">Input System</span> desde Package Manager y actívalo en Project Settings.</li>
     <li>Para gestión de recursos, añade <span class="negrita">Addressables</span>.</li>
@@ -231,7 +239,7 @@
   
   <div class="tarea">
     <p><span class="negrita">Actividad 1:</span> <br>Instalación de un editor de Unity.</p>
-    <p><span class="negrita">Actividad 2:</span> <br>Crea el proyecto <span class="negrita">TestYourName</span>.</p>
+    <p><span class="negrita">Actividad 2:</span> <br>Crea el proyecto <span class="negrita">TestTuNombre</span>.</p>
   </div>
   
   </section><!-- End section Create Unity Project-->
@@ -241,8 +249,9 @@
   <a name="sEditor_Unity"></a>
   <h2>Editor de Unity</h2>
   <p>Por defecto, la ventana del editor de Unity se muestra así:</p>
-  <a href="UD2/images/ud_2-2024-09-23-10-44-36.png" target="_BLANK"><figure><img src="UD2/images/ud_2-2024-09-23-10-44-36.png" /><br><figcaption></figcaption></figure></a>
+  <a href="UD2/images/UD2_2025-09-15-16-31-46.png" target="_BLANK"><figure><img src="UD2/images/UD2_2025-09-15-16-31-46.png" /><br><figcaption>Editor abierto</figcaption></figure></a>
   <br>
+  
   
   <p>Unity utiliza <span class="negrita">Programación Orientada a Objetos</span>, 
     por lo que todos los elementos del juego se incluyen en la jerarquía de objetos.</p>
@@ -251,15 +260,16 @@
     que pueden considerarse las pantallas del juego.</p>
   
   <p>La <span class="negrita">hierarchy</span> muestra todos los elementos de una scene.</p>
-  <figure><img src="UD2/images/ud2-2024-01-24-12-49-46.png" /><br><figcaption></figcaption></figure>
+  <a href="UD2/images/UD2_2025-09-15-16-45-10.png" target="_BLANK"><figure><img src="UD2/images/UD2_2025-09-15-16-45-10.png" /><br><figcaption>Hirearchy</figcaption></figure></a>
   <br>
+  
   
   <p>En cada scene debes añadir todos los elementos necesarios; estos elementos son <span class="d-word">GameObjects</span>. 
     Las scenes también siguen una estructura jerárquica, permitiendo agrupar <span class="negrita">GameObjects</span> entre sí.</p>
   
   <p>Por defecto, un proyecto de Unity contiene una <span class="negrita">Scene</span> con un <span class="negrita">GameObject</span>
-     de tipo <span class="negrita">camera</span> llamado <span class="d-word">Main Camera</span> y un <span class="negrita">GameObject</span> de tipo 
-     <span class="negrita">light</span> llamado <span class="d-word">Directional Light</span>.</p>
+     de tipo <span class="negrita">camera</span> llamado <span class="d-word">Main Camera</span>, un <span class="negrita">GameObject</span> de tipo 
+     <span class="negrita">light</span> llamado <span class="d-word">Directional Light</span> y un <span class="negrita">GameObject</span> para aplicar efectos de postprocesado <span class="d-word">Global Volume</span>.</p>
   
   <p>En la parte central del editor puedes ver la <span class="negrita">scene view</span> que,
       al pulsar el botón de reproducción, pasará a ser <span class="negrita">la vista desde la cámara configurada en el juego</span>.</p>
@@ -267,31 +277,35 @@
       <br>
       
   <p>Al seleccionar un objeto de la scene, el <span class="negrita">Inspector</span> muestra todas sus características.</p>
-  <figure><img src="UD2/images/ud2-2024-01-24-12-53-48.png" /><br><figcaption></figcaption></figure>
+  <a href="UD2/images/UD2_2025-09-15-16-48-46.png" target="_BLANK"><figure><img src="UD2/images/UD2_2025-09-15-16-48-46.png" /><br><figcaption></figcaption></figure></a>
   <br>
+  
   
   <p>Desde el código de scripting puedes acceder a los componentes de cada objeto.</p>
      
   <p>Cada tipo de objeto tendrá componentes por defecto, y se pueden añadir más si es necesario.</p>
-  <figure><img src="UD2/images/ud2-2024-01-24-12-54-33.png" /><br><figcaption>Main Camera</figcaption></figure>
+  <a href="UD2/images/UD2_2025-09-15-16-50-30.png" target="_BLANK"><figure><img src="UD2/images/UD2_2025-09-15-16-50-30.png" /><br><figcaption>Main Camera</figcaption></figure></a>
   <br>
-  <figure><img src="UD2/images/ud2-2024-01-24-12-54-55.png" /><br><figcaption>Directional Light</figcaption></figure>
+  
+  <a href="UD2/images/UD2_2025-09-15-16-51-10.png" target="_BLANK"><figure><img src="UD2/images/UD2_2025-09-15-16-51-10.png" /><br><figcaption>Directional Light</figcaption></figure></a>
   <br>
+  
   <p>El <span class="negrita">File Manager</span> permite ver y realizar acciones sobre los archivos del proyecto.</p>
   <p>Se recomienda crear desde el administrador las carpetas y archivos que necesites.</p>
     
-  <figure><img src="UD2/images/ud2-2024-01-24-12-55-54.png" /><br><figcaption></figcaption></figure>
+  <a href="UD2/images/UD2_2025-09-15-16-53-18.png" target="_BLANK"><figure><img src="UD2/images/UD2_2025-09-15-16-53-18.png" /><br><figcaption>File Manager</figcaption></figure></a>
   <br>
+  
   <p>La documentación oficial detalla la interfaz de Unity: 
-      <a class="enlace" target="_blank" href="https://docs.unity3d.com/2023.3/Documentation/Manual/UsingTheEditor.html">https://docs.unity3d.com/2023.3/Documentation/Manual/UsingTheEditor.html</a>
+      <a class="enlace" target="_blank" href="https://docs.unity3d.com/Manual/unity-editor.html">https://docs.unity3d.com/Manual/unity-editor.html</a>
   </p>
     
   <a href="UD2/images/ud2-2024-01-24-12-56-39.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-12-56-39.png" /><br><figcaption></figcaption></figure></a>
   <br>
 
   <!-- NUEVO (Unity 6.2) -->
-  <h3>Consejo de productividad</h3>
-  <p>En <span class="negrita">Project Settings &rarr; Editor &rarr; Enter Play Mode Settings</span>, puedes desactivar <em>Domain Reload</em>/<em>Scene Reload</em> 
+  <h3 class="oculto">Consejo de productividad</h3>
+  <p class="oculto">En <span class="negrita">Project Settings &rarr; Editor &rarr; Enter Play Mode Settings</span>, puedes desactivar <em>Domain Reload</em>/<em>Scene Reload</em> 
     para acelerar la entrada en Play Mode (ten en cuenta efectos colaterales y reinicializa estados manualmente cuando proceda).</p>
       
 </section><!-- End section Unity Editor-->
@@ -347,11 +361,18 @@
   <a href="UD2/images/ud2-2024-01-24-13-14-52.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-13-14-52.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  <p>Con la carpeta <span class="inline-folder">Scripts</span> creada, haz clic derecho sobre ella o sobre el icono de carpeta y selecciona <span class="negrita">Create &rarr; C# Script</span></p>
+  <p>Con la carpeta <span class="inline-folder">Scripts</span> creada, haz clic derecho sobre ella o sobre el icono de carpeta y selecciona <span class="negrita">Create &rarr; MonoBehaviour Script</span></p>
 
-  <a href="UD2/images/ud2-2024-01-24-13-15-46.png" target="_BLANK"><figure><img src="UD2/images/ud2-2024-01-24-13-15-46.png" /><br><figcaption></figcaption></figure></a>
+  <a href="UD2/images/UD2_2025-09-15-17-07-27.png" target="_BLANK"><figure><img src="UD2/images/UD2_2025-09-15-17-07-27.png" /><br><figcaption>Create Script</figcaption></figure></a>
   <br>
-  <a href="UD2/images/creating_script_folder.gif" target="_BLANK"><figure><img src="UD2/images/creating_script_folder.gif" /><br><figcaption></figcaption></figure></a>
+  <p>También lo podemos hacer desde la opción <span class="negrita">create &rarr; script &rarr; MonoBehaviour Script</span>. Cabe destacar que hay más opciones de 
+  creación de Script, pero inicialmente usaremos la <span class="r-word">MonoBehaviour</span> (clase de la que hereda que contiene funciones del ciclo de vida) </p>
+
+  <a href="UD2/images/UD2_2025-09-15-17-11-14.png" target="_BLANK"><figure><img src="UD2/images/UD2_2025-09-15-17-11-14.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+
+  <a href="UD2/images/CrearScript2.gif" target="_BLANK"><figure><img src="UD2/images/creating_script_folder.gif" /><br><figcaption></figcaption></figure></a>
   <br>
   
 
@@ -440,14 +461,6 @@ public class HelloThere : MonoBehaviour
   
   <figure><img src="UD2/images/ud2-2024-01-24-13-45-54.png" /><br><figcaption></figcaption></figure>
   <br>
-
-  <!-- NUEVO (Unity 6.2) Buenas prácticas -->
-  <h3>Buenas prácticas (Unity 6.2)</h3>
-  <ul>
-    <li>Expón propiedades privadas con <span class="negrita">[SerializeField]</span> en lugar de hacerlas <em>public</em>.</li>
-    <li>Usa <span class="negrita">[RequireComponent]</span> para dependencias (p. ej., Rigidbody).</li>
-    <li>Cachea referencias con <span class="negrita">GetComponent&lt;T&gt;()</span> en <span class="negrita">Awake</span>/<span class="negrita">Start</span>, evita llamarlo cada frame en <span class="negrita">Update</span>.</li>
-  </ul>
 
   <hr>
   <div class="tarea">
