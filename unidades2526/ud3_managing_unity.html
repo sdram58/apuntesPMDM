@@ -467,7 +467,19 @@
         Comprime la captura en un .rar o .zip llamado TuNombre y adjúntalo a la tarea.</span>
       </p>
     </div>
+    <section class="marco-t inf">
+      <span class="icono info"> </span> <span class="r-word">OnMouseEnter</span>  y <span class="r-word">OnMouseDrag</span>  son métodos del antiguo <span class="cursiva">input system</span>, que por defecto en la versión nueva de Unity está desactivado, o mejor dicho está sólo habilitado el nuevo.
+      <span class="negrita">OJO reiniciará unity</span> 
+      </section>
+    <section class="marco-b">
+        <p></p>Para activarlo ve a <span class="negrita">Edit &rarr; Project Settings &rarr; Player &rarr; Other Settings &rarr; Active Input Handling</span> y seleccionamos 
+    <span class="negrita">both</span> para tener compatibilidad con el sistema antiguo. 
+    En los apuntes veremos ambos sistemas, aunque el sistema antiguo está quedando en desuso por compatibilidad con proyectos antiguos</p>
+    <a href="UD3/images/UD3_2025-09-24-19-09-57.png"><figure><img src="UD3/images/UD3_2025-09-24-19-09-57.png" /><br><figcaption>Activar ambos sistemas input</figcaption></figure></a>
+    <br>
     
+    </section>
+      
     <br>
     <hr>
     <br>
@@ -815,6 +827,7 @@ public class Test : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Este método es del antiguo Input System
         if(Input.GetKeyDown(KeyCode.Space)){
             pointsTMP.text ="Points: " + ++points;
         }
