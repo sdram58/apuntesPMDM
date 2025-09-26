@@ -1159,8 +1159,10 @@ transform.Rotate(Vector3.up * Input.GetAxis("Horizontal") * rotationSpeed * Time
     </p>
   </div>
 </section><!-- End section La clase Input-->
+
 <div class="oculto">
-<a id="#sInput_System_Package"></a>
+
+<a id="#sInput_System_Package"></a> 
 <!--*********************************************************Input System Package***********************************************************-->
 <section class="apartado">
 <a name="sInput_System_Package"></a>
@@ -1186,35 +1188,44 @@ Selecciona <span class="negrita">Input System Package (new) o Both</span> si qui
 Tras la instalación, Unity añade soporte para: Ratón, teclado, mando, móvil/touch, VR, etc
 </p>
 
-<p>Una vez instalado, crea un mapa de entradas (<span class="negrita">Input Actions</span> )</p>
+<p>En el nuevo sistema <span class="negrita">Input System Package</span> , todas las entradas se guardan en un Asset.</p>
+<p>En ese Asset se deben configurar todas las posibles <span class="negrita">Input Actions</span>  (acciones de entrada) que se quiera que tenga el videojuego.</p>
+<p>Una Input Action es una acción que realiza el jugador con el controlador que esté utilizando, que puede ser el teclado, el ratón, un gamepad, pantalla táctil…</p>
 
-<p>El nuevo sistema funciona con un mapa de acciones en lugar de usar ejes y teclas sueltas.
-  <ol>
-    <li><span class="negrita">Crear asset de Input Actions:</span> 
-      <ul>
-        <li>En el Project → clic derecho → Create → Input Actions.</li>
-        <li>Nómbralo por ejemplo: <span class="cursiva">Controls.inputactions</span> .</li>
-      </ul>
-    </li>
-    <li><span class="negrita">Configurar acciones:</span> 
-      <ul>
-        <li>Doble clic en el asset → se abre el editor visual.</li>
-        <li>Crea un <span class="negrita">Action Map</span> (ej. "Player").</li>
-        <li>Dentro, añade acciones:
-          <ul>
-            <li>"Move" (tipo Value → Vector2, binding a WASD o Arrow Keys).</li>
-            <li>"Jump" (tipo Button, binding a Space).</li>
-            <li>"Look" (tipo Value → Vector2, binding a Mouse Delta).</li>
-          </ul>
-        </li>        
-        <li>Puedes añadir más (correr, disparar, etc.).</li>
-        <li>Pulsa <span class="negrita">Save Asset</span>. </li>
-      </ul>
-    </li>
-  </ol>
+<a href="UD3/images/UD3_2025-09-26-17-37-10.png"><figure><img src="UD3/images/UD3_2025-09-26-17-37-10.png" /><br><figcaption>InputAction</figcaption></figure></a>
+<br>
+
+<p>Las Input Actions se agrupan en Action Maps que serían los diferentes esquemas a usar dependiendo de la parte del juego en la que se esté.</p>
+
+<p>Por ejemplo:
+  <ul>
+<li>Menú.</li>
+<li>Jugador.</li>
+<li>Conduciendo coche.</li>
+<li>Nadar.</li>
+<li>Mapa.</li>
+<li>…</li>
+  </ul>
 </p>
 
+<a href="UD3/images/UD3_2025-09-26-17-38-41.png"><figure><img src="UD3/images/UD3_2025-09-26-17-38-41.png" /><br><figcaption>Action Maps</figcaption></figure></a>
+<br>
 
+<p>Por defecto unity incluye la definición de las <span class="negrita">Input Actions</span> más típicas tanto para movimiento, acciones, 
+  como para navegar por la UI.</p>
+
+<p>Para acceder a las Input Actions para consultarlas/modificarlas hay dos opciones:
+  <ul>
+
+  </ul>
+</p>
+Hacer doble clic en el asset.
+Menú &rarr; Edit &rarr; Project Settings… 
+			sección Input System Package.
+
+Como se puede observar, con las Input Actions creadas por defecto, ya se tienen mapeadas las acciones más habituales tanto de movimiento como de navegación por la UI.
+
+Si se necesitan más Maps y/o Actions simplemente se deben añadir en esta ventana.
 
 
 
@@ -1247,16 +1258,19 @@ Tras la instalación, Unity añade soporte para: Ratón, teclado, mando, móvil/
   </ul>
   
   <p>Al añadir <span class="r-word">Rigidbody</span> a un GameObject, su configuración aparece en el Inspector.</p>
-  <a href="UD3/images/ud3-2024-01-31-13-00-16.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-00-16.png" /><br><figcaption></figcaption></figure></a>
-  <br><br>
+
+  <a href="UD3/images/UD3_2025-09-26-17-31-19.png"><figure><img src="UD3/images/UD3_2025-09-26-17-31-19.png" /><br><figcaption>Rigibody properties</figcaption></figure></a>
+  <br>
   
+  <p>Una vez añadido un Rigidbody a un GameObject, en el inspector se puede ver su configuración.</p>
   <p>Propiedades de <span class="negrita">Rigidbody</span>:</p>
   <ul>
     <li><span class="negrita">Mass</span>: peso en kilogramos.</li>
-    <li><span class="negrita">Drag</span>: resistencia al movimiento lineal.</li>
-    <li><span class="negrita">Angular Drag</span>: resistencia a la rotación.</li>
+    <li><span class="negrita">Linear Damping</span>: resistencia al movimiento lineal.</li>
+    <li><span class="negrita">Angular Damping</span>: resistencia a la rotación.</li>
     <li><span class="negrita">Use Gravity</span>: si le afecta la gravedad.</li>
-    <li><span class="negrita">Is Kinematic</span>: si está activado, el GameObject no se ve afectado por la física (solo se manipula con su Transform; útil para detección de colisiones).</li>
+    <li><span class="negrita">Is Kinematic</span>: si está activado, el GameObject no se ve afectado por el motor físico 
+      (solo se manipula con su Transform; útil para detección de colisiones).</li>
     <li><span class="negrita">Constraints</span>: permite bloquear coordenadas.</li>
   </ul>
   <a href="UD3/images/ud3-2024-01-31-13-02-08.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-02-08.png" /><br><figcaption></figcaption></figure></a>
