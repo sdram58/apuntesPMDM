@@ -79,7 +79,7 @@
       <a href="#sLa_clase_Input" title="9.- La clase Input Manager (legacy)">9.- La clase Input Manager (legacy)</a>
     </div>
     <div class="fila">
-      <a href="#sLa_clase_Input_new" title="10.- Input System Package">10.- Input System Package</a>
+      <a href="#sInput_System_Package" title="10.- Input System Package">10.- Input System Package</a>
       <a href="#sMovimiento_cinematico_y_movimiento_fisico" title="11.- Movimiento cinemático y físico">11.- Movimiento cinemático y físico</a>
       <a href="#sColisiones" title="12.- Colisiones">12.- Colisiones</a>      
     </div>
@@ -856,6 +856,18 @@ public class Test : MonoBehaviour
   <p>Usa cualquiera de las técnicas previas para obtener esa referencia.</p>
   <a href="UD3/images/ud3-2024-01-29-11-18-28.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-11-18-28.png" /><br><figcaption></figcaption></figure></a>
   <br><br>
+
+  <p>Otro método para acceder a un componente de otro GameObject es definiendo la propiedad que almacenará el componente con <span class="negrita">[SerializeField]</span>
+     y arrastrar todo el GameObject a la casilla del inspector.</p>
+
+  <p>Unity reconocerá que se quiere un componente determinado y lo asignará directamente.</p>
+  
+  <a href="UD3/images/UD3_2025-09-27-23-46-43.png" target="_BLANK"><figure><img src="UD3/images/UD3_2025-09-27-23-46-43.png" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+  
+
+  
 </section><!-- End section La clase GameObject-->
 
 
@@ -1160,8 +1172,6 @@ transform.Rotate(Vector3.up * Input.GetAxis("Horizontal") * rotationSpeed * Time
   </div>
 </section><!-- End section La clase Input-->
 
-<div class="oculto">
-
 <a id="#sInput_System_Package"></a> 
 <!--*********************************************************Input System Package***********************************************************-->
 <section class="apartado">
@@ -1216,22 +1226,323 @@ Tras la instalación, Unity añade soporte para: Ratón, teclado, mando, móvil/
 
 <p>Para acceder a las Input Actions para consultarlas/modificarlas hay dos opciones:
   <ul>
-
+<li>Hacer <span class="negrita">doble clic en el asset</span>.</li>
+<li><span class="negrita">Menú &rarr; Edit &rarr; Project Settings</span>… &rarrb;
+			<span class="negrita">sección Input System Package</span>.</li>
   </ul>
 </p>
-Hacer doble clic en el asset.
-Menú &rarr; Edit &rarr; Project Settings… 
-			sección Input System Package.
 
-Como se puede observar, con las Input Actions creadas por defecto, ya se tienen mapeadas las acciones más habituales tanto de movimiento como de navegación por la UI.
+<p>Como se puede observar, con las Input Actions creadas por defecto, 
+  ya se tienen mapeadas las acciones más habituales tanto de movimiento como de navegación por la UI.</p>
 
-Si se necesitan más Maps y/o Actions simplemente se deben añadir en esta ventana.
+<p>Si se necesitan más Maps y/o Actions simplemente se deben añadir en esta ventana.</p>
+
+<p>Si por alguna razón el proyecto no dispone por defecto del Asset para Input System desde <span class="negrita">Menú &rarr; Edit &rarr; Project Settings</span>…,
+  <span class="negrita">sección Input System Package</span> se puede volver a crear.</p>
+
+<a href="UD3/images/UD3_2025-09-27-22-32-52.png" target="_BLANK"><figure><img src="UD3/images/UD3_2025-09-27-22-32-52.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<p>Con esta configuración por defecto ya se puede acceder a los eventos de entrada de un teclado y de un gamepad directamente desde el código.</p>
+
+<p>Hay tres maneras de mover al personaje mediante Input System:</p>
+<ul>
+  <li><span class="negrita">Detección directa</span> mediante la clase <span class="r-word">Keyboard</span> o <span class="r-word">Gamepad</span> .</li>
+  <li><span class="negrita">Detección de Actions</span> mediante la clase <span class="r-word">InputAction</span> .</li>
+  <li><span class="negrita">Detección de Actions y componente Player Input</span> mediante la clase <span class="r-word">PlayerInput</span> .</li>
+</ul>
+
+<h3>Detección directa</h3>
+
+<p>La primera opción es la más sencilla pero menos flexible, ya que se está atado a un dispositivo concreto.</p>
+<p>Es la técnica menos recomendable por no ser escalable y por la necesidad de tener que codificar cada acción a cada input (trigger is hardcoded) por lo que para cambiar la entrada se deberá cambiar el código.</p>
+<a href="UD3/images/UD3_2025-09-27-22-36-04.png" target="_BLANK"><figure><img src="UD3/images/UD3_2025-09-27-22-36-04.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<p>Ejemplo de detección directa:</p>
+<a href="UD3/images/UD3_2025-09-27-22-35-48.png" target="_BLANK"><figure><img src="UD3/images/UD3_2025-09-27-22-35-48.png" /><br><figcaption>Detección directa</figcaption></figure></a>
+<br>
+
+<h3>Detección de Actions</h3>
+
+<p>Esta es la técnica más recomendable para la mayoría de los proyectos y la que veremos aquí</p>
+<a href="UD3/images/UD3_2025-09-27-22-40-10.png" target="_BLANK"><figure><img src="UD3/images/UD3_2025-09-27-22-40-10.png" /><br><figcaption></figcaption></figure></a>
+<br>
+<p>Mediante la detección de Actions se separa la lógica de los dispositivos físicos aumentando la escalabilidad y mejorando el mantenimiento.</p>
+
+<p>Consiste en crear un objeto de la clase <span class="r-word">InputAction</span> para cada acción que se quiera detectar.</p>
+<p>Estas acciones se configuran en el Asset de Input System y se pueden agrupar en Action Maps.</p>
+<p>El código no está atado a ningún dispositivo concreto, ya que la configuración de las acciones se hace en el Asset.</p>
+<p>Si se quiere cambiar la entrada que activa una acción, solo hay que cambiar la configuración en el Asset, sin tocar el código.</p>
+<p class="sub-section">Ejemplo de detección de Actions:</p>
+<p>A continuación, se estudiará cómo utilizar la detección de Actions para manejar al personaje mediante movimiento físico de manera básica.</p>
+<p>Para el ejemplo se usará como base una escena que además de los elementos por defecto contiene:
+  <ul>
+<li>Canvas (desactivado con una imagen de pausa)</li>
+<li>Plano con una imagen como material para poder apreciar el movimiento.</li>
+<li>Cápsula a modo de jugador</li>
+  </ul>
+</p>
+<p>La cápsula tiene:
+  <ul>
+    <li>Un Rigidbody para poder aplicar salto (con la rotación en X y en Z congelada para que no vuelque).</li>
+    <li>Un cilindro como hijo para apreciar que rota al moverse la cámara.</li>
+    <li>La cámara principal como hija para que la siga al moverse.</li>
+  </ul>
+</p>
+
+<p>El primer paso será configurar dos acciones nuevas en el Input System Package, tanto en el Action Map <span class="negrita">Player</span>
+   como en el Action Map <span class="negrita">UI</span>, las dos se llamarán <span class="cursiva">Pause</span>.</p>
+
+<p>A las dos acciones nuevas se le añadirán dos <span class="negrita">Bindings</span> para poder usar tanto el teclado como el gamepad:
+  <ul>
+<li>Tecla Enter.</li>
+<li>Botón Start.</li>
+  </ul>
+</p>
+
+<p>Para realizar el Binding se puede pulsar en la casilla de <span class="negrita">Path</span> y una de las siguientes opciones:
+  <ul>
+<li>Buscar en la lista directamente</li>
+<li>Pulsar en la casilla de <span class="negrita">Path</span>, luego en el botón <span class="negrita">Listen</span> y seleccionar la opción que reconozca Unity.</li>
+  </ul>
+</p>
+<a href="UD3/images/UD3_2025-09-27-22-50-57.png" target="_BLANK"><figure><img src="UD3/images/UD3_2025-09-27-22-50-57.png" /><br><figcaption></figcaption></figure></a>
+<br>
+<a href="UD3/images/UD3_2025-09-27-22-51-13.png" target="_BLANK"><figure><img src="UD3/images/UD3_2025-09-27-22-51-13.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+
+<p>Es muy importante que cada Binding tenga marcada su opción correcta <span class="r-word">Keyboard&Mouse</span> o <span class="r-word">Gamepad</span>.</p>
+
+<p>El siguiente paso es crear un script que se llamará <span class="d-word">Movement</span> que se añadirá a la Cápsula (jugador) con toda la lógica de movimiento.</p>
+
+<p>Como se ha estudiado anteriormente todo movimiento físico se debe realizar en el método <span class="r-word">FixedUpdate</span>, así que el salto también se debe aplicar en ese método.</p>
+
+<p>A diferencia del movimiento, el salto es algo puntual y se debe detectar nada más se realice la Action y no se puede dejar a la suerte de que se pulse justo en el momento en el que se ejecuta FixedUpdate.</p>
+
+<p>Para solucionar esto en el método Update se detectará la <span class="negrita">Action jump</span> y se guardará en una propiedad que se evaluará en FixedUpdate para realizar el salto.</p>
+<p>A continuación veremos un ejemplo del Script utilizado y explicaremos algunas partes de su código:</p>
+<p>Incluimos la librería</p>
+<section><pre><code class="language-csharp">using UnityEngine.InputSystem;</code></pre>
+</section><br><br>
+<p>Definimos una variable InputAction de tipo <span class="r-word">InputActionAsset</span> que posteriormente asignaremos en el inspector:</p>
+<section><pre><code class="language-csharp">[SerializeField] private InputActionAsset InputActions;</code></pre>
+</section><br><br>
+
+<p>Declaramos tantas variables cono <span class="negrita">InputAction</span> vamos a utilizar</p>
+<section><pre><code class="language-csharp">private InputAction moveAction;
+    private InputAction lookAction;
+    private InputAction jumpAction;
+    private InputAction pauseActionPlayer;
+    private InputAction pauseActionUI;</code></pre>
+</section><br><br>
+
+<p>En cada <span class="negrita">Update</span> nos quedamos con el valor del Action correspondiente con su método <span class="r-word">ReadValue</span></p>
+<section><pre><code class="language-csharp">moveAmt = moveAction.ReadValue&lt;Vector2&gt;();
+lookAmt = lookAction.ReadValue&lt;Vector2&gt;();</code></pre> </section><br><br>
+
+<p>Activamos el Action Map que vamos a utilizar, un buen lugar es en el <span class="r-word">OnEnable</span></p>
+<section><pre><code class="language-csharp">private void OnEnable()
+{
+    InputActions.FindActionMap("Player").Enable();
+}</code></pre><section><br><br>
+
+  <p>En cada <span class="negrita">Update</span> comprobamos si se ha dado a <span class="cursiva">Pause</span> y quien le ha dado. 
+    Es decir, si estamos jugando sin <span class="cursiva">Pause</span>, el Action activo será el del <span class="negrita">player</span>
+     y el de <span class="negrita">UI</span> estará deshabilitado y viceversa</p>
+
+<section><pre><code class="language-csharp">private void DisplayPause()
+{
+    // Según se detecte la pausa en un Action Map u otro se activan/desactivan los diferentes elementos
+    if (pauseActionPlayer.WasPressedThisFrame())
+    {
+        Time.timeScale = 0; // Para el tiempo y se detienen todos los elementos del juego
+        PauseDisplayGO.SetActive(true);
+        InputActions.FindActionMap("Player").Disable();
+        InputActions.FindActionMap("UI").Enable();
+    }
+    else if (pauseActionUI.WasPressedThisFrame())
+    {
+        Time.timeScale = 1; // Vuelve a poner en marcha el tiempo
+        PauseDisplayGO.SetActive(false);
+        InputActions.FindActionMap("Player").Enable();
+        InputActions.FindActionMap("UI").Disable();
+    }
+}</code></pre>
+</section><br><br>
+
+<p>El salto lo hacemos con un AddForce que veremos más adelante</p>
+<section><pre><code class="language-csharp">private void Jump()
+{
+    myRigidbody.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
+}</code></pre>
+</section><br><br>
+
+<p>Aquí tienes el código completo y comentado para su estudio:</p>
+<section><pre><code class="language-csharp">using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class Movement : MonoBehaviour
+{
+    // Propiedad para poder acceder a las Input Actions definidas
+    [SerializeField] private InputActionAsset InputActions;
+    // Propiedades para enlazar las Input Action
+    private InputAction moveAction;
+    private InputAction lookAction;
+    private InputAction jumpAction;
+    private InputAction pauseActionPlayer;
+    private InputAction pauseActionUI;
+    // Propiedades para almacenar la cantidad de movimiento detectada
+    private Vector2 moveAmt;
+    private Vector2 lookAmt;
+    // Propiedad para acceder al Rigidbody propio
+    private Rigidbody myRigidbody;
+    // Propiedades para definir la velocidad de andar, de saltar y de rotar
+    [SerializeField] private float WalkSpeed = 5;
+    [SerializeField] private float JumpForce = 5;
+    [SerializeField] private float RotateSpeed = 60;
+    // Propiedad para poder acceder al Canvas con el menú de pausa
+    [SerializeField] private GameObject PauseDisplayGO;
+    // Propiedad para detectar en el método update que se desea saltar
+    private bool wantJump = false;
+
+    // Método que se ejecuta cuando el GameObject está activo
+    private void OnEnable()
+    {
+        // Para poder usar un Action Map (esquema) primero se debe activar
+        InputActions.FindActionMap("Player").Enable();
+    }
+
+    // Método que se ejecuta cuando el GameObject se desactiva
+    private void OnDisable()
+    {
+        // Se desactiva el Action Map del jugador
+        InputActions.FindActionMap("Player").Disable();
+    }
+
+    // Método que se ejecuta cuando el script se está cargando
+    private void Awake()
+    {
+        // Se enlazan las Actions con las propiedades creadas para un acceso posterior más simple
+        moveAction = InputActions.FindAction("Move");
+        lookAction = InputActions.FindAction("Look");
+        jumpAction = InputActions.FindAction("Jump");
+        // Si en diferentes Action Map existe la misma Action se debe indicar a la hora de buscar la Action
+        pauseActionPlayer = InputActions.FindAction("Player/Pause");
+        pauseActionUI = InputActions.FindAction("UI/Pause");
+        // Se almacena el Rigidbody propio en la propiedad
+        myRigidbody = GetComponent&lt;Rigidbody&gt;();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Se almacena la entrada recogida por la Action
+        moveAmt = moveAction.ReadValue&lt;Vector2&gt;();
+        lookAmt = lookAction.ReadValue&lt;Vector2&gt;();
+        // Se detecta que se quiere saltar
+        if (jumpAction.WasPressedThisFrame())
+        {
+            wantJump = true;
+        }
+        // Se llama al método DisplayPause para comprobar si se ha pulsado la Action pause
+        DisplayPause();
+    }
+
+    // FixedUpdate is called every fixed framerate frame
+    private void FixedUpdate()
+    {
+        // Si se quiere saltar se llama al método Jump y se resetea la propiedad wantJump
+        if (wantJump)
+        {
+            Jump();
+            wantJump = false;
+        }
+        // Se llama a los métodos que realizarán el movimiento y el giro
+        Walking();
+        Rotating();
+    }
+
+    private void Jump()
+    {
+        myRigidbody.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
+    }
+
+    private void Walking()
+    {
+        // Se calcula el Vector3 de movimiento según los datos recogidos en la entrada
+        Vector3 moveDir = transform.forward * moveAmt.y   // W y S
+                        + transform.right * moveAmt.x;    // A y D
+        // Velocidad de movimiento actual
+        Vector3 vel = myRigidbody.linearVelocity;
+        // Velocidad de movimiento que se debe aplicar
+        Vector3 targetVel = moveDir * WalkSpeed;
+        // Se aplica la fuerza de movimiento (velocidad lineal) al Rigidbody
+        myRigidbody.linearVelocity = new Vector3(targetVel.x, vel.y, targetVel.z);
+    }
+
+    private void Rotating()
+    {
+        // Rotación deseada en grados por segundo, se debe convertir a radianes
+        float rotation = lookAmt.x * RotateSpeed * Mathf.Deg2Rad;
+        // Velocidad de rotación actual
+        Vector3 angVel = myRigidbody.angularVelocity;
+        // Se aplica la fuerza de rotación (velocidad angular) al Rigidbody
+        myRigidbody.angularVelocity = new Vector3(angVel.x, rotation, angVel.z);
+    }
+
+    private void DisplayPause()
+    {
+        // Según se detecte la pausa en un Action Map u otro se activan/desactivan los diferentes elementos
+        if (pauseActionPlayer.WasPressedThisFrame())
+        {
+            Time.timeScale = 0; // Para el tiempo y se detienen todos los elementos del juego
+            PauseDisplayGO.SetActive(true);
+            InputActions.FindActionMap("Player").Disable();
+            InputActions.FindActionMap("UI").Enable();
+        }
+        else if (pauseActionUI.WasPressedThisFrame())
+        {
+            Time.timeScale = 1; // Vuelve a poner en marcha el tiempo
+            PauseDisplayGO.SetActive(false);
+            InputActions.FindActionMap("Player").Enable();
+            InputActions.FindActionMap("UI").Disable();
+        }
+    }
+}
+</code></pre>
+</section><br><br>
+
+<p>Una vez añadido el Script a la cápsula se deberán arrastrar tanto el Asset <span class="negrita">InputSystem_Actions</span> como el 
+  GameObject Canvas a sus casillas correspondientes en el inspector.</p>
+<a href="UD3/images/UD3_2025-09-27-23-11-41.png" target="_BLANK"><figure><img src="UD3/images/UD3_2025-09-27-23-11-41.png" /><br><figcaption></figcaption></figure></a>
+<br>
+
+<p>Esta es una primera aproximación al movimiento del personaje, pero válida para iniciarse.</p>
+
+<p>Tiene determinadas limitaciones como el hecho de que, si se deja de mover el personaje en mitad de un salto, 
+  no mantendrá la inercia en el salto.</p>
+
+  <a href="UD3/images/EjemploInput.gif" target="_BLANK"><figure><img src="UD3/images/EjemploInput.gif" /><br><figcaption></figcaption></figure></a>
+  <br>
+  
+
+<div class="tarea">
+  <p>Actividad 7. Realiza el ejemplo de arriba</p>
+</div>
 
 
 
+<h3>Detección de Actions y componente Player Input</h3>
+<p>Esta es la técnica extiende a la detección de Actions.</p>
+<a href="UD3/images/UD3_2025-09-27-22-41-45.png" target="_BLANK"><figure><img src="UD3/images/UD3_2025-09-27-22-41-45.png" /><br><figcaption></figcaption></figure></a>
+<br>
 
+<p>Permite tener métodos C# propios y conectarlos a las Actions configuradas de manera que se llama automáticamente a esos métodos cuando el usuario realice una Action.</p>
+<p>El componente Player input es idóneo para juegos multijugador en local permitiendo crear instancias nuevas de un jugador al detectar un dispositivo nuevo.</p>
 
-
+<p>En el <a class="enlace" target="_blank" href="https://www.youtube.com/playlist?list=PLX2vGYjWbI0RpLvO3B7aH-ObfcOifMD20">Input System Tutorials</a> (oficial de Unity) se explica el uso básico de la detección de Actions y se introduce también el componente Player.</p>
 
 
 </p>
@@ -1273,9 +1584,7 @@ Si se necesitan más Maps y/o Actions simplemente se deben añadir en esta venta
       (solo se manipula con su Transform; útil para detección de colisiones).</li>
     <li><span class="negrita">Constraints</span>: permite bloquear coordenadas.</li>
   </ul>
-  <a href="UD3/images/ud3-2024-01-31-13-02-08.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-02-08.png" /><br><figcaption></figcaption></figure></a>
-  <br><br>
-  
+ 
   <p>Con movimientos cinemáticos (sin física), al mover un GameObject se <span class="negrita">teletransporta</span> a la nueva posición.</p>
   
   <p>Si un GameObject tiene <span class="negrita">Rigidbody</span>, no es recomendable modificar su posición vía Transform, porque podría aparecer parcialmente dentro de otro objeto y provocar colisiones no deseadas.</p>
@@ -1286,35 +1595,56 @@ Si se necesitan más Maps y/o Actions simplemente se deben añadir en esta venta
   
   <h3>Movimiento físico</h3>
   <p>Ejemplo de movimiento físico:</p>
-  <section><pre><code class="language-csharp">using System.Collections;
-using System.Collections.Generic;
-using System.Net.Security;
-using UnityEngine;
+  <section><pre><code class="language-csharp">using UnityEngine;
+using UnityEngine.InputSystem;   // Necesario para el nuevo Input System
 
 public class CubeScript : MonoBehaviour
 {
-    public float linealForce;
-    public float angularForce;
+    public float linealForce = 25f;
+    public float angularForce = 10f;
 
     private Rigidbody rb;
+    [SerializeField] private InputActionAsset InputActions;
     
-    // Start is called before the first frame update
+    private InputAction moveAction;
+
+    private void Awake()
+    {
+        moveAction = InputActions.FindAction("Move");
+    }
+
+    private void OnEnable()
+    {
+        InputActions.FindActionMap("Player").Enable();
+    }
+
+    private void OnDisable()
+    {
+        InputActions.FindActionMap("Player").Disable();
+    }
+
+    void Update()
+    {
+        
+    }
+
     void Start()
     {
-        //Get a reference to the Rigibody component
-        rb = GetComponent&lt;Rigidbody&gt;        
+        rb = GetComponent&lt;Rigidbody&gt;();
     }
 
     private void FixedUpdate()
     {
-        float acceleration = Input.GetAxis("Vertical");
-        float spin = Input.GetAxis("Horizontal");
+        // Leemos los valores de entrada para la aceleración y el giro   
+        float acceleration = moveAction.ReadValue&lt;Vector2&gt;().y;
+        float spin = moveAction.ReadValue&lt;Vector2&gt;().x;     
 
-        //Thrust and turning forces are applied
+        // Aplicamos las fuerzas de empuje y giro al Rigidbody
         rb.AddForce(transform.forward * acceleration * linealForce);
         rb.AddTorque(transform.up * spin * angularForce);
     }
-}</code></pre>
+}
+</code></pre>
   </section><br><br>
   
   <p>Con el código anterior, hay que tener en cuenta los <span class="negrita">materiales físicos</span>: la fricción puede hacer que el comportamiento no sea el esperado.</p>
@@ -1364,11 +1694,12 @@ public class CubeScript : MonoBehaviour
         
     void Start()
     {
-        rb = GetComponent<Rigidbody>();        
+        rb = GetComponent&lt;Rigidbody&gt;();        
     }
 
     void Update()
     {
+        // Ojo, input manager antiguo Input.GetAxis("Vertical"), cambiar por moveAction.ReadValue&lt;Vector2&gt;().y      
         transform.Translate(Vector3.forward * Input.GetAxis("Vertical") * translationSpeed * Time.deltaTime);
 
         transform.Translate(Vector3.up * Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime);
@@ -1379,22 +1710,37 @@ public class CubeScript : MonoBehaviour
     }
 }</code></pre>
   </section><br><br>
-  
-  <h3>Combinar movimiento cinemático y físico</h3>
-  <p>Aunque no es lo ideal, se pueden combinar ambos tipos:</p>
+
+<p>Existen muchos métodos y propiedades para aplicar fuerzas a un Rigidbody, su uso dependerá del tipo de Gameobject.
+  (Se debe consultar la documentación para conocer todas las posibilidades ya que también hay métodos como MovePosition o MoveRotation que transporta el GameObject que pueden no ser recomendables).</p>
+
+
+<p>Al personaje:
   <ul>
-    <li><span class="negrita">Cinemático</span>: para mover personaje/enemigos sobre superficies.</li>
-    <li><span class="negrita">Físico</span>: para aplicar fuerza de salto.</li>
+    <li>Se le cambiarán las propiedades <span class="negrita">linearVelocity</span> y <span class="negrita">angularVelocity</span> para el movimiento y el giro, entre otras.</li>
+<li>Se le aplicará una fuerza vertical con <span class="negrita">AddForce</span> para el <span class="negrita">salto</span>.</li>
+<li>Se le aplicará una fuerza con <span class="negrita">AddForce</span> o <span class="negrita">AddTorque</span> si es empujado por otro GameObject.</li>
   </ul>
-  <a href="UD3/images/ud3-2024-01-31-13-36-07.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-36-07.png" /><br><figcaption></figcaption></figure></a>
-  <br><br>
-  
-  <p>El problema de este enfoque es que, si el personaje deja de moverse en mitad del salto, puede no conservar la inercia del salto.</p>
-  
+</p>
+
+<p>A un vehículo:
+  <ul><li>Se le aplicará una fuerza con <span class="negrita">AddForce</span> y/o <span class="negrita">AddTorque</span> para el movimiento y el giro.</li>
+  </ul>
+</p>
+
+<p>A un objeto:
+  <ul><li>Se le aplicará una fuerza con <span class="negrita">AddForce</span> y/o <span class="negrita">AddTorque</span> por ejemplo si es empujado.</li>
+  </ul>
+</p>
+<p>A un proyectil:
+  <ul>Se le aplicará una fuerza con <span class="negrita">AddForce</span> y/o <span class="negrita">AddTorque</span>.</ul>
+</p>
+
+
   <hr><br>
   <div class="tarea">
     <p>
-      <span class="subrayado negrita">Actividad 7. Rigidbody y seguimiento de cámara</span> <br>
+      <span class="subrayado negrita">Actividad 8. Rigidbody y seguimiento de cámara</span> <br>
       Abre el proyecto <span class="subrayado">InputsTuNombre</span>. <br>
       Añade <span class="negrita">Rigidbody</span> a la cápsula. <br>
       Configura los <span class="negrita">Constraints</span> para que no se tumbe al colisionar. <br>
@@ -1564,17 +1910,54 @@ public class CubeScript : MonoBehaviour
     <a href="UD3/images/ud3-2024-01-31-13-50-52.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-50-52.png" /><br><figcaption></figcaption></figure></a>
     <br>
     
-    <p>Otra forma de realizar tareas similares a <span class="r-word">InvokeRepeating</span> es mediante <span class="negrita">Coroutines</span>.</p>
+    <p>Otra forma de realizar tareas similares a <span class="r-word">InvokeRepeating</span> es mediante <span class="negrita">Corrutinas</span>.</p>
     <a href="UD3/images/ud3-2024-01-31-13-51-28.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-31-13-51-28.png" /><br><figcaption></figcaption></figure></a>
     <br>
     
-    <p>Las coroutines pueden cancelarse con <span class="negrita">StopAllCoroutines</span> y <span class="negrita">StopCoroutine("NombreMetodo")</span>.</p>
+    <p>Las corrutinas pueden cancelarse con <span class="negrita">StopAllCoroutines</span> y <span class="negrita">StopCoroutine("NombreMetodo")</span>.</p>
     
     
     <br><br>
     <hr>
     <br>
     <div id="task1" class="tarea">
+      <p><span class="subrayado negrita">Práctica 1 – Arkanoid</span></p>
+
+      <p>La práctica constará en reproducir una pantalla (inventada, cada uno la suya) del famoso juego 
+        <a class="enlace" target="_blank" href="https://es.wikipedia.org/wiki/Arkanoid">Arkanoid</a>. 
+        Aunque podría hacerse con un motor 2D usaremos la plantilla 3D que hemos usado hasta ahora y solo jugaremos con dos ejes.
+      </p>
+      <p>El juego consiste en destruir una serie de bloques con una bola que se mueve rebotando en las paredes y en la barra que maneja el jugador. 
+        Si la bola cae por debajo de la barra, el jugador pierde una vida. El juego termina cuando se destruyen todos los bloques (destruibles) 
+        o se pierden todas las vidas.
+      </p>
+      <p>El juego debe incluir:
+        <ul>
+          <li>Una barra que se mueve horizontalmente con las teclas A y D o las flechas izquierda y derecha. Hasta el final de la pantalla</li>
+          <li>Una bola que se mueve rebotando en las paredes, la barra y los bloques. Tendrás que calcular ángulos de rebote</li>
+          <li>Una serie de bloques que dispondrás como tú quieras y aplicarás materiales distintos. <br>Tipos de bloques: <span class="negrita">Elige 2 de las 3 opcionales</span><ul>
+            <li>Bloques normales que desaparecen al ser golpeados por la bola.</li>
+            <li>Bloques resistentes que necesitan dos impactos para desaparecer. Cambian de color tras el primer impacto.</li>
+            <li>Bloques indestructibles que no desaparecen al ser golpeados por la bola, ni disparados.</li>
+            <li>Bloques que cuando lo destruyes cae un objeto (decide tú que es) en vertical hacía abajo y
+              si lo tocas con la barra te incrementa en uno el número de vidas. (<span class="negrita">opcional</span>)</li>
+              <li>Bloques que cuando los detruyes, aceleran la bola x1.5 durante 10 segundos.  (<span class="negrita">opcional</span>)</li>
+              <li>Bloques que cuando lo destruyes cae un objeto (decide tú que es) en vertical hacía abajo y
+              si lo tocas con la barra te permite disparar vertical y hacía arriba, cuando toque un bloque tendrá el mismo efecto que la bola, pero no rebotará, desaparecerá.
+            Sólo podrá haber 3 "balas" en pantalla a la vez. Si te quitan la vida, pierdes la habilidad de disparar.  (<span class="negrita">opcional</span>)</li>
+
+          </ul></li>
+          <li>Un sistema de puntuación que sume puntos al destruir bloques. 10 puntos por bloque/toque, es decir si un bloque se destruye con 3 golpes valdrá 30 puntos.</li>
+          <li>Un sistema de vidas que reste una vida al perder la bola. Tendrás 3 vidas.</li>
+          <li>Al inicio y tras cada vida, la bola estará pegada a la barra, que si podrá desplazarse y al pulsar la tecla espacio es cuando saldrá despedia hacía arriba con una angulo aleatorio entre 10º y 170º.</li>
+          <li>Cuando finalice por vidas o porque no quedan bloques detruibles, mostrará en el centro de la pantalla la puntuación, junto con tu nombre y apellidos. Estando aquí y al pulsar "intro" se resetea la partida</li>
+        </ul>
+      </p>
+      <p>Tanto en las paredes como en el techo de la pantalla, la bola rebotará, sólo desaparecerá, quitando una vida cuando su posición sea inferior a la de la barra.</p>
+      <p>Tanto en los diferentes bloques, como la bola y las balas, deberás usar prefabs.</p>
+      <p>Aunque el aspecto sea 2D los objetos, bola, barra, bloques tendrás profundidad también.</p>
+    </div>
+    <div id="task1" class="oculto tarea">
       <p><span class="subrayado negrita">Práctica 1 – Pachinko</span></p>
       
     <p>Un Pachinko es una máquina recreativa japonesa en la que el jugador dispone de una gran cantidad de bolas de acero que se introducen en la máquina. <br>
@@ -1664,7 +2047,7 @@ public class CubeScript : MonoBehaviour
     </div>
   </section><!-- End section Métodos interesantes-->
   
-  <div class="oculto2">
+  <div class="oculto">
   <!--*********************************************************Componente CharacterController***********************************************************-->
   <section class="apartado">
     <a name="sComponenteCharacterController"></a>
