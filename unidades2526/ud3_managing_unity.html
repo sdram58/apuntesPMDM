@@ -1953,6 +1953,7 @@ public class CubeScript : MonoBehaviour
           <li>Cuando finalice por vidas o porque no quedan bloques detruibles, mostrará en el centro de la pantalla la puntuación, junto con tu nombre y apellidos. Estando aquí y al pulsar "intro" se resetea la partida</li>
         </ul>
       </p>
+      <p>El Input, será utilizando el nuevo sistema (Input System Package)</p>
       <p>Tanto en las paredes como en el techo de la pantalla, la bola rebotará, sólo desaparecerá, quitando una vida cuando su posición sea inferior a la de la barra.</p>
       <p>Tanto en los diferentes bloques, como la bola y las balas, deberás usar prefabs.</p>
       <p>Aunque el aspecto sea 2D los objetos, bola, barra, bloques tendrás profundidad también.</p>
@@ -2047,7 +2048,7 @@ public class CubeScript : MonoBehaviour
     </div>
   </section><!-- End section Métodos interesantes-->
   
-  <div class="oculto">
+  <div class="oculto33">
   <!--*********************************************************Componente CharacterController***********************************************************-->
   <section class="apartado">
     <a name="sComponenteCharacterController"></a>
@@ -2071,22 +2072,31 @@ public class CubeScript : MonoBehaviour
     
     <p><span class="negrita">Propiedades de CharacterController</span>:
       <ul>
-        <li><span class="negrita">Slope Limit</span>: pendiente máxima que puede subir.</li>
-        <li><span class="negrita">Step Offset</span>: altura máxima de escalón que puede subir (0.3 m).</li>
-        <li><span class="negrita">Skin Width</span>: grosor de la “piel” del collider (margen sin colisión).</li>
-        <li><span class="negrita">Min Move Distance</span>: distancia mínima para moverse.</li>
-        <li><span class="negrita">Center</span>: posición del collider respecto al GameObject.</li>
-        <li><span class="negrita">Radius</span>: radio de la cápsula.</li>
-        <li><span class="negrita">Height</span>: altura de la cápsula.</li>
+        <li><span class="negrita">Slope Limit</span>: pendiente máxima que puede subir (en grados). 
+          Si la superficie supera ese ángulo, el controller no sube y tenderá a resbalar/"bloquearse".
+          35–50° suele ser razonable. Si lo pones muy alto, el personaje trepará por cuestas casi verticales.
+         </li>
+        <li><span class="negrita">Step Offset</span>: altura máxima de escalón que puede subir (0.3 m). 
+        Permite subir bordillos/pequeños escalones sin saltar. Si el borde es más alto que este valor, se quedará pillado.</li>
+        <li><span class="negrita">Skin Width</span>: grosor de la "piel" del collider (margen sin colisión).</li>
+        <li><span class="negrita">Min Move Distance</span>: distancia mínima para moverse. Se aconseja dejarlo muy bajo (0–0.001). 
+          Si se sube, se pierde precisión en movimientos lentos.</li>
+        <li><span class="negrita">Center</span>: entro de la cápsula (<span class="cursiva">collider</span>) del controller en coordenadas locales del GameObject.
+        Desplaza la cápsula respecto al pivot del objeto (útil si el modelo no está centrado o para posturas como agacharse moviendo el centro).</li>
+        <li><span class="negrita">Radius</span>: radio de la cápsula. Define qué tan cerca puedes pasar de paredes/obstáculos. Muy pequeño: te "metes" en huecos y te atascas; muy grande: chocas con todo.
+        0.3–0.5 m para humano estándar. Recuerda que <span class="cursiva">Step Offset</span>  debe ser ≤ <span class="cursiva">Radius</span> .</li>
+        <li><span class="negrita">Height</span>: altura de la cápsula. Para agacharse, reduce <span class="cursiva">Height</span> 
+          y ajusta <span class="cursiva">Center</span>  hacia abajo para mantener los pies alineados con el suelo.</li>
       </ul>
-    </p>
+
+   </p>
     <a href="UD3/images/ud3-2024-03-05-09-59-36.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-05-09-59-36.png" /><br><figcaption></figcaption></figure></a>
     <br>
     
     <p>Como <span class="negrita">CharacterController no está afectado por la física</span>, 
       el componente proporciona propiedades y métodos para obtener información del GameObject, como <span class="r-word">isGrounded</span>, que indica si tocó el suelo durante su último movimiento.</p>
     
-    <p>El “suelo” será cualquier otro GameObject con collider sobre el que el CharacterController pueda apoyarse.</p>
+    <p>El "suelo" será cualquier otro GameObject con collider sobre el que el CharacterController pueda apoyarse.</p>
     
     <p>Para mover el personaje hay dos métodos:</p>
       <ul>
@@ -2109,31 +2119,47 @@ public class CubeScript : MonoBehaviour
     
     <section><pre><code class="language-csharp">using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float horizontalMove;
-    public float verticalMove;
+
+    [SerializeField] private InputActionAsset inputActions;
+
+    private InputAction moveAction;
+
+    private Vector2 moveAmt;
+
+    [SerializeField] private float playerSpeed = 5f;
+
     public Vector3 playerInput;
 
     public CharacterController player;
 
-    public float playerSpeed;
     // Start is called before the first frame update
+
+    void OnEnable()
+    {
+        inputActions.FindActionMap("Player").Enable();
+    }
+    
+    private void Awake()
+    {
+        moveAction = inputActions.FindAction("Move");
+    }
     void Start()
     {  
-        player = GetComponent&lt;CharacterController>();
+        player = GetComponent&lt;CharacterController&gt;();
     }
 
     // Update is called once per frame
     void Update()
     {
         // Obtener valores de entrada del jugador
-        horizontalMove = Input.GetAxis("Horizontal");
-        verticalMove = Input.GetAxis("Vertical");
+        moveAmt = moveAction.ReadValue&lt;Vector2&gt;();
 
-        playerInput = new Vector3(horizontalMove,0, verticalMove);
+        playerInput = new Vector3(moveAmt.x,0, moveAmt.y);
 
         // ClampMagnitude limita la magnitud del vector al máximo indicado (1),
         // así la diagonal no es más rápida que en un solo eje.
@@ -2170,42 +2196,52 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Entradas del jugador
-    private float horizontalMove;
-    private float verticalMove;
-    
+    [SerializeField] private InputActionAsset inputActions;
+    private InputAction moveAction;
+
     // Dirección de movimiento según la entrada
-    private Vector3 playerInput;
+    private Vector2 moveDir;
     
     // Acceso al CharacterController
     private CharacterController player;
     
     // Velocidad de movimiento
-    public float playerSpeed;
+    [SerializeField] private float playerSpeed;
     
     // Vector de movimiento final
     private Vector3 movePlayer;
     
     // Gravedad
-    public float gravity = 9.807f;
+    [SerializeField] private float gravity = 9.807f;
     
     // Velocidad de caída
-    public float fallVelocity;
+    [SerializeField] private float fallVelocity;
     
     // Fuerza de salto
-    public float jumpForce;
+    [SerializeField] private float jumpForce;
     
     // Referencia a la cámara y su dirección
-    public Camera mainCamera;
+    [SerializeField] private Camera mainCamera;
     private Vector3 camForward;
     private Vector3 camRight;
     
     // ¿Está en pendiente?
-    public bool isOnSlope = false;
+    [SerializeField] private bool isOnSlope = false;
     private Vector3 hitNormal;
     
     // Deslizamiento en pendientes no escalables
-    public float slideVelocity;
-    public float slopeForceDown;
+    [SerializeField] private float slideVelocity;
+    [SerializeField] private float slopeForceDown;
+
+    void OnEnable()
+    {
+        inputActions.FindActionMap("Player").Enable();
+    }
+
+    private void Awake()
+    {
+        moveAction = inputActions.FindAction("Move");
+    }
 
     void Start()
     {
@@ -2215,10 +2251,9 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // Entradas
-        horizontalMove = Input.GetAxis("Horizontal");
-        verticalMove = Input.GetAxis("Vertical");
+        moveDir = moveAction.ReadValue&lt;Vector2&gt;();
 
-        playerInput = new Vector3(horizontalMove, 0, verticalMove);
+        playerInput = new Vector3(moveDir.x, 0, moveDir.y);
 
         // Limitar magnitud para normalizar la diagonal
         playerInput = Vector3.ClampMagnitude(playerInput, 1);
@@ -2314,7 +2349,7 @@ using UnityEngine;
 public class PushRigidBody : MonoBehaviour
 {
     // Fuerza de empuje del personaje
-    public float pushPower = 2;
+    [SerializeField] private float pushPower = 2;
     // Masa del objeto empujado
     private float targetMass;
 
@@ -2390,10 +2425,11 @@ public class ThirdPersonCamera : MonoBehaviour
     <h2>Cámara profesional</h2>
     <p>Unity ofrece un paquete llamado <span class="r-word">Cinemachine</span>, con herramientas y 
       cámaras virtuales que simulan un estudio de cine para controlar totalmente la cámara.</p>
-    <a href="UD3/images/ud3-2024-03-11-10-24-06.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-24-06.png" /><br><figcaption></figcaption></figure></a>
+    <a href="UD3/images/UD3_2025-10-11-19-44-02.png"><figure><img src="UD3/images/UD3_2025-10-11-19-44-02.png" /><br><figcaption></figcaption></figure></a>
     <br>
-    <a href="UD3/images/ud3-2024-03-11-10-24-16.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-24-16.png" /><br><figcaption></figcaption></figure></a>
+    <a href="UD3/images/UD3_2025-10-11-19-46-13.png"><figure><img src="UD3/images/UD3_2025-10-11-19-46-13.png" /><br><figcaption></figcaption></figure></a>
     <br>
+    
     
     <p>Una vez instalado, encontrarás la configuración de cámaras virtuales en <span class="negrita">Menú &rArr; Component &rArr; Cinemachine</span>, 
        que puedes añadir a la cámara de la escena.</p>
@@ -2483,27 +2519,31 @@ public class ThirdPersonCamera : MonoBehaviour
     
     <p>Como la plataforma tiene Rigidbody, el movimiento debe ser físico.</p>
     
-    <section><pre><code class="language-csharp">public class PlatformEnhanced : MonoBehaviour
+    <section><pre><code class="language-csharp">using UnityEngine;
+using System.Collections;
+public class PlatformEnhanced : MonoBehaviour
 {
     // Rigidbody del objeto que se moverá
-    public Rigidbody platformRB;
+    [SerializeField] private Rigidbody platformRB;
     // Puntos de destino
-    public Transform[] platformPositions;
+    [SerializeField] private Transform[] platformPositions;
     // Velocidad
-    public float platformSpeed;
+    [SerializeField] private float platformSpeed;
     // ¿Puede moverse?
-    public bool moveToTheNext = true;
+    [SerializeField] private bool moveToTheNext = true;
     // Tiempo de espera al llegar a un destino
-    public float waitTime;
+    [SerializeField] private float waitTime;
 
     // Índices de posición
     private int actualPosition = 0;
     private int nextPosition = 1;
 
+    private int count = 0;
+
     void Start()
     {
         // Posición inicial
-        platformRB.position = platformPositions[0].position;
+        platformRB.position = platformPositions[actualPosition].position;
     }
 
     void Update()
@@ -2517,7 +2557,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
         // ¿Ha llegado al destino?
         if (Vector3.Distance(platformRB.position, platformPositions[nextPosition].position) == 0)
-        {
+        {            
             // Esperar
             StartCoroutine(WaitForNext(waitTime));
             actualPosition = nextPosition;
@@ -2542,6 +2582,8 @@ public class ThirdPersonCamera : MonoBehaviour
         moveToTheNext = true;
     }
 }
+
+
 </code></pre>
     </section><br><br>
     
@@ -2556,7 +2598,7 @@ public class ThirdPersonCamera : MonoBehaviour
   
   <!--*********************************************************Raycast***********************************************************-->
   <section class="apartado">
-    <a name="s"></a>
+    <a name="sRaycast"></a>
     <h2>Raycast</h2>
     
     <p>Un <span class="negrita">Raycast</span> consiste en emitir un rayo.</p>
@@ -2666,6 +2708,9 @@ public class ThirdPersonCamera : MonoBehaviour
           <br><br>
           </li>
         </ul>
+        <a href="UD3/images/LayerDetectionRayCast.gif"><figure><img src="UD3/images/LayerDetectionRayCast.gif" /><br><figcaption>El cube del medio es del layer buscado</figcaption></figure></a>
+        <br>
+        
       </p>
       
       <p>Puedes indicar que el rayo no impacte en Colliders de tipo Trigger.</p>
@@ -2682,31 +2727,41 @@ public class ThirdPersonCamera : MonoBehaviour
     <p>El siguiente script debe añadirse a la cámara. 
       No puede llamarse <span class="negrita">Camera</span> para no sobrescribir la clase de Unity.</p>
     <section><pre><code class="language-csharp">// El script no puede llamarse Camera porque sobrescribiría la clase de Unity
+using UnityEngine;
+using UnityEngine.InputSystem;
+
 public class CameraRay : MonoBehaviour
 {
     private Camera mainCamera;
 
-    void Start()
+    void Awake()
     {
-        mainCamera = GetComponent&lt;Camera>();
+        mainCamera = GetComponent&lt;Camera&gt;();
+        if (mainCamera == null)
+            mainCamera = Camera.main;
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        // Click izquierdo con el nuevo Input System
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
-            RaycastHit hit;
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            Vector2 screenPos = Mouse.current.position.ReadValue();
+            Ray ray = mainCamera.ScreenPointToRay(screenPos);
 
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                hit.transform.gameObject.GetComponent&lt;MeshRenderer>().material.color = Color.green;
-                Debug.DrawRay(ray.origin, ray.direction * 10, Color.blue);
+                if (hit.transform.TryGetComponent&lt;MeshRenderer&gt;(out var mr))
+                {
+                    mr.material.color = Color.green;
+                }
+
+                Debug.DrawRay(ray.origin, ray.direction * 10f, Color.blue, 1f);
             }
         }
+       
     }
-}
-</code></pre>
+}</code></pre>
     </section><br><br>
     <a href="UD3/images/ud3-2024-03-11-10-36-19.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-36-19.png" /><br><figcaption></figcaption></figure></a>
     <br>
@@ -2875,8 +2930,9 @@ public class MoveWithFloor : MonoBehaviour
     <p>Esta técnica también sirve para mover al jugador con clic de ratón o para que un enemigo patrulle y persiga al jugador al verlo.</p>
     
     <p>Instala el paquete <span class="r-word">AI Navigation</span>.</p>
-    <a href="UD3/images/ud3-2024-03-11-10-38-48.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-38-48.png" /><br><figcaption></figcaption></figure></a>
+    <a href="UD3/images/UD3_2025-10-13-12-26-43.png"><figure><img src="UD3/images/UD3_2025-10-13-12-26-43.png" /><br><figcaption>Instalación AI Navigation</figcaption></figure></a>
     <br>
+    
     
     <p>Al instalarlo, aparece la opción: <span class="negrita">Menú</span> &rarr; <span class="negrita">Window</span> &rarr;
     <span class="negrita">AI</span> &rarr; <span class="negrita">Navigation</span>.</p>
@@ -3002,7 +3058,9 @@ public class NavMeshController : MonoBehaviour
     }
 }</code></pre>
       </section><br><br>
-      
+      <p><a href="UD3/images/NavMesh.gif"><figure><img src="UD3/images/NavMesh.gif" /><br><figcaption></figcaption></figure></a>
+      <br>
+      </p>
       <p>A partir de este script, puedes crear una ruta para un GameObject:</p>
         <ul>
           <li>Crea GameObjects vacíos con collider trigger y colócalos donde quieras.</li>
@@ -3023,20 +3081,23 @@ public class NavMeshController : MonoBehaviour
         </ul>
       
     <p>Si quieres mover al personaje a donde se hace clic en pantalla, usa este script:</p>
-    <section><pre><code class="language-csharp">public class NavMeshMouse : MonoBehaviour
+    <section><pre><code class="language-csharp">using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.AI;
+public class NavMeshMouse : MonoBehaviour
 {
     // Agente de navegación
     private NavMeshAgent agent;
 
     void Start()
     {
-        agent = GetComponent&lt;NavMeshAgent>();
+        agent = GetComponent&lt;NavMeshAgent&gt;();
     }
 
     void Update()
     {
         // Al hacer clic, lanzar un rayo para saber dónde se hizo clic
-        if (Input.GetMouseButtonDown(0))
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
@@ -3049,7 +3110,9 @@ public class NavMeshController : MonoBehaviour
 }
 </code></pre>
     </section><br><br>
-    
+    <p><a href="UD3/images/NavMeshMouse.gif"><figure><img src="UD3/images/NavMeshMouse.gif" /><br><figcaption></figcaption></figure></a>
+      <br>
+      </p>
   </section><!-- End section NPCs-->
   
   <!--*********************************************************Cambio de escenas***********************************************************-->
@@ -3064,7 +3127,7 @@ public class NavMeshController : MonoBehaviour
     
     <p>Los cambios de escena pueden ocurrir en distintos momentos:
     <ul>
-      <li>Al pulsar “Play” en el menú principal.</li>
+      <li>Al pulsar "<span class="cursiva">Play</span>" en el menú principal.</li>
       <li>Al completar un nivel.</li>
       <li>Dentro de un nivel al entrar en una nueva zona.</li>
       <li>...</li>
@@ -3072,8 +3135,9 @@ public class NavMeshController : MonoBehaviour
     </p>
     
     <p>Primero añade todas las escenas a <span class="negrita">File</span> &rarr; <span class="negrita">Build Settings…</span>.</p>
-    <a href="UD3/images/ud3-2024-03-11-10-45-40.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-45-40.png" /><br><figcaption></figcaption></figure></a>
+    <a href="UD3/images/UD3_2025-10-13-13-15-45.png"><figure><img src="UD3/images/UD3_2025-10-13-13-15-45.png" /><br><figcaption>Scenes Config</figcaption></figure></a>
     <br>
+    
     
     <p>Pulsando <span class="negrita">Add Open Scenes</span> se añade la escena abierta.</p>
     
@@ -3082,8 +3146,13 @@ public class NavMeshController : MonoBehaviour
     <p>La escena en la posición cero (0) será la que se cargue al ejecutar el juego (tras compilar y generar el ejecutable).</p>
     <a href="UD3/images/ud3-2024-03-11-10-46-03.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-46-03.png" /><br><figcaption></figcaption></figure></a>
     <br>
+
+    <a href="UD3/images/ScenesAdd.gif"><figure><img src="UD3/images/ScenesAdd.gif" /><br><figcaption>Scenes Config</figcaption></figure></a>
+    <br>
+    <a href="UD3/images/ScenesChangeOrder.gif"><figure><img src="UD3/images/ScenesChangeOrder.gif" /><br><figcaption>Cambio de Orden de las escenas</figcaption></figure></a>
+    <br>
     
-    <p>Para cambiar de escena desde un script, añade esta librería:</p>
+    <p>Para <span class="negrita">cambiar de escena desde un script</span>, añade esta librería:</p>
     <section><pre><code class="language-csharp">using UnityEngine.SceneManagement;</code></pre>
     </section><br><br>
     
@@ -3173,6 +3242,8 @@ public class NavMeshController : MonoBehaviour
   <p>Para borrar todas las preferencias, usa <span class="negrita">DeleteAll</span>:</p>
   <a href="UD3/images/ud3-2024-03-11-10-48-18.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-48-18.png" /><br><figcaption></figcaption></figure></a>
   <br>
+
+  
 </section><!-- End section PlayerPrefs-->
 
 <!--*********************************************************Menus***********************************************************-->
@@ -3227,6 +3298,24 @@ public class NavMeshController : MonoBehaviour
 
   <a href="UD3/images/ud3-2024-03-11-10-51-21.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-51-21.png" /><br><figcaption></figcaption></figure></a>
   <br>
+  <br>
+  <p><span class="inline-file">Script Menu.cs</span></p>
+  
+  <section><pre><code class="language-csharp">using UnityEngine;
+
+public class Menu : MonoBehaviour
+{
+    [SerializeField] private TMP_InputField inputField;
+    public void OnClickButton()
+    {
+        inputField.text = "¡Has hecho clic en el botón!";
+    }
+}
+</code></pre>
+  </section><br><br>
+
+  <a href="UD3/images/MenuExample.gif" target="_BLANK"><figure><img src="UD3/images/MenuExample.gif" /><br><figcaption>Añadiendo código al botón</figcaption></figure></a>
+  <br>
 </section><!-- End section Menus-->
 
 <!--*********************************************************sComunicacion***********************************************************-->
@@ -3245,7 +3334,7 @@ public class NavMeshController : MonoBehaviour
 
   <p>Los eventos amplían los delegados para que una clase pueda notificar a otras cuando ocurre una acción.</p>
 
-  <p>Define un delegado y un evento asociado dentro de un GameObject.</p>
+  <p>Define un delegado y un evento associado dentro de un GameObject.</p>
 
   <p>Otros GameObjects pueden suscribirse con su propio método para que, al lanzarse el evento, se llame a dicho método.</p>
 
@@ -3452,20 +3541,27 @@ public class NavMeshController : MonoBehaviour
 <!--*********************************************************FinalPractice***********************************************************-->
 <section class="apartado">
   <a name="sFinalPractice"></a>
-  <h2>FinalPractice</h2>
+  <h2>Práctica Final</h2>
 
-  <div class="tarea">
-    <a class="tarea" target="_blank" href="https://aules.edu.gva.es/semipresencial/mod/assign/view.php?id=2332098">
+  <div class="">
+    <a class="tarea" target="_blank" href="https://aules.edu.gva.es/semipresencial/mod/assign/view.php?id=2969123">
       <p>Este proyecto consiste en un videojuego de creación libre con los siguientes requisitos:
         <ol>
           <li>El juego debe tener un menú inicial donde el jugador pueda introducir su nombre antes de empezar. <span class="negrita">1pt</span></li>
-          <li>Incluye un sistema de puntuación (p. ej., por tiempo de finalización, recogida de monedas/objetos, derrotar enemigos). Guarda esta puntuación en <span class="cursiva">PlayerPrefs</span> junto con el nombre del jugador. <span class="negrita">1.5pts</span></li>
-          <li>El menú inicial debe mostrar el nombre del jugador junto a su puntuación. <span class="negrita">0.5pts</span></li>
-          <li>Además del menú, el juego debe tener al menos dos pantallas a las que se pueda llegar tras completar la primera. No hace falta que sean muy extensas. <span class="negrita">0.75pts</span></li>
-          <li>La cámara debe seguir al personaje del jugador. <span class="negrita">0.75pts</span></li>
+          <li>Incluye un sistema de puntuación (p. ej., por tiempo de finalización, recogida de monedas/objetos, derrotar enemigos). 
+            Guarda esta puntuación en <span class="cursiva">PlayerPrefs</span> junto con el nombre del jugador. <span class="negrita">1pt</span></li>
+          <li>El menú inicial debe mostrar el nombre del jugador junto a su puntuación, junto con las del resto de jugadores ordenadas por posición. <span class="negrita">0.5pts</span></li>
+          <li>Además del menú, el juego debe tener al menos dos pantallas jugables, una inicial y otra secundaria. 
+            No hace falta que sean muy extensas. <span class="negrita">0.75pts</span></li>
+          <li>Añade checkpoints donde si el jugador pierde una vida, empiece por el último checkpoint. <span class="negrita">0.75pts</span></li>
+          <li>Añade la opción guardar partida. En el menú inicial podrá elegir entre seguir (si hay partida guardada) o empezar de nuevo.
+            Si elige seguir, se cargará la última partida guardada y empezará en el último checkpoint alcanzado. Manteniendo el tiempo, vidas, monedas (cualquier detalle a tener en cuenta para la partida) 
+            <span class="negrita">0.5pts</span>
+          </li>
+          <li>La cámara debe seguir al personaje del jugador. <span class="negrita">0.5pts</span></li>
           <li>Incluye al menos dos tipos de enemigos:
             <ul>
-              <li>Uno que persiga al jugador. <span class="negrita">1.5pts</span></li>
+              <li>Uno que persiga al jugador. <span class="negrita">1pt</span></li>
               <li>Otro que siga una ruta fija. <span class="negrita">1pt</span></li>
             </ul>
           </li>
