@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>U4. Introduction to Mobile Programming</title>
+        <title>U4. Introducción a la Programación Móvil</title>
         <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
         <link rel="stylesheet" href="../styles/prism.css">
         <link rel="stylesheet" href="../styles/styles.css">
@@ -16,50 +16,50 @@
 
     <nav id="menu-lateral" class="main-menu-lateral oculto">
         <div class="fila">
-            <a href="#sIntroduction">1.- Introduction</a><a 
-            href="#sTypeOfApps">2.- Types of Apps</a><a 
-            href="#sAndroidFeatures">3.- Android Features</a></div>
+            <a href="#sIntroduction">1.- Introducción</a><a 
+            href="#sTypeOfApps">2.- Tipos de Apps</a><a 
+            href="#sAndroidFeatures">3.- Características de Android</a></div>
         <div class="fila">
             <a 
-           href="#sAndroidArchitecture">4.- Android Architecture</a><a 
-           href="#sFragmentation">5.- Fragmentation</a><a 
+           href="#sAndroidArchitecture">4.- Arquitectura de Android</a><a 
+           href="#sFragmentation">5.- Fragmentación</a><a 
            href="#sAndroidStudio">6.- Android Studio</a>
         </div>
         <div class="fila">
             <a 
-           href="#sAndroidEmulator">7.- Android Emulator (AVD)</a><a 
-           href="#sTestOnReal">8.- Testing on Real Devices</a><a 
-           href="#sThirdPartyEmulators">9.- Other Emulators</a>
+           href="#sAndroidEmulator">7.- Emulador de Android (AVD)</a><a 
+           href="#sTestOnReal">8.- Pruebas en Dispositivo Real</a><a 
+           href="#sThirdPartyEmulators">9.- Otros Emuladores</a>
         </div>
         <div class="fila">
             <a 
-           href="#sOtherSystems">10.- Other Systems</a>
+           href="#sOtherSystems">10.- Otros Sistemas</a>
         </div>
         
     </nav>
 
-    <h1>UD4.- Introduction to Mobile Programming</h1>
+    <h1>UD4.- Introducción a la Programación Móvil</h1>
 
     <div class="main-menu">
         <div class="fila">
-            <a href="#sIntroduction">1.- Introduction</a><a 
-            href="#sTypeOfApps">2.- Types of Apps</a><a 
-            href="#sAndroidFeatures">3.- Android Features</a></div>
+            <a href="#sIntroduction">1.- Introducción</a><a 
+            href="#sTypeOfApps">2.- Tipos de Apps</a><a 
+            href="#sAndroidFeatures">3.- Características de Android</a></div>
         <div class="fila">
             <a 
-           href="#sAndroidArchitecture">4.- Android Architecture</a><a 
-           href="#sFragmentation">5.- Fragmentation</a><a 
+           href="#sAndroidArchitecture">4.- Arquitectura de Android</a><a 
+           href="#sFragmentation">5.- Fragmentación</a><a 
            href="#sAndroidStudio">6.- Android Studio</a>
         </div>
         <div class="fila">
             <a 
-           href="#sAndroidEmulator">7.- Android Emulator (AVD)</a><a 
-           href="#sTestOnReal">8.- Testing on Real Devices</a><a 
-           href="#sThirdPartyEmulators">9.- Other Emulators</a>
+           href="#sAndroidEmulator">7.- Emulador de Android (AVD)</a><a 
+           href="#sTestOnReal">8.- Pruebas en Dispositivo Real</a><a 
+           href="#sThirdPartyEmulators">9.- Otros Emuladores</a>
         </div>
         <div class="fila">
             <a 
-           href="#sOtherSystems">10.- Other Systems</a>
+           href="#sOtherSystems">10.- Otros Sistemas</a>
            <a class="relleno" href=""></a><a class="relleno" href=""></a>
         </div>
     </div>
@@ -68,41 +68,41 @@
 
     <!--************************Introduction**************************-->
     <a name="sIntroduction"></a>
-    <h2>Introduction</h2>
+    <h2>Introducción</h2>
 
-    <p>In 25 years, the world has changed like never before, and now the <span class="negrita">world is mobile</span>. 
-        Those of us who have had phones from the beginning have gone from having an analog <span class="cursiva" title="Extended Total Access Communications System">ETACS</span> phone like MoviLine to modern digital 5G devices. Now, anyone can talk and browse from anywhere. That’s why people under 20 are called digital natives. It’s no surprise that studies show mobile phones surpassed desktop PCs as the main device for internet access in Spain back in 2017.</p>
+    <p>En 25 años, el mundo ha cambiado como nunca, y ahora el <span class="negrita">mundo es móvil</span>. 
+        Quienes hemos tenido móviles desde el principio hemos pasado de tener un teléfono analógico <span class="cursiva" title="Extended Total Access Communications System">ETACS</span> como MoviLine a los modernos dispositivos digitales 5G. Hoy cualquiera puede hablar y navegar desde cualquier lugar. Por eso a los menores de 20 se les llama nativos digitales. No sorprende que los estudios muestren que en España el móvil superó al PC de sobremesa como dispositivo principal de acceso a Internet ya en 2017.</p>
     
-    <p>Within the mobile world, we mainly have Apple's iOS, BlackBerry, and Android platforms (following the failure of Microsoft’s Windows Mobile Phone and Nokia’s Symbian). 
-        Unfortunately, the first two are proprietary, which has led <span class="negrita">Android</span> to dominate the market, as seen in this <a class="enlace" target="_blank" href="https://gs.statcounter.com/os-market-share/mobile/spain">link</a>.</p>
+    <p>Dentro del mundo móvil, principalmente tenemos las plataformas iOS de Apple, BlackBerry y Android (tras el fracaso de Windows Mobile Phone de Microsoft y Symbian de Nokia). 
+        Por desgracia, las dos primeras son propietarias, lo que ha llevado a <span class="negrita">Android</span> a dominar el mercado, como se ve en este <a class="enlace" target="_blank" href="https://gs.statcounter.com/os-market-share/mobile/spain">enlace</a>.</p>
         
-                
-        <a href="UD4/images/ud_4-2024-11-21-10-35-11.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-10-35-11.png" /><br><figcaption>Mobile operating system market share in Spain</figcaption></figure></a>
+        <a href="UD4/images/UD4_2025-10-23-12-53-13.png"><figure><img src="UD4/images/UD4_2025-10-23-12-53-13.png" /><br><figcaption>Cuota de mercado de sistemas operativos móviles en España</figcaption></figure></a>
         <br>
+
         
         <br><br>
 
-        <p>The comparison of features between Android and iOS can be summarized as follows...</p>
+        <p>La comparación de características entre Android e iOS puede resumirse así...</p>
          <table style="width:50%; margin: 0 auto;">
              <tr style="text-align: center; background-color: gray;">
                  <th>Android</th>
                  <th>iOS</th>
              </tr>
              <tr>
-                 <td>Highly customizable, but it requires time to gain some knowledge to personalize the phone.</td>
-                 <td>It is very specialized, and the platform controls everything. It works well for those who are happy with the default settings.</td>
+                 <td>Altamente personalizable, pero requiere tiempo adquirir conocimientos para personalizar el teléfono.</td>
+                 <td>Es muy especializado y la plataforma lo controla todo. Funciona bien para quien está conforme con la configuración por defecto.</td>
              </tr>
              <tr>
-                 <td>Due to fragmentation, updates depend on the model and manufacturer of each device.</td>
-                 <td>Users always have access to the latest version of iOS, thanks to free and automatic updates.</td>
+                 <td>Debido a la fragmentación, las actualizaciones dependen del modelo y fabricante de cada dispositivo.</td>
+                 <td>Los usuarios tienen acceso siempre a la última versión de iOS, gracias a actualizaciones gratuitas y automáticas.</td>
              </tr>
              <tr>
-                 <td>Available on phones from various manufacturers: HTC, Google, Samsung, Motorola, LG, etc. Wide variety of models.</td>
-                 <td>Only available on Apple devices: iPod touch, iPad, iPhone, and Apple TV.</td>
+                 <td>Disponible en teléfonos de varios fabricantes: HTC, Google, Samsung, Motorola, LG, etc. Gran variedad de modelos.</td>
+                 <td>Solo disponible en dispositivos Apple: iPod touch, iPad, iPhone y Apple TV.</td>
              </tr>
              <tr>
-                 <td>Anyone can create and distribute Android applications. Users can download and install apps from outside the official store.</td>
-                 <td>It's more expensive for developers to publish apps for iOS. The App Store is practically the only place you can download apps from.</td>
+                 <td>Cualquiera puede crear y distribuir aplicaciones Android. Los usuarios pueden descargar e instalar apps fuera de la tienda oficial.</td>
+                 <td>Es más caro para desarrolladores publicar apps para iOS. La App Store es prácticamente el único lugar desde el que descargar apps.</td>
              </tr>
          </table>
         </p>
@@ -114,73 +114,73 @@
 
     <!--************************TypeOfApps**************************-->
     <a name="sTypeOfApps"></a>
-    <h2>Types of Applications</h2>
+    <h2>Tipos de Aplicaciones</h2>
 
-    <p>The mobile phone market is extremely diverse. Every month, dozens of new smartphones are launched, and as a result, mobile developers and entrepreneurs face challenges due to the increasing number of <span class="negrita">mobile applications</span>. There is no magic solution for choosing the platform to use.</p>
+    <p>El mercado de telefonía móvil es extremadamente diverso. Cada mes se lanzan decenas de nuevos smartphones y, como resultado, los desarrolladores y emprendedores se enfrentan a retos por el creciente número de <span class="negrita">aplicaciones móviles</span>. No existe una solución mágica para elegir la plataforma a utilizar.</p>
     
-    <p>Both <span class="negrita">native mobile applications and cross-platform apps</span> have their <span class="cursiva">advantages and disadvantages</span>. As a business owner, you should understand the differences between them.</p>
+    <p>Tanto las <span class="negrita">aplicaciones nativas como las multiplataforma</span> tienen sus <span class="cursiva">ventajas y desventajas</span>. Como responsable de un negocio, conviene entender las diferencias entre ellas.</p>
         
 
-    <h3>Advantages of Native Application Development</h3>
+    <h3>Ventajas del desarrollo de aplicaciones nativas</h3>
 
     <ul>
-        <li><span class="negrita">You have access to the full potential of the mobile device</span> 
-            <p>The essence of native apps is that they are written for a specific platform (today, Android or iOS). This means developers can provide <span class="negrita">much better integration between app functionalities and the mobile hardware features</span>: Bluetooth, NFC, GPS sensor, camera, microphone, accelerometer, gyroscope, etc.</p></li>
+        <li><span class="negrita">Acceso al potencial completo del dispositivo</span> 
+            <p>La esencia de las apps nativas es que se escriben para una plataforma específica (normalmente, Android o iOS). Esto permite ofrecer <span class="negrita">mucha mejor integración entre las funcionalidades de la app y el hardware del móvil</span>: Bluetooth, NFC, GPS, cámara, micrófono, acelerómetro, giroscopio, etc.</p></li>
 
-        <li><span class="negrita">Better screen performance</span>
-        <p  style="padding-left: 20px;">Using a native language gives you more freedom in terms of <span class="negrita">screen optimization</span>. With the number of mobile devices available and their varying screen sizes and aspect ratios, it’s crucial to ensure your apps display correctly everywhere.
+        <li><span class="negrita">Mejor rendimiento en pantalla</span>
+        <p  style="padding-left: 20px;">Usar un lenguaje nativo te da más libertad en cuanto a <span class="negrita">optimización de pantalla</span>. Con la cantidad de dispositivos y sus distintos tamaños y relaciones de aspecto, es crucial asegurar que tu app se muestre correctamente en todas partes.
         </p> </li>
 
-        <li><span class="negrita">Better performance</span> 
+        <li><span class="negrita">Mejor rendimiento</span> 
         <p  style="padding-left: 20px;">
-            Along with control and flexibility, better integration with mobile hardware provides another significant advantage. 
-           <span class="negrita">Native apps are very fast</span> and perform much better than others, like web apps. Native apps <span class="negrita">maximize the use of processing power</span>, minimizing response time as much as possible.</p></li>
-            <li><span class="negrita">Internet connection is not mandatory.</span> 
-            <p style="padding-left: 20px;">Since native apps are installed directly on the mobile device, <span class="negrita">they can access app data offline</span>. On the other hand, a web app or any other platform requires a constant online connection, which depends on the network speed.</p>
+            Junto con el control y la flexibilidad, la mejor integración con el hardware aporta otra ventaja importante. 
+           <span class="negrita">Las apps nativas son muy rápidas</span> y rinden mejor que otras, como las web. Las apps nativas <span class="negrita">aprovechan al máximo la potencia de proceso</span>, minimizando el tiempo de respuesta.</p></li>
+            <li><span class="negrita">No requieren conexión a Internet</span>. 
+            <p style="padding-left: 20px;">Como las apps nativas se instalan directamente en el dispositivo, <span class="negrita">pueden acceder a datos sin conexión</span>. En cambio, una app web u otras plataformas requieren conexión constante, dependiente de la red.</p>
 
-            <p style="padding-left: 20px;">Combined with the performance mentioned in the previous point, the ability to work offline makes <span class="negrita">native apps</span> the perfect choice for developing apps like mobile games.
+            <p style="padding-left: 20px;">Combinado con el rendimiento del punto anterior, la capacidad de funcionar offline hace que las <span class="negrita">apps nativas</span> sean la elección perfecta para juegos móviles, por ejemplo.
             </p></li>
     </ul>
 
 
-    <h3>Disadvantages of Native Applications</h3>
+    <h3>Desventajas de las aplicaciones nativas</h3>
 
-    <p>If there’s any disadvantage to native app development, it’s <span class="negrita">the incompatibility with other mobile operating systems</span>. iOS native apps are developed using Swift or Objective-C and can only be installed on iPhone or iPad. Similarly, Android apps are not compatible with iOS because they are developed in Java or Kotlin.
+    <p>Si hay una desventaja en el desarrollo nativo, es <span class="negrita">la incompatibilidad con otros sistemas operativos móviles</span>. Las apps nativas de iOS se desarrollan con Swift u Objective-C y solo se pueden instalar en iPhone o iPad. Del mismo modo, las apps Android no son compatibles con iOS porque se desarrollan en Java o Kotlin.
     </p>
-    <p>Another aspect worth mentioning is <span class="negrita">version compatibility</span>. For example, due to the wide variety of Android versions, providing full support to all app users becomes a challenge.
+    <p>Otro aspecto a mencionar es la <span class="negrita">compatibilidad de versiones</span>. Por ejemplo, dada la gran variedad de versiones de Android, dar soporte completo a todos los usuarios puede ser un reto.
     </p>
 
-    <h3>Advantages of Cross-Platform Application Development</h3>
+    <h3>Ventajas del desarrollo multiplataforma</h3>
 
     <ul>
-        <li> <span class="negrita">Reusable code</span> 
+        <li> <span class="negrita">Código reutilizable</span> 
             <p style="padding-left: 20px;">
-                Instead of developing different apps, mobile developers <span class="negrita">can use the same code for all platforms</span>. This means, unlike a native app, with cross-platform development, you can implement a feature in an app for one operating system, and it will work on others.
+                En lugar de desarrollar distintas apps, los desarrolladores <span class="negrita">pueden usar el mismo código para todas las plataformas</span>. Esto significa que, a diferencia de una app nativa, con desarrollo multiplataforma implementas una funcionalidad en una app para un SO y funcionará en los demás.
             </p>
-            <p  style="padding-left: 20px;">This reusability also offers an advantage when it comes to <span class="negrita">app deployment</span>.</p>
+            <p  style="padding-left: 20px;">Esta reutilización también ofrece ventaja en el <span class="negrita">despliegue</span> de la app.</p>
         </li>
-        <li> <span class="negrita">Cost-effectiveness</span> 
+        <li> <span class="negrita">Rentabilidad</span> 
             <p style="padding-left: 20px;">
-                Implementing your idea as a cross-platform app does not <span class="negrita">require large investments in resources</span>. This is because you don’t need a dedicated team for each mobile operating system. Thanks to a short learning curve and a unified set of technologies, a single team can support all platforms.
+                Implementar tu idea como app multiplataforma no <span class="negrita">requiere grandes inversiones</span>. No necesitas un equipo dedicado por cada sistema operativo. Gracias a una curva de aprendizaje corta y un conjunto unificado de tecnologías, un único equipo puede dar soporte a todas las plataformas.
             </p>
         </li>
-        <li> <span class="negrita">The same UI and UX across all platforms.</span> 
+        <li> <span class="negrita">La misma UI y UX en todas las plataformas</span> 
             <p style="padding-left: 20px;">
-                App performance is undoubtedly important, but equally important is how the app looks and flows. It can be difficult to achieve <span class="negrita">the same user interface and user experience</span> simply because two independent systems are involved.
+                El rendimiento es importante, pero también lo es cómo se ve y fluye la app. Puede ser difícil lograr <span class="negrita">la misma interfaz y experiencia de usuario</span> porque intervienen dos sistemas independientes.
                 </p>
             <p style="padding-left: 20px;">
-                Using a single codebase allows cross-platform apps to <span class="negrita">maintain the same appearance and user experience on all mobile devices.</span> 
+                Usando una sola base de código, las apps multiplataforma <span class="negrita">mantienen la misma apariencia y experiencia</span> en todos los dispositivos.
             </p>
         </li>
     </ul>
 
 
-    <h3><span class="negrita">Disadvantages of Cross-Platform Application Development</span></h3>
+    <h3><span class="negrita">Desventajas del desarrollo multiplataforma</span></h3>
 
     <ul>
-        <li><span class="negrita">They are not as flexible</span> as native apps.</li>
-        <li><span class="negrita">Performance</span> is not their strongest point.</li>
-        <li>The process for <span class="negrita">adding them to app stores can be more complicated.</span></li>
+        <li><span class="negrita">No son tan flexibles</span> como las nativas.</li>
+        <li><span class="negrita">El rendimiento</span> no es su punto fuerte.</li>
+        <li>El proceso de <span class="negrita">publicarlas en tiendas puede ser más complicado</span>.</li>
     </ul>
 
     <br><br>
@@ -188,40 +188,40 @@
 
     <!--************************AndroidFeatures**************************-->
     <a name="sAndroidFeatures"></a>
-    <h2>Android Features</h2>
+    <h2>Características de Android</h2>
 
-    <p>While there are several mobile platforms, the Android operating system for mobile devices offers a set of features that differentiate it from others:</p>
+    <p>Aunque hay varias plataformas móviles, el sistema operativo Android ofrece un conjunto de características que lo diferencian del resto:</p>
 
     <ul>
-        <li><span class="negrita">Open platform</span>. 
-            It is a free development platform based on Linux and open source. Among its advantages is the ability to use and adapt the system without paying royalties.
+        <li><span class="negrita">Plataforma abierta</span>. 
+            Es una plataforma de desarrollo gratuita, basada en Linux y de código abierto. Entre sus ventajas está poder usar y adaptar el sistema sin pagar royalties.
         </li>
         <li>
-            <span class="negrita">Guaranteed portability.</span> Thanks to the virtual machine concept, final applications are developed in Java, ensuring they run and function on a wide variety of devices, both current and future.
+            <span class="negrita">Portabilidad garantizada</span>. Gracias al concepto de máquina virtual, las apps finales se desarrollan en Java, garantizando que se ejecuten en una gran variedad de dispositivos, presentes y futuros.
         </li>
         <li>
-            <span class="negrita">Architecture based on Internet-inspired components</span>. 
-            For example, the user interface design is done in XML, allowing the same app to run on a mobile phone with a small screen or on a Netbook.
+            <span class="negrita">Arquitectura basada en componentes inspirados en Internet</span>. 
+            Por ejemplo, el diseño de la interfaz de usuario se hace en XML, permitiendo que la misma app se ejecute en un móvil con pantalla pequeña o en un Netbook.
         </li>
         <li>
-            <span class="negrita">Philosophy</span> of a device <span class="negrita">always connected</span> to the Internet.
+            <span class="negrita">Filosofía</span> de dispositivo <span class="negrita">siempre conectado</span> a Internet.
         </li>
         <li>
-            <span class="negrita">Many integrated services</span>. For example, GPS-based location, SQL databases, voice recognition and synthesis, browser, maps, etc.</li>
+            <span class="negrita">Muchos servicios integrados</span>: localización por GPS, bases de datos SQL, reconocimiento y síntesis de voz, navegador, mapas, etc.</li>
         <li>
-            <span class="negrita">Acceptable level of security.</span> Programs are isolated from each other thanks to the concept of execution within a sandbox provided by the virtual machine.
+            <span class="negrita">Nivel de seguridad aceptable</span>. Los programas están aislados gracias al concepto de sandbox proporcionado por la máquina virtual.
         </li>
         <li>
-            <span class="negrita">Optimized for low power consumption and memory usage.</span> Android uses the Dalvik virtual machine, Google's implementation of the Java virtual machine optimized for mobile devices.
+            <span class="negrita">Optimizado para bajo consumo y poca memoria</span>. Android usaba la máquina virtual Dalvik, implementación de Google de la JVM optimizada para móviles.
         </li>
         <li>
-            <span class="negrita">High-quality graphics and sound.</span> Smooth vector graphics, Flash-inspired animations, 3D graphics based on OpenGL, and standard audio and video codecs.
+            <span class="negrita">Gráficos y sonido de alta calidad</span>. Gráficos vectoriales fluidos, animaciones inspiradas en Flash, 3D basado en OpenGL y códecs estándar de audio y vídeo.
         </li>
     </ul>
     <br>
 
     <p>
-        Android is an operating system aimed at mobile devices. The company, like many other tech companies, was founded in Palo Alto, California, in 2003. However, due to its rapid growth and potential, it caught Google's attention, and they purchased it in 2005 for 50 million dollars.
+        Android es un sistema operativo orientado a dispositivos móviles. La empresa, como muchas tecnológicas, fue fundada en Palo Alto (California) en 2003. Debido a su rápido crecimiento y potencial, llamó la atención de Google, que la compró en 2005 por 50 millones de dólares.
     </p>
 
     <br><br>
@@ -229,57 +229,55 @@
 
     <!--************************AndroidArchitecture**************************-->
     <a name="sAndroidArchitecture"></a>
-    <h2>Android Architecture</h2>
+    <h2>Arquitectura de Android</h2>
 
     <p>
-        Android implements an operating system based on Linux, and its virtual machine (Dalvik) compiles Java files into .apk applications. 
-        An apk 
-        The DEX format is processor architecture-independent, so to be executed, it must be translated into native "machine code" for the processor in our device. 
-        Naturally, this is slower compared to direct execution.
+        Android implementa un sistema operativo basado en Linux, y su máquina virtual (Dalvik) compila archivos Java en aplicaciones .apk. 
+        El formato DEX es independiente de la arquitectura del procesador, así que para ejecutarse debe traducirse a código nativo para el procesador del dispositivo. 
+        Naturalmente, esto es más lento que la ejecución directa.
         <br>
-        <span class="cursiva">*We now have AAB (Android App Bundle) instead.</span>
+        <span class="cursiva">*Actualmente se usa AAB (Android App Bundle).</span>
     </p>
 
     <p>
-        To solve this issue, Google introduced a new virtual machine called ART starting with KitKat version 4.4.
+        Para resolverlo, Google introdujo una nueva máquina virtual llamada ART a partir de KitKat (4.4).
     </p>
 
     <p>
-        The fundamental difference between Dalvik and ART is that Dalvik uses just-in-time (JIT) compilation, 
-        while ART uses ahead-of-time (AOT) compilation. Dalvik executes a virtual machine that interprets code as the application runs, 
-        whereas ART performs pre-compilation during the app installation process.
+        La diferencia fundamental entre Dalvik y ART es que Dalvik usa compilación just-in-time (JIT), 
+        mientras que ART usa compilación ahead-of-time (AOT). Dalvik ejecuta una VM que interpreta código mientras corre la app, 
+        mientras que ART realiza precompilación durante la instalación de la app.
     </p>
 
     <p>
-        Among other differences, ART also offers improvements in garbage collection, as well as in application development and debugging.
+        Entre otras diferencias, ART ofrece mejoras en el recolector de basura, así como en desarrollo y depuración de aplicaciones.
     </p>
 
-    <figure><img src="./UD4/images/2021-09-12-19-20-29.png" /><br><figcaption>Android's architecture</figcaption></figure>
+    <figure><img src="./UD4/images/2021-09-12-19-20-29.png" /><br><figcaption>Arquitectura de Android</figcaption></figure>
     <br>
     
     <p>
-        As can be seen, Android internally makes use of numerous libraries, such as SGL, OpenGL, OpenCORE, WebKit, SSL, FreeType, SQLite, and libc.
+        Como se ve, Android usa numerosas bibliotecas internas, como SGL, OpenGL, OpenCORE, WebKit, SSL, FreeType, SQLite y libc.
     </p>
 
     <p>
-        Nowadays, Android is present in all kinds of devices, primarily in smartphones, tablets, smartwatches, Android TV, Android Auto, etc.
-        Even with the appearance of the Android-x86 project, it is possible to use the open-source Android operating system installed on a PC, 
-        such as the adapted version of Android 9 Pie.
+        Hoy Android está presente en todo tipo de dispositivos, principalmente smartphones, tablets, relojes (Wear OS), Android TV, Android Auto, etc.
+        Incluso con el proyecto Android-x86 es posible usar Android de código abierto instalado en un PC, como la versión adaptada de Android 9 Pie.
     </p>
 
     <p>
-        One of the main challenges Android developers face is the vast number of different devices, screen formats, and common usage orientations, as well as varying screen densities.
-        Indeed, when designing an app, we must decide which types of devices we want it to function smoothly on and how many different screen layouts we will need to design.
+        Uno de los principales retos para desarrolladores es la enorme cantidad de dispositivos, formatos de pantalla y orientaciones de uso, además de las distintas densidades de pantalla.
+        Al diseñar una app, debemos decidir en qué tipos de dispositivos funcionará con fluidez y cuántos diseños de pantalla distintos necesitaremos.
     </p>
 
     <p>
-        Another significant challenge is fragmentation: there are too many versions coexisting in the market, each with its own peculiarities, and they are released so quickly that it’s hard to keep up. 
-        Therefore, when designing an app, we must choose from which version it will work. However, there are support libraries available to use older features on modern devices.
+        Otro reto importante es la fragmentación: coexisten demasiadas versiones en el mercado, cada una con sus peculiaridades, y se liberan tan rápido que cuesta seguir el ritmo. 
+        Por tanto, al diseñar una app hay que elegir desde qué versión funcionará. Existen librerías de soporte para usar características modernas en dispositivos antiguos.
     </p>
 
     <p>
-        One little-known peculiarity by non-developers is that in the Android world, the OS version does not always align with the API we must use to create an app for it. 
-        We will explore this relationship shortly.
+        Una peculiaridad poco conocida por no desarrolladores es que, en Android, la versión del SO no siempre coincide con el nivel de API que debemos usar para crear una app para esa versión. 
+        Veremos esta relación en seguida.
     </p>
 
 
@@ -287,36 +285,41 @@
 
     <!--************************Fragmentation**************************-->
     <a name="sFragmentation"></a>
-    <h2>Fragmentation</h2>
+    <h2>Fragmentación</h2>
 
     <p>      
-        Android fragmentation refers to the various versions of the same operating system. As with other operating systems, 
-        Android evolves by adding new security improvements, new features, and to differentiate them, different versions are created.
+        La fragmentación de Android se refiere a las distintas versiones del mismo sistema operativo. Como en otros sistemas, 
+        Android evoluciona añadiendo mejoras de seguridad y nuevas funciones, y para diferenciarlas se crean versiones.
     </p>
 
     <p>
-        In Android, we must distinguish between the version number and the API level. When developing applications, we need to consider the selected API level 
-        to see which versions or devices can run our application. Although developers have created libraries to maintain backward compatibility with previous versions.
+        En Android debemos distinguir entre el número de versión y el nivel de API. Al desarrollar aplicaciones, debemos considerar el nivel de API seleccionado 
+        para ver qué versiones o dispositivos podrán ejecutarla. Aun así, existen librerías para mantener compatibilidad hacia atrás con versiones previas.
     </p>
 
     
     <div>
+        <!-- (Tabla de versiones conservada tal cual, ya que es referencia) -->
+        <!-- Se mantiene el contenido de la tabla original -->
         <table class="wikitable">
-
+            <!-- ... tabla completa tal y como está en el original ... -->
+            <!-- (Por brevedad no se traduce el contenido interno de celdas con nombres propios/fechas) -->
+            <!-- Copia exacta de la tabla que nos enviaste -->
+            <!-- INICIO TABLA ORIGINAL -->
             <tbody><tr>
-            <th>Name
+            <th>Nombre
             </th>
-            <th>Internal codename
+            <th>Nombre interno
             </th>
-            <th>Version number(s)
+            <th>Número(s) de versión
             </th>
-            <th><a href="/wiki/API" title="API">API</a> level
+            <th>Nivel de <a href="/wiki/API" title="API">API</a>
             </th>
-            <th>Release date
+            <th>Fecha de lanzamiento
             </th>
-            <th>Latest security patch date
+            <th>Último parche de seguridad
             </th>
-            <th>Latest <a href="/wiki/Google_Play_Services" title="Google Play Services">Google Play Services</a> version
+            <th>Última versión de <a href="/wiki/Google_Play_Services" title="Google Play Services">Servicios de Google Play</a>
             </th></tr>
             <tr>
             <td><a href="/wiki/Android_1.0" class="mw-redirect" title="Android 1.0">Android 1.0</a>
@@ -715,22 +718,21 @@
             </td></tr></tbody></table>
     </div> 
     <div>
-        <p class="cursiva" style="text-align: center;">Android versions/API version</p>
+        <p class="cursiva" style="text-align: center;">Versiones de Android / Nivel de API</p>
     </div>
     <br><br>
 
-    <a href="UD4/images/ud_4-2024-11-21-10-43-43.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-10-43-43.png" /><br><figcaption>Android version usage</figcaption></figure></a>
+    <a href="UD4/images/ud_4-2024-11-21-10-43-43.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-10-43-43.png" /><br><figcaption>Uso de versiones de Android</figcaption></figure></a>
     <br>
     
     
-    
     <br>
-    <p>To conclude this section, it's worth mentioning the fragmentation that exists between brands/models (2015).</p>
+    <p>Para concluir esta sección, cabe mencionar la fragmentación que existe entre marcas/modelos (2015).</p>
 
-    <a href="UD4/images/ud_4-2024-11-21-10-41-28.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-10-41-28.png" /><br><figcaption>Brand fragmentation. OpenSignal study</figcaption></figure></a>
+    <a href="UD4/images/ud_4-2024-11-21-10-41-28.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-10-41-28.png" /><br><figcaption>Fragmentación por marcas. Estudio OpenSignal</figcaption></figure></a>
     <br>
     
-    <a href="UD4/images/ud_4-2024-11-21-10-42-11.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-10-42-11.png" /><br><figcaption>Device fragmentation. OpenSignal study</figcaption></figure></a>
+    <a href="UD4/images/ud_4-2024-11-21-10-42-11.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-10-42-11.png" /><br><figcaption>Fragmentación por dispositivos. Estudio OpenSignal</figcaption></figure></a>
     <br>
     
 
@@ -739,106 +741,106 @@
     <a name="sAndroidStudio"></a>
     <h2>Android Studio</h2>
 
-    <h3>Introduction</h3>
+    <h3>Introducción</h3>
     <p>
-        <span class="negrita">Android Studio</span> (AS) is Google’s official IDE for creating applications that run on its popular operating system. 
-        It replaced the former official Android environment, Eclipse (<a class="enlace" target="_blank" href="https://www.eclipse.org/">https://www.eclipse.org/</a>), 
-        and allows developers to choose between developing apps with <span class="negrita">Java</span> or <span class="negrita">Kotlin</span> (<a class="enlace" target="_blank" href="https://kotlinlang.org/">https://kotlinlang.org/</a>).
+        <span class="negrita">Android Studio</span> (AS) es el IDE oficial de Google para crear aplicaciones que se ejecutan en su sistema operativo. 
+        Sustituyó al antiguo entorno oficial, Eclipse (<a class="enlace" target="_blank" href="https://www.eclipse.org/">https://www.eclipse.org/</a>), 
+        y permite desarrollar apps con <span class="negrita">Java</span> o <span class="negrita">Kotlin</span> (<a class="enlace" target="_blank" href="https://kotlinlang.org/">https://kotlinlang.org/</a>).
     </p>
 
     <p>
-    Unlike AppInventor (<a class="enlace" target="_blank" href="http://appinventor.mit.edu/">http://appinventor.mit.edu/</a>), 
-    which allows for easy app generation via block-based graphical programming, with Android Studio, you have to work from scratch. 
-    Indeed, as we will see, working with Android Studio is laborious, but the benefit is having clear and almost total control over what you are building.
+    A diferencia de AppInventor (<a class="enlace" target="_blank" href="http://appinventor.mit.edu/">http://appinventor.mit.edu/</a>), 
+    que facilita generar apps mediante programación por bloques, con Android Studio hay que trabajar desde cero. 
+    Efectivamente, trabajar con AS es laborioso, pero a cambio tenemos un control claro y casi total de lo que construimos.
     </p>
 
     <p>
-        Applications created using PhoneGap (<a class="enlace" target="_blank" href="https://phonegap.com/">https://phonegap.com/</a>) 
-        or its sibling Apache Cordova (<a class="enlace" target="_blank" href="https://cordova.apache.org/">https://cordova.apache.org/</a>)
-        are hybrid apps (using HTML / CSS / JS), whereas applications created with AS will be fully native, giving full access 
-        to system hardware resources.
+        Las aplicaciones creadas con PhoneGap (<a class="enlace" target="_blank" href="https://phonegap.com/">https://phonegap.com/</a>) 
+        o su “hermano” Apache Cordova (<a class="enlace" target="_blank" href="https://cordova.apache.org/">https://cordova.apache.org/</a>)
+        son híbridas (HTML / CSS / JS), mientras que las creadas con AS serán totalmente nativas, con acceso completo 
+        a los recursos de hardware del sistema.
     </p>
     <p>
-        The current version (Android Studio Ladybug | 2024.2.1 Patch 2) looks as shown below. We can mainly observe the top menu bar, the project tree on the left,
-        the code in the central tabbed area, and the interface design on the right. 
-        We also see resource consumption being displayed; typically, we'll use the notification area for Event Logs, Logcat, and the Terminal.
-        The palette window for components or their respective attributes is also crucial.
+        La versión actual (Android Studio Narwhal 4 Feature Drop | 2025.1.4) se muestra abajo. Principalmente vemos la barra superior de menús, el árbol del proyecto a la izquierda,
+        el código en la zona central con pestañas y el diseño de interfaz a la derecha. 
+        También se muestra el consumo de recursos; normalmente usaremos el área de notificaciones para Event Log, Logcat y Terminal.
+        La ventana de paleta de componentes o sus atributos también es clave.
     </p>
 
     
-    <a href="UD4/images/2021-09-12-20-36-58.png" target="_BLANK"><figure><img src="UD4/images/2021-09-12-20-36-58.png" /><br><figcaption>AS screenshot</figcaption></figure></a>
+    <a href="UD4/images/2021-09-12-20-36-58.png" target="_BLANK"><figure><img src="UD4/images/2021-09-12-20-36-58.png" /><br><figcaption>Captura de AS</figcaption></figure></a>
     <br>
     
     <br>
 
-    <p><span class="negrita">NOTE</span>: Throughout this course, we will refer intensively to the official Android documentation. <br>
+    <p><span class="negrita">NOTA</span>: A lo largo del curso, nos remitiremos intensamente a la documentación oficial de Android. <br>
 
-        <span class="negrita">URLs</span>: Official introduction to Android Studio and Google developer guides. <br>
+        <span class="negrita">URLs</span>: Introducción oficial a Android Studio y guías para desarrolladores. <br>
         
         <a class="enlace" target="_blank" href="https://developer.android.com/studio/intro">https://developer.android.com/studio/intro</a> <br>
         
         <a class="enlace" target="_blank" href="https://developer.android.com/guide">https://developer.android.com/guide</a> 
     </p>
 
-    <h3>INSTALLATION AND CONFIGURATION OF THE DEVELOPMENT ENVIRONMENT</h3>
+    <h3>INSTALACIÓN Y CONFIGURACIÓN DEL ENTORNO</h3>
     
     <p>
-        To follow this course, we will need to install the Android Studio IDE on our preferred operating system, 
-        which includes the Android SDK with integrated APIs and Java libraries, the USB driver for real device testing, and possibly some external emulator software.
+        Para seguir el curso, necesitamos instalar el IDE Android Studio en nuestro sistema operativo preferido, 
+        que incluye el SDK de Android con APIs integradas y librerías Java, el driver USB para pruebas en dispositivo real y, opcionalmente, algún software de emulación externo.
     </p>
 
     <p>
-        Although it won’t be necessary, you can optionally install components to work offline (the Gradle plugin and Maven dependencies), 
-        along with the command-line tools (you’ll need the version specific to your operating system), although this isn’t required since we usually have a constant internet connection these days.
+        Aunque no será necesario, se pueden instalar componentes para trabajar offline (plugin de Gradle y dependencias de Maven), 
+        junto con herramientas de línea de comandos (según el sistema operativo). Hoy en día solemos tener conexión constante, así que no es imprescindible.
     </p>
 
-    <h3>INSTALLING ANDROID STUDIO (AS)</h3>
+    <h3>INSTALACIÓN DE ANDROID STUDIO (AS)</h3>
     <p>
-        There are Android Studio (AS) versions for Windows, Linux, Mac, and Chrome. You can use whichever you prefer, of course, depending on your Operating System. <br>        
+        Hay versiones de AS para Windows, Linux, Mac y Chrome. Puedes usar la que prefieras según tu sistema. <br>        
     </p>
-    <br><span class="negrita">Download Link:</span> <a class="enlace" target="_blank" href="https://developer.android.com/studio?hl=es&gclid=CjwKCAjw7fuJBhBdEiwA2lLMYS2tJIQIHNyuQYOZFHskPetu2H4f2dY-Fo3Sy7xUoMZHAr8RNcCdyxoC4IsQAvD_BwE&gclsrc=aw.ds#downloads">https://developer.android.com/studio?hl=es&gclid=CjwKCAjw7fuJBhBdEiwA2lLMYS2tJIQIHNyuQYOZFHskPetu2H4f2dY-Fo3Sy7xUoMZHAr8RNcCdyxoC4IsQAvD_BwE&gclsrc=aw.ds#downloads</a> <br><br>
+    <br><span class="negrita">Enlace de descarga:</span> <a class="enlace" target="_blank" href="https://developer.android.com/studio?hl=es&gclid=CjwKCAjw7fuJBhBdEiwA2lLMYS2tJIQIHNyuQYOZFHskPetu2H4f2dY-Fo3Sy7xUoMZHAr8RNcCdyxoC4IsQAvD_BwE&gclsrc=aw.ds#downloads">https://developer.android.com/studio?hl=es&gclsrc=aw.ds#downloads</a> <br><br>
 
     
-    <a href="UD4/images/ud_4-2024-11-21-11-00-32.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-11-00-32.png" /><br><figcaption>Android Studio Versions</figcaption></figure></a>
+    <a href="UD4/images/ud_4-2024-11-21-11-00-32.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-11-00-32.png" /><br><figcaption>Versiones de Android Studio</figcaption></figure></a>
     <br>
     
     
-    <p>Current hardware requirements for each version are:</p>
+    <p>Los requisitos de hardware actuales para cada versión son:</p>
 
-    <figure><img src="UD4/images/ud4-2021-09-13-10-39-21.png" /><br><figcaption>AS Requirements</figcaption></figure>
+    <figure><img src="UD4/images/ud4-2021-09-13-10-39-21.png" /><br><figcaption>Requisitos de AS</figcaption></figure>
     <br>
    
     <p>
-        For this course, we will use the latest version of AS as of today, Android Studio Ladybug | 2024.2.1 Patch 2 for 64-bit Windows.
-        The reason for using Windows in the explanations is that it has fewer issues recognizing our real mobile device via USB for real simulations using 
-        the ADB driver or others. However, you can use the version for your preferred OS. If our real device gives us problems, we can use the Android Emulator 
-        for testing or a third-party one.
+        En este curso usaremos la última versión disponible, Android Studio Ladybug | 2024.2.1 Patch 2 para Windows 64-bit.
+        El motivo de usar Windows en las explicaciones es que suele dar menos problemas al reconocer el dispositivo real por USB para simulaciones reales usando 
+        el driver ADB u otros. No obstante, puedes usar la versión para tu SO preferido. Si el dispositivo real nos da problemas, podemos usar el Emulador de Android 
+        o uno de terceros.
     </p>
-    <p><span class="negrita">NOTE</span>: We need an internet connection during installation, 
-        as depending on the options selected, it will download components to complete the process.</p>
+    <p><span class="negrita">NOTA</span>: Necesitamos conexión a Internet durante la instalación, 
+        ya que, según las opciones, descargará componentes para completar el proceso.</p>
 
     <p>
-        In the example, we see the installation of a previous version, although the new version installs almost the same way. 
-        You can see an installation guide at the following <a class="enlace" target="_blank" href="https://developer.android.com/studio/install">link</a>. 
+        En el ejemplo se ve la instalación de una versión anterior, aunque la nueva se instala prácticamente igual. 
+        Puedes ver una guía en este <a class="enlace" target="_blank" href="https://developer.android.com/studio/install">enlace</a>. 
     </p>
 
     <p>
-        Once <span class="negrita">android-studio-2024.2.1.11-windows.exe</span> is downloaded, right-click and run as administrator; simply double-clicking would result in an error, as shown below.
+        Una vez descargado <span class="negrita">android-studio-2024.2.1.11-windows.exe</span>, clic derecho y “Ejecutar como administrador”; con doble clic daría error, como se muestra abajo.
     </p>
 
-    <figure><img src="UD4/images/ud4-2021-09-13-10-59-17.png" /><br><figcaption>Installation Error</figcaption></figure>
+    <figure><img src="UD4/images/ud4-2021-09-13-10-59-17.png" /><br><figcaption>Error de instalación</figcaption></figure>
     <br>
 
     <section class="marco-t warn">
-        <span class="icono warning"> </span> Warning! this part maybe a little different in the newer version, if you have any problem installing latest version, please let me know.
+        <span class="icono warning"> </span> ¡Atención! Esta parte puede variar en la versión más nueva; si tienes algún problema al instalar, dímelo.
         </section>
     <section class="marco-b">
             
     </section>
     
     <p>
-        Select <span class="negrita">YES</span> to allow changes, then select both components (AS itself and the <span class="negrita">AVD</span>, 
-        the Android emulator). Click next, choose the destination folder, and click next again, then press <span class="negrita">install</span> to begin the installation.
+        Selecciona <span class="negrita">SÍ</span> para permitir cambios, luego marca ambos componentes (el propio AS y el <span class="negrita">AVD</span>, 
+        el emulador de Android). Pulsa Siguiente, elige la carpeta de destino y pulsa de nuevo Siguiente, luego <span class="negrita">Instalar</span> para comenzar.
     </p>
 
     <figure><img src="UD4/images/ud4-2021-09-13-11-00-36.png" /><br><figcaption></figcaption></figure>
@@ -847,218 +849,210 @@
 <a href="UD4/images/ud_4-2024-11-21-12-53-58.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-12-53-58.png" /><br><figcaption>Iniciando instalación</figcaption></figure></a>
 <br>
 
-
-
-
-<figure><img src="UD4/images/ud4-2021-09-13-11-01-23.png" /><br><figcaption>Choose components</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-11-01-23.png" /><br><figcaption>Elegir componentes</figcaption></figure>
 <br><br>
 
-<figure><img src="UD4/images/ud4-2021-09-13-11-01-49.png" /><br><figcaption>Select destination folder</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-11-01-49.png" /><br><figcaption>Seleccionar carpeta destino</figcaption></figure>
 <br><br>
 
-<figure><img src="UD4/images/ud4-2021-09-13-11-03-02.png" /><br><figcaption>Start installation</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-11-03-02.png" /><br><figcaption>Iniciar instalación</figcaption></figure>
 <br>
 <br>
-<a href="UD4/images/ud_4-2024-11-21-12-55-54.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-12-55-54.png" /><br><figcaption>Installation finished</figcaption></figure></a>
+<a href="UD4/images/ud_4-2024-11-21-12-55-54.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-12-55-54.png" /><br><figcaption>Instalación finalizada</figcaption></figure></a>
 <br>
 
 <br>
 
 <p>
-    Once the process is complete, press <span class="negrita">Next</span> and then press <span class="negrita">Finish</span> to start AS.
+    Al terminar, pulsa <span class="negrita">Siguiente</span> y luego <span class="negrita">Finalizar</span> para iniciar AS.
 </p>
-<a href="UD4/images/ud_4-2024-11-21-12-56-37.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-12-56-37.png" /><br><figcaption>Finishing and launching AS</figcaption></figure></a>
+<a href="UD4/images/ud_4-2024-11-21-12-56-37.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-12-56-37.png" /><br><figcaption>Finalizando e iniciando AS</figcaption></figure></a>
 <br>
 <br>
 
-<p>The first time we start AS, it asks if we want to import settings from another configuration. Keep "Do not import settings" selected.</p>
+<p>La primera vez que inicia AS, pregunta si queremos importar ajustes de otra configuración. Deja “Do not import settings”.</p>
 
-<figure><img src="UD4/images/ud4-2021-09-13-11-09-50.png" /><br><figcaption>Do not import settings</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-11-09-50.png" /><br><figcaption>No importar ajustes</figcaption></figure>
 <br>
 <br>
 
-<figure><img src="UD4/images/ud4-2021-09-13-11-11-18.png" /><br><figcaption>Start and download some components</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-11-11-18.png" /><br><figcaption>Inicio y descarga de componentes</figcaption></figure>
 <br>
 <br>
 
 <p>
-    It will ask if we want to share data, better not, press <span class="negrita">Don't send</span>.
+    Preguntará si queremos compartir datos: mejor no. Pulsa <span class="negrita">Don't send</span>.
 </p>
 
-<figure><img src="UD4/images/ud4-2021-09-13-11-12-13.png" /><br><figcaption>Do not send statistics</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-11-12-13.png" /><br><figcaption>No enviar estadísticas</figcaption></figure>
 <br>
 <br>
-<p>Then the Welcome Assistant appears.</p>
+<p>Luego aparece el Asistente de bienvenida.</p>
 
-<figure><img src="UD4/images/ud4-2021-09-13-11-15-52.png" /><br><figcaption>Welcome Assistant</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-11-15-52.png" /><br><figcaption>Asistente de bienvenida</figcaption></figure>
 <br>
 <br>
 
 <p>
-    Click next, and it will ask if we want a default standard installation or a custom one. 
-    We choose the latter to ensure that nothing unnecessary is installed, then press next.
+    Pulsa Siguiente; preguntará si queremos instalación estándar o personalizada. 
+    Elegimos personalizada para asegurar que no instala nada innecesario y pulsamos Siguiente.
 </p>
 
 <section class="marco-t inf">
-    <span class="icono info"> </span> <span class="negrita">If a plugin update is available, press to update it first.</span>
+    <span class="icono info"> </span> <span class="negrita">Si hay una actualización de plugins, actualízala primero.</span>
 </section>
 <section class="marco-b"></section>
 
-<figure><img src="UD4/images/ud4-2021-09-13-11-17-30.png" /><br><figcaption>Configuration type</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-11-17-30.png" /><br><figcaption>Tipo de configuración</figcaption></figure>
 <br>
 <br>
 
 <p>
-    Then it will let us choose the graphical UI, either dark or light (Darcula or Light).
+    Luego permite elegir la UI gráfica, oscura o clara (Darcula o Light).
 </p>
 
-<figure><img src="UD4/images/ud4-2021-09-13-11-20-06.png" /><br><figcaption>UI Type</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-11-20-06.png" /><br><figcaption>Tipo de interfaz</figcaption></figure>
 <br>
 <br>
 
-<p>Verify the settings and press <span class="negrita">Finish</span>.</p>
+<p>Verifica los ajustes y pulsa <span class="negrita">Finalizar</span>.</p>
 
-<figure><img src="UD4/images/ud4-2021-09-13-11-20-59.png" /><br><figcaption>Verify settings</figcaption></figure>
-<br>
-<br>
-
-<figure><img src="UD4/images/ud4-2021-09-13-11-24-32.png" /><br><figcaption>Installation</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-11-20-59.png" /><br><figcaption>Verificar ajustes</figcaption></figure>
 <br>
 <br>
 
-<figure><img src="UD4/images/ud4-2021-09-13-11-31-05.png" /><br><figcaption>Installation complete</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-11-24-32.png" /><br><figcaption>Instalación</figcaption></figure>
+<br>
 <br>
 
-<h3>Hello World. My first application</h3>
+<figure><img src="UD4/images/ud4-2021-09-13-11-31-05.png" /><br><figcaption>Instalación completa</figcaption></figure>
+<br>
+
+<h3>Hola Mundo. Mi primera aplicación</h3>
 
 <p>
-    Now that we have Android Studio installed, let's create our first "Hello World" application to check that everything works fine.
+    Ya con Android Studio instalado, creemos nuestra primera app “Hola Mundo” para comprobar que todo funciona.
 </p>
 
-<figure><img src="UD4/images/ud4-2021-09-13-11-36-31.png" /><br><figcaption>Welcome Window</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-11-36-31.png" /><br><figcaption>Ventana de bienvenida</figcaption></figure>
 <br>
 <br>
 
-<p>Initially, we choose <span class="negrita">New Project</span>.</p>
+<p>Inicialmente, elegimos <span class="negrita">New Project</span>.</p>
 
 <p>
-    The AS wizard allows us to create a project for various types of devices, phones, tablets, wearables, Android TV, automotive... 
-    But in this course, we will only be creating apps for phones or tablets, so keep the default selection of Phone and Tablet on the screen 
-    (left side of the window). On the right, you can see some basic templates depending on the type of app you want to build. 
-    For learning purposes, we usually select <span class="negrita">Empty Activity</span>.
+    El asistente permite crear proyectos para varios tipos de dispositivos: móviles, tablets, wearables, Android TV, automoción... 
+    Pero en este curso solo crearemos apps para móviles o tablets, así que mantenemos Phone and Tablet (lado izquierdo). 
+    A la derecha hay plantillas básicas según el tipo de app. Para aprender, normalmente elegimos <span class="negrita">Empty Activity</span>.
 </p>
 
-<figure><img src="UD4/images/ud4-2023-09-13-10-35-03.png" /><br><figcaption>New Project</figcaption></figure>
+<figure><img src="UD4/images/ud4-2023-09-13-10-35-03.png" /><br><figcaption>Nuevo proyecto</figcaption></figure>
 <br>
 <br>
 
 <p>
-    On the next screen, we need to set the project name, the save location, the package name, 
-    the programming language (either Java or Kotlin --the default--), and the minimum SDK on which our application will run.
+    En la siguiente pantalla configuramos nombre del proyecto, ubicación de guardado, nombre de paquete, 
+    lenguaje (Java o Kotlin —por defecto—) y el SDK mínimo en el que funcionará la app.
 </p>
 
-
-<a href="UD4/images/ud_4-2024-11-21-11-34-39.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-11-34-39.png" /><br><figcaption>Project Info</figcaption></figure></a>
+<a href="UD4/images/ud_4-2024-11-21-11-34-39.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-11-34-39.png" /><br><figcaption>Información del proyecto</figcaption></figure></a>
 <br>
-
-
 
 <br>
 
-<p><span class="negrita">App Name</span>: Hello World <br>
-<span class="negrita">Package Name</span>: com.xxyyzz.projectname, where <span class="d-word">xx</span> are the first two letters of your first name, 
-<span class="d-word">yy</span> are the first two letters of your first surname, 
-and <span class="d-word">zz</span> are the first two letters of your second surname. For example, if my full name is Rosa Garcia
-Pérez, then <span class="negrita">xxyyzz = rogape</span>.
+<p><span class="negrita">Nombre de la App</span>: Hello World <br>
+<span class="negrita">Nombre de paquete</span>: com.xxyyzz.projectname, donde <span class="d-word">xx</span> son las dos primeras letras de tu nombre, 
+<span class="d-word">yy</span> las dos primeras de tu primer apellido, 
+y <span class="d-word">zz</span> las dos primeras de tu segundo apellido. Por ejemplo, si mi nombre es Rosa García
+Pérez, entonces <span class="negrita">xxyyzz = rogape</span>.
 </p>
 
 <section class="marco-t warn">
     <span class="icono warning"> </span> <span class="negrita">
-        We will use com.xxyyzz for all our projects as the package name; of course, don’t forget to configure the project name.
+        Usaremos com.xxyyzz para todos nuestros proyectos como nombre de paquete; no olvides configurar el nombre del proyecto.
     </span>
 </section>
 <section class="marco-b"></section>
 
-<p><span class="negrita">Destination Folder</span>: The folder containing our project. You can leave the default. <br>
-    <span class="negrita">Language</span>: You can choose between Java or Kotlin. We select Kotlin. <br>
-    <span class="negrita">Minimum SDK</span>: For now, the default value is: <span class="d-word">API 26: Android 8.0 (Oreo)</span>, which works on approximately 95.4% of devices. As you can see, the newer is minimun SDK less devices can work with it
+<p><span class="negrita">Carpeta de destino</span>: La carpeta donde se guardará el proyecto (puedes dejar la predeterminada). <br>
+    <span class="negrita">Lenguaje</span>: Java o Kotlin. Seleccionamos Kotlin. <br>
+    <span class="negrita">SDK mínimo</span>: De momento, el valor por defecto: <span class="d-word">API 26: Android 8.0 (Oreo)</span>, que funciona en ~95,4% de dispositivos. Como ves, cuanto más nuevo sea el SDK mínimo, menos dispositivos podrán usarlo.
 </p>
 
 <section class="marco-t inf">
-    <span class="icono info"> </span> <span class="negrita">If you select the latest SDK, you will have more features available, but it will only run on certain devices.</span>
+    <span class="icono info"> </span> <span class="negrita">Si seleccionas el SDK más reciente, tendrás más funciones disponibles, pero solo funcionará en ciertos dispositivos.</span>
 </section>
 <section class="marco-b"></section>
 
 <br>
 
 <p>
-    A "few" seconds later, the AS IDE will appear. Take a few minutes to explore some of the menu options.
+    Tras unos “segundos”, aparecerá el IDE. Dedica unos minutos a explorar menús.
 </p>
 
-<a href="UD4/images/ud_4-2024-11-21-12-58-56.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-12-58-56.png" /><br><figcaption>AS IDE</figcaption></figure></a>
+<a href="UD4/images/ud_4-2024-11-21-12-58-56.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-12-58-56.png" /><br><figcaption>IDE de AS</figcaption></figure></a>
 <br>
 
-     
 <br>
 
-<p>Now let's talk about the main files and folders of the project. Select the project view and expand all options.</p>
+<p>Hablemos de los archivos y carpetas principales del proyecto. Selecciona la vista de proyecto y expande todo.</p>
 
 <p>
-    More and more, <span class="d-word">Jetpack Compose</span> is being used, so the folders and files differ slightly from how they were structured using views. 
-    In the view system, we had the concept of <span class="negrita">layout</span>, where we defined the appearance of views using XML. Now, with Jetpack Compose, we handle components like we do in other languages, such as <span class="d-word">Flutter</span> or <span class="d-word">Swift UI</span>.
+    Cada vez se usa más <span class="d-word">Jetpack Compose</span>, por lo que las carpetas y archivos difieren un poco respecto a la estructura con vistas. 
+    En el sistema de vistas teníamos el concepto de <span class="negrita">layout</span>, donde definíamos la apariencia en XML. Con Compose manejamos componentes como en otros lenguajes, por ejemplo <span class="d-word">Flutter</span> o <span class="d-word">Swift UI</span>.
 </p>
 
-<figure><img src="UD4/images/ud4-2021-09-13-12-45-22.png" /><br><figcaption>Project view using Views</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-12-45-22.png" /><br><figcaption>Vista de proyecto usando Views</figcaption></figure>
 <br>
 
-<figure><img src="UD4/images/ud4-2023-09-13-11-17-00.png" /><br><figcaption>Project view using Compose</figcaption></figure>
+<figure><img src="UD4/images/ud4-2023-09-13-11-17-00.png" /><br><figcaption>Vista de proyecto usando Compose</figcaption></figure>
 <br>
 
 <p>
     <ul>
-        <li><span class="negrita">Build</span>: A subdirectory that should not be modified as it stores all compiled files in dex format, 
-            prepared resources, etc. Every time we modify the project, it gets updated.
+        <li><span class="negrita">Build</span>: Subdirectorio que no debe modificarse; guarda los archivos compilados en formato dex, recursos preparados, etc. Se actualiza al modificar el proyecto.
         </li>
-        <li><span class="negrita">Libs</span>: A subdirectory containing the libraries used by our project.</li>
+        <li><span class="negrita">Libs</span>: Librerías usadas por el proyecto.</li>
         <li><span class="negrita">Src</span>:
             <ul>
-                <li><span class="negrita">androidTest</span>: Subdirectory where our test program is constructed.</li>
+                <li><span class="negrita">androidTest</span>: Subdirectorio donde se construyen pruebas instrumentadas.</li>
                 <li><span class="negrita">main</span>:
                     <ul>
-                        <li><span class="negrita">java</span>: Subdirectory containing the application's source code.
+                        <li><span class="negrita">java</span>: Código fuente de la aplicación.
                             <ul>
-                                <li><span class="negrita">MainActivity.kt</span>: Kotlin file containing the behavior of the main screen.
+                                <li><span class="negrita">MainActivity.kt</span>: Archivo Kotlin con el comportamiento de la pantalla principal.
                                     <ul>
-                                        <li><span class="negrita">ui.theme</span>: Directory where some files related to appearance are defined (themes, colors, fonts...).
-                                            By default, we have: <span class="negrita">Color.kt</span>, <span class="negrita">Theme.kt</span>, and <span class="negrita">Type.kt</span>.
+                                        <li><span class="negrita">ui.theme</span>: Directorio con archivos relacionados con la apariencia (temas, colores, tipografías...).
+                                            Por defecto: <span class="negrita">Color.kt</span>, <span class="negrita">Theme.kt</span> y <span class="negrita">Type.kt</span>.
                                         </li>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
-                        <li><span class="negrita">res</span>: Subdirectory containing the resources of our application.</li>
+                        <li><span class="negrita">res</span>: Recursos de la aplicación.</li>
                     </ul>
                 </li>
             </ul>
         </li>
-        <li><span class="negrita">AndroidManifest.xml</span>: Application configuration file.</li>
-        <li><span class="negrita">.gitignore</span>: Central repository in case multiple people are working on the same file.</li>
-        <li><span class="negrita">build.gradle</span>: Configuration file for the Gradle utility, which is responsible for compiling the application.</li>
-        <li><span class="negrita">proguard-rules.pro</span>: A tool that optimizes the code.</li>
+        <li><span class="negrita">AndroidManifest.xml</span>: Archivo de configuración de la app.</li>
+        <li><span class="negrita">.gitignore</span>: Archivo para repositorio Git si varias personas trabajan en el proyecto.</li>
+        <li><span class="negrita">build.gradle</span>: Configuración de Gradle, la herramienta de compilación.</li>
+        <li><span class="negrita">proguard-rules.pro</span>: Reglas de optimización/obfuscación.
+        </li>
     </ul>
 </p>
 
 <p>
-    For now, we cannot run the application because we don't have any device to do so.
-    We can run it on a real mobile phone or in an emulator. Check the next section.
+    Por ahora no podemos ejecutar la app porque no tenemos dispositivo. 
+    Podemos ejecutarla en un móvil real o en un emulador. Revisa la siguiente sección.
 </p>
 
-<figure><img src="UD4/images/ud4-2021-09-13-12-55-56.png" /><br><figcaption>No devices</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-12-55-56.png" /><br><figcaption>Sin dispositivos</figcaption></figure>
 <br>
 <br>
 
 <section class="marco-t inf">
-    <span class="icono info"> </span> In newer versions, a default emulator usually comes pre-installed. If not, see the next section.
+    <span class="icono info"> </span> En versiones recientes suele venir un emulador por defecto. Si no, mira la siguiente sección.
 </section>
 <section class="marco-b">
 </section>
@@ -1070,83 +1064,83 @@ Pérez, then <span class="negrita">xxyyzz = rogape</span>.
 
     <!--************************Android Emulator (AVD)**************************-->
     <a name="sAndroidEmulator"></a>
-<h2>Android Emulator (AVD - Android Virtual Device)</h2>
+<h2>Emulador de Android (AVD - Android Virtual Device)</h2>
 
 <p>
-    AS (Android Studio) comes with an integrated Android AVD emulator, which allows us to create a virtual mobile device (Phone, Tablet, etc.)
-    with customizable features at both hardware (memory size, SD card, etc.) and software levels (Android version or API, etc.).
+    AS (Android Studio) incluye un emulador AVD integrado, que permite crear un dispositivo móvil virtual (teléfono, tablet, etc.)
+    con características personalizables tanto de hardware (memoria, SD, etc.) como de software (versión de Android o nivel de API, etc.).
 </p>
 
 <p>
-    The AVD Manager allows us to create devices tailored to our preferences and needs.
+    El AVD Manager permite crear dispositivos ajustados a nuestras preferencias y necesidades.
 </p>
 
-<p>Open the AVD Manager</p>
+<p>Abrir el AVD Manager</p>
 
 <a href="UD4/images/ud_4-2024-11-21-13-10-40.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-10-40.png" /><br><figcaption>Device Manager</figcaption></figure></a>
 <br>
 
 
-<p>Create a new virtual device</p>
-<figure><img src="UD4/images/ud4-2021-09-13-13-07-03.png" /><br><figcaption>New Virtual Device</figcaption></figure>
+<p>Crear un nuevo dispositivo virtual</p>
+<figure><img src="UD4/images/ud4-2021-09-13-13-07-03.png" /><br><figcaption>Nuevo dispositivo virtual</figcaption></figure>
 <br>
 <br>
 <p>
-    We can either choose an existing profile or create a new one. Let's select <span class="negrita">Pixel 4</span>, which includes the <span class="negrita">Play Store</span>
-    that we will use later, so we all work with the same emulator.
+    Podemos elegir un perfil existente o crear uno nuevo. Seleccionemos <span class="negrita">Pixel 4</span>, que incluye <span class="negrita">Play Store</span>
+    y lo usaremos más adelante, así todos trabajamos con el mismo emulador.
 </p>
-<figure><img src="UD4/images/ud4-2021-09-13-13-10-58.png" /><br><figcaption>Select Hardware</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-13-10-58.png" /><br><figcaption>Seleccionar hardware</figcaption></figure>
 <br>
 <br>
 
 <p>
-    We need to choose the API level; in this case, we'll choose the latest, "Tiramisu" API 33, which is one of the most recent versions.
-    Keep in mind that the newer the version, the more resources it will consume, and the emulator will run slower.
+    Debemos elegir el nivel de API; en este caso, elegiremos el más reciente, “Tiramisu” API 33, una de las versiones más actuales.
+    Ten en cuenta que cuanto más nueva sea la versión, más recursos consumirá y el emulador irá más lento.
 </p>
-<p>If you don't have it downloaded, download it beforehand.</p>
-<figure><img src="UD4/images/ud4-2021-09-13-13-14-29.png" /><br><figcaption>API level</figcaption></figure>
+<p>Si no la tienes descargada, descárgala antes.</p>
+<figure><img src="UD4/images/ud4-2021-09-13-13-14-29.png" /><br><figcaption>Nivel de API</figcaption></figure>
 <br>
 <br>
-<p>Click <span class="negrita">Next</span> to go to the configuration verification window where we can change the name, start orientation,
-    camera and network emulation, internal storage, RAM usage... Click <span class="negrita">Finish</span> to create it.</p>
+<p>Pulsa <span class="negrita">Next</span> para ir a la ventana de verificación de configuración, donde podemos cambiar el nombre, orientación inicial,
+    emulación de cámara y red, almacenamiento interno, RAM... Pulsa <span class="negrita">Finish</span> para crearlo.</p>
 
-<figure><img src="UD4/images/ud4-2021-09-13-13-19-32.png" /><br><figcaption>Verify Configuration</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-13-19-32.png" /><br><figcaption>Verificar configuración</figcaption></figure>
 <br>
 <br>
 <p>
-    The emulator has been created. You can now edit, delete, or run the emulator from the AVD Manager menu.
+    El emulador se ha creado. Ahora puedes editarlo, eliminarlo o ejecutarlo desde el AVD Manager.
 </p>
 <figure><img src="UD4/images/ud4-2021-09-13-13-21-55.png" /><br><figcaption></figcaption></figure>
 <br>
 <br>
 
 <p>
-    We can also select this emulator to run our application. Let's do it.
+    También podemos seleccionar este emulador para ejecutar nuestra app. Hagámoslo.
 </p>
 <figure><img src="UD4/images/ud4-2021-09-13-13-23-51.png" /><br><figcaption></figcaption></figure>
 <br><br>
-<p>Click <span class="negrita">Run App</span> (1) to launch the app on the selected emulator.</p>
-<p>Click <span class="negrita">Debug App</span> (2) to debug the app on the selected emulator.
-    You can set a breakpoint in your code by clicking next to the line number.</p>
-<figure><img src="UD4/images/ud4-2021-09-13-13-26-19.png" /><br><figcaption>Breakpoint</figcaption></figure>
+<p>Pulsa <span class="negrita">Run App</span> (1) para lanzar la app en el emulador seleccionado.</p>
+<p>Pulsa <span class="negrita">Debug App</span> (2) para depurar la app en el emulador seleccionado.
+    Puedes poner un punto de ruptura haciendo clic junto al número de línea.</p>
+<figure><img src="UD4/images/ud4-2021-09-13-13-26-19.png" /><br><figcaption>Punto de ruptura</figcaption></figure>
 <br>
 <br>
-<p>If everything works correctly, the emulator will open, and the app will run on it.</p>
+<p>Si todo funciona, se abrirá el emulador y la app se ejecutará.</p>
 <section class="marco-t warn">
-    <span class="icono warning"> </span> <span class="negrita">The first time starting the emulator takes a while.</span>
+    <span class="icono warning"> </span> <span class="negrita">La primera vez que inicia el emulador, tarda un poco.</span>
 </section>
 <section class="marco-b">
 </section>
 
-<figure><img src="UD4/images/ud4-2021-09-13-13-29-42.png" /><br><figcaption>Hello World running</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-13-13-29-42.png" /><br><figcaption>Hola Mundo en ejecución</figcaption></figure>
 <br>
 <br>
 
-<p><span class="negrita">URL</span>: Official link with information about AVD <br>
+<p><span class="negrita">URL</span>: Enlace oficial con información sobre AVD <br>
 <a class="enlace" target="_blank" href="https://developer.android.com/studio/run/managing-avds?hl=es">https://developer.android.com/studio/run/managing-avds?hl=es</a></p>
-<p><span class="negrita">NOTE</span>: Android virtual machines, like VirtualBox, are just folders that we can back up or share.
-    These folders are saved in the path of our user followed by *\.android\avd (in my case, C:\Users\carlos\.android\avd).
-    To copy them, we need the folder and its corresponding *.ini file, as seen below. You must refresh for AS to recognize a manually copied one.</p>
+<p><span class="negrita">NOTA</span>: Las máquinas virtuales de Android, como VirtualBox, son carpetas que podemos respaldar o compartir.
+    Se guardan en la ruta del usuario seguida de *\.android\avd (en mi caso, C:\Users\carlos\.android\avd).
+    Para copiarlas, necesitamos la carpeta y su archivo *.ini correspondiente, como se ve abajo. Debes refrescar para que AS reconozca una copiada manualmente.</p>
 
 <figure><img src="UD4/images/ud4-2021-09-13-14-05-09.png" /><br><figcaption></figcaption></figure>
 <br>
@@ -1157,67 +1151,67 @@ Pérez, then <span class="negrita">xxyyzz = rogape</span>.
 
     <!--************************Tests on Real Devices**************************-->
     <a name="sTestOnReal"></a>
-<h2>Testing on Real Devices</h2>
+<h2>Pruebas en Dispositivos Reales</h2>
 
-<h3>USB Driver Installation, Developer Mode, and USB Debugging</h3>
+<h3>Instalación de driver USB, Modo Desarrollador y Depuración USB</h3>
 
 <p>
-    While Android Studio allows us to test our applications using the Android Virtual Device (AVD) emulator,
-    it's evident that nothing beats testing them on our actual mobile device (whether it's a phone, tablet, etc.),
-    or even on multiple devices of different sizes and/or Android versions. We can use drivers from the device manufacturer, Google's drivers, or the well-known universal ADB drivers. 
-    This doesn't stop us from further testing our programs on different devices, screens, versions, etc. The AVD emulator is also commonly used.
+    Aunque Android Studio permite probar nuestras apps con el emulador AVD,
+    nada supera probarlas en nuestro dispositivo real (móvil, tablet, etc.),
+    o incluso en varios con distintos tamaños y/o versiones de Android. Podemos usar drivers del fabricante, los de Google o los conocidos drivers ADB universales. 
+    Eso no impide que sigamos probando en diferentes dispositivos, pantallas, versiones, etc. El emulador AVD también se usa mucho.
 </p>
 
 <p>
-    Before installing the driver, we need to put our Android device(s) in <span class="negrita">developer mode</span>.
-    This is crucial as it allows us to test our application and even debug it directly from AS with the mobile device connected via USB.
-    To do this, go to <span class="negrita">Settings</span>, then <span class="negrita">About Phone</span>, and tap <span class="negrita">Build Number seven times</span>.
-    After that, a message will appear indicating that you are now a developer.
+    Antes de instalar el driver, debemos poner el/los dispositivos Android en <span class="negrita">modo desarrollador</span>.
+    Es crucial, ya que permite probar y depurar directamente desde AS con el móvil conectado por USB.
+    Para ello, ve a <span class="negrita">Ajustes</span>, luego <span class="negrita">Acerca del teléfono</span>, y toca <span class="negrita">Número de compilación siete veces</span>.
+    Verás un mensaje indicando que ya eres desarrollador.
 </p>
 
-<figure><img src="UD4/images/ud4-2021-09-12-21-22-54.png" /><br><figcaption>Developer Mode</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-12-21-22-54.png" /><br><figcaption>Modo desarrollador</figcaption></figure>
 <br>
 
 <p>
-    Returning to settings, a new menu called <span class="negrita">Developer Options</span> should now appear, where we must enable <span class="negrita">USB Debugging</span>.
+    Volviendo a ajustes, debe aparecer un nuevo menú <span class="negrita">Opciones de desarrollador</span>, donde debemos habilitar la <span class="negrita">Depuración USB</span>.
 </p>
 <section class="marco-t warn">
-    <span class="icono warning"> </span> <span class="negrita">Note: Pay attention to the image; USB debugging is disabled.</span>
+    <span class="icono warning"> </span> <span class="negrita">Nota: En la imagen, la depuración USB está deshabilitada.</span>
 </section>
 <section class="marco-b"></section>
 
-<figure><img src="UD4/images/ud4-2021-09-12-21-27-03.png" /><br><figcaption>Enabling USB Debugging</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-12-21-27-03.png" /><br><figcaption>Habilitando Depuración USB</figcaption></figure>
 <br>
 
 <p>
-    Now let's install the USB driver for the device. If we don't have it installed, the manufacturer might provide one,
-    or it might install automatically via Internet updates, or even ask us to install it directly when connecting the phone to the computer.
+    Ahora instalemos el driver USB del dispositivo. Si no lo tenemos, el fabricante puede proveerlo,
+    o puede instalarse automáticamente mediante actualizaciones por Internet, o incluso pedirnos instalarlo al conectar el teléfono al PC.
 </p>
 <p>
-    Installing Google's drivers beforehand may help. Go to <span class="negrita">Tools -> SDK Manager -> SDK Tools</span>
-    and check the box for <span class="negrita">Google USB Driver</span>. Then press OK twice and Finish.
+    Instalar antes los drivers de Google puede ayudar. Ve a <span class="negrita">Tools -> SDK Manager -> SDK Tools</span>
+    y marca <span class="negrita">Google USB Driver</span>. Pulsa OK dos veces y Finish.
 </p>
 
-<figure><img src="UD4/images/ud4-2021-09-12-21-29-48.png" /><br><figcaption>Installing Google USB Driver</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-12-21-29-48.png" /><br><figcaption>Instalando Google USB Driver</figcaption></figure>
 <br>
 
 <p>
-    In my case, I connected three different devices, and they worked without any action, as seen in the Device Manager.
-    Modern devices usually don't have issues with Windows.
+    En mi caso conecté tres dispositivos distintos y funcionaron sin intervención, como se ve en el Administrador de dispositivos.
+    En dispositivos modernos, Windows suele reconocerlos sin problemas.
 </p>
 
-<figure><img src="UD4/images/ud4-2021-09-12-21-31-13.png" /><br><figcaption>Connected Android devices</figcaption></figure>
+<figure><img src="UD4/images/ud4-2021-09-12-21-31-13.png" /><br><figcaption>Dispositivos Android conectados</figcaption></figure>
 <br>
 
 <p>
-    Another option is to try the OEM driver's official links. Below are some examples.
+    Otra opción es probar los enlaces oficiales de drivers OEM. Abajo algunos ejemplos.
 </p>
 
 <p>
     <table>
         <tr>
             <th>OEM</th>
-            <th>Driver URL</th>
+            <th>URL del driver</th>
         </tr>
         <tr>
             <td>Acer</td>
@@ -1257,15 +1251,15 @@ Pérez, then <span class="negrita">xxyyzz = rogape</span>.
     </table>
 </p>
 
-<h3>Wireless debugging</h3>
-    <p>In latest versions of AS we can debug our apps without usb cable. That is using wireless and it's very simple. You simply have to enable Wireless debugging in developer mode
-     and then Scan de QR code that AS shows you</p>
+<h3>Depuración inalámbrica</h3>
+    <p>En versiones recientes de AS podemos depurar sin cable USB. Es muy simple: habilita la Depuración inalámbrica en modo desarrollador
+     y escanea el código QR que te muestra AS.</p>
 
-     <a href="UD4/images/ud_4-2024-11-21-13-19-41.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-19-41.png" /><br><figcaption>Pairing wireless mobile</figcaption></figure></a>
+     <a href="UD4/images/ud_4-2024-11-21-13-19-41.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-19-41.png" /><br><figcaption>Vinculación inalámbrica del móvil</figcaption></figure></a>
      <br>
      
      <section class="marco-t warn">
-        <span class="icono warning"> </span> Obviously you have to be connected at the same network that computer and that your real device had to use Android 11 or bigger.
+        <span class="icono warning"> </span> Obviamente debes estar en la misma red que el ordenador y tu dispositivo real debe usar Android 11 o superior.
         </section>
      <section class="marco-b">
             
@@ -1274,95 +1268,79 @@ Pérez, then <span class="negrita">xxyyzz = rogape</span>.
 
     <!--************************Third Party Emulators**************************-->
     <a name="sThirdPartyEmulators"></a>
-<h2>Third-Party Emulators</h2>
+<h2>Emuladores de Terceros</h2>
 
 <h3>BlueStacks 10</h3>
 <p>
-    We are going to download BlueStacks using this link: <a class="enlace" target="_blank" href="https://www.bluestacks.com/es/index.html">https://www.bluestacks.com/es/index.html</a>. 
-    Once the installer is downloaded, we run it. <span class="negrita">BlueStacksInstaller_10.190.0.5002_native_29f58463653ea660bf50c11c52fa2a25.exe</span> is an online installer. Allow it to make changes.
+    Vamos a descargar BlueStacks desde: <a class="enlace" target="_blank" href="https://www.bluestacks.com/es/index.html">https://www.bluestacks.com/es/index.html</a>. 
+    Una vez descargado el instalador, lo ejecutamos. <span class="negrita">BlueStacksInstaller_10.190.0.5002_native_29f58463653ea660bf50c11c52fa2a25.exe</span> es un instalador online. Permite que haga cambios.
 </p>
 
-<a href="UD4/images/ud_4-2024-11-21-13-24-24.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-24-24.png" /><br><figcaption>BlueStacks 10 Installation Step 1</figcaption></figure></a>
+<a href="UD4/images/ud_4-2024-11-21-13-24-24.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-24-24.png" /><br><figcaption>Paso 1 instalación BlueStacks 10</figcaption></figure></a>
 <br>
 
+<p>Haz clic en <span class="negrita">Install Now and accept terms</span></p>
 
-
-<p>Click on <span class="negrita">Install Now and accept terms</span></p>
-
-<a href="UD4/images/ud_4-2024-11-21-13-25-37.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-25-37.png" /><br><figcaption>BlueStacks 10 Installation Step 2</figcaption></figure></a>
+<a href="UD4/images/ud_4-2024-11-21-13-25-37.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-25-37.png" /><br><figcaption>Paso 2 instalación BlueStacks 10</figcaption></figure></a>
 <br>
 
-
-
-
-<p>Completing the installation process. Push next</p>
+<p>Completando el proceso de instalación. Pulsa Next</p>
 <a href="UD4/images/ud_4-2024-11-21-13-28-02.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-28-02.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-
-<p>We can now launch the emulator</p>
+<p>Ya podemos lanzar el emulador</p>
 <a href="UD4/images/ud_4-2024-11-21-13-31-49.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-31-49.png" /><br><figcaption></figcaption></figure></a>
 <br>
-<a href="UD4/images/ud_4-2024-11-21-13-32-42.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-32-42.png" /><br><figcaption>Bluestack</figcaption></figure></a>
+<a href="UD4/images/ud_4-2024-11-21-13-32-42.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-32-42.png" /><br><figcaption>Bluestacks</figcaption></figure></a>
 <br>
 
-
-<p>Once loaded, drag and drop the APK directly onto the emulator’s <span class="negrita">home screen</span>, and it will install.</p>
-<p>We can get the apk from AS in the <span class="negrita">Build</span> menu </p>
+<p>Una vez cargado, arrastra y suelta el APK directamente a la <span class="negrita">pantalla de inicio</span> del emulador y se instalará.</p>
+<p>Podemos obtener el APK desde AS en el menú <span class="negrita">Build</span> </p>
 <a href="UD4/images/ud_4-2024-11-21-13-37-51.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-37-51.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-<p>After building and generating the APK AS shows us a message indicating the path. Normally it would be <span class="inline-folder">Project_Folder &rAarr; app &rAarr; outputs &rAarr; apk &rAarr; debug</span></p>
-<a href="UD4/images/ud_4-2024-11-21-13-35-22.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-35-22.png" /><br><figcaption>APK located</figcaption></figure></a>
+<p>Tras compilar y generar el APK, AS muestra un mensaje con la ruta. Normalmente será <span class="inline-folder">Carpeta_Proyecto &rAarr; app &rAarr; outputs &rAarr; apk &rAarr; debug</span></p>
+<a href="UD4/images/ud_4-2024-11-21-13-35-22.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-35-22.png" /><br><figcaption>APK localizado</figcaption></figure></a>
 <br>
 
-<a href="UD4/images/ud_4-2024-11-21-13-39-57.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-39-57.png" /><br><figcaption>Installing APK</figcaption></figure></a>
+<a href="UD4/images/ud_4-2024-11-21-13-39-57.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-39-57.png" /><br><figcaption>Instalando APK</figcaption></figure></a>
 <br>
-<a href="UD4/images/ud_4-2024-11-21-13-40-54.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-40-54.png" /><br><figcaption>APK copied</figcaption></figure></a>
-<br>
-
-
-
-<p>
-    In addition to being installed within the emulator, a shortcut will also be created on the desktop.
-</p>
-
-<figure><img src="UD4/images/ud4-2021-09-12-21-11-26.png" /><br><figcaption>APK Installed</figcaption></figure>
+<a href="UD4/images/ud_4-2024-11-21-13-40-54.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-40-54.png" /><br><figcaption>APK copiado</figcaption></figure></a>
 <br>
 
 <p>
-    Click on your app’s icon and… <span class="negrita">HelloThere!</span>
+    Además de instalarse dentro del emulador, también se creará un acceso directo en el escritorio.
 </p>
 
-<a href="UD4/images/ud_4-2024-11-21-13-40-29.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-40-29.png" /><br><figcaption>APK launched</figcaption></figure></a>
+<figure><img src="UD4/images/ud4-2021-09-12-21-11-26.png" /><br><figcaption>APK instalado</figcaption></figure>
+<br>
+
+<p>
+    Haz clic en el icono de tu app y… <span class="negrita">¡Hola!</span>
+</p>
+
+<a href="UD4/images/ud_4-2024-11-21-13-40-29.png" target="_BLANK"><figure><img src="UD4/images/ud_4-2024-11-21-13-40-29.png" /><br><figcaption>APK lanzado</figcaption></figure></a>
 <br>
 
 <h3>Genymotion</h3>
 
 <div>
     <p>
-        <a class="tarea" target="_blank" href="https://aules.edu.gva.es/fp/mod/assign/view.php?id=4466622">Follow this link to install the Genymotion emulator and integrate it with Android Studio</a> <br>
-        <a class="enlace" target="_blank" href="https://desarrollador-android.com/desarrollo/herramientas/herramientas-de-ayuda/genymotion-emulador/">https://desarrollador-android.com/desarrollo/herramientas/herramientas-de-ayuda/genymotion-emulador/</a> (a little bit deprecated link but it may be still useful)
+        <a class="tarea" target="_blank" href="https://aules.edu.gva.es/fp/mod/assign/view.php?id=4466622">Sigue este enlace para instalar el emulador Genymotion e integrarlo con Android Studio</a> <br>
+        <a class="enlace" target="_blank" href="https://desarrollador-android.com/desarrollo/herramientas/herramientas-de-ayuda/genymotion-emulador/">https://desarrollador-android.com/desarrollo/herramientas/herramientas-de-ayuda/genymotion-emulador/</a> (enlace algo desactualizado, pero aún útil)
     </p>
 </div>
 
 
 <!--************************Other Systems**************************-->
 <a name="sOtherSystems"></a>
-<h2>Other Systems</h2>
+<h2>Otros Sistemas</h2>
 
-<p>The other major mobile ecosystem is, of course, Apple’s iOS.</p>
-<p>iOS app development usually requires using a Mac computer that has XCODE installed.</p>
-<p>As for iOS programming languages, they include C++ and Apple’s own Swift programming language.</p>
+<p>El otro gran ecosistema móvil es, por supuesto, iOS de Apple.</p>
+<p>Desarrollar apps iOS suele requerir un Mac con XCODE instalado.</p>
+<p>En cuanto a lenguajes, se incluyen C++ y el propio Swift de Apple.</p>
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
-
-
-
-
-
-    
 
     <script src="../script/prism.js"></script>
 </body>
