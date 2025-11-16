@@ -346,7 +346,7 @@
     <p>A continuación, completa las opciones del proyecto:</p>
     <ul>
         <li><span class="negrita">Name</span>: debe ser significativo.</li>
-        <li><span class="negrita">Package</span>: debe ser único. Para asegurarlo, usa la siguiente estructura:
+        <li><span class="negrita">Package</span>: debe ser único. Para asegurarlo y durante este curso, usaremos la siguiente estructura:
             <span class="cursiva">com.XXYYZZ.nombreproyecto</span>, donde XX son las dos primeras letras de tu nombre, YY las dos primeras de tu primer apellido y ZZ las dos primeras de tu segundo apellido.</li>
         <li><span class="negrita">Save location</span>: el directorio donde quieres guardar el proyecto.</li>
         <li><span class="negrita">Minimum SDK</span>: API 26 ("Oreo"; Android 8.0).
@@ -367,7 +367,7 @@
     
     
         
-    <span class="negrita">Una vez seleccionadas todas las opciones, haz clic en <span class="negrita">Finish</span>.</span>
+    <p><span class="negrita">Una vez seleccionadas todas las opciones, haz clic en <span class="negrita">Finish</span>.</span></p>
     
     <p>En este punto, <span class="negrita">Android Studio comenzará a crear el proyecto</span>.</p>
     
@@ -533,12 +533,13 @@
 <section class="apartado">
     <a name="sPrimeraaplicaciónAndroid_Contadordeclics"></a>
     <h2>Primera aplicación Android: Contador de clics</h2>
-    <p>El contenido inicial de un proyecto con Jetpack Compose suele ser similar al siguiente:</p>
+    <p>El contenido inicial de un proyecto con Jetpack Compose es el siguiente:</p>
     
     <a href="UD6/images/ud_6-2024-12-02-11-34-25.png" target="_BLANK"><figure><img src="UD6/images/ud_6-2024-12-02-11-34-25.png" /><br><figcaption>Contenido inicial</figcaption></figure></a>
     <br>
     
-    <p>En MainActivity.kt se distinguen tres partes principales:</p>
+    <p>En el archivo <span class="inline-file">MainActivity.kt</span> se pueden distinguir tres partes principales:</p>
+    
     <section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -570,38 +571,315 @@ fun GreetingPreview() {
     ClickCounterTheme {
         Greeting("Android")
     }
-}</code></pre></section>
-    <br>
+}</code></pre>
+    </section><br><br>
     
-    <p>Componentes y funciones:</p>
+    <p>Clase <span class="r-word">MainActivity</span>:</p>
     <ul>
-        <li>MainActivity: extiende ComponentActivity y define onCreate() donde se carga el tema y el contenido Compose.</li>
-        <li>Greeting: función anotada con @Composable que genera un Text.</li>
-        <li>GreetingPreview: función anotada con @Preview para ver la vista en Android Studio.</li>
+        <li>Extiende <span class="r-word">ComponentActivity</span>, que <span class="subrayado">es una Activity que soporta componentes de Jetpack Compose</span>.</li>
+        <li>Contiene el método <span class="r-word">onCreate</span>, que se ejecuta cuando la aplicación arranca.</li>
+        <li>Dentro de <span class="negrita">onCreate</span> se carga el <span class="negrita">tema del proyecto</span> y, dentro de él, se llama al componente <span class="r-word">Scaffold</span>, que a su vez invoca a la función <span class="d-word">Greeting</span>.</li>
+    </ul>
+    
+    <p>Función <span class="d-word">Greeting</span>:</p>
+    <ul>
+        <li>Acepta un <span class="cursiva">String</span> y un <span class="cursiva">Modifier</span> y genera un componente de Jetpack Compose <span class="r-word">Text</span>.</li>
+        <li>Esta función es un componente de Jetpack Compose porque está anotada con <span class="negrita">@Composable</span>.</li>
+    </ul>
+    
+    <p>Función <span class="d-word">GreetingPreview</span>:</p>
+    <ul>
+        <li>Carga el tema del proyecto y llama dentro de él a la función <span class="d-word">Greeting</span>.</li>
+        <li>Es un componente de Jetpack Compose porque está anotada con <span class="negrita">@Composable</span>.</li>
+        <li>Permite previsualizar su contenido porque además está anotada con <span class="negrita">@Preview</span>.</li>
+    </ul>
+    
+    <p>En el código se pueden ver los siguientes componentes de Jetpack Compose:</p>
+    <ul>
+        <li><span class="negrita">Scaffold</span>: Componente del sistema basado en Material Design que permite definir elevación, fondo, etc.</li>
+        <li><span class="negrita">Text</span>: Componente del sistema para mostrar texto.</li>
+        <li><span class="negrita">ClickCounterTheme</span>: Componente personalizado creado con el proyecto que extiende el tema por defecto de Material Design. Definido en el archivo <span class="inline-file">ui.theme/Theme.kt</span>.</li>
+        <li><span class="negrita">Greeting</span>: Componente personalizado que extiende la funcionalidad del componente <span class="r-word">Text</span>.</li>
+        <li><span class="negrita">GreetingPreview</span>: Componente personalizado para previsualizar el componente <span class="r-word">Greeting</span>.</li>
     </ul>
     
     <h3>@Composable</h3>
-    <p>Todas las funciones que definen componentes Compose deben estar anotadas con <span class="r-word">@Composable</span>.</p>
+    <p>Todos los componentes de Jetpack Compose, tanto los del sistema como los personalizados, son funciones que deben estar anotadas con <span class="r-word">@Composable</span>.</p>
+    <a href="UD6/images/ud6-2023-10-02-12-07-04.png" target="_BLANK"><figure><img src="UD6/images/ud6-2023-10-02-12-07-04.png" /><br><figcaption>Anotado con @Composable</figcaption></figure></a>
+    <br>
     
     <h3>@Preview</h3>
-    <p>Permite previsualizar componentes en Android Studio. Las funciones que reciben lambdas u otros parámetros complejos suelen necesitar envoltorios (wrappers) para poder previsualizarse.</p>
+<p>Android Studio permite ver una previsualización en tiempo real de los componentes que se definan, para ello se debe etiquetar un componente con <span class="r-word">@Preview</span>
+     como ocurre con la función <span class="d-word">GreetingPreview</span>.</p>
+
+<p>No se pueden previsualizar componentes que reciben funciones, para solucionar esto se crean componentes que envuelvan a esos que reciben funciones.</p>
+
+<figure><img src="UD6/images/ud6-2023-10-02-12-09-04.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Es muy importante que la previsualización muestre lo mismo que se mostrará en la ejecución de la aplicación por eso se puede realizar el siguiente cambio: </p>
+<figure><img src="UD6/images/ud6-2023-10-02-12-11-16.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Para poder ver las previsualizaciones en Android Studio se debe seleccionar la opción Split en la parte superior derecha.</p>
+<figure><img src="UD6/images/ud6-2023-10-02-12-14-40.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>La primera vez que se quiere previsualizar un componente y cuando hay cambios grandes o errores en el <span class="negrita">build</span> se deberá pulsar en <span class="negrita">Build & Refresh</span>…</p>
+
+<p class="sub-section">Opciones</p>
+
+<p>Pulsando la tecla <span class="negrita">CONTROL</span> y haciendo <span class="negrita">clic</span> sobre @Preview se pueden ver todas las opciones disponibles:</p>
+
+<section><pre><code class="language-kotlin">annotation class Preview(
+    val name: String = "",
+    val group: String = "",
+    @IntRange(from = 1) val apiLevel: Int = -1,
+    // TODO(mount): Make this Dp when they are inline classes
+    val widthDp: Int = -1,
+    // TODO(mount): Make this Dp when they are inline classes
+    val heightDp: Int = -1,
+    val locale: String = "",
+    @FloatRange(from = 0.01) val fontScale: Float = 1f,
+    val showSystemUi: Boolean = false,
+    val showBackground: Boolean = false,
+    val backgroundColor: Long = 0,
+    @UiMode val uiMode: Int = 0,
+    @Device val device: String = Devices.DEFAULT,
+    @Wallpaper val wallpaper: Int = Wallpapers.NONE,
+)</code></pre>
+</section><br><br>
+
+<p>Por ejemplo, se puede indicar un tamaño a la previsualización:</p>
+<figure><img src="UD6/images/ud6-2023-10-02-12-19-08.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Se puede ver el componente dentro de la interfaz del sistema o incluso indicar un dispositivo concreto:</p>
+<figure><img src="UD6/images/ud6-2023-10-02-12-21-50.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Se pueden crear varias previsualizaciones para un componente:</p>
+<figure><img src="UD6/images/ud6-2023-10-02-12-24-32.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Esto tiene especial utilidad para mostrar los modos claro y oscuro.</p>
+<figure><img src="UD6/images/ud6-2023-10-02-12-29-25.png" /><br><figcaption>Dos visualizaciones</figcaption></figure>
+<br>
+<p>También pueden haber varios componentes con previsualización:</p>
+<figure><img src="UD6/images/ud6-2023-10-02-12-31-34.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Las previsualizaciones también permiten ver cómo quedan los componentes cuando se está desarrollando una aplicación multi idioma:</p>
+<figure><img src="UD6/images/ud6-2023-10-02-12-31-57.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p class="sub-section">Limitaciones</p>
+<p>Las previsualizaciones tienen una serie de limitaciones:</p>
+<ul>
+    <li>No pueden recibir parámetros.</li>
+    <li>No tienen acceso a los archivos.</li>
+    <li>No tienen acceso a la red (no cargarán datos de internet).</li>
+    <li>Algunas API no funcionan completamente bien.</li>
+</u>
+
+<p>En la documentación oficial está toda la información sobre <a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/tooling/previews">@Preview</a>.</p>
+
     
     <h3>Live Edit</h3>
-    <p>Para actualizar automáticamente los cambios en el emulador se puede activar Live Edit desde File -> Settings (CTRL+ALT+S).</p>
+    <p>Para que los cambios se actualicen automáticamente en el emulador, configura la opción <span class="negrita">Live Edit</span> de Android Studio.</p>
+    <p>File -> Settings (CONTROL+ALT+S)</p>
+    
+    <a href="UD6/images/ud6-2023-10-02-12-36-12.png" target="_BLANK"><figure><img src="UD6/images/ud6-2023-10-02-12-36-12.png" /><br><figcaption></figcaption></figure></a>
+    <br>
     
     <h3>Contenido de la aplicación</h3>
-    <p>La aplicación "Contador de clics" necesita un texto que muestre el contador y un botón para incrementarlo. Buenas prácticas:</p>
-    <ul>
-        <li>Usar parámetros nombrados en llamadas.</li>
-        <li>Escribir parámetros en líneas separadas si hay varios.</li>
-        <li>Extraer la lambda final fuera de los paréntesis cuando corresponda.</li>
-    </ul>
+<p>La aplicación <span class="d-word">Contador de clics</span> necesita un <span class="negrita">texto</span> y un <span class="negrita">botón</span> así que se va a modificar el código para que lo incluya.</p>
+
+<p>Lo primero será eliminar la función <span class="d-word">Greeting</span> y todas sus llamadas.</p>
+
+<p>También se cambiará el nombre de la preview GrettingPreview por el nombre <span class="d-word">ContentPreview</span>.</p>
+
+<p>A continuación, se creará un componente Jetpack Compose llamado <span class="d-word">Content</span>.</p>
+<section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            ClickCounterTheme {
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun Content(){
+
+}
+
+@Preview(showBackground = true)
+@Composable
+fun GreetingPreview() {
+    ClickCounterTheme {
+
+    }
+}</code></pre>
+</section><br><br>
+
+
+
+
+<p>En el componente <span class="r-word">Content</span> se añaden tanto el texto como el botón.</p>
+
+<p>El texto se añade con un componente <span class="r-word">Text</span> y el botón se añade con un componente <span class="r-word">Button</span>.</p>
+
+<p>Se puede observar que el componente <span class="r-word">Button</span> <span class="subrayado">recibe una función lambda como parámetro <span class="negrita">onClick</span></span> y 
+    <span class="subrayado">otra función lambda como <span class="negrita">contenido</span> del propio botón</span>.</p>
+
+<p>El contenido del botón es otro texto.</p>
+
+<section><pre><code class="language-kotlin">@Composable
+fun Content(){
+    Text(text = "Has hecho clic 0 veces")
+    Button(onClick = { /*TODO*/
+        
+    }) {
+        Text(text = "¡PÚLSAME!")
+    }
+}</code></pre>
+</section><br><br>
+<section class="marco-t warn">
+    <span class="icono warning"> </span> Si no te reconoce algún componente, lo puedes importar con <span class="negrita">ALT+ENTER</span>.
+    </section>
+<section class="marco-b">
+    Recuerda que los componentes de Jetpack Compose se importan desde el paquete <span class="negrita">androidx.compose.</span>
+    <section><pre><code class="language-kotlin">import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text</code></pre>
+    </section>   
+</section>
+
+<p>Como se estudió en la unidad anterior, en Kotlin si el último parámetro es una función lambda, se puede extraer ese parámetro fuera de los paréntesis.</p>
+
+<p>Aunque las dos maneras funcionan igual, en Jetpack Compose si el último parámetro es una función lambda se extrae fuera de los paréntesis.</p>
+<figure><img src="UD6/images/ud6-2023-10-02-12-44-40.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Para poder previsualizar la interfaz gráfica y ver la interfaz gráfica en el emulador se deben añadir llamadas a la función 
+    Content tanto en <span class="r-word">onCreate</span> como en <span class="d-word">ContentPreview</span>.</p>
+
+<figure><img src="UD6/images/ud6-2023-10-02-12-46-15.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En la previsualización se puede observar que los dos componentes ocupan toda la pantalla (se nota más con el botón). </p>
+
+<p>También se puede observar que los dos componentes se superponen, esto es debido a que no hay ningún componente de tipo <span class="negrita">layout</span> en la interfaz.</p>
+
+<p>Los componentes de tipo <span class="negrita">layout</span> permiten organizar los componentes de la interfaz gráfica.</p>
+
+<p>Para solucionar esto se va a utilizar el componente <span class="r-word">Column</span> que permite organizar la interfaz en forma de columna.</p>
+<figure><img src="UD6/images/ud6-2023-10-02-12-49-50.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>A continuación, se añaden algunas modificaciones para mejorar la interfaz.</p>
+<section><pre><code class="language-kotlin">@Composable
+fun content() {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Has hecho clic 0 veces",
+            fontSize = 25.sp
+        )
+        Button(onClick = { /*TODO*/
+
+        }) {
+            Text(
+                text = "¡PÚLSAME!",
+                fontSize = 30.sp,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<p>Quedando así:</p>
+<figure><img src="UD6/images/ud6-2023-10-02-13-05-52.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Este código es una muestra de las buenas prácticas programando en Kotlin con Jetpack Compose:</p>
+<ul>
+    <li>Se utilizan los parámetros con nombre en las llamadas.</li>
+
+    <li>Si en la llamada hay varios parámetros, estos se escriben cada uno en una línea.</li>
     
-    <h3>Funcionalidad</h3>
-    <p>Usar una variable con estado (stateful) para almacenar el número de clics y asegurar que el UI se actualice correctamente. Luego, persistir ese estado frente a cambios del ciclo de vida (por ejemplo, usando rememberSaveable o ViewModel).</p>
-    
-    <a class="tarea" target="_blank" href="">Replica la app "Contador de clics" y añade un botón para reiniciar el contador</a>
-</section><!-- End section Contador de clics -->
+    <li>Si el último parámetro es una función lambda se extrae de los paréntesis.</li>
+</ul>
+
+<h3>Funcionalidad de la aplicación</h3>
+<p>En este punto ya se ha terminado con la UI declarativa.</p>
+
+<p>Ahora es el momento de implementar la funcionalidad de la aplicación.</p>
+
+<p>Se necesita una variable de tipo entera para almacenar la cantidad de veces que se ha hecho clic.</p>
+
+<p>Se crea esa variable inicializada a cero y se incluye en el primer texto.</p>
+
+<p>En el código del botón se añade uno a esa variable.</p>
+<section><pre><code class="language-kotlin">@Composable
+fun content() {
+    var times = 0
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Has hecho clic $times veces",
+            fontSize = 25.sp
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        Button(onClick = { /*TODO*/
+            times++
+        }) {
+            Text(
+                text = "¡PÚLSAME!",
+                fontSize = 30.sp,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<p>Si se ejecuta en el emulador la aplicación, aunque se puede comprobar que el botón funciona, no se actualiza el número de veces.</p>
+
+<p>Esto es debido a que como se indicó anteriormente los elementos de la interfaz se conectan al estado de la Activity y si el estado de la Activity no se actualiza la interfaz no se vuelve a pintar.</p>
+
+<p>Para solucionar esto se debe cambiar la variable para que sea una variable de estado de esta manera cuando esta variable cambie el estado de la Activity también lo hará y se volverá a pintar la interfaz.</p>
+
+<figure><img src="UD6/images/ud6-2023-10-02-13-18-13.png" /><br><figcaption>Añadiendo variable de estado</figcaption></figure>
+<br>
+
+
+<p>Con este cambio se puede ejecutar la aplicación y comprobar que la aplicación funciona. </p>
+
+<p>Al principio de la unidad se explicó que hay en situaciones en las que la Activity se destruye y se vuelve a crear, por ejemplo, al cambiar la orientación del dispositivo.</p>
+
+<p>Cuando esto ocurre se ejecuta la Activity desde el principio por lo que las variables se vuelven a crear.</p>
+
+<p>Si se cambia la orientación en la aplicación se observará que el número de clics se pierde.</p>
+<figure><img src="UD6/images/ud6-2023-10-02-13-22-56.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Para solucionar este comportamiento se debe cambiar la declaración de la variable para que se guarde aunque se destruya la Activity.</p>
+<figure><img src="UD6/images/ud6-2023-10-02-13-24-30.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>Con este cambio se puede ejecutar la aplicación y comprobar que la aplicación funciona correctamente aunque se cambie de orientación, 
+    de modo claro/oscuro o incluso la configuración del dispositivo. </p>
+
+    <a class="tarea" target="_blank" href="">Replica la aplicación "Contador de Clics" y añade un botón para resetar la cuenta</a>
+</section><!-- End section Primera aplicación Android: Contador de clics-->
+
 
 <section class="apartado">
     <a name="sCentralizarValoresenelproyecto"></a>
@@ -739,7 +1017,7 @@ fun GreetingPreview() {
     <figure><img src="UD6/images/ud6-2023-10-04-13-52-49.png" /><br><figcaption>Logcat</figcaption></figure>
     <br>
     
-    <p>Aquí tienes el ejemplo completo del <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2324/tree/master/UD3/ClicsCounter">contador de clics</a> en GitHub.</p>
+    <p>Aquí tienes el ejemplo completo del <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2324/tree/master/UD6/ClicsCounter">contador de clics</a> en GitHub.</p>
     
     </section><!-- End section Debug -->
     
