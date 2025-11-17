@@ -736,11 +736,13 @@ fun GreetingPreview() {
 
 <p>El contenido del botón es otro texto.</p>
 
+<p>Añadimos como parámetro de entrada <span class="negrita">padding</span>  de tipo <span class="r-word">PaddingValues</span> para que no nos de error. Lo explicaremos más adelante. </p>
+
 <section><pre><code class="language-kotlin">@Composable
-fun Content(){
+fun Content(padding: PaddingValues){     
     Text(text = "Has hecho clic 0 veces")
     Button(onClick = { /*TODO*/
-        
+
     }) {
         Text(text = "¡PÚLSAME!")
     }
@@ -765,23 +767,37 @@ import androidx.compose.material3.Text</code></pre>
 <p>Para poder previsualizar la interfaz gráfica y ver la interfaz gráfica en el emulador se deben añadir llamadas a la función 
     Content tanto en <span class="r-word">onCreate</span> como en <span class="d-word">ContentPreview</span>.</p>
 
-<figure><img src="UD6/images/ud6-2023-10-02-12-46-15.png" /><br><figcaption></figcaption></figure>
+<section><pre><code class="language-kotlin">@Preview(showBackground = true)
+@Composable
+fun ContentPreview() {
+    ClickCounterTheme {
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            Content(innerPadding)
+        }
+    }
+}</code></pre>
+</section><br><br>
+
+<p>En la previsualización se puede observar que los dos componentes se situan en la parte superior uno encima del otro. </p>
+<a href="UD6/images/UD6_2025-11-17-09-38-31.png"><figure><img src="UD6/images/UD6_2025-11-17-09-38-31.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-<p>En la previsualización se puede observar que los dos componentes ocupan toda la pantalla (se nota más con el botón). </p>
 
 <p>También se puede observar que los dos componentes se superponen, esto es debido a que no hay ningún componente de tipo <span class="negrita">layout</span> en la interfaz.</p>
 
 <p>Los componentes de tipo <span class="negrita">layout</span> permiten organizar los componentes de la interfaz gráfica.</p>
 
 <p>Para solucionar esto se va a utilizar el componente <span class="r-word">Column</span> que permite organizar la interfaz en forma de columna.</p>
-<figure><img src="UD6/images/ud6-2023-10-02-12-49-50.png" /><br><figcaption></figcaption></figure>
+
+<a href="UD6/images/UD6_2025-11-17-09-40-01.png"><figure><img src="UD6/images/UD6_2025-11-17-09-40-01.png" /><br><figcaption></figcaption></figure></a>
 <br>
+
 <p>A continuación, se añaden algunas modificaciones para mejorar la interfaz.</p>
 <section><pre><code class="language-kotlin">@Composable
-fun content() {
+fun Content(padding: PaddingValues){
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
+            .padding(padding),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -825,10 +841,11 @@ fun content() {
 
 <p>En el código del botón se añade uno a esa variable.</p>
 <section><pre><code class="language-kotlin">@Composable
-fun content() {
-    var times = 0
+fun Content(padding: PaddingValues){
+    var times:Int = 0
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
+            .padding(padding),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -836,7 +853,6 @@ fun content() {
             text = "Has hecho clic $times veces",
             fontSize = 25.sp
         )
-        Spacer(modifier = Modifier.height(20.dp))
         Button(onClick = { /*TODO*/
             times++
         }) {
@@ -856,8 +872,9 @@ fun content() {
 
 <p>Para solucionar esto se debe cambiar la variable para que sea una variable de estado de esta manera cuando esta variable cambie el estado de la Activity también lo hará y se volverá a pintar la interfaz.</p>
 
-<figure><img src="UD6/images/ud6-2023-10-02-13-18-13.png" /><br><figcaption>Añadiendo variable de estado</figcaption></figure>
+<a href="UD6/images/UD6_2025-11-17-09-51-41.png"><figure><img src="UD6/images/UD6_2025-11-17-09-51-41.png" /><br><figcaption>Añadiendo variable de estado</figcaption></figure></a>
 <br>
+
 
 
 <p>Con este cambio se puede ejecutar la aplicación y comprobar que la aplicación funciona. </p>
@@ -935,37 +952,157 @@ fun content() {
 )</code></pre></section>
     
     <h3>Strings parametrizadas</h3>
-    <p>Centraliza cadenas con placeholders y pásales parámetros desde Kotlin usando stringResource(id = R.string.counter_text, count).</p>
+    <p>En la aplicación <span class="cursiva">Contador de clics</span> se tiene la necesidad de centralizar la siguiente cadena:</p>
+
+
+<p>Esta cadena utiliza una variable por lo que a la hora de centralizar dicha cadena se debe pasar ese valor como parámetro.</p>
+
+<figure><img src="UD6/images/ud6-2023-10-04-13-13-06.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>El formato para declarar parámetros es <span class="d-word">%NºParámetro$Tipo</span>, 
+siendo los tipos de parámetros: <span class="negrita">s</span> (cadenas), <span class="negrita">d</span> (números).</p>
+
+<figure><img src="UD6/images/ud6-2023-10-04-13-15-07.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Por ejemplo, si se quieren recibir varios parámetros:</p>
+<figure><img src="UD6/images/ud6-2023-10-04-13-19-30.png" /><br><figcaption></figcaption></figure>
+<br>
+
+
+<p>En las últimas versiones de Android Studio se puede indicar siempre que el tipo de dato es <span class="negrita">s</span> (cadena) ya que Android Studio 
+    se encarga de convertir automáticamente el dato a <span class="negrita"><span class="cursiva">String</span></span>.</p>
+
+<p>Android Studio ayuda a crear estos valores centralizados.
+    Con el cursor encima de la <span class="negrita">string hardcoded</span> se muestra la ayuda contextual con clic <span class="cursiva">derecho</span> o con <span class="cursiva">ALT+INTRO</span> y 
+    se selecciona la opción <span class="negrita">Extract string resource</span>:</p>
+<figure><img src="UD6/images/ud6-2023-10-04-13-20-33.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>Si se tienen varios archivos <span class="inline-file">strings.xml</span> se puede marcar que se añada el valor a todos los archivos y una vez se añada solo habrá que traducir el valor en cada archivo.</p>
+<figure><img src="UD6/images/ud6-2023-10-04-13-21-50.png" /><br><figcaption></figcaption></figure>
+<br>
+<p>Si la cadena tiene varios parámetros Android Studio los reconocerá:</p>
+<figure><img src="UD6/images/ud6-2023-10-04-13-22-36.png" /><br><figcaption>Cadena con parámetros</figcaption></figure>
+<br>
+
+<p>Ahora desde Kotlin en la función <span class="r-word">stringResources</span> se podrán pasar esos parámetros:</p>
+
+<section><pre><code class="language-xml">Text(
+    text = stringResource(
+        id = R.string.counter_text, //Recurso
+        times), //Primer parámetro, añadimos una variable
+    fontSize = 25.sp
+)</code></pre>
+</section><br><br>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> La traducción de aplicaciones tiene un gran inconveniente ya que la misma frase no tiene la misma longitud en todos los idiomas.
+    </section>
+<section class="marco-b">
+    Se debe realizar un buen estudio de la aplicación y de los diferentes idiomas para que la aplicación se muestre de manera similar en todos los idiomas en los que se distribuya.        
+</section>
 </section><!-- End section Centralizar valores -->
 
 <section class="apartado">
-    <a name="sAplicacionMultiidioma"></a>
-    <h2>Aplicación multiidioma</h2>
-    
-    <p>Crear apps multiidioma es sencillo: crea un strings.xml por cada idioma soportado.</p>
-    <ul>
-        <li>Si solo existe el strings.xml por defecto, se usará independientemente del idioma del dispositivo.</li>
-        <li>Si existe un strings.xml para el idioma del dispositivo, Android cargará ese archivo.</li>
-        <li>Si falta una cadena en un idioma, se usará la cadena del archivo por defecto.</li>
-    </ul>
-    
-    <p>Crear un nuevo archivo de cadenas: Right-click en values -> New -> Values Resource File y añadir el qualifier de idioma (por ejemplo values-es para español).</p>
-    
-    <p>Android Studio ofrece un editor de cadenas que facilita la traducción y muestra recordatorios cuando faltan traducciones.</p>
-</section><!-- End section Aplicación multiidioma -->
+<a name="sAplicacionMultiidioma"></a>
+<h2>Aplicación Multi idioma</h2>
+
+<p>Crear aplicaciones <span class="negrita">multiidioma</span> con Android Studio es muy sencillo, 
+    simplemente se debe crear un archivo <span class="inline-file">strings.xml</span> para cada idioma soportado.</p>
+<ul>
+    <li>Si solo se tiene un archivo <span class="inline-file">strings.xml</span> como ocurre nada más crear el proyecto,
+        ese archivo se cargará sea cual sea el idioma configurado en el dispositivo.</li>
+    <li>Si el dispositivo tiene un idioma configurado 
+        y no existe archivo <span class="inline-file">strings.xml</span> para ese idioma se cargará el archivo <span class="inline-file">strings.xml</span> 
+        por defecto (el que se crea junto al proyecto).</li>
+    <li>Si el dispositivo tiene uno o más idiomas configurados y hay archivos <span class="inline-file">strings.xml</span> para esos idiomas, 
+        se cargará el primero de la lista de la configuración del móvil.</li>
+    <li>Si se tienen varios archivos <span class="inline-file">strings.xml</span> y en uno no aparece una de las cadenas traducidas, 
+        se cargará la cadena en el idioma por defecto</li>    
+</ul>
+
+<p>Lo más habitual es que el archivo <span class="inline-file">strings.xml</span> creado con el proyecto sea para el idioma inglés.</p>
+
+<p>Para crear un archivo strings.xml para un idioma se deben seguir los siguientes pasos:</p>
+
+<p><span class="cursiva">Clic derecho</span> sobre la carpeta <span class="negrita">values -> New -> Values Resource File</span></p>
+
+<figure><img src="UD6/images/creating_string_multilanguage.gif" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En el inspector del proyecto se puede ver cómo se ha creado un segundo archivo para centralizar cadenas:</p>
+<figure><img src="UD6/images/ud6-2023-10-04-10-52-44.png" /><br><figcaption>Varios strings de idiomas</figcaption></figure>
+<br>
+
+<p>El siguiente paso es replicar el contenido del primer archivo strings.xml al segundo y traducir el valor de las cadenas:</p>
+<figure><img src="UD6/images/ud6-2023-10-04-10-53-22.png" /><br><figcaption>Replicando texto</figcaption></figure>
+<br>
+
+<p>Mediante el editor de idiomas también se pueden añadir cadenas para los diferentes idiomas e incluso añadir nuevos archivos <span class="inline-file">strings.xml</span>:</p>
+
+<figure><img src="UD6/images/ud6-2023-10-04-13-03-26.png" /><br><figcaption>String Editor</figcaption></figure>
+<br>
+
+<p>En el editor aparecen tantas columnas como archivos <span class="inline-file">strings.xml</span> haya:</p>
+<figure><img src="UD6/images/ud6-2023-10-04-13-03-52.png" /><br><figcaption></figcaption></figure>
+<br>
+
+<p>En el momento en el que se tienen diferentes archivos <span class="inline-file">strings.xml</span> para diferentes idiomas, 
+    al añadir una cadena a uno de los archivos Android Studio avisará que se debe traducir a los otros idiomas.</p>
+
+<figure><img src="UD6/images/ud6-2023-10-04-13-04-43.png" /><br><figcaption>Aviso de Android Studio para traducir cadena</figcaption></figure>
+<br>
+
+<p>Si una cadena no se traduce a algún idioma Android Studio mostrará la cadena definida en el archivo strings.xml por defecto.</p>
+
+<p>El resultado se puede ver con las previsualizaciones <span class="negrita">@Preview</span>:</p>
+
+
+<figure><img src="UD6/images/ud6-2023-10-04-13-05-54.png" /><br><figcaption>Previsualizaciones</figcaption></figure>
+<br>
+
+<p>Y también se puede comprobar con el emulador:</p>
+<figure><img src="UD6/images/ud6-2023-10-04-13-11-48.png" /><br><figcaption>Cambiado de idioma</figcaption></figure>
+<br>
+
+</section><!-- End section Aplicación Multi idioma-->
 
 <section class="apartado">
-    <a name="sOrientacionesverticalyhorizontal"></a>
-    <h2>Orientaciones vertical y horizontal</h2>
+<a name="sOrientacionesverticalyhorizontal"></a>
+<h2>Orientaciones vertical y horizontal</h2>
+
+<p>En los dispositivos fijos como televisiones o automóviles no tiene sentido cambiar la orientación, 
+    de hecho directamente no disponen del acelerómetro para detectarla.</p>
+
+<p>La mayoría de dispositivos móviles Android (móviles y táblets) permiten cambiar la orientación de la pantalla entre vertical y horizontal.</p>
+
+<p>Existen excepciones como los smartWatch que siendo móviles generalmente solo tienen una orientación.</p>
+
+<p>Si se desarrolla una aplicación para móvil o táblet <span class="negrita">es importante tener en cuenta el diseño en las dos orientaciones</span>.</p>
+
+<p>Gracias al uso de <span class="cursiva">Jetpack Compose</span> los componentes se van a situar ocupando la pantalla tal y como se definan.</p>
+
+<p>Por esta razón, en principio todas las aplicaciones se visualizarán correctamente indistintamente del tamaño y la orientación de la pantalla.</p>
+
+<p>Más adelante se verá cómo mostrar diferentes componentes o los mismos componentes con diferente estilo según el tamaño de pantalla para crear una mejor experiencia de usuario.</p>
+
+<p>Es posible que se quiera diseñar una aplicación que no permita cambiar la orientación.
+    Para ello en el archivo <span class="inline-file">AndroidManifest.xml</span> se debe añadir la siguiente propiedad a la <span class="negrita">Activity</span>: </p>
+
+	<section><pre><code class="language-xml">android:screenOrientation="ORIENTACIÓN"</code></pre>
+    </section><br><br>
+
+    <figure><img src="UD6/images/ud6-2023-10-04-13-32-19.png" /><br><figcaption>Android Manifest. Orientación</figcaption></figure>
+    <br>
     
-    <p>En la mayoría de smartphones y tablets la orientación puede cambiar entre vertical (portrait) y horizontal (landscape). Diseña pensando en ambas orientaciones.</p>
-    
-    <p>Con Jetpack Compose, los componentes se posicionan según las dimensiones disponibles, por lo que muchas interfaces se ajustan automáticamente.</p>
-    
-    <p>Si se desea bloquear la orientación para una Activity, añadir en AndroidManifest.xml:</p>
-    <section><pre><code class="language-xml">android:screenOrientation="ORIENTATION"</code></pre></section>
-    <p>Aplicar esta propiedad a cada Activity que deba permanecer en una orientación fija.</p>
-</section><!-- End section Orientaciones -->
+
+<p>
+Esta configuración se debe hacer para todas las Activities de la aplicación en las que se quiera bloquear la orientación.
+</p>
+
+
+</section><!-- End section Orientaciones vertical y horizontal-->
 
                         
 
@@ -1017,7 +1154,7 @@ fun content() {
     <figure><img src="UD6/images/ud6-2023-10-04-13-52-49.png" /><br><figcaption>Logcat</figcaption></figure>
     <br>
     
-    <p>Aquí tienes el ejemplo completo del <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2324/tree/master/UD6/ClicsCounter">contador de clics</a> en GitHub.</p>
+    <p>Aquí tienes el ejemplo completo del <a class="enlace" target="_blank" href="https://github.com/sdram58/EJEMPLOSPMDM2526/tree/master/UD6/ClickCounter">contador de clics</a> en GitHub.</p>
     
     </section><!-- End section Debug -->
     
@@ -1078,7 +1215,7 @@ fun content() {
        <p>Cuando se genere el entero, se habilitarán dos botones: uno para convertir el número a binario y otro para convertirlo a hexadecimal. Usa un color distinto para cada botón.</p>
     
         <figure><img src="UD6/images/example_conversor.gif" /><br><figcaption>Ejemplo: Aplicación Convertidor</figcaption></figure> <br>
-        <p>Aquí tienes una posible <a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD6/NumericalConverter">solución</a>. Es solo una guía; procura intentarlo tú primero.</p>
+        <p>Aquí tienes una posible <a class="enlace" target="_blank" href="https://github.com/sdram58/EJEMPLOSPMDM2526/tree/master/UD6/NumericalConverter">solución</a>. Es solo una guía; procura intentarlo tú primero.</p>
         <hr>
     </div>
     
@@ -1100,7 +1237,7 @@ fun content() {
     <figure><img src="UD6/images/ud6-2023-10-11-12-30-14.png" /><br><figcaption>Ejemplo: Aplicación de Estadísticas</figcaption></figure>
     <br>
     
-    <p>Aquí tienes una posible <a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD6/Statistics">solución</a>. Es solo una guía; procura intentarlo tú primero.</p>
+    <p>Aquí tienes una posible <a class="enlace" target="_blank" href="https://github.com/sdram58/EJEMPLOSPMDM2526/tree/master/UD6/Statistics">solución</a>. Es solo una guía; procura intentarlo tú primero.</p>
     
     </div>
     <br><br>
