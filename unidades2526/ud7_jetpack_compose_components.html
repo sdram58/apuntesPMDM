@@ -17,9 +17,9 @@
 
   <nav id="menu-lateral" class="main-menu-lateral oculto">
     <div class="fila">
-      <a href="#sIntroduccion" title="1. Introduction">1. Introduction</a>
-      <a href="#sOrganizandoCodigo" title="2. Organizing the Code">2. Organizing the Code</a>
-      <a href="#sComponentesdeJetpackCompose" title="3.- Jetpack Compose Components">3.- Jetpack Compose Components</a>
+      <a href="#sIntroduccion" title="1. Introducción">1. Introducción</a>
+      <a href="#sOrganizandoCodigo" title="2. Organización del código">2. Organización del código</a>
+      <a href="#sComponentesdeJetpackCompose" title="3.- Componentes de Jetpack Compose">3.- Componentes de Jetpack Compose</a>
     </div>
 
     <div class="fila">
@@ -84,13 +84,13 @@
     </div>
   </nav> <!-- BTM_MENU-->
 
-  <h1>U7.- Jetpack Compose Components</h1>
+  <h1>U7.- Componentes de Jetpack Compose</h1>
 
   <div class="main-menu">
     <div class="fila">
-      <a href="#sIntroduccion" title="1. Introduction">1. Introduction</a>
-      <a href="#sOrganizandoCodigo" title="2. Organizing the Code">2. Organizing the Code</a>
-      <a href="#sComponentesdeJetpackCompose" title="3.- Jetpack Compose Components">3.- Jetpack Compose Components</a>
+      <a href="#sIntroduccion" title="1. Introducción">1. Introducción</a>
+      <a href="#sOrganizandoCodigo" title="2. Organización del código">2. Organización del código</a>
+      <a href="#sComponentesdeJetpackCompose" title="3.- Componentes de Jetpack Compose">3.- Componentes de Jetpack Compose</a>
     </div>
 
     <div class="fila">
@@ -110,7 +110,7 @@
     </div>
     <div class="fila">
       <a href="#sConceptos" title="13.- Concepts">13.- Concepts</a>
-      <a href="#sComponentesparaintroducirinformacion" title="14.- Components to Enter Information">14.- Components to Enter Information</a>
+      <a href="#sComponentesparaintroducirinformacion" title="14.- Components to Enter Information">14. Components to Enter Information</a>
       <a href="#sStateHoisting" title="15.- State Hoisting">15.- State Hoisting</a>
     </div>
     <div class="fila">
@@ -160,51 +160,51 @@
  <!--*********************************************************Introduction***********************************************************-->
 <section class="apartado">
   <a id="sIntroduccion"></a>
-  <h2>Introduction</h2>
+  <h2>Introducción</h2>
 
   <p>
-    In this unit, we will study the different components offered by <span class="negrita">Jetpack Compose</span> for designing interfaces.
+    En esta unidad estudiaremos los distintos componentes que ofrece <span class="negrita">Jetpack Compose</span> para diseñar interfaces.
   </p>
-  <p>We will look at <span class="negrita">presentation and interaction</span> components such as text, images, dialogs, etc.</p>
+  <p>Veremos componentes de <span class="negrita">presentación e interacción</span> como texto, imágenes, diálogos, etc.</p>
 
-  <p>We will also look at <span class="negrita">layout</span> components that allow you to organize interface elements, such as columns, grids, cards, and so on.</p>
+  <p>También estudiaremos componentes de <span class="negrita">layout</span> que permiten organizar los elementos de la interfaz, como columnas, rejillas, tarjetas, etc.</p>
 
-  <p>In the official documentation, you can find:
+  <p>En la documentación oficial puedes encontrar:
     <ul>
-      <li>Their documentation and usage: <a class="enlace" target="_blank" href="https://developer.android.com/develop/ui/compose/components">Developer Android</a></li>
-      <li>Style guidelines: <a class="enlace" target="_blank" href="https://m3.material.io/components">Material Design</a></li>
+      <li>La documentación y ejemplos: <a class="enlace" target="_blank" href="https://developer.android.com/develop/ui/compose/components">Developer Android</a></li>
+      <li>Las guías de estilo: <a class="enlace" target="_blank" href="https://m3.material.io/components">Material Design</a></li>
     </ul>
   </p>
 
   <h3>Disclaimer</h3>
-  <p>Given the large number of Jetpack Compose components and the range of options for each one, it is impossible to cover everything in class.</p>
-  <p>Therefore, in class we will only explain each component’s functionality and the most important points.</p>
-  <p>It is each person’s responsibility to study each component and perform whatever tests they wish.</p>
-  <p>Of course, after studying each component, you can ask questions in class and/or in the Aules forum.</p>
+  <p>Dada la gran cantidad de componentes de Jetpack Compose y la variedad de opciones de cada uno, es imposible cubrirlo todo en clase.</p>
+  <p>Por ello, en clase solo explicaremos la funcionalidad de cada componente y los puntos más importantes.</p>
+  <p>Es responsabilidad de cada alumno estudiar cada componente y realizar las pruebas que desee.</p>
+  <p>Por supuesto, después de estudiar cada componente, pueden formular preguntas en clase y/o en el foro de Aules.</p>
 
   <h3>Switch Example</h3>
-  <a href="UD7/images/ud_7-2025-01-06-23-06-54.png" target="_BLANK">
+  <a href="UD7/images/ud_7-2025-01-06-23-06-54.png" target="_BLANK" title="Ejemplo de Switch">
     <figure>
       <img src="UD7/images/ud_7-2025-01-06-23-06-54.png" /><br>
-      <figcaption>Components</figcaption>
+      <figcaption>Componentes</figcaption>
     </figure>
   </a>
   <br>
-  <a href="UD7/images/ud_7-2025-01-06-23-07-27.png" target="_BLANK">
+  <a href="UD7/images/ud_7-2025-01-06-23-07-27.png" target="_BLANK" title="Switch">
     <figure>
       <img src="UD7/images/ud_7-2025-01-06-23-07-27.png" /><br>
       <figcaption>Switch</figcaption>
     </figure>
   </a>
   <br>
-  <a href="UD7/images/ud_7-2025-01-06-23-07-54.png" target="_BLANK">
+  <a href="UD7/images/ud_7-2025-01-06-23-07-54.png" target="_BLANK" title="Referencia">
     <figure>
       <img src="UD7/images/ud_7-2025-01-06-23-07-54.png" /><br>
-      <figcaption>Reference</figcaption>
+      <figcaption>Referencia</figcaption>
     </figure>
   </a>
   <br>
-  <a href="UD7/images/ud_7-2025-01-06-23-08-12.png" target="_BLANK">
+  <a href="UD7/images/ud_7-2025-01-06-23-08-12.png" target="_BLANK" title="Material">
     <figure>
       <img src="UD7/images/ud_7-2025-01-06-23-08-12.png" /><br>
       <figcaption>Material</figcaption>
@@ -212,8 +212,8 @@
   </a>
   <br>
 
-  <p>The latest version of Jetpack Compose uses Material Design 3. Material Design is an interface design style developed by Google.</p>
-  <a href="UD7/images/ud_7-2025-01-06-23-09-00.png" target="_BLANK">
+  <p>La versión más reciente de Jetpack Compose usa Material Design 3. Material Design es un estilo de diseño de interfaz desarrollado por Google.</p>
+  <a href="UD7/images/ud_7-2025-01-06-23-09-00.png" target="_BLANK" title="Material Design 3">
     <figure>
       <img src="UD7/images/ud_7-2025-01-06-23-09-00.png" /><br>
       <figcaption></figcaption>
@@ -221,11 +221,11 @@
   </a>
   <br>
 
-  <p>The <a class="enlace" target="_blank" href="https://m3.material.io/components">Material Design 3</a> website provides very important information on how to use the components in the <span class="negrita">Guidelines</span> section:</p>
+  <p>El sitio web de <a class="enlace" target="_blank" href="https://m3.material.io/components">Material Design 3</a> proporciona información muy importante sobre cómo usar los componentes en la sección de <span class="negrita">Guidelines</span>:</p>
   <a href="UD7/images/ud_7-2025-01-06-23-10-51.png" target="_BLANK">
     <figure>
       <img src="UD7/images/ud_7-2025-01-06-23-10-51.png" /><br>
-      <figcaption>Guidelines</figcaption>
+      <figcaption>Guías (Guidelines)</figcaption>
     </figure>
   </a>
   <br>
@@ -235,32 +235,32 @@
 <!--*********************************************************Organizando el código***********************************************************-->
 <section class="apartado">
   <a id="sOrganizandoCodigo"></a>
-  <h2>Organizing the Code</h2>
+  <h2>Organizando el código</h2>
 
   <p>
-    Before delving into <span class="negrita">Jetpack Compose</span> components, it is important to keep the code of
-    the application organized. Therefore, keep in mind the following:
+    Antes de profundizar en los componentes de <span class="negrita">Jetpack Compose</span>, es importante mantener el código de
+    la aplicación organizado. Por lo tanto, ten en cuenta lo siguiente:
   </p>
   <ul>
-    <li>You can create as many files as needed.</li>
-    <li>If the application has multiple screens, each screen should have its own interface code in a separate file.</li>
-    <li>The file containing a class that extends Activity should not include any UI components.</li>
-    <li>You should create a component that serves as the base of the application so that it can be used anywhere.</li>
-    <li>All files containing user interface components should be placed in the <span class="inline-folder">ui</span> folder.</li>
-    <li>If multiple components belong to the same area/section of the screen, you should create a component that groups them together.</li>
-    <li>Whenever a component repeats with the same style settings, you should create a custom component that extends it.</li>
+    <li>Puedes crear tantos archivos como necesites.</li>
+    <li>Si la aplicación tiene múltiples pantallas, cada pantalla debe tener su propio código de interfaz en un archivo separado.</li>
+    <li>El archivo que contiene una clase que extiende Activity no debe incluir ningún componente de interfaz de usuario.</li>
+    <li>Debes crear un componente que sirva como base de la aplicación para que pueda ser utilizado en cualquier parte.</li>
+    <li>Todos los archivos que contienen componentes de interfaz de usuario deben colocarse en la carpeta <span class="inline-folder">ui</span>.</li>
+    <li>Si varios componentes pertenecen a la misma área/sección de la pantalla, debes crear un componente que los agrupe.</li>
+    <li>Siempre que un componente se repita con la misma configuración de estilo, debes crear un componente personalizado que lo extienda.</li>
   </ul>
 
   <p>
-    To illustrate all of the above, we will modify the <span class="negrita">Click Counter</span> project from U6
-    to fulfill the above points. Additionally, from now on, we will specify where each studied element should be placed.
+    Para ilustrar todo lo anterior, modificaremos el proyecto de <span class="negrita">Click Counter</span> de la U6
+    para cumplir con los puntos anteriores. Además, de ahora en adelante, especificaremos dónde se debe colocar cada elemento estudiado.
   </p>
 
   <p>
-    The first step is to create a new <span class="r-word">Composable</span> element named
+    El primer paso es crear un nuevo elemento <span class="r-word">Composable</span> llamado
     <span class="d-word">ClickCounterContent</span>:
-    Right-click on the <span class="inline-file">ui</span> folder
-    <span class="negrita">&rarr; New &rarr; Kotlin Class/File</span>.
+    Haz clic derecho en la carpeta <span class="inline-file">ui</span>
+    <span class="negrita">&rarr; Nuevo &rarr; Clase/Archivo Kotlin</span>.
   </p>
   <a href="UD7/images/ud7-2023-10-20-16-14-32.png" target="_BLANK">
     <figure>
@@ -271,7 +271,7 @@
   <br>
 
   <p>
-    Specify the name: <span class="d-word">ClickCounterContent</span>, select <span class="negrita">File</span>, and press Enter.
+    Especifica el nombre: <span class="d-word">ClickCounterContent</span>, selecciona <span class="negrita">Archivo</span>, y presiona Enter.
   </p>
 
   <a href="UD7/images/ud_7-2025-01-06-23-27-38.png" target="_BLANK">
@@ -283,7 +283,7 @@
   <br>
 
   <p>
-    Inside the ClickCounterContent file, include the following:
+    Dentro del archivo ClickCounterContent, incluye lo siguiente:
   </p>
 
   <section><pre><code class="language-kotlin">@Composable
@@ -300,18 +300,18 @@ fun ClickCounterContent(content: @Composable (modifier: Modifier) -> Unit) {
   </section><br><br>
 
   <p>
-    Next, this component must be used from the <span class="r-word">onCreate</span> function of the
-    <span class="d-word">MainActivity</span> file:
+    A continuación, este componente debe ser utilizado desde la función <span class="r-word">onCreate</span> del
+    archivo <span class="d-word">MainActivity</span>:
   </p>
 
   <p>
-    In this way, whenever a new screen is created or you want to preview a component, you should use
-    the <span class="d-word">ClickCounterContent</span> component, and the application’s style will be preserved.
+    De esta manera, cada vez que se crea una nueva pantalla o se quiere previsualizar un componente, se debe usar
+    el componente <span class="d-word">ClickCounterContent</span>, y se preservará el estilo de la aplicación.
   </p>
 
   <p>
-    Now, it is time to rename the <span class="negrita">Content</span> function to <span class="d-word">ClickCounter</span>.
-    You must also change its calls both in the <span class="negrita">onCreate</span> function and in the preview.
+    Ahora, es momento de renombrar la función <span class="negrita">Content</span> a <span class="d-word">ClickCounter</span>.
+    También debes cambiar sus llamadas tanto en la función <span class="negrita">onCreate</span> como en la previsualización.
   </p>
 
   <section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
@@ -329,11 +329,11 @@ fun ClickCounterContent(content: @Composable (modifier: Modifier) -> Unit) {
   </section><br><br>
 
   <p>
-    Finally, we will move the <span class="d-word">ClickCounter</span> function to a separate file.
+    Finalmente, moveremos la función <span class="d-word">ClickCounter</span> a un archivo separado.
   </p>
 
   <p>
-    Right-click on the <span class="cursiva">ui</span> folder &rarr; <span class="cursiva">New &rarr; Package</span>.
+    Haz clic derecho en la carpeta <span class="cursiva">ui</span> &rarr; <span class="cursiva">Nuevo &rarr; Paquete</span>.
   </p>
   <figure>
     <img src="UD7/images/ud7-2023-10-22-23-23-28.png" /><br>
@@ -342,11 +342,11 @@ fun ClickCounterContent(content: @Composable (modifier: Modifier) -> Unit) {
   <br>
 
   <p>
-    Enter the package name: <span class="negrita">screens</span> and press Enter.
+    Ingresa el nombre del paquete: <span class="negrita">screens</span> y presiona Enter.
   </p>
 
   <p>
-    Right-click on the new <span class="cursiva">screens</span> folder &rarr; <span class="cursiva">New &rarr; Kotlin Class/File</span>:
+    Haz clic derecho en la nueva carpeta <span class="cursiva">screens</span> &rarr; <span class="cursiva">Nuevo &rarr; Clase/Archivo Kotlin</span>:
   </p>
   <figure>
     <img src="UD7/images/ud7-2023-10-22-23-24-32.png" /><br>
@@ -355,7 +355,7 @@ fun ClickCounterContent(content: @Composable (modifier: Modifier) -> Unit) {
   <br>
 
   <p>
-    Enter the file name: <span class="d-word">ClickCounter</span>, select the <span class="negrita">File</span> option, and press Enter.
+    Ingresa el nombre del archivo: <span class="d-word">ClickCounter</span>, selecciona la opción <span class="negrita">Archivo</span>, y presiona Enter.
   </p>
 
   <figure>
@@ -365,8 +365,8 @@ fun ClickCounterContent(content: @Composable (modifier: Modifier) -> Unit) {
   <br>
 
   <p>
-    The <span class="d-word">ClickCounter</span> function and the <span class="d-word">ClickCounterPreview</span> preview
-    are removed from <span class="inline-file">MainActivity.kt</span> and placed in the <span class="inline-file">ClickCounter</span> file:
+    La función <span class="d-word">ClickCounter</span> y la previsualización <span class="d-word">ClickCounterPreview</span>
+    se eliminan de <span class="inline-file">MainActivity.kt</span> y se colocan en el archivo <span class="inline-file">ClickCounter</span>:
   </p>
 
   <section class="marco-t file-">
@@ -465,13 +465,13 @@ fun ClickCounterPreview() {
   </section>
 
   <p>
-    In this way, the project structure becomes more organized.
+    De esta manera, la estructura del proyecto se vuelve más organizada.
   </p>
   <p>
-    If a screen is going to be composed of multiple files, it is recommended to create a <span class="negrita">new package</span> (by the name of the screen) within the <span class="negrita">screens</span> folder.
+    Si una pantalla va a estar compuesta por múltiples archivos, se recomienda crear un <span class="negrita">nuevo paquete</span> (con el nombre de la pantalla) dentro de la carpeta <span class="negrita">screens</span>.
   </p>
   <p>
-    If some components are shared among different screens, you should create a new package named <span class="negrita">common</span>, <span class="negrita">share</span>, or <span class="negrita">partials</span> and place those components inside it.
+    Si algunos componentes son compartidos entre diferentes pantallas, debes crear un nuevo paquete llamado <span class="negrita">common</span>, <span class="negrita">share</span>, o <span class="negrita">partials</span> y colocar esos componentes dentro de él.
   </p>
 
   <a href="UD7/images/ud7-2023-10-22-23-29-40.png" target="_BLANK">
@@ -483,7 +483,7 @@ fun ClickCounterPreview() {
   <br>
   
   <section class="marco-t inf">
-    <span class="icono info"> </span> It is important to keep your code consistently organized.
+    <span class="icono info"> </span> Es importante mantener tu código consistentemente organizado.
   </section>
   <section class="marco-b">
 
@@ -495,9 +495,9 @@ fun ClickCounterPreview() {
   <!--*********************************************************Componentes de Jetpack Compose***********************************************************-->
 <section class="apartado">
   <a id="sComponentesdeJetpackCompose"></a>
-  <h2>Jetpack Compose Components</h2>
+  <h2>Componentes de Jetpack Compose</h2>
 
-  <p>The Jetpack Compose components can be unofficially classified into two types:</p>
+  <p>Los componentes de Jetpack Compose se pueden clasificar de forma no oficial en dos tipos:</p>
 
   <table>
     <thead>
@@ -505,7 +505,7 @@ fun ClickCounterPreview() {
         <p>
           <span class="subrayado">Layout</span>
         </p>
-        <p>They allow organizing elements of the graphical interface</p>
+        <p>Permiten organizar los elementos de la interfaz gráfica</p>
       </th>
     </thead>
     <tbody>
@@ -552,11 +552,9 @@ fun ClickCounterPreview() {
     <thead>
       <th colspan="2">
         <p>
-          <span class="subrayado">Information Presentation</span>
+          <span class="subrayado">Presentación de información</span>
         </p>
-        <p>They allow displaying information to the user. <br>
-          The user can interact with them.
-        </p>
+        <p>Permiten mostrar información al usuario y ofrecer interacción.</p>
       </th>
     </thead>
     <tbody>
@@ -599,36 +597,36 @@ fun ClickCounterPreview() {
   </table>
   <br>
 
-  <p>In the previous unit, some Jetpack Compose components have already been used: <span class="cursiva">Column,
+  <p>En la unidad anterior, ya se han utilizado algunos componentes de Jetpack Compose: <span class="cursiva">Column,
       Row, Text, Button, Spacer, Surface</span>.</p>
 
-  <p><span class="negrita">The entire interface</span> of the applications will be created with:</p>
+  <p><span class="negrita">La interfaz completa</span> de las aplicaciones se creará con:</p>
   <ul>
-    <li><span class="negrita">Components offered by Jetpack Compose</span></li>
+    <li><span class="negrita">Componentes ofrecidos por Jetpack Compose</span></li>
 
-    <li><span class="negrita">Custom Jetpack Compose components</span> created by extending and grouping
-      the components offered by Jetpack Compose.</li>
+    <li><span class="negrita">Componentes personalizados de Jetpack Compose</span> creados al extender y agrupar
+      los componentes ofrecidos por Jetpack Compose.</li>
   </ul>
 
-  <p>Jetpack Compose <span class="negrita">components</span> are <span class="negrita">functions</span> labeled with
+  <p>Los <span class="negrita">componentes</span> de Jetpack Compose son funciones etiquetadas con
     <span class="r-word">@Composable</span>.</p>
 
-  <p>You can observe this in the components provided by Jetpack Compose:</p>
+  <p>Esto se puede observar en los componentes proporcionados por Jetpack Compose:</p>
 
   <figure><img src="UD7/images/ud7-2023-10-22-23-47-00.png" /><br>
     <figcaption></figcaption>
   </figure>
   <br>
 
-  <p>To create <span class="negrita">your own component</span>, you must create a <span
-      class="negrita">function labeled</span> with <span class="d-word">@Composable</span>.</p>
+  <p>Para crear <span class="negrita">tu propio componente</span>, debes crear una <span
+      class="negrita">función etiquetada</span> con <span class="d-word">@Composable</span>.</p>
 
-  <p>Moreover, the documentation indicates that:</p>
+  <p>Además, la documentación indica que:</p>
   <ul>
-    <li>If the function <span class="negrita">@Composable does not return anything</span> (the most common scenario),
-      its name should start with a capital letter.</li>
-    <li>If the function <span class="negrita">@composable returns something</span>, its name should start in
-      lowercase.</li>
+    <li>Si la función <span class="negrita">@Composable no devuelve nada</span> (el escenario más común),
+      su nombre debe comenzar con una letra mayúscula.</li>
+    <li>Si la función <span class="negrita">@composable devuelve algo</span>, su nombre debe comenzar en
+      minúscula.</li>
   </ul>
 
   <figure><img src="UD7/images/ud7-2023-10-22-23-49-09.png" /><br>
@@ -643,24 +641,22 @@ fun ClickCounterPreview() {
 <section class="apartado">
   <a id="sMaterial3"></a>
   <h2>Material 3</h2>
-  <p>The latest version of Jetpack Compose uses Material Design 3. Material Design is a Google interface design style.
-  </p>
+  <p>La versión más reciente de Jetpack Compose usa Material Design 3. Material Design es un estilo de diseño de interfaz desarrollado por Google.</p>
 
-  <p>All Jetpack Compose components can be found in the <a class="enlace" target="_blank"
-      href="https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary">official
-      documentation</a>
-    with a visual example and a link to <a class="enlace" target="_blank" href="https://m3.material.io/components">Material
+  <p>Todos los componentes de Jetpack Compose se pueden encontrar en la <a class="enlace" target="_blank"
+      href="https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary">documentación oficial</a>
+    con un ejemplo visual y un enlace a <a class="enlace" target="_blank" href="https://m3.material.io/components">Material
       Design 3</a>:
-    so you can see how to use the component and the style guidelines:</p>
+    para que puedas ver cómo usar el componente y las guías de estilo:</p>
 
   <figure><img src="UD7/images/ud7-2023-10-22-23-53-55.png" /><br>
     <figcaption></figcaption>
   </figure>
   <br>
 
-  <p>The <a class="enlace" target="_blank" href="https://m3.material.io/components">Material Design 3</a> web offers
-    very important information
-    on how to use the components in the <span class="negrita">Guidelines</span> section (style guides):</p>
+  <p>El <a class="enlace" target="_blank" href="https://m3.material.io/components">Material Design 3</a> web ofrece
+    muy importante información
+    sobre cómo usar los componentes en la sección de <span class="negrita">Guidelines</span> (guías de estilo):</p>
 
   <figure><img src="UD7/images/ud7-2023-10-22-23-56-06.png" /><br>
     <figcaption></figcaption>
@@ -669,13 +665,14 @@ fun ClickCounterPreview() {
 
   <h3>ExperimentalMaterial3Api</h3>
 
-  <p>Sometimes, Jetpack Compose components are in an experimental phase but can still be used without problem.</p>
-  <p>In such cases, Android Studio will ask for this specification.</p>
-  <p>In Android Studio’s contextual help, you can specify it as follows:
+  <p>En ocasiones, los componentes de Jetpack Compose se encuentran en una fase experimental pero se pueden usar sin problema.
+  </p>
+  <p>En tales casos, Android Studio pedirá esta especificación.</p>
+  <p>En la ayuda contextual de Android Studio, puedes especificarlo de la siguiente manera:
   <ul>
-    <li>At the beginning of the component containing the experimental component.</li>
-    <li>Throughout the current file.</li>
-    <li>If you want to propagate it so that the parent component also has to specify it.</li>
+    <li>Al principio del componente que contiene el componente experimental.</li>
+    <li>A lo largo del archivo actual.</li>
+    <li>Si deseas propagarlo para que el componente padre también tenga que especificarlo.</li>
   </ul>
   </p>
 
@@ -689,34 +686,33 @@ fun ClickCounterPreview() {
 <!--*********************************************************Componentes Text y BasicText***********************************************************-->
 <section class="apartado">
   <a id="sComponentesTextyBasicText"></a>
-  <h2>Text and BasicText Components</h2>
+  <h2>Text y BasicText</h2>
 
-  <p>The <span class="negrita">Text</span> and <span class="negrita">BasicText</span> components allow showing a text
-    string in the interface.</p>
+  <p>Los componentes <span class="negrita">Text</span> y <span class="negrita">BasicText</span> permiten mostrar una cadena de texto
+    en la interfaz.</p>
 
-  <p>The difference is that <span class="negrita">Text uses Material principles</span> whereas BasicText does not.</p>
+  <p>La diferencia es que <span class="negrita">Text utiliza principios de Material</span> mientras que BasicText no.</p>
 
-  <p>Its basic usage has already been studied in class and is as follows:</p>
+  <p>Su uso básico ya se ha estudiado en clase y es el siguiente:</p>
   <figure><img src="UD7/images/ud7-2023-10-22-23-57-45.png" /><br>
     <figcaption></figcaption>
   </figure>
   <br>
 
-  <p>It is <span class="negrita">important to know how Jetpack Compose components work</span>. Press <span
-      class="negrita">CTRL and hold it while
-      left-clicking</span> on the class name. It also works if the cursor is on the name and you press CTRL+B.</p>
-  <p>This will open the component’s code in Android Studio. You can do this with any class, function,
-    or object…</p>
+  <p>Es <span class="negrita">importante saber cómo funcionan los componentes de Jetpack Compose</span>. Presiona <span class="negrita">CTRL y mantenlo presionado mientras
+      haces clic izquierdo</span> en el nombre de la clase. También funciona si el cursor está sobre el nombre y presionas CTRL+B.</p>
+  <p>Esto abrirá el código del componente en Android Studio. Puedes hacer esto con cualquier clase, función,
+    o objeto…</p>
 
   <figure><img src="UD7/images/KotlinDoc.gif" /><br>
-    <figcaption>Pressing ctrl+B on the component to see its definition.</figcaption>
+    <figcaption>Presionando ctrl+B sobre el componente para ver su definición.</figcaption>
   </figure>
   <br>
 
-  <p>All the functions have <span class="cursiva">KotlinDoc</span> documentation, where their parameters are explained.
+  <p>Todas las funciones tienen documentación en <span class="cursiva">KotlinDoc</span>, donde se explican sus parámetros.
   </p>
 
-  <p>When calling the Text function using parameter names as recommended by Jetpack Compose, you can alter their order.
+  <p>Al llamar a la función Text usando los nombres de los parámetros como recomienda Jetpack Compose, puedes alterar su orden.
   </p>
 
   <figure><img src="UD7/images/ud7-2023-10-23-00-06-03.png" /><br>
@@ -724,36 +720,34 @@ fun ClickCounterPreview() {
   </figure>
   <br>
 
-  <p>When you use Jetpack Compose components, just like with any class that is not yours, it is important to check what
-    parameters they have and how they work.</p>
+  <p>Cuando usas componentes de Jetpack Compose, al igual que con cualquier clase que no es tuya, es importante verificar qué
+    parámetros tienen y cómo funcionan.</p>
 
-  <p>With the cursor on a class/function/parameter/variable, press CTRL+B, and Android Studio will open the file
-    defining it so that you can review it.</p>
+  <p>Con el cursor sobre una clase/función/parámetro/variable, presiona CTRL+B, y Android Studio abrirá el archivo
+    que la define para que puedas revisarlo.</p>
 
-  <p>For example:</p>
+  <p>Por ejemplo:</p>
   <ul>
-    <li>text needs a String</li>
-    <li>modifier needs a Modifier</li>
-    <li>fontWeight needs a FontWeight</li>
+    <li>text necesita un String</li>
+    <li>modifier necesita un Modifier</li>
+    <li>fontWeight necesita un FontWeight</li>
   </ul>
 
-  <p>By navigating through the parameters with CTRL+B, you can learn about the accepted data type. This can also be
-    checked online in the official documentation.</p>
+  <p>Navegando a través de los parámetros con CTRL+B, puedes aprender sobre el tipo de dato aceptado. Esto también se puede
+    verificar en línea en la documentación oficial.</p>
   <figure><img src="UD7/images/ud7-2023-10-23-00-07-47.png" /><br>
     <figcaption></figcaption>
   </figure>
   <br>
 
-  <p>The only <span class="negrita">mandatory parameter</span> is <span class="negrita">text</span>, the string to be
-    displayed.</p>
+  <p>El único <span class="negrita">parámetro obligatorio</span> es <span class="negrita">text</span>, la cadena que se mostrará.</p>
 
-  <p>All other parameters can be omitted (they already have a value). If you omit them, Kotlin uses their default
-    values.</p>
+  <p>Todos los demás parámetros se pueden omitir (ya tienen un valor por defecto). Si los omites, Kotlin usa sus valores por defecto.</p>
   <figure><img src="UD7/images/ud7-2023-10-23-00-08-54.png" /><br>
     <figcaption></figcaption>
   </figure>
   <br>
-  <p>Some <span class="negrita">Text</span> examples with parameters:</p>
+  <p>Algunos ejemplos de <span class="negrita">Text</span> con parámetros:</p>
 
   <figure><img src="UD7/images/ud7-2023-10-23-00-10-25.png" /><br>
     <figcaption></figcaption>
@@ -761,9 +755,9 @@ fun ClickCounterPreview() {
   <br>
 
 
-  <p>With the <span class="negrita">style</span> parameter, you can set up various style properties at once.</p>
+  <p>Con el parámetro <span class="negrita">style</span>, puedes configurar varias propiedades de estilo a la vez.</p>
 
-  <p>Although you could use the specific parameters like <span class="negrita">color</span>, <span
+  <p>Aunque podrías usar los parámetros específicos como <span class="negrita">color</span>, <span
       class="negrita">fontSize…</span></p>
 
 </section><!-- End section Componentes Text y BasicText-->
@@ -866,7 +860,7 @@ fun ClickCounterPreview() {
     <a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/modifiers-list">https://developer.android.com/jetpack/compose/modifiers-list</a>
   </p>
 
-  <p>Most of the <span class="negrita">Modifier</span> functions can be used in any scope, but some can only be used in a specific scope.</p>
+  <p>Most of the <span class="negrita">Modifier</span> functions can be used in any scope, but some can only be used in a specific scope.
 <a href="UD7/images/ud_7-2025-01-06-23-44-25.png" target="_BLANK">
   <figure>
     <img src="UD7/images/ud_7-2025-01-06-23-44-25.png" /><br>
@@ -1089,47 +1083,46 @@ fun ClickCounterPreview() {
 
   <h3>Converting raster images to webp.</h3>
 
-  <p>Google recommends webp format because it is more optimized and takes up less space.
+  <p>Google recomienda el formato webp porque está más optimizado y ocupa menos espacio.
 
-    Using webp format can <span class="subrayado">reduce application size by up to 80%</span>.
+    Usar el formato webp puede <span class="subrayado">reducir el tamaño de la aplicación hasta en un 80%</span>.
 
-    The webp format is supported from API 14 with quality loss and from API 18 without quality loss.
+    El formato webp es compatible desde la API 14 con pérdida de calidad y desde la API 18 sin pérdida de calidad.
 
-    Since we work with API 24+ in the course, there is no problem with quality.</p>
+    Dado que trabajamos con API 24+ en el curso, no hay problema con la calidad.</p>
 
-  <p>Right-click on the image in the project:</p>
+  <p>Haz clic derecho en la imagen en el proyecto:</p>
 
   <figure><img src="UD7/images/ud7-2023-10-23-09-40-38.png" /><br>
     <figcaption></figcaption>
   </figure>
   <br>
-  <p>Choose the options you need: 100% or <span class="cursiva">Lossless encoding -> maximum quality.</span></p>
+  <p>Elige las opciones que necesites: 100% o <span class="cursiva">Lossless encoding -> maximum quality.</span></p>
   <figure><img src="UD7/images/ud7-2023-10-23-09-41-22.png" /><br>
     <figcaption></figcaption>
   </figure>
   <br>
 
-  <p>A preview is displayed showing final quality, final size, and differences.
-    You can also adjust the final quality if desired.</p>
+  <p>Una vista previa se muestra mostrando la calidad final, tamaño final y diferencias.
+    También puedes ajustar la calidad final si lo deseas.</p>
   <figure><img src="UD7/images/ud7-2023-10-23-12-19-38.png" /><br>
     <figcaption></figcaption>
   </figure>
   <br>
-  <p>The example image at 30% quality has almost no loss and goes from 421.3 KB to 14.5 KB (3.5% of the original
-    size).</p>
+  <p>La imagen de ejemplo con un 30% de calidad tiene casi ninguna pérdida y pasa de 421.3 KB a 14.5 KB (3.5% del original).</p>
 
-  <p>Finally, press Finish to convert the image to webp format.</p>
+  <p>Finalmente, presiona Finish para convertir la imagen al formato webp.</p>
 
   <figure><img src="UD7/images/ud7-2023-10-23-12-20-27.png" /><br>
     <figcaption></figcaption>
   </figure>
   <br>
 
-  <p>With bigger images, the optimization is more noticeable.
+  <p>Con imágenes más grandes, la optimización es más notable.
   <ul>
-    <li>Original image: 7.9 MB</li>
-    <li>Final image: 400 KB</li>
-    <li>Reduced to 6.1%</li>
+    <li>Imagen original: 7.9 MB</li>
+    <li>Imagen final: 400 KB</li>
+    <li>Reducido al 6.1%</li>
   </ul>
 
   <figure><img src="UD7/images/ud7-2023-10-23-12-23-05.png" /><br>
@@ -1236,7 +1229,7 @@ implementation(libs.coil.network.okhttp)
   <br>
 
 
-  <p>Coil offers the function <span class="r-word">crossfade</span> to gradually display the image:</p>
+  <p>Coil ofrece la función <span class="r-word">crossfade</span> para mostrar gradualmente la imagen:</p>
   <figure><img src="UD7/images/ud7-2023-10-23-12-43-30.png" /><br>
     <figcaption></figcaption>
   </figure>
@@ -1284,23 +1277,23 @@ implementation(libs.coil.network.okhttp)
       
 
 
-  <p>Remember to press <span class="negrita">Sync Now</span> after adding the dependency.</p>
+  <p>Recuerda presionar <span class="negrita">Sync Now</span> después de agregar la dependencia.</p>
 
-  <p>Once the dependency is added, <a class="enlace" target="_blank"
-      href="https://fonts.google.com/icons">all icons</a> are available.</p>
+  <p>Una vez que se agrega la dependencia, <a class="enlace" target="_blank"
+      href="https://fonts.google.com/icons">todos los iconos</a> están disponibles.</p>
 
   <figure><img src="UD7/images/ud7-2023-10-23-12-53-52.png" /><br>
     <figcaption></figcaption>
   </figure>
   <br>
-  <p>In the Icon class, we have sub-classes for icons:</p>
+  <p>En la clase Icon, tenemos sub-clases para los iconos:</p>
   <ul>
-    <li><span class="negrita">Default</span>: same usage as Filled.</li>
-    <li><span class="negrita">Filled</span>: icon fully in one color.</li>
-    <li><span class="negrita">Outlined</span>: icon only showing its edges.</li>
-    <li><span class="negrita">TwoTone</span>: icon with two colors.</li>
-    <li><span class="negrita">Sharp</span>: icon with angled corners.</li>
-    <li><span class="negrita">Rounded</span>: icon with rounded corners.</li>
+    <li><span class="negrita">Default</span>: mismo uso que Filled.</li>
+    <li><span class="negrita">Filled</span>: icono completamente en un color.</li>
+    <li><span class="negrita">Outlined</span>: icono mostrando solo sus bordes.</li>
+    <li><span class="negrita">TwoTone</span>: icono con dos colores.</li>
+    <li><span class="negrita">Sharp</span>: icono con esquinas anguladas.</li>
+    <li><span class="negrita">Rounded</span>: icono con esquinas redondeadas.</li>
   </ul>
 
   <figure><img src="UD7/images/ud7-2023-10-23-12-55-48.png" /><br>
@@ -2335,6 +2328,13 @@ ExposedDropdownMenuBox(
 
   <p>The <span class="r-word">SearchBar</span> has various parameters for its configuration, some depending on a
     state.
+    Thus, the minimal setup is the following:</p>
+  <figure><img src="UD7/images/ud7-2023-10-24-13-24-02.png" /><br>
+    <figcaption></figcaption>
+  </figure>
+  <br>
+
+  <p>You can use different
     Thus, the minimal setup is the following:</p>
   <figure><img src="UD7/images/ud7-2023-10-24-13-24-02.png" /><br>
     <figcaption></figcaption>

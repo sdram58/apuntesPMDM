@@ -17,17 +17,17 @@
 
   <nav id="menu-lateral" class="main-menu-lateral oculto">
     <div class="fila">
-      <a href="#sIntroduccion" title="1.- Introduction">1.- Introduction</a>
-      <a href="#sArquitecturaorientadaaServicios" title="2. Service-Oriented Architecture">2. Service-Oriented Architecture</a>
-      <a href="#sAPI_Rest" title="3.- REST API">3.- REST API</a>      
+      <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
+      <a href="#sArquitecturaorientadaaServicios" title="2. Arquitectura orientada a servicios">2.- Arquitectura orientada a servicios</a>
+      <a href="#sAPI_Rest" title="3.- API REST">3.- API REST</a>      
     </div>    
     <div class="fila">
       <a href="#sCoil" title="4.- Coil">4.- Coil</a>
-      <a href="#sConexionainternet" title="5.- Internet Connection">5.- Internet Connection</a>
+      <a href="#sConexionainternet" title="5.- Conexión a Internet">5.- Conexión a Internet</a>
       <a href="#sHttpURLConnection" title="6.- HttpURLConnection">6.- HttpURLConnection</a>
     </div>
     <div class="fila">
-      <a href="#sLibreriasparaconexionesHTTP" title="7.- Libraries for HTTP connections">7.- Libraries for HTTP connections</a>
+      <a href="#sLibreriasparaconexionesHTTP" title="7.- Bibliotecas para conexiones HTTP">7.- Bibliotecas para conexiones HTTP</a>
       <a href="#sRetrofit" title="8.- Retrofit">8.- Retrofit</a>
       
     </div>
@@ -37,57 +37,56 @@
 
   <div class="main-menu">
     <div class="fila">
-      <a href="#sIntroduccion" title="1.- Introduction">1.- Introduction</a>
-      <a href="#sArquitecturaorientadaaServicios" title="2. Service-Oriented Architecture">2. Service-Oriented Architecture</a>
-      <a href="#sAPI_Rest" title="3.- REST API">3.- REST API</a>      
+      <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
+      <a href="#sArquitecturaorientadaaServicios" title="2. Arquitectura orientada a servicios">2.- Arquitectura orientada a servicios</a>
+      <a href="#sAPI_Rest" title="3.- API REST">3.- API REST</a>      
     </div>    
     <div class="fila">
       <a href="#sCoil" title="4.- Coil">4.- Coil</a>
-      <a href="#sConexionainternet" title="5.- Internet Connection">5.- Internet Connection</a>
+      <a href="#sConexionainternet" title="5.- Conexión a Internet">5.- Conexión a Internet</a>
       <a href="#sHttpURLConnection" title="6.- HttpURLConnection">6.- HttpURLConnection</a>
     </div>
     <div class="fila">
-      <a href="#sLibreriasparaconexionesHTTP" title="7.- Libraries for HTTP connections">7.- Libraries for HTTP connections</a>
+      <a href="#sLibreriasparaconexionesHTTP" title="7.- Bibliotecas para conexiones HTTP">7.- Bibliotecas para conexiones HTTP</a>
       <a href="#sRetrofit" title="8.- Retrofit">8.- Retrofit</a>
       <a href="" class="relleno"></a>
     </div>
   </div>
   
-  <!--*********************************************************Introduction***********************************************************-->
+  <!--*********************************************************Introducción***********************************************************-->
   <section class="apartado">
   <a id="sIntroduccion"></a>
-  <h2>Introduction</h2>
-  <p>In the previous unit, we studied how to store and access information on the device itself.</p>
+  <h2>Introducción</h2>
+  <p>En la unidad anterior vimos cómo almacenar y acceder a información en el propio dispositivo.</p>
   
-  <p>In this unit, we will study the different techniques for accessing information available on the internet via REST APIs.</p>
+  <p>En esta unidad estudiaremos las distintas técnicas para acceder a información disponible en Internet mediante APIs REST.</p>
   
-  <p>We will learn the techniques to obtain and send information to/from existing APIs.</p>
+  <p>Aprenderemos a obtener y enviar información hacia/desde APIs públicas o privadas.</p>
   
 
 
-</section><!-- End section Introduction-->
+</section><!-- End section Introducción-->
 
-<!--*********************************************************Service-Oriented Architecture***********************************************************-->
+<!--*********************************************************Arquitectura orientada a servicios***********************************************************-->
 <section class="apartado">
 <a id="sArquitecturaorientadaaServicios"></a>
-<h2>Service-Oriented Architecture</h2>
+<h2>Arquitectura orientada a servicios</h2>
 
-<h3><span class="negrita">Service-Oriented Architecture</span> → <span class="negrita">SOA (Service Oriented Architecture)</span></h3>
+<h3><span class="negrita">Arquitectura orientada a servicios</span> → <span class="negrita">SOA</span></h3>
 
-<p><span class="negrita">Web services</span> are a set of protocols and standards that allow different applications to exchange data.</p>
+<p>Los <span class="negrita">web services</span> son protocolos y estándares que permiten que distintas aplicaciones intercambien datos.</p>
 
-<p>One of the main features is that these applications can be developed with different programming languages 
-  and can be running on different platforms.</p>
+<p>Una de sus principales características es que las aplicaciones consumidoras y proveedoras pueden estar escritas en distintos lenguajes y ejecutarse en plataformas diferentes.</p>
 
-<p>They can even be developed by different entities.</p>
+<p>Pueden incluso ser desarrolladas por organizaciones diferentes y reutilizarse por terceros.</p>
 
 <figure><img src="UD11/images/ud11-2024-03-06-13-06-31.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<p>When using a service-oriented architecture, the development of applications <span class="negrita">is not based on generating complete applications</span>.</p>
+<p>Cuando se utiliza una arquitectura orientada a servicios, el desarrollo de aplicaciones <span class="negrita">no se basa en generar aplicaciones completas</span>.</p>
 
-<p>With SOA, services (applications) are developed that <span class="negrita">generate results</span> and 
-  these services can be <span class="negrita">used</span> both in the <span class="negrita">own application</span> and in <span class="negrita">third-party applications</span>.</p>
+<p>Con SOA, se desarrollan servicios (aplicaciones) que <span class="negrita">generan resultados</span> y 
+  estos servicios pueden ser <span class="negrita">usados</span> tanto en la <span class="negrita">propia aplicación</span> como en <span class="negrita">aplicaciones de terceros</span>.</p>
 
 <h3>Standards Used in SOA</h3>
 <p>For the implementation of services, different technologies can be used depending on the characteristics of the service being developed.
@@ -102,20 +101,18 @@
 </ul>
 </p>
 
-</section><!-- End section Service-Oriented Architecture-->
+</section><!-- End section Arquitectura orientada a servicios-->
 
-<!--*********************************************************REST API***********************************************************-->
+<!--*********************************************************API REST***********************************************************-->
 <section class="apartado">
 <a id="sAPI_Rest"></a>
-<h2>REST API</h2>
+<h2>API REST</h2>
 
-<h3>API (Application Programming Interface)</h3>
+<h3>API (Interfaz de Programación de Aplicaciones)</h3>
 
-<p>An <span class="negrita">API</span> is a <span class="negrita">set of functionalities</span> already developed 
-  and prepared to be used within other technologies by making use of SOA principles.</p>
+<p>Una <span class="negrita">API</span> es un conjunto de funcionalidades ya implementadas que pueden ser usadas por otras aplicaciones siguiendo los principios de SOA.</p>
 
-<p>Its purpose is to offer an <span class="negrita">abstraction layer</span> when performing different tasks 
-  (calculations, obtaining/saving data…) so that it facilitates tasks for developers.</p>
+<p>Su objetivo es ofrecer una <span class="negrita">capa de abstracción</span> para realizar tareas (cálculos, obtención/almacenamiento de datos…) facilitando la labor del desarrollador.</p>
 
 <h3>REST</h3>
 <p><span class="negrita">REST</span> → REpresentational State Transfer</p>
@@ -208,18 +205,17 @@
 </code></pre>
 </section><br><br>
 
-</section><!-- End section REST API-->
+</section><!-- End section API REST-->
 
 <!--*********************************************************Coil***********************************************************-->
 <section class="apartado">
 <a id="sCoil"></a>
 <h2>Coil</h2>
-<h3>Coil Library</h3>
+<h3>Librería Coil</h3>
 
-<p>In a previous unit we studied the use of the Coil library for accessing images located on the internet.</p>
+<p>En la unidad anterior vimos la librería Coil para cargar imágenes desde Internet.</p>
 
-<p>The Coil library requires a URL to retrieve the image. This URL can either be a direct path to an image 
-  or an <span class="negrita">API endpoint</span> as shown in the examples:</p>
+<p>Coil necesita una URL para obtener la imagen. Esta URL puede apuntar directamente a una imagen o ser un <span class="negrita">endpoint</span> de una API, como en los ejemplos:</p>
 
 <figure><img src="UD11/images/ud11-2024-03-06-13-21-06.png" /><br><figcaption></figcaption></figure>
 <br>
@@ -227,32 +223,31 @@
 
 </section><!-- End section Coil-->
 
-<!--*********************************************************5.- Internet Connection***********************************************************-->
+<!--*********************************************************5.- Conexión a Internet***********************************************************-->
 <section class="apartado">
 <a id="sConexionainternet"></a>
-<h2>Internet Connection</h2>
-<p>It is important to note that if the application is going to access the internet, permissions must be granted by specifying it in the manifest file
-   <span class="negrita">manifest</span> → <span class="inline-file">AndroidManifest.xml</span>
-with the following line:</p>
+<h2>Conexión a Internet</h2>
+<p>Si la aplicación va a acceder a Internet, es necesario declarar el permiso correspondiente en el manifiesto 
+   (<span class="negrita">AndroidManifest.xml</span>) con la siguiente línea:</p>
 
 <figure><img src="UD11/images/ud11-2024-03-06-13-23-27.png" /><br><figcaption></figcaption></figure>
 <br>
 <section><pre><code class="language-xml">&lt;uses-permission android:name="android.permission.INTERNET"/&gt;</code></pre>
 </section><br><br>
 
-</section><!-- End section 5.- Internet Connection-->
+</section><!-- End section 5.- Conexión a Internet-->
 
 <!--*********************************************************HttpURLConnection***********************************************************-->
 <section class="apartado">
 <a id="sHttpURLConnection"></a>
 <h2>HttpURLConnection</h2>
-<p>Android provides the <span class="negrita">HttpURLConnection</span> class for making HTTP connections manually.</p>
+<p>Android proporciona la clase <span class="negrita">HttpURLConnection</span> para realizar conexiones HTTP de forma manual.</p>
 
-<p>Connections with HttpURLConnection should be made in a coroutine off the main thread.</p>
+<p>Es recomendable realizar las conexiones con HttpURLConnection dentro de una corrutina y fuera del hilo principal.</p>
 
-<p>Requests of any type allowed by the HTTP protocol can be made.</p>
+<p>Se pueden ejecutar peticiones de cualquier tipo definidas por el protocolo HTTP.</p>
 
-<p>The following code performs a GET request in Jetpack Compose.</p>
+<p>El siguiente fragmento muestra una petición GET en Jetpack Compose.</p>
 
 <section><pre><code class="language-kotlin">Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -327,21 +322,20 @@ with the following line:</p>
 
 </section><!-- End section HttpURLConnection-->
 
-<!--*********************************************************Libraries for HTTP connections***********************************************************-->
+<!--*********************************************************Bibliotecas para conexiones HTTP***********************************************************-->
 <section class="apartado">
 <a id="sLibreriasparaconexionesHTTP"></a>
-<h2>Libraries for HTTP Connections</h2>
+<h2>Bibliotecas para conexiones HTTP</h2>
 
-<p>Although we have previously seen how to use the HttpURLConnection class to make HTTP connections from Android, 
-  there are also several libraries to facilitate and speed up these actions.</p>
-  <p>Android Libraries:
+<p>Aunque se puede usar HttpURLConnection directamente, existen bibliotecas que simplifican y agilizan las conexiones HTTP.</p>
+  <p>Ejemplos:
     <ul>
-      <li><span class="negrita">Retrofit</span> (This is the one we will cover)</li>
-      <li>Volley</li>
+      <li><span class="negrita">Retrofit</span> (la que veremos en profundidad).</li>
+      <li>Volley.</li>
     </ul>
   </p>
   
-  <p>Kotlin Libraries (available in Android and Kotlin projects):
+  <p>Librerías Kotlin (válidas en proyectos Android y Kotlin):
     <ul>
       <li>Ktor</li>
       <li>http4k</li>
@@ -349,19 +343,19 @@ with the following line:</p>
   </p>
   
 
-</section><!-- End section Libraries for HTTP connections-->
+</section><!-- End section Bibliotecas para conexiones HTTP-->
 
 <!--*********************************************************Retrofit***********************************************************-->
 <section class="apartado">
 <a id="sRetrofit"></a>
 <h2>Retrofit</h2>
-<p>Retrofit is an open-source library for Java and Android that simplifies making HTTP requests and processing the retrieved data.</p>
-<p>Features:
+<p>Retrofit es una librería open-source para Java y Android que simplifica la realización de peticiones HTTP y el procesamiento de las respuestas.</p>
+<p>Características:
   <ul>
-    <li><span class="negrita">Type safety</span>: it ensures safety by automatically converting JSON responses to Java/Kotlin objects and Java/Kotlin objects to JSON in requests.</li>
-    <li><span class="negrita">Readable and maintainable code</span>: thanks to annotations in interfaces, HTTP requests are defined, simplifying their use.</li>
-    <li>Allows <span class="negrita">adding parameters, headers, and variables</span> to the endpoint.</li>
-    <li>Handles <span class="negrita">different response formats</span> besides JSON.</li>
+    <li><span class="negrita">Seguridad de tipos</span>: convierte automáticamente JSON a objetos Kotlin/Java y viceversa.</li>
+    <li><span class="negrita">Código legible y mantenible</span>: las peticiones se definen mediante anotaciones en interfaces.</li>
+    <li>Permite añadir <span class="negrita">parámetros, cabeceras y variables</span> a los endpoints.</li>
+    <li>Soporta distintos formatos de respuesta además de JSON.</li>
   </ul>
 </p>
 

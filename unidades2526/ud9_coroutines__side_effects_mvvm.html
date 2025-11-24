@@ -17,45 +17,56 @@
 
 <nav id="menu-lateral" class="main-menu-lateral oculto">
   <div class="fila">
-    <a href="#sCorrutinas" title="1.- Corrutinas">1.- Coroutines</a>
-    <a href="#sSideEffects" title="2.- Side Effects">2.- Side Effects</a>
-    <a href="#sArquitecturasAndroid" title="3.- Arquitecturas Android">3.- Android Architectures</a>      
+-    <a href="#sCorrutinas" title="1.- Corrutinas">1.- Coroutines</a>
+-    <a href="#sSideEffects" title="2.- Side Effects">2.- Side Effects</a>
+-    <a href="#sArquitecturasAndroid" title="3.- Arquitecturas Android">3.- Android Architectures</a>      
++    <a href="#sCorrutinas" title="1.- Corrutinas">1.- Corrutinas</a>
++    <a href="#sSideEffects" title="2.- Efectos secundarios">2.- Efectos secundarios</a>
++    <a href="#sArquitecturasAndroid" title="3.- Arquitecturas Android">3.- Arquitecturas Android</a>      
   </div>
   <div class="fila">
-    <a href="#sCasopractico" title="4.- Caso práctico">4.- Practical Case</a> 
-    <a href="#sFlows" title="5.- Flows">5.- Flows</a>
-    <a href="#sActividades" title="6.- Actividades">5.- Activities</a>      
+-    <a href="#sCasopractico" title="4.- Caso práctico">4.- Practical Case</a> 
+-    <a href="#sFlows" title="5.- Flows">5.- Flows</a>
+-    <a href="#sActividades" title="6.- Actividades">5.- Activities</a>      
++    <a href="#sCasopractico" title="4.- Caso práctico">4.- Caso práctico</a> 
++    <a href="#sFlows" title="5.- Flows">5.- Flows</a>
++    <a href="#sActividades" title="6.- Actividades">6.- Actividades</a>      
   </div>
 
 </nav> <!-- BTM_MENU-->
 
-<h1>U9.- Coroutines, Side Effects, and MVVM</h1>
+<h1>U9.- Corrutinas, Efectos secundarios y MVVM</h1>
 
 <div class="main-menu">
   <div class="fila">
-    <a href="#sCorrutinas" title="1.- Coroutines">1.- Coroutines</a>
-    <a href="#sSideEffects" title="2.- Side Effects">2.- Side Effects</a>
-    <a href="#sArquitecturasAndroid" title="3.- Android Architectures">3.- Android Architectures</a>
+-    <a href="#sCorrutinas" title="1.- Coroutines">1.- Coroutines</a>
+-    <a href="#sSideEffects" title="2.- Side Effects">2.- Side Effects</a>
+-    <a href="#sArquitecturasAndroid" title="3.- Android Architectures">3.- Android Architectures</a>
++    <a href="#sCorrutinas" title="1.- Corrutinas">1.- Corrutinas</a>
++    <a href="#sSideEffects" title="2.- Efectos secundarios">2.- Efectos secundarios</a>
++    <a href="#sArquitecturasAndroid" title="3.- Arquitecturas Android">3.- Arquitecturas Android</a>
   </div>
   <div class="fila">
-    <a href="#sCasopractico" title="4.- Practical Case">4.- Practical Case</a>
-    <a href="#sFlows" title="5.- Flows">5.- Flows</a>    
-    <a href="#sActividades" title="6.- Activities">6.- Activities</a>
+-    <a href="#sCasopractico" title="4.- Practical Case">4.- Practical Case</a>
+-    <a href="#sFlows" title="5.- Flows">5.- Flows</a>    
+-    <a href="#sActividades" title="6.- Activities">6.- Activities</a>
++    <a href="#sCasopractico" title="4.- Caso práctico">4.- Caso práctico</a>
++    <a href="#sFlows" title="5.- Flows">5.- Flows</a>    
++    <a href="#sActividades" title="6.- Actividades">6.- Actividades</a>
   </div>
 </div>
 
 <!--*********************************************************Coroutines***********************************************************-->
 <section class="apartado">
   <a id="sCorrutinas"></a>
-  <h2>Coroutines</h2>
-  <h3>Introduction</h3>
-  <p>In Android, the <span class="negrita">main thread</span> is responsible for displaying the user interface and <span class="negrita">managing the interactions</span> with the application.</p>
+  <h2>Corrutinas</h2>
+  <h3>Introducción</h3>
+  <p>En Android, el <span class="negrita">hilo principal</span> se encarga de mostrar la interfaz y <span class="negrita">gestionar las interacciones</span> con la app.</p>
 
-  <p>This means that <span class="negrita">if the main thread runs a heavy or asynchronous task, the user interface will freeze</span> 
-    and the user won't be able to interact with the device until the task finishes.
+  <p>Esto implica que <span class="negrita">si el hilo principal ejecuta una tarea pesada o asíncrona, la interfaz puede bloquearse</span> y el usuario no podrá interactuar hasta que termine.
    <ul>
-    <li><span class="negrita">Heavy tasks</span>: tasks that take a long time.</li>
-    <li><span class="negrita">Asynchronous tasks</span>: tasks that can be performed in the background.</li>
+    <li><span class="negrita">Tareas pesadas</span>: operaciones que tardan mucho.</li>
+    <li><span class="negrita">Tareas asíncronas</span>: operaciones que se ejecutan en segundo plano.</li>
    </ul>
   </p>
 
@@ -72,53 +83,53 @@
 
   
   <h3>Suspending Functions</h3>
-  <p>Suspending functions are those that block the execution of the function until a specific instruction is finished.</p>
-  <p>These functions must always be executed inside a coroutine or within a coroutine scope (<span class="cursiva">coroutine scope</span>)
-  or inside another <span class="negrita">suspend function</span>.</p>
+  <p>Las funciones suspendidas permiten pausar y reanudar la ejecución sin bloquear el hilo actual.</p>
+  <p>Estas funciones deben ejecutarse dentro de una corrutina o un alcance de corrutina (<span class="cursiva">coroutine scope</span>)
+  o dentro de otra <span class="negrita">suspend function</span>.</p>
 
   <figure><img src="UD9/images/ud9-2023-12-03-20-00-23.png" /><br><figcaption>Android Studio notifies that an instruction may block the function's execution.</figcaption></figure>
   <br>
 
-  <p class="sub-section">Usage</p>
-<p>A suspend function is a function that can be "paused" and then resumed without blocking the current thread. This makes them ideal for time-consuming operations, such as:
+  <p class="sub-section">Uso</p>
+<p>Una función suspendida es aquella que puede ser "pausada" y luego reanudada sin bloquear el hilo actual. Esto las hace ideales para operaciones que consumen tiempo, como:
   <ul>
-    <li>Database queries.</li>
-    <li>Web service calls.</li>
-    <li>Input/output (I/O) operations.</li>
-    <li>Complex tasks that need to run in the background.</li>
+    <li>Consultas a bases de datos.</li>
+    <li>Llamadas a servicios web.</li>
+    <li>Operaciones de entrada/salida (I/O).</li>
+    <li>Tareas complejas que necesitan ejecutarse en segundo plano.</li>
   </ul>
 </p>
 
-<p class="sub-section">Basic Syntax</p>
+<p class="sub-section">Sintaxis básica</p>
 
 <section><pre><code class="language-kotlin">suspend fun functionName(): ReturnType {
     // Function code
 }
 </code></pre>
 </section><br><br>
-<p>Suspend functions simplify the handling of asynchronous operations by eliminating the need for complex callbacks.</p>
+<p>Las funciones suspendidas simplifican el manejo de operaciones asíncronas al eliminar la necesidad de callbacks complejos.</p>
 
-<p>Example: Imagine you are simulating a data download that takes 2 seconds.</p>
+<p>Ejemplo: Imagina que estás simulando una descarga de datos que tarda 2 segundos.</p>
 <section><pre><code class="language-kotlin">suspend fun downloadData(): String {
-    delay(2000) // Simulates a 2-second delay
-    return "Data downloaded"
+    delay(2000) // Simula un retraso de 2 segundos
+    return "Datos descargados"
 }
 
 fun main() {
-    runBlocking { //This is an special coroutine that do that main thread waits for it.
-        println("Download starting...")
-        val result = downloadData() //Here the coroutine is blocked
-        println("Result: $result")
+    runBlocking { //Esta es una corrutina especial que hace que el hilo principal espere por ella.
+        println("Descarga iniciando...")
+        val result = downloadData() //Aquí la corrutina está bloqueada
+        println("Resultado: $result")
     }
 }</code></pre>
 </section><br><br>
-<p>Explanation:
+<p>Explicación:
   <ol>
-    <li>The <span class="d-word">downloadData</span> function is a suspend function. 
-        <span class="r-word">delay(2000)</span> pauses the execution for 2 seconds without blocking the current thread.</li>
-    <li>The <span class="r-word">runBlocking</span> function is used to start a coroutine in the main thread. This is only for testing; 
-        in a real environment (e.g., Android), you would use other contexts such as <span class="r-word">launch</span> or <span class="r-word">async</span>.</li>
-    <li>The program prints "Download starting...", waits for 2 seconds, and then prints the result.</li>
+    <li>La función <span class="d-word">downloadData</span> es una función suspendida. 
+        <span class="r-word">delay(2000)</span> pausa la ejecución durante 2 segundos sin bloquear el hilo actual.</li>
+    <li>La función <span class="r-word">runBlocking</span> se utiliza para iniciar una corrutina en el hilo principal. Esto es solo para pruebas; 
+        en un entorno real (por ejemplo, Android), usarías otros contextos como <span class="r-word">launch</span> o <span class="r-word">async</span>.</li>
+    <li>El programa imprime "Descarga iniciando...", espera 2 segundos y luego imprime el resultado.</li>
   </ol>
 </p>
 
@@ -175,18 +186,7 @@ myCoroutinJob.cancel()</code></pre>
 
 <h3>Asynchronous Requests</h3>
 
-<p>They allow you to execute several actions in the background and wait for them concurrently, avoiding unnecessary time wastage
-  since they are executed in parallel.</p>
-
-<section><pre><code class="language-kotlin">//runBlocking creates a coroutine that blocks the thread until the others finish
-//It is only advised for testing.
-fun main() = runBlocking{
-    //Note: It's not an integer, it's a deferred
-    val datoA = async{
-        println("Start A")
-        delay(2000)
-        println("End A")
-        25
+<p>They allow you to execute several actions in the background and wait for them concurrently, avoiding
     }
 
     //Note: It's not an integer, it's a deferred

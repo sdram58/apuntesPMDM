@@ -17,59 +17,59 @@
 
   <nav id="menu-lateral" class="main-menu-lateral oculto">
     <div class="fila">
-      <a href="#sIntroduccion" title="1.- Introduction">1.- Introduction</a>
-      <a href="#sFileSystem" title="2.- File System">2.- File System</a>
-      <a href="#sAlamacenamientoEspecificodelaapp" title="3.- App-specific Storage">3.- App-specific Storage</a>
+      <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
+      <a href="#sFileSystem" title="2.- Sistema de archivos">2.- Sistema de archivos</a>
+      <a href="#sAlamacenamientoEspecificodelaapp" title="3.- Almacenamiento específico de la app">3.- Almacenamiento específico de la app</a>
     </div>
     
     <div class="fila">
-      <a href="#sAccesoalalmacenamientoexterno" title="4.- Access to external storage">4.- Access to external storage</a>
+      <a href="#sAccesoalalmacenamientoexterno" title="4.- Acceso al almacenamiento externo">4.- Acceso al almacenamiento externo</a>
       <a href="#sDataStore" title="5.- DataStore">5.- DataStore</a>
       <a href="#sROOM" title="6.- Room">6.- Room</a>
     </div>
     
     <div class="fila oculto">
-      <a href="#sP05" title="7.- P05. Shopping List">7.- P05. Shopping List</a>
+      <a href="#sP05" title="7.- P05. Lista de la compra">7.- P05. Lista de la compra</a>
     </div>
 </nav> <!-- BTM_MENU-->
 
-<h1>U10.- Persistence</h1>  
+<h1>U10.- Persistencia</h1>  
 
 <div class="main-menu">
     <div class="fila">
-      <a href="#sIntroduccion" title="1.- Introduction">1.- Introduction</a>
-      <a href="#sFileSystem" title="2.- File System">2.- File System</a>
-      <a href="#sAlamacenamientoEspecificodelaapp" title="3.- App-specific Storage">3.- App-specific Storage</a>
+      <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
+      <a href="#sFileSystem" title="2.- Sistema de archivos">2.- Sistema de archivos</a>
+      <a href="#sAlamacenamientoEspecificodelaapp" title="3.- Almacenamiento específico de la app">3.- Almacenamiento específico de la app</a>
     </div>
     
     <div class="fila">
-      <a href="#sAccesoalalmacenamientoexterno" title="4.- Access to external storage">4.- Access to external storage</a>
+      <a href="#sAccesoalalmacenamientoexterno" title="4.- Acceso al almacenamiento externo">4.- Acceso al almacenamiento externo</a>
       <a href="#sDataStore" title="5.- DataStore">5.- DataStore</a>
       <a href="#sROOM" title="6.- Room">6.- Room</a>
     </div>
     <div class="fila oculto">
-      <a href="#sP05" title="7.- P05. Shopping List">7.- P05. Shopping List</a>
+      <a href="#sP05" title="7.- P05. Lista de la compra">7.- P05. Lista de la compra</a>
       <a href="" class="relleno"></a><a href="" class="relleno"></a>
     </div>
 </div>
 
 
   
-<!--*********************************************************Introduction***********************************************************-->
+<!--*********************************************************Introducción***********************************************************-->
 <section class="apartado">
   <a id="sIntroduccion"></a>
-  <h2>Introduction</h2>
+  <h2>Introducción</h2>
   
-<p>Data persistence is a very important issue in mobile applications.</p>
-<p>The first reason is well known to everyone and happens when the device's orientation/configuration changes. This has been solved with the use of states and <span class="cursiva">ViewModel</span>.</p>
-<p>However, there are other situations where it is interesting to be able to store data for later use.</p>
-<p>In this unit, the following tools for implementing data persistence will be studied:
-  <ul>
-    <li><span class="negrita">File System</span>.</li>
-    <li><span class="negrita">Datastore</span>.</li>
-    <li><span class="negrita">Room</span>.</li>
-  </ul>
-</p>
+  <p>La persistencia de datos es un aspecto muy importante en las aplicaciones móviles.</p>
+  <p>La primera situación conocida ocurre al cambiar la orientación/configuración del dispositivo; esto se resuelve con estados y <span class="cursiva">ViewModel</span>.</p>
+  <p>Además, existen otras situaciones en las que interesa guardar datos para usarlos más adelante.</p>
+  <p>En esta unidad se estudiarán las siguientes herramientas para implementar la persistencia de datos:
+    <ul>
+      <li><span class="negrita">File System</span>.</li>
+      <li><span class="negrita">Datastore</span>.</li>
+      <li><span class="negrita">Room</span>.</li>
+    </ul>
+  </p>
  
 </section><!-- End section Introduction-->
 
@@ -77,52 +77,52 @@
 <!--*********************************************************File System***********************************************************-->
 <section class="apartado">
   <a id="sFileSystem"></a>
-  <h2>File System</h2>
+  <h2>Sistema de archivos</h2>
   
-  <p>As with any operating system, Android uses a file system.</p>
+  <p>Como cualquier sistema operativo, Android utiliza un sistema de ficheros.</p>
   
-<p>This file system allows several options for storing application data:
-  <ul>
-    <li>App-specific storage (<span class="cursiva">App-specific storage</span>).</li>
-    <li>Shared storage (<span class="cursiva">Shared storage</span>).</li>
-    <li>Preferences.</li>
-    <li>Databases.</li>
-  </ul>
-</p>
+  <p>Este sistema de ficheros ofrece varias opciones para almacenar datos de la aplicación:
+    <ul>
+      <li>Almacenamiento específico de la app (<span class="cursiva">App-specific storage</span>).</li>
+      <li>Almacenamiento compartido (<span class="cursiva">Shared storage</span>).</li>
+      <li>Preferencias (clave–valor).</li>
+      <li>Bases de datos.</li>
+    </ul>
+  </p>
 
-<h3>App-specific storage</h3>
-<p>Stores files intended for use only by the application itself.</p>
-<p>You can create dedicated folders in both internal and external storage.</p>
-<p>Internal storage should be used for confidential information (other apps will not have access to it).</p>
+  <h3>Almacenamiento específico de la app</h3>
+  <p>Guarda archivos destinados solo para el uso de la propia aplicación.</p>
+  <p>Se pueden crear carpetas dedicadas tanto en el almacenamiento interno como externo.</p>
+  <p>El almacenamiento interno debe usarse para información confidencial (otras apps no tendrán acceso a ella).</p>
 
-<h3>Shared storage</h3>
-  <p>Stores files that the application can share with other apps, such as documents, media (audio, video…), or other files.</p>
-  
+  <h3>Almacenamiento compartido</h3>
+    <p>Guarda archivos que la aplicación puede compartir con otras apps, como documentos, medios (audio, video…) u otros archivos.</p>
+    
 
-  <h3>Preferences</h3>
-  <p>Private storage for the application. Allows key-value pairs.</p>
+    <h3>Preferencias</h3>
+    <p>Almacenamiento privado para la aplicación. Permite pares clave-valor.</p>
 
-  <h3>Databases</h3>
+    <h3>Bases de datos</h3>
 
-  <p>Stores structured data privately using the Room library (a framework that uses SQLite).</p>
-  
+    <p>Guarda datos estructurados de forma privada usando la librería Room (un framework que utiliza SQLite).</p>
+    
 
-  <p>You can consult the following summary table in the <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage?hl=es-419">official documentation</a>:</p>
-  
-  <figure><img src="UD10/images/ud10-2023-12-17-20-11-08.png" /><br><figcaption></figcaption></figure>
-  <br>
-  <figure><img src="UD10/images/ud10-2023-12-17-20-13-05.png" /><br><figcaption></figcaption></figure>
-  <br>
+    <p>Se puede consultar la siguiente tabla resumen en la <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage?hl=es-419">documentación oficial</a>:</p>
+    
+    <figure><img src="UD10/images/ud10-2023-12-17-20-11-08.png" /><br><figcaption></figcaption></figure>
+    <br>
+    <figure><img src="UD10/images/ud10-2023-12-17-20-13-05.png" /><br><figcaption></figcaption></figure>
+    <br>
 
-  <h3>Which option to choose?</h3>
-<p>When choosing a storage type, several variables come into play:
-  <ul>
-    <li><span class="negrita">Size of the data to be stored</span>: internal storage has limited space.</li>
-    <li><span class="negrita">Ensuring access to the data</span>: internal storage or a database is better, as external storage is not always accessible.</li>
-    <li><span class="negrita">Type of data</span>: if the files should not be shared, app-specific storage should be used.</li>
-    <li><span class="negrita">Data privacy</span>: if working with sensitive data, it should be stored in preferences, a database, or internal storage. The latter also hides the data from users.</li>
-  </ul>
-</p>
+    <h3>¿Qué opción elegir?</h3>
+    <p>Al elegir un tipo de almacenamiento influyen varias variables:
+      <ul>
+        <li><span class="negrita">Tamaño de los datos</span>: el almacenamiento interno tiene espacio limitado.</li>
+        <li><span class="negrita">Accesibilidad</span>: almacenamiento interno o base de datos garantizan mejor acceso; el externo puede no estar disponible.</li>
+        <li><span class="negrita">Tipo de datos</span>: si no deben compartirse, usar almacenamiento específico de la app.</li>
+        <li><span class="negrita">Privacidad</span>: los datos sensibles deben guardarse en preferencias, base de datos o almacenamiento interno.</li>
+      </ul>
+    </p>
 
 </section><!-- End section File System-->
 
@@ -130,41 +130,41 @@
   <!--*********************************************************App-Specific Storage***********************************************************-->
   <section class="apartado">
     <a id="sAlamacenamientoEspecificodelaapp"></a>
-    <h2>App-Specific Storage</h2>
+    <h2>Almacenamiento específico de la app</h2>
     
-    <p>Android offers the following locations for exclusive use by the application.</p>  
+    <p>Android ofrece las siguientes ubicaciones para uso exclusivo de la aplicación.</p>  
   
-  <p>Directories in <span class="negrita">internal storage</span>:
+  <p>Directorios en <span class="negrita">almacenamiento interno</span>:
     <ul>
-      <li>Android prevents other applications from accessing these locations.</li>
-      <li>Starting with Android 10 (API 29) and higher, these locations are encrypted.</li>
-      <li>They are a good place to store sensitive data.</li>
-      <li>They typically have limited capacity.</li>
+      <li>Android impide que otras apps accedan a estas ubicaciones.</li>
+      <li>A partir de Android 10 (API 29) estas ubicaciones pueden estar encriptadas.</li>
+      <li>Son adecuadas para datos sensibles.</li>
+      <li>Suelen disponer de espacio limitado.</li>
     </ul>
   </p>
   
-  <p>Directories in <span class="negrita">external storage</span>:
+  <p>Directorios en <span class="negrita">almacenamiento externo</span>:
   <ul>
-    <li>These locations are intended for exclusive use by the application, although other applications with the proper permissions may access them.</li>
-    <li>If files are to be created that are intended to be shared with other applications, they should be created in the shared space of external storage.</li>
+    <li>Estas ubicaciones pueden ser de uso exclusivo de la app, pero otras apps con permisos pueden acceder a ellas.</li>
+    <li>Si los archivos deben compartirse con otras apps, deben ubicarse en el espacio compartido del almacenamiento externo.</li>
   </ul></p>
   
-  <p>Both options include a directory for storing <span class="negrita">persistent files</span> and another for <span class="negrita">cache</span>.</p>
+  <p>Ambas opciones incluyen un directorio para almacenar <span class="negrita">archivos persistentes</span> y otro para <span class="negrita">caché</span>.</p>
   
-  <h3>Access to files in internal storage</h3>
-  <p>Common and persistent files are located in a directory that can be accessed using the <span class="r-word">filesDir</span> property of a <span class="negrita">context</span> object (as shown earlier, the context can be obtained in various ways).</p>
+  <h3>Acceso a archivos en almacenamiento interno</h3>
+  <p>Los archivos comunes y persistentes se encuentran en un directorio accesible mediante la propiedad <span class="r-word">filesDir</span> de un objeto <span class="negrita">context</span> (como se mostró anteriormente, el contexto se puede obtener de varias maneras).</p>
   
-  <p>Using the <span class="r-word">File</span> API (similar to Java), you can access and store files.</p>
+  <p>Usando la API de <span class="r-word">File</span> (similar a Java), se pueden acceder y almacenar archivos.</p>
   
-  <p>To avoid affecting the app's performance, the same file should not be opened and closed multiple times.</p>
+  <p>Para evitar afectar el rendimiento de la app, no se debe abrir y cerrar el mismo archivo múltiples veces.</p>
   
-  <p>Here’s how to open a file using the API:</p>
+  <p>Así es como se abre un archivo usando la API:</p>
   
   <section><pre><code class="language-kotlin">val file = File(applicationContext.filesDir, "file_name")</code></pre>
   </section><br><br>
   
-  <p class="sub-section">Storing a file using a Stream</p>
-  <p>As an alternative to the File API, you can use the <span class="r-word">openFileOutput()</span> method to get a <span class="r-word">FileOutputStream</span> object, which allows writing to a file inside the <span class="r-word">filesDir</span> directory.</p>
+  <p class="sub-section">Almacenar un archivo usando un Stream</p>
+  <p>Como alternativa a la API de File, se puede usar el método <span class="r-word">openFileOutput()</span> para obtener un objeto <span class="r-word">FileOutputStream</span>, que permite escribir en un archivo dentro del directorio <span class="r-word">filesDir</span>.</p>
   <section><pre><code class="language-kotlin">val myFile = "myFile"
   val content = "My first Android file!"
   
@@ -174,7 +174,7 @@
   </code></pre>
   </section><br><br>
   
-  <p>From Android Studio, you can view the created files using the <span class="negrita">Device File Explorer</span>:
+  <p>Desde Android Studio, se pueden ver los archivos creados usando el <span class="negrita">Device File Explorer</span>:
     <ul>
       <li><span class="negrita">data -> data -> package_name -> files</span></li>
     </ul>
@@ -185,17 +185,17 @@
   <figure><img src="UD10/images/ud10-2023-12-17-20-42-26.png" /><br><figcaption></figcaption></figure>
   <br>
   
-  <p>In Android 7 (API 24) or higher, if you don’t specify <span class="negrita">Context.MODE_PRIVATE</span>, a security exception will be thrown</p>
+  <p>En Android 7 (API 24) o superior, si no se especifica <span class="negrita">Context.MODE_PRIVATE</span>, se lanzará una excepción de seguridad</p>
   
   <figure><img src="UD10/images/ud10-2023-12-17-20-43-21.png" /><br><figcaption></figcaption></figure>
   <br>
   
-  <p>If you want to allow other applications to access internal storage files, you need to use a 
+  <p>Si se desea permitir que otras aplicaciones accedan a los archivos del almacenamiento interno, se debe usar un 
   <a class="enlace" target="_blank" href="https://developer.android.com/reference/androidx/core/content/FileProvider">FileProvider</a> 
-  with the <span class="negrita">FLAG_GRANT_READ_URI_PERMISSION</span> attribute.</p>
+  con el atributo <span class="negrita">FLAG_GRANT_READ_URI_PERMISSION</span>.</p>
   
-  <p>To read the content of a file, use the <span class="r-word">openFileOutput()</span> method 
-    to get a <span class="r-word">BufferedReader</span> object that returns a sequence of strings (one for each line of the file):</p>
+  <p>Para leer el contenido de un archivo, use el método <span class="r-word">openFileOutput()</span> 
+    para obtener un objeto <span class="r-word">BufferedReader</span> que devuelve una secuencia de cadenas (una por cada línea del archivo):</p>
   
   <section><pre><code class="language-kotlin">// Access file using Stream
   applicationContext.openFileInput(myFile).bufferedReader().useLines { fileContent ->
@@ -208,9 +208,9 @@
   </code></pre>
   </section><br><br>
     
-  <p class="sub-section">Visualize file list</p>
+  <p class="sub-section">Visualizar lista de archivos</p>
   
-  <p>You can get an array of file names in the <span class="r-word">filesDir</span> directory using the <span class="r-word">fileList()</span> method:</p>
+  <p>Se puede obtener un array con los nombres de los archivos en el directorio <span class="r-word">filesDir</span> usando el método <span class="r-word">fileList()</span>:</p>
   
   <section><pre><code class="language-kotlin">val files: Array<String> = applicationContext.fileList()
   
@@ -222,21 +222,21 @@
   </code></pre>
   </section><br><br>
   
-  <p class="sub-section">Subdirectories</p>
+  <p class="sub-section">Subdirectorios</p>
   
-  <p>If necessary, you can create subdirectories using the <span class="r-word">getDir()</span> method.</p>
+  <p>Si es necesario, se pueden crear subdirectorios usando el método <span class="r-word">getDir()</span>.</p>
   
-  <p>This method also allows you to access the created subdirectories.</p>
+  <p>Este método también permite acceder a los subdirectorios creados.</p>
   <section><pre><code class="language-kotlin">applicationContext.getDir("subdirectory", Context.MODE_PRIVATE)</code></pre>
   </section><br><br>
   
-  <p>This method has a small drawback: it creates the directory with the <span class="negrita">app_</span> prefix 
-     and outside the <span class="negrita">files</span> directory:</p>
+  <p>Este método tiene un pequeño inconveniente: crea el directorio con el prefijo <span class="negrita">app_</span> 
+     y fuera del directorio <span class="negrita">files</span>:</p>
   
   <figure><img src="UD10/images/ud10-2023-12-17-20-50-18.png" /><br><figcaption></figcaption></figure>
   <br>
   
-  <p>To create subdirectories within <span class="negrita">files</span>, you can use the methods of the <span class="r-word">File</span> class as in <span class="d-word">Java</span>.</p>
+  <p>Para crear subdirectorios dentro de <span class="negrita">files</span>, se pueden usar los métodos de la clase <span class="r-word">File</span> como en <span class="d-word">Java</span>.</p>
   <section><pre><code class="language-kotlin">val appDir: File = applicationContext.filesDir
   val subDir = File(appDir, "subDirectory")
   if (!subDir.exists()) subDir.mkdir()
@@ -246,41 +246,41 @@
   <br>
   
   
-  <h3>Cache</h3>
-  <p>If you need to temporarily store files with sensitive data, they should be stored in the <span class="inline-folder">cache</span> directory.</p>
+  <h3>Caché</h3>
+  <p>Si necesitas almacenar temporalmente ficheros (incluidos datos sensibles), utiliza el directorio <span class="inline-folder">cache</span>.</p>
   
-  <p>To create a file in cache storage, use 
-    <span class="r-word">File.createTempFile()</span>, specify the prefix (name), 
-    the suffix (extension, by default .tmp), and a context object:</p>
+  <p>Para crear un archivo en el almacenamiento de caché, usa 
+    <span class="r-word">File.createTempFile()</span>, especifica el prefijo (nombre), 
+    el sufijo (extensión, por defecto .tmp) y un objeto de contexto:</p>
     <section><pre><code class="language-kotlin">File.createTempFile("temporaryFile", null, applicationContext.cacheDir)</code></pre>
     </section><br><br>
   <a href="UD10/images/ud_10-2025-01-28-17-15-04.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-01-28-17-15-04.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
   
-  <p>To access files located in the cache directory, use the <span class="r-word">cacheDir</span> property on a context and the <span class="negrita">File</span> class:</p>
+  <p>Para acceder a los archivos en el directorio de caché, usa la propiedad <span class="r-word">cacheDir</span> en un contexto y la clase <span class="negrita">File</span>:</p>
   
   <section><pre><code class="language-kotlin">val cacheFile = File(applicationContext.cacheDir, "fileName")</code></pre>
   </section><br><br>
   
-  <p>The <span class="inline-folder">cache</span> directory is managed by Android, 
-    if the app runs out of space, Android will delete files stored in that directory.</p>
+  <p>El directorio <span class="inline-folder">cache</span> es gestionado por Android, 
+    si la app se queda sin espacio, Android eliminará los archivos almacenados en ese directorio.</p>
   
-  <p>You can delete files from the cache directory using one of the following methods.
+  <p>Se pueden eliminar archivos del directorio de caché usando uno de los siguientes métodos.
     <ul>
-      <li>If the file is located in the <span class="inline-folder">files</span> folder:
+      <li>Si el archivo está en la carpeta <span class="inline-folder">files</span>:
   <section><pre><code class="language-kotlin">applicationContext.deleteFile("fileName")</code></pre>
   </section><br><br>
   
       </li>
-      <li>Using a <span class="r-word">File</span> object depending on the file’s location:
+      <li>Usando un objeto <span class="r-word">File</span> dependiendo de la ubicación del archivo:
         <section><pre><code class="language-kotlin">val fileToDelete = File(applicationContext.filesDir, "fileName")
   
   fileToDelete.delete()
   </code></pre>
         </section>
   
-        <section><pre><code class="language-kotlin">//In cache
+        <section><pre><code class="language-kotlin">//En caché
   val cacheFile = File(applicationContext.cacheDir, "fileName")
   
   cacheFile.delete()
@@ -298,24 +298,22 @@
   <!--*********************************************************Access to External Storage***********************************************************-->
   <section class="apartado">
     <a id="sAccesoalalmacenamientoexterno"></a>
-    <h2>Access to External Storage</h2>
-  <p>If additional space is needed to store application-specific files, external storage can be used, provided it is available.</p>
+    <h2>Acceso al almacenamiento externo</h2>
+  <p>Si se necesita espacio adicional para ficheros específicos de la aplicación, se puede usar el almacenamiento externo siempre que esté disponible.</p>
   
-  <p>External storage can be a partition in the internal memory, but it can also be located on an external storage device such as an SD card or even a USB flash drive connected to the USB.</p>
+  <p>El almacenamiento externo puede residir en una partición de la memoria interna o en un dispositivo externo como una tarjeta SD o un pendrive conectado por USB.</p>
   
-  <p>In cases where external storage is located on a connected storage device, this storage may become unavailable, for example, if an SD card is removed from the device.</p>
+  <p>Si el almacenamiento externo está en un dispositivo conectado, puede dejar de estar disponible (por ejemplo, al extraer la SD).</p>
   
-  <p>Therefore, it is not advisable to create files in external storage that the proper functioning of the application depends on.</p>
+  <p>Por ello, no conviene depender de ficheros en almacenamiento externo para el funcionamiento crítico de la aplicación.</p>
   
-  <h3>Checking the Availability of External Storage</h3>
-  <p>It is important to check that external storage is available before attempting to read or write data to it.</p>
+  <h3>Comprobar la disponibilidad del almacenamiento externo</h3>
+  <p>Es importante comprobar que el almacenamiento externo está disponible antes de leer o escribir en él.</p>
   
-  <p>Using the <span class="r-word">Environment</span> class and its <span class="r-word">getExternalStorageState</span> method, 
-     you can check the availability of external storage as well as the permissions on it.</p>
+  <p>Usando la clase <span class="r-word">Environment</span> y su método <span class="r-word">getExternalStorageState</span> se puede comprobar su estado y permisos.</p>
   
-  <p>If the state is <span class="d-word">MEDIA_MOUNTED</span>, you will have <span class="negrita">read and write</span> permissions, 
-    if the state is <span class="d-word">MEDIA_MOUNTED_READ_ONLY</span>, you will only have <span class="negrita">read</span> permissions.</p>
-  <p>A good way to check this would be with the following functions:</p>
+  <p>Si el estado es <span class="d-word">MEDIA_MOUNTED</span> hay permisos de lectura y escritura; si es <span class="d-word">MEDIA_MOUNTED_READ_ONLY</span> solo lectura.</p>
+  <p>Una buena forma de comprobar esto sería con las siguientes funciones:</p>
   
   <section><pre><code class="language-kotlin">fun isExternalStorageWritable(): Boolean {
       return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
@@ -327,16 +325,16 @@
   }
   </code></pre>
   </section><br><br>
-  <h3>Selecting a Location on External Storage</h3>
+  <h3>Seleccionar una ubicación en el almacenamiento externo</h3>
   
-  <p>Since external storage can be either in internal memory or on a connected device, 
-    when storing information in external storage, you must choose the location.</p>
-  <p>To access the locations, use the <span class="r-word">ContextCompat</span> class and its <span class="r-word">getExternalFilesDirs</span> method.</p>
-  <p>This will return an array with all the available volumes.</p>
-  <p>Generally, the first element in the array will be the primary external storage volume, 
-    and this should be used unless it is full or unavailable.</p>
+  <p>Dado que el almacenamiento externo puede estar en la memoria interna o en un dispositivo conectado, 
+    al almacenar información en él, se debe elegir la ubicación.</p>
+  <p>Para acceder a las ubicaciones, usa la clase <span class="r-word">ContextCompat</span> y su método <span class="r-word">getExternalFilesDirs</span>.</p>
+  <p>Esto devolverá un array con todos los volúmenes disponibles.</p>
+  <p>Generalmente, el primer elemento del array será el volumen principal de almacenamiento externo, 
+    y este debe ser utilizado a menos que esté lleno o no disponible.</p>
   
-    <p>The following code would get the path to the primary external storage volume.</p>
+    <p>El siguiente código obtiene la ruta al volumen principal de almacenamiento externo.</p>
   
   <section><pre><code class="language-kotlin">val externalStorageVolumes: Array<out File> =
       ContextCompat.getExternalFilesDirs(applicationContext, null)
@@ -345,42 +343,42 @@
   </code></pre>
   </section><br><br>
   
-    <p>By checking the size of the <span class="negrita">externalStorageVolumes</span> array, you can determine if there are additional volumes.</p>
+    <p>Al comprobar el tamaño del array <span class="negrita">externalStorageVolumes</span>, se puede determinar si hay volúmenes adicionales.</p>
     
-  <p>The first element (index 0) is internal storage.</p>
+  <p>El primer elemento (índice 0) es el almacenamiento interno.</p>
   
-  <p>The microSD card is usually the second element (index 1).</p>
+  <p>La tarjeta microSD suele ser el segundo elemento (índice 1).</p>
   
-  <p>If other devices like flash drives are connected, they will appear after that.</p>
+  <p>Si hay otros dispositivos como pendrives conectados, aparecerán después.</p>
   
-  <p>With index 1, you can access all external storage.</p>
+  <p>Con el índice 1, se puede acceder a todo el almacenamiento externo.</p>
   <section><pre><code class="language-kotlin">val externalStorage = applicationContext.getExternalFilesDirs(null)[1]</code></pre>
   </section><br><br>
   
-  <p>You can specify a particular directory within external storage:</p>
+  <p>Se puede especificar un directorio particular dentro del almacenamiento externo:</p>
   
   <section><pre><code class="language-kotlin">val externalDownloads = applicationContext.getExternalFilesDirs(Environment.DIRECTORY_DOWNLOADS)</code></pre>
   </section><br><br>
   <a href="UD10/images/ud_10-2025-01-28-17-35-17.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-01-28-17-35-17.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  <h3>Accessing Files in External Storage</h3>
-      <p>To access files in external storage, use the <span class="negrita">getExternalFilesDir</span> method 
-         of a <span class="negrita">context</span> object.</p>
+  <h3>Accediendo a archivos en almacenamiento externo</h3>
+      <p>Para acceder a archivos en el almacenamiento externo, usa el método <span class="negrita">getExternalFilesDir</span> 
+         de un objeto <span class="negrita">context</span>.</p>
   
-    <p>To avoid affecting the application's performance, the same file should not be opened and closed multiple times.</p>
+    <p>Para evitar afectar el rendimiento de la aplicación, no se debe abrir y cerrar el mismo archivo múltiples veces.</p>
   
   <section><pre><code class="language-kotlin">val fileName = "myFile"
   
   val appSpecificExternalDir = File(applicationContext.getExternalFilesDir(null), fileName)
   </code></pre>
   </section><br><br>
-  <p>On Android 11 (API 30) and higher, creating subdirectories in external storage is not allowed.</p>
+  <p>En Android 11 (API 30) y versiones superiores, no se permite crear subdirectorios en el almacenamiento externo.</p>
   
-  <h3>Creating Files in External Storage Cache</h3>
+  <h3>Creando archivos en la caché del almacenamiento externo</h3>
   
   
-  <p>To create a file in the external storage cache, use the <span class="r-word">externalCacheDir</span> property of a <span class="negrita">context</span> object:</p>
+  <p>Para crear un archivo en la caché del almacenamiento externo, usa la propiedad <span class="r-word">externalCacheDir</span> de un <span class="negrita">context</span>:</p>
   
      <section><pre><code class="language-kotlin">val cacheFileName = "myTemporaryFile"
   
@@ -388,16 +386,16 @@
   </code></pre>
      </section><br><br>
      
-  <h3>Deleting Files from External Storage Cache</h3>
+  <h3>Eliminando archivos de la caché del almacenamiento externo</h3>
   
-  <p>You should use the <span class="r-word">delete</span> method on a <span class="negrita">File</span> object representing the file to be deleted.</p>
+  <p>Se debe usar el método <span class="r-word">delete</span> en un objeto <span class="negrita">File</span> que represente el archivo a eliminar.</p>
   <figure><img src="UD10/images/ud10-2023-12-17-23-16-13.png" /><br><figcaption></figcaption></figure>
   <br>
   
-  <h3>Multimedia Content</h3>
+  <h3>Contenido multimedia</h3>
   
-  <p>If the app works with multimedia files that are not essential but add value to the user experience, 
-    it is best to store them in external storage:</p>
+  <p>Si la app trabaja con archivos multimedia que no son esenciales pero añaden valor a la experiencia del usuario, 
+    es mejor almacenarlos en el almacenamiento externo:</p>
   <section><pre><code class="language-kotlin">fun getAppSpecificAlbumStorageDir(context: Context, albumName: String): File? {
       // Get the directory for images within the application's specific
       // external storage directory
@@ -413,34 +411,34 @@
   }
   </code></pre>
   </section><br><br>
-  <p>For the proper functioning of the application, it is important to use the directory names provided by the API 
-    with the constants of the <span class="r-word">Environment</span> class:</p>
+  <p>Para el correcto funcionamiento de la aplicación, es importante usar los nombres de directorio que proporciona la API 
+    con las constantes de la clase <span class="r-word">Environment</span>:</p>
   <figure><img src="UD10/images/ud10-2023-12-17-23-19-32.png" /><br><figcaption></figcaption></figure>
   <br>
   
   <p><a class="enlace" target="_blank" href="https://developer.android.com/reference/android/os/Environment#fields">https://developer.android.com/reference/android/os/Environment#fields</a></p>
   
-  <p>If none of the predefined names fit the application's needs, you can pass null to the <span class="r-word">getExternalFilesDir</span> method.</p>
+  <p>Si ninguno de los nombres predefinidos se ajusta a las necesidades de la aplicación, se puede pasar null al método <span class="r-word">getExternalFilesDir</span>.</p>
   
-  <p>This will store the files directly in the root directory of the specific external storage for the application.</p>
+  <p>Esto almacenará los archivos directamente en el directorio raíz del almacenamiento externo específico de la aplicación.</p>
   
   
-  <h3>Checking Free Space</h3>
-  <p>Some devices have very limited storage space, so when developing an application, special care should be taken with the space the app occupies.</p>
+  <h3>Comprobando el espacio libre</h3>
+  <p>Algunos dispositivos tienen muy poco espacio de almacenamiento, por lo que al desarrollar una aplicación, se debe tener especial cuidado con el espacio que ocupa.</p>
   
-  <p>A good practice before storing a file is to check if the file fits in the available space.</p>
+  <p>Una buena práctica antes de almacenar un archivo es comprobar si cabe en el espacio disponible.</p>
   
-  <p>However, it is not always necessary to check free space because there are times when it is not known how much space the file will occupy. 
-    In these cases, you can attempt to save the file and catch the <span class="r-word">IOException</span> that will be thrown if the file cannot be stored.</p>
+  <p>No obstante, no siempre es necesario comprobar el espacio libre, ya que a veces no se sabe cuánto espacio ocupará el archivo. 
+    En estos casos, se puede intentar guardar el archivo y capturar la <span class="r-word">IOException</span> que se lanzará si no se puede almacenar.</p>
   
-  <p>To check the free space the device can provide, use the <span class="r-word">getAllocatableBytes</span> method.</p>
+  <p>Para comprobar el espacio libre que el dispositivo puede proporcionar, usa el método <span class="r-word">getAllocatableBytes</span>.</p>
   
-  <p>This method may sometimes show more capacity than the real one because the system may have detected files in other applications' caches and may delete them if necessary.</p>
+  <p>Este método puede mostrar a veces más capacidad de la real porque el sistema puede haber detectado archivos en las cachés de otras aplicaciones y puede eliminarlos si es necesario.</p>
   
-  <p>If there is enough space, the <span class="r-word">allocateBytes</span> method should be used. 
-    If this method is not used, the app can request the user to delete files or clear the device's entire cache.</p>
+  <p>Si hay suficiente espacio, se debe usar el método <span class="r-word">allocateBytes</span>. 
+    Si no se usa este método, la app puede solicitar al usuario que elimine archivos o limpie toda la caché del dispositivo.</p>
   
-  <p>The following code shows how to obtain the device's free space:</p>
+  <p>El siguiente código muestra cómo obtener el espacio libre del dispositivo:</p>
   
   <section><pre><code class="language-kotlin">// 10 MB of storage is needed.
   val NUM_BYTES_NEEDED_FOR_MY_APP = 1024 * 1024 * 10L;
@@ -471,36 +469,35 @@
   <a id="sDataStore"></a>
   <h2>DataStore</h2>
   
-  <p><span class="d-word">DataStore</span> allows storing small or simple datasets on the device.</p>
+  <p><span class="d-word">DataStore</span> permite almacenar pequeños conjuntos de datos en el dispositivo.</p>
 
-  <p>Data stored with <span class="negrita">DataStore</span> is saved in the app's internal storage, 
-  so no other app will be able to access it.</p>
+  <p>Los datos guardados con <span class="negrita">DataStore</span> se almacenan en el almacenamiento interno de la app y no son accesibles por otras apps.</p>
 
-  <p>DataStore has two implementations:
+  <p>DataStore tiene dos implementaciones:
   <ul>
-    <li><span class="negrita">Preferences DataStore</span>: stores key-value pairs.</li>
-    <li><span class="negrita">Proto DataStore</span>: stores objects (instances of classes).</li>
+    <li><span class="negrita">Preferences DataStore</span>: almacena pares clave–valor.</li>
+    <li><span class="negrita">Proto DataStore</span>: almacena objetos (instancias de clases).</li>
   </ul>
   </p>
 
-  <p>Due to the complexity of developing <span class="negrita">Proto DataStore</span>, in class we will only study <span class="negrita">Preferences DataStore</span>.</p>
+  <p>Por la complejidad de <span class="negrita">Proto DataStore</span>, en clase nos centraremos en <span class="negrita">Preferences DataStore</span>.</p>
 
-  <p>DataStore allows creating files to store information, generally preferences.</p>
+  <p>DataStore permite crear archivos para almacenar información, generalmente preferencias.</p>
 
-  <p>The advantage of <span class="negrita">DataStore</span> is that the operating system handles all the management of preference files.</p>
+  <p>La ventaja de <span class="negrita">DataStore</span> es que el sistema operativo se encarga de toda la gestión de los archivos de preferencias.</p>
 
-  <p><span class="negrita">Rules for using DataStore</span>:
+  <p><span class="negrita">Reglas para usar DataStore</span>:
   <ul>
-    <li>Only maintain one open instance of DataStore on the same file.</li>
-    <li>The generic type of DataStore must be immutable.</li>
-    <li>Never mix SingleProcessDataStore and MultiProcessDataStore for the same file.</li>
+    <li>Solo mantener una instancia abierta de DataStore en el mismo archivo.</li>
+    <li>El tipo genérico de DataStore debe ser inmutable.</li>
+    <li>Nunca mezclar SingleProcessDataStore y MultiProcessDataStore para el mismo archivo.</li>
   </ul>
   </p>
   
 <h3>Preferences DataStore</h3>
-<p><span class="negrita">Preferences DataStore</span> allows storing key-value pairs.</p>
+<p><span class="negrita">Preferences DataStore</span> permite almacenar pares clave-valor.</p>
 
-<p>The data that can be stored will be of basic types:
+<p>Los datos que se pueden almacenar son de tipos básicos:
   <ul>
     <li>Int</li>
     <li>Double</li>
@@ -511,49 +508,49 @@
   </ul>
 </p>
 
-<p>Additionally, it offers the possibility of storing a set of strings:
+<p>Además, ofrece la posibilidad de almacenar un conjunto de cadenas:
   <ul>
     <li><span class="negrita">Set&lt;String></span></li>
   </ul>
 </p>
 
-<p>It is most common to store and retrieve preferences from the <span class="cursiva">ViewModel</span> to properly maintain state variables.</p>
+<p>Es más común almacenar y recuperar preferencias desde el <span class="cursiva">ViewModel</span> para mantener adecuadamente las variables de estado.</p>
 
-<p>Thus, to keep a good file structure in the project, it is recommended to create a package called <span class="inline-folder">preferences</span> 
-  where a class will be located, which will implement all the logic for storing and retrieving preference values.</p>
+<p>Así, para mantener una buena estructura de archivos en el proyecto, se recomienda crear un paquete llamado <span class="inline-folder">preferences</span> 
+  donde una clase implementará toda la lógica para almacenar y recuperar valores de preferencia.</p>
 
-<p>This new class will be used from the corresponding <span class="cursiva">ViewModel</span>.</p>
+<p>Esta nueva clase será utilizada desde el correspondiente <span class="cursiva">ViewModel</span>.</p>
 
-<p><span class="negrita">Preferences DataStore</span> uses coroutines and Flows (data flows).</p>
+<p><span class="negrita">Preferences DataStore</span> utiliza corutinas y Flows (flujos de datos).</p>
 
-<p><span class="negrita">Flow</span> allows emitting several values sequentially, which are collected from a coroutine. For example, 
-  they can be used to receive live updates from a database.</p>
+<p><span class="negrita">Flow</span> permite emitir varios valores secuencialmente, que son recolectados desde una corutina. Por ejemplo, 
+  pueden ser usados para recibir actualizaciones en vivo desde una base de datos.</p>
 
-<p>A <span class="negrita">Flow</span> is similar to an Iterator but uses suspension functions to produce and consume values.</p>
+<p>Un <span class="negrita">Flow</span> es similar a un Iterator pero utiliza funciones de suspensión para producir y consumir valores.</p>
 
-<p>Since the data is stored in the device's internal storage, the most recommended dispatcher when launching the coroutine is to use the input-output thread set: 
+<p>Debido a que los datos se almacenan en el almacenamiento interno del dispositivo, el dispatcher más recomendado al lanzar la corutina es el conjunto de hilos de entrada-salida: 
   <span class="r-word">Dispatchers.IO.</span></p>
 
-<p>In Preferences DataStore, a Flow is used to retrieve the data.</p>
+<p>En Preferences DataStore, se utiliza un Flow para recuperar los datos.</p>
 
-<p>Preferences DataStore also needs the application context for proper management of preference files.</p>
+<p>Preferences DataStore también necesita el contexto de la aplicación para una gestión adecuada de los archivos de preferencias.</p>
 
-<h3>Practical Case: ViewModel and Live Data</h3>
-<p>To use Preferences DataStore, the following dependency needs to be added:
+<h3>Caso práctico: ViewModel y Live Data</h3>
+<p>Para usar Preferences DataStore, se debe agregar la siguiente dependencia:
   <ul>
     <li><span class="inline-file">libs.versions.toml</span>: <ul>
-      <li><span class="cursiva">[version]</span> section:
+      <li><span class="cursiva">[version]</span> sección:
         <section><pre><code class="language-kotlin">datastorePreferences = "1.1.2"</code></pre>
         </section>
       </li>
-      <li><span class="cursiva">[libraries]</span> section:
+      <li><span class="cursiva">[libraries]</span> sección:
         <section><pre><code class="language-kotlin">androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref="datastorePreferences" }</code></pre>
         </section>
       </li>
     </ul></li>
-    <li><span class="inline-file">build.graddle.kts (Module: app) </span>:
+    <li><span class="inline-file">build.graddle.kts (Módulo: app) </span>:
     <ul>
-      <li><span class="cursiva">plugins</span> section: 
+      <li><span class="cursiva">plugins</span> sección: 
         <section><pre><code class="language-kotlin">implementation(libs.androidx.datastore)</code></pre>
         </section><br>
       </li>
@@ -561,11 +558,11 @@
   </ul>
 </p>
 
-<p>If other dependencies are required (<span class="negrita">Navigation</span>, <span class="negrita">LiveData</span>…) they should also be added.</p>
+<p>Si se requieren otras dependencias (<span class="negrita">Navigation</span>, <span class="negrita">LiveData</span>…) también deben ser añadidas.</p>
 
-<p>Remember to press <span class="negrita">Sync Now</span> after these changes.</p>
+<p>Recuerda presionar <span class="negrita">Sync Now</span> después de estos cambios.</p>
 
-<p class="sub-section">Class to save and retrieve preferences</p>
+<p class="sub-section">Clase para guardar y recuperar preferencias</p>
 
 <section><pre><code class="language-kotlin">class AppPreferences(val context: Context) {
     //Static variables to represent the keys of the values to save
@@ -594,7 +591,7 @@
 }</code></pre>
 </section><br>
 
-<p class="sub-section">ViewModel that uses the previous class</p>
+<p class="sub-section">ViewModel que usa la clase anterior</p>
 <section><pre><code class="language-kotlin">//Since the context is needed, the ViewModel extends from AndroidViewModel so that the operating system
 //passes the Application object from which the context will be retrieved
 class PreferencesViewModel(application: Application):AndroidViewModel(application) {
@@ -628,7 +625,7 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
 }</code></pre>
 </section><br><br>
 
-<p>On the different screens of the application, if data needs to be saved or retrieved from the preferences file, it will use the methods from the ViewModel:</p>
+<p>En las diferentes pantallas de la aplicación, si se necesitan guardar o recuperar datos del archivo de preferencias, se usarán los métodos del ViewModel:</p>
 
 <section><pre><code class="language-kotlin">val fullname by preferencesViewModel.fullname.observeAsState(initial = "")
 
@@ -661,17 +658,17 @@ Button(
 <a href="UD10/images/ud_10-2025-02-03-13-10-50.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-13-10-50.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-<p class="sub-section">Complex Data</p>
+<p class="sub-section">Datos complejos</p>
 
-<p>If more complex data such as objects needs to be saved, the class that stores the preferences should deconstruct and reconstruct that object.</p>
-<p>The class to store could look like this:</p>
+<p>Si se necesitan guardar datos más complejos como objetos, la clase que almacena las preferencias debe descomponer y reconstruir ese objeto.</p>
+<p>La clase para almacenar podría verse así:</p>
 <section><pre><code class="language-kotlin">data class User(
     val username:String,
     val email:String,
     val id: Int
 ) </code></pre>
 </section><br><br>
-<p>Class to save/retrieve preferences:</p>
+<p>Clase para guardar/recuperar preferencias:</p>
 <section><pre><code class="language-kotlin">class AppPreferences(val context: Context) {
     //Static variables to represent the keys of the values to save
     companion object{
@@ -707,7 +704,7 @@ Button(
 }</code></pre>
 </section><br><br>
 
-<p>And the ViewModel could look like this:</p>
+<p>Y el ViewModel podría verse así:</p>
 <section><pre><code class="language-kotlin">//Since the context is needed, the ViewModel extends from AndroidViewModel so that the operating system
 //passes the Application object from which the context will be retrieved
 class PreferencesViewModel(application: Application):AndroidViewModel(application) {
@@ -753,15 +750,15 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
 </section><br><br>
 
 <div class="tarea">
-  <p>Create an application with a <span class="cursiva">SplashScreen</span> and an <span class="cursiva">onboarding</span>
-     where user data, such as name, email, etc., is requested.</p>
+  <p>Crear una aplicación con una <span class="cursiva">SplashScreen</span> y un <span class="cursiva">onboarding</span>
+     donde se solicite al usuario datos como nombre, email, etc.</p>
   
-  <p>These data will be stored in a DataStore, and the app will detect if no data exists, showing the onboarding, and if data is found, it will go to the main screen.
-    The app does not need to be functional, meaning the main screen can just display some text.</p>
+  <p>Estos datos se almacenarán en un DataStore, y la app detectará si no existen datos, mostrando el onboarding, y si se encuentran datos, irá directamente a la pantalla principal.
+    La app no necesita ser funcional, es decir, la pantalla principal puede mostrar simplemente un texto.</p>
 
 </div>
 
-<p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD10/DataStoreOnBoarding">Here</a> you can see an example</p>
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD10/DataStoreOnBoarding">Aquí</a> puedes ver un ejemplo</p>
 </section><!-- End section DataStore-->
 
   
@@ -771,91 +768,87 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
     <a id="sROOM"></a>
     <h2>ROOM</h2>
     
-    <h3>Introduction</h3>
+    <h3>Introducción</h3>
   
-    <p>Apps that manage large amounts of structured data can benefit from the ability to store that data locally. 
-      The most common use case is to cache relevant data so that the device can access it even when it is offline, 
-      allowing the user to browse that content while disconnected.</p>
+    <p>Las apps que manejan grandes cantidades de datos estructurados se benefician de almacenarlos localmente. 
+      Un uso habitual es cachear datos relevantes para que la app funcione sin conexión y el usuario pueda consultar contenido offline.</p>
   
-      <p>Some examples of apps that use a database on the device: 
+      <p>Ejemplos de apps que usan una base de datos local:
         <ul>
-          <li>Contacts: personal and contact data of people.</li>
-          <li>Clock: alarms.</li>
-          <li>Google Maps: list of recent searches.</li>
+          <li>Contacts: datos personales y de contacto.</li>
+          <li>Clock: alarmas.</li>
+          <li>Google Maps: lista de búsquedas recientes.</li>
           <li>…</li>
         </ul>
   </p>
       
     
-  <p>The persistence library <span class="negrita">Room</span> provides an abstraction layer for <span class="negrita">SQLite</span>
-     that allows access to the database smoothly while still leveraging all of SQLite's technology. 
-     In particular, Room provides the following benefits:
-    <ul>
-      <li>Compilation-time verification of SQL queries</li>
-      <li>Convenience annotations that minimize repetitive and error-prone boilerplate code</li>
-      <li>Optimized database migration paths</li>
-    </ul></p>
-    
-  
-  <p>Due to these considerations, it is recommended to use Room instead of directly using the SQLite APIs.</p>
+  <p>La librería de persistencia <span class="negrita">Room</span> ofrece una capa de abstracción sobre <span class="negrita">SQLite</span>, proporcionando:</p>
+  <ul>
+    <li>Verificación de consultas SQL en tiempo de compilación.</li>
+    <li>Anotaciones que reducen código repetitivo.</li>
+    <li>Migraciones optimizadas de base de datos.</li>
+  </ul>
+
+  <p>Debido a estas consideraciones, se recomienda usar Room en lugar de las APIs de SQLite directamente.</p>
   <figure><img src="UD10/images/ud10-2023-12-20-10-03-17.png" /><br><figcaption></figcaption></figure>
   <br>
   
-  <p>You can complete the information <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage/room?hl=es-419">here</a></p>
+  <p>Se puede completar la información <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage/room?hl=es-419">aquí</a></p>
   
   
-  <h3>Main Components</h3>
+  <h3>Componentes principales</h3>
   
-  <p>These are the three main components of Room:
+  <p>Estos son los tres componentes principales de Room:
     <ul>
-      <li>The <span class="negrita">database class</span> which contains the database and serves as the main access point for the app's connection to persistent data</li>
-      <li>The <span class="negrita">data entities</span> that represent tables in your app's database</li>
-      <li>The <span class="negrita">Data Access Objects (DAOs)</span> that provide methods your app can use to query, update, insert, and delete data in the database</li>
+      <li>La <span class="negrita">clase de base de datos</span> que contiene la base de datos y sirve como el principal punto de acceso de la app a los datos persistentes</li>
+      <li>Las <span class="negrita">entidades de datos</span> que representan tablas en la base de datos de la app</li>
+      <li>Los <span class="negrita">Data Access Objects (DAOs)</span> que proporcionan métodos que la app puede usar para consultar, actualizar, insertar y eliminar datos en la base de datos</li>
     </ul>
   </p>
   
-  <p>The database class provides your app with instances of the DAOs associated with that database. 
-    In turn, the app can use the DAOs to retrieve data from the database as instances of the associated data entity objects. 
-    The app can also use the defined data entities to update rows in the corresponding tables or create new rows for insertion.
-    The following image shows the relationships between the different components of Room.</p>
+  <p>La clase de base de datos proporciona a la app instancias de los DAOs asociados con esa base de datos. 
+    A su vez, la app puede usar los DAOs para recuperar datos de la base de datos como instancias de los objetos de entidad de datos asociados. 
+    La app también puede usar las entidades de datos definidas para actualizar filas en las tablas correspondientes o crear nuevas filas para inserción.
+    La siguiente imagen muestra las relaciones entre los diferentes componentes de Room.</p>
   
     <figure><img src="UD10/images/ud10-2023-12-20-10-39-31.png" /><br><figcaption></figcaption></figure>
     <br>
     
   
-  <h3>Setting up Room</h3>
+  <h3>Configurando Room</h3>
   
-  <p>To use Room in your app, you need to add the following dependencies:
+  <p>Para usar Room en tu app, necesitas agregar las siguientes dependencias:
     <ul>
       <li><span class="inline-file">libs.versions.toml</span>:
       <ul>
-        <li><span class="cursiva">[version]</span> section: 
+        <li><span class="cursiva">[version]</span> sección: 
         <section><pre><code class="language-kotlin">room = "2.6.1"
   ksp = "2.0.0-1.0.24"</code></pre>
         </section> <br>
         <section class="marco-t warn">
-          <span class="icono warning"> </span> The <a class="enlace" target="_blank" href="https://github.com/google/ksp/releases">ksp version</a> must be compatible with the Kotlin version
+          <span class="icono warning"> </span> La <a class="enlace" target="_blank" href="https://github.com/google/ksp/releases">versión de ksp</a> debe ser compatible con la versión de Kotlin
           </section>
         <section class="marco-b">
             
         </section>
         
         </li>
-        <li><span class="cursiva">[libraries]</span> section:
+        <li><span class="cursiva">[libraries]</span> sección:
         <section><pre><code class="language-kotlin">androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
   androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
   androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }</code></pre>
         </section></li>
-        <li><span class="cursiva">[plugins]</span> section:
+        <li><span class="cursiva">[plugins]</span> sección:
         <section><pre><code class="language-kotlin">ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }</code></pre>
         </section></li>
       </ul></li>
-      <li><span class="inline-file">build.graddle.kts (Module: app) </span>:
+      <li><span class="inline-file">build.graddle.kts (Módulo: app) </span>:
         <ul>
-          <li>In <span class="cursiva">plugins</span> section: <section><pre><code class="language-kotlin">alias(libs.plugins.ksp) apply true</code></pre>
+          <li>En sección <span class="cursiva">plugins</span>: <section><pre><code class="language-kotlin">alias(libs.plugins.ksp) apply true</code></pre>
           </section>
           </li>
-          <li>In <span class="cursiva">dependencies</span> section:
+          <li>En sección <span class="cursiva">dependencies</span>:
           <section><pre><code class="language-kotlin">implementation(libs.androidx.room.runtime)
   implementation(libs.androidx.room.ktx)
   ksp(libs.androidx.room.compiler)</code></pre>
@@ -868,76 +861,76 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   
   </p>
   
-  <p>Remember to press <span class="negrita">sync now</span> to apply the changes</p>
+  <p>Recuerda presionar <span class="negrita">sync now</span> para aplicar los cambios</p>
   
   
   
-  <h3>Case Study: Task Manager</h3>
+  <h3>Estudio de caso: Gestor de tareas</h3>
   
-  <p>In this section, we will create an application to save tasks, each task will have a name, and we will be able to indicate whether the task is done or not, and delete it.</p>
+  <p>En esta sección, crearemos una aplicación para guardar tareas, cada tarea tendrá un nombre, y podremos indicar si la tarea está hecha o no, y eliminarla.</p>
   
-  <p>This application created in the case study will use the following concepts:
+  <p>Esta aplicación creada en el estudio de caso usará los siguientes conceptos:
     <ul>
-      <li><span class="negrita">LazyColumn</span>: tasks will be displayed as list items.</li>
-      <li><span class="negrita">ViewModel</span>: separates business logic from views.</li>
-      <li><span class="negrita">Coroutines</span>: database access tasks are performed in the background.</li>
-      <li><span class="negrita">Room</span>: creating and accessing the database.</li>
-      <li><span class="negrita">DAO pattern</span>: to separate persistence from logic.</li>
-      <li><span class="negrita">Clean Architecture</span>: an overview of this architecture will be introduced in software development.</li>
+      <li><span class="negrita">LazyColumn</span>: las tareas se mostrarán como elementos de lista.</li>
+      <li><span class="negrita">ViewModel</span>: separa la lógica de negocio de las vistas.</li>
+      <li><span class="negrita">Coroutines</span>: las tareas de acceso a la base de datos se realizan en segundo plano.</li>
+      <li><span class="negrita">Room</span>: creación y acceso a la base de datos.</li>
+      <li><span class="negrita">DAO pattern</span>: para separar la persistencia de la lógica.</li>
+      <li><span class="negrita">Clean Architecture</span>: se introducirá una visión general de esta arquitectura en el desarrollo de software.</li>
     </ul>
   </p>
   
-  <p>After creating the project, you will need to add the necessary dependencies. 
-    For the example, dependencies for navigation, serialization, extended icons, and livedata, 
-    as well as <span class="negrita">Room</span> and <span class="negrita">Kps</span> will be added.</p>
+  <p>Después de crear el proyecto, será necesario agregar las dependencias necesarias. 
+    Para el ejemplo, se agregarán dependencias para navegación, serialización, íconos extendidos y livedata, 
+    así como <span class="negrita">Room</span> y <span class="negrita">Kps</span>.</p>
   
-    <p>For project organization, it has been decided to use the principles of <span class="negrita">Clean Architecture</span> 
-      which is a software development pattern where responsibilities are separated in such a way that the code becomes easier to 
-      <span class="subrayado">maintain, scale, and test</span>.</p>
+    <p>Para la organización del proyecto, se ha decidido usar los principios de <span class="negrita">Clean Architecture</span> 
+      que es un patrón de desarrollo de software donde las responsabilidades están separadas de tal manera que el código se vuelve más fácil de 
+      <span class="subrayado">mantener, escalar y probar</span>.</p>
     
   
-    <p>The image below shows the folder structure.</p>
+    <p>La imagen a continuación muestra la estructura de carpetas.
     <a href="UD10/images/ud_10-2025-02-03-18-35-10.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-18-35-10.png" /><br><figcaption></figcaption></figure></a>
     <br>
     
     
-    <p>Following Clean Architecture, the project is divided into functionalities, 
-      in this example, the only functionality is task management, so the package <span class="inline-folder">tasks</span> is created.</p>
+    <p>Siguiendo la Clean Architecture, el proyecto se divide en funcionalidades, 
+      en este ejemplo, la única funcionalidad es la gestión de tareas, por lo que se crea el paquete <span class="inline-folder">tasks</span>.</p>
     
-    <p>Inside the <span class="inline-folder">tasks</span> package, the following subpackages are created:
+    <p>Dentro del paquete <span class="inline-folder">tasks</span>, se crean los siguientes subpaquetes:
       <ul>
         <li><span class="inline-folder">data</span>:
           <ul>
-            <li><span class="inline-folder">local</span>: files for local data access. 
+            <li><span class="inline-folder">local</span>: archivos para el acceso a datos local. 
               <ul>
-                <li><span class="inline-folder">database</span>  &rarr;	 definition of the SQLite database.</li>
-                <li><span class="inline-folder">entities</span>  &rarr; definitions of the database tables.</li>
-                <li><span class="inline-folder">dao</span> &rarr; definition of actions that can be performed on the database.</li>
+                <li><span class="inline-folder">database</span>  &rarr;	 definición de la base de datos SQLite.</li>
+                <li><span class="inline-folder">entities</span>  &rarr; definiciones de las tablas de la base de datos.</li>
+                <li><span class="inline-folder">dao</span> &rarr; definición de acciones que se pueden realizar en la base de datos.</li>
               </ul>          
             </li>
-            <li><span class="inline-folder">remote</span> r&rarr; folder to include access to data via an API (not included in this project).</li>
-            <li><span class="inline-folder">repository</span> r&rarr; responsible for deciding whether data is retrieved locally or remotely, and converting the data to model classes (domain).</li>
+            <li><span class="inline-folder">remote</span> r&rarr; carpeta para incluir acceso a datos a través de una API (no incluida en este proyecto).</li>
+            <li><span class="inline-folder">repository</span> r&rarr; responsable de decidir si los datos se recuperan local o remotamente, y convertir los datos a clases de modelo (dominio).</li>
           </ul>
         </li>
         <li><span class="inline-folder">domain</span><ul>
-          <li><span class="inline-folder">model</span> &rarr; definition of classes that will represent the data from the tables.</li>
-          <li><span class="inline-folder">usecase</span> &rarr; contains business logic (for example, data validation before inserting into the database).</li>
+          <li><span class="inline-folder">model</span> &rarr; definición de clases que representarán los datos de las tablas.</li>
+          <li><span class="inline-folder">usecase</span> &rarr; contiene la lógica de negocio (por ejemplo, validación de datos antes de insertar en la base de datos).</li>
         </ul></li>
         <li><span class="inline-folder">ui</span>
         <ul>
-          <li>includes screens for this <span class="negrita">feature</span>.</li>
-          <li><span class="inline-folder">viewmodels</span> r&rarr; definition of the viewmodels required for the screens.</li>
+          <li>incluye pantallas para esta <span class="negrita">funcionalidad</span>.</li>
+          <li><span class="inline-folder">viewmodels</span> r&rarr; definición de los viewmodels requeridos para las pantallas.</li>
         </ul></li>
       </ul>
     </p>
     <a href="UD10/images/ud_10-2025-02-03-18-47-24.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-18-47-24.png" /><br><figcaption>Clean Architecture</figcaption></figure></a>
     <br>
     
-    <p class="sub-section">Entities</p>
+    <p class="sub-section">Entidades</p>
     
-    <p>The first component of <span class="negrita">Room</span> to be implemented is the <span class="negrita">entity</span> which will represent <span class="negrita">the data of the table</span>.</p>
+    <p>El primer componente de <span class="negrita">Room</span> a implementar es la <span class="negrita">entidad</span> que representará <span class="negrita">los datos de la tabla</span>.</p>
     
-    <p>The entity should be a data class which in this case will be called <span class="inline-file">TaskEntity</span> :</p>
+    <p>La entidad debe ser una clase de datos que en este caso se llamará <span class="inline-file">TaskEntity</span> :</p>
     
   <section><pre><code class="language-kotlin">@Entity(tableName = "tasks")
   data class TaskEntity(
@@ -949,37 +942,37 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   </code></pre>
   </section><br><br>
   
-  <p>With the <span class="r-word">@</span> annotation in Room we indicate:
+  <p>Con la anotación <span class="r-word">@</span> en Room indicamos:
     <ul>
-      <li><span class="negrita">@Entity</span>: the table name it refers to</li>
-      <li><span class="negrita">@PrimaryKey</span>: the following property corresponds to the primary key.</li>
+      <li><span class="negrita">@Entity</span>: el nombre de la tabla a la que se refiere</li>
+      <li><span class="negrita">@PrimaryKey</span>: la siguiente propiedad corresponde a la clave primaria.</li>
     </ul>
   </p>
   
-  <p>Another available option is <span class="r-word">@ColumnInfo</span>, which allows specifying a different column name in the database.</p>
+  <p>Otra opción disponible es <span class="r-word">@ColumnInfo</span>, que permite especificar un nombre de columna diferente en la tabla de la base de datos.</p>
   <a href="UD10/images/ud_10-2025-02-03-18-51-51.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-18-51-51.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  <p>In the image, the <code>firstName</code> property of the class corresponds to the <code>first_name</code> column in the database table.</p>
+  <p>En la imagen, la <code>firstName</code> propiedad de la clase corresponde a la <code>first_name</code> columna en la tabla de la base de datos.</p>
   
-  <p>In the <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage/room/defining-data?hl=es-419">documentation</a> you can consult all possible options.</p>
+  <p>En el <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage/room/defining-data?hl=es-419">documento</a> puedes consultar todas las opciones posibles.</p>
   
   
   <p class="sub-section">DAO – Data Access Object</p>
 
-  <p>The <span class="negrita">DAO</span> defines a set of actions on the database, so that these actions will receive or 
-    return an <span class="negrita">Entity</span> object containing a record from the database.</p>
+  <p>El <span class="negrita">DAO</span> define un conjunto de acciones sobre la base de datos, de modo que estas acciones recibirán o 
+    devolverán un <span class="negrita">Entity</span> que contiene un registro de la base de datos.</p>
   
-  <p>The DAO must be an interface.</p>
+  <p>El DAO debe ser una interfaz.</p>
   
-  <p>Normally, a DAO is defined for each database table.</p>
+  <p>Normalmente, se define un DAO para cada tabla de la base de datos.</p>
   
-  <p>Thus, within a DAO, all the actions needed to create the <span class="cursiva">CRUD</span> for the associated table are defined. 
-    This keeps a separation between the different accesses to the database.</p>
+  <p>Así, dentro de un DAO, se definen todas las acciones necesarias para crear el <span class="cursiva">CRUD</span> para la tabla asociada. 
+    Esto mantiene una separación entre los diferentes accesos a la base de datos.</p>
   
-  <p>If a query needs to affect multiple tables, this action should be defined in the DAO of the most important table in the query.</p>
+  <p>Si una consulta necesita afectar a múltiples tablas, esta acción debe definirse en el DAO de la tabla más importante en la consulta.</p>
   
-  <p>In the case study, the interface will be called <span class="inline-file">TaskDAO</span>:</p>
+  <p>En el estudio de caso, la interfaz se llamará <span class="inline-file">TaskDAO</span>:</p>
   
   <section><pre><code class="language-kotlin">@Dao
   interface TaskDAO {
@@ -1003,45 +996,45 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   }</code></pre>
   </section><br><br>
   
-  <p>The methods can return values directly or can return <span class="negrita">LiveData</span> or <span class="negrita">Flow</span>.</p>
+  <p>Los métodos pueden devolver valores directamente o pueden devolver <span class="negrita">LiveData</span> o <span class="negrita">Flow</span>.</p>
   
-  <p>In the case study, we use <span class="negrita">LiveData</span> so that whenever there is a change in the query (when the table is modified), 
-    LiveData will emit the change, and the UI can update without having to query again.</p>
+  <p>En el estudio de caso, se usa <span class="negrita">LiveData</span> para que cada vez que haya un cambio en la consulta (cuando se modifica la tabla), 
+    LiveData emita el cambio, y la UI pueda actualizarse sin necesidad de volver a consultar.</p>
   
-  <p>Since the methods will access the database (storage), they must be suspension functions to ensure that coroutines are used (<span class="negrita">Dispatcher.IO</span>) when making calls to them.</p>
+  <p>Como los métodos accederán a la base de datos (almacenamiento), deben ser funciones de suspensión para asegurar que se usen corutinas (<span class="negrita">Dispatcher.IO</span>) al llamarlos.</p>
   
   
-  <p>In the case of the method <span class="d-word">getAllTask</span>, there is no need to specify it because returning a <span class="negrita">LiveData</span> 
-    already forces the use of a coroutine when calling this method.</p>
+  <p>En el caso del método <span class="d-word">getAllTask</span>, no es necesario especificarlo porque devolver <span class="negrita">LiveData</span> 
+    ya obliga a usar una corutina al llamar a este método.</p>
   <a href="UD10/images/ud_10-2025-02-03-18-58-04.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-18-58-04.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  <p>With Room annotations we indicate:
+  <p>Con las anotaciones de Room indicamos:
     <ul>
-      <li><span class="negrita">@Dao</span>: it is a Room DAO</li>
-      <li><span class="negrita">@Query: custom query (can be of any type: SELECT, INSERT, UPDATE or DELETE).</span></li>
-      <li><span class="negrita">@Insert</span>: query that saves a record in the table using the received object data.</li>
-      <li><span class="negrita">@Delete</span>: query that deletes the record from the table that matches the received object.</li>
+      <li><span class="negrita">@Dao</span>: es un DAO de Room</li>
+      <li><span class="negrita">@Query: consulta personalizada (puede ser de cualquier tipo: SELECT, INSERT, UPDATE o DELETE).</span></li>
+      <li><span class="negrita">@Insert</span>: consulta que guarda un registro en la tabla usando los datos del objeto recibido.</li>
+      <li><span class="negrita">@Delete</span>: consulta que elimina el registro de la tabla que coincide con el objeto recibido.</li>
     </ul>
   </p>
   
-  <p>In custom queries, parameters can be indicated with a <span class="r-word">:</span>, so if the query specifies <span class="d-word">:name</span>
-     this corresponds to the function parameter <span class="negrita">name: String</span>.</p>
+  <p>En las consultas personalizadas, se pueden indicar parámetros con un <span class="r-word">:</span>, así que si la consulta especifica <span class="d-word">:name</span>
+     esto corresponde al parámetro de la función <span class="negrita">name: String</span>.</p>
   <a href="UD10/images/ud_10-2025-02-03-19-00-47.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-19-00-47.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  <p>In the <span class="r-word">insert</span> statement, the conflict strategy can be specified, 
-     in the case study, the strategy is to replace the record if a record with the same data already exists in the entity.</p>
+  <p>En la sentencia de <span class="r-word">insert</span>, se puede especificar la estrategia de conflicto, 
+     en el estudio de caso, la estrategia es reemplazar el registro si ya existe uno con los mismos datos en la entidad.</p>
   <a href="UD10/images/ud_10-2025-02-03-19-01-02.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-19-01-02.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  <p class="sub-section">Room Database</p>
+  <p class="sub-section">Base de datos Room</p>
   
-  <p>The database must be defined as an <span class="negrita">abstract class</span> that extends <span class="r-word">RoomDatabase</span> 
-    where the database configuration will be defined, and access to the database will be obtained. If the database does not exist, it will also be created.</p>
+  <p>La base de datos debe definirse como una <span class="negrita">clase abstracta</span> que extiende <span class="r-word">RoomDatabase</span> 
+    donde se configurará la base de datos y se obtendrá el acceso a ella. Si la base de datos no existe, también se creará.</p>
   
   
-  <p>In the case study, the database is declared in the abstract class <span class="inline-file">TasksDatabase</span>:</p>
+  <p>En el estudio de caso, la base de datos se declara en la clase abstracta <span class="inline-file">TasksDatabase</span>:</p>
   <section><pre><code class="language-kotlin">@Database(entities = [TaskEntity::class], version = 1)
   abstract class TasksDatabase : RoomDatabase() {
       abstract fun taskDAO(): TaskDAO
@@ -1063,30 +1056,30 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   }</code></pre>
   </section><br><br>
   
-  <p>With Room annotations we indicate:
+  <p>Con las anotaciones de Room indicamos:
     <ul>
-      <li><span class="negrita">@Database</span>: with an array, we specify all the entities associated with the database. 
-        You can use the <span class="r-word">[ ]</span> notation or the function <span class="r-word">arrayOf()</span>.</li>
+      <li><span class="negrita">@Database</span>: con un array, especificamos todas las entidades asociadas con la base de datos. 
+        Puedes usar la notación <span class="r-word">[ ]</span> o la función <span class="r-word">arrayOf()</span>.</li>
     </ul>
   </p>
   
-  <p>The <span class="d-word">getInstance</span> function requires the application context, and when calling the <span class="r-word">databaseBuilder</span> method, the database name must be specified. 
-    In this case study, it will be "<span class="d-word">task_database</span>".</p>
+  <p>La función <span class="d-word">getInstance</span> requiere el contexto de la aplicación, y al llamar al método <span class="r-word">databaseBuilder</span>, se debe especificar el nombre de la base de datos. 
+    En este estudio de caso, será "<span class="d-word">task_database</span>".</p>
   
   <a href="UD10/images/ud_10-2025-02-03-19-06-19.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-19-06-19.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  <p class="sub-section">Repository</p>
+  <p class="sub-section">Repositorio</p>
   
-  <p>The repository is responsible for:
+  <p>El repositorio es responsable de:
     <ul>
-      <li>Deciding if data is retrieved locally or from an API (and keeping them synchronized).</li>
-      <li>Converting data between the interface model (domain) and the database model (Entity).</li>
+      <li>Decidir si los datos se recuperan localmente o desde una API (y mantenerlos sincronizados).</li>
+      <li>Convertir los datos entre el modelo de interfaz (dominio) y el modelo de base de datos (Entidad).</li>
     </ul>
   </p>
   
-  <p>The repository must receive an instance of the DAO to perform the actions and must implement the same actions that are allowed in the DAO. 
-    In the case study, it is declared in the <span class="inline-file">TaskRepository</span> class:</p>
+  <p>El repositorio debe recibir una instancia del DAO para realizar las acciones y debe implementar las mismas acciones que se permiten en el DAO. 
+    En el estudio de caso, se declara en la clase <span class="inline-file">TaskRepository</span>:</p>
   
   <section><pre><code class="language-kotlin">class TaskRepository(private val taskDAO: TaskDAO) {
       val tasks: LiveData&lt;MutableList&lt;Task&gt;&gt; = taskDAO.getAllTasks().map { items -&gt;
@@ -1111,17 +1104,17 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   }</code></pre>
   </section><br><br>
   
-  <p class="sub-section">Domain</p>
+  <p class="sub-section">Dominio</p>
   
-  <p>The model is the representation of data used in the graphical interface, and it is declared in the <span class="inline-file">Task</span> class.</p>
+  <p>El modelo es la representación de datos usada en la interfaz gráfica, y se declara en la clase <span class="inline-file">Task</span>.</p>
   <section><pre><code class="language-kotlin">data class Task(
       val id: Int = 0,
       val name: String,
       val isDone: Boolean = false,
   )</code></pre>
   </section><br><br>
-  <p>The use cases are responsible for linking the model with the actions that can be performed in the database, adding the necessary business logic
-     such as data validation before inserting data into the database. This is declared in the <span class="inline-file">TaskUseCase</span> class.</p>
+  <p>Los casos de uso son responsables de vincular el modelo con las acciones que se pueden realizar en la base de datos, añadiendo la lógica de negocio necesaria
+     como la validación de datos antes de insertar en la base de datos. Esto se declara en la clase <span class="inline-file">TaskUseCase</span>.</p>
   
   <section><pre><code class="language-kotlin">class TaskUseCase(private val repository: TaskRepository) {
       fun getAllTasks(): LiveData&lt;MutableList&lt;Task&gt;&gt; {
@@ -1149,7 +1142,7 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   
   <p class="sub-section">ViewModel</p>
   
-  <p>Two ViewModels will be defined, the first will be used to maintain the states of MainScreen and will be defined in the <span class="inline-file">MainScreenViewModel.kt</span> file.</p>
+  <p>Se definirán dos ViewModels, el primero se usará para mantener los estados de MainScreen y se definirá en el archivo <span class="inline-file">MainScreenViewModel.kt</span>.</p>
   <section><pre><code class="language-kotlin">class MainScreenViewModel : ViewModel() {
       private val _taskName = MutableLiveData&lt;String&gt;()
       val taskName: LiveData&lt;String&gt; = _taskName
@@ -1164,21 +1157,21 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   }</code></pre>
   </section><br><br>
   
-  <p>The second ViewModel will be used for database access and will be defined in the <span class="inline-file">TasksViewModel.kt</span> file:</p>
+  <p>El segundo ViewModel se utilizará para el acceso a la base de datos y se definirá en el archivo <span class="inline-file">TasksViewModel.kt</span>:</p>
   
-  <p>It must extend <span class="r-word">AndroidViewModel</span> because the context is needed for database access.
+  <p>Debe extender de <span class="r-word">AndroidViewModel</span> porque se necesita el contexto para el acceso a la base de datos.
     <ul>
-      <li>Using <span class="d-word">TaskDatabase</span>, we get the database instance and with it, an instance of <span class="d-word">TaskDAO</span>.</li>
-      <li>Using the <span class="d-word">DAO</span>, we get the repository.</li>
-      <li>Using the repository, we initialize the <span class="subrayado">Use Case</span>.</li>
+      <li>Usando <span class="d-word">TaskDatabase</span>, obtenemos la instancia de la base de datos y con ella, una instancia de <span class="d-word">TaskDAO</span>.</li>
+      <li>Usando el <span class="d-word">DAO</span>, obtenemos el repositorio.</li>
+      <li>Usando el repositorio, inicializamos el <span class="subrayado">Caso de Uso</span>.</li>
     </ul>
   </p>
   
   <section class="marco-t warn">
-    <span class="icono warning"> </span> These three actions are not recommended as they generate high coupling in the app.
+    <span class="icono warning"> </span> Estas tres acciones no son recomendadas ya que generan un alto acoplamiento en la app.
     </section>
   <section class="marco-b">
-    To resolve this, it is recommended to use flows (Flow) to maintain data instead of LiveData, and dependency injection (Dagger Hilt), but these concepts are advanced for the purpose of this course.
+    Para resolver esto, se recomienda usar flujos (Flow) para mantener los datos en lugar de LiveData, y la inyección de dependencias (Dagger Hilt), pero estos conceptos son avanzados para el propósito de este curso.
   </section>
   
   <section><pre><code class="language-kotlin">class TaskViewModel(application: Application) : AndroidViewModel(application) {
@@ -1224,10 +1217,10 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   }</code></pre>
   </section><br><br>
   
-  <p class="sub-section">MainActivity and Navigation</p>
+  <p class="sub-section">MainActivity y Navegación</p>
   
-  <p>In <span class="d-word">MainActivity</span>, the <span class="d-word">taskViewModel</span> should be defined so it can be shared between the <span class="cursiva">SplashScreen</span> 
-    (during which the data will be initially loaded) and the MainScreen (task management).</p>
+  <p>En <span class="d-word">MainActivity</span>, se debe definir el <span class="d-word">taskViewModel</span> para que pueda ser compartido entre la <span class="cursiva">SplashScreen</span> 
+    (durante la cual se cargarán inicialmente los datos) y la MainScreen (gestión de tareas).</p>
   
   <section class="marco-t file-">
     <span class="icono file"> </span> <span class="negrita">MainActivity</span>
@@ -1249,7 +1242,7 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   </section>
   
   <section class="marco-t file-">
-    <span class="icono file"> </span> <span class="negrita">Routes</span>
+    <span class="icono file"> </span> <span class="negrita">Rutas</span>
     </section>
   <section class="marco-b">
       <section><pre><code class="language-kotlin">sealed class Routes {
@@ -1263,7 +1256,7 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   </section>
   
   <section class="marco-t file-">
-    <span class="icono file"> </span> <span class="negrita">Navigation</span>
+    <span class="icono file"> </span> <span class="negrita">Navegación</span>
     </section>
   <section class="marco-b">
    <section><pre><code class="language-kotlin">@Composable
@@ -1287,7 +1280,7 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   </section>
   
   <p class="sub-section">SplashScreen</p>
-  <p>The <span class="negrita">Splash Screen</span> is the first destination in the navigation, and here <span class="d-word">taskViewModel</span> is used to fetch the task list from the database.</p>
+  <p>La <span class="negrita">Splash Screen</span> es la primera destino en la navegación, y aquí se usa <span class="d-word">taskViewModel</span> para obtener la lista de tareas de la base de datos.</p>
   <a href="UD10/images/ud_10-2025-02-03-19-23-04.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-19-23-04.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
@@ -1302,7 +1295,7 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
       LaunchedEffect(key1 = true) {
           delay(5000)
           taskViewModel.getAllTasks()
-          navController.popBackStack() // Avoid going back to Splash Screen
+          navController.popBackStack() // Evitar volver a la Splash Screen
           navController.navigate(Routes.Main)
       }
   }
@@ -1359,7 +1352,7 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
      </section> 
   </section>
   
-  <p class="sub-section">Common components</p>
+  <p class="sub-section">Componentes comunes</p>
   <a href="UD10/images/ud_10-2025-02-03-19-23-04.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-02-03-19-23-04.png" /><br><figcaption></figcaption></figure></a>
   <section class="marco-t file-">
     <span class="icono file"> </span> <span class="negrita">AppScaffold.kt</span>
@@ -1418,13 +1411,13 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
               .then(modifier),
           horizontalArrangement = Arrangement.spacedBy(
               20.dp,
-              Alignment.CenterHorizontally
+              Alignment.CenterHorizontales
           ),
           verticalAlignment = Alignment.CenterVertically,
       ) {
           Image(
               painter = painterResource(id = R.drawable.rick),
-              contentDescription = "Photo of Rick",
+              contentDescription = "Foto de Rick",
               modifier = Modifier
                   .clip(CircleShape)
                   .border(
@@ -1482,7 +1475,7 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
                   ) {
                       Icon(
                           imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                          contentDescription = "Go back",
+                          contentDescription = "Regresar",
                           tint = MaterialTheme.colorScheme.onPrimary
                       )
                   }
@@ -1527,11 +1520,11 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
                   ) {
                       TextField(value = inputTaskName,
                           onValueChange = { mainScreenViewModel.onTaskNameChange(it) },
-                          label = { Text(text = "Task to add") },
+                          label = { Text(text = "Tarea a añadir") },
                           trailingIcon = {
                               if (showDeleteIcon.value) {
                                   Icon(imageVector = Icons.Default.Delete,
-                                      contentDescription = "Delete task",
+                                      contentDescription = "Eliminar tarea",
                                       modifier = Modifier.clickable { mainScreenViewModel.onTaskNameDelete() })
                               }
                           })
@@ -1547,7 +1540,7 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
                           },
                           enabled = showDeleteIcon.value
                       ) {
-                          Text(text = "Add")
+                          Text(text = "Añadir")
                       }
                   }
   
@@ -1592,14 +1585,14 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
                               .background(MaterialTheme.colorScheme.error)
                               .padding(20.dp),
                           verticalArrangement = Arrangement.spacedBy(16.dp),
-                          horizontalAlignment = Alignment.CenterHorizontally
+                          horizontalAlignment = Alignment.CenterHorizontales
                       ) {
                           Text(
-                              text = """The task "$inputTaskName" already exists.""",
+                              text = """La tarea "$inputTaskName" ya existe.""",
                               color = MaterialTheme.colorScheme.onSecondary
                           )
                           Button(onClick = { showInsertTaskError = false }) {
-                              Text(text = "Accept")
+                              Text(text = "Aceptar")
                           }
                       }
                   }
@@ -1609,7 +1602,7 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   }
   
   
-  //Each task item in the list.
+  //Cada elemento de tarea en la lista.
   @Composable
   fun TaskItem(
       task: Task,
@@ -1660,7 +1653,7 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
                   ) {
                       Icon(
                           imageVector = Icons.Default.Delete,
-                          contentDescription = "Delete task",
+                          contentDescription = "Eliminar tarea",
                           tint = MaterialTheme.colorScheme.onPrimaryContainer
                       )
                   }
@@ -1671,11 +1664,11 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
     </section>
   </section>
   
-  <a href="UD10/images/TaskManagerRunning.gif" target="_BLANK"><figure><img src="UD10/images/TaskManagerRunning.gif" /><br><figcaption>Running App</figcaption></figure></a>
+  <a href="UD10/images/TaskManagerRunning.gif" target="_BLANK"><figure><img src="UD10/images/TaskManagerRunning.gif" /><br><figcaption>App en ejecución</figcaption></figure></a>
   
   
   <br><br>
-  <p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD10/taskmanager">Here</a> you can see the full example on github</p>
+  <p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD10/taskmanager">Aquí</a> puedes ver el ejemplo completo en github</p>
   
   
   </section><!-- End section ROOM-->
@@ -1684,7 +1677,7 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   <!--*********************************************************Shopping List Practice***********************************************************-->
   <section class="apartado oculto">
   <a id="sP05"></a>
-  <h2>P05 Shopping List</h2>
+  <h2>P05 Lista de la compra</h2>
   
   <a class="tarea" target="_blank" href="https://aules.edu.gva.es/fp/mod/assign/view.php?id=5463526">
     <p>La práctica consistirá en realizar una applicación de la lista de la compra. La aplicación tendrá los siguientes requisitos:
