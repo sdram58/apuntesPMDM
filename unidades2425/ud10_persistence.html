@@ -17,38 +17,38 @@
 
   <nav id="menu-lateral" class="main-menu-lateral oculto">
     <div class="fila">
-      <a href="#sIntroduccion" title="1.- Introduction">1.- Introduction</a>
-      <a href="#sFileSystem" title="2.- File System">2.- File System</a>
-      <a href="#sAlamacenamientoEspecificodelaapp" title="3.- App-specific Storage">3.- App-specific Storage</a>
+      <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
+      <a href="#sFileSystem" title="2.- Sistema de archivos">2.- Sistema de archivos</a>
+      <a href="#sAlamacenamientoEspecificodelaapp" title="3.- Almacenamiento específico de la app">3.- Almacenamiento específico de la app</a>
     </div>
     
     <div class="fila">
-      <a href="#sAccesoalalmacenamientoexterno" title="4.- Access to external storage">4.- Access to external storage</a>
+      <a href="#sAccesoalalmacenamientoexterno" title="4.- Acceso al almacenamiento externo">4.- Acceso al almacenamiento externo</a>
       <a href="#sDataStore" title="5.- DataStore">5.- DataStore</a>
       <a href="#sROOM" title="6.- Room">6.- Room</a>
     </div>
     
     <div class="fila oculto">
-      <a href="#sP05" title="7.- P05. Shopping List">7.- P05. Shopping List</a>
+      <a href="#sP05" title="7.- P05. Lista de la compra">7.- P05. Lista de la compra</a>
     </div>
 </nav> <!-- BTM_MENU-->
 
-<h1>U10.- Persistence</h1>  
+<h1>U10.- Persistencia</h1>  
 
 <div class="main-menu">
     <div class="fila">
-      <a href="#sIntroduccion" title="1.- Introduction">1.- Introduction</a>
-      <a href="#sFileSystem" title="2.- File System">2.- File System</a>
-      <a href="#sAlamacenamientoEspecificodelaapp" title="3.- App-specific Storage">3.- App-specific Storage</a>
+      <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
+      <a href="#sFileSystem" title="2.- Sistema de archivos">2.- Sistema de archivos</a>
+      <a href="#sAlamacenamientoEspecificodelaapp" title="3.- Almacenamiento específico de la app">3.- Almacenamiento específico de la app</a>
     </div>
     
     <div class="fila">
-      <a href="#sAccesoalalmacenamientoexterno" title="4.- Access to external storage">4.- Access to external storage</a>
+      <a href="#sAccesoalalmacenamientoexterno" title="4.- Acceso al almacenamiento externo">4.- Acceso al almacenamiento externo</a>
       <a href="#sDataStore" title="5.- DataStore">5.- DataStore</a>
       <a href="#sROOM" title="6.- Room">6.- Room</a>
     </div>
     <div class="fila oculto">
-      <a href="#sP05" title="7.- P05. Shopping List">7.- P05. Shopping List</a>
+      <a href="#sP05" title="7.- P05. Lista de la compra">7.- P05. Lista de la compra</a>
       <a href="" class="relleno"></a><a href="" class="relleno"></a>
     </div>
 </div>
@@ -57,101 +57,101 @@
   
 <!--*********************************************************Introduction***********************************************************-->
 <section class="apartado">
-  <a name="sIntroduccion"></a>
-  <h2>Introduction</h2>
+  <a id="sIntroduccion"></a>
+  <h2>Introducción</h2>
   
-<p>Data persistence is a very important issue in mobile applications.</p>
-<p>The first reason is well known to everyone and happens when the device's orientation/configuration changes. This has been solved with the use of states and <span class="cursiva">ViewModel</span>.</p>
-<p>However, there are other situations where it is interesting to be able to store data for later use.</p>
-<p>In this unit, the following tools for implementing data persistence will be studied:
-  <ul>
-    <li><span class="negrita">File System</span>.</li>
-    <li><span class="negrita">Datastore</span>.</li>
-    <li><span class="negrita">Room</span>.</li>
-  </ul>
-</p>
+  <p>La persistencia de datos es un aspecto muy importante en las aplicaciones móviles.</p>
+  <p>La primera situación conocida ocurre al cambiar la orientación/configuración del dispositivo; esto se ha solucionado mediante el uso de estados y <span class="cursiva">ViewModel</span>.</p>
+  <p>Además, existen otras situaciones en las que interesa guardar datos para usarlos más adelante.</p>
+  <p>En esta unidad se estudiarán las siguientes herramientas para implementar la persistencia de datos:
+    <ul>
+      <li><span class="negrita">Sistema de Archivos</span>.</li>
+      <li><span class="negrita">Datastore</span>.</li>
+      <li><span class="negrita">Room</span>.</li>
+    </ul>
+  </p>
  
 </section><!-- End section Introduction-->
 
 
 <!--*********************************************************File System***********************************************************-->
 <section class="apartado">
-  <a name="sFileSystem"></a>
-  <h2>File System</h2>
+  <a id="sFileSystem"></a>
+  <h2>Sistema de archivos</h2>
   
-  <p>As with any operating system, Android uses a file system.</p>
+  <p>Como cualquier sistema operativo, Android utiliza un sistema de ficheros.</p>
   
-<p>This file system allows several options for storing application data:
-  <ul>
-    <li>App-specific storage (<span class="cursiva">App-specific storage</span>).</li>
-    <li>Shared storage (<span class="cursiva">Shared storage</span>).</li>
-    <li>Preferences.</li>
-    <li>Databases.</li>
-  </ul>
-</p>
+  <p>Este sistema de ficheros ofrece varias opciones para almacenar datos de la aplicación:
+    <ul>
+      <li>Almacenamiento específico de la app (<span class="cursiva">App-specific storage</span>).</li>
+      <li>Almacenamiento compartido (<span class="cursiva">Shared storage</span>).</li>
+      <li>Preferencias (key-value).</li>
+      <li>Bases de datos.</li>
+    </ul>
+  </p>
 
-<h3>App-specific storage</h3>
-<p>Stores files intended for use only by the application itself.</p>
-<p>You can create dedicated folders in both internal and external storage.</p>
-<p>Internal storage should be used for confidential information (other apps will not have access to it).</p>
+  <h3>App-specific storage</h3>
+  <p>Stores files intended for use only by the application itself.</p>
+  <p>You can create dedicated folders in both internal and external storage.</p>
+  <p>Internal storage should be used for confidential information (other apps will not have access to it).</p>
 
-<h3>Shared storage</h3>
-  <p>Stores files that the application can share with other apps, such as documents, media (audio, video…), or other files.</p>
-  
+  <h3>Shared storage</h3>
+    <p>Stores files that the application can share with other apps, such as documents, media (audio, video…), or other files.</p>
+    
 
-  <h3>Preferences</h3>
-  <p>Private storage for the application. Allows key-value pairs.</p>
+    <h3>Preferences</h3>
+    <p>Private storage for the application. Allows key-value pairs.</p>
 
-  <h3>Databases</h3>
+    <h3>Databases</h3>
 
-  <p>Stores structured data privately using the Room library (a framework that uses SQLite).</p>
-  
+    <p>Stores structured data privately using the Room library (a framework that uses SQLite).</p>
+    
 
-  <p>You can consult the following summary table in the <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage?hl=es-419">official documentation</a>:</p>
-  
-  <figure><img src="UD10/images/ud10-2023-12-17-20-11-08.png" /><br><figcaption></figcaption></figure>
-  <br>
-  <figure><img src="UD10/images/ud10-2023-12-17-20-13-05.png" /><br><figcaption></figcaption></figure>
-  <br>
+    <p>You can consult the following summary table in the <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage?hl=es-419">official documentation</a>:</p>
+    
+    <figure><img src="UD10/images/ud10-2023-12-17-20-11-08.png" /><br><figcaption></figcaption></figure>
+    <br>
+    <figure><img src="UD10/images/ud10-2023-12-17-20-13-05.png" /><br><figcaption></figcaption></figure>
+    <br>
 
-  <h3>Which option to choose?</h3>
-<p>When choosing a storage type, several variables come into play:
-  <ul>
-    <li><span class="negrita">Size of the data to be stored</span>: internal storage has limited space.</li>
-    <li><span class="negrita">Ensuring access to the data</span>: internal storage or a database is better, as external storage is not always accessible.</li>
-    <li><span class="negrita">Type of data</span>: if the files should not be shared, app-specific storage should be used.</li>
-    <li><span class="negrita">Data privacy</span>: if working with sensitive data, it should be stored in preferences, a database, or internal storage. The latter also hides the data from users.</li>
-  </ul>
-</p>
+    <h3>¿Qué opción elegir?</h3>
+    <p>Al elegir un tipo de almacenamiento influyen varias variables:
+      <ul>
+        <li><span class="negrita">Tamaño de los datos</span>: el almacenamiento interno tiene espacio limitado.</li>
+        <li><span class="negrita">Accesibilidad de los datos</span>: el almacenamiento interno o una base de datos garantizan mejor el acceso; el almacenamiento externo puede no estar siempre disponible.</li>
+        <li><span class="negrita">Tipo de datos</span>: si no deben compartirse, utilice almacenamiento específico de la app.</li>
+        <li><span class="negrita">Privacidad</span>: datos sensibles deben guardarse en preferencias, base de datos o almacenamiento interno.</li>
+      </ul>
+    </p>
 
 </section><!-- End section File System-->
 
 
   <!--*********************************************************App-Specific Storage***********************************************************-->
   <section class="apartado">
-    <a name="sAlamacenamientoEspecificodelaapp"></a>
-    <h2>App-Specific Storage</h2>
+    <a id="sAlamacenamientoEspecificodelaapp"></a>
+    <h2>Almacenamiento específico de la app</h2>
     
-    <p>Android offers the following locations for exclusive use by the application.</p>  
+    <p>Android ofrece las siguientes ubicaciones para uso exclusivo de la aplicación.</p>  
   
-  <p>Directories in <span class="negrita">internal storage</span>:
+  <p>Directorios en <span class="negrita">almacenamiento interno</span>:
     <ul>
-      <li>Android prevents other applications from accessing these locations.</li>
-      <li>Starting with Android 10 (API 29) and higher, these locations are encrypted.</li>
-      <li>They are a good place to store sensitive data.</li>
-      <li>They typically have limited capacity.</li>
+      <li>Android impide que otras apps accedan a estas ubicaciones.</li>
+      <li>A partir de Android 10 (API 29) estas ubicaciones pueden estar encriptadas.</li>
+      <li>Son adecuadas para datos sensibles.</li>
+      <li>Suelen disponer de espacio limitado.</li>
     </ul>
   </p>
   
-  <p>Directories in <span class="negrita">external storage</span>:
+  <p>Directorios en <span class="negrita">almacenamiento externo</span>:
   <ul>
-    <li>These locations are intended for exclusive use by the application, although other applications with the proper permissions may access them.</li>
-    <li>If files are to be created that are intended to be shared with other applications, they should be created in the shared space of external storage.</li>
+    <li>Estas ubicaciones pueden ser de uso exclusivo de la app, pero otras apps con permisos pueden acceder a ellas.</li>
+    <li>Si los archivos deben compartirse con otras apps, deben ubicarse en el espacio compartido del almacenamiento externo.</li>
   </ul></p>
   
-  <p>Both options include a directory for storing <span class="negrita">persistent files</span> and another for <span class="negrita">cache</span>.</p>
+  <p>Ambas opciones incluyen un directorio para almacenar <span class="negrita">archivos persistentes</span> y otro para <span class="negrita">caché</span>.</p>
   
-  <h3>Access to files in internal storage</h3>
+  <h3>Acceso a ficheros en almacenamiento interno</h3>
   <p>Common and persistent files are located in a directory that can be accessed using the <span class="r-word">filesDir</span> property of a <span class="negrita">context</span> object (as shown earlier, the context can be obtained in various ways).</p>
   
   <p>Using the <span class="r-word">File</span> API (similar to Java), you can access and store files.</p>
@@ -163,7 +163,7 @@
   <section><pre><code class="language-kotlin">val file = File(applicationContext.filesDir, "file_name")</code></pre>
   </section><br><br>
   
-  <p class="sub-section">Storing a file using a Stream</p>
+  <p class="sub-section">Almacenar un fichero usando un stream</p>
   <p>As an alternative to the File API, you can use the <span class="r-word">openFileOutput()</span> method to get a <span class="r-word">FileOutputStream</span> object, which allows writing to a file inside the <span class="r-word">filesDir</span> directory.</p>
   <section><pre><code class="language-kotlin">val myFile = "myFile"
   val content = "My first Android file!"
@@ -208,7 +208,7 @@
   </code></pre>
   </section><br><br>
     
-  <p class="sub-section">Visualize file list</p>
+  <p class="sub-section">Visualizar la lista de ficheros</p>
   
   <p>You can get an array of file names in the <span class="r-word">filesDir</span> directory using the <span class="r-word">fileList()</span> method:</p>
   
@@ -246,8 +246,8 @@
   <br>
   
   
-  <h3>Cache</h3>
-  <p>If you need to temporarily store files with sensitive data, they should be stored in the <span class="inline-folder">cache</span> directory.</p>
+  <h3>Caché</h3>
+  <p>Si necesitas almacenar temporalmente ficheros (incluyendo datos sensibles), utiliza el directorio <span class="inline-folder">cache</span>.</p>
   
   <p>To create a file in cache storage, use 
     <span class="r-word">File.createTempFile()</span>, specify the prefix (name), 
@@ -297,24 +297,22 @@
 
   <!--*********************************************************Access to External Storage***********************************************************-->
   <section class="apartado">
-    <a name="sAccesoalalmacenamientoexterno"></a>
-    <h2>Access to External Storage</h2>
-  <p>If additional space is needed to store application-specific files, external storage can be used, provided it is available.</p>
+    <a id="sAccesoalalmacenamientoexterno"></a>
+    <h2>Acceso al almacenamiento externo</h2>
+  <p>Si se necesita espacio adicional para ficheros específicos de la aplicación, se puede usar el almacenamiento externo siempre que esté disponible.</p>
   
-  <p>External storage can be a partition in the internal memory, but it can also be located on an external storage device such as an SD card or even a USB flash drive connected to the USB.</p>
+  <p>El almacenamiento externo puede residir en una partición de la memoria interna o en un dispositivo externo como una tarjeta SD o un pendrive conectado por USB.</p>
   
-  <p>In cases where external storage is located on a connected storage device, this storage may become unavailable, for example, if an SD card is removed from the device.</p>
+  <p>Si el almacenamiento externo está en un dispositivo conectado, puede dejar de estar disponible (por ejemplo, al extraer la SD).</p>
   
-  <p>Therefore, it is not advisable to create files in external storage that the proper functioning of the application depends on.</p>
+  <p>Por ello, no conviene depender de ficheros en almacenamiento externo para el funcionamiento crítico de la aplicación.</p>
   
-  <h3>Checking the Availability of External Storage</h3>
-  <p>It is important to check that external storage is available before attempting to read or write data to it.</p>
+  <h3>Comprobar la disponibilidad del almacenamiento externo</h3>
+  <p>Es importante comprobar que el almacenamiento externo está disponible antes de leer o escribir en él.</p>
   
-  <p>Using the <span class="r-word">Environment</span> class and its <span class="r-word">getExternalStorageState</span> method, 
-     you can check the availability of external storage as well as the permissions on it.</p>
+  <p>Usando la clase <span class="r-word">Environment</span> y su método <span class="r-word">getExternalStorageState</span> se puede comprobar su estado y permisos.</p>
   
-  <p>If the state is <span class="d-word">MEDIA_MOUNTED</span>, you will have <span class="negrita">read and write</span> permissions, 
-    if the state is <span class="d-word">MEDIA_MOUNTED_READ_ONLY</span>, you will only have <span class="negrita">read</span> permissions.</p>
+  <p>Si el estado es <span class="d-word">MEDIA_MOUNTED</span> hay permisos de lectura y escritura; si es <span class="d-word">MEDIA_MOUNTED_READ_ONLY</span> solo lectura.</p>
   <p>A good way to check this would be with the following functions:</p>
   
   <section><pre><code class="language-kotlin">fun isExternalStorageWritable(): Boolean {
@@ -327,7 +325,7 @@
   }
   </code></pre>
   </section><br><br>
-  <h3>Selecting a Location on External Storage</h3>
+  <h3>Seleccionar una ubicación en el almacenamiento externo</h3>
   
   <p>Since external storage can be either in internal memory or on a connected device, 
     when storing information in external storage, you must choose the location.</p>
@@ -364,7 +362,7 @@
   <a href="UD10/images/ud_10-2025-01-28-17-35-17.png" target="_BLANK"><figure><img src="UD10/images/ud_10-2025-01-28-17-35-17.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  <h3>Accessing Files in External Storage</h3>
+  <h3>Acceso a ficheros en almacenamiento externo</h3>
       <p>To access files in external storage, use the <span class="negrita">getExternalFilesDir</span> method 
          of a <span class="negrita">context</span> object.</p>
   
@@ -377,7 +375,7 @@
   </section><br><br>
   <p>On Android 11 (API 30) and higher, creating subdirectories in external storage is not allowed.</p>
   
-  <h3>Creating Files in External Storage Cache</h3>
+  <h3>Crear ficheros en la caché del almacenamiento externo</h3>
   
   
   <p>To create a file in the external storage cache, use the <span class="r-word">externalCacheDir</span> property of a <span class="negrita">context</span> object:</p>
@@ -388,13 +386,13 @@
   </code></pre>
      </section><br><br>
      
-  <h3>Deleting Files from External Storage Cache</h3>
+  <h3>Eliminar ficheros de la caché del almacenamiento externo</h3>
   
   <p>You should use the <span class="r-word">delete</span> method on a <span class="negrita">File</span> object representing the file to be deleted.</p>
   <figure><img src="UD10/images/ud10-2023-12-17-23-16-13.png" /><br><figcaption></figcaption></figure>
   <br>
   
-  <h3>Multimedia Content</h3>
+  <h3>Contenido multimedia</h3>
   
   <p>If the app works with multimedia files that are not essential but add value to the user experience, 
     it is best to store them in external storage:</p>
@@ -425,7 +423,7 @@
   <p>This will store the files directly in the root directory of the specific external storage for the application.</p>
   
   
-  <h3>Checking Free Space</h3>
+  <h3>Comprobar espacio libre</h3>
   <p>Some devices have very limited storage space, so when developing an application, special care should be taken with the space the app occupies.</p>
   
   <p>A good practice before storing a file is to check if the file fits in the available space.</p>
@@ -468,28 +466,27 @@
 
   <!--*********************************************************DataStore***********************************************************-->  
 <section class="apartado">
-  <a name="sDataStore"></a>
+  <a id="sDataStore"></a>
   <h2>DataStore</h2>
   
-  <p><span class="d-word">DataStore</span> allows storing small or simple datasets on the device.</p>
+  <p><span class="d-word">DataStore</span> permite almacenar pequeños conjuntos de datos en el dispositivo.</p>
 
-  <p>Data stored with <span class="negrita">DataStore</span> is saved in the app's internal storage, 
-  so no other app will be able to access it.</p>
+  <p>Los datos guardados con <span class="negrita">DataStore</span> se almacenan en el almacenamiento interno de la app y no son accesibles por otras apps.</p>
 
-  <p>DataStore has two implementations:
+  <p>DataStore tiene dos implementaciones:
   <ul>
-    <li><span class="negrita">Preferences DataStore</span>: stores key-value pairs.</li>
-    <li><span class="negrita">Proto DataStore</span>: stores objects (instances of classes).</li>
+    <li><span class="negrita">Preferences DataStore</span>: almacena pares clave–valor.</li>
+    <li><span class="negrita">Proto DataStore</span>: almacena objetos (instancias de clases).</li>
   </ul>
   </p>
 
-  <p>Due to the complexity of developing <span class="negrita">Proto DataStore</span>, in class we will only study <span class="negrita">Preferences DataStore</span>.</p>
+  <p>Por la complejidad de <span class="negrita">Proto DataStore</span>, en clase nos centraremos en <span class="negrita">Preferences DataStore</span>.</p>
 
-  <p>DataStore allows creating files to store information, generally preferences.</p>
+  <p>DataStore permite crear archivos para almacenar información, generalmente preferencias.</p>
 
-  <p>The advantage of <span class="negrita">DataStore</span> is that the operating system handles all the management of preference files.</p>
+  <p>La ventaja de <span class="negrita">DataStore</span> es que el sistema operativo se encarga de la gestión de los archivos de preferencias.</p>
 
-  <p><span class="negrita">Rules for using DataStore</span>:
+  <p><span class="negrita">Reglas para usar DataStore</span>:
   <ul>
     <li>Only maintain one open instance of DataStore on the same file.</li>
     <li>The generic type of DataStore must be immutable.</li>
@@ -538,7 +535,7 @@
 
 <p>Preferences DataStore also needs the application context for proper management of preference files.</p>
 
-<h3>Practical Case: ViewModel and Live Data</h3>
+<p class="sub-section">Caso práctico: ViewModel y LiveData</p>
 <p>To use Preferences DataStore, the following dependency needs to be added:
   <ul>
     <li><span class="inline-file">libs.versions.toml</span>: <ul>
@@ -768,16 +765,15 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
 
   <!--*********************************************************ROOM***********************************************************-->
   <section class="apartado">
-    <a name="sROOM"></a>
+    <a id="sROOM"></a>
     <h2>ROOM</h2>
     
-    <h3>Introduction</h3>
+    <h3>Introducción</h3>
   
-    <p>Apps that manage large amounts of structured data can benefit from the ability to store that data locally. 
-      The most common use case is to cache relevant data so that the device can access it even when it is offline, 
-      allowing the user to browse that content while disconnected.</p>
+    <p>Las apps que manejan grandes cantidades de datos estructurados se benefician de almacenarlos localmente. 
+      Un uso habitual es cachear datos relevantes para que la app funcione sin conexión y el usuario pueda consultar contenido offline.</p>
   
-      <p>Some examples of apps that use a database on the device: 
+      <p>Ejemplos de apps que usan una base de datos local:
         <ul>
           <li>Contacts: personal and contact data of people.</li>
           <li>Clock: alarms.</li>
@@ -787,45 +783,42 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   </p>
       
     
-  <p>The persistence library <span class="negrita">Room</span> provides an abstraction layer for <span class="negrita">SQLite</span>
-     that allows access to the database smoothly while still leveraging all of SQLite's technology. 
-     In particular, Room provides the following benefits:
-    <ul>
-      <li>Compilation-time verification of SQL queries</li>
-      <li>Convenience annotations that minimize repetitive and error-prone boilerplate code</li>
-      <li>Optimized database migration paths</li>
-    </ul></p>
-    
-  
-  <p>Due to these considerations, it is recommended to use Room instead of directly using the SQLite APIs.</p>
+  <p>La librería de persistencia <span class="negrita">Room</span> ofrece una capa de abstracción sobre <span class="negrita">SQLite</span>, proporcionando:</p>
+  <ul>
+    <li>Verificación de consultas SQL en tiempo de compilación.</li>
+    <li>Anotaciones que reducen código repetitivo.</li>
+    <li>Migraciones optimizadas de base de datos.</li>
+  </ul>
+
+  <p>Debido a estas consideraciones, se recomienda usar Room en lugar de las APIs de SQLite directamente.</p>
   <figure><img src="UD10/images/ud10-2023-12-20-10-03-17.png" /><br><figcaption></figcaption></figure>
   <br>
   
   <p>You can complete the information <a class="enlace" target="_blank" href="https://developer.android.com/training/data-storage/room?hl=es-419">here</a></p>
   
   
-  <h3>Main Components</h3>
+  <h3>Componentes principales</h3>
   
-  <p>These are the three main components of Room:
+  <p>Estos son los tres componentes principales de Room:
     <ul>
-      <li>The <span class="negrita">database class</span> which contains the database and serves as the main access point for the app's connection to persistent data</li>
-      <li>The <span class="negrita">data entities</span> that represent tables in your app's database</li>
-      <li>The <span class="negrita">Data Access Objects (DAOs)</span> that provide methods your app can use to query, update, insert, and delete data in the database</li>
+      <li>La <span class="negrita">clase de base de datos</span>, que contiene la base de datos y sirve como el principal punto de acceso de la app a los datos persistentes.</li>
+      <li>Las <span class="negrita">entidades de datos</span>, que representan las tablas en la base de datos de la app.</li>
+      <li>Los <span class="negrita">Data Access Objects (DAOs)</span>, que proporcionan métodos para consultar, actualizar, insertar y eliminar datos en la base de datos.</li>
     </ul>
   </p>
   
-  <p>The database class provides your app with instances of the DAOs associated with that database. 
-    In turn, the app can use the DAOs to retrieve data from the database as instances of the associated data entity objects. 
-    The app can also use the defined data entities to update rows in the corresponding tables or create new rows for insertion.
-    The following image shows the relationships between the different components of Room.</p>
+  <p>La clase de base de datos proporciona a la app instancias de los DAOs asociados. 
+    A su vez, la app puede usar los DAOs para recuperar datos de la base de datos como instancias de los objetos de entidad de datos asociados. 
+    La app también puede usar las entidades de datos definidas para actualizar filas en las tablas correspondientes o crear nuevas filas para inserción.
+    La siguiente imagen muestra las relaciones entre los diferentes componentes de Room.</p>
   
     <figure><img src="UD10/images/ud10-2023-12-20-10-39-31.png" /><br><figcaption></figcaption></figure>
     <br>
     
   
-  <h3>Setting up Room</h3>
+  <h3>Configuración de Room</h3>
   
-  <p>To use Room in your app, you need to add the following dependencies:
+  <p>Para usar Room en tu app, necesitas añadir las siguientes dependencias:
     <ul>
       <li><span class="inline-file">libs.versions.toml</span>:
       <ul>
@@ -834,7 +827,7 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   ksp = "2.0.0-1.0.24"</code></pre>
         </section> <br>
         <section class="marco-t warn">
-          <span class="icono warning"> </span> The <a class="enlace" target="_blank" href="https://github.com/google/ksp/releases">ksp version</a> must be compatible with the Kotlin version
+          <span class="icono warning"> </span> La <a class="enlace" target="_blank" href="https://github.com/google/ksp/releases">versión de ksp</a> debe ser compatible con la versión de Kotlin
           </section>
         <section class="marco-b">
             
@@ -868,15 +861,15 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   
   </p>
   
-  <p>Remember to press <span class="negrita">sync now</span> to apply the changes</p>
+  <p>Remember to press <span class="negrita">sync now</span> to apply the changes</p
   
   
   
-  <h3>Case Study: Task Manager</h3>
+  <h3>Estudio de caso: Gestor de tareas</h3>
   
-  <p>In this section, we will create an application to save tasks, each task will have a name, and we will be able to indicate whether the task is done or not, and delete it.</p>
+  <p>En esta sección, crearemos una aplicación para guardar tareas, cada tarea tendrá un nombre, y podremos indicar si está realizada o no, y eliminarla.</p>
   
-  <p>This application created in the case study will use the following concepts:
+  <p>Esta aplicación creada en el caso de estudio utilizará los siguientes conceptos:
     <ul>
       <li><span class="negrita">LazyColumn</span>: tasks will be displayed as list items.</li>
       <li><span class="negrita">ViewModel</span>: separates business logic from views.</li>
@@ -1175,10 +1168,10 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   </p>
   
   <section class="marco-t warn">
-    <span class="icono warning"> </span> These three actions are not recommended as they generate high coupling in the app.
+    <span class="icono warning"> </span> Estas tres acciones no son recomendables ya que generan un alto acoplamiento en la app.
     </section>
   <section class="marco-b">
-    To resolve this, it is recommended to use flows (Flow) to maintain data instead of LiveData, and dependency injection (Dagger Hilt), but these concepts are advanced for the purpose of this course.
+    Para resolver esto, se recomienda usar flows (Flow) para mantener datos en lugar de LiveData, y la inyección de dependencias (Dagger Hilt), pero estos conceptos son avanzados para el propósito de este curso.
   </section>
   
   <section><pre><code class="language-kotlin">class TaskViewModel(application: Application) : AndroidViewModel(application) {
@@ -1404,7 +1397,7 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
   </section>
   
   <section class="marco-t file-">
-    <span class="icono file"> </span> <span class="negrita">AuthorInfo.kt</span>
+       <span class="icono file"> </span> <span class="negrita">AuthorInfo.kt</span>
     </section>
   <section class="marco-b">
       <section><pre><code class="language-kotlin">// Custom component to display author information
@@ -1683,8 +1676,8 @@ class PreferencesViewModel(application: Application):AndroidViewModel(applicatio
 
   <!--*********************************************************Shopping List Practice***********************************************************-->
   <section class="apartado oculto">
-  <a name="sP05"></a>
-  <h2>P05 Shopping List</h2>
+  <a id="sP05"></a>
+  <h2>P05 Lista de la compra</h2>
   
   <a class="tarea" target="_blank" href="https://aules.edu.gva.es/fp/mod/assign/view.php?id=5463526">
     <p>La práctica consistirá en realizar una applicación de la lista de la compra. La aplicación tendrá los siguientes requisitos:

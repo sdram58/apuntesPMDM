@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
@@ -18,14 +18,14 @@
 
   <nav id="menu-lateral" class="main-menu-lateral oculto">
     <div class="fila">
-      <a href="#sNavegacion" title="1. Navigation">1.- Navigation</a>
-      <a href="#sDisenosAdaptativos" title="2. Adaptive Designs">2.- Adaptive Designs</a>
-      <a href="#sSplashScreen" title="3. Splash Screen">3.- Splash Screen</a>
+      <a href="#sNavegacion" title="1. Navegación">1.- Navegación</a>
+      <a href="#sDisenosAdaptativos" title="2. Diseños adaptativos">2.- Diseños adaptativos</a>
+      <a href="#sSplashScreen" title="3. Pantalla de arranque">3.- Pantalla de arranque</a>
     </div>
     <div class="fila">
-      <a href="#sOnboarding" title="4. Onboarding">4.- Onboarding</a>
-      <a href="#sTemas" title="5. Themes">5.- Themes</a>
-      <a href="#sAnimaciones" title="6. Animations">6.- Animations</a>
+      <a href="#sOnboarding" title="4. Introducción de usuario">4.- Onboarding</a>
+      <a href="#sTemas" title="5. Temas">5.- Temas</a>
+      <a href="#sAnimaciones" title="6. Animaciones">6.- Animaciones</a>
     </div>
 
   </nav> <!-- BTM_MENU-->
@@ -34,50 +34,50 @@
 
   <div class="main-menu">
     <div class="fila">
-      <a href="#sNavegacion" title="1. Navigation">1.- Navigation</a>
-      <a href="#sDisenosAdaptativos" title="2. Adaptive Designs">2.- Adaptive Designs</a>
-      <a href="#sSplashScreen" title="3. Splash Screen">3.- Splash Screen</a>
+      <a href="#sNavegacion" title="1. Navegación">1.- Navegación</a>
+      <a href="#sDisenosAdaptativos" title="2. Diseños adaptativos">2.- Diseños adaptativos</a>
+      <a href="#sSplashScreen" title="3. Pantalla de arranque">3.- Pantalla de arranque</a>
     </div>
     <div class="fila">
-      <a href="#sOnboarding" title="4. Onboarding">4.- Onboarding</a>
-      <a href="#sTemas" title="5. Themes">5.- Themes</a>
-      <a href="#sAnimaciones" title="6. Animations">6.- Animations</a>
+      <a href="#sOnboarding" title="4. Introducción de usuario">4.- Onboarding</a>
+      <a href="#sTemas" title="5. Temas">5.- Temas</a>
+      <a href="#sAnimaciones" title="6. Animaciones">6.- Animaciones</a>
     </div>
   </div>
 
   <!--*********************************************************Navegación***********************************************************-->
 <section class="apartado">
-  <a name="sNavegacion"></a>
-  <h2>Navigation</h2>
+  <a id="sNavegacion"></a>
+  <h2>Navegación</h2>
   
-<p>With the traditional <span class="negrita">Android (Views)</span> programming, each screen of the application was implemented in a
-  <span class="negrita">different Activity</span>.</p>
+<p>Con la programación tradicional de <span class="negrita">Android (Views)</span>, cada pantalla de la aplicación se implementaba en una
+  <span class="negrita">diferente Activity</span>.</p>
 
-<p>This required the use of navigation graphs, instructions for starting Activities,
-  creating elements to send information to the new window, and to receive information upon closing the window.</p>
+<p>Esto requería el uso de gráficos de navegación, instrucciones para iniciar Activities,
+  crear elementos para enviar información a la nueva ventana, y para recibir información al cerrar la ventana.</p>
 
-<p>With <span class="negrita">Jetpack Compose</span>, the entire navigation process is simplified because the structure of a 
-  <span class="subrayado">Compose-developed application is based on a <span class="negrita">Single Activity</span></span>.</p>
+<p>Con <span class="negrita">Jetpack Compose</span>, todo el proceso de navegación se simplifica porque la estructura de una 
+  <span class="subrayado">aplicación desarrollada en Compose se basa en una <span class="negrita">Single Activity</span></span>.</p>
 
-<p><span class="negrita">Single Activity</span> means that <span class="negrita">there is only one Activity managing all interface elements</span>,
-  which are divided into different Compose components in Jetpack Compose.</p>
+<p><span class="negrita">Single Activity</span> significa que <span class="negrita">solo hay una Activity gestionando todos los elementos de la interfaz</span>,
+  que se dividen en diferentes componentes de Compose en Jetpack Compose.</p>
 
-<p>From this point on, it is very important to have all your application code organized into folders.</p>
+<p>A partir de este momento, es muy importante tener todo tu código de aplicación organizado en carpetas.</p>
 
-<p>To do this, you can create a folder named <span class="negrita">screens</span> inside <span class="negrita">ui</span> where you place the different components of each screen.</p>
-<p>Inside the <span class="negrita">screens</span> folder, you can directly keep the <span class="d-word">.kt</span> files for each screen, or you can create new folders if each screen is composed of multiple <span class="d-word">.kt</span> files.</p>
+<p>Para ello, puedes crear una carpeta llamada <span class="negrita">screens</span> dentro de <span class="negrita">ui</span> donde coloques los diferentes componentes de cada pantalla.</p>
+<p>Dentro de la carpeta <span class="negrita">screens</span>, puedes mantener directamente los archivos <span class="d-word">.kt</span> para cada pantalla, o puedes crear nuevas carpetas si cada pantalla se compone de múltiples archivos <span class="d-word">.kt</span>.</p>
 
 <figure><img src="UD8/images/ud8-2023-11-20-16-13-29.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<p>The example to be studied is an application with two screens.</p>
-<p>The first screen will show a <span class="r-word">TextField</span> for entering a <span class="cursiva">name</span> and a <span class="cursiva">button</span> to <span class="subrayado">navigate to the second screen while sending it the name</span>.</p>
-<p>The second screen will display the received name and a button to go back.</p>
+<p>El ejemplo a estudiar es una aplicación con dos pantallas.</p>
+<p>La primera mostrará un <span class="r-word">TextField</span> para introducir un <span class="cursiva">nombre</span> y un <span class="cursiva">botón</span> para <span class="subrayado">navegar a la segunda pantalla enviándole el nombre</span>.</p>
+<p>La segunda pantalla mostrará el nombre recibido y un botón para volver.</p>
 
 <figure><img src="UD8/images/ud8-2023-11-20-17-20-47.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<p>To implement navigation with Jetpack Compose, you must add the following dependency:
+<p>Para implementar la navegación con Jetpack Compose, debes añadir la siguiente dependencia:
   <ul>
     <li><span class="inline-file">libs.versions.toml</span><ul>
       <li><span class="cursiva">[version]</span> section
@@ -107,26 +107,26 @@ implementation(libs.kotlinx.serialization.json)</code></pre>
     </ul></li>
   </ul>
    <br> <section class="marco-t warn">
-    <span class="icono warning"> </span> Remember push <span class="negrita">sync now</span> to apply changes
+    <span class="icono warning"> </span> Recuerda pulsar <span class="negrita">sync now</span> para aplicar los cambios
     </section>
    <section class="marco-b">      
    </section>
    </p>
 
 
-<p>Navigation in Jetpack Compose requires two elements:
+<p>La navegación en Jetpack Compose requiere dos elementos:
   <ul>
-    <li><span class="r-word">NavController</span>: it controls the navigation.</li>
-    <li><span class="r-word">NavHost</span>: it displays each of the screens to which navigation occurs.</li>
+    <li><span class="r-word">NavController</span>: controla la navegación.</li>
+    <li><span class="r-word">NavHost</span>: muestra cada una de las pantallas a las que se navega.</li>
   </ul>
 </p>
 
-<p>The element <span class="r-word">NavHost</span> defines the different screens to which you can navigate
-   and also needs the <span class="r-word">NavController</span>.</p>
+<p>El elemento <span class="r-word">NavHost</span> define las diferentes pantallas a las que se puede navegar
+   y también necesita el <span class="r-word">NavController</span>.</p>
 
-   <p>The first step is to create a package named <span class="negrita">navigation</span>, and inside it, create a file called <span class="inline-file">Routes</span>
-    which will contain a <span class="negrita">reference to each route of the application</span> in order to keep them <span class="negrita">centralized</span>. 
-  To encapsulate the routes we put them inside a sealed class</p>
+   <p>El primer paso es crear un paquete llamado <span class="negrita">navigation</span>, y dentro de él, crear un archivo llamado <span class="inline-file">Routes</span>
+    que contendrá una <span class="negrita">referencia a cada ruta de la aplicación</span> para mantenerlas <span class="negrita">centralizadas</span>. 
+  Para encapsular las rutas las ponemos dentro de una clase sellada</p>
  
  <section>
    <pre><code class="language-kotlin">sealed class Routes{
@@ -148,15 +148,15 @@ implementation(libs.kotlinx.serialization.json)</code></pre>
  
  <br><br>
  
- <p>If the screen does <span class="negrita">not need</span> to receive values, define the route with: <span class="r-word">object</span></p>
- <p>If the screen <span class="negrita">needs</span> to receive values, define the route with: <span class="r-word">data class</span></p>
- <p><span class="negrita">Optional parameters</span> are indicated by assigning them a <span class="negrita">default value</span>.</p>
+ <p>Si la pantalla no necesita recibir valores, define la ruta con: <span class="r-word">object</span></p>
+ <p>Si la pantalla necesita recibir valores, define la ruta con: <span class="r-word">data class</span></p>
+ <p><span class="negrita">Los parámetros opcionales</span> se indican asignándoles un <span class="negrita">valor por defecto</span>.</p>
  
 
    
-<p>Next, within the navigation folder, create a file that contains a 
+<p>Seguido, dentro de la carpeta de navegación, crea un archivo que contenga un 
 <span class="r-word">@Composable</span> component named <span class="inline-file">Navigation.kt</span>. 
-In this file, you define the <span class="negrita">NavController</span> and the <span class="negrita">NavHost</span>.</p>
+En este archivo, defines el <span class="negrita">NavController</span> y el <span class="negrita">NavHost</span>.</p>
 
 <section><pre><code class="language-kotlin">@Composable
 fun Navigation() {
@@ -184,17 +184,17 @@ fun Navigation() {
 </code></pre>
 </section><br><br>
 
-<p>In the example, two screens have been defined:
+<p>En el ejemplo, se han definido dos pantallas:
   <ul>
-    <li>The first will load the <span class="d-word">FirstScreen</span> component that will receive the <span class="r-word">NavController</span> object.</li>
-    <li>The second will load the <span class="d-word">SecondScreen</span> component that will receive the <span class="r-word">NavController</span> object and also a <span class="r-word">String</span> argument. 
-      This argument must be specified when you want to navigate to this screen.</li>    
+    <li>La primera cargará el componente <span class="d-word">FirstScreen</span> que recibirá el objeto <span class="r-word">NavController</span>.</li>
+    <li>La segunda cargará el componente <span class="d-word">SecondScreen</span> que recibirá el objeto <span class="r-word">NavController</span> y también un argumento de tipo <span class="r-word">String</span>. 
+      Este argumento debe ser especificado cuando se quiera navegar a esta pantalla.</li>    
   </ul>
 </p>
-<p>The <span class="r-word">NavController</span> object must be passed to all components in which interacting with them will cause a screen change (navigation).</p>
+<p>El objeto <span class="r-word">NavController</span> debe ser pasado a todos los componentes en los que interactuar con ellos cause un cambio de pantalla (navegación).</p>
 
-<p>Since there will now be several screens and all will be managed by the <span class="r-word">Navigation</span> component, 
-  in the <span class="inline-file">MainActivity</span> file, it must be indicated that this component is loaded.</p>
+<p>Dado que ahora habrá varias pantallas y todas serán gestionadas por el componente <span class="r-word">Navigation</span>, 
+  en el archivo <span class="inline-file">MainActivity</span> debe indicarse que se carga este componente.</p>
 
 <section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -209,33 +209,33 @@ fun Navigation() {
 }</code></pre>
 </section><br><br>
 
-<p>With all this, the navigation system is created; the only thing left is to create the content for the app's screens.</p>
+<p>Con todo esto, se crea el sistema de navegación; lo único que queda es crear el contenido para las pantallas de la app.</p>
 
 <a href="UD8/images/ud_8-2025-01-20-10-06-29.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-06-29.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-<p>Inside the <span class="inline-folder">screens</span> folder, create a new package called <span class="inline-folder">layout</span> 
-  and inside it, create a new Kotlin file called <span class="inline-file">AppScaffold.kt</span>.</p>
+<p>Dentro de la carpeta <span class="inline-folder">screens</span>, crea un nuevo paquete llamado <span class="inline-folder">layout</span> 
+  y dentro de él, crea un nuevo archivo Kotlin llamado <span class="inline-file">AppScaffold.kt</span>.</p>
 
-<p>This file will contain the structure for all the app's screens.</p>
+<p>Este archivo contendrá la estructura para todas las pantallas de la app.</p>
 
-<p>This component receives: <ul>
-  <li>The title to display in the <span class="negrita">TopBar</span>.</li>
-  <li>The <span class="negrita">NavController</span> to allow navigation from the <span class="negrita">TopBar</span>.</li>
-  <li>A lambda function for the content of the <span class="r-word">Scaffold</span>, 
-    which returns the <span class="r-word">paddingValues</span> parameter that should always be assigned to the first component of a <span class="negrita">Scaffold</span>.</li>
+<p>Este componente recibe: <ul>
+  <li>El título a mostrar en la <span class="negrita">TopBar</span>.</li>
+  <li>El <span class="negrita">NavController</span> para permitir la navegación desde la <span class="negrita">TopBar</span>.</li>
+  <li>Una función lambda para el contenido del <span class="r-word">Scaffold</span>, 
+    que retorna el parámetro <span class="r-word">paddingValues</span> que siempre debe asignarse al primer componente de un <span class="negrita">Scaffold</span>.</li>
 </ul></p>
 
 <a href="UD8/images/ud_8-2025-01-20-10-09-02.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-09-02.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-<p>As seen in <span class="inline-file">AppScaffold</span>, using <span class="r-word">navController.popStackBack</span> 
+<p>Como se ve en <span class="inline-file">AppScaffold</span>, usando <span class="r-word">navController.popStackBack</span> 
 it is indicated that we should go to the previous screen in the screen stack.</p>
 
 <a href="UD8/images/ud_8-2025-01-20-10-10-37.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-10-37.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-<p>The <span class="r-word">navController.navigateUp</span> instruction performs the same action.</p>
+<p>La <span class="r-word">navController.navigateUp</span> instruction performs the same action.</p>
 
 <a href="UD8/images/ud_8-2025-01-20-10-10-52.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-10-52.png" /><br><figcaption></figcaption></figure></a>
 <br>
@@ -245,7 +245,7 @@ it is indicated that we should go to the previous screen in the screen stack.</p
 <section><pre><code class="language-kotlin">@Composable
 fun FirstScreen(navController: NavController) {
     AppScaffold(
-        title = "First Screen",
+        title = "Primera Pantalla",
         navController = navController
     ) { paddingValues ->
         Column(
@@ -253,20 +253,20 @@ fun FirstScreen(navController: NavController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "App for navigation")
+            Text(text = "App para navegación")
             Spacer(modifier = Modifier.height(20.dp))
             var nameState by rememberSaveable { mutableStateOf("")}
             TextField(
                 value = nameState,
                 onValueChange = { nameState = it },
-                placeholder = { Text(text = "Type your name") }
+                placeholder = { Text(text = "Escribe tu nombre") }
             )
             Spacer(modifier = Modifier.height(20.dp))
             var ageState by rememberSaveable { mutableStateOf("")}
             TextField(
                 value = ageState,
                 onValueChange = { ageState = it },
-                placeholder = { Text(text = "Type your age") }
+                placeholder = { Text(text = "Escribe tu edad") }
             )
             Spacer(modifier = Modifier.height(20.dp))
             Button(
@@ -279,27 +279,27 @@ fun FirstScreen(navController: NavController) {
                     )
                 }
             ) {
-                Text(text = "Move next window")
+                Text(text = "Mover a la siguiente ventana")
             }
         }
     }
 }</code></pre>
 </section><br><br>
 
-<p>Using <span class="r-word">navController.navigate</span>, it is indicated that we should go to the Second screen, passing the necessary parameters.</p>
+<p>Usando <span class="r-word">navController.navigate</span>, se indica que debemos ir a la Segunda pantalla, pasando los parámetros necesarios.</p>
 
 <a href="UD8/images/ud_8-2025-01-20-10-15-55.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-15-55.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-<p>Since <span class="negrita">ageState</span> is a state variable that stores an integer value, it tries to convert it to <span class="negrita">Int</span>, and 
-   if the conversion fails, it will use the value <span class="negrita">0</span>.</p>
+<p>Dado que <span class="negrita">ageState</span> es una variable de estado que almacena un valor entero, se intenta convertir a <span class="negrita">Int</span>, y 
+   si la conversión falla, se usará el valor <span class="negrita">0</span>.</p>
 
 <p><span class="negrita"><span class="cursiva">SecondScreen</span></span></p>
 
 <section><pre><code class="language-kotlin">@Composable
 fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
     AppScaffold(
-        title = "Second Screen",
+        title = "Segunda Pantalla",
         navController = navController
     ) { paddingValues ->
         Column(
@@ -309,11 +309,11 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "I've navigated")
-            Text(text = "Data entered:")
+            Text(text = "He navegado")
+            Text(text = "Datos ingresados:")
             //Text(text = "Name: ${if (name.isNotEmpty()) name else "No input"}")
-            Text(text = "Name: ${name.ifEmpty { "No input" }}")
-            Text(text = "Age: ${if (age != 0) age else "No input"}")
+            Text(text = "Nombre: ${name.ifEmpty { "Sin entrada" }}")
+            Text(text = "Edad: ${if (age != 0) age else "Sin entrada"}")
 
             Button(onClick = {
 //                navController.popBackStack()
@@ -328,30 +328,30 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
 
 //                navController.navigateUp()
             }) {
-                Text(text = "Go back")
+                Text(text = "Volver")
             }
         }
     }
 }</code></pre>
 </section><br><br>
 
-<p>Since the <span class="d-word">age</span> parameter has been defined as optional in the route, 
-    in the screen component, a default value must be assigned in case the screen is navigated to without that parameter being specified.</p>
+<p>Dado que el parámetro <span class="d-word">age</span> ha sido definido como opcional en la ruta, 
+    en el componente de la pantalla, se debe asignar un valor por defecto en caso de que se navegue a la pantalla sin que ese parámetro sea especificado.</p>
   
     <a href="UD8/images/ud_8-2025-01-20-10-19-31.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-19-31.png" /><br><figcaption></figcaption></figure></a>
     <br>
     
-<p>In Android, when navigating between screens, 
-  they are accumulated in the screen stack, which is why the <span class="r-word">popBackStack</span> function is used to return to the previous screen.</p>
+<p>En Android, al navegar entre pantallas, 
+  se van acumulando en la pila de pantallas, por lo que se utiliza la función <span class="r-word">popBackStack</span> para volver a la pantalla anterior.</p>
 
-<p>If you navigate directly to First, that screen would be added again to the stack.</p>
+<p>Si navegas directamente a First, esa pantalla se añadiría de nuevo a la pila.</p>
 
-<p>If you want to navigate to a specific screen, indicating that intermediate screens should be removed, you should do it as follows:</p>
+<p>Si deseas navegar a una pantalla específica, indicando que las pantallas intermedias deben ser eliminadas, debes hacerlo de la siguiente manera:</p>
   
 <a href="UD8/images/ud_8-2025-01-20-10-21-10.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-21-10.png" /><br><figcaption></figcaption></figure></a>
 <br>
   
-<p>The <span class="r-word">inclusive</span> parameter indicates that the screen you navigate to should be removed so that it doesn't remain duplicated.</p>
+<p>El parámetro <span class="r-word">inclusive</span> indica que la pantalla a la que se navega debe ser eliminada para que no quede duplicada.</p>
 
   
     
@@ -360,39 +360,31 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
 
 <h3>BackHandler</h3>
 
-<p>Android devices generally have a button that takes you back to the previous screen. Additionally, apps sometimes show
-  a back arrow in the top bar to do the same thing.</p>
+<p>Estos controles normalmente ejecutan <span class="negrita">navController.popBackStack()</span>.</p>
 <figure><img src="UD8/images/ud8-2023-11-21-14-15-38.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<p>These buttons always execute <span class="negrita">navController.popBackStack()</span>.</p>
-<figure><img src="UD8/images/ud8-2023-11-21-14-19-54.png" /><br><figcaption></figcaption></figure>
-<br>
+<p>Esta acción siempre regresa a la pantalla anterior, ya sea desde tu app o desde otro lugar; de hecho, si
+  acabas de abrir una operación desde la pantalla de inicio, al pulsar la flecha de retroceso volverías a la pantalla de inicio.</p>
 
-<p>This action always returns to the previous screen, whether it’s from your app or from somewhere else; in fact, if
-  you just opened one operation from the home screen, pressing the back arrow would bring you back to the home
-  screen.</p>
-
-<p>You can change this behavior by using the <span class="negrita">BackHandler</span> component.</p>
-<p>If you set the property <span class="negrita">enabled = true</span>, the back buttons will remain disabled all the
-  time.</p>
+<p>Puedes cambiar este comportamiento usando el componente <span class="negrita">BackHandler</span>.</p>
+<p>Si estableces la propiedad <span class="negrita">enabled = true</span>, los botones de retroceso permanecerán deshabilitados todo el tiempo.</p>
 
 <figure><img src="UD8/images/ud8-2023-11-21-14-23-35.png" /><br><figcaption></figcaption></figure>
 <br>
-<p>It’s not advisable to keep <span class="r-word">enabled</span> always as true, because in that case you’d never be
-  able to exit the application.</p>
+<p>No es recomendable mantener <span class="r-word">enabled</span> siempre como verdadero, porque en ese caso nunca podrías salir de la aplicación.</p>
 
-<p>Typically, you’ll link <span class="r-word">enabled</span> to a state variable:</p>
+<p>Típicamente, enlazarás <span class="r-word">enabled</span> a una variable de estado:</p>
 
 <figure><img src="UD8/images/ud8-2023-11-21-14-24-32.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <div class="tarea">
-  <p>Activity 1:</p>
-  <p>Study of the example Navigation application.</p>
+  <p>Actividad 1:</p>
+  <p>Estudio del ejemplo de aplicación de Navegación.</p>
 </div>
 
-<p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD8/NavigationTests">Here</a> you have the link to github with the complete example </p>
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD8/NavigationTests">Aquí</a> tienes el enlace a github con el ejemplo completo </p>
 
 </section><!-- End section Navegación-->
 
@@ -400,33 +392,31 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
 
   <!--*********************************************************Diseños adaptativos***********************************************************-->
 <section class="apartado">
-  <a name="sDisenosAdaptativos"></a>
-  <h2>Adaptive Layouts</h2>
+  <a id="sDisenosAdaptativos"></a>
+  <h2>Diseños adaptativos</h2>
   
-  <p>Mobile devices come in different screen sizes and resolutions.</p>
-  <p>If we know the screen size and orientation, we can decide which components to display on the screen.</p>
-  <p>For example, master-detail applications might show certain components or others depending on the width.</p>
+  <p>Los dispositivos móviles vienen en diferentes tamaños y resoluciones de pantalla.</p>
+  <p>Si conocemos el tamaño y la orientación de la pantalla, podemos decidir qué componentes mostrar en la pantalla.</p>
+  <p>Por ejemplo, las aplicaciones de maestro-detalle podrían mostrar ciertos componentes u otros dependiendo del ancho.</p>
   <figure><img src="UD8/images/ud8-2023-11-21-14-47-20.png" /><br><figcaption></figcaption></figure>
   <br>
 
-  <p>There are several ways to determine the screen size and orientation.</p>
+  <p>Hay varias formas de determinar el tamaño y la orientación de la pantalla.</p>
 
   <h3>Window size classes</h3>
-  <p>The <span class="negrita">Window Size Classes</span> are 
-    <a class="enlace" target="_blank" href="https://developer.android.com/develop/ui/compose/layouts/adaptive/support-different-display-sizes?hl=es-419">categorized in the Jetpack Compose documentation</a>
-     and it explains <a class="enlace" target="_blank" href="https://developer.android.com/develop/ui/compose/layouts/adaptive/use-window-size-classes">how the elements should be organized</a>.</p>
+  <p>Las <span class="negrita">Window Size Classes</span> están documentadas en la documentación de Jetpack Compose y explican cómo deben organizarse los elementos según el tamaño de la ventana (enlaces en la documentación oficial).</p>
   
   <a href="UD8/images/ud_8-2025-01-20-10-56-18.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-56-18.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  <p>For example, the Pixel 6a with API 35 gets the following values:
+  <p>Por ejemplo, el Pixel 6a con API 35 obtiene los siguientes valores:
     <ul>
       <li><span class="negrita">Vertical</span>:	 width &rarr; Compact		and	height  &rarr; Expanded</li>
       <li><span class="negrita">Horizontal</span>:	 width &rarr; Expanded	and	height  &rarr; Compact</li>
     </ul>
   </p>
   
-  <p>To know the <span class="negrita">Window size classes</span>, the following dependency must be added:
+  <p>Para conocer las <span class="negrita">Window size classes</span>, debe añadirse la siguiente dependencia:
   <ul>
     <li>
       File <span class="inline-file">libs.versions.toml</span> <ul>
@@ -448,13 +438,13 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
       </section>
     </li>
   </ul></p>
-  <p>Remember to press <span class="negrita">Sync Now</span> after adding the dependency.</p>
+  <p>Recuerda presionar <span class="negrita">Sync Now</span> después de añadir la dependencia.</p>
   
-  <p>Once the above dependency is added, the following instructions can be used to get the device's window size classes:</p>
+  <p>Una vez añadida la dependencia anterior, se pueden usar las siguientes instrucciones para obtener las clases de tamaño de ventana del dispositivo:</p>
   
   <a href="UD8/images/ud_8-2025-01-20-11-08-18.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-08-18.png" /><br><figcaption></figcaption></figure></a>
   <br>
-  <p>These instructions will return one of the following values:</p>
+  <p>Estas instrucciones devolverán uno de los siguientes valores:</p>
   <p>
     <pre>
       Window<span class="negrita">Width</span>SizeClass.COMPACT 		Window<span class="negrita">Height</span>SizeClass.COMPACT
@@ -464,16 +454,16 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
   </p>
   <h3>LocalConfiguration class</h3>
   
-  <p>The screen dimensions and orientation can also be obtained using the <span class="r-word">LocalConfiguration</span> class.
+  <p>Las dimensiones y orientación de la pantalla también se pueden obtener usando la clase <span class="r-word">LocalConfiguration</span>.
   <ul>
-  <li>Dimensions in Dp:
+  <li>Dimensiones en Dp:
     <a href="UD8/images/ud_8-2025-01-20-11-12-29.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-12-29.png" /><br><figcaption></figcaption></figure></a>
     <br>
     <a href="UD8/images/ud_8-2025-01-20-11-12-59.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-12-59.png" /><br><figcaption></figcaption></figure></a>
     <br>
     
   </li>
-  <li>Screen orientation:
+  <li>Orientación de la pantalla:
     <a href="UD8/images/ud_8-2025-01-20-11-12-20.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-12-20.png" /><br><figcaption></figcaption></figure></a>
     <br>
     
@@ -481,17 +471,17 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
   </ul></p>
   
   <h3>BoxWithConstraints Component</h3>
-  <p>Another option is to use the <span class="r-word">BoxWithConstraints</span> Layout component, which automatically injects the dimensions.</p>
+  <p>Otra opción es usar el componente de diseño <span class="r-word">BoxWithConstraints</span>, que inyecta automáticamente las dimensiones.</p>
   <a href="UD8/images/ud_8-2025-01-20-11-14-44.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-14-44.png" /><br><figcaption></figcaption></figure></a>
   <br>
   <a href="UD8/images/ud_8-2025-01-20-11-15-12.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-15-12.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  <p>If this method is used outside of a Scaffold, higher values are obtained, as it includes margins and the top and bottom status bars in the dimensions.</p>
+  <p>Si este método se usa fuera de un Scaffold, se obtienen valores más altos, ya que incluye márgenes y las barras de estado superior e inferior en las dimensiones.</p>
   
-  <p>Once the screen size/orientation is known, different components can be loaded accordingly.</p>
+  <p>Una vez que se conoce el tamaño/orientación de la pantalla, se pueden cargar diferentes componentes en consecuencia.</p>
   
-  <p>For example:</p>
+  <p>Por ejemplo:</p>
   
   <a href="UD8/images/ud_8-2025-01-20-11-15-59.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-15-59.png" /><br><figcaption></figcaption></figure></a>
   <br>
@@ -500,9 +490,9 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
 
 
   <div class="tarea">
-    <p>Activity 2: <br>
-    Modify the DragonBall practice app so that it has an adaptive design. That is, it displays as it is in landscape mode, 
-    but in portrait mode it shows separate screens: one with the list and another with the detail.
+    <p>Actividad 2: <br>
+    Modifica la app de DragonBall para que tenga un diseño adaptativo. Es decir, que se muestre como está en modo paisaje, 
+    pero en modo retrato muestra pantallas separadas: una con la lista y otra con el detalle.
     </p>
   </div>
 
@@ -512,55 +502,55 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
 
   <!--*********************************************************SplashScreen***********************************************************-->
 <section class="apartado">
-  <a name="sSplashScreen"></a>
-  <h2>SplashScreen</h2>
+  <a id="sSplashScreen"></a>
+  <h2>Pantalla de arranque (SplashScreen)</h2>
   
-  <p>A <span class="negrita">Splash Screen</span> is a window that appears when an Activity of an application or a game is launched, 
-    provided that the associated process of the application is not running.</p>
+  <p>Una <span class="negrita">Splash Screen</span> es una ventana que aparece cuando se inicia una Activity de una aplicación o un juego, 
+    siempre que el proceso asociado de la aplicación no esté en ejecución.</p>
  
- <p>By default, <span class="negrita">the Splash Screen of an application consists of the application icon on a white/black background</span> 
-    (depending on the activated mode).</p>
+ <p>Por defecto, <span class="negrita">la Splash Screen de una aplicación consiste en el icono de la aplicación sobre un fondo blanco/negro</span> 
+    (dependiendo del modo activado).</p>
  
- <p>The Splash Screen is a good resource to <span class="negrita">avoid the blank screen</span> while the application opens and 
-    <span class="negrita">loads necessary data</span> for the app.</p>
+ <p>La Splash Screen es un buen recurso para <span class="negrita">evitar la pantalla en blanco</span> mientras se abre la aplicación y 
+    <span class="negrita">carga los datos necesarios</span> para la app.</p>
  
- <p>Android Studio offers a library that allows you to customize the default Splash Screen, but its configuration is quite complex.</p>
+ <p>Android Studio ofrece una biblioteca que permite personalizar la Splash Screen por defecto, pero su configuración es bastante compleja.</p>
  
- <p>If the application needs to load a lot of data, the default Splash Screen might not last long enough.</p>
+ <p>Si la aplicación necesita cargar muchos datos, es posible que la Splash Screen por defecto no dure lo suficiente.</p>
  
- <p>Thanks to Jetpack Compose and the Single Activity technique, a second Splash Screen can be created to load the data with it.</p>
+ <p>Gracias a Jetpack Compose y a la técnica de Single Activity, se puede crear una segunda Splash Screen para cargar los datos con ella.</p>
  
- <p>In this unit, the two techniques will be studied:
+ <p>En esta unidad, se estudiarán las dos técnicas:
    <ul>
-     <li>Modify the default Splash Screen.</li>
-     <li>Create a Splash Screen with Jetpack Compose.</li>
+     <li>Modificar la Splash Screen por defecto.</li>
+     <li>Crear una Splash Screen con Jetpack Compose.</li>
    </ul>
  </p>
  
- <p>A Splash Screen typically includes:
+ <p>Una Splash Screen típicamente incluye:
    <ul>
-     <li>Image or logo.</li>
-     <li>Application name.</li>
-     <li>Application version.</li>
-     <li>Developers' names.</li>
-     <li>Engine used for development.</li>
+     <li>Imagen o logo.</li>
+     <li>Nombre de la aplicación.</li>
+     <li>Versión de la aplicación.</li>
+     <li>Nombres de los desarrolladores.</li>
+     <li>Motor usado para el desarrollo.</li>
    </ul>
  </p>
  
- <p>Additionally, animations are often used.</p>
+ <p>Adicionalmente, a menudo se utilizan animaciones.</p>
  
- <a href="UD8/images/ud_8-2025-01-20-11-36-23.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-36-23.png" /><br><figcaption>Some SplashScreen samples</figcaption></figure></a>
+ <a href="UD8/images/ud_8-2025-01-20-11-36-23.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-36-23.png" /><br><figcaption>Algunos ejemplos de SplashScreen</figcaption></figure></a>
  <br>
  
- <p>Starting from Android 12, the default Splash Screen is implemented as follows:</p>
+ <p>A partir de Android 12, la Splash Screen por defecto se implementa de la siguiente manera:</p>
  
- <p>Documentation:
+ <p>Documentación:
    <ul>
      <li>
-       <a class="enlace" target="_blank" href="https://developer.android.com/develop/ui/views/launch/splash-screen">English</a>
+       <a class="enlace" target="_blank" href="https://developer.android.com/develop/ui/views/launch/splash-screen">Inglés</a>
      </li>
      <li>
-       <a class="enlace" target="_blank" href="https://developer.android.com/develop/ui/views/launch/splash-screen?hl=es-419">Spanish</a>
+       <a class="enlace" target="_blank" href="https://developer.android.com/develop/ui/views/launch/splash-screen?hl=es-419">Español</a>
      </li>
    </ul>
  </p>
@@ -568,19 +558,19 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
  <a href="UD8/images/ud_8-2025-01-20-11-40-32.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-40-32.png" /><br><figcaption></figcaption></figure></a>
  <br>
  
- <p>The process of showing the Splash Screen consists of the following sequence:
+ <p>El proceso de mostrar la Splash Screen consiste en la siguiente secuencia:
    <ul>
-     <li><span class="negrita">Entry animation</span>: the Splash Screen is shown. <span class="negrita">Android controls this animation and it cannot be customized</span>.</li>
-     <li><span class="negrita">Splash Screen</span>: the <span class="negrita">content of the Splash Screen is displayed</span>, automatically animating the image if it is an animated vector image (xml) and the Android version is 12 or higher.</li>
-     <li><span class="negrita">Exit animation</span>: the way the Splash Screen disappears. 
-       By default, it is controlled by the system, but it can be customized. <span class="negrita">If customized, it is mandatory to manually remove the Splash Screen</span> 
-       when the animation finishes. The image and/or the Splash Screen itself can be animated in this step.</li>
+     <li><span class="negrita">Animación de entrada</span>: se muestra la Splash Screen. <span class="negrita">Android controla esta animación y no se puede personalizar</span>.</li>
+     <li><span class="negrita">Splash Screen</span>: se muestra el <span class="negrita">contenido de la Splash Screen</span>, animando automáticamente la imagen si es una imagen vectorial animada (xml) y la versión de Android es 12 o superior.</li>
+     <li><span class="negrita">Animación de salida</span>: la forma en que desaparece la Splash Screen. 
+       Por defecto, es controlada por el sistema, pero puede ser personalizada. <span class="negrita">Si se personaliza, es obligatorio eliminar manualmente la Splash Screen</span> 
+       cuando la animación termina. La imagen y/o la propia Splash Screen pueden ser animadas en este paso.</li>
    </ul>
  </p>
  <a href="UD8/images/ud_8-2025-01-20-11-43-25.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-11-43-25.png" /><br><figcaption>SplashScreen sequence</figcaption></figure></a>
  <br>
  
- <p>To customize the default Splash Screen, the following dependency must be added:
+ <p>Para personalizar la Splash Screen por defecto, debe añadirse la siguiente dependencia:
    <ul>
      <li>
        File <span class="inline-file">libs.versions.toml</span> <ul>
@@ -600,38 +590,38 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
    </ul>
  </p>
  
- <p>Remember to press <span class="negrita">Sync Now</span> after adding the dependency.</p>
+ <p>Recuerda presionar <span class="negrita">Sync Now</span> después de añadir la dependencia.</p>
 
  <section class="marco-t inf">
-  <span class="icono info"> </span> In newer versions we don't need to add dependencies. They're already added by default
+  <span class="icono info"> </span> En versiones más recientes no es necesario el postSplashScreenTheme.
   </section>
  <section class="marco-b">
     
  </section>
   
  
- <p>If you want to use an image, it should be added to the project in the <span class="inline-folder">resources</span> folder:</p>
+ <p>Si quieres usar una imagen, debe ser añadida al proyecto en la carpeta <span class="inline-folder">resources</span>:</p>
  
  <a href="UD8/images/ud_8-2025-01-20-12-23-04.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-12-23-04.png" /><br><figcaption></figcaption></figure></a>
  <br>
  
- <p>It is preferable to use vector graphics, but bitmap images (png or jpg) converted to webp can also be used.</p>
+ <p>Es preferible usar gráficos vectoriales, pero también se pueden usar imágenes de mapa de bits (png o jpg) convertidas a webp.</p>
  
- <p>The image dimensions should meet the following:
+ <p>Las dimensiones de la imagen deben cumplir con lo siguiente:
    <ul>
-     <li><span class="negrita">Without transparency</span>: 240x240 (a 160 radius circle is displayed)</li>
-     <li><span class="negrita">With transparency</span>: 288x288 (a 192 radius circle is displayed)</li>
+     <li><span class="negrita">Sin transparencia</span>: 240x240 (se muestra un círculo de radio 160)</li>
+     <li><span class="negrita">Con transparencia</span>: 288x288 (se muestra un círculo de radio 192)</li>
    </ul>
  </p>
  
- <p>If it is a vector graphic, the dimension will be in dp, if it is a bitmap image, the dimension will be in px.</p>
+ <p>Si es un gráfico vectorial, la dimensión estará en dp, si es una imagen de mapa de bits, la dimensión estará en px.</p>
  
- <p>The next step is to create the style for the Splash Screen, for which a resource file <span class="inline-file">res/values/splash.xml</span> should be created:</p>
+ <p>El siguiente paso es crear el estilo para la Splash Screen, para lo cual se debe crear un archivo de recurso <span class="inline-file">res/values/splash.xml</span>:</p>
  
  <a href="UD8/images/ud_8-2025-01-20-12-26-08.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-12-26-08.png" /><br><figcaption></figcaption></figure></a>
  <br>
  
- <p>with the following code:</p>
+ <p>con el siguiente código:</p>
  <section><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
  &lt;resources&gt;
      &lt;style name="Theme.MySplashScreen" parent="Theme.SplashScreen"&gt;
@@ -645,64 +635,64 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
  <a href="UD8/images/ud_8-2025-01-20-12-29-59.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-12-29-59.png" /><br><figcaption></figcaption></figure></a>
  <br>
  <section class="marco-t inf">
-  <span class="icono info"> </span> In newer versions postSplashScreenTheme is not necessary
+  <span class="icono info"> </span> En versiones más recientes no es necesario el postSplashScreenTheme.
   </section>
  <section class="marco-b">
     
  </section>
   
- <p>The theme to load after finishing is the one already existing in <span class="inline-file">res/values/themes.xml</span>.</p>
+ <p>El tema a cargar después de terminar es el que ya existe en <span class="inline-file">res/values/themes.xml</span>.</p>
  
- <p>In the manifest file, it should be indicated that the Activity will use the Splash Screen defined in the new theme:</p>
+ <p>En el archivo de manifiesto, debe indicarse que la Activity usará la Splash Screen definida en el nuevo tema:</p>
  
  <a href="UD8/images/ud_8-2025-01-20-12-30-45.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-12-30-45.png" /><br><figcaption></figcaption></figure></a>
  <br>
  
- <p>Finally, it should be indicated in the Kotlin file <span class="inline-file">MainActivity.kt</span> of the activity that the Splash Screen will be used:</p>
+ <p>Finalmente, debe indicarse en el archivo Kotlin <span class="inline-file">MainActivity.kt</span> de la activity que se usará la Splash Screen:</p>
  
  <a href="UD8/images/ud_8-2025-01-20-12-32-04.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-12-32-04.png" /><br><figcaption></figcaption></figure></a>
  <br>
  
- <p>If, after the Splash Screen finishes, the screen stays blank until the main screen of the app appears, 
-   the following code should be added to the previous line:</p>
+ <p>Si, después de que la Splash Screen termine, la pantalla se queda en blanco hasta que aparece la pantalla principal de la app, 
+   se debe añadir el siguiente código a la línea anterior:</p>
  
  <a href="UD8/images/ud_8-2025-01-20-12-32-45.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-12-32-45.png" /><br><figcaption></figcaption></figure></a>
  <br>
  
- <p>With the steps above, the Splash Screen will work correctly on all devices.</p>
+ <p>Con los pasos anteriores, la Splash Screen funcionará correctamente en todos los dispositivos.</p>
  
- <p>Starting from Android 12 (API 31), new features are introduced for the Splash Screen:
+ <p>A partir de Android 12 (API 31), se introducen nuevas características para la Splash Screen:
    <ul>
-     <li>Animated images (only vector graphics in xml format)</li>
-     <li>Display a secondary image (branding image) at the bottom.</li>
-     <li>Splash Screen exit animation.</li>
+     <li>Imágenes animadas (solo gráficos vectoriales en formato xml)</li>
+     <li>Mostrar una imagen secundaria (imagen de marca) en la parte inferior.</li>
+     <li>Animación de salida de la Splash Screen.</li>
    </ul>
  </p>
 
  <section class="marco-t inf">
-  <span class="icono info"> </span> In newer versions, <span class="negrita">installSplashScreen()</span> function is not needed. You shouldn't put it in. It's in the Android core and does it on its own.
+  <span class="icono info"> </span> En versiones más recientes, <span class="negrita">installSplashScreen()</span> function is not needed. You shouldn't put it in. It's in the Android core and does it on its own.
   </section>
  <section class="marco-b">
     
  </section>
   
  
- <p>In the <a class="enlace" target="_blank" href="https://developer.android.com/develop/ui/views/launch/splash-screen?hl=es-419#launch">documentation</a> 
-   you can find all the information and examples for these features.</p>
+ <p>En la <a class="enlace" target="_blank" href="https://developer.android.com/develop/ui/views/launch/splash-screen?hl=es-419#launch">documentación</a> 
+   puedes encontrar toda la información y ejemplos para estas características.</p>
  
- <h3>SplashScreen with Jetpack Compose</h3>
+ <h3>SplashScreen con Jetpack Compose</h3>
  
- <p>With Jetpack Compose navigation, implementing a Splash Screen is very simple.
+ <p>Con la navegación de Jetpack Compose, implementar una Splash Screen es muy simple.
    <ol>
-     <li>Create a route for the Splash Screen in Routes.kt.</li>
-     <li>Add the Splash Screen route to the Navigation.kt file.</li>
-     <li>Indicate in the NavHost (Navigation.kt) that the Splash Screen is the "startDestination".</li>
-     <li>Create a @Composable component with the Splash Screen content.</li>
-     <li>Indicate in the @Composable of the Splash Screen that after it finishes loading, it should navigate to the next screen.</li>
+     <li>Crear una ruta para la Splash Screen en Routes.kt.</li>
+     <li>Agregar la ruta de la Splash Screen al archivo Navigation.kt.</li>
+     <li>Indicar en el NavHost (Navigation.kt) que la Splash Screen es el "startDestination".</li>
+     <li>Crear un componente @Composable con el contenido de la Splash Screen.</li>
+     <li>Indicar en el @Composable de la Splash Screen que después de terminar de cargar, debe navegar a la siguiente pantalla.</li>
    </ol>
  </p>
  
- <p>The <span class="r-word">LaunchedEffect</span> is used (it will be studied later) to run that code in the background (coroutine).</p>
+ <p>Se utiliza el <span class="r-word">LaunchedEffect</span> (se estudiará más adelante) para ejecutar ese código en segundo plano (corrutina).</p>
  
  <section><pre><code class="language-kotlin">@Composable
  fun SplashScreen(navController: NavHostController) {
@@ -728,7 +718,8 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
              modifier = Modifier.size(200.dp, 200.dp)
          )
          Text(
-             text = "Welcomed",
+-            text = "Welcomed",
++            text = "Bienvenido",
              fontSize = 30.sp,
              fontWeight = FontWeight.Bold
          )
@@ -736,149 +727,149 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
  }
  </code></pre>
  </section><br><br>
- <p>In a real application, instead of the delay(5000) instruction, the code that retrieves the information needed by the application should be written, 
-   for example, from a database or an API.</p>
+ <p>En una aplicación real, en lugar de la instrucción delay(5000) se debe escribir el código que recupera la información necesaria para la aplicación, 
+   por ejemplo, desde una base de datos o una API.</p>
  
- <p>Very attractive Splash Screens can be designed using the animations that will be covered at the end of this unit.</p>
+ <p>Se pueden diseñar Splash Screens muy atractivas usando las animaciones que se cubrirán al final de esta unidad.</p>
  
- <p>By adding a Splash Screen with Jetpack Compose, the application opening flow will be as follows:
+ <p>Al añadir una Splash Screen con Jetpack Compose, el flujo de apertura de la aplicación será el siguiente:
    <ol>
-     <li>Default Splash Screen (with the application icon).</li>
+     <li>Default Splash Screen (con el icono de la aplicación).</li>
      <li>Jetpack Compose Splash Screen.</li>
-     <li>Main screen.</li>
+     <li>Pantalla principal.</li>
    </ol>
  </p>
  
- <p>Using this technique, you take advantage of the design ease that Jetpack Compose offers.</p>
+ <p>Usando esta técnica, aprovechas la facilidad de diseño que ofrece Jetpack Compose.</p>
  
- <p>Additionally, the Jetpack Compose Splash Screen can be started to initially display the app icon in the center, providing continuity between the two Splash Screens.</p>
+ <p>Adicionalmente, la Splash Screen de Jetpack Compose se puede iniciar mostrando inicialmente el icono en el centro, proporcionando continuidad entre las dos Splash Screens.</p>
  
- <p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD8/SplashScreen">Here</a>, there is an example of a combined SplashScreen</p>
+ <p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD8/SplashScreen">Aquí</a>, hay un ejemplo de una SplashScreen combinada</p>
  
 
   <div class="tarea">
-    <p>Modify the DragonBall application to include a <span class="cursiva">SplashScreen</span>. This will display the dragon ball from the app and the text "DragonBall" for 3 seconds.</p>
+    <p>Modifica la aplicación DragonBall para incluir una <span class="cursiva">SplashScreen</span>. Esta mostrará la bola de dragón de la app y el texto "DragonBall" durante 3 segundos.</p>
   </div>
 
-  <p class="oculto">Here is the <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2324/tree/master/UD5/dragonball_navigation">Github link</a> with the Dragon Ball app updated for Navigation, adapted to <span class="cursiva">Portrait</span> and <span class="cursiva">Landscape</span>, and with a <span class="cursiva">Splash Screen</span>.</p>
+  <p class="oculto">Aquí está el <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2324/tree/master/UD5/dragonball_navigation">enlace de Github</a> con la app de Dragon Ball actualizada para Navigation, adaptada a <span class="cursiva">Portrait</span> y <span class="cursiva">Landscape</span>, y con una <span class="cursiva">Splash Screen</span>.</p>
 
 </section><!-- End section SplashScreen-->
 
 <!--*********************************************************Onboarding***********************************************************-->
 <section class="apartado">
-  <a name="sOnboarding"></a>
+  <a id="sOnboarding"></a>
   <h2>Onboarding</h2>
   
-  <p><span class="negrita">Onboarding</span> refers to a set of screens displayed in the app as an introduction to how it works.</p>
-  <p>Via <span class="cursiva">Onboarding</span>, you can quickly explain to the user how the app works.</p>
-  <p>You can also request data from the user, for example, in <span class="cursiva">Telegram/WhatsApp</span>, the <span class="cursiva">Onboarding</span> requests the phone number, the confirmation code, and the username.</p>
-  <p>There are many techniques for <span class="cursiva">Onboarding</span>. In some cases it’s mandatory to go through all steps, in others you can skip them and go directly into the main application.</p>
-  <p>The <span class="cursiva">Onboarding</span> should only be shown the first time you run the app after installing it.</p>
-  <p>If, in <span class="cursiva">Onboarding</span>, mandatory data is requested for the app to function, the Onboarding will continue to be displayed until that data is obtained.</p>
-  <p>In apps where you can log out, the <span class="cursiva">Onboarding</span> will be displayed each time the current user logs out.</p>
-  <p>You can find numerous online resources and best practices on designing a good Onboarding process.</p>
-  <p>Below are a couple of examples:</p>
+  <p><span class="negrita">Onboarding</span> hace referencia a un conjunto de pantallas que introducen al usuario en el funcionamiento de la app.</p>
+  <p>Via <span class="cursiva">Onboarding</span>, puedes explicar rápidamente al usuario cómo funciona la app.</p>
+  <p>También puedes solicitar datos al usuario, por ejemplo, en <span class="cursiva">Telegram/WhatsApp</span>, el <span class="cursiva">Onboarding</span> solicita el número de teléfono, el código de confirmación y el nombre de usuario.</p>
+  <p>Hay muchas técnicas para <span class="cursiva">Onboarding</span>. En algunos casos es obligatorio pasar por todos los pasos, en otros puedes saltártelos e ir directamente a la aplicación principal.</p>
+  <p>El <span class="cursiva">Onboarding</span> solo debe mostrarse la primera vez que ejecutas la app después de instalarla.</p>
+  <p>Si, en <span class="cursiva">Onboarding</span>, se solicitan datos obligatorios para el funcionamiento de la app, el Onboarding continuará mostrándose hasta que se obtengan esos datos.</p>
+  <p>En apps donde se puede cerrar sesión, el <span class="cursiva">Onboarding</span> se mostrará cada vez que el usuario actual cierre sesión.</p>
+  <p>Puedes encontrar numerosos recursos en línea y mejores prácticas sobre cómo diseñar un buen proceso de Onboarding.</p>
+  <p>A continuación, se presentan un par de ejemplos:</p>
   <figure><img src="UD8/images/ud8-2023-11-21-19-11-40.png" /><br><figcaption></figcaption></figure>
   <br>
 
   <figure><img src="UD8/images/ud8-2023-11-21-19-11-54.png" /><br><figcaption></figcaption></figure>
   <br>
 
-  <p>Creating Onboarding with Jetpack Compose and Navigation is quite simple using navigation. You can choose one of these approaches:
+  <p>Crear Onboarding con Jetpack Compose y Navigation es bastante simple usando la navegación. Puedes elegir uno de estos enfoques:
     <ul>
-      <li>Create as many Screens as there are onboarding pages and control navigation among them.</li>
-      <li>Create a single screen with a HorizontalPager (if mandatory data is collected, you must control navigation between pages with buttons).</li>
+      <li>Crear tantas Pantallas como páginas de onboarding y controlar la navegación entre ellas.</li>
+      <li>Crear una sola pantalla con un HorizontalPager (si se recopilan datos obligatorios, debes controlar la navegación entre páginas con botones).</li>
     </ul>
   </p>
 
-  <p>When Onboarding is finished, you must navigate to a screen that already shows the app’s functionality.</p>
+  <p>Cuando el Onboarding haya terminado, debes navegar a una pantalla que ya muestre la funcionalidad de la app.</p>
 
-  <p>To show the Onboarding only the first time you launch the app (or whenever it’s needed—for example, if the user logs out), you must store that information somehow.</p>
-  <p>In <span class="cursiva">UD10 Persistence</span>, you’ll learn how to save app preferences, allowing you to store this data.</p>
+  <p>Para mostrar el Onboarding solo la primera vez que inicias la app (o siempre que sea necesario, por ejemplo, si el usuario cierra sesión), debes almacenar esa información de alguna manera.</p>
+  <p>En <span class="cursiva">UD10 Persistencia</span>, aprenderás cómo guardar las preferencias de la app, lo que te permitirá almacenar estos datos.</p>
 
 </section><!-- End section Onboarding-->
 
 
   <!--*********************************************************Temas***********************************************************-->
 <section class="apartado">
-  <a name="sTemas"></a>
-  <h2>Themes</h2>
+  <a id="sTemas"></a>
+   <h2>Temas (Themes)</h2>
 
-  <p>In the previous unit, we studied how to centralize values and thus how to create a color palette within the <span class="negrita">res -> values -> colors.xml</span> file that can be used to build a theme for the entire application.</p>
+  <p>En la unidad anterior, estudiamos cómo centralizar valores y así cómo crear una paleta de colores dentro del archivo <span class="negrita">res -> values -> colors.xml</span> que puede ser utilizada para construir un tema para toda la aplicación.</p>
 
-<p>Although that file is fully functional, it <span class="subrayado">does not follow the foundations of Material Design and should be avoided</span>.</p>
+<p>Aunque ese archivo es totalmente funcional, <span class="subrayado">no sigue los fundamentos del Material Design y debe evitarse</span>.</p>
 
-<p>Within the same folder is the file <span class="inline-file">themes.xml</span>, which specifies the base theme on which the <span class="negrita">Jetpack Compose</span> theme is built.</p>
+<p>Dentro de la misma carpeta se encuentra el archivo <span class="inline-file">themes.xml</span>, que especifica el tema base sobre el cual se construye el tema de <span class="negrita">Jetpack Compose</span>.</p>
 
 <figure><img src="UD8/images/ud8-2023-11-21-19-31-22.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<p>When creating a project in Android Studio, by default it creates its own <span class="negrita">Jetpack Compose theme</span> based on Material Design, which you can customize.</p>
-<p>The files for this theme can be found in the <span class="negrita">ui --> theme</span> folder.</p>
+<p>Al crear un proyecto en Android Studio, por defecto se crea su propio <span class="negrita">tema de Jetpack Compose</span> basado en Material Design, el cual puedes personalizar.</p>
+<p>Los archivos para este tema se pueden encontrar en la carpeta <span class="negrita">ui --> theme</span>.</p>
 
-<p>From now on, to configure the application’s theme, we will use these files.</p>
+<p>De ahora en adelante, para configurar el tema de la aplicación, usaremos estos archivos.</p>
 <figure><img src="UD8/images/ud8-2023-11-21-19-33-14.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<p>The theme is defined in the file <span class="inline-file">Theme.kt</span>. Its content is as follows:</p>
+<p>El tema se define en el archivo <span class="inline-file">Theme.kt</span>. Su contenido es el siguiente:</p>
 <figure><img src="UD8/images/ud8-2023-11-21-19-34-56.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<p>The <span class="negrita">Theme.kt</span> is divided into three subsystems:
+<p>El <span class="negrita">Theme.kt</span> se divide en tres subsistemas:
   <ul>
-    <li><span class="negrita">Color.kt</span>: color palette</li>
-    <li><span class="negrita">Type.kt</span>: text typography</li>
-    <li><span class="negrita">Shape.kt</span>: shapes (this file is not created by default)</li>
+    <li><span class="negrita">Color.kt</span>: paleta de colores</li>
+    <li><span class="negrita">Type.kt</span>: tipografía del texto</li>
+    <li><span class="negrita">Shape.kt</span>: formas (este archivo no se crea por defecto)</li>
   </ul>
 </p>
 <figure><img src="UD8/images/ud8-2023-11-21-19-38-46.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<p>Whenever you make any changes to any of these three files, you will see them immediately in the Jetpack Compose application components that implement Material3.</p>
+<p>Siempre que realices cambios en alguno de estos tres archivos, los verás inmediatamente en los componentes de la aplicación Jetpack Compose que implementan Material3.</p>
 
 <h3>Color Palette</h3>
 
-<p>This palette consists of <span class="negrita">6 key colors</span>. The following image shows the 5 key colors of the default Material 3 theme plus an additional key color for errors.</p>
+<p>Esta paleta consiste en <span class="negrita">6 colores clave</span>. La siguiente imagen muestra los 5 colores clave del tema por defecto de Material 3 más un color clave adicional para errores.</p>
 <figure><img src="UD8/images/ud8-2023-11-21-21-07-34.png" /><br><figcaption>Color palette</figcaption></figure>
 <br>
 
-<p>Each color must be defined in 13 different tones, from 0 (black) to 100 (white).</p>
+<p>Cada color debe ser definido en 13 tonos diferentes, desde 0 (negro) hasta 100 (blanco).</p>
 <figure><img src="UD8/images/ud8-2023-11-21-21-07-57.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<p>For each of the 6 key colors, you must <span class="negrita">choose 4 color shades</span>, which are the ones that will be <span class="negrita">specified in the app theme</span>.</p>
+<p>Para cada uno de los 6 colores clave, debes <span class="negrita">elegir 4 tonos de color</span>, que son los que serán <span class="negrita">especificados en el tema de la app</span>.</p>
 <figure><img src="UD8/images/ud8-2023-11-21-21-08-59.png" /><br><figcaption></figcaption></figure>
 <br>
 
-<p>The roles for the Primary, Secondary, and Tertiary colors are:
+<p>Los roles para los colores Primario, Secundario y Terciario son:
   <ul>
-    <li><span class="negrita">Primary</span>: The base color used for main components, such as prominent buttons, active states, and elevated surface tone.</li>
-    <li><span class="negrita">Secondary</span>: Used for less prominent UI components, such as filter chips.</li>
-    <li><span class="negrita">Tertiary</span>: Used to provide contrasts. You can find more information on when to use each key color in the official Material documentation:
+    <li><span class="negrita">Primario</span>: El color base utilizado para los componentes principales, como botones prominentes, estados activos y tono de superficie elevada.</li>
+    <li><span class="negrita">Secundario</span>: Usado para componentes de UI menos prominentes, como chips de filtro.</li>
+    <li><span class="negrita">Terciario</span>: Usado para proporcionar contrastes. Puedes encontrar más información sobre cuándo usar cada color clave en la documentación oficial de Material:
       <a class="enlace" target="_blank" href="https://m3.material.io/styles/color/roles#19e75989-7485-4f5b-a769-940c4e4364bc">Color roles</a></li>
   </ul>
 </p>
 <figure><img src="UD8/images/ud8-2023-11-21-21-10-44.png" /><br><figcaption>Color roles</figcaption></figure>
 <br>
 
-<p>Meaning of the shade names:</p>
+<p>Significado de los nombres de los tonos:</p>
 
 <a href="UD8/images/ud_8-2025-01-20-17-16-45.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-17-16-45.png" /><br><figcaption></figcaption></figure></a>
 <br>
-<p>More information on when to use each key color can be found in the official Material documentation:
+<p>Más información sobre cuándo usar cada color clave se puede encontrar en la documentación oficial de Material:
   <a class="enlace" target="_blank" href="https://m3.material.io/styles/color/roles#19e75989-7485-4f5b-a769-940c4e4364bc">Color roles</a>.</p>
 
 <p class="sub-section">Using the Material Theme Colors</p>
-<p>To use the Material-defined colors, whether it’s the default theme or a customized palette, you must use the class <span class="negrita">MaterialTheme</span>.</p>
+<p>Para usar los colores definidos por Material, ya sea el tema por defecto o una paleta personalizada, debes usar la clase <span class="negrita">MaterialTheme</span>.</p>
 <figure><img src="UD8/images/ud8-2023-11-21-23-00-29.png" /><br><figcaption></figcaption></figure>
 <br>
 
 <p class="sub-section">Modifying the Color Palette</p>
 
-<p>Choosing a color palette is critical in an application, requiring thorough study.</p>
-<p>If you have enough design knowledge, you can manually create the palette.</p>
-<p>If not, you can use the tool offered by Material3: <a class="enlace" target="_blank" href="https://m3.material.io/theme-builder#/custom">https://m3.material.io/theme-builder#/custom</a></p>
-<p>In this tool, you select the key colors you want, and it automatically generates the required shades and shows you how they will look in the application.</p>
+<p>Elegir una paleta de colores es crítico en una aplicación, requiriendo un estudio minucioso.</p>
+<p>Si tienes suficiente conocimiento de diseño, puedes crear la paleta manualmente.</p>
+<p>Si no, puedes usar la herramienta ofrecida por Material3: <a class="enlace" target="_blank" href="https://m3.material.io/theme-builder#/custom">https://m3.material.io/theme-builder#/custom</a></p>
+<p>En esta herramienta, seleccionas los colores clave que deseas, y automáticamente genera los tonos requeridos y te muestra cómo se verán en la aplicación.</p>
 
 <a href="UD8/images/ud_8-2025-01-20-17-19-14.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-17-19-14.png" /><br><figcaption></figcaption></figure></a>
 <br>
@@ -886,7 +877,7 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
 <a href="UD8/images/ud_8-2025-01-20-17-19-54.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-17-19-54.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-<p>When exporting the theme created in the web application, a compressed file material-theme.zip is obtained with the following files:
+<p>Al exportar el tema creado en la aplicación web, se obtiene un archivo comprimido material-theme.zip con los siguientes archivos:
 
   <a href="UD8/images/ud_8-2025-01-20-17-40-09.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-17-40-09.png" /><br><figcaption></figcaption></figure></a>
   <br>
@@ -894,94 +885,92 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
   <ul>
     <li><span class="negrita">Color.kt</span>:
     <br>
-    This should be replaced with the one from the project by indicating the correct package.</li>
+    Este debe ser reemplazado por el del proyecto indicando el paquete correcto.</li>
     <li><span class="negrita">Theme.kt</span>: <br>
-      This should be replaced with the one from the project by indicating the correct package, and at the end of the file, the correct project <span class="negrita">Theme</span> name must be indicated.</li>
+      Este debe ser reemplazado por el del proyecto indicando el paquete correcto, y al final del archivo, debe indicarse el nombre correcto del <span class="negrita">Theme</span> del proyecto.</li>
     <li><span class="negrita">Type.kt</span>: <br>
-      This should be replaced with the one from the project by indicating the correct package.
-      If fonts were selected, the content of the <span class="inline-folder">res</span> folder from the <span class="negrita">zip</span> must be copied to the <span class="inline-folder">res</span> folder of the project in Android Studio and the dependencies should be imported.
+      Este debe ser reemplazado por el del proyecto indicando el paquete correcto.
+      Si se seleccionaron fuentes, el contenido de la carpeta <span class="inline-folder">res</span> del <span class="negrita">zip</span> debe ser copiado a la carpeta <span class="inline-folder">res</span> del proyecto en Android Studio y deben importarse las dependencias.
     </li>
   </ul>
 </p>
 
   
 
-
-
-  <p>Once you have decided on the color palette, you must place it in the app within the file <span class="inline-file">Color.kt</span>.</p>
-  <p>By default, this file has some color definitions as examples.</p>
+  <p>Una vez que hayas decidido la paleta de colores, debes colocarla en la app dentro del archivo <span class="inline-file">Color.kt</span>.</p>
+  <p>Por defecto, este archivo tiene algunas definiciones de colores como ejemplos.</p>
   <figure><img src="UD8/images/ud8-2023-11-21-23-08-47.png" /><br><figcaption>Colores.kt</figcaption></figure>
   <br>
 
-  <p>The best approach is to define all palette colors for both light and dark modes in the manner in which you will later use them in the application’s theme.</p>
+  <p>El mejor enfoque es definir todos los colores de la paleta para los modos claro y oscuro de la manera en que luego los usarás en el tema de la aplicación.</p>
 
-  <p>Below are all the required variables to modify the entire default Material 3 color palette.</p>
+  <p>A continuación se muestran todas las variables requeridas para modificar toda la paleta de colores por defecto de Material 3.</p>
   <figure><img src="UD8/images/ud8-2023-11-21-23-10-35.png" /><br><figcaption></figcaption></figure>
   <br>
-  <p>You get the same code using the <a class="enlace" target="_blank" href="https://m3.material.io/theme-builder#/custom">Material 3 palette generation tool</a>.</p>
+  <p>Obtienes el mismo código usando la <a class="enlace" target="_blank" href="https://m3.material.io/theme-builder#/custom">herramienta de generación de paletas de Material 3</a>.</p>
 
-  <p>Once you have added the entire palette, you must specify that palette in the application’s theme color subsystem in the file <span class="inline-file">Theme.kt</span>.</p>
+  <p>Una vez que hayas añadido toda la paleta, debes especificar esa paleta en el subsistema de color del tema de la aplicación en el archivo <span class="inline-file">Theme.kt</span>.</p>
   <figure><img src="UD8/images/ud8-2023-11-21-23-12-39.png" /><br><figcaption>Theme.kt</figcaption></figure>
   <br>
 
   <h3>Dynamic Color</h3>
-  <p>A very important feature in Material 3 is <span class="d-word">Dynamic Color</span>, an algorithm that generates derived colors from the device’s wallpaper.</p>
+  <p>Una característica muy importante en Material 3 es <span class="d-word">Dynamic Color</span>, un algoritmo que genera colores derivados del fondo del dispositivo.</p>
 
-  <p>By default, Android Studio projects with Jetpack Compose enable Dynamic Color if the device’s Android version supports it. You can see this in the <span class="inline-file">Theme.kt</span> file:</p>
+  <p>Por defecto, los proyectos de Android Studio con Jetpack Compose habilitan Dynamic Color si la versión de Android del dispositivo lo soporta. Puedes ver esto en el archivo <span class="inline-file">Theme.kt</span>:</p>
   <figure><img src="UD8/images/ud8-2023-11-21-23-16-13.png" /><br><figcaption></figcaption></figure>
   <br>
 
-  <p>If you want to disable it, just remove those lines of code that enable it.</p>
+  <p>Si deseas desactivarlo, simplemente elimina esas líneas de código que lo habilitan.</p>
 
   <h3>Typography</h3>
-  <p>Material 3 defines five different typography roles, each with three sizes:</p>
+  <p>Material 3 define cinco roles de tipografía diferentes, cada uno con tres tamaños:</p>
   
   <a href="UD8/images/ud_8-2025-01-20-17-41-33.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-17-41-33.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
 
-  <p>Each of the <a class="enlace" target="_blank" href="https://m3.material.io/styles/typography/applying-type#fea95f28-348c-42ae-95e1-1c5bfd819524">five roles has a specific function</a>.</p>
+  <p>Cada uno de los <a class="enlace" target="_blank" href="https://m3.material.io/styles/typography/applying-type#fea95f28-348c-42ae-95e1-1c5bfd819524">cinco roles tiene una función específica</a>.</p>
 
-  <p>For each role, three different sizes are defined:</p>
+  <p>Para cada rol, se definen tres tamaños diferentes:</p>
   <a href="UD8/images/ud_8-2025-01-20-17-42-15.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-17-42-15.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
 
-  <p>You can consult <a class="enlace" target="_blank" href="https://m3.material.io/styles/typography/type-scale-tokens#a734c6ed-634c-4abb-adb2-35daf0aed06a">the detailed features of each role</a>.</p>
+  <p>Puedes consultar <a class="enlace" target="_blank" href="https://m3.material.io/styles/typography/type-scale-tokens#a734c6ed-634c-4abb-adb2-35daf0aed06a">las características detalladas de cada rol</a>.</p>
 
   <p class="sub-section">Using Material Theme Typography</p>
-  <p>Just like with colors, to use the typographies, you must use the <span class="r-word">MaterialTheme</span> class:</p>
+  <p>Al igual que con los colores, para usar las tipografías, debes usar la clase <span class="r-word">MaterialTheme</span>:</p>
   <figure><img src="UD8/images/ud8-2023-11-21-23-20-52.png" /><br><figcaption></figcaption></figure>
   <br>
 
   <p class="sub-section">Modifying Typography --> Type.kt</p>
-  <p>To modify the typography of the Material 3 theme, add your own styles in the <span class="inline-file">Type.kt</span> file.</p>
+  <p>Para modificar la tipografía del tema de Material 3, añade tus propios estilos en el archivo <span class="inline-file">Type.kt</span>.</p>
   <figure><img src="UD8/images/ud8-2023-11-21-23-23-35.png" /><br><figcaption></figcaption></figure>
   <br>
 
   <h3>Shapes</h3>
-  <p>Material 3 defines a set of shapes that can be applied to components.</p>
-  <p>With components like <span class="cursiva">Button</span>, <span class="cursiva">TextField</span>, <span class="cursiva">Card</span>, etc., you can see that a shape is applied around them.</p>
-  <p>By default, the shape defined in the material theme is rounded, although you can customize the shapes.</p>
+  <p>Material 3 define un conjunto de formas que se pueden aplicar a los componentes.</p>
+  <p>Con componentes como <span class="cursiva">Button</span>, <span class="cursiva">TextField</span>, <span class="cursiva">Card</span>, etc., puedes ver que se aplica una forma alrededor de ellos.</p>
+  <p>Por defecto, la forma definida en el tema material es redondeada, aunque puedes personalizar las formas.</p>
 
   <p class="sub-section">Using Material Theme Shapes</p>
-  <p>Like with colors, to use shapes you must do so through the <span class="r-word">MaterialTheme</span> class:</p>
+  <p>Al igual que con los colores, para usar las formas debes hacerlo a través de la clase <span class="r-word">MaterialTheme</span>:</p>
   <figure><img src="UD8/images/ud8-2023-11-21-23-26-41.png" /><br><figcaption></figcaption></figure>
   <br>
 
-  <p>The shapes you can define can be rounded or angular and can be symmetrical or not.</p>
+  <p>Las formas que puedes definir pueden ser redondeadas o angulares y pueden ser simétricas o no.</p>
   <figure><img src="UD8/images/ud8-2023-11-21-23-28-10.png" /><br><figcaption></figcaption></figure>
   <br>
 
   <p class="sub-section">Modifying Shapes --> Shape.kt</p>
-  <p>By default, Android Studio does not create a file to customize shapes.</p>
-  <p>You must manually create it inside the <span class="inline-folder">theme</span> folder and then add your custom shapes there.</p>
-  <p>There are different constructors for <span class="negrita">RoundedCornerShape</span> and <span class="negrita">CutCornerShape</span>.</p>
+  <p>Por defecto, Android Studio no crea un archivo para personalizar formas.</p>
+  <p>Debes crear manualmente el archivo dentro de la carpeta <span class="inline-folder">theme</span> y luego añadir tus formas personalizadas allí.</p>
+  <p>Existen diferentes constructores para <span class="negrita">RoundedCornerShape</span> y <span class="negrita">CutCornerShape</span>.</p>
   <figure><img src="UD8/images/ud8-2023-11-21-23-29-56.png" /><br><figcaption></figcaption></figure>
   <br>
 
-  <p>Then, you need to indicate in the <span class="inline-file">Theme.kt</span> file that you’ve created the <span class="inline-file">Shape.kt</span> file so the application theme uses it.</p>
-  <p>At this point, you can see that it’s loading all three subsystems (color, typography, and shapes) for the app theme.</p>
+  <p>Luego, debes indicar en el archivo <span class="inline-file">Theme.kt</span> que has creado el archivo <span class="inline-file">Shape.kt</span> para que el tema de la aplicación lo use.</p>
+  <p>En este punto, puedes ver que se están cargando los tres subsistemas (color, tipografía y formas) para el tema de la app.</p>
   <figure><img src="UD8/images/ud8-2023-11-21-23-32-22.png" /><br><figcaption>Theme.kt</figcaption></figure>
   <br>
 
@@ -1007,28 +996,28 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
   <h3>Status and Navigation Bars</h3>
 
 
-  <p>The Android operating system offers two bars by default in apps:
+  <p>El sistema operativo Android ofrece dos barras por defecto en las apps:
     <ul>
-      <li>The status bar (top).</li>
-      <li>The navigation bar (bottom).</li>
+      <li>La barra de estado (superior).</li>
+      <li>La barra de navegación (inferior).</li>
     </ul>
   </p>
-  <p>The style of these bars is configured based on the application’s theme colors, 
-    but since these bars are provided by the operating system, you must follow a specific procedure if you want to style them independently of the theme.</p>
+  <p>El estilo de estas barras se configura en base a los colores del tema de la aplicación, 
+    pero dado que estas barras son proporcionadas por el sistema operativo, debes seguir un procedimiento específico si deseas estilizarla independientemente del tema.</p>
    <a href="UD8/images/ud_8-2025-01-20-18-20-57.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-18-20-57.png" /><br><figcaption></figcaption></figure></a>
    <br>
 
-   <p>By default, Jetpack Compose configures the status bar (top) and the navigation bar (bottom) to be transparent.</p>
+   <p>Por defecto, Jetpack Compose configura la barra de estado (superior) y la barra de navegación (inferior) para que sean transparentes.</p>
 
-<p>This action is performed through the <span class="r-word">enableEdgeToEdge</span> function, which can be seen in the onCreate function of the <span class="d-word">MainActivity</span> file.</p>
+<p>Esta acción se realiza a través de la función <span class="r-word">enableEdgeToEdge</span>, que se puede ver en la función onCreate del archivo <span class="d-word">MainActivity</span>.
 <a href="UD8/images/ud_8-2025-01-20-18-23-05.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-18-23-05.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-<p>The <span class="r-word">enableEdgeToEdge</span> function has been introduced in the latest versions of Android Studio and 
-   it will likely have modifications in the future to allow for more customization.</p>
+<p>La función <span class="r-word">enableEdgeToEdge</span> ha sido introducida en las últimas versiones de Android Studio y 
+   probablemente tendrá modificaciones en el futuro para permitir más personalización.</p>
 
-<p>This function supports two parameters <span class="negrita">statusBarStyle</span> and <span class="negrita">navigationBarStyle</span>
-   that allow changing the color of the bars and the style of the buttons.</p>
+<p>Esta función soporta dos parámetros <span class="negrita">statusBarStyle</span> y <span class="negrita">navigationBarStyle</span>
+   que permiten cambiar el color de las barras y el estilo de los botones.</p>
 
 <p class="sub-section">Status Bar and Navigation Bar Colors</p>
 
@@ -1037,22 +1026,22 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
 <p>
   <ul>
     <li><span class="negrita">SystemBarStyle.light</span>: <ul>
-      <li>Indicates that the color of the bar should be light to contrast with the icons, which will automatically be configured to a dark color.</li>
-      <li>The first parameter is the color to apply to the bar.</li>
-      <li>The second parameter should be a dark color in case the device does not have dark mode.</li>
+      <li>Indica que el color de la barra debe ser claro para contrastar con los iconos, que se configurarán automáticamente a un color oscuro.</li>
+      <li>El primer parámetro es el color a aplicar a la barra.</li>
+      <li>El segundo parámetro debe ser un color oscuro en caso de que el dispositivo no tenga modo oscuro.</li>
     </ul>
     </li>
     <li><span class="negrita">SystemBarStyle.dark</span>: <ul>
-      <li>Indicates that the color of the bar should be dark to contrast with the icons, which will automatically be configured to a dark color.</li>
-      <li>The parameter is the color to apply to the bar.</li>
+      <li>Indica que el color de la barra debe ser oscuro para contrastar con los iconos, que se configurarán automáticamente a un color oscuro.</li>
+      <li>El parámetro es el color a aplicar a la barra.</li>
     </ul></li>
   </ul>
 
 </p>
 
-<p>The status bar, the navigation bar, or both can be hidden at once.</p>
+<p>La barra de estado, la barra de navegación, o ambas pueden ser ocultadas a la vez.</p>
 
-<p>To do this, within the <span class="r-word">onCreate</span> function of the <span class="d-word">MainActivity</span> file, the following instructions can be added:</p>
+<p>Para ello, dentro de la función <span class="r-word">onCreate</span> del archivo <span class="d-word">MainActivity</span>, se pueden añadir las siguientes instrucciones:</p>
 
 <section><pre><code class="language-kotlin">// Controls the visibility of system bars
 val windowInsetsController = WindowInsetsControllerCompat(window, window.decorView)
@@ -1076,28 +1065,28 @@ windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
   
   <!--*********************************************************Animaciones***********************************************************-->
   <section class="apartado">
-  <a name="sAnimaciones"></a>
-  <h2>Animations</h2>
+  <a id="sAnimaciones"></a>
+  <h2>Animaciones</h2>
 
   <p>
-    Jetpack Compose provides a series of <a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/animation?hl=es-419">APIs for creating animations</a> in the interface components.
+    Jetpack Compose proporciona una serie de <a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/animation?hl=es-419">APIs para crear animaciones</a> en los componentes de interfaz.
   </p>
 
-  <p>In the Jetpack Compose documentation you can see a 
+  <p>En la documentación de Jetpack Compose puedes ver un 
     <a class="enlace" target="_blank" href="https://developer.android.com/develop/ui/compose/animation/choose-api?hl=es-419">
-    diagram to know what type of animation is needed in each case</a>.</p>
+    diagrama para saber qué tipo de animación se necesita en cada caso</a>.</p>
   
   <a href="UD8/images/ud_8-2025-01-20-18-31-03.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-18-31-03.png" /><br><figcaption></figcaption></figure></a>
    
   <br>
 
   <p>
-    Below are a few examples of how to use these animation APIs. If more information is needed on how they work—for instance, changing the animation type or duration—please refer to the <a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/animation?hl=es-419">documentation</a>.
+    A continuación se muestran algunos ejemplos de cómo usar estas APIs de animación. Si necesitas más información sobre cómo funcionan, por ejemplo, cambiar el tipo de animación o la duración, consulta la <a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/animation?hl=es-419">documentación</a>.
   </p>
 
   <h3>animate*AsState</h3>
   <p>
-    This API can create an animation between two values, with Android handling the animation from the initial value to the final value. The <span class="negrita">*</span> can be replaced by any of the following types:
+    Esta API puede crear una animación entre dos valores, siendo Android quien maneja la animación desde el valor inicial hasta el valor final. El <span class="negrita">*</span> puede ser reemplazado por cualquiera de los siguientes tipos:
   </p>
   <ul>
     <li>Int</li>
@@ -1124,11 +1113,11 @@ Column(
     horizontalAlignment = Alignment.CenterHorizontally
 ) {
     Button(onClick = { animateColor = !animateColor }) {
-        Text(text = "Change Color")
+        Text(text = "Cambiar color")
     }
     Spacer(modifier = Modifier.height(10.dp))
     Text(
-        text = "Hello Rick!",
+        text = "Hola Rick!",
         fontWeight = FontWeight.Bold,
         modifier = Modifier
             .background(backgroundColor)
@@ -1138,13 +1127,14 @@ Column(
   </section>
   <br>
 
+ 
   <figure>
     <img src="UD8/images/ud8-2023-11-22-00-24-39.png" /><br>
     <figcaption></figcaption>
   </figure>
   <br>
 
-  <p>Changing opacity:</p>
+  <p>Cambiando la opacidad:</p>
   <section>
     <pre><code class="language-kotlin">var animateAlpha by rememberSaveable {
     mutableStateOf(true)
@@ -1158,7 +1148,7 @@ Column(
     horizontalAlignment = Alignment.CenterHorizontally
 ) {
     Button(onClick = { animateAlpha = !animateAlpha }) {
-        Text(text = "Change Opacity")
+        Text(text = "Cambiar opacidad")
     }
     Spacer(modifier = Modifier.height(10.dp))
     Box(
@@ -1168,7 +1158,7 @@ Column(
             .background(Color(0xFFFFA020))
     ) {
         Text(
-            text = "Hello Rick!",
+            text = "Hola Rick!",
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(20.dp)
         )
@@ -1185,7 +1175,7 @@ Column(
 
   <h3>AnimatedVisibility</h3>
   <p>
-    Lets you hide and show components.
+    Te permite ocultar y mostrar componentes.
   </p>
 
   <section>
@@ -1196,15 +1186,15 @@ Column(
 Column(
     modifier = Modifier.fillMaxSize(),
     verticalArrangement = Arrangement.Center,
-    horizontalAlignment = Alignment.CenterHorizontally
+    horizontalAlignment = Alignment.CenterHorizontales
 ) {
     Button(onClick = { visible = !visible }) {
-        Text(text = if (visible) "Hide" else "Show")
+        Text(text = if (visible) "Ocultar" else "Mostrar")
     }
     Spacer(modifier = Modifier.height(10.dp))
     AnimatedVisibility(visible = visible) {
         Text(
-            text = "Hello Rick!",
+            text = "Hola Rick!",
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .background(Color(0xFFFFA020))
@@ -1223,11 +1213,11 @@ Column(
   <br>
 
   <p>
-    According to the documentation, the default entering animation is <span class="negrita">fade in–expand</span> and the default exiting animation is <span class="negrita">fade out–shrink</span>.
+    Según la documentación, la animación de entrada por defecto es <span class="negrita">fade in–expand</span> y la animación de salida por defecto es <span class="negrita">fade out–shrink</span>.
   </p>
 
   <p>
-    You can configure these animations via the <span class="r-word">enter</span> and <span class="r-word">exit</span> parameters. Some possible options include:
+    Puedes configurar estas animaciones a través de los parámetros <span class="r-word">enter</span> y <span class="r-word">exit</span>. Algunas opciones posibles incluyen:
   </p>
   <ul>
     <li>fadeIn</li>
@@ -1249,12 +1239,12 @@ Column(
   </ul>
 
   <p>
-    <a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/animation?hl=es-419#enter-exit-transition">See example animations</a>
+    <a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/animation?hl=es-419#enter-exit-transition">Ver animaciones de ejemplo</a>
   </p>
 
   <h3>AnimatedContent</h3>
   <p>
-    Animates all the content of a component; by default, it is a fade-and-grow animation.
+    Anima todo el contenido de un componente; por defecto, es una animación de desvanecimiento y crecimiento.
   </p>
   <section class="oculto marco-t warn">
     <span class="icono warning"> </span> experimental, it may undergo changes or disappear in the future
@@ -1318,7 +1308,7 @@ Column(
   
   <h3>Crossfade</h3>
   
-  <p>Turns one component’s content into another, blending them during the transition.</p>
+  <p>Convierte el contenido de un componente en otro, fusionándolos durante la transición.</p>
   
   <section>
     <pre><code class="language-kotlin">
@@ -1343,16 +1333,16 @@ Column(
   <figure><img src="UD8/images/CrossFadeDemo1.gif" /><br><figcaption></figcaption></figure>
   <br>
   
-  <p>Let’s look at another example:</p>
+  <p>Veamos otro ejemplo:</p>
   
   <section>
     <pre><code class="language-kotlin">
   Column(
       modifier = Modifier.fillMaxSize(),
       verticalArrangement = Arrangement.Center,
-      horizontalAlignment = Alignment.CenterHorizontally
+      horizontalAlignment = Alignment.CenterHorizontales
   ) {
-      val sections = arrayOf("Anime", "Manga", "Others")
+      val sections = arrayOf("Anime", "Manga", "Otros")
       var visibleContent by rememberSaveable {
           mutableStateOf(sections[0])
       }
@@ -1372,9 +1362,9 @@ Column(
           label = ""
       ) { screen ->
           when (screen) {
-              "Manga" -> Text(text = "Show Manga")
-              "Anime" -> Text(text = "Show Anime")
-              "Others" -> Text(text = "Show others")
+              "Manga" -> Text(text = "Mostrar Manga")
+              "Anime" -> Text(text = "Mostrar Anime")
+              "Otros" -> Text(text = "Mostrar otros")
           }
       }
   }
@@ -1387,7 +1377,7 @@ Column(
 
 
   <h3>Modifier.animateContentSize</h3>
-  <p>Android will animate the component when its size changes due to a change in its content.</p>
+  <p>Android animará el componente cuando su tamaño cambie debido a un cambio en su contenido.</p>
   
   <section><pre><code class="language-kotlin">var expanded by rememberSaveable {
       mutableStateOf(false)
@@ -1416,11 +1406,11 @@ Column(
           TextButton(onClick = {
               expanded = !expanded
           }) {
-              Text(text = if(expanded) "Less." else "Read more...")
+              Text(text = if(expanded) "Menos." else "Leer más...")
           }
       }
   
-      Text(text = "Hey!")
+      Text(text = "¡Hola!")
       if(expanded){
           Spacer(modifier = Modifier.height(8.dp))
   
@@ -1452,56 +1442,53 @@ Column(
   </section><br>
   
   <h3>Customizing animations</h3>
-  <p>Default animations come configured in a particular way, but they can be customized.</p>
+  <p>Las animaciones por defecto vienen configuradas de una manera particular, pero pueden ser personalizadas.</p>
   
   <p class="sub-section"><span class="negrita">animationSpec</span> parameter</p>
-  <p>This parameter can be used in:</p>
+  <p>Este parámetro puede ser usado en:</p>
   <ul>
-    <li><span class="cursiva">animate*AsState</span>, <span class="cursiva">Crossfade</span>, and <span class="cursiva">Modifier.animateContentSize</span></li>
+    <li><span class="cursiva">animate*AsState</span>, <span class="cursiva">Crossfade</span>, y <span class="cursiva">Modifier.animateContentSize</span></li>
     <li><span class="cursiva">fadeX</span>, <span class="cursiva">slideX</span>, <span class="cursiva">scaleX</span>,
-        <span class="cursiva">expandX</span>, and <span class="cursiva">shrinkX</span>
-        allowed in the <span class="r-word">transitionSpec</span> parameter of <span class="r-word">AnimatedContent</span>.</li>
+        <span class="cursiva">expandX</span>, y <span class="cursiva">shrinkX</span>
+        permitidos en el parámetro <span class="r-word">transitionSpec</span> de <span class="r-word">AnimatedContent</span>.</li>
     <li><span class="cursiva">fadeX</span>, <span class="cursiva">slideX</span>, <span class="cursiva">scaleX</span>,
-        <span class="cursiva">expandX</span>, and <span class="cursiva">shrinkX</span>
-        allowed in the <span class="negrita">enter</span> and <span class="negrita">exit</span> parameters of <span class="cursiva">AnimatedContent</span>.</li>
+        <span class="cursiva">expandX</span>, y <span class="cursiva">shrinkX</span>
+        permitidos en los parámetros <span class="negrita">enter</span> y <span class="negrita">exit</span> de <span class="cursiva">AnimatedContent</span>.</li>
   </ul>
   </p>
   
-  <p>All the details about customizing animations can be found in the
-  <a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/animation/customize?hl=es-419">documentation</a>.</p>
+  <p>A continuación, algunos ejemplos básicos:</p>
   
-  <p>Below are some basic examples:</p>
-  
-  <p>Physics-based animation: <a class="enlace" target="_blank" 
-    href="https://developer.android.com/jetpack/compose/animation/customize?hl=es-419#spring">spring</a> (spring effect)
+  <p>Animación basada en física: <a class="enlace" target="_blank" 
+    href="https://developer.android.com/jetpack/compose/animation/customize?hl=es-419#spring">spring</a> (efecto resorte)
   </p>
   <figure><img src="UD8/images/ud8-2023-11-23-12-10-00.png" /><br><figcaption></figcaption></figure>
   <br>
   <ul>
-    <li><span class="negrita">dampingRatio</span> indicates the bounce when reaching the target value.</li>
-    <li><span class="negrita">stiffness</span> indicates the speed at which it moves toward the target value.</li>
+    <li><span class="negrita">dampingRatio</span> indica el rebote al alcanzar el valor objetivo.</li>
+    <li><span class="negrita">stiffness</span> indica la velocidad a la que se mueve hacia el valor objetivo.</li>
   </ul>
   
-  <p class="sub-section">Duration-based animation: <span class="negrita">tween</span> (between)</p>
+  <p class="sub-section">Animación basada en duración: <span class="negrita">tween</span> (entre)</p>
   
   <figure><img src="UD8/images/ud8-2023-11-23-12-18-30.png" /><br><figcaption></figcaption></figure>
   <br>
   
-  <p>Where:
+  <p>Donde:
   <ul>
-    <li><span class="negrita">durationMillis</span>: animation duration.</li>
-    <li><span class="negrita">easing</span>: indicates how the animation progresses between the two values.</li>
-    <li><span class="negrita">delayMillis</span>: wait time before the animation starts.</li>
+    <li><span class="negrita">durationMillis</span>: duración de la animación.</li>
+    <li><span class="negrita">easing</span>: indica cómo progresa la animación entre los dos valores.</li>
+    <li><span class="negrita">delayMillis</span>: tiempo de espera antes de que comience la animación.</li>
   </ul>  
   </p>
   
-  <p class="sub-section">Repeating a duration-based animation (<span class="cursiva">tween</span>)</p>
+  <p class="sub-section">Repetir una animación basada en duración (<span class="cursiva">tween</span>)</p>
   
-  <p><span class="subrayado">With a set number of repetitions:</span></p>
+  <p><span class="subrayado">Con un número de repeticiones establecido:</span></p>
   <figure><img src="UD8/images/ud8-2023-11-23-12-21-16.png" /><br><figcaption></figcaption></figure>
   <br>
   
-  <p><span class="subrayado">With infinite repetitions:</span></p>
+  <p><span class="subrayado">Con repeticiones infinitas:</span></p>
   <figure><img src="UD8/images/ud8-2023-11-23-12-22-41.png" /><br><figcaption></figcaption></figure>
   <br>
   
@@ -1510,30 +1497,30 @@ Column(
 
   <!--*********************************************************Práctica***********************************************************-->
   <section class="apartado">
-    <a id="sP6" name="sP6"></a>
-    <h2>Practice 06. Free Application</h2>
+    <a id="sP6"></a>
+    <h2>Práctica 06. Aplicación libre</h2>
   
     <a class="tarea" target="_blank" href="https://aules.edu.gva.es/fp/mod/assign/view.php?id=5367280">
       <p>
-        Choose a theme and create a free application around that theme.
+        Elige un tema y crea una aplicación libre alrededor de él.
       </p>
-      <p>The application does not need to be fully functional, but it must contain at least the following elements:
+      <p>La aplicación no necesita ser totalmente funcional, pero debe contener al menos los siguientes elementos:
         <ul>
-          <li>A SplashScreen. Find a logo and some text to display when starting the application. <br><span class="negrita">1 point</span></li>
-          <li>An onboarding of 4 screens: in the first three, there will be an option to go to the next one or jump directly to the last. 
-            On the fourth screen, we'll go directly to the app’s home. <br><span class="negrita">2 points</span>
+          <li>Una SplashScreen. Busca un logo y un texto para mostrar al iniciar la aplicación. <br><span class="negrita">1 punto</span></li>
+          <li>Un onboarding de 4 pantallas: en las tres primeras, habrá una opción para ir a la siguiente o saltar directamente a la última. 
+            En la cuarta pantalla, iremos directamente a la pantalla principal de la app. <br><span class="negrita">2 puntos</span>
           </li>
-          <li>Application: It will have at least two screens in which information is passed from one to the other. <br><span class="negrita">1.5 points</span></li>
-          <li>Implement two versions of the app’s screens (portrait and landscape). 
-            (Not for the SplashScreen or Onboarding, but ensure these display correctly in both orientations.) <br>
-            <span class="negrita">1.5 points</span>
+          <li>Aplicación: Tendrá al menos dos pantallas en las que se pase información de una a otra. <br><span class="negrita">1.5 puntos</span></li>
+          <li>Implementar dos versiones de las pantallas de la app (retrato y paisaje). 
+            (No para la SplashScreen o Onboarding, pero asegúrate de que se muestran correctamente en ambas orientaciones.) <br>
+            <span class="negrita">1.5 puntos</span>
           </li>
-          <li>It must include at least one animation. <br><span class="negrita">1 point</span></li>
-          <li>Change the default theme to colors and shapes of your choice. <br><span class="negrita">1 point</span></li>
+          <li>Debe incluir al menos una animación. <br><span class="negrita">1 punto</span></li>
+          <li>Cambiar el tema por defecto a colores y formas de tu elección. <br><span class="negrita">1 punto</span></li>
         </ul>
       </p>
-      <p><span class="negrita">Note:</span> In addition to meeting the above requirements, the app's visual appeal will be considered, as well as the organization of components and folders, code structure, and use of comments. 
-        <br><span class="negrita">2 points</span></p>
+      <p><span class="negrita">Nota:</span> Además de cumplir los requisitos, se valorará la apariencia visual, organización de componentes y carpetas, estructura del código y uso de comentarios. 
+        <br><span class="negrita">2 puntos</span></p>
     </a>
   
   </section><!-- End section Práctica-->

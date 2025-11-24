@@ -1165,7 +1165,6 @@ public class Test : MonoBehaviour
   <a href="UD3/images/ud3-2024-01-29-19-19-18.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-01-29-19-19-18.png" /><br><figcaption></figcaption></figure></a>
   <br>
   
-  <br>
   <p>The <span class="r-word">MonoBehaviour</span> class provides some methods that allow code execution when mouse events occur:
   <ul>
     <li><span class="negrita">OnMouseDown</span></li>
@@ -1519,7 +1518,7 @@ public class CubeScript : MonoBehaviour
 
 <!--*********************************************************Collisions***********************************************************-->
 <section class="apartado">
-<a name="sColisiones"></a>
+<a id="sColisiones"></a>
 <h2>Collisions</h2>
 <p>To detect collisions between GameObjects, they must have a <span class="r-word">Collider</span> component 
   (usually present on all GameObjects).</p>
@@ -1768,13 +1767,14 @@ public class CubeScript : MonoBehaviour
     
     <p><span class="subrayado">Game Mechanics:</span> 
     <ul>
-      <li>The game will start with 100 balls and 0 points.</li>
+      <li>The game should start with 100 balls and 0 points.</li>
       <li>Pressing the left arrow key will release a ball from the top left slot, and one ball will be deducted from the remaining count.</li>
       <li>Pressing the right arrow key will release a ball from the top right slot, and one ball will be deducted from the remaining count.</li>
       <li>When a ball falls into any gate, the corresponding points or an extra ball should be added to the remaining count.</li>
       <li>When a ball falls into any gate or the bottom, it should be destroyed.</li>
       <li>The HUD should always be updated with the current points and the remaining number of balls.</li>
-    </ul></p>
+    </ul>
+    </p>
     
     
     
@@ -1792,7 +1792,8 @@ public class CubeScript : MonoBehaviour
       <li>Modify the board to resemble the original pachinko machines, where the ball is launched from the bottom through the side toward the top of the board. 
         In this case, the arrow keys will be replaced by the spacebar, and pressing it will launch a ball. 
         You should create a mechanism to adjust the force of the ball, such as a wheel that rotates with the arrow keys to indicate power.</li>
-    </ul></p>
+    </ul>
+    </p>
     
     
     
@@ -1876,13 +1877,12 @@ public class PlayerController : MonoBehaviour
     public CharacterController player;
 
     public float playerSpeed;
-    // Start is called before the first frame update
+    
     void Start()
-    {  
-        player = GetComponent&lt;CharacterController>();
+    {
+        player = GetComponent&lt;CharacterController&gt;();
     }
 
-    // Update is called once per frame
     void Update()
     {
         //Getting the player's input values
@@ -1969,7 +1969,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        player = GetComponent&lt;CharacterController>();
+        player = GetComponent&lt;CharacterController&gt;();
     }
 
     void Update()
@@ -2284,7 +2284,7 @@ public class ThirdPersonCamera : MonoBehaviour
     public float platformSpeed;
     // Indicates if it can move or not
     public bool moveToTheNext = true;
-    // Variable indicating the time to wait upon reaching a target position
+    // Variable to handle the waiting time upon reaching a target position
     public float waitTime;
 
     // Variable to calculate the positions between which it will move
@@ -2496,7 +2496,7 @@ public class CameraRay : MonoBehaviour
 
     void Start()
     {
-        mainCamera = GetComponent&lt;Camera>();
+        mainCamera = GetComponent&lt;Camera&gt;();
     }
 
     void Update()
@@ -2597,7 +2597,7 @@ public class MoveWithFloor : MonoBehaviour
 
     void Start()
     {
-        player = GetComponent&lt;CharacterController>();
+        player = GetComponent&lt;CharacterController&gt;();
     }
 
     void Update()
@@ -2704,232 +2704,6 @@ public class MoveWithFloor : MonoBehaviour
     <p>Upon installing the AI Navigation package, a new option is added: <span class="negrita">Menu</span> &rarr; <span class="negrita">Window</span> &rarr;
     <span class="negrita">AI</span> &rarr; <span class="negrita">Navigation</span>.</p>
     <a href="UD3/images/ud3-2024-03-11-10-38-59.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-38-59.png" /><br><figcaption></figcaption></figure></a>
-    <br>
-    
-    <p>By selecting <span class="negrita">Menu</span> &rarr; <span class="negrita">Window</span> &rarr; <span class="negrita">AI</span> 
-       &rarr; <span class="negrita">Navigation</span>, the Navigation window appears.</p>
-    
-    <p>In the <span class="negrita">Agents</span> tab, you can define the characteristics of the GameObject 
-      that will move along the optimal path.</p>
-    
-      <a href="UD3/images/ud3-2024-03-11-10-39-33.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-39-33.png" /><br><figcaption></figcaption></figure></a>
-      <br>
-      
-      
-    <p>You can create as many agents as needed; for example, some enemies may not be able to jump over walls, while others can.</p>
-    
-    <p>In the <span class="negrita">Areas</span> tab, you can define different areas and their priority (Cost),
-      with a lower number indicating higher priority for passing through that area.</p>
-    
-      <a href="UD3/images/ud3-2024-03-11-10-39-43.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-39-43.png" /><br><figcaption></figcaption></figure></a>
-      <br>
-      
-      
-      <p>The GameObjects that need to move must be given the <span class="negrita">NavMeshAgent</span> component.</p>
-      
-      <p>In the example, the capsule will move to the position of the sphere via the most optimal path.</p>
-      
-      <p><span class="negrita">The NavMeshAgent component has been added to the capsule</span>. In the inspector, you can see its configuration options.</p>
-      
-      <a href="UD3/images/ud3-2024-03-11-10-40-08.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-40-08.png" /><br><figcaption></figcaption></figure></a>
-      <br>
-      
-      <a href="UD3/images/ud3-2024-03-11-10-40-16.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-40-16.png" /><br><figcaption></figcaption></figure></a>
-      <br>
-      
-      
-    
-    <p>Next, you need to add the <span class="negrita">NavMeshSurface</span> component to the GameObjects in the scene and assign it the desired area.</p>
-    
-    <p>This component defines <span class="negrita">where the agent is allowed to move</span>.</p>
-    
-    <p>In the example, the ground and all the blocks are inside a GameObject, and the NavMeshSurface component is added to that GameObject.</p>
-    <a href="UD3/images/ud3-2024-03-11-10-40-43.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-40-43.png" /><br><figcaption></figcaption></figure></a>
-    <br>
-    <a href="UD3/images/ud3-2024-03-11-10-40-50.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-40-50.png" /><br><figcaption></figcaption></figure></a>
-    <br>
-    
-    
-    <p>Once the NavMeshSurface is configured, press the <span class="negrita">Bake</span> button.</p>
-    
-    <p>This generates the surface on which the character will be able to move. 
-      A margin is left around obstacles to avoid unexpected behaviors. 
-      You can modify this surface by adjusting the <span class="negrita">Agent</span> settings and pressing <span class="negrita">Clear</span> 
-       and <span class="negrita">Bake</span> again.</p>
-    
-       <a href="UD3/images/ud3-2024-03-11-10-41-12.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-41-12.png" /><br><figcaption></figcaption></figure></a>
-       <br>
-       
-       <br>
-       
-    
-      <p>Since the sphere is not part of the scenery, you need to add the <span class="negrita">NavMeshObstacle</span> component to it.</p>
-         
-      <p>The <span class="negrita">NavMeshObstacle</span> component is typically used for GameObjects that can move around the scene.</p>
-      <a href="UD3/images/ud3-2024-03-11-10-41-42.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-41-42.png" /><br><figcaption></figcaption></figure></a>
-      <br>
-      
-      <a href="UD3/images/ud3-2024-03-11-10-41-55.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-41-55.png" /><br><figcaption></figcaption></figure></a>
-      <br>
-      
-      
-      <p>The <span class="negrita">NavMeshObstacle</span> component is used for characters that move through the scene and 
-        for GameObjects that, when moved, can affect the navigation surface.</p>
-      
-      <p>Enemies will have the <span class="cursiva">NavMeshObstacle</span> component and should not affect the navigation surface.</p>
-      
-      <p>GameObjects like falling rocks that obstruct passage or doors that can close should affect the navigation surface.</p>
-      
-      <p>To configure a <span class="negrita">NavMeshObstacle</span> to affect the surface, check the <span class="negrita">Carve</span> option. 
-        If you only want it to affect the surface when the GameObject is stationary (for example, a large rock that falls), 
-        uncheck the <span class="negrita">Carve Only Stationary</span> option.</p>
-    
-        <a href="UD3/images/ud3-2024-03-11-10-42-37.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-42-37.png" /><br><figcaption></figcaption></figure></a>
-        <br>
-        
-        <br>
-        
-      <p>In the example, there is a cube with the NavMeshObstacle component and the Carve option enabled.</p>
-      <a href="UD3/images/ud3-2024-03-11-10-42-56.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-42-56.png" /><br><figcaption></figcaption></figure></a>
-      <br>
-      
-      <a href="UD3/images/ud3-2024-03-11-10-43-06.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-43-06.png" /><br><figcaption></figcaption></figure></a>
-      <br>
-      
-      <a href="UD3/images/ud3-2024-03-11-10-43-22.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-43-22.png" /><br><figcaption></figcaption></figure></a>
-      <br>
-      
-      
-      <p>In navigation, you can create <span class="negrita">links</span>.</p>
-      <p>There are two types of links:
-        <ul>
-          <li><span class="negrita">NavMeshLink</span>: connects navigation zones on the same surface, such as allowing the player to step down a larger ledge than normally allowed.</li>
-          <li><span class="negrita">OffMeshLink</span>: connects two physically separate navigation zones.</li>
-        </ul>
-      </p>
-      <p>Links can be one-way or bidirectional.</p>
-      
-      <h3>NavMeshLink</h3>
-      <p>A NavMeshLink has two points and a visible surface between the two points.</p>
-      <p>For example, if you want the character to be able to step down the ledge but not climb it back up, uncheck the <span class="negrita">Bidirectional</span> option.</p>
-    <a href="UD3/images/ud3-2024-03-11-10-43-51.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-43-51.png" /><br><figcaption></figcaption></figure></a>
-    <br>
-    
-      <h3>OffMeshLink</h3>
-      <p>An OffMeshLink requires two GameObjects as reference points for navigation.</p>
-      
-      <p>The only thing left is to assign the following script to the GameObject that needs to move (the capsule).</p>
-      <p>Add the library at the top of the script.</p>
-      <a href="UD3/images/ud3-2024-03-11-10-44-24.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-44-24.png" /><br><figcaption></figcaption></figure></a>
-      <br>
-      
-      <section><pre><code class="language-csharp">using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
-
-
-public class NavMeshController : MonoBehaviour
-{
-    // Target object to follow
-    public Transform aim;
-    // Variable to handle navigation through the scene
-    private NavMeshAgent agent;
-
-    void Start()
-    {
-        agent = GetComponent<NavMeshAgent>();
-    }
-
-    void Update()
-    {
-        // Each frame updates the target position
-        // so if the target moves, the path will be recalculated
-        agent.destination = aim.position;
-    }
-}</code></pre>
-      </section><br><br>
-      
-      
-      <p>From the above script, you can create a path for a GameObject:
-        <ul>
-          <li>In the scene, create empty GameObjects with a trigger collider and place them where needed.</li>
-          <li>Declare an array of targets in the script.</li>
-          <li>In the Start method, set the first target to be position zero of the array.</li>
-          <li>In the Update method, check if the target has been reached.</li>
-          <li>If the target has been reached, update the target to the next position in the array.</li>
-          <li>If the next array position equals the array's length, reset the target to position zero of the array.</li>
-          <li>In the inspector, add all the empty GameObjects to the script in the order you want for the movement path.</li>
-        </ul>
-      </p>
-      
-      <p>If you want the patrolling enemy to chase the player, add the following:
-        <ul>
-          <li>Declare a Transform for the player in the script.</li>
-          <li>Add the functionality of casting a Raycast from the enemy in the direction it walks, with a specific length 
-            (you can simulate human vision by having the Raycast rotate a few degrees to each side).</li>
-          <li>If the Raycast hits the player, save the current target in a variable and change the target to the player's transform.</li>
-          <li>If the Raycast no longer hits the player (the player moves out of range), 
-            update the target to the previously saved one (this can be improved by updating the target to the closest current point on the enemy's route).</li>
-        </ul>
-      </p>
-      
-    <p>If you want the player's character to move to the point clicked on the screen, you can use the following script:</p>
-    <section><pre><code class="language-csharp">public class NavMeshMouse : MonoBehaviour
-{
-    // Variable to handle navigation through the scene
-    private NavMeshAgent agent;
-
-    void Start()
-    {
-        agent = GetComponent&lt;NavMeshAgent>();
-    }
-
-    void Update()
-    {
-        // When clicking on a point on the screen, a ray is cast to determine where the click occurred
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
-            {
-                // Sets the agent's destination to the point where the ray hit,
-                // which is where the mouse click occurred
-                agent.destination = hit.point;
-            }
-        }
-    }
-}
-</code></pre>
-    </section><br><br>
-    
-      
-      </section><!-- End section NPCs-->
-  
-  
-  
-    <!--*********************************************************Scene Switching***********************************************************-->
-    <section class="apartado">
-      <a name="sCambiodeescenas"></a>
-      <h2>Scene Switching</h2>
-    <p>In a video game, it's common to have more than one scene, mainly because each game level is usually a different scene.</p>
-    
-    <p>Additionally, games often feature an initial menu and options menu, which are also scenes.</p>
-    
-    <p>To switch to a scene, it must be added to the game's build settings.</p>
-    
-    <p>Scene transitions can occur at different times:
-    <ul>
-      <li>When pressing the Play button in the main menu.</li>
-      <li>Upon completing a level.</li>
-      <li>Within a level when entering a new zone.</li>
-      <li>...</li>
-    </ul>
-    </p>
-    
-    <p>The first step is to add all scenes to the build settings: 
-      <span class="negrita">File</span> &rarr; <span class="negrita">Build Settings…</span>.</p>
-    <a href="UD3/images/ud3-2024-03-11-10-45-40.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-45-40.png" /><br><figcaption></figcaption></figure></a>
     <br>
     
     <p>By pressing the <span class="negrita">Add Open Scenes</span> button, the currently open scene will be added.</p>
@@ -3100,9 +2874,7 @@ public class NavMeshController : MonoBehaviour
       <br>
       
       
-        
-    
-    <p>This links the method to the event on the UI GameObject.</p>
+      <p>This links the method to the event on the UI GameObject.</p>
     
     <a href="UD3/images/ud3-2024-03-11-10-51-21.png" target="_BLANK"><figure><img src="UD3/images/ud3-2024-03-11-10-51-21.png" /><br><figcaption></figcaption></figure></a>
     <br>
@@ -3319,56 +3091,3 @@ public class NavMeshController : MonoBehaviour
 <p>As seen in the examples, using delegates and events is a much less intrusive technique.</p>
 <p>Additionally, it allows multiple GameObjects to subscribe to the same event easily, and they can perform actions when that event is triggered.</p>
 <p>In the example, a system event was used, but from the script where the event is defined, the event can be triggered whenever an action occurs, simply by calling the event.</p>
-
-<section><pre><code class="language-csharp">void Start() {
-    OnActivate(true);
-}
-</code></pre>
-</section><br><br>
-
-
-      
-      </section><!-- End section sComunicacion-->
-
-      <!--*********************************************************FinalPractice***********************************************************-->
-      <section class="apartado">
-      <a name="sFinalPractice"></a>
-      <h2>FinalPractice</h2>
-
-      <div class="tarea">
-        <a class="tarea" target="_blank" href="https://aules.edu.gva.es/semipresencial/mod/assign/view.php?id=2332098">
-        <p>This project consists of a free-creation videogame with the following requirements:
-          <ol>
-            <li>The game should have an initial menu where the player can enter their name before starting. <span class="negrita">1pt</span></li>
-            <li>Include a scoring system, such as based on time to complete, collecting coins or other items, or defeating enemies. This score should be saved in <span class="cursiva">PlayerPref</span> along with the player’s name. <span class="negrita">1.5pts</span></li>
-            <li>The initial menu should display the player’s name along with their score. <span class="negrita">0.5pts</span></li>
-            <li>Besides the menu screen, the game should have at least two screens that can be navigated to after completing the first. Note, the screens don’t have to be very extensive. <span class="negrita">0.75pts</span></li>
-            <li>The camera should follow the player character. <span class="negrita">0.75pts</span></li>
-            <li>Include at least two types of enemies:
-              <ul>
-                <li>One that chases the player. <span class="negrita">1.5pts</span></li>
-                <li>Another that follows a set path. <span class="negrita">1pt</span></li>
-              </ul>
-            </li>
-            <li>Make use of prefabs where necessary.</li>
-            <li>Include gameplay mechanics such as player movement, jumps, lives, attacks, etc. <span class="negrita">1.5pts</span></li>
-            <li>Game design and characters (store assets are acceptable), background, sprites, animations, audio, etc. <span class="negrita">1.5pts</span></li>
-          </ol>
-        </p>
-      
-        <p>For submission, create a package with the necessary scene elements and record a video, maximum 5 minutes, demonstrating the game’s functionality and how you have implemented the most important functionalities.</p>
-      </a>
-      </div>
-      
-      
-      
-      
-      </section><!-- End section FinalPractice-->
-    
-  </div> <!--END OCULTO-->
-
-  <!---BTM_MENU--->
-  <script src="../script/prism.js"></script>
-</body>
-
-</html>

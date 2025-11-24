@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>U9.- Coroutines, Side Effects y MVVM</title>
+  <title>U9.- Corrutinas, Efectos secundarios y MVVM</title>
   <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
   <link rel="stylesheet" href="../styles/prism.css">
   <link rel="stylesheet" href="../styles/styles.css">
@@ -17,45 +17,63 @@
 
 <nav id="menu-lateral" class="main-menu-lateral oculto">
   <div class="fila">
-    <a href="#sCorrutinas" title="1.- Corrutinas">1.- Coroutines</a>
-    <a href="#sSideEffects" title="2.- Side Effects">2.- Side Effects</a>
-    <a href="#sArquitecturasAndroid" title="3.- Arquitecturas Android">3.- Android Architectures</a>      
-  </div>
-  <div class="fila">
-    <a href="#sCasopractico" title="4.- Caso práctico">4.- Practical Case</a> 
-    <a href="#sFlows" title="5.- Flows">5.- Flows</a>
-    <a href="#sActividades" title="6.- Actividades">5.- Activities</a>      
-  </div>
+-    <a href="#sCorrutinas" title="1.- Corrutinas">1.- Coroutines</a>
+-    <a href="#sSideEffects" title="2.- Efectos secundarios">2.- Side Effects</a>
+-    <a href="#sArquitecturasAndroid" title="3.- Arquitecturas Android">3.- Android Architectures</a>      
++    <a href="#sCorrutinas" title="1.- Corrutinas">1.- Corrutinas</a>
++    <a href="#sSideEffects" title="2.- Efectos secundarios">2.- Efectos secundarios</a>
++    <a href="#sArquitecturasAndroid" title="3.- Arquitecturas Android">3.- Arquitecturas Android</a>      
+   </div>
+   <div class="fila">
+-    <a href="#sCasopractico" title="4.- Caso práctico">4.- Practical Case</a> 
+-    <a href="#sFlows" title="5.- Flows">5.- Flows</a>
+-    <a href="#sActividades" title="6.- Actividades">5.- Activities</a>      
++    <a href="#sCasopractico" title="4.- Caso práctico">4.- Caso práctico</a> 
++    <a href="#sFlows" title="5.- Flows">5.- Flows</a>
++    <a href="#sActividades" title="6.- Actividades">6.- Actividades</a>      
+   </div>
 
 </nav> <!-- BTM_MENU-->
 
-<h1>U9.- Coroutines, Side Effects, and MVVM</h1>
+<h1>U9.- Corrutinas, Efectos secundarios y MVVM</h1>
 
 <div class="main-menu">
   <div class="fila">
-    <a href="#sCorrutinas" title="1.- Coroutines">1.- Coroutines</a>
-    <a href="#sSideEffects" title="2.- Side Effects">2.- Side Effects</a>
-    <a href="#sArquitecturasAndroid" title="3.- Android Architectures">3.- Android Architectures</a>
-  </div>
-  <div class="fila">
-    <a href="#sCasopractico" title="4.- Practical Case">4.- Practical Case</a>
-    <a href="#sFlows" title="5.- Flows">5.- Flows</a>    
-    <a href="#sActividades" title="6.- Activities">6.- Activities</a>
-  </div>
+-    <a href="#sCorrutinas" title="1.- Coroutines">1.- Coroutines</a>
+-    <a href="#sSideEffects" title="2.- Side Effects">2.- Side Effects</a>
+-    <a href="#sArquitecturasAndroid" title="3.- Android Architectures">3.- Android Architectures</a>
++    <a href="#sCorrutinas" title="1.- Corrutinas">1.- Corrutinas</a>
++    <a href="#sSideEffects" title="2.- Efectos secundarios">2.- Efectos secundarios</a>
++    <a href="#sArquitecturasAndroid" title="3.- Arquitecturas Android">3.- Arquitecturas Android</a>
+   </div>
+   <div class="fila">
+-    <a href="#sCasopractico" title="4.- Practical Case">4.- Practical Case</a>
+-    <a href="#sFlows" title="5.- Flows">5.- Flows</a>    
+-    <a href="#sActividades" title="6.- Activities">6.- Activities</a>
++    <a href="#sCasopractico" title="4.- Caso práctico">4.- Caso práctico</a>
++    <a href="#sFlows" title="5.- Flows">5.- Flows</a>    
++    <a href="#sActividades" title="6.- Actividades">6.- Actividades</a>
+   </div>
 </div>
 
 <!--*********************************************************Coroutines***********************************************************-->
 <section class="apartado">
-  <a name="sCorrutinas"></a>
-  <h2>Coroutines</h2>
-  <h3>Introduction</h3>
-  <p>In Android, the <span class="negrita">main thread</span> is responsible for displaying the user interface and <span class="negrita">managing the interactions</span> with the application.</p>
+-  <a name="sCorrutinas"></a>
+-  <h2>Coroutines</h2>
++  <a id="sCorrutinas"></a>
++  <h2>Corrutinas</h2>
+   <h3>Introduction</h3>
+-  <p>In Android, the <span class="negrita">main thread</span> is responsible for displaying the user interface and <span class="negrita">managing the interactions</span> with the application.</p>
++  <p>En Android, el <span class="negrita">hilo principal</span> es el responsable de mostrar la interfaz y <span class="negrita">gestionar las interacciones</span> con la aplicación.</p>
 
-  <p>This means that <span class="negrita">if the main thread runs a heavy or asynchronous task, the user interface will freeze</span> 
-    and the user won't be able to interact with the device until the task finishes.
+-  <p>This means that <span class="negrita">if the main thread runs a heavy or asynchronous task, the user interface will freeze</span> 
+-    and the user won't be able to interact with the device until the task finishes.
++  <p>Esto significa que <span class="negrita">si el hilo principal ejecuta una tarea pesada o asíncrona, la interfaz se bloqueará</span> y el usuario no podrá interactuar hasta que termine.</p>
    <ul>
-    <li><span class="negrita">Heavy tasks</span>: tasks that take a long time.</li>
-    <li><span class="negrita">Asynchronous tasks</span>: tasks that can be performed in the background.</li>
+-    <li><span class="negrita">Heavy tasks</span>: tasks that take a long time.</li>
+-    <li><span class="negrita">Asynchronous tasks</span>: tasks that can be performed in the background.</li>
++    <li><span class="negrita">Tareas pesadas</span>: tareas que tardan mucho.</li>
++    <li><span class="negrita">Tareas asíncronas</span>: tareas que pueden ejecutarse en segundo plano.</li>
    </ul>
   </p>
 
@@ -72,11 +90,16 @@
 
   
   <h3>Suspending Functions</h3>
-  <p>Suspending functions are those that block the execution of the function until a specific instruction is finished.</p>
+-  <p>Suspending functions are those that block the execution of the function until a specific instruction is finished.</p>
++  <h3>Funciones suspendidas</h3>
++  <p>Las funciones suspendidas son aquellas que pueden pausar la ejecución hasta que una operación asíncrona finalice.</p>
+
   <p>These functions must always be executed inside a coroutine or within a coroutine scope (<span class="cursiva">coroutine scope</span>)
   or inside another <span class="negrita">suspend function</span>.</p>
 
   <figure><img src="UD9/images/ud9-2023-12-03-20-00-23.png" /><br><figcaption>Android Studio notifies that an instruction may block the function's execution.</figcaption></figure>
+  <br>
+  <figure><img src="UD9/images/ud9-2023-12-03-20-00-23.png" /><br><figcaption>Android Studio notifica que una instrucción puede bloquear la ejecución de la función.</figcaption></figure>
   <br>
 
   <p class="sub-section">Usage</p>
@@ -210,8 +233,10 @@ fun main() = runBlocking{
 
  <!--*********************************************************Side Effects***********************************************************-->
 <section class="apartado">
-  <a name="sSideEffects"></a>
-  <h2>Side Effects</h2>
+-  <a name="sSideEffects"></a>
+-  <h2>Side Effects</h2>
++  <a id="sSideEffects"></a>
++  <h2>Efectos secundarios</h2>
   <p>As previously studied, Jetpack Compose performs <span class="negrita">recompositions</span> of the user interface <span class="negrita">when state changes occur</span>.</p>
   <p>Sometimes <span class="negrita">the application recomposes more or fewer times than necessary</span> 
     or even <span class="negrita">when recomposing, code that should not be executed runs</span>.</p>
@@ -356,9 +381,11 @@ fun main() = runBlocking{
 <!--*********************************************************Android Architectures***********************************************************-->
 <section class="apartado">
   <a name="sArquitecturasAndroid"></a>
-  <h2>Android Architectures</h2>
-  
-  <p>When developing applications of any kind, choosing the right architecture to use is very important.</p>
+-  <h2>Android Architectures</h2>
++  <h2>Arquitecturas Android</h2>
+
+-  <p>When developing applications of any kind, choosing the right architecture to use is very important.</p>
++  <p>Al desarrollar aplicaciones, elegir la arquitectura adecuada es muy importante.</p>
 
   <p>The most common approach is to use an architecture that separates the application logic (programming) from the views (graphical interface).</p>
 
@@ -487,10 +514,12 @@ fun main() = runBlocking{
 <!--*********************************************************Practical Case***********************************************************-->
 <section class="apartado">
   <a name="sCasopractico"></a>
-  <h2>Practical Case</h2>
+-  <h2>Practical Case</h2>
++  <h2>Caso práctico</h2>
 
-   <p>We will follow step by step how to create an application using <span class="negrita">ViewModel</span>, in this case, the application will be a 
-     <span class="cursiva">Book List</span>. The first thing we will do is create the project in the selected folder with the default Compose template.</p>
+-   <p>We will follow step by step how to create an application using <span class="negrita">ViewModel</span>, in this case, the application will be a 
+-     <span class="cursiva">Book List</span>. The first thing we will do is create the project in the selected folder with the default Compose template.</p>
++   <p>Seguiremos paso a paso cómo crear una aplicación usando <span class="negrita">ViewModel</span>; en este caso la app será una <span class="cursiva">lista de libros</span>. Lo primero es crear el proyecto con la plantilla Compose por defecto.</p>
 
    <h3>Add dependencies</h3>
 
@@ -541,8 +570,8 @@ implementation(libs.androidx.runtime.livedata)
 </p>
 
 <section class="marco-t inf">
-  <span class="icono info"> </span> Remember to click <span class="negrita">Sync Now</span> after making these changes.
-  </section>
+  <span class="icono info"> </span> Recuerda pulsar <span class="negrita">Sync Now</span> tras realizar estos cambios.
+   </section>
 <section class="marco-b">
     
 </section>
@@ -663,7 +692,8 @@ implementation(libs.androidx.runtime.livedata)
         }
         _books.value = searchList
     }
-}</code></pre></section><br>
+}</code></pre>
+</section><br>
    
    <h3>Navigation and Routes</h3>
 
@@ -1148,18 +1178,17 @@ fun BookInfoScreen(
  <!--*********************************************************FLOWS***********************************************************-->
  <section class="apartado">
   <a name="sFlows"></a>
-  <h2>INTRODUCTION TO FLOWS</h2>
+-  <h2>INTRODUCTION TO FLOWS</h2>
++  <h2>Introducción a Flows</h2>
 
-  <h3>Introduction</h3>
+-  <h3>Introduction</h3>
++  <h3>Introducción</h3>
 
-  <p>Flow is a component of the coroutine library that allows us to implement reactive programming. </p>
+-  <p>Flow is a component of the coroutine library that allows us to implement reactive programming. </p>
++  <p>Flow es un componente de la librería de corrutinas que permite implementar programación reactiva.</p>
 
-
-  <p>It is the natural substitute for RxJava, since the vast majority of things that can be done are here, generally simpler, 
-      since they are based on concepts that we already know about <span class="d-word">coroutines</span> , <span class="d-word">sequences</span> , 
-      and <span class="d-word">collections</span>  to give us a very easy solution.</p>
-  
-  <h3>What are the Flows?</h3>
+-  <h3>What are the Flows?</h3>
++  <h3>¿Qué son los Flows?</h3>
 
   <p>Flows are asynchronous sequences.</p>
   
@@ -1496,8 +1525,8 @@ we should use <span class="r-word">collectAsState()</span> from the <span class=
 </section><br><br>
 
 
-<a class="tarea" name="exercise_flow" target="_blank" href="#exercise_flow">Exercise:
-Do the practical case using flows instead of live data.</a> 
+<a class="tarea" id="exercise_flow" target="_blank" href="#exercise_flow">Ejercicio:
+Realiza el caso práctico usando Flows en lugar de LiveData.</a> 
   <br> <br>
 <p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD9/BookViewModelFlows">A possible solution</a> </p>
 
@@ -1518,305 +1547,7 @@ and what is the maximum number of values ​​that we want to store.</p>
 In this case we use a <span class="negrita">MutableSharedFlow</span> </p>
 
 
-<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>()
-val state:SharedFlow&lt;Note> = _state.asSharedFlow()</code></pre>
-</section><br>
-
-<p>We can see that the <span class="r-word">SharedFlows</span>  do not pass an initial value in the constructor.</p>
-
-<p>To change values ​​we do not use the <span class="negrita">value</span> property, since it is not a single value, but we use the <span class="negrita">emit</span> function. </p>
-<section><pre><code class="language-kotlin">_state.emit(Note("Title $counter", "Description $counter"))</code></pre>
-</section><br>
-
-<p>To collect it we do it in the same way.</p>
-
-
-<section><pre><code class="language-kotlin">viewModel.state.collect(::println)</code></pre>
-</section><br>
-
-<p>For now, the complete code looks like this:</p>
-
-
-<section><pre><code class="language-kotlin">data class Note(
-val title:String,
-val description:String
-)
-
-class ViewModel(){ //It would simulate a ViewModel but for this example is a simple class
-
-private val _state = MutableSharedFlow&lt;Note>()
-val state:SharedFlow&lt;Note> = _state.asSharedFlow()
-
-suspend fun update(){
-  var counter = 1
-  while(true){
-      _state.emit(Note("Title $counter", "Description $counter"))
-      counter++
-      delay(500)
-  }
-}
-}
-
-
-//This main function is just for running the example
-fun main():Unit = runBlocking {
-
-val viewModel = ViewModel()
-launch {
-  viewModel.update()
-}
-viewModel.state.collect(::println)
-}</code></pre>
-</section><br>
-
-<p>Output:</p>
-<section><pre><code class="language-kotlin">Note(title=Title 1, description=Description 1)
-Note(title=Title 2, description=Description 2)
-Note(title=Title 3, description=Description 3)
-Note(title=Title 4, description=Description 4)
-Note(title=Title 5, description=Description 5)
-Note(title=Title 6, description=Description 6)
-Note(title=Title 7, description=Description 7)
-....</code></pre>
-</section><br>
-
-<p>At the moment it is working exactly the same as we had it before. Now let's see what happens if we start collecting after a second (line 7)</p>
-
-
-<section><pre><code class="language-kotlin">fun main():Unit = runBlocking {
-
-val viewModel = ViewModel()
-launch {
-  viewModel.update()
-}
-delay(1000)
-viewModel.state.collect(::println)
-}</code></pre>
-</section><br>
-
-<p>In this case we see that we have lost the first two values, it starts cocllecting from 3.</p>
-
-
-<section><pre><code class="language-kotlin">Note(title=Title 3, description=Description 3)
-Note(title=Title 4, description=Description 4)
-Note(title=Title 5, description=Description 5)
-....</code></pre>
-</section><br>
-
-<p>If we do not tell it anything, by default this <span class="r-word">SharedFlow</span>  will not store any value and therefore the old values ​​are not emitted.</p>
-
-
-<p>How can we configure this? If we go to the creation of the <span class="negrita">MutableSharedFlow</span> we will see that it has 3 arguments, 
-<span class="negrita">replay</span>, <span class="negrita">extraBufferCapacity</span> , <span class="negrita">onBufferOverflow</span>.</p>
-
-
-<p>Let's see what each of them is for:</p>
-
-
-<p><span class="r-word">replay</span> . Of integer type, we can tell it how many values ​​we want it to store so that when we subscribe it
-starts with the first one stored. Default value is 0.
-In this case we are going to set it to 1</p>
-
-
 <section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>(
-  replay = 1
-)</code></pre>
-</section><br>
-
-<p>We see as a result, that before it issued us from 3, and when we put 1 it also recovers 2.</p>
-
-<section><pre><code class="language-kotlin">Note(title=Title 2, description=Description 2)
-Note(title=Title 3, description=Description 3)
-Note(title=Title 4, description=Description 4)
-.....</code></pre>
-</section><br>
-
-<p>If instead of <span class="negrita">replay=1</span>  we set 2,
-then it will return the 2 stored, that is, the first and the second, then it already emits the third normally.</p>
-
-
-<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>(
-replay = 2
-)</code></pre>
-</section><br>
-
-<p>Output: </p>
-
-<section><pre><code class="language-kotlin">Note(title=Title 1, description=Description 1)
-Note(title=Title 2, description=Description 2)
-Note(title=Title 3, description=Description 3)
-Note(title=Title 4, description=Description 4)
-.....</code></pre>
-</section><br>
-
-
-<p><span class="r-word">extraBufferCapacity</span> . It will store values ​​in a buffer. 
-  Let's imagine that the values ​​are being collected more slowly than they are being emitted.
-To do the test we will add a println to see when the values ​​are being emitted (line 4).</p>
-
-
-<section><pre><code class="language-kotlin">while(true){
-delay(500)
-_state.emit(Note("Title $counter", "Description $counter"))
-println("Emitting Title= $counter")
-counter++
-}</code></pre>
-</section><br>
-
-<p>Also, when we collect we will set a delay of 1 second. For this we pass the lambda.</p>
-
-
-<section><pre><code class="language-kotlin">viewModel.state.collect {
-delay(1000)
-println(it)
-}</code></pre>
-</section><br>
-
-<p>Let's see the output</p>
-
-
-<section><pre><code class="language-kotlin">Emitting Title= 1
-Emitting Title= 2
-Emitting Title= 3
-Note(title=Title 1, description=Description 1)
-Emitting Title= 4
-Note(title=Title 2, description=Description 2)
-Emitting Title= 5
-Note(title=Title 3, description=Description 3)
-Emitting Title= 6
-Note(title=Title 4, description=Description 4)
-Emitting Title= 7</code></pre>
-</section><br><br>
-
-<p>We see that, since we have a <span class="negrita">replay</span>  of 2, the first 2 are broadcast without being collected, a third is broadcast and we collect the first, 
-once the first is collected a fourth is broadcast, once the second is collected a fifth is broadcast.
-In other words, once the replay capacity is exhausted, no more are broadcast until one of the replays is collected, the broadcast function remains suspended.</p>
-
-
-<p>To give it more storage capacity we use the <span class="r-word">extraBufferCapacity</span> parameter, 
-we are going to give it a value of two so that it stores 4 elements in total (2 replay + 2 extraBufferCapacity).</p>
-
-
-<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>(
-replay = 2,
-extraBufferCapacity = 2
-)</code></pre>
-</section><br>
-
-<p>Output:</p>
-
-<section><pre><code class="language-kotlin">Emitting Title= 1
-Emitting Title= 2
-Emitting Title= 3
-Note(title=Title 1, description=Description 1)
-Emitting Title= 4
-Emitting Title= 5
-Note(title=Title 2, description=Description 2)
-Emitting Title= 6
-Emitting Title= 7
-Note(title=Title 3, description=Description 3)
-Emitting Title= 8
-Note(title=Title 4, description=Description 4)
-Emitting Title= 9
-....</code></pre>
-</section><br>
-
-<p>We see that it is emitting until the buffer is full, once it is full it is suspended until one is collected to be able to emit another.</p>
-
-
-<p>It may be that we want the emit function to be suspended but simply discard the old or the new ones. We can do this with the third parameter,
-<span class="negrita">onBufferOverflow</span></p>
-
-
-<p><span class="r-word">onBufferOverflow</span> . Its default value is configured with <span class="negrita">BuffeOverFlow.SUSPEND</span>, that is, if the buffer is full, 
-it is suspended and does not continue emitting until some element is collected.
-Other values ​​of this parameter are:</p>
-
-
-<p><span class="negrita">BufferOverFlow.DROP_OLDEST</span> , that is, it eliminates the oldest ones in order to have room in the buffer and continue emitting.</p>
-
-
-<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>(
-replay = 2,
-extraBufferCapacity = 2,
-onBufferOverflow = BufferOverflow.DROP_OLDEST
-)</code></pre>
-</section><br>
-
-<p>If we put this value in our example we see the following output.</p>
-
-<section><pre><code class="language-kotlin">Emitting Title= 5
-Note(title=Title 2, description=Description 2)
-Emitting Title= 6
-Emitting Title= 7
-Note(title=Title 3, description=Description 3)
-Emitting Title= 8
-Emitting Title= 9
-Note(title=Title 4, description=Description 4)
-Emitting Title= 10
-Emitting Title= 11
-Note(title=Title 6, description=Description 6)
-Emitting Title= 12
-Emitting Title= 13
-Note(title=Title 8, description=Description 8)
-Emitting Title= 14
-....
-</code></pre>
-</section><br>
-
-<p>If we look at element 5 (which was the oldest) it has not been collected, it has been discarded in order to emit element 10</p>
-
-
-<p><span class="negrita">BufferOverFlow.DROP_LATEST</span>. In this case we will discard the new ones that enter until we consume the old ones.</p>
-
-
-<p>Let's see the examples:</p>
-
-<section><pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>(
-replay = 2,
-extraBufferCapacity = 2,
-onBufferOverflow = BufferOverflow.DROP_LATEST
-)</code></pre>
-</section><br>
-
-<p>Output:</p>
-
-<section><pre><code class="language-kotlin">Emitting Title= 8
-Emitting Title= 9
-Note(title=Title 4, description=Description 4)
-Emitting Title= 10
-Emitting Title= 11
-Note(title=Title 5, description=Description 5)
-Emitting Title= 12
-Emitting Title= 13
-Note(title=Title 6, description=Description 6)
-Emitting Title= 14
-Emitting Title= 15
-Note(title=Title 7, description=Description 7)
-Emitting Title= 16
-Emitting Title= 17
-Note(title=Title 8, description=Description 8)
-Emitting Title= 18
-Emitting Title= 19
-Note(title=Title 10, description=Description 10)
-Emitting Title= 20
-....</code></pre>
-</section><br>
-
-<p>In this case he had to discard the 9 to be able to issue the 10.</p>
-
-
-<p>Another difference with the <span class="r-word">StateFlow</span>  is that if we emit the same value with the <span class="r-word">SharedFlow</span>
-it will emit it again, while with the <span class="r-word">StateFlow</span> it would not emit the same value again.</p>
-
-
-<p>How do we make a <span class="r-word">SharedFlow</span>  behave exactly like a <span class="r-word">StateFlow</span>?</p>
-
-
-<p>For this, we only store the last value, <span class="negrita">replay=1</span>, we don't give extra buffer capacity, and if we delete the oldest one.</p>
-
-
-<section><pre><code class="language-kotlin"> private val _state = MutableSharedFlow<Note>(
 replay = 1,
 extraBufferCapacity = 0,
 onBufferOverflow = BufferOverflow.DROP_OLDEST
@@ -1885,12 +1616,15 @@ we simply wanted to show that <span class="r-word">StateFlow</span>  is a specia
 <!--*********************************************************Activities***********************************************************-->
 <section class="apartado">
   <a name="sActividades"></a>
-  <h2>Activities</h2>
+-  <h2>Activities</h2>
++  <h2>Actividades</h2>
   <div class="tarea">
-    <p>Replicate the practical case above.</p>
-    <p>You have <a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD9/booksviewmodel">here</a>  the implementation</p>
+-    <p>Replicate the practical case above.</p>
+-    <p>You have <a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD9/booksviewmodel">here</a>  the implementation</p>
++    <p>Replica el caso práctico anterior.</p>
++    <p>Tienes la implementación en <a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD9/booksviewmodel">este enlace</a>.</p>
   </div>
- 
+
   <div class="tarea">
    <p><span class="negrita">Activity 2</span></p>
    <p>Replicate the book list example from the notes, but in the main window, add a photo of yourself (ID style) at the bottom and your full name.</p>

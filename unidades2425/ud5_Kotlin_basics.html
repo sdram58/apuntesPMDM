@@ -31,7 +31,7 @@
       <a 
        href="#sPOO" title="7.- Object-Oriented Programming">7.- Object-Oriented Programming</a><a 
        href="#sFuncionesExtension" title="8.- Extension Functions">8.- Extension Functions</a><a 
-       href="#sSingleton" title="9.- Singleton">9.- Singleton</a>
+       href="#sSingleton" title="9.- Singleton" class="">9.- Singleton</a>
     </div>
     <div class="fila">
       <a 
@@ -80,7 +80,7 @@
 
 <!--*********************************************************1.- Fundamentos de Kotlin***********************************************************-->
 <section class="apartado">
-  <a name="sFundamentos"></a>
+  <a id="sFundamentos"></a>
   <h2>Fundamentals of Kotlin</h2>
   
   <h3>Introduction</h3>
@@ -738,7 +738,7 @@ numbers = arrayOf(1, 2) // This will produce an error
 
 <!--*********************************************************Null Safety***********************************************************-->
 <section class="apartado">
-<a name="sNullSafety"></a>
+<a id="sNullSafety"></a>
 <h2>Null Safety</h2>
 
 <p>One of the most common and dreaded errors that can occur while programming is the infamous <span class="negrita">NullPointerException</span>.</p>
@@ -847,7 +847,7 @@ This operator often appears in Java-to-Kotlin migrations.
 
 <!--*********************************************************Expressiones Regulares***********************************************************-->
 <section class="apartado">
-  <a name="sExpresionesRegulares"></a>
+  <a id="sExpresionesRegulares"></a>
   <h2>Regular Expressions</h2>
   
   <p>In every programming language, it is necessary to check if the values entered by the user meet specific rules.</p>
@@ -998,7 +998,7 @@ println(checkName.matches(name))
 
 <!--*********************************************************Control de Flujo***********************************************************-->
 <section class="apartado">
-  <a name="sControldeFlujo"></a>
+  <a id="sControldeFlujo"></a>
   <h2>Control Flow</h2>
   <p>These are instructions that allow altering the normal flow of program execution. They are very similar to those in any other language.</p>
   
@@ -1255,7 +1255,7 @@ repeat(times = 100) { index ->
 
 <!--*********************************************************Colecciones***********************************************************-->
 <section class="apartado">
-  <a name="sColecciones"></a>
+  <a id="sColecciones"></a>
   <h2>Collections</h2>
   
   <p><span class="negrita">Collections</span> are a data type that allows storing a variable number of elements, zero or more.
@@ -1411,6 +1411,8 @@ names.count()               // Returns the number of elements in the set
 val set1 = setOf(1, 3, 4, 8, 7, 12, 15)
 val set2 = setOf(24, 7, 5, 1, 8, 6)
 
+
+
 // Returns a set with the elements from both groups without repetitions
 val joinedGroups = set1 union set2
 
@@ -1560,7 +1562,7 @@ val oddNumbersTo200 = oddNumbers.takeWhile { it &lt; 200 }.toList()
 
 <!--*********************************************************Funciones***********************************************************-->
 <section class="apartado">
-  <a name="sFunciones"></a>
+  <a id="sFunciones"></a>
   <h2>Functions</h2>
   
   <h3>Built-in Functions</h3>
@@ -1813,7 +1815,7 @@ fun Int.isOdd(): Boolean {
 
 <!--*********************************************************Programación Orientada a Objetos***********************************************************-->
 <section class="apartado">
-  <a name="sPOO"></a>
+  <a id="sPOO"></a>
   <h2>Object-Oriented Programming (OOP)</h2>
   
   <p>As mentioned at the beginning of this unit, Kotlin aims to be concise and avoid writing excessive code.
@@ -2191,7 +2193,7 @@ fun Int.isOdd(): Boolean {
 
 <!--*********************************************************Funciones de Extensión***********************************************************-->
 <section class="apartado">
-  <a name="sFuncionesExtension"></a>
+  <a id="sFuncionesExtension"></a>
   <h2>Extension Functions</h2>
   
   <p>Kotlin allows you to <span class="negrita">extend the functionality</span> of existing classes, 
@@ -2249,7 +2251,7 @@ fun Int.isOdd(): Boolean {
 
 <!--*********************************************************Singleton***********************************************************-->
 <section class="apartado">
-<a name="sSingleton"></a>
+<a id="sSingleton"></a>
 <h2>Singleton</h2>
 <p>In Kotlin, you can create a singleton, which is a unique object of its class. This means that there can only be one instance of that class.</p>
 
@@ -2276,7 +2278,7 @@ If declared globally in the .kt file, you can add extension functions in the sam
 
 <!--*********************************************************Herencia***********************************************************-->
 <section class="apartado">
-  <a name="sHerencia"></a>
+  <a id="sHerencia"></a>
   <h2>Inheritance</h2>
   <p>In <span class="negrita">Kotlin, all classes are final by default</span>, meaning inheritance is not allowed unless explicitly indicated.</p>
   <p>To allow a class to be a superclass, you need to use the reserved word <span class="negrita">open</span>.</p>
@@ -2440,7 +2442,8 @@ class Monitor(
   
   <section><pre><code class="language-kotlin">sealed class Figura
   class Triangulo(val lado1:Int, val lado2:Int, val lado3:Int) : Figura()
-  …
+  class Cuadrado(val lado:Int) : Figura()
+  class Circulo(val radio:Int) : Figura()
   object Punto : Figura()
   object SinDefinir : Figura()
   </code></pre>
@@ -2450,7 +2453,8 @@ class Monitor(
   
   <section><pre><code class="language-kotlin">val texto = when(figura) {
      is Triangulo -> "triangle"
-     …
+     is Cuadrado -> "square"
+     is Circulo -> "circle"
      Punto -> "point"
      SinDefinir -> "undefined"
   }
@@ -2546,7 +2550,7 @@ class Monitor(
 
 <!--*********************************************************Funciones de alcance***********************************************************-->
 <section class="apartado">
-  <a name="sFuncionesdealcance"></a>
+  <a id="sFuncionesdealcance"></a>
   <h2>Scope Functions</h2>
   <p>Kotlin offers the so-called <span class="negrita">scope functions</span> that allow executing a block of code <span class="negrita">in the context of the object that calls them</span>.</p>
   <p>
@@ -2699,7 +2703,7 @@ class Monitor(
 
 <!--*********************************************************Funciones Lambda***********************************************************-->
 <section class="apartado">
-  <a name="sFuncionesLambda"></a>
+  <a id="sFuncionesLambda"></a>
   <h2>Lambda Functions</h2>
   
   <p>Generally, a function must be declared and assigned an identifier to be used:</p>
@@ -2858,7 +2862,7 @@ class Monitor(
 
 <!--*********************************************************Ejercicios Interactivos en Kotlin***********************************************************-->
 <section class="apartado">
-<a name="sEjerciciosInteractivos"></a>
+<a id="sEjerciciosInteractivos"></a>
 <h2>Interactive exercises en Kotlin</h2>
 <div class="" style="width: 100%;">
   <p>Do this exercises from <a class="enlace" target="_blank" href="https://kotlinlang.org/">https://kotlinlang.org/</a> </p> <br>
