@@ -1,36 +1,35 @@
 <!DOCTYPE html>
 <html lang="es-ES">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Introducción a Android</title>
-        <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
-        <link rel="stylesheet" href="../styles/prism.css">
-        <link rel="stylesheet" href="../styles/styles.css">
-        <script src="../script/script.js"></script>
-    </head>
-    
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducción a Android</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/prism.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <script src="../script/script.js"></script>
+</head>
+
 <body class="line-numbers">
     <div class="logos"></div>
 
 
     <nav id="menu-lateral" class="main-menu-lateral oculto">
         <div class="fila">
-            <a href="#sIntroduccion">1.- Introducción</a><a 
-            href="#sActivities">2.- Actividades</a><a 
-            href="#sProgramacionImperativavsdeclarativa">3.- Programación imperativa vs declarativa</a></div>
-        <div class="fila">
-            <a 
-           href="#sAplicacionesNativasenAndroid">4.- Aplicaciones nativas en Android</a><a 
-           href="#sJetpackCompose">5.- Jetpack Compose</a><a 
-           href="#sCrearunproyectoenAndroid">6.- Crear un proyecto en Android</a>
+            <a href="#sIntroduccion">1.- Introducción</a><a href="#sActivities">2.- Actividades</a><a
+                href="#sProgramacionImperativavsdeclarativa">3.- Programación imperativa vs declarativa</a>
         </div>
         <div class="fila">
-            <a 
-           href="#sEstructuradeUnproyectoenAndroid">7.- Estructura de un proyecto en Android</a><a 
-           href="#sUnidadesdeMedidaenAndroid">8.- Unidades de medida en Android</a><a 
-           href="#sPrimeraaplicaciónAndroid_Contadordeclics">9.- Primera aplicación Android: Contador de clics</a>
+            <a href="#sAplicacionesNativasenAndroid">4.- Aplicaciones nativas en Android</a><a
+                href="#sJetpackCompose">5.- Jetpack Compose</a><a href="#sCrearunproyectoenAndroid">6.- Crear un
+                proyecto en Android</a>
+        </div>
+        <div class="fila">
+            <a href="#sEstructuradeUnproyectoenAndroid">7.- Estructura de un proyecto en Android</a><a
+                href="#sUnidadesdeMedidaenAndroid">8.- Unidades de medida en Android</a><a
+                href="#sPrimeraaplicaciónAndroid_Contadordeclics">9.- Primera aplicación Android: Contador de clics</a>
         </div>
         <div class="fila">
             <a href="#sCentralizarValoresenelproyecto">10.- Centralizar valores en el proyecto</a>
@@ -45,27 +44,25 @@
         </div>
 
         <div class="fila"><a href="#sEjercicios">16.- Ejercicios</a></div>
-        
+
     </nav>
 
     <h1>U6.- Introducción a Android</h1>
 
     <div class="main-menu">
         <div class="fila">
-            <a href="#sIntroduccion">1.- Introducción</a><a 
-            href="#sActivities">2.- Actividades</a><a 
-            href="#sProgramacionImperativavsdeclarativa">3.- Programación imperativa vs declarativa</a></div>
-        <div class="fila">
-            <a 
-           href="#sAplicacionesNativasenAndroid">4.- Aplicaciones nativas en Android</a><a 
-           href="#sJetpackCompose">5.- Jetpack Compose</a><a 
-           href="#sCrearunproyectoenAndroid">6.- Crear un proyecto en Android</a>
+            <a href="#sIntroduccion">1.- Introducción</a><a href="#sActivities">2.- Actividades</a><a
+                href="#sProgramacionImperativavsdeclarativa">3.- Programación imperativa vs declarativa</a>
         </div>
         <div class="fila">
-            <a 
-           href="#sEstructuradeUnproyectoenAndroid">7.- Estructura de un proyecto en Android</a><a 
-           href="#sUnidadesdeMedidaenAndroid">8.- Unidades de medida en Android</a><a 
-           href="#sPrimeraaplicaciónAndroid_Contadordeclics">9.- Primera aplicación Android: Contador de clics</a>
+            <a href="#sAplicacionesNativasenAndroid">4.- Aplicaciones nativas en Android</a><a
+                href="#sJetpackCompose">5.- Jetpack Compose</a><a href="#sCrearunproyectoenAndroid">6.- Crear un
+                proyecto en Android</a>
+        </div>
+        <div class="fila">
+            <a href="#sEstructuradeUnproyectoenAndroid">7.- Estructura de un proyecto en Android</a><a
+                href="#sUnidadesdeMedidaenAndroid">8.- Unidades de medida en Android</a><a
+                href="#sPrimeraaplicaciónAndroid_Contadordeclics">9.- Primera aplicación Android: Contador de clics</a>
         </div>
         <div class="fila">
             <a href="#sCentralizarValoresenelproyecto">10.- Centralizar valores en el proyecto</a>
@@ -86,461 +83,585 @@
 
 
 
-<!--*********************************************************Introducción***********************************************************-->
+    <!--*********************************************************Introducción***********************************************************-->
 
-<section class="apartado">
-    <a id="sIntroduccion"></a>
-    <h2>Introducción</h2>
-    <p>La experiencia de usuario en aplicaciones móviles y en aplicaciones de escritorio es muy diferente.</p>
-    
-    <p>En una aplicación móvil, la interacción del usuario <span class="subrayado">no siempre comienza en el mismo punto</span>.</p>
-    
-    <p>Por ejemplo:</p>
-    
-    <p><ul>
-        <li>Si se abre la aplicación de correo, lo más habitual es que se muestre la bandeja de entrada o la última ventana abierta en la aplicación.
-        </li>
-        <li>
-            Si estás navegando una página web y pulsas el botón de contacto para enviar un correo, 
-            es probable que la aplicación de correo se abra directamente para redactar el mensaje.
-        </li>
-    </ul></p>
-    
-    <p>En las aplicaciones de escritorio, el punto de inicio de la aplicación es el método <span class="d-word">main</span>, que incluye el código que se ejecuta cuando la aplicación arranca.</p>
-    
-    <p>En las aplicaciones móviles no se puede hacer de la misma forma porque una aplicación puede iniciarse en distintos puntos dentro de ella, como se ha visto anteriormente.</p>
-    <p>
-    Por eso el <span class="negrita">ciclo de vida</span> de las aplicaciones móviles es diferente al de las aplicaciones de escritorio.
-    </p>
-    
+    <section class="apartado">
+        <a id="sIntroduccion"></a>
+        <h2>Introducción</h2>
+        <p>La experiencia de usuario en aplicaciones móviles y en aplicaciones de escritorio es muy diferente.</p>
+
+        <p>En una aplicación móvil, la interacción del usuario <span class="subrayado">no siempre comienza en el mismo
+                punto</span>.</p>
+
+        <p>Por ejemplo:</p>
+
+        <p>
+        <ul>
+            <li>Si se abre la aplicación de correo, lo más habitual es que se muestre la bandeja de entrada o la última
+                ventana abierta en la aplicación.
+            </li>
+            <li>
+                Si estás navegando una página web y pulsas el botón de contacto para enviar un correo,
+                es probable que la aplicación de correo se abra directamente para redactar el mensaje.
+            </li>
+        </ul>
+        </p>
+
+        <p>En las aplicaciones de escritorio, el punto de inicio de la aplicación es el método <span
+                class="d-word">main</span>, que incluye el código que se ejecuta cuando la aplicación arranca.</p>
+
+        <p>En las aplicaciones móviles no se puede hacer de la misma forma porque una aplicación puede iniciarse en
+            distintos puntos dentro de ella, como se ha visto anteriormente.</p>
+        <p>
+            Por eso el <span class="negrita">ciclo de vida</span> de las aplicaciones móviles es diferente al de las
+            aplicaciones de escritorio.
+        </p>
+
     </section><!-- End section Introduction-->
 
-    
 
 
-<!--*********************************************************Activities***********************************************************-->
-<section class="apartado">
-    <a id="sActivities"></a>
-    <h2>Actividades</h2>
-    <p>La clase <span class="r-word">Activity</span> es un <span class="negrita">componente crucial en una aplicación Android</span>. 
-        En Android, <span class="subrayado">cada pantalla de la aplicación se define dentro de una Activity</span>.</p>
-    
-    <p>Una <span class="r-word">Activity</span> es el punto de entrada para la interacción del usuario con la aplicación.
-        En Android, el código que inicia una Activity corresponde a una llamada a método, que está relacionada con una de las etapas específicas del <span class="negrita">ciclo de vida de la Activity</span>.</p>
-    
-    <p>A medida que el usuario navega, sale y vuelve a la aplicación, las distintas Activities de la aplicación pasan por varios estados en su ciclo de vida (<span class="negrita">lifecycle</span>).</p>
-    
-    <h3>Ciclo de vida de la Activity</h3>
-    <a href="UD6/images/ud6-2023-10-02-10-11-11.png" target="_BLANK"><figure><img src="UD6/images/ud6-2023-10-02-10-11-11.png" /><br><figcaption>Ciclo de vida de la Activity</figcaption></figure></a>
-    <br>
-        
-    <p>Es importante tener en cuenta que Android presenta ciertos comportamientos particulares.</p>
-    
-    <p>Una Activity activa se destruye y recrea cuando:
+
+    <!--*********************************************************Activities***********************************************************-->
+    <section class="apartado">
+        <a id="sActivities"></a>
+        <h2>Actividades</h2>
+        <p>La clase <span class="r-word">Activity</span> es un <span class="negrita">componente crucial en una
+                aplicación Android</span>.
+            En Android, <span class="subrayado">cada pantalla de la aplicación se define dentro de una Activity</span>.
+        </p>
+
+        <p>Una <span class="r-word">Activity</span> es el punto de entrada para la interacción del usuario con la
+            aplicación.
+            En Android, el código que inicia una Activity corresponde a una llamada a método, que está relacionada con
+            una de las etapas específicas del <span class="negrita">ciclo de vida de la Activity</span>.</p>
+
+        <p>A medida que el usuario navega, sale y vuelve a la aplicación, las distintas Activities de la aplicación
+            pasan por varios estados en su ciclo de vida (<span class="negrita">lifecycle</span>).</p>
+
+        <h3>Ciclo de vida de la Activity</h3>
+        <a href="UD6/images/ud6-2023-10-02-10-11-11.png" target="_BLANK">
+            <figure><img src="UD6/images/ud6-2023-10-02-10-11-11.png" /><br>
+                <figcaption>Ciclo de vida de la Activity</figcaption>
+            </figure>
+        </a>
+        <br>
+
+        <p>Es importante tener en cuenta que Android presenta ciertos comportamientos particulares.</p>
+
+        <p>Una Activity activa se destruye y recrea cuando:
         <ul>
             <li>cambia la orientación del dispositivo.</li>
             <li>se cambia entre los modos claro y oscuro.</li>
             <li>cambia la configuración del dispositivo, como el idioma.</li>
         </ul>
-    </p>
-    
-    <p>Ser consciente de esto es muy importante al desarrollar aplicaciones.</p>
-    <a href="UD6/images/ud6-2023-10-02-10-14-24.png" target="_BLANK"><figure><img src="UD6/images/ud6-2023-10-02-10-14-24.png" /><br><figcaption>Reinicio de la Activity</figcaption></figure></a>
-    <br>
-    
-    <p>La clase <span class="r-word">Activity</span> proporciona una serie de funciones callback que notifican a la activity cuando cambia su estado:
-    <ul>
-        <li><span class="negrita">onCreate()</span></li>
-        <li><span class="negrita">onStart()</span></li>
-        <li><span class="negrita">onResume()</span></li>
-        <li><span class="negrita">onPause()</span></li>
-        <li><span class="negrita">onStop()</span></li>
-        <li><span class="negrita">onDestroy()</span></li>
-    </ul>
-    
-    <br>
-    El sistema invoca cada uno de estos <span class="negrita">callbacks</span> cuando una activity cambia de estado en su ciclo de vida (<span class="negrita">lifecycle</span>).
-    </p>
-    
-    <p>Usando los <span class="negrita">callbacks</span> del ciclo de vida, puedes definir cómo se comporta la activity cuando el usuario la abandona y vuelve a ella.</p>
-    
-    <p>Por ejemplo:</p>
-    
-    <p>Si estás creando un reproductor de vídeo en streaming, puedes indicar que el vídeo se pause y que la conexión de red se cierre si el usuario cambia a otra aplicación. 
-        Cuando el usuario regrese a la activity, la conexión puede restablecerse y la reproducción reanudarse.
         </p>
-    
+
+        <p>Ser consciente de esto es muy importante al desarrollar aplicaciones.</p>
+        <a href="UD6/images/ud6-2023-10-02-10-14-24.png" target="_BLANK">
+            <figure><img src="UD6/images/ud6-2023-10-02-10-14-24.png" /><br>
+                <figcaption>Reinicio de la Activity</figcaption>
+            </figure>
+        </a>
+        <br>
+
+        <p>La clase <span class="r-word">Activity</span> proporciona una serie de funciones callback que notifican a la
+            activity cuando cambia su estado:
+        <ul>
+            <li><span class="negrita">onCreate()</span></li>
+            <li><span class="negrita">onStart()</span></li>
+            <li><span class="negrita">onResume()</span></li>
+            <li><span class="negrita">onPause()</span></li>
+            <li><span class="negrita">onStop()</span></li>
+            <li><span class="negrita">onDestroy()</span></li>
+        </ul>
+
+        <br>
+        El sistema invoca cada uno de estos <span class="negrita">callbacks</span> cuando una activity cambia de estado
+        en su ciclo de vida (<span class="negrita">lifecycle</span>).
+        </p>
+
+        <p>Usando los <span class="negrita">callbacks</span> del ciclo de vida, puedes definir cómo se comporta la
+            activity cuando el usuario la abandona y vuelve a ella.</p>
+
+        <p>Por ejemplo:</p>
+
+        <p>Si estás creando un reproductor de vídeo en streaming, puedes indicar que el vídeo se pause y que la conexión
+            de red se cierre si el usuario cambia a otra aplicación.
+            Cuando el usuario regrese a la activity, la conexión puede restablecerse y la reproducción reanudarse.
+        </p>
+
     </section><!-- End section Activities-->
-    
 
 
-<!--*********************************************************Programación imperativa vs declarativa***********************************************************-->
-<section class="apartado">
-    <a id="sProgramacionImperativavsdeclarativa"></a>
-    <h2>Programación imperativa vs declarativa</h2>
-    <p>El lenguaje de programación <span class="negrita">Kotlin</span> incluye características que lo acercan a la programación declarativa.</p>
-    <p>Ejemplo: recorrer un array y transformarlo en otro
-    <ul>
-        <li><span class="negrita">Java</span>: se utiliza un bucle <span class="cursiva">for</span> para recorrer todos los elementos, especificando cómo se transforma cada elemento y, finalmente, almacenándolo en el array resultante. 
-            Aunque desde hace algunas versiones también se permite programación funcional en Java</li>
-        <li><span class="negrita">Kotlin</span>: se usa la función <span class="cursiva">map</span>, que mapea una lista a otra sin especificar explícitamente si crear una lista nueva, añadir elementos o definir el orden.</li>
-    </ul>
-    </p>
+
+    <!--*********************************************************Programación imperativa vs declarativa***********************************************************-->
+    <section class="apartado">
+        <a id="sProgramacionImperativavsdeclarativa"></a>
+        <h2>Programación imperativa vs declarativa</h2>
+        <p>El lenguaje de programación <span class="negrita">Kotlin</span> incluye características que lo acercan a la
+            programación declarativa.</p>
+        <p>Ejemplo: recorrer un array y transformarlo en otro
+        <ul>
+            <li><span class="negrita">Java</span>: se utiliza un bucle <span class="cursiva">for</span> para recorrer
+                todos los elementos, especificando cómo se transforma cada elemento y, finalmente, almacenándolo en el
+                array resultante.
+                Aunque desde hace algunas versiones también se permite programación funcional en Java</li>
+            <li><span class="negrita">Kotlin</span>: se usa la función <span class="cursiva">map</span>, que mapea una
+                lista a otra sin especificar explícitamente si crear una lista nueva, añadir elementos o definir el
+                orden.</li>
+        </ul>
+        </p>
     </section><!-- End section Imperative vs Declarative Programming -->
-    
+
     <!--*********************************************************Native Applications in Android***********************************************************-->
     <section class="apartado">
-    <a id="sAplicacionesNativasenAndroid"></a>
-    <h2>Aplicaciones nativas en Android</h2>
-    <p>Hoy en día existen dos opciones para desarrollar aplicaciones nativas en Android:</p>
-    <p>
+        <a id="sAplicacionesNativasenAndroid"></a>
+        <h2>Aplicaciones nativas en Android</h2>
+        <p>Hoy en día existen dos opciones para desarrollar aplicaciones nativas en Android:</p>
+        <p>
         <ul>
             <li>Método tradicional con <span class="negrita">Views</span>: programación imperativa.
-                <p>La interfaz gráfica se define en archivos XML, especificando los elementos gráficos (Views), y en el código del programa se describen explícitamente todas las acciones.</p>
-            </li>            
+                <p>La interfaz gráfica se define en archivos XML, especificando los elementos gráficos (Views), y en el
+                    código del programa se describen explícitamente todas las acciones.</p>
+            </li>
             <li><span class="negrita">Jetpack Compose</span>: programación imperativa-declarativa.
-                <p>Los elementos gráficos (UI declarativa) y su funcionalidad (programación imperativa) se definen directamente en el código del programa.</p>
+                <p>Los elementos gráficos (UI declarativa) y su funcionalidad (programación imperativa) se definen
+                    directamente en el código del programa.</p>
             </li>
         </ul>
-    </p>
-    <p>Una de las principales ventajas de las <span class="negrita">interfaces de usuario declarativas</span> es que <span class="subrayado">los elementos de la interfaz están vinculados al estado de la Activity</span>.</p>
-    
-    <p>Así, si cambia un elemento de la interfaz, cambia el estado y la interfaz se vuelve a dibujar automáticamente para reflejar el nuevo estado.</p>
-    
-    <p>Este proceso ocurre automáticamente sin necesidad de instrucciones adicionales por parte del desarrollador.</p>
-    
-    <p>El sistema está muy optimizado y solo vuelve a dibujar las partes afectadas por el cambio de estado.</p>
-    
-    <p>Ventajas de usar interfaces declarativas:</p>
-    <ul>
-        <li>Menos código.</li>
-        <li>Código más simple y fácil de leer.</li>
-        <li>Evita clases intermedias que pueden introducir errores.</li>
-        <li>Intuitivo.</li>
-        <li>Manejo automático de cambios en la vista vinculados al estado de la aplicación.</li>
-        <li>Muy rápido.</li>
-        <li>Capacidades de vista previa para cualquier componente.</li>
-        <li>Altamente potente.</li>
-    </ul>
-    
-    <p>Frameworks como <span class="negrita">React Native</span>, <span class="negrita">Flutter</span> o 
-        <span class="negrita">Swift UI</span> usan el paradigma de interfaz declarativa.</p>
-    
-    <p>Este curso se centrará en <span class="negrita">Jetpack Compose</span>, ya que representa la tendencia actual del mercado.
-    
-    En el desarrollo nativo para Android, es <span class="subrayado">posible combinar el método tradicional basado en XML con Jetpack Compose</span>.
-    </p>
-    </section><!-- End section Native Applications in Android -->
-    
+        </p>
+        <p>Una de las principales ventajas de las <span class="negrita">interfaces de usuario declarativas</span> es que
+            <span class="subrayado">los elementos de la interfaz están vinculados al estado de la Activity</span>.</p>
 
-<!--*********************************************************Jetpack Compose***********************************************************-->
-<section class="apartado">
-    <a id="sJetpackCompose"></a>
-    <h2>Jetpack Compose</h2>
-    <p><span class="negrita">Jetpack Compose</span> es un conjunto de herramientas para construir y diseñar interfaces de usuario declarativas para Android.</p>
-    
-    <p>Está <span class="negrita">100% basado en Kotlin</span>.</p>
-    
-    <p>Se introdujo a partir de la versión Arctic Fox (2021) de Android Studio.</p>
-    
-    <p>Las aplicaciones desarrolladas con Jetpack Compose pueden ejecutarse en <span class="negrita">Android 5.0 (API 21) y versiones posteriores</span>.</p>
-    <a href="UD6/images/ud6-2023-10-02-10-50-58.png" target="_BLANK"><figure><img src="UD6/images/ud6-2023-10-02-10-50-58.png" /><br><figcaption>Logotipo de Jetpack Compose</figcaption></figure></a>
-    <br>
-        
-    <p>Jetpack Compose está disponible únicamente para Android.
-    
-    Está compuesto por:
-    <ul>
-        <li><span class="negrita">Compilador</span>: un plugin de Gradle que genera el código necesario.</li>
-        <li><span class="negrita">Runtime</span>: un entorno de ejecución que crea y mantiene el árbol de nodos para hacer seguimiento de los elementos de la interfaz.</li>
-        <li><span class="negrita">Biblioteca UI</span>: decide cómo se interpreta y renderiza el árbol de nodos.</li>
-    </ul>
-    
-    </p>
-    
-    <p>Tanto el <span class="negrita">compilador</span> como el <span class="negrita">runtime</span> están "fijados" y funcionan de forma genérica.</p>
-    
-    <p>La <span class="negrita">biblioteca UI</span> es un componente que <span class="subrayado">puede cambiar</span>, 
-        y actualmente la única versión estable es Jetpack Compose para Android.</p>
-    
-    <p>JetBrains está desarrollando librerías para:</p>
-    <ul>
-        <li>Compose para Desktop (Windows, Mac y Linux)</li>
-        <li>Compose para Web (experimental)</li>
-        <li>Compose para iOS (alpha)</li>
-    </ul>
-    
-    <p>Todo esto se agrupa junto con Jetpack Compose en el proyecto <a class="enlace" target="_blank" href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a>, permitiendo generar ejecutables para Android, iOS, escritorio y web, similar a <span class="cursiva">Flutter</span>.</p>
-    
-    <h3>Desarrollo Android con Jetpack Compose</h3>
-    
-    <p>Usar <span class="negrita">Jetpack Compose</span> implica <span class="subrayado">definir de forma declarativa la interfaz gráfica</span> de la aplicación.</p>
-        
-    <p>Para definir la interfaz gráfica, los desarrolladores utilizan componentes de Jetpack Compose, que pueden ser del sistema o personalizados.</p>
-            
-    <p><span class="subrayado">Un componente de Jetpack Compose puede contener a otro componente de Jetpack Compose</span>. 
-        Este comportamiento se usa con frecuencia para crear componentes personalizados que extienden la funcionalidad de los existentes.</p>
-    
-    <p>Si es necesario, también se puede usar <span class="subrayado">programación imperativa</span>: variables, clases, estructuras de control, funciones, etc.</p>
-        
+        <p>Así, si cambia un elemento de la interfaz, cambia el estado y la interfaz se vuelve a dibujar automáticamente
+            para reflejar el nuevo estado.</p>
+
+        <p>Este proceso ocurre automáticamente sin necesidad de instrucciones adicionales por parte del desarrollador.
+        </p>
+
+        <p>El sistema está muy optimizado y solo vuelve a dibujar las partes afectadas por el cambio de estado.</p>
+
+        <p>Ventajas de usar interfaces declarativas:</p>
+        <ul>
+            <li>Menos código.</li>
+            <li>Código más simple y fácil de leer.</li>
+            <li>Evita clases intermedias que pueden introducir errores.</li>
+            <li>Intuitivo.</li>
+            <li>Manejo automático de cambios en la vista vinculados al estado de la aplicación.</li>
+            <li>Muy rápido.</li>
+            <li>Capacidades de vista previa para cualquier componente.</li>
+            <li>Altamente potente.</li>
+        </ul>
+
+        <p>Frameworks como <span class="negrita">React Native</span>, <span class="negrita">Flutter</span> o
+            <span class="negrita">Swift UI</span> usan el paradigma de interfaz declarativa.
+        </p>
+
+        <p>Este curso se centrará en <span class="negrita">Jetpack Compose</span>, ya que representa la tendencia actual
+            del mercado.
+
+            En el desarrollo nativo para Android, es <span class="subrayado">posible combinar el método tradicional
+                basado en XML con Jetpack Compose</span>.
+        </p>
+    </section><!-- End section Native Applications in Android -->
+
+
+    <!--*********************************************************Jetpack Compose***********************************************************-->
+    <section class="apartado">
+        <a id="sJetpackCompose"></a>
+        <h2>Jetpack Compose</h2>
+        <p><span class="negrita">Jetpack Compose</span> es un conjunto de herramientas para construir y diseñar
+            interfaces de usuario declarativas para Android.</p>
+
+        <p>Está <span class="negrita">100% basado en Kotlin</span>.</p>
+
+        <p>Se introdujo a partir de la versión Arctic Fox (2021) de Android Studio.</p>
+
+        <p>Las aplicaciones desarrolladas con Jetpack Compose pueden ejecutarse en <span class="negrita">Android 5.0
+                (API 21) y versiones posteriores</span>.</p>
+        <a href="UD6/images/ud6-2023-10-02-10-50-58.png" target="_BLANK">
+            <figure><img src="UD6/images/ud6-2023-10-02-10-50-58.png" /><br>
+                <figcaption>Logotipo de Jetpack Compose</figcaption>
+            </figure>
+        </a>
+        <br>
+
+        <p>Jetpack Compose está disponible únicamente para Android.
+
+            Está compuesto por:
+        <ul>
+            <li><span class="negrita">Compilador</span>: un plugin de Gradle que genera el código necesario.</li>
+            <li><span class="negrita">Runtime</span>: un entorno de ejecución que crea y mantiene el árbol de nodos para
+                hacer seguimiento de los elementos de la interfaz.</li>
+            <li><span class="negrita">Biblioteca UI</span>: decide cómo se interpreta y renderiza el árbol de nodos.
+            </li>
+        </ul>
+
+        </p>
+
+        <p>Tanto el <span class="negrita">compilador</span> como el <span class="negrita">runtime</span> están "fijados"
+            y funcionan de forma genérica.</p>
+
+        <p>La <span class="negrita">biblioteca UI</span> es un componente que <span class="subrayado">puede
+                cambiar</span>,
+            y actualmente la única versión estable es Jetpack Compose para Android.</p>
+
+        <p>JetBrains está desarrollando librerías para:</p>
+        <ul>
+            <li>Compose para Desktop (Windows, Mac y Linux)</li>
+            <li>Compose para Web (experimental)</li>
+            <li>Compose para iOS (alpha)</li>
+        </ul>
+
+        <p>Todo esto se agrupa junto con Jetpack Compose en el proyecto <a class="enlace" target="_blank"
+                href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a>, permitiendo
+            generar ejecutables para Android, iOS, escritorio y web, similar a <span class="cursiva">Flutter</span>.</p>
+
+        <h3>Desarrollo Android con Jetpack Compose</h3>
+
+        <p>Usar <span class="negrita">Jetpack Compose</span> implica <span class="subrayado">definir de forma
+                declarativa la interfaz gráfica</span> de la aplicación.</p>
+
+        <p>Para definir la interfaz gráfica, los desarrolladores utilizan componentes de Jetpack Compose, que pueden ser
+            del sistema o personalizados.</p>
+
+        <p><span class="subrayado">Un componente de Jetpack Compose puede contener a otro componente de Jetpack
+                Compose</span>.
+            Este comportamiento se usa con frecuencia para crear componentes personalizados que extienden la
+            funcionalidad de los existentes.</p>
+
+        <p>Si es necesario, también se puede usar <span class="subrayado">programación imperativa</span>: variables,
+            clases, estructuras de control, funciones, etc.</p>
+
     </section><!-- End section Jetpack Compose -->
 
 
-    
 
-<!--*********************************************************Crear un proyecto en Android***********************************************************-->
 
-<section class="apartado">
-    <a id="sCrearunproyectoenAndroid"></a>
-    <h2>Crear un proyecto en Android</h2>
-    <p>La mejor forma de entender cómo funciona Android Studio es creando una aplicación sencilla que utilice algunos de sus componentes y funcionalidades.</p>
-    
-    <p>Esta unidad consistirá en explicar conceptos mientras se crea una aplicación.</p>
-    
-    <p>Algunos conceptos tratados aquí se explicarán con más detalle en unidades posteriores.</p>
-    
-    <p>La aplicación que crearemos será un <span class="negrita">contador de clics</span> como el que se muestra en la imagen.</p>
-    
-    <figure><img src="UD6/images/ud6-2023-10-02-10-59-47.png" /><br><figcaption>Contador de clics</figcaption></figure>
-    <br>
-    
-    <p>Una vez abierto Android Studio, hay varias opciones para crear un proyecto:</p>
-    <p>
+    <!--*********************************************************Crear un proyecto en Android***********************************************************-->
+
+    <section class="apartado">
+        <a id="sCrearunproyectoenAndroid"></a>
+        <h2>Crear un proyecto en Android</h2>
+        <p>La mejor forma de entender cómo funciona Android Studio es creando una aplicación sencilla que utilice
+            algunos de sus componentes y funcionalidades.</p>
+
+        <p>Esta unidad consistirá en explicar conceptos mientras se crea una aplicación.</p>
+
+        <p>Algunos conceptos tratados aquí se explicarán con más detalle en unidades posteriores.</p>
+
+        <p>La aplicación que crearemos será un <span class="negrita">contador de clics</span> como el que se muestra en
+            la imagen.</p>
+
+        <figure><img src="UD6/images/ud6-2023-10-02-10-59-47.png" /><br>
+            <figcaption>Contador de clics</figcaption>
+        </figure>
+        <br>
+
+        <p>Una vez abierto Android Studio, hay varias opciones para crear un proyecto:</p>
+        <p>
         <ul>
-            <li>Si <span class="negrita">no hay ningún proyecto</span> abierto: haz clic en <span class="r-word">New Project</span>.
-                <a href="UD6/images/UD6_2025-11-14-15-14-26.png"><figure><img src="UD6/images/UD6_2025-11-14-15-14-26.png" /><br><figcaption>New project</figcaption></figure></a>
+            <li>Si <span class="negrita">no hay ningún proyecto</span> abierto: haz clic en <span class="r-word">New
+                    Project</span>.
+                <a href="UD6/images/UD6_2025-11-14-15-14-26.png">
+                    <figure><img src="UD6/images/UD6_2025-11-14-15-14-26.png" /><br>
+                        <figcaption>New project</figcaption>
+                    </figure>
+                </a>
                 <br>
-                                
+
             </li>
             <li>Si <span class="negrita">ya hay un proyecto abierto</span>, hay dos opciones:
                 <ul>
                     <li>Cerrar el proyecto y luego hacer clic en <span class="r-word">New Project.</span>
-                        <figure><img src="UD6/images/ud6-2023-10-02-11-03-35.png" /><br><figcaption></figcaption></figure>
+                        <figure><img src="UD6/images/ud6-2023-10-02-11-03-35.png" /><br>
+                            <figcaption></figcaption>
+                        </figure>
                         <br>
-                        
+
                     </li>
                     <li>Crear un nuevo proyecto directamente.
-                        <figure><img src="UD6/images/ud6-2023-10-02-11-03-56.png" /><br><figcaption></figcaption></figure>
+                        <figure><img src="UD6/images/ud6-2023-10-02-11-03-56.png" /><br>
+                            <figcaption></figcaption>
+                        </figure>
                         <br>
-                        
+
                     </li>
-                </ul>            
-                </li>
-            <li>Crear un proyecto desde un <span class="negrita">sistema de control de versiones</span> (VCS): <br> introduce la URL del repositorio.
-            <figure><img src="UD6/images/ud6-2023-10-02-11-04-55.png" /><br><figcaption></figcaption></figure>
-            <br>
+                </ul>
+            </li>
+            <li>Crear un proyecto desde un <span class="negrita">sistema de control de versiones</span> (VCS): <br>
+                introduce la URL del repositorio.
+                <figure><img src="UD6/images/ud6-2023-10-02-11-04-55.png" /><br>
+                    <figcaption></figcaption>
+                </figure>
+                <br>
             </li>
         </ul>
-    </p>
-    
-    <p>Al crear el proyecto, Android Studio muestra una ventana con todas las plantillas disponibles.</p>
-    
-    <p>Debes elegir <span class="negrita">Phone and Tablet</span> y luego <span class="negrita">Empty Activity</span> (usa Jetpack Compose).</p>
-    <a href="UD6/images/UD6_2025-11-14-15-24-13.png"><figure><img src="UD6/images/UD6_2025-11-14-15-24-13.png" /><br><figcaption>Selección de plantilla</figcaption></figure></a>
-    <br>
-    
-    
-    
-    <p>Las plantillas que incluyen la palabra "Views" en su nombre usan el método tradicional basado en XML.</p>
-    
-    <p>A continuación, completa las opciones del proyecto:</p>
-    <ul>
-        <li><span class="negrita">Name</span>: debe ser significativo.</li>
-        <li><span class="negrita">Package</span>: debe ser único. Para asegurarlo y durante este curso, usaremos la siguiente estructura:
-            <span class="cursiva">com.XXYYZZ.nombreproyecto</span>, donde XX son las dos primeras letras de tu nombre, YY las dos primeras de tu primer apellido y ZZ las dos primeras de tu segundo apellido.</li>
-        <li><span class="negrita">Save location</span>: el directorio donde quieres guardar el proyecto.</li>
-        <li><span class="negrita">Minimum SDK</span>: API 26 ("Oreo"; Android 8.0).
-           <p> Elegir el SDK mínimo es un paso crucial al iniciar un proyecto.</p>
-           
-    <ul>
-        <li>Versión más baja posible -> soporta mayor número de dispositivos.</li>
-        <li>Versión más alta -> acceso a todas las funcionalidades.</li>
-    </ul>
-            <p>En <span class="negrita">todas las actividades del curso (cuando sea posible)</span> seleccionaremos API 26 (alcance 95.4%).
-    
-    Aunque API 28 (89.6%) o API 29 (81.2%) también podrían elegirse sin problema, hoy en día hay pocos dispositivos por debajo de esas versiones.
-    </p>
-        </li>
-    </ul>
-    <a href="UD6/images/UD6_2025-11-14-15-25-46.png"><figure><img src="UD6/images/UD6_2025-11-14-15-25-46.png" /><br><figcaption>Selección características del proyecto</figcaption></figure></a>
-    <br>
-    
-    
-        
-    <p><span class="negrita">Una vez seleccionadas todas las opciones, haz clic en <span class="negrita">Finish</span>.</span></p>
-    
-    <p>En este punto, <span class="negrita">Android Studio comenzará a crear el proyecto</span>.</p>
-    
-    <p>Durante el proceso de creación del proyecto, Android Studio descargará todos los componentes necesarios.
-        <span class="negrita">Se recomienda no interactuar con el programa hasta que la creación del proyecto haya finalizado por completo.</span></p>
-    
-    <p>Puedes comprobar el progreso de descarga y creación del proyecto en la esquina inferior derecha.</p>
-    <a href="UD6/images/ud6-2023-10-02-11-15-12.png" target="_BLANK"><figure><img src="UD6/images/ud6-2023-10-02-11-15-12.png" /><br><figcaption></figcaption></figure></a>
-    <br>
-    
-    
-    </section><!-- End section Creating a Project in Android -->
-    
+        </p>
 
-<!--*********************************************************Estructura de Un proyecto en Android***********************************************************-->
-<section class="apartado">
-    <a id="sEstructuradeUnproyectoenAndroid"></a>
-    <h2>Estructura de un proyecto en Android</h2>
-    
-    <p>Una vez creado el proyecto, puedes ver todos sus archivos. Dependiendo de la vista seleccionada (Project, Android, etc.), los archivos pueden aparecer en ubicaciones distintas. A continuación se explican los más importantes.</p>
-    
-    <a href="UD6/images/ud_6-2024-12-02-11-30-47.png" target="_BLANK"><figure><img src="UD6/images/ud_6-2024-12-02-11-30-47.png" /><br><figcaption>Estructura del proyecto - Vista Android</figcaption></figure></a>
-    <br>
-    
-    
-    <h3>Archivo: AndroidManifest.xml</h3>
-    <p>Vista Project -> <span class="inline-file">app/src/main/AndroidManifest.xml</span> <br>
-    Vista Android -> <span class="inline-file">manifests/AndroidManifest.xml</span>
-    </p>
-    
-    <p>Este archivo describe las características fundamentales de la aplicación y sus componentes. Especifica las <span class="negrita">Activities</span> (pantallas) incluidas en la aplicación y los permisos requeridos por estas Activities, como cámara, contactos, internet, etc.</p>
-    
-    <h3>Archivos: build.gradle</h3>
-    <p>Android Studio usa <span class="negrita">Gradle</span> para compilar y construir la aplicación.</p>
-    
-    <p>Hay un archivo <span class="negrita">build.gradle</span> para todo el proyecto y otro <span class="negrita">build.gradle</span> para cada módulo del proyecto.</p>
-    
-    <p>Generalmente, el archivo <span class="negrita">build.gradle</span> del módulo <span class="negrita">app</span> es el más relevante.</p>
-    
-    <p>Este archivo contiene las dependencias de compilación de la aplicación y las configuraciones por defecto.</p>
-    
-    <p>Vista Project -> <span class="inline-file">app/build.gradle</span> <br>
-    Vista Android -> <span class="inline-file">Gradle Scripts/build.gradle.kts (Module: app)</span></p>
-    
-    <p class="sub-section">Archivo: build.gradle.kts (Module: app)</p>
-    
-    <ul>
-        <li><span class="negrita">compiledSdk</span> -> Versión usada para compilar. Por defecto, es la última SDK instalada en el equipo.</li>
-        <li><span class="negrita">applicationId</span> -> Nombre completo del paquete de la aplicación.</li>
-        <li><span class="negrita">minSdk</span> -> Versión mínima de SDK especificada al crear el proyecto. Será la versión más antigua compatible con la aplicación.</li>
-        <li><span class="negrita">targetSdk</span> -> La versión más alta con la que se prueba la aplicación.</li>
-        <li><span class="negrita">dependencies</span> -> Sección donde se añaden las dependencias requeridas por la aplicación.</li>
-    </ul>
-    
-    <h3>Archivo: MainActivity.kt</h3>
-    
-    <p>Vista Project -> <span class="inline-file">app/src/main/java/com.catata.contadordeclics/MainActivity.kt</span><br>
-    Vista Android -> <span class="inline-file">java/com.catata.contadordeclics/MainActivity.kt</span>
-    </p>
-    
-    <p>En este archivo se programa el comportamiento de esa pantalla.</p>
-    <p>Por defecto, contiene:
+        <p>Al crear el proyecto, Android Studio muestra una ventana con todas las plantillas disponibles.</p>
+
+        <p>Debes elegir <span class="negrita">Phone and Tablet</span> y luego <span class="negrita">Empty
+                Activity</span> (usa Jetpack Compose).</p>
+        <a href="UD6/images/UD6_2025-11-14-15-24-13.png">
+            <figure><img src="UD6/images/UD6_2025-11-14-15-24-13.png" /><br>
+                <figcaption>Selección de plantilla</figcaption>
+            </figure>
+        </a>
+        <br>
+
+
+
+        <p>Las plantillas que incluyen la palabra "Views" en su nombre usan el método tradicional basado en XML.</p>
+
+        <p>A continuación, completa las opciones del proyecto:</p>
         <ul>
-            <li>La definición de la Activity principal y su método <span class="r-word">onCreate</span>. Debido al ciclo de vida de las Activities, el código en <span class="r-word">onCreate</span> se ejecutará cuando la Activity alcance ese estado.</li>
+            <li><span class="negrita">Name</span>: debe ser significativo.</li>
+            <li><span class="negrita">Package</span>: debe ser único. Para asegurarlo y durante este curso, usaremos la
+                siguiente estructura:
+                <span class="cursiva">com.XXYYZZ.nombreproyecto</span>, donde XX son las dos primeras letras de tu
+                nombre, YY las dos primeras de tu primer apellido y ZZ las dos primeras de tu segundo apellido.
+            </li>
+            <li><span class="negrita">Save location</span>: el directorio donde quieres guardar el proyecto.</li>
+            <li><span class="negrita">Minimum SDK</span>: API 26 ("Oreo"; Android 8.0).
+                <p> Elegir el SDK mínimo es un paso crucial al iniciar un proyecto.</p>
+
+                <ul>
+                    <li>Versión más baja posible -> soporta mayor número de dispositivos.</li>
+                    <li>Versión más alta -> acceso a todas las funcionalidades.</li>
+                </ul>
+                <p>En <span class="negrita">todas las actividades del curso (cuando sea posible)</span> seleccionaremos
+                    API 26 (alcance 95.4%).
+
+                    Aunque API 28 (89.6%) o API 29 (81.2%) también podrían elegirse sin problema, hoy en día hay pocos
+                    dispositivos por debajo de esas versiones.
+                </p>
+            </li>
+        </ul>
+        <a href="UD6/images/UD6_2025-11-14-15-25-46.png">
+            <figure><img src="UD6/images/UD6_2025-11-14-15-25-46.png" /><br>
+                <figcaption>Selección características del proyecto</figcaption>
+            </figure>
+        </a>
+        <br>
+
+
+
+        <p><span class="negrita">Una vez seleccionadas todas las opciones, haz clic en <span
+                    class="negrita">Finish</span>.</span></p>
+
+        <p>En este punto, <span class="negrita">Android Studio comenzará a crear el proyecto</span>.</p>
+
+        <p>Durante el proceso de creación del proyecto, Android Studio descargará todos los componentes necesarios.
+            <span class="negrita">Se recomienda no interactuar con el programa hasta que la creación del proyecto haya
+                finalizado por completo.</span>
+        </p>
+
+        <p>Puedes comprobar el progreso de descarga y creación del proyecto en la esquina inferior derecha.</p>
+        <a href="UD6/images/ud6-2023-10-02-11-15-12.png" target="_BLANK">
+            <figure><img src="UD6/images/ud6-2023-10-02-11-15-12.png" /><br>
+                <figcaption></figcaption>
+            </figure>
+        </a>
+        <br>
+
+
+    </section><!-- End section Creating a Project in Android -->
+
+
+    <!--*********************************************************Estructura de Un proyecto en Android***********************************************************-->
+    <section class="apartado">
+        <a id="sEstructuradeUnproyectoenAndroid"></a>
+        <h2>Estructura de un proyecto en Android</h2>
+
+        <p>Una vez creado el proyecto, puedes ver todos sus archivos. Dependiendo de la vista seleccionada (Project,
+            Android, etc.), los archivos pueden aparecer en ubicaciones distintas. A continuación se explican los más
+            importantes.</p>
+
+        <a href="UD6/images/ud_6-2024-12-02-11-30-47.png" target="_BLANK">
+            <figure><img src="UD6/images/ud_6-2024-12-02-11-30-47.png" /><br>
+                <figcaption>Estructura del proyecto - Vista Android</figcaption>
+            </figure>
+        </a>
+        <br>
+
+
+        <h3>Archivo: AndroidManifest.xml</h3>
+        <p>Vista Project -> <span class="inline-file">app/src/main/AndroidManifest.xml</span> <br>
+            Vista Android -> <span class="inline-file">manifests/AndroidManifest.xml</span>
+        </p>
+
+        <p>Este archivo describe las características fundamentales de la aplicación y sus componentes. Especifica las
+            <span class="negrita">Activities</span> (pantallas) incluidas en la aplicación y los permisos requeridos por
+            estas Activities, como cámara, contactos, internet, etc.</p>
+
+        <h3>Archivos: build.gradle</h3>
+        <p>Android Studio usa <span class="negrita">Gradle</span> para compilar y construir la aplicación.</p>
+
+        <p>Hay un archivo <span class="negrita">build.gradle</span> para todo el proyecto y otro <span
+                class="negrita">build.gradle</span> para cada módulo del proyecto.</p>
+
+        <p>Generalmente, el archivo <span class="negrita">build.gradle</span> del módulo <span
+                class="negrita">app</span> es el más relevante.</p>
+
+        <p>Este archivo contiene las dependencias de compilación de la aplicación y las configuraciones por defecto.</p>
+
+        <p>Vista Project -> <span class="inline-file">app/build.gradle</span> <br>
+            Vista Android -> <span class="inline-file">Gradle Scripts/build.gradle.kts (Module: app)</span></p>
+
+        <p class="sub-section">Archivo: build.gradle.kts (Module: app)</p>
+
+        <ul>
+            <li><span class="negrita">compiledSdk</span> -> Versión usada para compilar. Por defecto, es la última SDK
+                instalada en el equipo.</li>
+            <li><span class="negrita">applicationId</span> -> Nombre completo del paquete de la aplicación.</li>
+            <li><span class="negrita">minSdk</span> -> Versión mínima de SDK especificada al crear el proyecto. Será la
+                versión más antigua compatible con la aplicación.</li>
+            <li><span class="negrita">targetSdk</span> -> La versión más alta con la que se prueba la aplicación.</li>
+            <li><span class="negrita">dependencies</span> -> Sección donde se añaden las dependencias requeridas por la
+                aplicación.</li>
+        </ul>
+
+        <h3>Archivo: MainActivity.kt</h3>
+
+        <p>Vista Project -> <span
+                class="inline-file">app/src/main/java/com.catata.contadordeclics/MainActivity.kt</span><br>
+            Vista Android -> <span class="inline-file">java/com.catata.contadordeclics/MainActivity.kt</span>
+        </p>
+
+        <p>En este archivo se programa el comportamiento de esa pantalla.</p>
+        <p>Por defecto, contiene:
+        <ul>
+            <li>La definición de la Activity principal y su método <span class="r-word">onCreate</span>. Debido al ciclo
+                de vida de las Activities, el código en <span class="r-word">onCreate</span> se ejecutará cuando la
+                Activity alcance ese estado.</li>
             <li>Un componente de Jetpack Compose con texto (<span class="r-word">Text</span>).</li>
             <li>Un componente de Jetpack Compose con vista previa (<span class="r-word">@Preview</span>).</li>
         </ul>
-    </p>
-    
-    <h3>Carpeta: ui/theme</h3>
-    <p>Vista Project -> <span class="inline-folder">app/src/main/java/com.catata.contadordeclics/ui.theme</span><br>
-    Vista Android -> <span class="inline-folder">java/com.catata.contadordeclics/ui.theme</span>
-    </p>
-    
-    <p>Este directorio contiene archivos que configuran el tema usado por la aplicación.
-    
-    Por defecto, Jetpack Compose usa un tema basado en <a class="enlace" target="_blank" href="https://m3.material.io/">Material Design</a> (la guía de diseño de Google).
-    
-    Estos archivos en la carpeta ui.theme permiten ampliar ese tema.
-    </p>
-    
-    <h3>Carpeta: res</h3>
-    
-    <p>Vista Project -> <span class="inline-folder">app/src/main/res</span><br>
-    Vista Android -> <span class="inline-folder">res</span></p>
-    
-    <p>Este directorio contiene los recursos de la aplicación.</p>
-        
-    <h3>Carpeta: drawable</h3>
-    <p>Vista Project -> <span class="inline-folder">app/src/main/res/drawable</span><br>
-    Vista Android -> <span class="inline-folder">res/drawable</span></p>
-    
-    <p>Directorio donde se almacenan las imágenes de la aplicación.</p>
-    
-    <h3>Carpeta: mipmap</h3>
-    
-    <p>Vista Project -> <span class="inline-folder">app/src/main/res/midmap-RESOLUTION</span> <br>
-    
-    <p>Directorios que contienen el icono de la aplicación para diferentes densidades de píxeles de pantalla.</p>
-    <figure><img src="UD6/images/ud6-2023-10-02-11-40-51.png" /><br><figcaption></figcaption></figure>
-    <br>
-    <p>
-    Vista Android -> <span class="inline-folder">res/mipmap</span> <br>
-    
-    <p>En la vista Android, los archivos se agrupan por nombre. La RESOLUTION en la que se usan se muestra junto al nombre.</p>
-    <figure><img src="UD6/images/ud6-2023-10-02-11-41-28.png" /><br><figcaption></figcaption></figure>
-    <br>
-    
-    <p>Nomenclatura de RESOLUCION en Android:
-    <ul>
-        <li>xxxhdpi -> 640 dpi</li>
-        <li>xxhdpi -> 480 dpi</li>
-        <li>xhdpi -> 320 dpi</li>
-        <li>hdpi -> 240 dpi</li>
-        <li>mdpi -> 160 dpi</li>
-    </ul>
-    </p>
-    
+        </p>
+
+        <h3>Carpeta: ui/theme</h3>
+        <p>Vista Project -> <span class="inline-folder">app/src/main/java/com.catata.contadordeclics/ui.theme</span><br>
+            Vista Android -> <span class="inline-folder">java/com.catata.contadordeclics/ui.theme</span>
+        </p>
+
+        <p>Este directorio contiene archivos que configuran el tema usado por la aplicación.
+
+            Por defecto, Jetpack Compose usa un tema basado en <a class="enlace" target="_blank"
+                href="https://m3.material.io/">Material Design</a> (la guía de diseño de Google).
+
+            Estos archivos en la carpeta ui.theme permiten ampliar ese tema.
+        </p>
+
+        <h3>Carpeta: res</h3>
+
+        <p>Vista Project -> <span class="inline-folder">app/src/main/res</span><br>
+            Vista Android -> <span class="inline-folder">res</span></p>
+
+        <p>Este directorio contiene los recursos de la aplicación.</p>
+
+        <h3>Carpeta: drawable</h3>
+        <p>Vista Project -> <span class="inline-folder">app/src/main/res/drawable</span><br>
+            Vista Android -> <span class="inline-folder">res/drawable</span></p>
+
+        <p>Directorio donde se almacenan las imágenes de la aplicación.</p>
+
+        <h3>Carpeta: mipmap</h3>
+
+        <p>Vista Project -> <span class="inline-folder">app/src/main/res/midmap-RESOLUTION</span> <br>
+
+        <p>Directorios que contienen el icono de la aplicación para diferentes densidades de píxeles de pantalla.</p>
+        <figure><img src="UD6/images/ud6-2023-10-02-11-40-51.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+        <p>
+            Vista Android -> <span class="inline-folder">res/mipmap</span> <br>
+
+        <p>En la vista Android, los archivos se agrupan por nombre. La RESOLUTION en la que se usan se muestra junto al
+            nombre.</p>
+        <figure><img src="UD6/images/ud6-2023-10-02-11-41-28.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+
+        <p>Nomenclatura de RESOLUCION en Android:
+        <ul>
+            <li>xxxhdpi -> 640 dpi</li>
+            <li>xxhdpi -> 480 dpi</li>
+            <li>xhdpi -> 320 dpi</li>
+            <li>hdpi -> 240 dpi</li>
+            <li>mdpi -> 160 dpi</li>
+        </ul>
+        </p>
+
     </section><!-- End section Structure of an Android Project -->
 
 
-  
-    
-<section class="apartado">
-    <a id="sUnidadesdeMedidaenAndroid"></a>
-    <h2>Unidades de medida en Android</h2>
-    
-    <p>Al desarrollar aplicaciones Android es esencial entender las unidades de medida disponibles.</p>
-    
-    <p>Android soporta las siguientes unidades:</p>
-    <ul>
-        <li>dp -> density-independent pixels (píxeles independientes de densidad)</li>
-        <li>sp -> scale-independent pixels (píxeles independientes de escala, para texto)</li>
-        <li>in -> pulgadas</li>
-        <li>mm -> milímetros</li>
-        <li>pt -> puntos (1 pt = 1/72 de pulgada)</li>
-        <li>px -> píxeles reales</li>
-    </ul>
-    
-    <h3><span class="negrita">dp</span> (density-independent pixels):</h3>
-    <p>
-        1 dp equivale a 1 píxel en una pantalla de 160 dpi. Es una unidad flexible que se adapta según la densidad de la pantalla:
-        <section><pre><code class="language-kotlin">dp = (width in pixels * 160) / screen density</code></pre></section>
-        Es la unidad recomendada para la mayoría de tamaños y márgenes, excepto para texto.
-    </p>
-    
-    <h3><span class="negrita">sp</span> (scale-independent pixels):</h3>
-    <p>
-        Similar a dp, pero además escala con la preferencia de tamaño de letra del usuario. Usar sp para tamaños de fuente.
-    </p>
-    
-    <h3><span class="negrita">in / mm / pt</span>:</h3>
-    <p>
-        Unidades basadas en el tamaño físico de la pantalla (pulgadas, milímetros y puntos).
-    </p>
-    
-    <h3><span class="negrita">px</span> (píxeles):</h3>
-    <p>
-        Corresponde a un píxel físico de la pantalla. Su uso no es recomendable para diseño adaptable, ya que los dispositivos tienen distintas densidades (ppi).
-    </p>
-</section><!-- End section Unidades de medida en Android -->
 
-<section class="apartado">
-    <a id="sPrimeraaplicaciónAndroid_Contadordeclics"></a>
-    <h2>Primera aplicación Android: Contador de clics</h2>
-    <p>El contenido inicial de un proyecto con Jetpack Compose es el siguiente:</p>
-    
-    <a href="UD6/images/ud_6-2024-12-02-11-34-25.png" target="_BLANK"><figure><img src="UD6/images/ud_6-2024-12-02-11-34-25.png" /><br><figcaption>Contenido inicial</figcaption></figure></a>
-    <br>
-    
-    <p>En el archivo <span class="inline-file">MainActivity.kt</span> se pueden distinguir tres partes principales:</p>
-    
-    <section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
+
+    <section class="apartado">
+        <a id="sUnidadesdeMedidaenAndroid"></a>
+        <h2>Unidades de medida en Android</h2>
+
+        <p>Al desarrollar aplicaciones Android es esencial entender las unidades de medida disponibles.</p>
+
+        <p>Android soporta las siguientes unidades:</p>
+        <ul>
+            <li>dp -> density-independent pixels (píxeles independientes de densidad)</li>
+            <li>sp -> scale-independent pixels (píxeles independientes de escala, para texto)</li>
+            <li>in -> pulgadas</li>
+            <li>mm -> milímetros</li>
+            <li>pt -> puntos (1 pt = 1/72 de pulgada)</li>
+            <li>px -> píxeles reales</li>
+        </ul>
+
+        <h3><span class="negrita">dp</span> (density-independent pixels):</h3>
+        <p>
+            1 dp equivale a 1 píxel en una pantalla de 160 dpi. Es una unidad flexible que se adapta según la densidad
+            de la pantalla:
+        <section>
+            <pre><code class="language-kotlin">dp = (width in pixels * 160) / screen density</code></pre>
+        </section>
+        Es la unidad recomendada para la mayoría de tamaños y márgenes, excepto para texto.
+        </p>
+
+        <h3><span class="negrita">sp</span> (scale-independent pixels):</h3>
+        <p>
+            Similar a dp, pero además escala con la preferencia de tamaño de letra del usuario. Usar sp para tamaños de
+            fuente.
+        </p>
+
+        <h3><span class="negrita">in / mm / pt</span>:</h3>
+        <p>
+            Unidades basadas en el tamaño físico de la pantalla (pulgadas, milímetros y puntos).
+        </p>
+
+        <h3><span class="negrita">px</span> (píxeles):</h3>
+        <p>
+            Corresponde a un píxel físico de la pantalla. Su uso no es recomendable para diseño adaptable, ya que los
+            dispositivos tienen distintas densidades (ppi).
+        </p>
+    </section><!-- End section Unidades de medida en Android -->
+
+    <section class="apartado">
+        <a id="sPrimeraaplicaciónAndroid_Contadordeclics"></a>
+        <h2>Primera aplicación Android: Contador de clics</h2>
+        <p>El contenido inicial de un proyecto con Jetpack Compose es el siguiente:</p>
+
+        <a href="UD6/images/ud_6-2024-12-02-11-34-25.png" target="_BLANK">
+            <figure><img src="UD6/images/ud_6-2024-12-02-11-34-25.png" /><br>
+                <figcaption>Contenido inicial</figcaption>
+            </figure>
+        </a>
+        <br>
+
+        <p>En el archivo <span class="inline-file">MainActivity.kt</span> se pueden distinguir tres partes principales:
+        </p>
+
+        <section>
+            <pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -572,65 +693,96 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }</code></pre>
-    </section><br><br>
-    
-    <p>Clase <span class="r-word">MainActivity</span>:</p>
-    <ul>
-        <li>Extiende <span class="r-word">ComponentActivity</span>, que <span class="subrayado">es una Activity que soporta componentes de Jetpack Compose</span>.</li>
-        <li>Contiene el método <span class="r-word">onCreate</span>, que se ejecuta cuando la aplicación arranca.</li>
-        <li>Dentro de <span class="negrita">onCreate</span> se carga el <span class="negrita">tema del proyecto</span> y, dentro de él, se llama al componente <span class="r-word">Scaffold</span>, que a su vez invoca a la función <span class="d-word">Greeting</span>.</li>
-    </ul>
-    
-    <p>Función <span class="d-word">Greeting</span>:</p>
-    <ul>
-        <li>Acepta un <span class="cursiva">String</span> y un <span class="cursiva">Modifier</span> y genera un componente de Jetpack Compose <span class="r-word">Text</span>.</li>
-        <li>Esta función es un componente de Jetpack Compose porque está anotada con <span class="negrita">@Composable</span>.</li>
-    </ul>
-    
-    <p>Función <span class="d-word">GreetingPreview</span>:</p>
-    <ul>
-        <li>Carga el tema del proyecto y llama dentro de él a la función <span class="d-word">Greeting</span>.</li>
-        <li>Es un componente de Jetpack Compose porque está anotada con <span class="negrita">@Composable</span>.</li>
-        <li>Permite previsualizar su contenido porque además está anotada con <span class="negrita">@Preview</span>.</li>
-    </ul>
-    
-    <p>En el código se pueden ver los siguientes componentes de Jetpack Compose:</p>
-    <ul>
-        <li><span class="negrita">Scaffold</span>: Componente del sistema basado en Material Design que permite definir elevación, fondo, etc.</li>
-        <li><span class="negrita">Text</span>: Componente del sistema para mostrar texto.</li>
-        <li><span class="negrita">ClickCounterTheme</span>: Componente personalizado creado con el proyecto que extiende el tema por defecto de Material Design. Definido en el archivo <span class="inline-file">ui.theme/Theme.kt</span>.</li>
-        <li><span class="negrita">Greeting</span>: Componente personalizado que extiende la funcionalidad del componente <span class="r-word">Text</span>.</li>
-        <li><span class="negrita">GreetingPreview</span>: Componente personalizado para previsualizar el componente <span class="r-word">Greeting</span>.</li>
-    </ul>
-    
-    <h3>@Composable</h3>
-    <p>Todos los componentes de Jetpack Compose, tanto los del sistema como los personalizados, son funciones que deben estar anotadas con <span class="r-word">@Composable</span>.</p>
-    <a href="UD6/images/ud6-2023-10-02-12-07-04.png" target="_BLANK"><figure><img src="UD6/images/ud6-2023-10-02-12-07-04.png" /><br><figcaption>Anotado con @Composable</figcaption></figure></a>
-    <br>
-    
-    <h3>@Preview</h3>
-<p>Android Studio permite ver una previsualización en tiempo real de los componentes que se definan, para ello se debe etiquetar un componente con <span class="r-word">@Preview</span>
-     como ocurre con la función <span class="d-word">GreetingPreview</span>.</p>
+        </section><br><br>
 
-<p>No se pueden previsualizar componentes que reciben funciones, para solucionar esto se crean componentes que envuelvan a esos que reciben funciones.</p>
+        <p>Clase <span class="r-word">MainActivity</span>:</p>
+        <ul>
+            <li>Extiende <span class="r-word">ComponentActivity</span>, que <span class="subrayado">es una Activity que
+                    soporta componentes de Jetpack Compose</span>.</li>
+            <li>Contiene el método <span class="r-word">onCreate</span>, que se ejecuta cuando la aplicación arranca.
+            </li>
+            <li>Dentro de <span class="negrita">onCreate</span> se carga el <span class="negrita">tema del
+                    proyecto</span> y, dentro de él, se llama al componente <span class="r-word">Scaffold</span>, que a
+                su vez invoca a la función <span class="d-word">Greeting</span>.</li>
+        </ul>
 
-<figure><img src="UD6/images/ud6-2023-10-02-12-09-04.png" /><br><figcaption></figcaption></figure>
-<br>
+        <p>Función <span class="d-word">Greeting</span>:</p>
+        <ul>
+            <li>Acepta un <span class="cursiva">String</span> y un <span class="cursiva">Modifier</span> y genera un
+                componente de Jetpack Compose <span class="r-word">Text</span>.</li>
+            <li>Esta función es un componente de Jetpack Compose porque está anotada con <span
+                    class="negrita">@Composable</span>.</li>
+        </ul>
 
-<p>Es muy importante que la previsualización muestre lo mismo que se mostrará en la ejecución de la aplicación por eso se puede realizar el siguiente cambio: </p>
-<figure><img src="UD6/images/ud6-2023-10-02-12-11-16.png" /><br><figcaption></figcaption></figure>
-<br>
+        <p>Función <span class="d-word">GreetingPreview</span>:</p>
+        <ul>
+            <li>Carga el tema del proyecto y llama dentro de él a la función <span class="d-word">Greeting</span>.</li>
+            <li>Es un componente de Jetpack Compose porque está anotada con <span class="negrita">@Composable</span>.
+            </li>
+            <li>Permite previsualizar su contenido porque además está anotada con <span class="negrita">@Preview</span>.
+            </li>
+        </ul>
 
-<p>Para poder ver las previsualizaciones en Android Studio se debe seleccionar la opción Split en la parte superior derecha.</p>
-<figure><img src="UD6/images/ud6-2023-10-02-12-14-40.png" /><br><figcaption></figcaption></figure>
-<br>
-<p>La primera vez que se quiere previsualizar un componente y cuando hay cambios grandes o errores en el <span class="negrita">build</span> se deberá pulsar en <span class="negrita">Build & Refresh</span>…</p>
+        <p>En el código se pueden ver los siguientes componentes de Jetpack Compose:</p>
+        <ul>
+            <li><span class="negrita">Scaffold</span>: Componente del sistema basado en Material Design que permite
+                definir elevación, fondo, etc.</li>
+            <li><span class="negrita">Text</span>: Componente del sistema para mostrar texto.</li>
+            <li><span class="negrita">ClickCounterTheme</span>: Componente personalizado creado con el proyecto que
+                extiende el tema por defecto de Material Design. Definido en el archivo <span
+                    class="inline-file">ui.theme/Theme.kt</span>.</li>
+            <li><span class="negrita">Greeting</span>: Componente personalizado que extiende la funcionalidad del
+                componente <span class="r-word">Text</span>.</li>
+            <li><span class="negrita">GreetingPreview</span>: Componente personalizado para previsualizar el componente
+                <span class="r-word">Greeting</span>.</li>
+        </ul>
 
-<p class="sub-section">Opciones</p>
+        <h3>@Composable</h3>
+        <p>Todos los componentes de Jetpack Compose, tanto los del sistema como los personalizados, son funciones que
+            deben estar anotadas con <span class="r-word">@Composable</span>.</p>
+        <a href="UD6/images/ud6-2023-10-02-12-07-04.png" target="_BLANK">
+            <figure><img src="UD6/images/ud6-2023-10-02-12-07-04.png" /><br>
+                <figcaption>Anotado con @Composable</figcaption>
+            </figure>
+        </a>
+        <br>
 
-<p>Pulsando la tecla <span class="negrita">CONTROL</span> y haciendo <span class="negrita">clic</span> sobre @Preview se pueden ver todas las opciones disponibles:</p>
+        <h3>@Preview</h3>
+        <p>Android Studio permite ver una previsualización en tiempo real de los componentes que se definan, para ello
+            se debe etiquetar un componente con <span class="r-word">@Preview</span>
+            como ocurre con la función <span class="d-word">GreetingPreview</span>.</p>
 
-<section><pre><code class="language-kotlin">annotation class Preview(
+        <p>No se pueden previsualizar componentes que reciben funciones, para solucionar esto se crean componentes que
+            envuelvan a esos que reciben funciones.</p>
+
+        <figure><img src="UD6/images/ud6-2023-10-02-12-09-04.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+
+        <p>Es muy importante que la previsualización muestre lo mismo que se mostrará en la ejecución de la aplicación
+            por eso se puede realizar el siguiente cambio: </p>
+        <figure><img src="UD6/images/ud6-2023-10-02-12-11-16.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+
+        <p>Para poder ver las previsualizaciones en Android Studio se debe seleccionar la opción Split en la parte
+            superior derecha.</p>
+        <figure><img src="UD6/images/ud6-2023-10-02-12-14-40.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+        <p>La primera vez que se quiere previsualizar un componente y cuando hay cambios grandes o errores en el <span
+                class="negrita">build</span> se deberá pulsar en <span class="negrita">Build & Refresh</span>…</p>
+
+        <p class="sub-section">Opciones</p>
+
+        <p>Pulsando la tecla <span class="negrita">CONTROL</span> y haciendo <span class="negrita">clic</span> sobre
+            @Preview se pueden ver todas las opciones disponibles:</p>
+
+        <section>
+            <pre><code class="language-kotlin">annotation class Preview(
     val name: String = "",
     val group: String = "",
     @IntRange(from = 1) val apiLevel: Int = -1,
@@ -647,56 +799,79 @@ fun GreetingPreview() {
     @Device val device: String = Devices.DEFAULT,
     @Wallpaper val wallpaper: Int = Wallpapers.NONE,
 )</code></pre>
-</section><br><br>
+        </section><br><br>
 
-<p>Por ejemplo, se puede indicar un tamaño a la previsualización:</p>
-<figure><img src="UD6/images/ud6-2023-10-02-12-19-08.png" /><br><figcaption></figcaption></figure>
-<br>
+        <p>Por ejemplo, se puede indicar un tamaño a la previsualización:</p>
+        <figure><img src="UD6/images/ud6-2023-10-02-12-19-08.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
 
-<p>Se puede ver el componente dentro de la interfaz del sistema o incluso indicar un dispositivo concreto:</p>
-<figure><img src="UD6/images/ud6-2023-10-02-12-21-50.png" /><br><figcaption></figcaption></figure>
-<br>
-<p>Se pueden crear varias previsualizaciones para un componente:</p>
-<figure><img src="UD6/images/ud6-2023-10-02-12-24-32.png" /><br><figcaption></figcaption></figure>
-<br>
-<p>Esto tiene especial utilidad para mostrar los modos claro y oscuro.</p>
-<figure><img src="UD6/images/ud6-2023-10-02-12-29-25.png" /><br><figcaption>Dos visualizaciones</figcaption></figure>
-<br>
-<p>También pueden haber varios componentes con previsualización:</p>
-<figure><img src="UD6/images/ud6-2023-10-02-12-31-34.png" /><br><figcaption></figcaption></figure>
-<br>
-<p>Las previsualizaciones también permiten ver cómo quedan los componentes cuando se está desarrollando una aplicación multi idioma:</p>
-<figure><img src="UD6/images/ud6-2023-10-02-12-31-57.png" /><br><figcaption></figcaption></figure>
-<br>
+        <p>Se puede ver el componente dentro de la interfaz del sistema o incluso indicar un dispositivo concreto:</p>
+        <figure><img src="UD6/images/ud6-2023-10-02-12-21-50.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+        <p>Se pueden crear varias previsualizaciones para un componente:</p>
+        <figure><img src="UD6/images/ud6-2023-10-02-12-24-32.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+        <p>Esto tiene especial utilidad para mostrar los modos claro y oscuro.</p>
+        <figure><img src="UD6/images/ud6-2023-10-02-12-29-25.png" /><br>
+            <figcaption>Dos visualizaciones</figcaption>
+        </figure>
+        <br>
+        <p>También pueden haber varios componentes con previsualización:</p>
+        <figure><img src="UD6/images/ud6-2023-10-02-12-31-34.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+        <p>Las previsualizaciones también permiten ver cómo quedan los componentes cuando se está desarrollando una
+            aplicación multi idioma:</p>
+        <figure><img src="UD6/images/ud6-2023-10-02-12-31-57.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
 
-<p class="sub-section">Limitaciones</p>
-<p>Las previsualizaciones tienen una serie de limitaciones:</p>
-<ul>
-    <li>No pueden recibir parámetros.</li>
-    <li>No tienen acceso a los archivos.</li>
-    <li>No tienen acceso a la red (no cargarán datos de internet).</li>
-    <li>Algunas API no funcionan completamente bien.</li>
-</u>
+        <p class="sub-section">Limitaciones</p>
+        <p>Las previsualizaciones tienen una serie de limitaciones:</p>
+        <ul>
+            <li>No pueden recibir parámetros.</li>
+            <li>No tienen acceso a los archivos.</li>
+            <li>No tienen acceso a la red (no cargarán datos de internet).</li>
+            <li>Algunas API no funcionan completamente bien.</li>
+            </u>
 
-<p>En la documentación oficial está toda la información sobre <a class="enlace" target="_blank" href="https://developer.android.com/jetpack/compose/tooling/previews">@Preview</a>.</p>
+            <p>En la documentación oficial está toda la información sobre <a class="enlace" target="_blank"
+                    href="https://developer.android.com/jetpack/compose/tooling/previews">@Preview</a>.</p>
 
-    
-    <h3>Live Edit</h3>
-    <p>Para que los cambios se actualicen automáticamente en el emulador, configura la opción <span class="negrita">Live Edit</span> de Android Studio.</p>
-    <p>File -> Settings (CONTROL+ALT+S)</p>
-    
-    <a href="UD6/images/ud6-2023-10-02-12-36-12.png" target="_BLANK"><figure><img src="UD6/images/ud6-2023-10-02-12-36-12.png" /><br><figcaption></figcaption></figure></a>
-    <br>
-    
-    <h3>Contenido de la aplicación</h3>
-<p>La aplicación <span class="d-word">Contador de clics</span> necesita un <span class="negrita">texto</span> y un <span class="negrita">botón</span> así que se va a modificar el código para que lo incluya.</p>
 
-<p>Lo primero será eliminar la función <span class="d-word">Greeting</span> y todas sus llamadas.</p>
+            <h3>Live Edit</h3>
+            <p>Para que los cambios se actualicen automáticamente en el emulador, configura la opción <span
+                    class="negrita">Live Edit</span> de Android Studio.</p>
+            <p>File -> Settings (CONTROL+ALT+S)</p>
 
-<p>También se cambiará el nombre de la preview GrettingPreview por el nombre <span class="d-word">ContentPreview</span>.</p>
+            <a href="UD6/images/ud6-2023-10-02-12-36-12.png" target="_BLANK">
+                <figure><img src="UD6/images/ud6-2023-10-02-12-36-12.png" /><br>
+                    <figcaption></figcaption>
+                </figure>
+            </a>
+            <br>
 
-<p>A continuación, se creará un componente Jetpack Compose llamado <span class="d-word">Content</span>.</p>
-<section><pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
+            <h3>Contenido de la aplicación</h3>
+            <p>La aplicación <span class="d-word">Contador de clics</span> necesita un <span
+                    class="negrita">texto</span> y un <span class="negrita">botón</span> así que se va a modificar el
+                código para que lo incluya.</p>
+
+            <p>Lo primero será eliminar la función <span class="d-word">Greeting</span> y todas sus llamadas.</p>
+
+            <p>También se cambiará el nombre de la preview GrettingPreview por el nombre <span
+                    class="d-word">ContentPreview</span>.</p>
+
+            <p>A continuación, se creará un componente Jetpack Compose llamado <span class="d-word">Content</span>.</p>
+            <section>
+                <pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -722,23 +897,29 @@ fun GreetingPreview() {
 
     }
 }</code></pre>
-</section><br><br>
+            </section><br><br>
 
 
 
 
-<p>En el componente <span class="r-word">Content</span> se añaden tanto el texto como el botón.</p>
+            <p>En el componente <span class="r-word">Content</span> se añaden tanto el texto como el botón.</p>
 
-<p>El texto se añade con un componente <span class="r-word">Text</span> y el botón se añade con un componente <span class="r-word">Button</span>.</p>
+            <p>El texto se añade con un componente <span class="r-word">Text</span> y el botón se añade con un
+                componente <span class="r-word">Button</span>.</p>
 
-<p>Se puede observar que el componente <span class="r-word">Button</span> <span class="subrayado">recibe una función lambda como parámetro <span class="negrita">onClick</span></span> y 
-    <span class="subrayado">otra función lambda como <span class="negrita">contenido</span> del propio botón</span>.</p>
+            <p>Se puede observar que el componente <span class="r-word">Button</span> <span class="subrayado">recibe una
+                    función lambda como parámetro <span class="negrita">onClick</span></span> y
+                <span class="subrayado">otra función lambda como <span class="negrita">contenido</span> del propio
+                    botón</span>.
+            </p>
 
-<p>El contenido del botón es otro texto.</p>
+            <p>El contenido del botón es otro texto.</p>
 
-<p>Añadimos como parámetro de entrada <span class="negrita">padding</span>  de tipo <span class="r-word">PaddingValues</span> para que no nos de error. Lo explicaremos más adelante. </p>
+            <p>Añadimos como parámetro de entrada <span class="negrita">padding</span> de tipo <span
+                    class="r-word">PaddingValues</span> para que no nos de error. Lo explicaremos más adelante. </p>
 
-<section><pre><code class="language-kotlin">@Composable
+            <section>
+                <pre><code class="language-kotlin">@Composable
 fun Content(padding: PaddingValues){     
     Text(text = "Has hecho clic 0 veces")
     Button(onClick = { /*TODO*/
@@ -747,27 +928,37 @@ fun Content(padding: PaddingValues){
         Text(text = "¡PÚLSAME!")
     }
 }</code></pre>
-</section><br><br>
-<section class="marco-t warn">
-    <span class="icono warning"> </span> Si no te reconoce algún componente, lo puedes importar con <span class="negrita">ALT+ENTER</span>.
-    </section>
-<section class="marco-b">
-    Recuerda que los componentes de Jetpack Compose se importan desde el paquete <span class="negrita">androidx.compose.</span>
-    <section><pre><code class="language-kotlin">import androidx.compose.material3.Button
+            </section><br><br>
+            <section class="marco-t warn">
+                <span class="icono warning"> </span> Si no te reconoce algún componente, lo puedes importar con <span
+                    class="negrita">ALT+ENTER</span>.
+            </section>
+            <section class="marco-b">
+                Recuerda que los componentes de Jetpack Compose se importan desde el paquete <span
+                    class="negrita">androidx.compose.</span>
+                <section>
+                    <pre><code class="language-kotlin">import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text</code></pre>
-    </section>   
-</section>
+                </section>
+            </section>
 
-<p>Como se estudió en la unidad anterior, en Kotlin si el último parámetro es una función lambda, se puede extraer ese parámetro fuera de los paréntesis.</p>
+            <p>Como se estudió en la unidad anterior, en Kotlin si el último parámetro es una función lambda, se puede
+                extraer ese parámetro fuera de los paréntesis.</p>
 
-<p>Aunque las dos maneras funcionan igual, en Jetpack Compose si el último parámetro es una función lambda se extrae fuera de los paréntesis.</p>
-<figure><img src="UD6/images/ud6-2023-10-02-12-44-40.png" /><br><figcaption></figcaption></figure>
-<br>
-<p>Para poder previsualizar la interfaz gráfica y ver la interfaz gráfica en el emulador se deben añadir llamadas a la función 
-    Content tanto en <span class="r-word">onCreate</span> como en <span class="d-word">ContentPreview</span>.</p>
+            <p>Aunque las dos maneras funcionan igual, en Jetpack Compose si el último parámetro es una función lambda
+                se extrae fuera de los paréntesis.</p>
+            <figure><img src="UD6/images/ud6-2023-10-02-12-44-40.png" /><br>
+                <figcaption></figcaption>
+            </figure>
+            <br>
+            <p>Para poder previsualizar la interfaz gráfica y ver la interfaz gráfica en el emulador se deben añadir
+                llamadas a la función
+                Content tanto en <span class="r-word">onCreate</span> como en <span
+                    class="d-word">ContentPreview</span>.</p>
 
-<section><pre><code class="language-kotlin">@Preview(showBackground = true)
+            <section>
+                <pre><code class="language-kotlin">@Preview(showBackground = true)
 @Composable
 fun ContentPreview() {
     ClickCounterTheme {
@@ -776,24 +967,37 @@ fun ContentPreview() {
         }
     }
 }</code></pre>
-</section><br><br>
+            </section><br><br>
 
-<p>En la previsualización se puede observar que los dos componentes se situan en la parte superior uno encima del otro. </p>
-<a href="UD6/images/UD6_2025-11-17-09-38-31.png"><figure><img src="UD6/images/UD6_2025-11-17-09-38-31.png" /><br><figcaption></figcaption></figure></a>
-<br>
+            <p>En la previsualización se puede observar que los dos componentes se situan en la parte superior uno
+                encima del otro. </p>
+            <a href="UD6/images/UD6_2025-11-17-09-38-31.png">
+                <figure><img src="UD6/images/UD6_2025-11-17-09-38-31.png" /><br>
+                    <figcaption></figcaption>
+                </figure>
+            </a>
+            <br>
 
 
-<p>También se puede observar que los dos componentes se superponen, esto es debido a que no hay ningún componente de tipo <span class="negrita">layout</span> en la interfaz.</p>
+            <p>También se puede observar que los dos componentes se superponen, esto es debido a que no hay ningún
+                componente de tipo <span class="negrita">layout</span> en la interfaz.</p>
 
-<p>Los componentes de tipo <span class="negrita">layout</span> permiten organizar los componentes de la interfaz gráfica.</p>
+            <p>Los componentes de tipo <span class="negrita">layout</span> permiten organizar los componentes de la
+                interfaz gráfica.</p>
 
-<p>Para solucionar esto se va a utilizar el componente <span class="r-word">Column</span> que permite organizar la interfaz en forma de columna.</p>
+            <p>Para solucionar esto se va a utilizar el componente <span class="r-word">Column</span> que permite
+                organizar la interfaz en forma de columna.</p>
 
-<a href="UD6/images/UD6_2025-11-17-09-40-01.png"><figure><img src="UD6/images/UD6_2025-11-17-09-40-01.png" /><br><figcaption></figcaption></figure></a>
-<br>
+            <a href="UD6/images/UD6_2025-11-17-09-40-01.png">
+                <figure><img src="UD6/images/UD6_2025-11-17-09-40-01.png" /><br>
+                    <figcaption></figcaption>
+                </figure>
+            </a>
+            <br>
 
-<p>A continuación, se añaden algunas modificaciones para mejorar la interfaz.</p>
-<section><pre><code class="language-kotlin">@Composable
+            <p>A continuación, se añaden algunas modificaciones para mejorar la interfaz.</p>
+            <section>
+                <pre><code class="language-kotlin">@Composable
 fun Content(padding: PaddingValues){
     Column(
         modifier = Modifier.fillMaxSize()
@@ -816,31 +1020,34 @@ fun Content(padding: PaddingValues){
         }
     }
 }</code></pre>
-</section><br><br>
+            </section><br><br>
 
-<p>Quedando así:</p>
-<figure><img src="UD6/images/ud6-2023-10-02-13-05-52.png" /><br><figcaption></figcaption></figure>
-<br>
-<p>Este código es una muestra de las buenas prácticas programando en Kotlin con Jetpack Compose:</p>
-<ul>
-    <li>Se utilizan los parámetros con nombre en las llamadas.</li>
+            <p>Quedando así:</p>
+            <figure><img src="UD6/images/ud6-2023-10-02-13-05-52.png" /><br>
+                <figcaption></figcaption>
+            </figure>
+            <br>
+            <p>Este código es una muestra de las buenas prácticas programando en Kotlin con Jetpack Compose:</p>
+            <ul>
+                <li>Se utilizan los parámetros con nombre en las llamadas.</li>
 
-    <li>Si en la llamada hay varios parámetros, estos se escriben cada uno en una línea.</li>
-    
-    <li>Si el último parámetro es una función lambda se extrae de los paréntesis.</li>
-</ul>
+                <li>Si en la llamada hay varios parámetros, estos se escriben cada uno en una línea.</li>
 
-<h3>Funcionalidad de la aplicación</h3>
-<p>En este punto ya se ha terminado con la UI declarativa.</p>
+                <li>Si el último parámetro es una función lambda se extrae de los paréntesis.</li>
+            </ul>
 
-<p>Ahora es el momento de implementar la funcionalidad de la aplicación.</p>
+            <h3>Funcionalidad de la aplicación</h3>
+            <p>En este punto ya se ha terminado con la UI declarativa.</p>
 
-<p>Se necesita una variable de tipo entera para almacenar la cantidad de veces que se ha hecho clic.</p>
+            <p>Ahora es el momento de implementar la funcionalidad de la aplicación.</p>
 
-<p>Se crea esa variable inicializada a cero y se incluye en el primer texto.</p>
+            <p>Se necesita una variable de tipo entera para almacenar la cantidad de veces que se ha hecho clic.</p>
 
-<p>En el código del botón se añade uno a esa variable.</p>
-<section><pre><code class="language-kotlin">@Composable
+            <p>Se crea esa variable inicializada a cero y se incluye en el primer texto.</p>
+
+            <p>En el código del botón se añade uno a esa variable.</p>
+            <section>
+                <pre><code class="language-kotlin">@Composable
 fun Content(padding: PaddingValues){
     var times:Int = 0
     Column(
@@ -864,429 +1071,584 @@ fun Content(padding: PaddingValues){
         }
     }
 }</code></pre>
-</section><br><br>
+            </section><br><br>
 
-<p>Si se ejecuta en el emulador la aplicación, aunque se puede comprobar que el botón funciona, no se actualiza el número de veces.</p>
+            <p>Si se ejecuta en el emulador la aplicación, aunque se puede comprobar que el botón funciona, no se
+                actualiza el número de veces.</p>
 
-<p>Esto es debido a que como se indicó anteriormente los elementos de la interfaz se conectan al estado de la Activity y si el estado de la Activity no se actualiza la interfaz no se vuelve a pintar.</p>
+            <p>Esto es debido a que como se indicó anteriormente los elementos de la interfaz se conectan al estado de
+                la Activity y si el estado de la Activity no se actualiza la interfaz no se vuelve a pintar.</p>
 
-<p>Para solucionar esto se debe cambiar la variable para que sea una variable de estado de esta manera cuando esta variable cambie el estado de la Activity también lo hará y se volverá a pintar la interfaz.</p>
+            <p>Para solucionar esto se debe cambiar la variable para que sea una variable de estado de esta manera
+                cuando esta variable cambie el estado de la Activity también lo hará y se volverá a pintar la interfaz.
+            </p>
 
-<a href="UD6/images/UD6_2025-11-17-09-51-41.png"><figure><img src="UD6/images/UD6_2025-11-17-09-51-41.png" /><br><figcaption>Añadiendo variable de estado</figcaption></figure></a>
-<br>
-
-
-
-<p>Con este cambio se puede ejecutar la aplicación y comprobar que la aplicación funciona. </p>
-
-<p>Al principio de la unidad se explicó que hay en situaciones en las que la Activity se destruye y se vuelve a crear, por ejemplo, al cambiar la orientación del dispositivo.</p>
-
-<p>Cuando esto ocurre se ejecuta la Activity desde el principio por lo que las variables se vuelven a crear.</p>
-
-<p>Si se cambia la orientación en la aplicación se observará que el número de clics se pierde.</p>
-<figure><img src="UD6/images/ud6-2023-10-02-13-22-56.png" /><br><figcaption></figcaption></figure>
-<br>
-<p>Para solucionar este comportamiento se debe cambiar la declaración de la variable para que se guarde aunque se destruya la Activity.</p>
-<figure><img src="UD6/images/ud6-2023-10-02-13-24-30.png" /><br><figcaption></figcaption></figure>
-<br>
+            <a href="UD6/images/UD6_2025-11-17-09-51-41.png">
+                <figure><img src="UD6/images/UD6_2025-11-17-09-51-41.png" /><br>
+                    <figcaption>Añadiendo variable de estado</figcaption>
+                </figure>
+            </a>
+            <br>
 
 
-<p>Con este cambio se puede ejecutar la aplicación y comprobar que la aplicación funciona correctamente aunque se cambie de orientación, 
-    de modo claro/oscuro o incluso la configuración del dispositivo. </p>
 
-    <a class="tarea" target="_blank" href="">Replica la aplicación "Contador de Clics" y añade un botón para resetar la cuenta</a>
-</section><!-- End section Primera aplicación Android: Contador de clics-->
+            <p>Con este cambio se puede ejecutar la aplicación y comprobar que la aplicación funciona. </p>
+
+            <p>Al principio de la unidad se explicó que hay en situaciones en las que la Activity se destruye y se
+                vuelve a crear, por ejemplo, al cambiar la orientación del dispositivo.</p>
+
+            <p>Cuando esto ocurre se ejecuta la Activity desde el principio por lo que las variables se vuelven a crear.
+            </p>
+
+            <p>Si se cambia la orientación en la aplicación se observará que el número de clics se pierde.</p>
+            <figure><img src="UD6/images/ud6-2023-10-02-13-22-56.png" /><br>
+                <figcaption></figcaption>
+            </figure>
+            <br>
+            <p>Para solucionar este comportamiento se debe cambiar la declaración de la variable para que se guarde
+                aunque se destruya la Activity.</p>
+            <figure><img src="UD6/images/ud6-2023-10-02-13-24-30.png" /><br>
+                <figcaption></figcaption>
+            </figure>
+            <br>
 
 
-<section class="apartado">
-    <a id="sCentralizarValoresenelproyecto"></a>
-    <h2>Centralizar valores en el proyecto</h2>
-    
-    <p>Evita usar literales (hardcoded) en el código. Centraliza colores, cadenas y dimensiones en los archivos de recursos (values).</p>
-    
-    <section><pre><code class="language-kotlin">Text(
+            <p>Con este cambio se puede ejecutar la aplicación y comprobar que la aplicación funciona correctamente
+                aunque se cambie de orientación,
+                de modo claro/oscuro o incluso la configuración del dispositivo. </p>
+
+            <a class="tarea" target="_blank" href="">Replica la aplicación "Contador de Clics" y añade un botón para
+                resetar la cuenta</a>
+    </section><!-- End section Primera aplicación Android: Contador de clics-->
+
+
+    <section class="apartado">
+        <a id="sCentralizarValoresenelproyecto"></a>
+        <h2>Centralizar valores en el proyecto</h2>
+
+        <p>Evita usar literales (hardcoded) en el código. Centraliza colores, cadenas y dimensiones en los archivos de
+            recursos (values).</p>
+
+        <section>
+            <pre><code class="language-kotlin">Text(
     text = "Click Me!",
     fontSize = 30.sp,
     modifier = Modifier.padding(16.dp)
-)</code></pre></section>
-    <br>
-    
-    <p>Archivos por defecto:</p>
-    <ul>
-        <li>colors.xml -> centraliza colores</li>
-        <li>strings.xml -> centraliza cadenas de texto</li>
-        <li>dimens.xml -> centraliza dimensiones (crear manualmente si no existe)</li>
-    </ul>
-    
-    <p>Ejemplo colors.xml:</p>
-    <section class="marco-b"><pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
+)</code></pre>
+        </section>
+        <br>
+
+        <p>Archivos por defecto:</p>
+        <ul>
+            <li>colors.xml -> centraliza colores</li>
+            <li>strings.xml -> centraliza cadenas de texto</li>
+            <li>dimens.xml -> centraliza dimensiones (crear manualmente si no existe)</li>
+        </ul>
+
+        <p>Ejemplo colors.xml:</p>
+        <section class="marco-b">
+            <pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?>
 &lt;resources>
     &lt;color name="purple_200">#FFBB86FC&lt;/color>
     &lt;color name="purple_500">#FF6200EE&lt;/color>
     &lt;color name="teal_200">#FF03DAC5&lt;/color>
     &lt;color name="black">#FF000000&lt;/color>
     &lt;color name="white">#FFFFFFFF&lt;/color>
-&lt;/resources></code></pre></section>
-    
-    <p>Ejemplo strings.xml:</p>
-    <section class="marco-b"><pre><code class="language-xml">&lt;string name="clickme">¡Haz clic!</string></code></pre></section>
-    
-    <p>Crear dimens.xml: Right-click en values -> New -> Values Resource File y nombrarlo dimens.xml. Ejemplo:</p>
-    <section class="marco-b"><pre><code class="language-xml">&lt;resources>
+&lt;/resources></code></pre>
+        </section>
+
+        <p>Ejemplo strings.xml:</p>
+        <section class="marco-b">
+            <pre><code class="language-xml">&lt;string name="clickme">¡Haz clic!</string></code></pre>
+        </section>
+
+        <p>Crear dimens.xml: Right-click en values -> New -> Values Resource File y nombrarlo dimens.xml. Ejemplo:</p>
+        <section class="marco-b">
+            <pre><code class="language-xml">&lt;resources>
     &lt;dimen name="button_text">25sp&lt;/dimen>
-&lt;/resources></code></pre></section>
-    
-    <h3>Uso desde Compose</h3>
-    <p>Accede a recursos con funciones específicas:</p>
-    <ul>
-        <li>stringResource(id = R.string.nombre)</li>
-        <li>dimensionResource(id = R.dimen.nombre) — para sp: .value.sp</li>
-        <li>colorResource(id = R.color.nombre)</li>
-    </ul>
-    
-    <section><pre><code class="language-kotlin">Text(
+&lt;/resources></code></pre>
+        </section>
+
+        <h3>Uso desde Compose</h3>
+        <p>Accede a recursos con funciones específicas:</p>
+        <ul>
+            <li>stringResource(id = R.string.nombre)</li>
+            <li>dimensionResource(id = R.dimen.nombre) — para sp: .value.sp</li>
+            <li>colorResource(id = R.color.nombre)</li>
+        </ul>
+
+        <section>
+            <pre><code class="language-kotlin">Text(
     text = stringResource(id = R.string.clickme),
     fontSize = dimensionResource(id = R.dimen.button_text).value.sp,
     modifier = Modifier.padding(dimensionResource(id = R.dimen.button_padding)),
     color = colorResource(id = R.color.teal_200)
-)</code></pre></section>
-    
-    <h3>Strings parametrizadas</h3>
-    <p>En la aplicación <span class="cursiva">Contador de clics</span> se tiene la necesidad de centralizar la siguiente cadena:</p>
+)</code></pre>
+        </section>
+
+        <h3>Strings parametrizadas</h3>
+        <p>En la aplicación <span class="cursiva">Contador de clics</span> se tiene la necesidad de centralizar la
+            siguiente cadena:</p>
 
 
-<p>Esta cadena utiliza una variable por lo que a la hora de centralizar dicha cadena se debe pasar ese valor como parámetro.</p>
+        <p>Esta cadena utiliza una variable por lo que a la hora de centralizar dicha cadena se debe pasar ese valor
+            como parámetro.</p>
 
-<figure><img src="UD6/images/ud6-2023-10-04-13-13-06.png" /><br><figcaption></figcaption></figure>
-<br>
-<p>El formato para declarar parámetros es <span class="d-word">%NºParámetro$Tipo</span>, 
-siendo los tipos de parámetros: <span class="negrita">s</span> (cadenas), <span class="negrita">d</span> (números).</p>
+        <figure><img src="UD6/images/ud6-2023-10-04-13-13-06.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+        <p>El formato para declarar parámetros es <span class="d-word">%NºParámetro$Tipo</span>,
+            siendo los tipos de parámetros: <span class="negrita">s</span> (cadenas), <span class="negrita">d</span>
+            (números).</p>
 
-<figure><img src="UD6/images/ud6-2023-10-04-13-15-07.png" /><br><figcaption></figcaption></figure>
-<br>
+        <figure><img src="UD6/images/ud6-2023-10-04-13-15-07.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
 
-<p>Por ejemplo, si se quieren recibir varios parámetros:</p>
-<figure><img src="UD6/images/ud6-2023-10-04-13-19-30.png" /><br><figcaption></figcaption></figure>
-<br>
+        <p>Por ejemplo, si se quieren recibir varios parámetros:</p>
+        <figure><img src="UD6/images/ud6-2023-10-04-13-19-30.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
 
 
-<p>En las últimas versiones de Android Studio se puede indicar siempre que el tipo de dato es <span class="negrita">s</span> (cadena) ya que Android Studio 
-    se encarga de convertir automáticamente el dato a <span class="negrita"><span class="cursiva">String</span></span>.</p>
+        <p>En las últimas versiones de Android Studio se puede indicar siempre que el tipo de dato es <span
+                class="negrita">s</span> (cadena) ya que Android Studio
+            se encarga de convertir automáticamente el dato a <span class="negrita"><span
+                    class="cursiva">String</span></span>.</p>
 
-<p>Android Studio ayuda a crear estos valores centralizados.
-    Con el cursor encima de la <span class="negrita">string hardcoded</span> se muestra la ayuda contextual con clic <span class="cursiva">derecho</span> o con <span class="cursiva">ALT+INTRO</span> y 
-    se selecciona la opción <span class="negrita">Extract string resource</span>:</p>
-<figure><img src="UD6/images/ud6-2023-10-04-13-20-33.png" /><br><figcaption></figcaption></figure>
-<br>
+        <p>Android Studio ayuda a crear estos valores centralizados.
+            Con el cursor encima de la <span class="negrita">string hardcoded</span> se muestra la ayuda contextual con
+            clic <span class="cursiva">derecho</span> o con <span class="cursiva">ALT+INTRO</span> y
+            se selecciona la opción <span class="negrita">Extract string resource</span>:</p>
+        <figure><img src="UD6/images/ud6-2023-10-04-13-20-33.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
 
-<p>Si se tienen varios archivos <span class="inline-file">strings.xml</span> se puede marcar que se añada el valor a todos los archivos y una vez se añada solo habrá que traducir el valor en cada archivo.</p>
-<figure><img src="UD6/images/ud6-2023-10-04-13-21-50.png" /><br><figcaption></figcaption></figure>
-<br>
-<p>Si la cadena tiene varios parámetros Android Studio los reconocerá:</p>
-<figure><img src="UD6/images/ud6-2023-10-04-13-22-36.png" /><br><figcaption>Cadena con parámetros</figcaption></figure>
-<br>
+        <p>Si se tienen varios archivos <span class="inline-file">strings.xml</span> se puede marcar que se añada el
+            valor a todos los archivos y una vez se añada solo habrá que traducir el valor en cada archivo.</p>
+        <figure><img src="UD6/images/ud6-2023-10-04-13-21-50.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+        <p>Si la cadena tiene varios parámetros Android Studio los reconocerá:</p>
+        <figure><img src="UD6/images/ud6-2023-10-04-13-22-36.png" /><br>
+            <figcaption>Cadena con parámetros</figcaption>
+        </figure>
+        <br>
 
-<p>Ahora desde Kotlin en la función <span class="r-word">stringResources</span> se podrán pasar esos parámetros:</p>
+        <p>Ahora desde Kotlin en la función <span class="r-word">stringResources</span> se podrán pasar esos parámetros:
+        </p>
 
-<section><pre><code class="language-xml">Text(
+        <section>
+            <pre><code class="language-xml">Text(
     text = stringResource(
         id = R.string.counter_text, //Recurso
         times), //Primer parámetro, añadimos una variable
     fontSize = 25.sp
 )</code></pre>
-</section><br><br>
+        </section><br><br>
 
-<section class="marco-t warn">
-    <span class="icono warning"> </span> La traducción de aplicaciones tiene un gran inconveniente ya que la misma frase no tiene la misma longitud en todos los idiomas.
-    </section>
-<section class="marco-b">
-    Se debe realizar un buen estudio de la aplicación y de los diferentes idiomas para que la aplicación se muestre de manera similar en todos los idiomas en los que se distribuya.        
-</section>
-</section><!-- End section Centralizar valores -->
+        <section class="marco-t warn">
+            <span class="icono warning"> </span> La traducción de aplicaciones tiene un gran inconveniente ya que la
+            misma frase no tiene la misma longitud en todos los idiomas.
+        </section>
+        <section class="marco-b">
+            Se debe realizar un buen estudio de la aplicación y de los diferentes idiomas para que la aplicación se
+            muestre de manera similar en todos los idiomas en los que se distribuya.
+        </section>
+    </section><!-- End section Centralizar valores -->
 
-<section class="apartado">
-<a id="sAplicacionMultiidioma"></a>
-<h2>Aplicación Multi idioma</h2>
+    <section class="apartado">
+        <a id="sAplicacionMultiidioma"></a>
+        <h2>Aplicación Multi idioma</h2>
 
-<p>Crear aplicaciones <span class="negrita">multiidioma</span> con Android Studio es muy sencillo, 
-    simplemente se debe crear un archivo <span class="inline-file">strings.xml</span> para cada idioma soportado.</p>
-<ul>
-    <li>Si solo se tiene un archivo <span class="inline-file">strings.xml</span> como ocurre nada más crear el proyecto,
-        ese archivo se cargará sea cual sea el idioma configurado en el dispositivo.</li>
-    <li>Si el dispositivo tiene un idioma configurado 
-        y no existe archivo <span class="inline-file">strings.xml</span> para ese idioma se cargará el archivo <span class="inline-file">strings.xml</span> 
-        por defecto (el que se crea junto al proyecto).</li>
-    <li>Si el dispositivo tiene uno o más idiomas configurados y hay archivos <span class="inline-file">strings.xml</span> para esos idiomas, 
-        se cargará el primero de la lista de la configuración del móvil.</li>
-    <li>Si se tienen varios archivos <span class="inline-file">strings.xml</span> y en uno no aparece una de las cadenas traducidas, 
-        se cargará la cadena en el idioma por defecto</li>    
-</ul>
+        <p>Crear aplicaciones <span class="negrita">multiidioma</span> con Android Studio es muy sencillo,
+            simplemente se debe crear un archivo <span class="inline-file">strings.xml</span> para cada idioma
+            soportado.</p>
+        <ul>
+            <li>Si solo se tiene un archivo <span class="inline-file">strings.xml</span> como ocurre nada más crear el
+                proyecto,
+                ese archivo se cargará sea cual sea el idioma configurado en el dispositivo.</li>
+            <li>Si el dispositivo tiene un idioma configurado
+                y no existe archivo <span class="inline-file">strings.xml</span> para ese idioma se cargará el archivo
+                <span class="inline-file">strings.xml</span>
+                por defecto (el que se crea junto al proyecto).</li>
+            <li>Si el dispositivo tiene uno o más idiomas configurados y hay archivos <span
+                    class="inline-file">strings.xml</span> para esos idiomas,
+                se cargará el primero de la lista de la configuración del móvil.</li>
+            <li>Si se tienen varios archivos <span class="inline-file">strings.xml</span> y en uno no aparece una de las
+                cadenas traducidas,
+                se cargará la cadena en el idioma por defecto</li>
+        </ul>
 
-<p>Lo más habitual es que el archivo <span class="inline-file">strings.xml</span> creado con el proyecto sea para el idioma inglés.</p>
+        <p>Lo más habitual es que el archivo <span class="inline-file">strings.xml</span> creado con el proyecto sea
+            para el idioma inglés.</p>
 
-<p>Para crear un archivo strings.xml para un idioma se deben seguir los siguientes pasos:</p>
+        <p>Para crear un archivo strings.xml para un idioma se deben seguir los siguientes pasos:</p>
 
-<p><span class="cursiva">Clic derecho</span> sobre la carpeta <span class="negrita">values -> New -> Values Resource File</span></p>
+        <p><span class="cursiva">Clic derecho</span> sobre la carpeta <span class="negrita">values -> New -> Values
+                Resource File</span></p>
 
-<figure><img src="UD6/images/creating_string_multilanguage.gif" /><br><figcaption></figcaption></figure>
-<br>
+        <figure><img src="UD6/images/creating_string_multilanguage.gif" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
 
-<p>En el inspector del proyecto se puede ver cómo se ha creado un segundo archivo para centralizar cadenas:</p>
-<figure><img src="UD6/images/ud6-2023-10-04-10-52-44.png" /><br><figcaption>Varios strings de idiomas</figcaption></figure>
-<br>
+        <p>En el inspector del proyecto se puede ver cómo se ha creado un segundo archivo para centralizar cadenas:</p>
+        <figure><img src="UD6/images/ud6-2023-10-04-10-52-44.png" /><br>
+            <figcaption>Varios strings de idiomas</figcaption>
+        </figure>
+        <br>
 
-<p>El siguiente paso es replicar el contenido del primer archivo strings.xml al segundo y traducir el valor de las cadenas:</p>
-<figure><img src="UD6/images/ud6-2023-10-04-10-53-22.png" /><br><figcaption>Replicando texto</figcaption></figure>
-<br>
+        <p>El siguiente paso es replicar el contenido del primer archivo strings.xml al segundo y traducir el valor de
+            las cadenas:</p>
+        <figure><img src="UD6/images/ud6-2023-10-04-10-53-22.png" /><br>
+            <figcaption>Replicando texto</figcaption>
+        </figure>
+        <br>
 
-<p>Mediante el editor de idiomas también se pueden añadir cadenas para los diferentes idiomas e incluso añadir nuevos archivos <span class="inline-file">strings.xml</span>:</p>
+        <p>Mediante el editor de idiomas también se pueden añadir cadenas para los diferentes idiomas e incluso añadir
+            nuevos archivos <span class="inline-file">strings.xml</span>:</p>
 
-<figure><img src="UD6/images/ud6-2023-10-04-13-03-26.png" /><br><figcaption>String Editor</figcaption></figure>
-<br>
+        <figure><img src="UD6/images/ud6-2023-10-04-13-03-26.png" /><br>
+            <figcaption>String Editor</figcaption>
+        </figure>
+        <br>
 
-<p>En el editor aparecen tantas columnas como archivos <span class="inline-file">strings.xml</span> haya:</p>
-<figure><img src="UD6/images/ud6-2023-10-04-13-03-52.png" /><br><figcaption></figcaption></figure>
-<br>
+        <p>En el editor aparecen tantas columnas como archivos <span class="inline-file">strings.xml</span> haya:</p>
+        <figure><img src="UD6/images/ud6-2023-10-04-13-03-52.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
 
-<p>En el momento en el que se tienen diferentes archivos <span class="inline-file">strings.xml</span> para diferentes idiomas, 
-    al añadir una cadena a uno de los archivos Android Studio avisará que se debe traducir a los otros idiomas.</p>
+        <p>En el momento en el que se tienen diferentes archivos <span class="inline-file">strings.xml</span> para
+            diferentes idiomas,
+            al añadir una cadena a uno de los archivos Android Studio avisará que se debe traducir a los otros idiomas.
+        </p>
 
-<figure><img src="UD6/images/ud6-2023-10-04-13-04-43.png" /><br><figcaption>Aviso de Android Studio para traducir cadena</figcaption></figure>
-<br>
+        <figure><img src="UD6/images/ud6-2023-10-04-13-04-43.png" /><br>
+            <figcaption>Aviso de Android Studio para traducir cadena</figcaption>
+        </figure>
+        <br>
 
-<p>Si una cadena no se traduce a algún idioma Android Studio mostrará la cadena definida en el archivo strings.xml por defecto.</p>
+        <p>Si una cadena no se traduce a algún idioma Android Studio mostrará la cadena definida en el archivo
+            strings.xml por defecto.</p>
 
-<p>El resultado se puede ver con las previsualizaciones <span class="negrita">@Preview</span>:</p>
-
-
-<figure><img src="UD6/images/ud6-2023-10-04-13-05-54.png" /><br><figcaption>Previsualizaciones</figcaption></figure>
-<br>
-
-<p>Y también se puede comprobar con el emulador:</p>
-<figure><img src="UD6/images/ud6-2023-10-04-13-11-48.png" /><br><figcaption>Cambiado de idioma</figcaption></figure>
-<br>
-
-</section><!-- End section Aplicación Multi idioma-->
-
-<section class="apartado">
-<a id="sOrientacionesverticalyhorizontal"></a>
-<h2>Orientaciones vertical y horizontal</h2>
-
-<p>En los dispositivos fijos como televisiones o automóviles no tiene sentido cambiar la orientación, 
-    de hecho directamente no disponen del acelerómetro para detectarla.</p>
-
-<p>La mayoría de dispositivos móviles Android (móviles y táblets) permiten cambiar la orientación de la pantalla entre vertical y horizontal.</p>
-
-<p>Existen excepciones como los smartWatch que siendo móviles generalmente solo tienen una orientación.</p>
-
-<p>Si se desarrolla una aplicación para móvil o táblet <span class="negrita">es importante tener en cuenta el diseño en las dos orientaciones</span>.</p>
-
-<p>Gracias al uso de <span class="cursiva">Jetpack Compose</span> los componentes se van a situar ocupando la pantalla tal y como se definan.</p>
-
-<p>Por esta razón, en principio todas las aplicaciones se visualizarán correctamente indistintamente del tamaño y la orientación de la pantalla.</p>
-
-<p>Más adelante se verá cómo mostrar diferentes componentes o los mismos componentes con diferente estilo según el tamaño de pantalla para crear una mejor experiencia de usuario.</p>
-
-<p>Es posible que se quiera diseñar una aplicación que no permita cambiar la orientación.
-    Para ello en el archivo <span class="inline-file">AndroidManifest.xml</span> se debe añadir la siguiente propiedad a la <span class="negrita">Activity</span>: </p>
-
-	<section><pre><code class="language-xml">android:screenOrientation="ORIENTACIÓN"</code></pre>
-    </section><br><br>
-
-    <figure><img src="UD6/images/ud6-2023-10-04-13-32-19.png" /><br><figcaption>Android Manifest. Orientación</figcaption></figure>
-    <br>
-    
-
-<p>
-Esta configuración se debe hacer para todas las Activities de la aplicación en las que se quiera bloquear la orientación.
-</p>
+        <p>El resultado se puede ver con las previsualizaciones <span class="negrita">@Preview</span>:</p>
 
 
-</section><!-- End section Orientaciones vertical y horizontal-->
+        <figure><img src="UD6/images/ud6-2023-10-04-13-05-54.png" /><br>
+            <figcaption>Previsualizaciones</figcaption>
+        </figure>
+        <br>
 
-                        
+        <p>Y también se puede comprobar con el emulador:</p>
+        <figure><img src="UD6/images/ud6-2023-10-04-13-11-48.png" /><br>
+            <figcaption>Cambiado de idioma</figcaption>
+        </figure>
+        <br>
+
+    </section><!-- End section Aplicación Multi idioma-->
+
+    <section class="apartado">
+        <a id="sOrientacionesverticalyhorizontal"></a>
+        <h2>Orientaciones vertical y horizontal</h2>
+
+        <p>En los dispositivos fijos como televisiones o automóviles no tiene sentido cambiar la orientación,
+            de hecho directamente no disponen del acelerómetro para detectarla.</p>
+
+        <p>La mayoría de dispositivos móviles Android (móviles y táblets) permiten cambiar la orientación de la pantalla
+            entre vertical y horizontal.</p>
+
+        <p>Existen excepciones como los smartWatch que siendo móviles generalmente solo tienen una orientación.</p>
+
+        <p>Si se desarrolla una aplicación para móvil o táblet <span class="negrita">es importante tener en cuenta el
+                diseño en las dos orientaciones</span>.</p>
+
+        <p>Gracias al uso de <span class="cursiva">Jetpack Compose</span> los componentes se van a situar ocupando la
+            pantalla tal y como se definan.</p>
+
+        <p>Por esta razón, en principio todas las aplicaciones se visualizarán correctamente indistintamente del tamaño
+            y la orientación de la pantalla.</p>
+
+        <p>Más adelante se verá cómo mostrar diferentes componentes o los mismos componentes con diferente estilo según
+            el tamaño de pantalla para crear una mejor experiencia de usuario.</p>
+
+        <p>Es posible que se quiera diseñar una aplicación que no permita cambiar la orientación.
+            Para ello en el archivo <span class="inline-file">AndroidManifest.xml</span> se debe añadir la siguiente
+            propiedad a la <span class="negrita">Activity</span>: </p>
+
+        <section>
+            <pre><code class="language-xml">android:screenOrientation="ORIENTACIÓN"</code></pre>
+        </section><br><br>
+
+        <figure><img src="UD6/images/ud6-2023-10-04-13-32-19.png" /><br>
+            <figcaption>Android Manifest. Orientación</figcaption>
+        </figure>
+        <br>
 
 
-<!--*********************************************************Values Resource Files***********************************************************-->
+        <p>
+            Esta configuración se debe hacer para todas las Activities de la aplicación en las que se quiera bloquear la
+            orientación.
+        </p>
 
-<section class="apartado">
-    <a id="sValuesResourceFiles"></a>
-    <h2>Archivos de recursos (values)</h2>
-    
-    <p>Hasta ahora se han usado <span class="negrita">archivos de recursos con valores</span> como <span class="cursiva">strings.xml, colors.xml</span> y <span class="cursiva">dimens.xml</span> 
-    para centralizar valores.</p>
-    
-    <p>Estos archivos también pueden usarse para cargar valores específicos según la configuración del dispositivo.</p>
-    
-    <p>Por ejemplo, se puede cargar un archivo <span class="negrita">colors.xml</span> cuando la orientación es vertical (<span class="cursiva">portrait</span>) y otro distinto para horizontal (<span class="cursiva">landscape</span>), 
-    de forma similar a cómo <span class="inline-file">strings.xml</span> se comporta para distintos idiomas.</p>
-    
-    <p>Con el método tradicional de interfaces definido por XML, esta configuración tenía mucho más sentido.</p>
-    
-    <p>A continuación se muestra cómo crear estos archivos:</p>
-    
-    <p>Haz clic derecho en la carpeta <span class="inline-folder">values</span> y selecciona <span class="negrita">Values Resource File</span>.</p>
-    
-    <figure><img src="UD6/images/ud6-2023-10-04-13-40-20.png" /><br><figcaption>Creación de archivos de recursos</figcaption></figure>
-    <br>
-    
-    <p>El comportamiento de estos archivos es idéntico al de <span class="negrita">strings.xml</span>. 
-    El archivo se creará en una carpeta que Android cargará automáticamente según la configuración del dispositivo.</p>
-    
-    <figure><img src="UD6/images/ud6-2023-10-04-13-41-08.png" /><br><figcaption></figcaption></figure>
-    <br>
-    
+
+    </section><!-- End section Orientaciones vertical y horizontal-->
+
+
+
+
+    <!--*********************************************************Values Resource Files***********************************************************-->
+
+    <section class="apartado">
+        <a id="sValuesResourceFiles"></a>
+        <h2>Archivos de recursos (values)</h2>
+
+        <p>Hasta ahora se han usado <span class="negrita">archivos de recursos con valores</span> como <span
+                class="cursiva">strings.xml, colors.xml</span> y <span class="cursiva">dimens.xml</span>
+            para centralizar valores.</p>
+
+        <p>Estos archivos también pueden usarse para cargar valores específicos según la configuración del dispositivo.
+        </p>
+
+        <p>Por ejemplo, se puede cargar un archivo <span class="negrita">colors.xml</span> cuando la orientación es
+            vertical (<span class="cursiva">portrait</span>) y otro distinto para horizontal (<span
+                class="cursiva">landscape</span>),
+            de forma similar a cómo <span class="inline-file">strings.xml</span> se comporta para distintos idiomas.</p>
+
+        <p>Con el método tradicional de interfaces definido por XML, esta configuración tenía mucho más sentido.</p>
+
+        <p>A continuación se muestra cómo crear estos archivos:</p>
+
+        <p>Haz clic derecho en la carpeta <span class="inline-folder">values</span> y selecciona <span
+                class="negrita">Values Resource File</span>.</p>
+
+        <figure><img src="UD6/images/ud6-2023-10-04-13-40-20.png" /><br>
+            <figcaption>Creación de archivos de recursos</figcaption>
+        </figure>
+        <br>
+
+        <p>El comportamiento de estos archivos es idéntico al de <span class="negrita">strings.xml</span>.
+            El archivo se creará en una carpeta que Android cargará automáticamente según la configuración del
+            dispositivo.</p>
+
+        <figure><img src="UD6/images/ud6-2023-10-04-13-41-08.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+
     </section><!-- End section Values Resource Files -->
-    
+
     <!--*********************************************************Depuración***********************************************************-->
     <section class="apartado">
-    <a id="sDebug"></a>
-    <h2>Depuración</h2>
-    <p>Android Studio incluye un <span class="negrita">modo de depuración</span> que funciona como la mayoría de los IDEs: permite establecer <span class="negrita">puntos de interrupción</span>, ejecutar en modo debug y avanzar paso a paso por el código.</p>
-    <figure><img src="UD6/images/ud6-2023-10-04-13-54-00.png" /><br><figcaption></figcaption></figure>
-    <br>
-    
-    <p>Para comprobaciones más sencillas puedes usar la clase <span class="negrita">Log</span> como se muestra a continuación:</p>
-    <section><pre><code class="language-kotlin">Log.i("TAG", "MENSAJE")</code></pre>
-    </section><br><br>
-    <p>El mensaje aparecerá en la sección <span class="d-word">Logcat</span> de Android Studio.</p>
-    
-    <figure><img src="UD6/images/ud6-2023-10-04-13-52-49.png" /><br><figcaption>Logcat</figcaption></figure>
-    <br>
-    
-    <p>Aquí tienes el ejemplo completo del <a class="enlace" target="_blank" href="https://github.com/sdram58/EJEMPLOSPMDM2526/tree/master/UD6/ClickCounter">contador de clics</a> en GitHub.</p>
-    
+        <a id="sDebug"></a>
+        <h2>Depuración</h2>
+        <p>Android Studio incluye un <span class="negrita">modo de depuración</span> que funciona como la mayoría de los
+            IDEs: permite establecer <span class="negrita">puntos de interrupción</span>, ejecutar en modo debug y
+            avanzar paso a paso por el código.</p>
+        <figure><img src="UD6/images/ud6-2023-10-04-13-54-00.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+
+        <p>Para comprobaciones más sencillas puedes usar la clase <span class="negrita">Log</span> como se muestra a
+            continuación:</p>
+        <section>
+            <pre><code class="language-kotlin">Log.i("TAG", "MENSAJE")</code></pre>
+        </section><br><br>
+        <p>El mensaje aparecerá en la sección <span class="d-word">Logcat</span> de Android Studio.</p>
+
+        <figure><img src="UD6/images/ud6-2023-10-04-13-52-49.png" /><br>
+            <figcaption>Logcat</figcaption>
+        </figure>
+        <br>
+
+        <p>Aquí tienes el ejemplo completo del <a class="enlace" target="_blank"
+                href="https://github.com/sdram58/EJEMPLOSPMDM2526/tree/master/UD6/ClickCounter">contador de clics</a> en
+            GitHub.</p>
+
     </section><!-- End section Debug -->
-    
+
     <!--*********************************************************Actualizaciones de Android Studio***********************************************************-->
     <section class="apartado">
-    <a id="sActualizaciones"></a>
-    <h2>Actualizaciones de Android Studio</h2>
-    <p>El software <span class="negrita">Android Studio</span> recibe actualizaciones que pueden afectar a distintos componentes:</p>
-    <ul>
-        <li>El propio Android Studio.</li>
-        <li>Android SDK.</li>
-        <li>JDK.</li>
-        <li>Plugins.</li>
-        <li>Gradle.</li>
-        <li>Dependencias.</li>
-    </ul>
-    
-    <p>Ocasionalmente, tras una actualización, algunos proyectos pueden dejar de funcionar hasta que se configuren correctamente.</p>
-    
-    <p>La forma en que se muestran los errores depende del tipo de actualización que los haya provocado.</p>
-    <figure><img src="UD6/images/ud6-2023-10-04-13-55-57.png" /><br><figcaption>Visualización de errores</figcaption></figure>
-    <br>
-    
-    <p>Según el tipo de error, las soluciones variarán.</p>
-    
-    <h3>Error de versión de Java:</h3>
-    
-    <p>Para resolver un error de versión de Java, ve a: <br>
-    <span class="negrita">File -> Settings (CTRL+ALT+S)</span></p>
-    
-    <p>Selecciona la versión de JDK correcta.</p>
-    <figure><img src="UD6/images/ud6-2023-10-04-13-57-35.png" /><br><figcaption>Selección del JDK correcto</figcaption></figure>
-    <br>
-    
-    <h3>Error de appcompat:</h3>
-    
-    <p>En aplicaciones diseñadas con XML se usa la librería <span class="negrita">appcompat</span>.</p>
-    
-    <p>Si desarrollas una aplicación que mezcla XML y Jetpack Compose, por ejemplo durante una migración, también se utiliza esta librería.</p>
-    
-    <p>En ocasiones, tras actualizaciones, puede ser necesario actualizar la versión de la dependencia. Esto se configura en el archivo <span class="inline-file">build.gradle (Module: app)</span>:</p>
-    
-    <figure><img src="UD6/images/ud6-2023-10-04-13-59-02.png" /><br><figcaption>Dependencias en Gradle</figcaption></figure>
-    <br>
-    
+        <a id="sActualizaciones"></a>
+        <h2>Actualizaciones de Android Studio</h2>
+        <p>El software <span class="negrita">Android Studio</span> recibe actualizaciones que pueden afectar a distintos
+            componentes:</p>
+        <ul>
+            <li>El propio Android Studio.</li>
+            <li>Android SDK.</li>
+            <li>JDK.</li>
+            <li>Plugins.</li>
+            <li>Gradle.</li>
+            <li>Dependencias.</li>
+        </ul>
+
+        <p>Ocasionalmente, tras una actualización, algunos proyectos pueden dejar de funcionar hasta que se configuren
+            correctamente.</p>
+
+        <p>La forma en que se muestran los errores depende del tipo de actualización que los haya provocado.</p>
+        <figure><img src="UD6/images/ud6-2023-10-04-13-55-57.png" /><br>
+            <figcaption>Visualización de errores</figcaption>
+        </figure>
+        <br>
+
+        <p>Según el tipo de error, las soluciones variarán.</p>
+
+        <h3>Error de versión de Java:</h3>
+
+        <p>Para resolver un error de versión de Java, ve a: <br>
+            <span class="negrita">File -> Settings (CTRL+ALT+S)</span>
+        </p>
+
+        <p>Selecciona la versión de JDK correcta.</p>
+        <figure><img src="UD6/images/ud6-2023-10-04-13-57-35.png" /><br>
+            <figcaption>Selección del JDK correcto</figcaption>
+        </figure>
+        <br>
+
+        <h3>Error de appcompat:</h3>
+
+        <p>En aplicaciones diseñadas con XML se usa la librería <span class="negrita">appcompat</span>.</p>
+
+        <p>Si desarrollas una aplicación que mezcla XML y Jetpack Compose, por ejemplo durante una migración, también se
+            utiliza esta librería.</p>
+
+        <p>En ocasiones, tras actualizaciones, puede ser necesario actualizar la versión de la dependencia. Esto se
+            configura en el archivo <span class="inline-file">build.gradle (Module: app)</span>:</p>
+
+        <figure><img src="UD6/images/ud6-2023-10-04-13-59-02.png" /><br>
+            <figcaption>Dependencias en Gradle</figcaption>
+        </figure>
+        <br>
+
     </section><!-- End section Android Studio Updates -->
-    
 
 
-<!--*********************************************************Ejercicios***********************************************************-->
-<section class="apartado">
-    <a id="sEjercicios"></a>
-    <h2>Ejercicios</h2>
-    
-    <div class="tarea">
-        <span class="r-word">Convertidor Decimal-Binario-Hexadecimal</span> <br><br>
-       <p>Crea una aplicación donde al pulsar un botón se genere un entero aleatorio. Una vez pulsado, el botón se convertirá en otro botón para borrar todo y reiniciar.</p>
-       <p>Cuando se genere el entero, se habilitarán dos botones: uno para convertir el número a binario y otro para convertirlo a hexadecimal. Usa un color distinto para cada botón.</p>
-    
-        <figure><img src="UD6/images/example_conversor.gif" /><br><figcaption>Ejemplo: Aplicación Convertidor</figcaption></figure> <br>
-        <p>Aquí tienes una posible <a class="enlace" target="_blank" href="https://github.com/sdram58/EJEMPLOSPMDM2526/tree/master/UD6/NumericalConverter">solución</a>. Es solo una guía; procura intentarlo tú primero.</p>
+
+    <!--*********************************************************Ejercicios***********************************************************-->
+    <section class="apartado">
+        <a id="sEjercicios"></a>
+        <h2>Ejercicios</h2>
+
+        <div class="tarea">
+            <span class="r-word">Convertidor Decimal-Binario-Hexadecimal</span> <br><br>
+            <p>Crea una aplicación donde al pulsar un botón se genere un entero aleatorio. Una vez pulsado, el botón se
+                convertirá en otro botón para borrar todo y reiniciar.</p>
+            <p>Cuando se genere el entero, se habilitarán dos botones: uno para convertir el número a binario y otro
+                para convertirlo a hexadecimal. Usa un color distinto para cada botón.</p>
+
+            <figure><img src="UD6/images/example_conversor.gif" /><br>
+                <figcaption>Ejemplo: Aplicación Convertidor</figcaption>
+            </figure> <br>
+            <p>Aquí tienes una posible <a class="enlace" target="_blank"
+                    href="https://github.com/sdram58/EJEMPLOSPMDM2526/tree/master/UD6/NumericalConverter">solución</a>.
+                Es solo una guía; procura intentarlo tú primero.</p>
+            <hr>
+        </div>
+
+        <div class="tarea">
+
+            <span class="r-word">Estadísticas</span> <br><br>
+
+            <br>
+            <p>Crea una aplicación que lleve estadísticas de acceso a una calle, contando personas a pie, patinetes,
+                bicicletas y coches.
+                Debe parecerse al ejemplo mostrado. </p>
+            <figure><img src="UD6/images/example_statistics.gif" /><br>
+                <figcaption>Ejemplo: Aplicación de Estadísticas</figcaption>
+            </figure>
+            <p>La aplicación tendrá un contador para cada tipo, un botón para incrementar en 1, un botón para
+                decrementar en 1 y un botón de reinicio para cada contador.</p>
+            <p>También habrá un contador global que sume todos los contadores y un botón general para reiniciar todo.
+            </p>
+            <p>En la parte inferior se mostrará el porcentaje correspondiente a cada tipo de vehículo.</p>
+            <p>Los botones de decrementar y reiniciar permanecerán deshabilitados mientras su contador sea 0 (usa la
+                propiedad <code>enabled</code>).
+                Para alinear elementos en vertical usa <span class="negrita">Column</span>; para alinearlos en
+                horizontal usa <span class="negrita">Row</span>.
+            </p>
+
+            <figure><img src="UD6/images/ud6-2023-10-11-12-30-14.png" /><br>
+                <figcaption>Ejemplo: Aplicación de Estadísticas</figcaption>
+            </figure>
+            <br>
+
+            <p>Aquí tienes una posible <a class="enlace" target="_blank"
+                    href="https://github.com/sdram58/EJEMPLOSPMDM2526/tree/master/UD6/Statistics">solución</a>. Es solo
+                una guía; procura intentarlo tú primero.</p>
+
+        </div>
+        <br><br>
         <hr>
-    </div>
-    
-    <div class="tarea">
-        
-        <span class="r-word">Estadísticas</span> <br><br>
-        
-    <br>
-        <p>Crea una aplicación que lleve estadísticas de acceso a una calle, contando personas a pie, patinetes, bicicletas y coches. 
-            Debe parecerse al ejemplo mostrado. </p>
-        <figure><img src="UD6/images/example_statistics.gif" /><br><figcaption>Ejemplo: Aplicación de Estadísticas</figcaption></figure>
-        <p>La aplicación tendrá un contador para cada tipo, un botón para incrementar en 1, un botón para decrementar en 1 y un botón de reinicio para cada contador.</p>
-        <p>También habrá un contador global que sume todos los contadores y un botón general para reiniciar todo.</p>
-        <p>En la parte inferior se mostrará el porcentaje correspondiente a cada tipo de vehículo.</p>
-        <p>Los botones de decrementar y reiniciar permanecerán deshabilitados mientras su contador sea 0 (usa la propiedad <code>enabled</code>).
-            Para alinear elementos en vertical usa <span class="negrita">Column</span>; para alinearlos en horizontal usa <span class="negrita">Row</span>.
-        </p>
-        
-    <figure><img src="UD6/images/ud6-2023-10-11-12-30-14.png" /><br><figcaption>Ejemplo: Aplicación de Estadísticas</figcaption></figure>
-    <br>
-    
-    <p>Aquí tienes una posible <a class="enlace" target="_blank" href="https://github.com/sdram58/EJEMPLOSPMDM2526/tree/master/UD6/Statistics">solución</a>. Es solo una guía; procura intentarlo tú primero.</p>
-    
-    </div>
-    <br><br>
-    <hr>
-    <a id="p4" name="p4" href=""></a>
-    <div class="tarea">
-        <h4>Práctica 4: Controlador de puntos de tenis</h4>
-        <p>Crea una aplicación en Android Studio para llevar la puntuación de un partido de tenis compuesto por 3 <span class="cursiva" lang="en">sets</span>. <br>
-        Cada <span class="cursiva" lang="en">set</span> se compone de juegos, y cada juego se compone de puntos. <br></p>
-        
-        <p><span class="negrita">Cada punto en un juego</span> incrementa la puntuación. Por ejemplo, si un jugador tiene 0 y gana un punto pasa a 15; el siguiente punto pasa a 30, luego a 40 y finalmente otro punto gana el juego, siempre que el oponente tenga 30 puntos o menos. Si ambos llegan a 40 es <span class="cursiva" lang="en">deuce</span>. 
-        Si un jugador marca estando en ventaja gana el juego; si el oponente marca vuelve a <span class="cursiva" lang="en">deuce</span>. Desde <span class="cursiva" lang="en">deuce</span> hay que marcar dos puntos consecutivos para ganar el juego.</p>
-        
-        <p><span class="negrita">Cada <span class="cursiva" lang="en">set</span> consiste en juegos</span>. Un jugador gana el <span class="cursiva" lang="en">set</span> al llegar a 6 juegos con 2 de ventaja (por ejemplo 6-4). También puede ganar 7-5. Si llegan a 6-6 se juega un <span class="cursiva" lang="en">tie break</span>, que puntúa de uno en uno y se gana al llegar a 7 con 2 puntos de ventaja.</p>
-    
-        <p><span class="negrita">El partido</span> lo gana el jugador que gane 2 sets.</p>
-        
-        <p>Consulta las reglas en <a class="enlace" target="_blank" href="https://innertenis.com/puntuacion-en-el-tenis/">este enlace</a>.</p>
-    
-        <p>
-            La aplicación tendrá un botón por cada jugador para incrementar sus puntos en el juego actual. Si un punto decide el juego, se incrementará el contador de juegos; si un set termina y decide el partido, se mostrará que el partido ha finalizado.
-            Habrá un botón de reinicio para todo el partido.
-        </p>
-        <p>Consideraciones:
+        <a id="p4" name="p4" href=""></a>
+        <div class="tarea">
+            <h4>Práctica 4: Controlador de puntos de tenis</h4>
+            <p>Crea una aplicación en Android Studio para llevar la puntuación de un partido de tenis compuesto por 3
+                <span class="cursiva" lang="en">sets</span>. <br>
+                Cada <span class="cursiva" lang="en">set</span> se compone de juegos, y cada juego se compone de puntos.
+                <br></p>
+
+            <p><span class="negrita">Cada punto en un juego</span> incrementa la puntuación. Por ejemplo, si un jugador
+                tiene 0 y gana un punto pasa a 15; el siguiente punto pasa a 30, luego a 40 y finalmente otro punto gana
+                el juego, siempre que el oponente tenga 30 puntos o menos. Si ambos llegan a 40 es <span class="cursiva"
+                    lang="en">deuce</span>.
+                Si un jugador marca estando en ventaja gana el juego; si el oponente marca vuelve a <span
+                    class="cursiva" lang="en">deuce</span>. Desde <span class="cursiva" lang="en">deuce</span> hay que
+                marcar dos puntos consecutivos para ganar el juego.</p>
+
+            <p><span class="negrita">Cada <span class="cursiva" lang="en">set</span> consiste en juegos</span>. Un
+                jugador gana el <span class="cursiva" lang="en">set</span> al llegar a 6 juegos con 2 de ventaja (por
+                ejemplo 6-4). También puede ganar 7-5. Si llegan a 6-6 se juega un <span class="cursiva" lang="en">tie
+                    break</span>, que puntúa de uno en uno y se gana al llegar a 7 con 2 puntos de ventaja.</p>
+
+            <p><span class="negrita">El partido</span> lo gana el jugador que gane 2 sets.</p>
+
+            <p>Consulta las reglas en <a class="enlace" target="_blank"
+                    href="https://innertenis.com/puntuacion-en-el-tenis/">este enlace</a>.</p>
+
+            <p>
+                La aplicación tendrá un botón por cada jugador para incrementar sus puntos en el juego actual. Si un
+                punto decide el juego, se incrementará el contador de juegos; si un set termina y decide el partido, se
+                mostrará que el partido ha finalizado.
+                Habrá un botón de reinicio para todo el partido.
+            </p>
+            <p>Consideraciones:
             <ul>
                 <li>La aplicación deberá soportar inglés y español.</li>
                 <li>La app solo funcionará en modo vertical (portrait).</li>
-                <li>Gestión centralizada de colores: un color por equipo, uno para sets, otro para juegos y otro para puntos.</li>
+                <li>Gestión centralizada de colores: un color por equipo, uno para sets, otro para juegos y otro para
+                    puntos.</li>
                 <li>Si hay tie-break debe resaltarse visualmente.</li>
-                <li>El código deberá estar comentado y bien formateado.</li>            
+                <li>El código deberá estar comentado y bien formateado.</li>
             </ul>
-        </p>
-    
-        <p>Ejemplo de aspecto:</p>
-        <figure><img src="UD6/images/Ejemplo_practica.gif" /><br><figcaption></figcaption></figure>
-        <br>
-        
-        <p>Envía tu solución <a class="enlace" target="_blank" href="https://aules.edu.gva.es/semipresencial/mod/assign/view.php?id=2360445">aquí</a>.</p>
-    
-    </div>
-    
+            </p>
+
+            <p>Ejemplo de aspecto:</p>
+            <figure><img src="UD6/images/Ejemplo_practica.gif" /><br>
+                <figcaption></figcaption>
+            </figure>
+            <br>
+
+            <p>Envía tu solución <a class="enlace" target="_blank"
+                    href="https://aules.edu.gva.es/semipresencial/mod/assign/view.php?id=3017791">aquí</a>.</p>
+
+        </div>
+
     </section><!-- End section Exercises -->
 
 
 
-    
 
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>  
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
     <script src="../script/prism.js"></script>
 </body>
+
 </html>
