@@ -1233,7 +1233,7 @@ fun ClickCounter() {
       <li>En la sección <span class="cursiva">[versions]</span>:</li>
 
       <section>
-        <pre><code class="language-kotlin">coil="3.0.4"</code></pre>
+        <pre><code class="language-kotlin">coil="3.3.0"</code></pre>
       </section>
       <br><br>
 
@@ -1258,6 +1258,11 @@ implementation(libs.coil.network.okhttp)
 </code></pre>
     </section>
     <br><br>
+
+    <p>O simplemente añadiendo esto en el archivo <span class="inline-file">build.gradle.kts (Module: app)</span>
+      <section><pre><code class="language-kotlin">implementation("io.coil-kt.coil3:coil-compose:3.3.0")</code></pre>
+      </section><br><br>
+    </p>
 
     <a href="UD7/images/ud_7-2025-01-07-00-18-57.png" target="_BLANK">
       <figure>
@@ -1798,7 +1803,7 @@ implementation(libs.coil.network.okhttp)
 
     <div class="tarea">
       <p>
-        Crea un nuevo proyecto en Android Studio llamado <span class="negrita">ConverterV2You</span>
+        Crea un nuevo proyecto en Android Studio llamado <span class="negrita">ConverterV2TuNombre</span>
       </p>
       <p>
         La aplicación debe contener:
@@ -3820,17 +3825,23 @@ LazyColumn(
       <li>
         <span class="inline-file">libs.versions.toml</span>
         <ul>
-          <li>Sección <span class="cursiva">[versions]</span>. <br><img style="vertical-align: baseline"
-              src="UD7/images/ud_7-2025-01-07-14-35-34.png" /></li>
-          <li>Sección <span class="cursiva">[libraries]</span>. <br><img style="vertical-align: baseline"
-              src="UD7/images/ud_7-2025-01-07-14-35-54.png" /></li>
+          <li>Sección <span class="cursiva">[versions]</span>. <br>
+            <section><pre><code class="language-kotlin">[versions]
+constraintlayout-compose = "1.1.0-rc01"</code></pre>
+            </section><br><br>
+          </li>
+          <li>Sección <span class="cursiva">[libraries]</span>. <br>
+          <section><pre><code class="language-kotlin">[libraries]
+constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayout-compose" }
+</code></pre>
+          </section><br><br></li>
         </ul>
       </li>
       <li>
         <span class="inline-file">build.gradle.kts (Module: app)</span>
         <ul>
-          <li>Sección dependencies: <br><img style="vertical-align: baseline"
-              src="UD7/images/ud_7-2025-01-07-14-38-43.png" /></li>
+          <li>Sección dependencies: <br><section><pre><code class="language-kotlin">implementation(libs.constraintlayout.compose)</code></pre>
+          </section><br><br></li>
         </ul>
       </li>
     </ul>
@@ -4201,11 +4212,11 @@ fun Content() {
 
     <p>Cualquier componente puede tener un Tooltip.</p>
 
-    <p>Para usar estos componentes, es necesario actualizar ciertas versiones:</p>
+    <p>Para usar estos componentes, es necesario actualizar ciertas versiones: (si la tuya es igual o superior, no hace falta que toques nada.)</p>
     <ul>
       <li><span class="inline-file">build.gradle.kts (Project):</span>
         <ul>
-          <li>Kotlin -> 1.8.21</li>
+          <li>Kotlin -> 1.8.21 o superior</li>
         </ul>
       </li>
       <li><span class="inline-file">build.gradle.kts (Module):</span>
