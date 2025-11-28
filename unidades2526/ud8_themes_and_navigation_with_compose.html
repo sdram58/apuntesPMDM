@@ -81,8 +81,8 @@
   <ul>
     <li><span class="inline-file">libs.versions.toml</span><ul>
       <li><span class="cursiva">[version]</span> section
-        <section><pre><code class="language-kotlin">navigation = "2.8.5"
-serialization = "1.6.3"
+        <section><pre><code class="language-kotlin">navigation = "2.9.6"
+serialization = "1.9.0"
 </code></pre>
         </section>
       </li>
@@ -229,7 +229,7 @@ fun Navigation() {
 <a href="UD8/images/ud_8-2025-01-20-10-09-02.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-09-02.png" /><br><figcaption></figcaption></figure></a>
 <br>
 
-<p>Como se ve en <span class="inline-file">AppScaffold</span>, usando <span class="r-word">navController.popStackBack</span> 
+<p>Como se ve en <span class="inline-file">AppScaffold</span>, usando <span class="r-word">navController.popBackStack()</span> 
 it is indicated that we should go to the previous screen in the screen stack.</p>
 
 <a href="UD8/images/ud_8-2025-01-20-10-10-37.png" target="_BLANK"><figure><img src="UD8/images/ud_8-2025-01-20-10-10-37.png" /><br><figcaption></figcaption></figure></a>
@@ -384,7 +384,7 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
   <p>Estudio del ejemplo de aplicación de Navegación.</p>
 </div>
 
-<p><a class="enlace" target="_blank" href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD8/NavigationTests">Aquí</a> tienes el enlace a github con el ejemplo completo </p>
+<p><a class="enlace" target="_blank" href="https://github.com/sdram58/EJEMPLOSPMDM2526/tree/master/UD8/NavigationTests">Aquí</a> tienes el enlace a github con el ejemplo completo </p>
 
 </section><!-- End section Navegación-->
 
@@ -575,7 +575,7 @@ fun SecondScreen(navController: NavController, name: String, age: Int = 0) {
      <li>
        File <span class="inline-file">libs.versions.toml</span> <ul>
          <li><span class="cursiva">[version]</span> section
-         <section><pre><code class="language-kotlin">coreSplashscreen = "1.0.1"</code></pre>
+         <section><pre><code class="language-kotlin">coreSplashscreen = "1.2.0"</code></pre>
          </section></li>
        <li><span class="cursiva">[libraries]</span> section
        <section><pre><code class="language-kotlin">androidx-core-splashscreen = {group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen"}</code></pre>
@@ -1186,7 +1186,7 @@ Column(
 Column(
     modifier = Modifier.fillMaxSize(),
     verticalArrangement = Arrangement.Center,
-    horizontalAlignment = Alignment.CenterHorizontales
+    horizontalAlignment = Alignment.CenterHorizontally
 ) {
     Button(onClick = { visible = !visible }) {
         Text(text = if (visible) "Ocultar" else "Mostrar")
@@ -1340,7 +1340,7 @@ Column(
   Column(
       modifier = Modifier.fillMaxSize(),
       verticalArrangement = Arrangement.Center,
-      horizontalAlignment = Alignment.CenterHorizontales
+      horizontalAlignment = Alignment.CenterHorizontally
   ) {
       val sections = arrayOf("Anime", "Manga", "Otros")
       var visibleContent by rememberSaveable {
