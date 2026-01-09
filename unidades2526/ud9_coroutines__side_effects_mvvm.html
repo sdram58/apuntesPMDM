@@ -60,22 +60,27 @@
     </ul>
     </p>
 
-    <h3>Coroutines</h3>
+    <h3>Corrutinas</h3>
 
-    <p>Kotlin provides <span class="d-word">coroutines</span> to perform actions without blocking the main thread.</p>
-    <p>Coroutines are more efficient than threads because they group available threads to execute instructions with
-      different
-      configurations (<span class="cursiva">context + dispatcher</span>).</p>
-    <p>Additionally, the number of threads is limited, but the number of coroutines that can be launched is almost
-      infinite.</p>
-    <p>So when you want to execute a set of instructions and avoid blocking the main thread, you need to create a
-      coroutine
-      and specify the configuration in which it will run, allowing the system to manage the coroutine using as many
-      threads as needed.</p>
-    <p>More information: <a class="enlace" target="_blank"
-        href="https://kotlinlang.org/docs/coroutines-overview.html">Kotlin coroutines</a> and
-      <a class="enlace" target="_blank" href="https://developer.android.com/kotlin/coroutines?hl=es-419">Kotlin
-        coroutines in Android</a>.
+    <p>Kotlin proporciona <span class="d-word">coroutines</span> para realizar acciones sin bloquear el hilo principal.
+    </p>
+    <p>Las corrutinas son más eficientes que los hilos porque agrupan los hilos disponibles para ejecutar instrucciones
+      con
+      diferentes
+      configuraciones (<span class="cursiva">context + dispatcher</span>).</p>
+    <p>Además, el número de hilos es limitado, pero el número de corrutinas que se pueden iniciar es casi
+      infinito.</p>
+    <p>Por lo tanto, cuando desees ejecutar un conjunto de instrucciones y evitar bloquear el hilo principal, debes
+      crear una
+      corrutina
+      y especificar la configuración en la que se ejecutará, permitiendo que el sistema gestione la corrutina utilizando
+      tantos
+      hilos como sea necesario.</p>
+    <p>Más información: <a class="enlace" target="_blank" href="https://kotlinlang.org/docs/coroutines-overview.html"
+        title="Documentación oficial de corrutinas en Kotlin">Corrutinas de Kotlin</a> y
+      <a class="enlace" target="_blank" href="https://developer.android.com/kotlin/coroutines?hl=es-419"
+        title="Guía de corrutinas en Android">Corrutinas
+        de Kotlin en Android</a>.
     </p>
 
 
@@ -135,130 +140,147 @@ fun main() {
       <li>La función <span class="r-word">runBlocking</span> se utiliza para iniciar una corrutina en el hilo principal.
         Esto es solo para pruebas;
         en un entorno real (por ejemplo, Android), usarías otros contextos como <span class="r-word">launch</span> o
-        <span class="r-word">async</span>.</li>
+        <span class="r-word">async</span>.
+      </li>
       <li>El programa imprime "Descarga iniciando...", espera 2 segundos y luego imprime el resultado.</li>
     </ol>
     </p>
 
 
-    <h3>Coroutine Context</h3>
-    <p>Defines, among other things, the work and dispatcher (sets of threads) that will be used to perform the task.</p>
+    <h3>Contexto de la Corrutina (Coroutine Context)</h3>
+    <p>Define, entre otras cosas, el trabajo (Job) y el despachador (Dispatcher, conjuntos de hilos) que se utilizarán
+      para realizar la tarea.</p>
     <section>
       <pre><code class="language-kotlin">var job=Job()
 val coroutineContext: CoroutineContext = Dispatchers.IO + job
 
 launch(coroutineContext){
-  //Actions
+  //Acciones
 }
 </code></pre>
     </section><br>
 
-    <h3>Coroutine Scope</h3>
+    <h3>Ámbito de la Corrutina (Coroutine Scope)</h3>
 
-    <p>Sets the execution scope for the coroutine, i.e., where the coroutine will be used.</p>
+    <p>Establece el ámbito de ejecución para la corrutina, es decir, dónde se utilizará la corrutina.</p>
     <section>
       <pre><code class="language-kotlin">var job=Job()
 val coroutineContext: CoroutineContext = Dispatchers.IO + job
 val coroutineScope = CoroutineScope(coroutineContext)
 
 coroutineScope.launch{
-  //Actions
+  //Acciones
 }
 ....
 coroutineScope.cancel("....")
 </code></pre>
     </section><br>
 
-    <p>Typically, the <span class="negrita">CoroutineScope</span> is provided
-      (<span class="negrita">rememberCoroutineScope</span>, <span class="negrita">viewModelScope</span>, ...) where it's
-      used, but we can create our own.</p>
+    <p>Normalmente, el <span class="negrita">CoroutineScope</span> es proporcionado por el entorno
+      (<span class="negrita">rememberCoroutineScope</span>, <span class="negrita">viewModelScope</span>, ...) donde se
+      utiliza, pero podemos crear el nuestro propio.</p>
 
 
-    <h3>Canceling Coroutines</h3>
+    <h3>Cancelación de Corrutinas</h3>
 
-    <p>Using <span class="negrita">rememberCoroutineScope</span> and <span class="negrita">viewModelScope</span>
-      you can execute coroutines with <span class="negrita">launch</span> (among other builders).</p>
+    <p>Usando <span class="negrita">rememberCoroutineScope</span> y <span class="negrita">viewModelScope</span>
+      puedes ejecutar corrutinas con <span class="negrita">launch</span> (entre otros constructores).</p>
 
-    <p>When the coroutine is executed inside a <span class="cursiva">@Composable</span> element, the coroutine will be
-      canceled if the screen is no longer visible on the screen.</p>
+    <p>Cuando la corrutina se ejecuta dentro de un elemento <span class="cursiva">@Composable</span>, la corrutina se
+      cancelará si la pantalla ya no es visible.</p>
 
-    <p>With the <span class="negrita">launch</span> method, you can store the coroutine's identifier to cancel it later
-      if needed.
-      This is especially useful for coroutines executed inside a ViewModel.</p>
+    <p>Con el método <span class="negrita">launch</span>, puedes almacenar el identificador de la corrutina para
+      cancelarla más tarde
+      si es necesario.
+      Esto es especialmente útil para corrutinas ejecutadas dentro de un ViewModel.</p>
 
     <section>
       <pre><code class="language-kotlin">var myCoroutinJob:Job = Job()
 myCoroutinJob = viewModelScope.launch{
-  //Actions to perform in the coroutine
+  //Acciones a realizar en la corrutina
 }
 
 ....
-//You can cancel the coroutine using its job. (Among other actions)
+//Puedes cancelar la corrutina usando su job. (Entre otras acciones)
 myCoroutinJob.cancel()</code></pre>
     </section><br>
 
-    <h3>Asynchronous Requests</h3>
+    <h3>Peticiones Asíncronas</h3>
 
-    <p>They allow you to execute several actions in the background and wait for them concurrently, avoiding
+    <p>Permiten ejecutar varias acciones en segundo plano y esperar por ellas de forma concurrente, evitando
+      el bloqueo.</p>
+
+    <section>
+      <pre><code class="language-kotlin">// Nota: El código original estaba incompleto, aquí se muestra la estructura corregida
+viewModelScope.launch {
+      // Nota: No es un entero, es un Deferred
+      val datoA = async {
+          println("Inicio A")
+          delay(2000)
+          println("Fin A")
+          40
       }
 
-      //Note: It's not an integer, it's a deferred
-      val datoB = async{
-      println("Start B")
-      delay(4000)
-      println("End B")
-      60
+      // Nota: No es un entero, es un Deferred
+      val datoB = async {
+          println("Inicio B")
+          delay(4000)
+          println("Fin B")
+          60
       }
 
-      //Wait for both to finish, since they are deferred we use await()
+      // Esperar a que ambos terminen; como son deferred usamos await()
       val total = datoA.await() + datoB.await()
 
       println("${datoA.await()} + ${datoB.await()} = $total")
-      }</code></pre>
-  </section><br>
+}</code></pre>
+    </section><br>
 
 
   </section><!-- End section Coroutines-->
 
-
-  <!--*********************************************************Side Effects***********************************************************-->
   <section class="apartado">
     <a id="sSideEffects"></a>
-    <h2>Side Effects</h2>
-    <p>As previously studied, Jetpack Compose performs <span class="negrita">recompositions</span> of the user interface
-      <span class="negrita">when state changes occur</span>.</p>
-    <p>Sometimes <span class="negrita">the application recomposes more or fewer times than necessary</span>
-      or even <span class="negrita">when recomposing, code that should not be executed runs</span>.</p>
-    <p>All these unwanted situations are called <span class="d-word">Side Effects</span>.</p>
-    <p>All components of the application should avoid side effects,
-      but there are times when side effects are needed, such as for <span class="negrita">one-time events</span> like
-      showing a notification or
-      navigating to a screen if a state meets a condition.</p>
+    <h2>Efectos Secundarios (Side Effects)</h2>
+    <p>Como se ha estudiado anteriormente, Jetpack Compose realiza <span class="negrita">recomposiciones</span> de la
+      interfaz de usuario
+      <span class="negrita">cuando ocurren cambios de estado</span>.
+    </p>
+    <p>A veces, <span class="negrita">la aplicación se recompone más o menos veces de las necesarias</span>
+      o incluso, <span class="negrita">al recomponerse, se ejecuta código que no debería ejecutarse</span>.</p>
+    <p>Todas estas situaciones no deseadas se denominan <span class="d-word">Side Effects</span> (Efectos Secundarios).
+    </p>
+    <p>Todos los componentes de la aplicación deben evitar los efectos secundarios,
+      pero hay momentos en los que son necesarios, como para <span class="negrita">eventos únicos</span> como
+      mostrar una notificación o
+      navegar a una pantalla si un estado cumple una condición.</p>
 
-    <p>The following code produces a <span class="negrita">side effect</span>:</p>
+    <p>El siguiente código produce un <span class="negrita">efecto secundario</span>:</p>
 
-    <figure><img src="UD9/images/ud9-2023-12-03-23-03-10.png" /><br>
+    <figure><img src="UD9/images/ud9-2023-12-03-23-03-10.png"
+        alt="Ejemplo de código que produce un efecto secundario" />
       <figcaption></figcaption>
     </figure>
     <br>
 
-    <p>When the button is pressed, the message changes.</p>
-    <p>The <span class="cursiva">Toast</span> is shown whenever the message is not empty.</p>
-    <p>Once the button is pressed and the message is no longer empty, from then on, when the <span
-        class="cursiva">TextField</span> changes,
-      the <span class="cursiva">Toast</span> will always be shown.</p>
+    <p>Cuando se pulsa el botón, el mensaje cambia.</p>
+    <p>El <span class="cursiva">Toast</span> se muestra siempre que el mensaje no esté vacío.</p>
+    <p>Una vez que se pulsa el botón y el mensaje deja de estar vacío, a partir de ese momento, cuando el <span
+        class="cursiva">TextField</span> cambie,
+      el <span class="cursiva">Toast</span> se mostrará siempre.</p>
 
-    <p>To solve these problems, <span class="negrita">Effects Handlers</span> were created
-      <span class="negrita">which allow you to execute these actions in a controlled environment</span>.
+    <p>To resolver estos problemas, se crearon los <span class="negrita">Effects Handlers</span> (Manejadores de
+      Efectos)
+      <span class="negrita">que permiten ejecutar estas acciones en un entorno controlado</span>.
     </p>
-    <p><span class="cursiva">Effects Handlers</span> also facilitate the use of coroutines in Jetpack Compose.</p>
-    <p>The available <span class="cursiva">Effects Handlers</span> are:
+    <p>Los <span class="cursiva">Effects Handlers</span> también facilitan el uso de corrutinas en Jetpack Compose.</p>
+    <p>Los <span class="cursiva">Effects Handlers</span> disponibles son:
     <ul>
       <li><span class="negrita">LaunchedEffect</span></li>
       <li><span class="negrita">RememberCoroutineScope</span></li>
       <li><span class="negrita">derivedStateOf</span></li>
       <li>SideEffect</li>
-      <li>RemindUpdatedState</li>
+      <li>RememberUpdatedState</li>
       <li>DisposableEffect</li>
       <li>produceState</li>
       <li>snapshotFlow</li>
@@ -266,122 +288,134 @@ myCoroutinJob.cancel()</code></pre>
     </p>
 
     <h3>LaunchedEffect</h3>
-    <p>A <span class="negrita">LaunchedEffect block is executed the first time the component it's included in is
-        composed</span>.</p>
-    <p><span class="negrita">After that, it will only execute (recompose) if any of the parameters it receives
-        change.</span></p>
-    <p>LaunchedEffect supports up to three parameters key (key1, key2, key3) or a list of keys.</p>
+    <p>Un bloque <span class="negrita">LaunchedEffect se ejecuta la primera vez que el componente en el que está
+        incluido se
+        compone</span>.</p>
+    <p><span class="negrita">Después de eso, solo se ejecutará (recompondrá) si alguno de los parámetros que recibe
+        cambia.</span></p>
+    <p>LaunchedEffect admite hasta tres parámetros clave (key1, key2, key3) o una lista de claves.</p>
 
-    <figure><img src="UD9/images/ud9-2023-12-03-23-09-36.png" /><br>
+    <figure><img src="UD9/images/ud9-2023-12-03-23-09-36.png"
+        alt="Ejemplo de uso de LaunchedEffect con una clave booleana" />
       <figcaption></figcaption>
     </figure>
     <br>
 
-    <p>In the previous example, <span class="subrayado">the block will only execute once (when the component is first
-        composed) even if the </span>
-      <span class="cursiva">SplashScreen</span> function is recomposed, as the parameter it receives will always have
-      the same value (<span class="cursiva">true</span>).
+    <p>En el ejemplo anterior, <span class="subrayado">el bloque solo se ejecutará una vez (cuando el componente se
+        componga
+        por primera vez) aunque la función </span>
+      <span class="cursiva">SplashScreen</span> se recomponga, ya que el parámetro que recibe siempre tendrá
+      el mismo valor (<span class="cursiva">true</span>).
     </p>
 
-    <p>A LaunchedEffect block is a coroutine, so it also <span class="negrita">allows you to execute suspending
-        functions within a @Composable component</span>.</p>
+    <p>Un bloque LaunchedEffect es una corrutina, por lo que también <span class="negrita">permite ejecutar funciones de
+        suspensión dentro de un componente @Composable</span>.</p>
 
-    <figure><img src="UD9/images/ud9-2023-12-03-23-10-32.png" /><br>
+    <figure><img src="UD9/images/ud9-2023-12-03-23-10-32.png"
+        alt="Ejemplo de LaunchedEffect ejecutando funciones de suspensión" />
       <figcaption></figcaption>
     </figure>
     <br>
 
-    <p>Thus, if the block is running and undergoes recomposition, the coroutine that was running is paused and starts
-      over.</p>
-    <p>The coroutine cancels its execution when the LaunchedEffect block leaves the composition (is no longer on
-      screen).</p>
+    <p>Así, si el bloque se está ejecutando y sufre una recomposición (debido al cambio de una clave), la corrutina que
+      se estaba ejecutando se cancela y comienza
+      de nuevo.</p>
+    <p>La corrutina cancela su ejecución cuando el bloque LaunchedEffect sale de la composición (ya no está en
+      pantalla).</p>
 
-    <p>Applying it to the previous login example:</p>
+    <p>Aplicándolo al ejemplo anterior del login:</p>
 
-    <figure><img src="UD9/images/ud9-2023-12-03-23-13-25.png" /><br>
+    <figure><img src="UD9/images/ud9-2023-12-03-23-13-25.png"
+        alt="Corrección del ejemplo de login usando LaunchedEffect" />
       <figcaption></figcaption>
     </figure>
     <br>
 
-    <p>The LaunchedEffect block will execute every time the state <span class="negrita">message</span> changes.</p>
+    <p>El bloque LaunchedEffect se ejecutará cada vez que el estado <span class="negrita">message</span> cambie.</p>
 
-    <p>This first approach won't work properly because the message only changes when it goes from "<span
+    <p>Este primer enfoque no funcionará correctamente porque el mensaje solo cambia cuando pasa de "<span
         class="cursiva">User logged in!</span>"
-      to "<span class="cursiva">Error</span>" and vice versa. So if an error occurs and
-      when the data changes, the error remains, the message won't be shown again.</p>
+      a "<span class="cursiva">Error</span>" y viceversa. Por lo tanto, si ocurre un error y
+      cuando los datos cambian el error persiste, el mensaje no se mostrará de nuevo.</p>
 
-    <p>To fix this, simply clear the <span class="negrita">message</span> after showing the <span
+    <p>Para solucionar esto, simplemente limpia el <span class="negrita">message</span> después de mostrar el <span
         class="cursiva">Toast</span>.</p>
 
-    <p>Complete Login Example:</p>
-    <figure><img src="UD9/images/ud9-2023-12-03-23-15-45.png" /><br>
+    <p>Ejemplo de Login Completo:</p>
+    <figure><img src="UD9/images/ud9-2023-12-03-23-15-45.png" alt="Ejemplo completo de login con limpieza de estado" />
       <figcaption></figcaption>
     </figure>
     <br>
 
     <h3>RememberCoroutineScope</h3>
 
-    <p><span class="negrita">RememberCoroutineScope</span> allows you to get a safe scope (<span
+    <p><span class="negrita">RememberCoroutineScope</span> permite obtener un ámbito seguro (<span
         class="cursiva">scope</span>)
-      to execute a coroutine.</p>
-    <p>It is used when you need to execute a suspending function <span class="negrita">outside the scope of a
-        @Composable component</span>
-      such as inside <span class="cursiva">onClick</span>.</p>
-    <p>You cannot use <span class="negrita">LaunchedEffect</span> if you're not inside a <span
-        class="negrita">@Composable</span> context.</p>
-    <figure><img src="UD9/images/ud9-2023-12-03-23-18-50.png" /><br>
+      para ejecutar una corrutina.</p>
+    <p>Se utiliza cuando necesitas ejecutar una función de suspensión <span class="negrita">fuera del ámbito de un
+        componente @Composable</span>,
+      como dentro de un <span class="cursiva">onClick</span>.</p>
+    <p>No puedes usar <span class="negrita">LaunchedEffect</span> si no estás dentro de un contexto <span
+        class="negrita">@Composable</span>.</p>
+    <figure><img src="UD9/images/ud9-2023-12-03-23-18-50.png"
+        alt="Error al intentar usar funciones de suspensión en un onClick" />
       <figcaption></figcaption>
     </figure>
     <br>
 
-    <p>In this case, the scope of a coroutine is needed.</p>
+    <p>En este caso, se necesita el ámbito (scope) de una corrutina.</p>
 
-    <p>First, you get the coroutine's scope with <span class="negrita">rememberCoroutineScope</span> and
-      then to execute the coroutine, you use the <span class="r-word">launch</span> function.</p>
-    <figure><img src="UD9/images/ud9-2023-12-03-23-20-33.png" /><br>
+    <p>Primero, obtienes el ámbito de la corrutina con <span class="negrita">rememberCoroutineScope</span> y
+      luego, para ejecutar la corrutina, utilizas la función <span class="r-word">launch</span>.</p>
+    <figure><img src="UD9/images/ud9-2023-12-03-23-20-33.png"
+        alt="Uso correcto de rememberCoroutineScope en un onClick" />
       <figcaption></figcaption>
     </figure>
     <br>
-    <p>This Effect Handler has already been used to move the scroll automatically</p>
-    <figure><img src="UD9/images/ud9-2023-12-03-23-21-09.png" /><br>
+    <p>Este Effect Handler ya se ha utilizado para mover el scroll automáticamente.</p>
+    <figure><img src="UD9/images/ud9-2023-12-03-23-21-09.png" alt="Ejemplo de scroll automático con scope" />
       <figcaption></figcaption>
     </figure>
     <br>
 
-    <p>Moving the scroll is a suspending function, and when performing this action by clicking a button, the scope of
-      the coroutine is needed.</p>
+    <p>Mover el scroll es una función de suspensión, y al realizar esta acción haciendo clic en un botón, se necesita el
+      ámbito de
+      la corrutina.</p>
 
-    <p>When using the <span class="r-word">launch</span> function, the coroutine runs on the main thread, which can
-      sometimes be problematic as it could block the user interface.</p>
+    <p>Al usar la función <span class="r-word">launch</span>, la corrutina se ejecuta en el hilo principal (main
+      thread), lo que a
+      veces puede ser problemático ya que podría bloquear la interfaz de usuario.</p>
 
-    <p>The <span class="r-word">launch</span> function allows you to specify the context in which the coroutine should
-      run:
+    <p>La función <span class="r-word">launch</span> permite especificar el contexto en el que debe
+      ejecutarse la corrutina:
     <ul>
-      <li><span class="negrita">Dispatchers.Main</span>: main thread (used for the user interface).</li>
-      <li><span class="negrita">Dispatchers.IO</span>: primarily for input/output tasks.</li>
-      <li><span class="negrita">Dispatchers.Default</span>: managed by the operating system (same as not specifying any
+      <li><span class="negrita">Dispatchers.Main</span>: hilo principal (utilizado para la interfaz de usuario).</li>
+      <li><span class="negrita">Dispatchers.IO</span>: principalmente para tareas de entrada/salida.</li>
+      <li><span class="negrita">Dispatchers.Default</span>: gestionado por el sistema operativo (igual que no
+        especificar ningún
         dispatcher).</li>
-      <li><span class="negrita">Dispatchers.Unconfined</span>: any thread without control over it (not recommended).
+      <li><span class="negrita">Dispatchers.Unconfined</span>: cualquier hilo sin control sobre él (no recomendado).
       </li>
     </ul>
     </p>
 
-    <p>If the actions performed in the <span class="r-word">launch</span> function are related to the user interface, it
-      is best to either not specify anything or to specify <span class="r-word">Dispatchers.Main</span>.</p>
+    <p>Si las acciones realizadas en la función <span class="r-word">launch</span> están relacionadas con la interfaz de
+      usuario, es
+      mejor no especificar nada o especificar <span class="r-word">Dispatchers.Main</span>.</p>
 
     <a href="UD9/images/ud_9-2025-01-27-13-38-12.png" target="_BLANK">
-      <figure><img src="UD9/images/ud_9-2025-01-27-13-38-12.png" /><br>
+      <figure><img src="UD9/images/ud_9-2025-01-27-13-38-12.png" alt="Uso de Dispatchers.Main en launch" />
         <figcaption></figcaption>
       </figure>
     </a>
     <br>
 
-    <p>If the actions performed in the <span class="r-word">launch</span> function are intended to obtain data from
-      external sources or storage, or if the actions are not related to the user interface, it is best to specify <span
-        class="r-word">Dispatchers.IO</span>.</p>
+    <p>Si las acciones realizadas en la función <span class="r-word">launch</span> están destinadas a obtener datos de
+      fuentes externas o almacenamiento, o si las acciones no están relacionadas con la interfaz de usuario, es mejor
+      especificar <span class="r-word">Dispatchers.IO</span>.</p>
 
     <a href="UD9/images/ud_9-2025-01-27-13-38-21.png" target="_BLANK">
-      <figure><img src="UD9/images/ud_9-2025-01-27-13-38-21.png" /><br>
+      <figure><img src="UD9/images/ud_9-2025-01-27-13-38-21.png" alt="Uso de Dispatchers.IO en launch" />
         <figcaption></figcaption>
       </figure>
     </a>
@@ -390,220 +424,236 @@ myCoroutinJob.cancel()</code></pre>
 
     <h3>derivedStateOf</h3>
 
-    <p>The handler <span class="r-word">derivedStateOf</span> allows you to create a state that depends on one or more
-      other states.</p>
-    <p>This way, unnecessary extra recompositions are avoided.</p>
-    <p>It could be said that <span class="r-word">derivedStateOf</span> does not trigger recompositions until the state
-      value changes from its previous value.</p>
+    <p>El manejador <span class="r-word">derivedStateOf</span> permite crear un estado que depende de uno o más
+      estados adicionales.</p>
+    <p>De esta manera, se evitan recomposiciones adicionales innecesarias.</p>
+    <p>Se podría decir que <span class="r-word">derivedStateOf</span> no activa recomposiciones hasta que el valor del
+      estado
+      cambie respecto a su valor anterior.</p>
 
-    <p>To better understand the need for <span class="negrita">derivedStateOf</span>, let’s study the following example:
+    <p>Para entender mejor la necesidad de <span class="negrita">derivedStateOf</span>, estudiemos el siguiente ejemplo:
     </p>
-    <figure><img src="UD9/images/ud9-2023-12-03-23-23-19.png" /><br>
+    <figure><img src="UD9/images/ud9-2023-12-03-23-23-19.png"
+        alt="Ejemplo de recomposición innecesaria sin derivedStateOf" />
       <figcaption></figcaption>
     </figure>
     <br>
 
-    <p>When the <span class="cursiva">username</span> state changes, the <span class="cursiva">isUsernameValid</span>
-      function runs
-      which will change the value of <span class="cursiva">buttonEnabled</span>, and the button will recompose every
-      time a letter is typed.</p>
+    <p>Cuando el estado <span class="cursiva">username</span> cambia, se ejecuta la función <span
+        class="cursiva">isUsernameValid</span>,
+      la cual cambiará el valor de <span class="cursiva">buttonEnabled</span>, y el botón se recompondrá cada
+      vez que se escriba una letra.</p>
 
-    <p>Does it make sense to recompose the button if <span class="cursiva">buttonEnabled</span> is
-      <span class="cursiva">true</span> and when you type another letter, it remains <span class="cursiva">true</span>?
+    <p>¿Tiene sentido recomponer el botón si <span class="cursiva">buttonEnabled</span> es
+      <span class="cursiva">true</span> y al escribir otra letra sigue siendo <span class="cursiva">true</span>?
     </p>
 
-    <p>By indicating that <span class="negrita">buttonEnabled</span> is a derived state of another, unnecessary
-      recompositions are avoided.</p>
-    <figure><img src="UD9/images/ud9-2023-12-03-23-26-02.png" /><br>
+    <p>Al indicar que <span class="negrita">buttonEnabled</span> es un estado derivado de otro, se evitan
+      recomposiciones innecesarias.</p>
+    <figure><img src="UD9/images/ud9-2023-12-03-23-26-02.png"
+        alt="Uso de derivedStateOf para optimizar recomposiciones" />
       <figcaption></figcaption>
     </figure>
     <br>
 
 
-    <p>The button will only recompose when the value of <span class="negrita">buttonEnabled</span> changes from true to
-      false or vice versa.</p>
+    <p>El botón solo se recompondrá cuando el valor de <span class="negrita">buttonEnabled</span> cambie de true a
+      false o viceversa.</p>
 
-    <p>If the value of <span class="negrita">buttonEnabled</span> is true and when typing another letter it remains
-      true, the view will not be recomposed.</p>
+    <p>Si el valor de <span class="negrita">buttonEnabled</span> es true y al escribir otra letra sigue siendo
+      true, la vista no se recompondrá.</p>
 
-  </section><!-- End section Side Effects-->
+  </section>
 
   <!--*********************************************************Android Architectures***********************************************************-->
   <section class="apartado">
     <a id="sArquitecturasAndroid"></a>
-    <h2>Android Architectures</h2>
+    <h2>Arquitecturas de Android</h2>
 
-    <p>When developing applications of any kind, choosing the right architecture to use is very important.</p>
+    <p>Al desarrollar aplicaciones de cualquier tipo, elegir la arquitectura adecuada es muy importante.</p>
 
-    <p>The most common approach is to use an architecture that separates the application logic (programming) from the
-      views (graphical interface).</p>
+    <p>El enfoque más común es utilizar una arquitectura que separe la lógica de la aplicación (programación) de las
+      vistas (interfaz gráfica).</p>
 
-    <p>In this way, the views are responsible for displaying the interface (rendering), while the logic can be separated
-      into other components where the application's functionality is programmed.</p>
+    <p>De esta manera, las vistas son responsables de mostrar la interfaz (renderizado), mientras que la lógica puede
+      separarse
+      en otros componentes donde se programa la funcionalidad de la aplicación.</p>
 
-    <p>With this separation, it will be easier to work with the logic, make changes, and perform tests later on…</p>
-    <p>The architectures most commonly used in Android are:
+    <p>Con esta separación, será más fácil trabajar con la lógica, realizar cambios y llevar a cabo pruebas más
+      adelante…</p>
+    <p>Las arquitecturas más utilizadas en Android son:
     <ul>
-      <li><span class="negrita">MVC</span> – Model View Controller</li>
+      <li><span class="negrita">MVC</span> – Modelo Vista Controlador</li>
 
-      <li><span class="negrita">MVP</span> – Model View Presenter</li>
+      <li><span class="negrita">MVP</span> – Modelo Vista Presentador</li>
 
-      <li><span class="negrita">MVVM</span> – Model View ViewModel</li>
+      <li><span class="negrita">MVVM</span> – Modelo Vista Vista-Modelo</li>
     </ul>
     </p>
 
     <h3>MVC</h3>
 
-    <span class="negrita">MVC -> Model View Controller:</span>
+    <span class="negrita">MVC -> Modelo Vista Controlador:</span>
 
-    <p>The MVC architecture promotes organizing the application into <span class="negrita">three distinct</span>
-      and <span class="negrita">loosely coupled</span> parts.
+    <p>La arquitectura MVC promueve la organización de la aplicación en <span class="negrita">lo que son tres partes
+        diferenciadas</span>
+      y <span class="negrita">débilmente acopladas</span>.
     <ul>
-      <li><span class="negrita">Model</span>: this component works with data (database access).</li>
-      <li><span class="negrita">View</span>: responsible for organizing the data obtained from the model and creating
-        the graphical interface to display to the user.</li>
-      <li><span class="negrita">Controller</span>: manages requests to the application.</li>
+      <li><span class="negrita">Modelo</span>: este componente trabaja con los datos (acceso a bases de datos).</li>
+      <li><span class="negrita">Vista</span>: responsable de organizar los datos obtenidos del modelo y crear
+        la interfaz gráfica para mostrar al usuario.</li>
+      <li><span class="negrita">Controlador</span>: gestiona las peticiones a la aplicación.</li>
     </ul>
     </p>
 
 
-    <p>A <span class="subrayado">loose coupling</span> means that changes in one part of the code have minimal effect on
-      other parts.</p>
+    <p>Un <span class="subrayado">acoplamiento débil</span> significa que los cambios en una parte del código tienen un
+      efecto mínimo en
+      otras partes.</p>
 
-    <p>In the best case, when using the MVC pattern, a change will not affect other parts.</p>
+    <p>En el mejor de los casos, al utilizar el patrón MVC, un cambio no afectará a otras partes.</p>
 
-    <p>There are many implementations of the MVC architecture; in the Android implementation, both the controller and
-      the view are defined in the same place (Activity or Fragment), and both depend on the model.</p>
-    <figure><img src="UD9/images/ud9-2023-12-03-23-31-50.png" /><br>
+    <p>Existen muchas implementaciones de la arquitectura MVC; en la implementación de Android, tanto el controlador
+      como
+      la vista se definen en el mismo lugar (Activity o Fragment), y ambos dependen del modelo.</p>
+
+
+
+    <figure><img src="UD9/images/ud9-2023-12-03-23-31-50.png" alt="Esquema de la arquitectura MVC" />
       <figcaption>MVC</figcaption>
     </figure>
     <br>
 
-    <p>One of the disadvantages of this architecture is that all responsibility falls on the same element (<span
-        class="cursiva">Activity or Fragment</span>).</p>
+    <p>Una de las desventajas de esta arquitectura es que toda la responsabilidad recae sobre el mismo elemento (<span
+        class="cursiva">Activity o Fragment</span>).</p>
 
-    <p>This can cause performance issues if there is a heavy task running on the main thread.</p>
+    <p>Esto puede causar problemas de rendimiento si hay una tarea pesada ejecutándose en el hilo principal.</p>
 
     <h3>MVP</h3>
-    <p><span class="negrita">MVP -> Model View Presenter:</span></p>
+    <p><span class="negrita">MVP -> Modelo Vista Presentador:</span></p>
 
-    <p>It better organizes files and changes the way the three components work together.
+    <p>Organiza mejor los archivos y cambia la forma en que los tres componentes trabajan juntos.
     <ul>
-      <li><span class="negrita">Model</span>: same as in MVC.</li>
-      <li><span class="negrita">View</span>: the <span class="cursiva">Activity</span> or <span
-          class="cursiva">Fragment</span> is considered part of the view and
-        is no longer located alongside the Controller.</li>
-      <li><span class="negrita">Presenter</span>: similar to the Controller in MVC, but is responsible for orchestrating
-        everything that happens.
-        Typically, there is one Presenter per <span class="cursiva">Activity</span> or <span
+      <li><span class="negrita">Modelo</span>: igual que en MVC.</li>
+      <li><span class="negrita">Vista</span>: la <span class="cursiva">Activity</span> o el <span
+          class="cursiva">Fragment</span> se consideran parte de la vista y
+        ya no se encuentran junto al Controlador (Presentador).</li>
+      <li><span class="negrita">Presentador</span>: similar al Controlador en MVC, pero se encarga de orquestar
+        todo lo que sucede.
+        Normalmente, hay un Presentador por <span class="cursiva">Activity</span> o <span
           class="cursiva">Fragment</span>.</li>
     </ul>
     </p>
 
-    <figure><img src="UD9/images/ud9-2023-12-03-23-34-29.png" /><br>
+
+
+    <figure><img src="UD9/images/ud9-2023-12-03-23-34-29.png" alt="Esquema de la arquitectura MVP" />
       <figcaption>MVP</figcaption>
     </figure>
     <br>
 
     <h3>MVVM</h3>
-    <p><span class="negrita">MVVM -> Model View ViewModel:</span>
+    <p><span class="negrita">MVVM -> Modelo Vista Vista-Modelo:</span>
     <ul>
-      <li><span class="negrita">Model</span>: same as in MVC.</li>
+      <li><span class="negrita">Modelo</span>: igual que en MVC.</li>
 
-      <li><span class="negrita">View</span>: responsible for displaying the data.</li>
+      <li><span class="negrita">Vista</span>: responsable de mostrar los datos.</li>
 
       <li><span class="negrita">ViewModel</span>:
         <ul>
-          <li>Wraps the model and prepares observable data for the view.</li>
-          <li>Provides bindings to the view to send events to the model.</li>
-          <li>Changes in it automatically update the view and vice versa.</li>
+          <li>Envuelve al modelo y prepara datos observables para la vista.</li>
+          <li>Proporciona enlaces (bindings) a la vista para enviar eventos al modelo.</li>
+          <li>Los cambios en él actualizan automáticamente la vista y viceversa.</li>
         </ul>
       </li>
     </ul>
     </p>
 
-    <p>The <span class="negrita">ViewModel</span> is responsible for:
+
+
+    <p>El <span class="negrita">ViewModel</span> es responsable de:
     <ul>
-      <li>Responding to interactions in the view</li>
-      <li>Accessing data (model)</li>
-      <li>Notifying the view of changes in the data.</li>
+      <li>Responder a las interacciones en la vista.</li>
+      <li>Acceder a los datos (modelo).</li>
+      <li>Notificar a la vista los cambios en los datos.</li>
     </ul>
     </p>
 
-    <p>Additionally, <span class="negrita">ViewModel survives configuration changes</span> like orientation changes,
-      meaning that the information stored in the ViewModel is preserved at all times.</p>
+    <p>Además, el <span class="negrita">ViewModel sobrevive a los cambios de configuración</span> como los cambios de
+      orientación,
+      lo que significa que la información almacenada en el ViewModel se preserva en todo momento.</p>
 
     <p class="sub-section">LiveData</p>
 
-    <p>Although ViewModel can work with states as we've used them until now,
-      <span class="subrayado">it is recommended to use the <span class="negrita">LiveData class</span> </span> because
-      it is optimized for the lifecycle of the Activity.
+    <p>Aunque el ViewModel puede trabajar con estados tal como los hemos usado hasta ahora,
+      <span class="subrayado">se recomienda utilizar la clase <span class="negrita">LiveData</span></span> porque
+      está optimizada para el ciclo de vida de la Activity.
     </p>
 
-    <p><span class="negrita">LiveData</span> allows you to hold <span class="negrita">data that can be observed as
-        states</span>.</p>
+    <p><span class="negrita">LiveData</span> permite mantener <span class="negrita">datos que pueden ser observados como
+        estados</span>.</p>
 
-    <p>It is specifically designed to be used in <span class="cursiva">Activities</span>, <span
-        class="cursiva">Fragments</span>, or
-      <span class="cursiva">Services</span> so that <span class="negrita">it only notifies observers if they are
-        currently running</span>
-      (active lifecycle state).
+    <p>Está diseñado específicamente para ser utilizado en <span class="cursiva">Activities</span>, <span
+        class="cursiva">Fragments</span> o
+      <span class="cursiva">Services</span> de modo que <span class="negrita">solo notifica a los observadores si están
+        actualmente en ejecución</span>
+      (estado de ciclo de vida activo).
     </p>
 
-    <p>It allows for device orientation changes without losing the observed data.</p>
+    <p>Permite cambios de orientación del dispositivo sin perder los datos observados.</p>
 
-    <p>Android provides the <span class="negrita">LiveData</span> and <span class="negrita">MutableLiveData</span>
-      classes to store any type of data and observe its changes</p>
+    <p>Android proporciona las clases <span class="negrita">LiveData</span> y <span
+        class="negrita">MutableLiveData</span>
+      para almacenar cualquier tipo de dato y observar sus cambios.</p>
 
-    <p>Android automatically provides two methods for storing data in a LiveData:
+    <p>Android proporciona automáticamente dos métodos para almacenar datos en un LiveData:
     <ul>
-      <li>Using its <span class="r-word">value</span> property (uses the main thread).</li>
-      <li>Using its <span class="r-word">postValue</span> method (uses a background thread).</li>
+      <li>Usando su propiedad <span class="r-word">value</span> (utiliza el hilo principal).</li>
+      <li>Usando su método <span class="r-word">postValue</span> (utiliza un hilo de fondo).</li>
     </ul>
     </p>
 
-    <p>The <span class="r-word">postValue</span> method should always be used when working from a coroutine, and the
-      context <span class="negrita">Dispatchers.IO</span> should also be specified.</p>
+    <p>El método <span class="r-word">postValue</span> debe usarse siempre cuando se trabaja desde una corrutina, y
+      también debe especificarse el contexto <span class="negrita">Dispatchers.IO</span>.</p>
 
+    <p class="sub-section">ViewModel y LiveData</p>
 
-
-
-    <p class="sub-section">ViewModel and LiveData</p>
-
-    <p>From now on:
+    <p>A partir de ahora:
     <ul>
-      <li>If a component needs a state and that state is not needed anywhere else in the application,
-        the component will contain the state (stateful).</li>
-      <li>If a component needs a state and this state is needed in other parts of the application,
-        the component will not contain the state (stateless) and will subscribe to a LiveData provided by the ViewModel.
+      <li>Si un componente necesita un estado y ese estado no se necesita en ningún otro lugar de la aplicación,
+        el componente contendrá el estado (con estado o "stateful").</li>
+      <li>Si un componente necesita un estado y este estado es necesario en otras partes de la aplicación,
+        el componente no contendrá el estado (sin estado o "stateless") y se suscribirá a un LiveData proporcionado por
+        el ViewModel.
       </li>
     </ul>
     </p>
 
-  </section><!-- End section Android Architectures-->
-
+  </section><!-- End section Android Architectures -->
 
   <!--*********************************************************Practical Case***********************************************************-->
   <section class="apartado">
     <a id="sCasopractico"></a>
-    <h2>Practical Case</h2>
+    <h2>Caso Práctico</h2>
 
-    <p>We will follow step by step how to create an application using <span class="negrita">ViewModel</span>, in this
-      case, the application will be a
-      <span class="cursiva">Book List</span>. The first thing we will do is create the project in the selected folder
-      with the default Compose template.
+    <p>Seguiremos paso a paso cómo crear una aplicación utilizando <span class="negrita">ViewModel</span>; en este
+      caso, la aplicación será una
+      <span class="cursiva">Lista de Libros</span>. Lo primero que haremos será crear el proyecto en la carpeta
+      seleccionada
+      con la plantilla predeterminada de Compose.
     </p>
 
-    <h3>Add dependencies</h3>
+    <h3>Añadir dependencias</h3>
 
-    <p>After creating the project, it's necessary to add the required dependencies. For this example, the dependencies
-      for navigation, serialization, extended icons, and livedata will be added:</p>
+    <p>Tras crear el proyecto, es necesario añadir las dependencias requeridas. Para este ejemplo, se añadirán las
+      dependencias
+      de navegación, serialización, iconos extendidos y LiveData:</p>
 
     <p>
     <ul>
       <li><span class="inline-file">libs.versions.toml</span>
         <ul>
-          <li><span class="negrita">[version] section</span>:
+          <li><span class="negrita">Sección [version]</span>:
             <section>
               <pre><code class="language-kotlin">navigation = "2.8.5"
 serialization = "1.6.3"
@@ -611,7 +661,7 @@ runtimeLivedata = "1.7.6"
 </code></pre>
             </section>
           </li>
-          <li><span class="negrita">[libraries] section</span>:
+          <li><span class="negrita">Sección [libraries]</span>:
             <section>
               <pre><code class="language-kotlin">androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
@@ -620,24 +670,24 @@ androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtim
 </code></pre>
             </section>
           </li>
-          <li><span class="negrita">[plugins] section</span>:
+          <li><span class="negrita">Sección [plugins]</span>:
             <section>
               <pre><code class="language-kotlin">kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }</code></pre>
             </section>
           </li>
         </ul>
       </li>
-      <li><span class="inline-file">build.gradle.kts (Module: app) </span>
+      <li><span class="inline-file">build.gradle.kts (Módulo: app) </span>
         <ul>
-          <li><span class="cursiva">plugins</span> section:
+          <li>Sección <span class="cursiva">plugins</span>:
             <section>
               <pre><code class="language-kotlin">alias(libs.plugins.kotlin.serialization)</code></pre>
             </section>
           </li>
-          <li><span class="cursiva">dependencies</span> section:
+          <li>Sección <span class="cursiva">dependencies</span>:
             <section>
               <pre><code class="language-kotlin">implementation(libs.androidx.navigation)
-implementation(libs.kotlinx.serialization.json)
+implementation(libs.kotlinx.serialization-json)
 implementation(libs.androidx.material.icons)
 implementation(libs.androidx.runtime.livedata)
 </code></pre>
@@ -649,20 +699,19 @@ implementation(libs.androidx.runtime.livedata)
     </p>
 
     <section class="marco-t inf">
-      <span class="icono info"> </span> Remember to click <span class="negrita">Sync Now</span> after making these
-      changes.
+      <span class="icono info"> </span> Recuerda hacer clic en <span class="negrita">Sync Now</span> después de realizar
+      estos
+      cambios.
     </section>
     <section class="marco-b">
 
     </section>
 
-
-
-    <h3>Data Model</h3>
-    <p>To store the data, create the file <span class="inline-file">Book.kt</span> in a package called <span
+    <h3>Modelo de Datos</h3>
+    <p>Para almacenar los datos, crea el archivo <span class="inline-file">Book.kt</span> en un paquete llamado <span
         class="inline-folder">model</span>,
-      which will contain a <span class="r-word">data class</span> defining the <span class="d-word">Book</span> object
-      and a static method to retrieve all books.</p>
+      que contendrá una <span class="r-word">data class</span> definiendo el objeto <span class="d-word">Book</span>
+      y un método estático para recuperar todos los libros.</p>
 
     <section>
       <pre><code class="language-kotlin">data class Book(
@@ -696,11 +745,12 @@ implementation(libs.androidx.runtime.livedata)
     </section><br>
 
     <h3>View Model</h3>
-    <p>In a package called <span class="inline-folder">viewmodel</span>, create the file <span
+    <p>En un paquete llamado <span class="inline-folder">viewmodel</span>, crea el archivo <span
         class="inline-file">BookViewModel.kt</span>,
-      which will contain a <span class="r-word">class</span> for the <span class="negrita">ViewModel</span> with all the
-      necessary <span class="negrita">LiveData</span>
-      (states) and the <span class="negrita">methods to modify those LiveData</span>.</p>
+      que contendrá una <span class="r-word">class</span> para el <span class="negrita">ViewModel</span> con todos los
+      <span class="negrita">LiveData</span>
+      (estados) necesarios y los <span class="negrita">métodos para modificar esos LiveData</span>.
+    </p>
 
     <section>
       <pre><code class="language-kotlin">class BookViewModel : ViewModel() {
@@ -782,11 +832,11 @@ implementation(libs.androidx.runtime.livedata)
 }</code></pre>
     </section><br>
 
-    <h3>Navigation and Routes</h3>
+    <h3>Navegación y Rutas</h3>
 
-    <p>In a package called <span class="inline-folder">navigation</span>, create the files <span
+    <p>En un paquete llamado <span class="inline-folder">navigation</span>, crea los archivos <span
         class="inline-file">Routes.kt</span>
-      and <span class="inline-file">Navigation.kt</span>, where the application's navigation will be defined.</p>
+      y <span class="inline-file">Navigation.kt</span>, donde se definirá la navegación de la aplicación.</p>
 
     <section class="marco-t file-">
       <span class="icono file"> </span> <span class="negrita">Routes.kt</span>
@@ -845,11 +895,10 @@ fun Navigation() {
       </section>
     </section>
 
-    </p>
-
     <h3>MainActivity</h3>
-    <p>In the file <span class="inline-file">MainActivity.kt</span>, it call the <span class="d-word">Navigation</span>
-      component, which will be the content of the <span class="cursiva">Activity</span>.</p>
+    <p>En el archivo <span class="inline-file">MainActivity.kt</span>, se llama al componente <span
+        class="d-word">Navigation</span>,
+      que será el contenido de la <span class="cursiva">Activity</span>.</p>
 
     <section>
       <pre><code class="language-kotlin">class MainActivity : ComponentActivity() {
@@ -865,18 +914,18 @@ fun Navigation() {
 }</code></pre>
     </section><br>
 
-    <h3>File structure for screens</h3>
-    <a href="UD9/images/ud_9-2025-01-28-14-31-50.png">
-      <figure><img src="UD9/images/ud_9-2025-01-28-14-31-50.png" /><br>
+    <h3>Estructura de archivos para las pantallas</h3>
+    <a href="UD9/images/ud_9-2025-01-28-14-31-50.png" title="Estructura de paquetes en Android Studio">
+      <figure><img src="UD9/images/ud_9-2025-01-28-14-31-50.png" alt="Estructura de carpetas del proyecto" /><br>
         <figcaption></figcaption>
       </figure>
     </a>
     <br>
 
-    <h3><span class="inline-folder">Layout</span></h3>
+    <h3><span class="inline-folder">Layout (Diseño)</span></h3>
 
-    <a href="UD9/images/ud_9-2025-01-28-14-36-38.png">
-      <figure><img src="UD9/images/ud_9-2025-01-28-14-36-38.png" /><br>
+    <a href="UD9/images/ud_9-2025-01-28-14-36-38.png" title="Diseño visual de los componentes">
+      <figure><img src="UD9/images/ud_9-2025-01-28-14-36-38.png" alt="Esquema del layout" /><br>
         <figcaption></figcaption>
       </figure>
     </a>
@@ -952,7 +1001,7 @@ fun AppTopBar(
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Go back",
+                        contentDescription = "Ir atrás",
                         tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
@@ -1006,17 +1055,17 @@ fun AuthorInfo(modifier: Modifier = Modifier) {
     </section><br><br>
 
     <h3><span class="inline-folder">MainScreen</span></h3>
-    <a href="UD9/images/ud_9-2025-01-28-14-37-58.png">
-      <figure><img src="UD9/images/ud_9-2025-01-28-14-37-58.png" /><br>
+    <a href="UD9/images/ud_9-2025-01-28-14-37-58.png" title="Vista previa de la pantalla principal">
+      <figure><img src="UD9/images/ud_9-2025-01-28-14-37-58.png" alt="Captura de pantalla MainScreen" /><br>
         <figcaption></figcaption>
       </figure>
     </a>
     <br>
     <p class="sub-section">MainScreen</p>
 
-    <p>In a package called <span class="inline-folder">mainscreens</span>, create the file <span
+    <p>En un paquete llamado <span class="inline-folder">mainscreens</span>, crea el archivo <span
         class="inline-file">MainScreen.kt</span>
-      for the main screen interface that will display the list of books.</p>
+      para la interfaz de la pantalla principal que mostrará la lista de libros.</p>
 
     <section>
       <pre><code class="language-kotlin">@Composable
@@ -1097,7 +1146,7 @@ fun MainScreen(
                         .background(MaterialTheme.colorScheme.primary)
                 ) {
                     Text(
-                        text = "Loading...",
+                        text = "Cargando...",
                         fontSize = 40.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onPrimary
@@ -1135,7 +1184,7 @@ fun BookCard(
                 if (book.favorite) {
                     Icon(
                         imageVector = Icons.Default.Star,
-                        contentDescription = "book",
+                        contentDescription = "libro favorito",
                         tint = Color(0xFFFB8C00)
                     )
                 }
@@ -1143,7 +1192,7 @@ fun BookCard(
             trailingContent = {
                 Icon(
                     imageVector = Icons.Default.Delete,
-                    contentDescription = "book",
+                    contentDescription = "eliminar libro",
                     modifier = Modifier.clickable {
                         onBookDelete(book)
                     }
@@ -1155,9 +1204,9 @@ fun BookCard(
     </section><br><br>
 
     <h3><span class="inline-folder">BookInfoScreen</span></h3>
-    <p>In a package called <span class="inline-folder">screens</span>, create the file <span
+    <p>En un paquete llamado <span class="inline-folder">screens</span>, crea el archivo <span
         class="inline-file">BookInfoScreen.kt</span>
-      to display detailed information about the book from the list that was clicked.</p>
+      para mostrar información detallada del libro de la lista sobre el que se hizo clic.</p>
 
     <section>
       <pre><code class="language-kotlin">@Composable
@@ -1187,13 +1236,13 @@ fun BookInfoScreen(
                 Column {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.MenuBook,
-                        contentDescription = "book"
+                        contentDescription = "icono libro"
                     )
                     if (favorite) {
                         Spacer(modifier = Modifier.height(4.dp))
                         Icon(
                             imageVector = Icons.Default.Star,
-                            contentDescription = "book",
+                            contentDescription = "favorito",
                             tint = Color(0xFFFB8C00)
                         )
                     }
@@ -1236,67 +1285,70 @@ fun BookInfoScreen(
     </section><br><br>
 
 
-    <h3>Problem with ViewModel and LiveData</h3>
+    <h3>Problema con ViewModel y LiveData</h3>
 
-    <p>When <span class="negrita">LiveData</span> stores a list of objects, even if the list is modified, the changes
-      are not notified to the observers
-      so no recomposition happens:</p>
-    <figure><img src="UD9/images/ud9-2023-12-04-12-59-09.png" /><br>
+    <p>Cuando <span class="negrita">LiveData</span> almacena una lista de objetos, aunque se modifique la lista, los
+      cambios
+      no se notifican a los observadores,
+      por lo que no ocurre ninguna recomposición:</p>
+    <figure><img src="UD9/images/ud9-2023-12-04-12-59-09.png" alt="Gráfico del problema de identidad en LiveData" /><br>
       <figcaption></figcaption>
     </figure>
     <br>
 
-    <p>This happens because although the list has been modified, the instance is the same. To solve this, a new list
-      must be created
-      and copies of the elements in the list must be made, modified, and added to the new list.</p>
+    <p>Esto sucede porque, aunque la lista se haya modificado, la instancia es la misma. Para solucionar esto, se debe
+      crear una nueva lista
+      y realizar copias de los elementos de la lista, modificarlos y añadirlos a la nueva lista.</p>
 
-    <figure><img src="UD9/images/ud9-2023-12-04-12-59-55.png" /><br>
+    <figure><img src="UD9/images/ud9-2023-12-04-12-59-55.png"
+        alt="Solución mediante la creación de una nueva lista" /><br>
       <figcaption></figcaption>
     </figure>
     <br>
     <section class="marco-t inf">
-      <span class="icono info"> </span> About LiveData
+      <span class="icono info"> </span> Sobre LiveData
     </section>
     <section class="marco-b">
-      <p>If we are going to modify the value from another thread other than the main, we must do it with <span
-          class="negrita">myLiveData.postValue(value)</span>
-        instead of <span class="negrita">myLiveData.value = value</span>. That is, if we are inside a coroutine and
-        change the value of LiveData, we will use
-        postValue to notify correctly.</p>
+      <p>Si vamos a modificar el valor desde otro hilo que no sea el principal, debemos hacerlo con <span
+          class="negrita">myLiveData.postValue(valor)</span>
+        en lugar de <span class="negrita">myLiveData.value = valor</span>. Es decir, si estamos dentro de una corrutina
+        y
+        cambiamos el valor de LiveData, utilizaremos
+        postValue para notificar correctamente.</p>
       <section>
-        <pre><code class="language-kotlin">_usernameLD.postValue("Another value")</code></pre>
+        <pre><code class="language-kotlin">_usernameLD.postValue("Otro valor")</code></pre>
       </section><br><br>
     </section>
 
     <section class="marco-t inf">
-      <span class="icono info"> </span> About ViewModel
+      <span class="icono info"> </span> Sobre ViewModel
     </section>
     <section class="marco-b">
-      <p>If there is a ViewModel that is shared by all Screens, you can create the ViewModel in MainActivity using "by"
+      <p>Si hay un ViewModel que es compartido por todas las Pantallas (Screens), puedes crear el ViewModel en
+        MainActivity usando "by"
       </p>
       <section>
-        <pre><code class="language-kotlin">val workoutViewModel by viewModels<WorkoutViewModel>()</code></pre>
+        <pre><code class="language-kotlin">val workoutViewModel by viewModels&lt;WorkoutViewModel&gt;()</code></pre>
       </section><br>
-      <p>Or in the Navigation component using "=remember":</p>
+      <p>O en el componente Navigation usando "=remember":</p>
       <section>
         <pre><code class="language-kotlin">val workoutViewModel = remember {
-     WorkoutViewModel()
+      WorkoutViewModel()
    }</code></pre>
       </section><br>
-      <p>If there is a ViewModel that is used only by some Screens (not all), create the ViewModel in Navigation using
-        "=remember" and pass it to the Screens that need it</p>
-      <p>If there is a ViewModel that is only used in one Screen, create the ViewModel in that Screen using "=remember".
-        (You can also use the <span class="negrita">viewModel()</span>
-        function)</p>
+      <p>Si hay un ViewModel que es usado solo por algunas Pantallas (no todas), crea el ViewModel en Navigation usando
+        "=remember" y pásalo a las Pantallas que lo necesiten.</p>
+      <p>Si hay un ViewModel que solo se usa en una Pantalla, crea el ViewModel en esa Pantalla usando "=remember".
+        (También puedes usar la función <span class="negrita">viewModel()</span>)</p>
       <section>
         <pre><code class="language-kotlin">val workoutViewModel= viewModel(){
-         //If our ViewModel constructor has an input parameter.
+         //Si el constructor de nuestro ViewModel tiene un parámetro de entrada.
        WorkoutViewModel(3)
    }</code></pre>
       </section><br>
-      <p>Or simply</p>
+      <p>O simplemente:</p>
       <section>
-        <pre><code class="language-kotlin">//No initial input parameter
+        <pre><code class="language-kotlin">//Sin parámetro de entrada inicial
    val workoutViewModel = viewModel(WorkoutViewModel::class.java)</code></pre>
       </section><br><br>
     </section>
@@ -1307,69 +1359,72 @@ fun BookInfoScreen(
   <!--*********************************************************FLOWS***********************************************************-->
   <section class="apartado">
     <a id="sFlows"></a>
-    <h2>INTRODUCTION TO FLOWS</h2>
+    <h2>INTRODUCCIÓN A LOS FLOWS</h2>
 
-    <h3>Introduction</h3>
+    <h3>Introducción</h3>
 
-    <p>Flow is a component of the coroutine library that allows us to implement reactive programming. </p>
-
-
-    <p>It is the natural substitute for RxJava, since the vast majority of things that can be done are here, generally
-      simpler,
-      since they are based on concepts that we already know about <span class="d-word">coroutines</span> , <span
-        class="d-word">sequences</span> ,
-      and <span class="d-word">collections</span> to give us a very easy solution.</p>
-
-    <h3>What are the Flows?</h3>
-
-    <p>Flows are asynchronous sequences.</p>
-
-    <p class="sub-section">The Flows are lazy</p>
-
-    <p>Like sequences, Flows are lazy, which means that until someone requests the Flow's values, the operations on them
-      are not executed. </p>
-    <p>This causes them to be called <span class="negrita">cold streams</span>, because they will not start providing
-      data until someone asks to collect them.
-      Also, if another element connects to the Flow, it starts from the first value of the flow.</p>
-    <p>It is important to understand this, because <span class="negrita">if a Flow performs heavy operations,
-        they will be repeated every time someone collects its values</span>.</p>
+    <p>Flow es un componente de la librería de corrutinas que nos permite implementar programación reactiva. </p>
 
 
+    <p>Es el sustituto natural de RxJava, ya que la gran mayoría de cosas que se pueden hacer allí también están aquí, y
+      en general de forma más sencilla,
+      porque se basa en conceptos que ya conocemos sobre <span class="d-word">corrutinas</span> , <span
+        class="d-word">secuencias</span> ,
+      y <span class="d-word">colecciones</span> para ofrecernos una solución muy fácil.</p>
 
-    <p class="sub-section">Flows are asynchronous</p>
+    <h3>¿Qué son los Flows?</h3>
 
-    <p>Unlike sequences, which are processed one element after another, in Flow this is not necessarily the case. It can
-      take a long time between one value and the next.</p>
+    <p>Los Flows son secuencias asíncronas.</p>
 
-    <p>That's why we won't normally run them on the main thread.</p>
+    <p class="sub-section">Los Flows son perezosos (lazy)</p>
 
-    <p>Since all this happens in a coroutine context, think that the thread management is going to be very easy to
-      manage.</p>
-
-
-    <p class="sub-section">Flows are sequential</p>
-
-    <p>This means that if a Flow is going to generate x elements, and these consist of heavy processing, they will be
-      executed one after the other:
-      until the previous one finishes, the next one will not start.</p>
-
-    <p>This, which is often an advantage, can sometimes be a disadvantage.
-      Imagine that you have to make 10 requests to servers and that each one is independent of the previous one. Even
-      so,
-      you would have to wait for the previous one to finish to launch the next one.</p>
-
-    <p>This can be modified, and we'll see later. But keep in mind that they work like this by default</p>
+    <p>Al igual que las secuencias, los Flows son perezosos, lo que significa que hasta que alguien solicita los valores
+      del Flow, las operaciones sobre ellos
+      no se ejecutan. </p>
+    <p>Esto hace que se les llame <span class="negrita">cold streams</span>, porque no empezarán a proporcionar
+      datos hasta que alguien los recoja (collect).
+      Además, si otro elemento se conecta al Flow, empieza desde el primer valor del flow.</p>
+    <p>Es importante entender esto, porque <span class="negrita">si un Flow realiza operaciones pesadas,
+        se repetirán cada vez que alguien recoja (collect) sus valores</span>.</p>
 
 
 
-    <h3>Flow Builders</h3>
+    <p class="sub-section">Los Flows son asíncronos</p>
 
-    <p>We have 3 ways to build a Flow:</p>
+    <p>A diferencia de las secuencias, que se procesan un elemento tras otro, en Flow esto no tiene por qué ser así.
+      Puede
+      pasar mucho tiempo entre un valor y el siguiente.</p>
+
+    <p>Por eso normalmente no los ejecutaremos en el hilo principal.</p>
+
+    <p>Como todo esto sucede en un contexto de corrutinas, piensa que la gestión de hilos va a ser muy fácil de
+      manejar.</p>
+
+
+    <p class="sub-section">Los Flows son secuenciales</p>
+
+    <p>Esto significa que si un Flow va a generar x elementos, y estos consisten en procesamiento pesado, se ejecutarán
+      uno detrás de otro:
+      hasta que el anterior termine, el siguiente no empezará.</p>
+
+    <p>Esto, que a menudo es una ventaja, a veces puede ser una desventaja.
+      Imagina que tienes que hacer 10 peticiones a servidores y que cada una es independiente de la anterior. Aun
+      así,
+      tendrías que esperar a que termine la anterior para lanzar la siguiente.</p>
+
+    <p>Esto se puede modificar, y lo veremos más adelante. Pero ten en cuenta que por defecto funcionan así</p>
+
+
+
+    <h3>Constructores de Flow</h3>
+
+    <p>Tenemos 3 formas de construir un Flow:</p>
 
     <p class="sub-section">asFlow()</p>
 
-    <p>Perhaps this is the easiest way to generate a Flow. All collections, including sequences, can be converted to a
-      Flow using this function</p>
+    <p>Quizá esta sea la forma más sencilla de generar un Flow. Todas las colecciones, incluidas las secuencias, se
+      pueden convertir a un
+      Flow usando esta función</p>
 
     <section>
       <pre><code class="language-kotlin">val flow = listOf(1, 2, 3, 4).asFlow()</code></pre>
@@ -1377,8 +1432,9 @@ fun BookInfoScreen(
 
     <p class="sub-section">flowOf()</p>
 
-    <p>A Flow is generated with a sequence of predefined values, the equivalent of <span class="d-word">listOf()</span>
-      or <span class="d-word">sequenceOf()</span> </p>
+    <p>Se genera un Flow con una secuencia de valores predefinidos, el equivalente a <span
+        class="d-word">listOf()</span>
+      o <span class="d-word">sequenceOf()</span> </p>
 
     <section>
       <pre><code class="language-kotlin">val flow = flowOf(1, 2, 3, 4)</code></pre>
@@ -1386,12 +1442,13 @@ fun BookInfoScreen(
 
     <p class="sub-section">flow { }</p>
 
-    <p>The most versatile of all, and the one you will surely use most often. </p>
-    <p>We create a <span class="negrita">flow { }</span> block and add values ​​with the <span
-        class="negrita">emit()</span> function.</p>
+    <p>El más versátil de todos, y el que seguramente usarás con más frecuencia. </p>
+    <p>Creamos un bloque <span class="negrita">flow { }</span> y añadimos valores con la función <span
+        class="negrita">emit()</span>.</p>
 
-    <p>Also, here we add the advantage that this block receives a coroutine context, so we can call suspend functions
-      without any problem within it.</p>
+    <p>Además, aquí tenemos la ventaja de que este bloque recibe un contexto de corrutinas, así que podemos llamar a
+      funciones suspend
+      sin ningún problema dentro de él.</p>
 
     <section>
       <pre><code class="language-kotlin">flow {
@@ -1402,23 +1459,25 @@ for (i in (0..3)) {
 }</code></pre>
     </section><br><br>
 
-    <h3>Types of operators</h3>
+    <h3>Tipos de operadores</h3>
 
-    <p>Flows can be transformed just like collections, making them very easy to use.</p>
+    <p>Los Flows se pueden transformar igual que las colecciones, lo que los hace muy fáciles de usar.</p>
 
-    <p>We can filter, map, combine, transform... and a large number of operations that allow you to adapt these flows to
-      the needs you have in the place where you use them.</p>
+    <p>Podemos filtrar, mapear, combinar, transformar... y un gran número de operaciones que te permiten adaptar estos
+      flows a
+      las necesidades que tengas en el lugar donde los uses.</p>
 
-    <p>As with sequences, there are two types of operators</p>
+    <p>Como ocurre con las secuencias, hay dos tipos de operadores</p>
 
-    <p class="sub-section">Intermediate operators</p>
+    <p class="sub-section">Operadores intermedios</p>
 
-    <p>They are operators that do not launch any operation, regardless of their complexity. What they do is return a
-      <span class="negrita">new Flow</span> that is
-      the combination of the previous one with the new operation.</p>
+    <p>Son operadores que no lanzan ninguna operación, independientemente de su complejidad. Lo que hacen es devolver un
+      <span class="negrita">nuevo Flow</span> que es
+      la combinación del anterior con la nueva operación.
+    </p>
 
 
-    <p>For example, we can use the <span class="negrita"><span class="r-word">filter()</span> </span> operation:</p>
+    <p>Por ejemplo, podemos usar la operación <span class="negrita"><span class="r-word">filter()</span> </span>:</p>
 
     <section>
       <pre><code class="language-kotlin">fun makeFlow() = flow{
@@ -1437,7 +1496,8 @@ makeFlow() //user function that returns a flow
 </code></pre>
     </section><br><br>
 
-    <p>And then do a <span class="negrita"><span class="r-word">map()</span> </span> to transform the results:</p>
+    <p>Y luego hacer un <span class="negrita"><span class="r-word">map()</span> </span> para transformar los resultados:
+    </p>
     <section>
       <pre><code class="language-kotlin">makeFlow()
 .filter { it % 2 == 0 }
@@ -1445,9 +1505,10 @@ makeFlow() //user function that returns a flow
     </section><br><br>
 
 
-    <p>But there is a particularly interesting operator, which is <span class="negrita"><span
-          class="r-word">transform()</span></span> , and which allows us to make as complex transformations
-      as we need. All we have to do is call <span class="negrita">emit()</span> with the values ​​we want to return:</p>
+    <p>Pero hay un operador especialmente interesante, que es <span class="negrita"><span
+          class="r-word">transform()</span></span> , y que nos permite hacer transformaciones tan complejas
+      como necesitemos. Solo tenemos que llamar a <span class="negrita">emit()</span> con los valores que queramos
+      devolver:</p>
 
     <section>
       <pre><code class="language-kotlin">flowOf(1,2,3,4,5).transform{
@@ -1457,7 +1518,7 @@ makeFlow() //user function that returns a flow
 }</code></pre>
     </section>
 
-    <p>Output:</p>
+    <p>Salida:</p>
 
     <section>
       <pre><code class="language-kotlin">Value -> 2
@@ -1466,8 +1527,8 @@ Value -> 4</code></pre>
 
 
 
-    <p>You can also combine multiple Flows with operations like <span class="negrita"><span class="r-word">zip()</span>
-      </span> or <span class="negrita"><span class="r-word">combine()</span> </span> :</p>
+    <p>También puedes combinar varios Flows con operaciones como <span class="negrita"><span class="r-word">zip()</span>
+      </span> o <span class="negrita"><span class="r-word">combine()</span> </span> :</p>
 
     <section>
       <pre><code class="language-kotlin">val flow1 = flowOf(1, 2, 3, 4)
@@ -1484,7 +1545,7 @@ println(it)
 }</code></pre>
     </section>
 
-    <p>Result</p>
+    <p>Resultado</p>
     <section>
       <pre><code class="language-kotlin">1 -> 1
 2 -> 2
@@ -1494,7 +1555,7 @@ println(it)
     </section><br><br>
 
 
-    <p>We can apply some action to each of the flow elements with <span class="negrita"><span
+    <p>Podemos aplicar alguna acción a cada uno de los elementos del flow con <span class="negrita"><span
           class="r-word">onEach()</span> </span></p>
 
     <section>
@@ -1508,7 +1569,7 @@ println("$it")
 }</code></pre>
     </section>
 
-    <p>Result</p>
+    <p>Resultado</p>
     <section>
       <pre><code class="language-kotlin">1 -> a
 2 -> a
@@ -1522,18 +1583,19 @@ println("$it")
 
 
 
-    <p>Remember that all of these operators can have suspend functions inside them,
-      so those operations can be as simple as addition or as complex as calling a server and saving the result to a
-      database.</p>
+    <p>Recuerda que todos estos operadores pueden tener funciones suspend dentro,
+      así que esas operaciones pueden ser tan simples como una suma o tan complejas como llamar a un servidor y guardar
+      el resultado en una
+      base de datos.</p>
 
 
-    <p class="sub-section">Terminal operators</p>
+    <p class="sub-section">Operadores terminales</p>
 
-    <p>These do launch the execution and cause the production of values begins and these to be emitted.</p>
+    <p>Estos sí lanzan la ejecución y hacen que comience la producción de valores y que estos se emitan.</p>
 
-    <p>The most common terminal operator is <span class="negrita"><span class="r-word">collect()</span> </span> ,
-      which tells Flow that there is already someone on the other side (the collector) waiting for results, and that it
-      can start emitting them.</p>
+    <p>El operador terminal más común es <span class="negrita"><span class="r-word">collect()</span> </span> ,
+      que le indica al Flow que ya hay alguien al otro lado (el collector) esperando resultados, y que puede empezar a
+      emitirlos.</p>
 
     <section>
       <pre><code class="language-kotlin">val flow= flowOf(1,2,3,4,5,6)
@@ -1543,9 +1605,9 @@ println(it)
 }</code></pre>
     </section><br><br>
 
-    <p>Another interesting terminal function is <span class="negrita"><span class="r-word">toList()</span></span> . It
-      will wait for the entire flow to finish emitting and turn it into a list.</p>
-    <p>In this example we are going to take a previous flow and convert it into a list and print its result.</p>
+    <p>Otra función terminal interesante es <span class="negrita"><span class="r-word">toList()</span></span> . Esperará
+      a que el flow termine de emitir por completo y lo convertirá en una lista.</p>
+    <p>En este ejemplo vamos a tomar un flow anterior, convertirlo en una lista e imprimir su resultado.</p>
     <section>
       <pre><code class="language-kotlin">val flow1 = flowOf(1, 2, 3, 4)
 val flow2 = flowOf("1", "2", "3", "4", "5")
@@ -1554,19 +1616,20 @@ println(
 flow1.combine(flow2) { a, b -> "$a -> $b" }.toList()
 )</code></pre>
     </section>
-    <p>Output:</p>
+    <p>Salida:</p>
     <section>
       <pre><code class="language-kotlin">[1 -> 1, 2 -> 2, 3 -> 3, 4 -> 4, 4 -> 5]</code></pre>
     </section><br><br>
 
 
-    <p>But there is not only this one, we have several more like <span class="negrita">toSet(), first(), single(),
-        reduce()</span> or <span class="negrita">fold()</span> .</p>
+    <p>Pero no es la única: tenemos varias más como <span class="negrita">toSet(), first(), single(),
+        reduce()</span> o <span class="negrita">fold()</span> .</p>
 
-    <h3>Constraints on contexts and exceptions</h3>
-    <p>Flow has some restrictions, to make the whole system work properly.</p>
+    <h3>Restricciones de contexto y excepciones</h3>
+    <p>Flow tiene algunas restricciones para que todo el sistema funcione correctamente.</p>
 
-    <p>The first is that we cannot switch context within the code of a flow. If we do this, we'll get an exception:</p>
+    <p>La primera es que no podemos cambiar de contexto dentro del código de un flow. Si hacemos esto, obtendremos una
+      excepción:</p>
 
     <section>
       <pre><code class="language-kotlin">fun makeFlow() = flow {
@@ -1579,9 +1642,9 @@ withContext(Dispatchers.IO) {
 }</code></pre>
     </section><br><br>
 
-    <p>Flow will always run in the context of the coroutine that launched it.
-      But many times it won't be what we want, how do we then change the execution context? We can use the <span
-        class="negrita">flowOn()</span> function:</p>
+    <p>Flow siempre se ejecutará en el contexto de la corrutina que lo lanzó.
+      Pero muchas veces no será lo que queremos, ¿cómo cambiamos entonces el contexto de ejecución? Podemos usar la
+      función <span class="negrita">flowOn()</span>:</p>
 
     <section>
       <pre><code class="language-kotlin">val flow = flowOf(1,2,3,4)
@@ -1590,8 +1653,8 @@ flow.flowOn(Dispatchers.IO)
 .collect { print(it) }</code></pre>
     </section><br><br>
 
-    <p>With respect to exceptions, it happens a bit the same. Exceptions should not be caught within the flows,
-      so as not to hide them and the rest of the code does not find out. There is a special function for this:</p>
+    <p>Respecto a las excepciones, ocurre algo parecido. Las excepciones no deberían capturarse dentro de los flows,
+      para no ocultarlas y que el resto del código no se entere. Para esto hay una función especial:</p>
 
 
     <section>
@@ -1601,37 +1664,39 @@ flow.flowOn(Dispatchers.IO)
 }</code></pre>
     </section><br><br>
 
-    <p>If we don't catch the exception, it will continue to propagate normally, as it happens with the rest of the
-      coroutine components.</p>
+    <p>Si no capturamos la excepción, seguirá propagándose normalmente, como ocurre con el resto de componentes de
+      corrutinas.</p>
 
     <br><br>
-    <h3>Types or specializations of FLows</h3>
+    <h3>Tipos o especializaciones de Flows</h3>
 
-    <p>So far we have seen the general behavior of the flows and the main characteristics.
-      Now we will see some types of flow specialization that can be interesting for certain cases.</p>
+    <p>Hasta aquí hemos visto el comportamiento general de los flows y sus principales características.
+      Ahora veremos algunos tipos de especialización de flow que pueden ser interesantes para ciertos casos.</p>
 
     <p class="sub-section">StateFlow</p>
 
-    <p>Remember that we said that generic flows were <span class="cursiva">cold streams</span> , that is, until someone
-      starts collecting their values,
-      the flow doesn't start emitting.</p>
+    <p>Recuerda que dijimos que los flows genéricos eran <span class="cursiva">cold streams</span> , es decir, hasta que
+      alguien
+      empieza a recolectar (collect) sus valores,
+      el flow no comienza a emitir.</p>
 
-    <p>The <span class="d-word">StateFlows</span> are <span class="cursiva">hot streams</span> , that is, whether there
-      is someone listening or not, they are going to emit values.
-      If we connect to a <span class="d-word">Stateflow</span> , it will give us the last value, it will not start with
-      the first one.</p>
+    <p>Los <span class="d-word">StateFlows</span> son <span class="cursiva">hot streams</span> , es decir, haya o no
+      alguien escuchando, van a emitir valores.
+      Si nos conectamos a un <span class="d-word">Stateflow</span> , nos dará el último valor, no empezará por el
+      primero.</p>
 
 
-    <p><span class="d-word">StateFlows</span> are especially interesting for saving the state of the UI, when we connect
-      to it, it will tell us what the last state the UI should be in is.
-      From there if the state changes, the UI will receive the new state. <br>
-      As you have seen, this would be the equivalent of <span class="d-word">LiveData</span> .
+    <p>Los <span class="d-word">StateFlows</span> son especialmente interesantes para guardar el estado de la UI: cuando
+      nos conectamos
+      nos dirá cuál es el último estado en el que debería estar la UI.
+      A partir de ahí, si el estado cambia, la UI recibirá el nuevo estado. <br>
+      Como has visto, esto sería el equivalente de <span class="d-word">LiveData</span> .
     </p>
 
-    <p>Let's do an example in which we simulate a use case in which the UI is going to be updated (in this case the
-      console), we will update the UI every second by passing it a new <span class="negrita">note</span> .
-      For this, we will use a <span class="r-word">MutableStateFlow</span> that will be of the <span
-        class="negrita">note</span> type.</p>
+    <p>Vamos a hacer un ejemplo en el que simulamos un caso de uso en el que la UI se va a actualizar (en este caso, la
+      consola). Actualizaremos la UI cada segundo pasándole una nueva <span class="negrita">nota</span> .
+      Para ello usaremos un <span class="r-word">MutableStateFlow</span> que será del tipo <span
+        class="negrita">Note</span>.</p>
 
     <section>
       <pre><code class="language-kotlin">data class Note(
@@ -1667,15 +1732,17 @@ viewModel.state.collect(){
 }</code></pre>
     </section><br><br>
 
-    <p>Note that to update the value of the <span class="d-word">StateFlow</span> , the new value is passed through the
-      <span class="r-word">value</span> property of the <span class="d-word">status</span> variable.
-      Notice that to start the value of the StateFlow we pass a note in the constructor.</p>
+    <p>Fíjate en que para actualizar el valor del <span class="d-word">StateFlow</span> , el nuevo valor se pasa
+      mediante la
+      propiedad <span class="r-word">value</span> de la variable <span class="d-word">state</span>.
+      Observa también que para el valor inicial del StateFlow pasamos una nota en el constructor.
+    </p>
 
 
     <section class="marco-t inf">
-      <span class="icono info"> </span> Since the <span class="negrita">println</span> function receives the same
-      arguments that the <span class="negrita">lambda</span> passes,
-      we can abbreviate it using the function reference (::)
+      <span class="icono info"> </span> Como la función <span class="negrita">println</span> recibe los mismos
+      argumentos que pasa la <span class="negrita">lambda</span>,
+      podemos abreviarlo usando la referencia a función (::)
     </section>
     <section class="marco-b">
       <section>
@@ -1683,59 +1750,62 @@ viewModel.state.collect(){
       </section>
     </section>
 
-    <p>The code above has a problem and that is that from the UI we could change the value of the state flow by doing
-      this.</p>
+    <p>El código anterior tiene un problema: desde la UI podríamos cambiar el valor del state flow haciendo
+      esto.</p>
 
     <section>
       <pre><code class="language-kotlin">viewModel.state.value = Note("Fake title", "Fake description")</code></pre>
     </section><br>
 
-    <p>That is, it is poorly encapsulated. To avoid that we must make the property that is accessed from outside
-      read-only. Let's see how we could do it.</p>
+    <p>Es decir, está mal encapsulado. Para evitarlo debemos hacer que la propiedad accesible desde fuera sea de solo
+      lectura. Veamos cómo podríamos hacerlo.</p>
 
     <section>
-      <pre><code class="language-kotlin">private val _state: MutableStateFlow<Note> = MutableStateFlow(Note("Title 1", "Description 1"))
-val state:StateFlow<Note> = _state.asStateFlow()</code></pre>
+      <pre><code class="language-kotlin">private val _state: MutableStateFlow&lt;Note&gt; = MutableStateFlow(Note("Title 1", "Description 1"))
+val state:StateFlow&lt;Note&gt; = _state.asStateFlow()</code></pre>
     </section><br>
 
-    <p>We see that our MutableStateFlow variable is private and offer a public one that cannot be changed, nor can the
-      value property be modified.
-      This is called <span class="cursiva">backing property</span> </p>
+    <p>Vemos que nuestra variable MutableStateFlow es privada y ofrecemos una pública que no se puede cambiar, ni
+      tampoco se puede modificar la propiedad value.
+      Esto se llama <span class="cursiva">backing property</span> </p>
 
-    <p class="sub-section">Collect Flow in a Composable</p>
-    <p>If we need to collect a flow and have it be a state variable for recomposition,
-      we should use <span class="r-word">collectAsState()</span> from the <span class="negrita">flow</span>. We can do
-      this as follows:</p>
+    <p class="sub-section">Recoger un Flow en un Composable</p>
+    <p>Si necesitamos recoger un flow y que sea una variable de estado para recomposición,
+      deberíamos usar <span class="r-word">collectAsState()</span> del <span class="negrita">flow</span>. Podemos
+      hacerlo
+      así:</p>
 
     <section>
       <pre><code class="language-kotlin">val books: List<Book> by bookViewModel.books.collectAsState()</code></pre>
     </section><br><br>
 
 
-    <a class="tarea" name="exercise_flow" target="_blank" href="#exercise_flow">Exercise:
-      Do the practical case using flows instead of live data.</a>
+    <a class="tarea" name="exercise_flow" target="_blank" href="#exercise_flow">Ejercicio:
+      Realiza el caso práctico usando flows en lugar de live data.</a>
     <br> <br>
     <p><a class="enlace" target="_blank"
-        href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD9/BookViewModelFlows">A possible solution</a> </p>
+        href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD9/BookViewModelFlows">Una posible solución</a>
+    </p>
 
 
     <p class="sub-section">SharedFlow</p>
 
 
-    <p><span class="r-word">StateFlow</span> is a specialization of <span class="r-word">SharedFlow</span>. <span
-        class="r-word">SharedFlow</span> is much more configurable.
-      When the exact conditions of a StateFlow are not enough for us, we can configure the <span
-        class="r-word">SharedFlow</span> to behave exactly as we need.</p>
+    <p><span class="r-word">StateFlow</span> es una especialización de <span class="r-word">SharedFlow</span>. <span
+        class="r-word">SharedFlow</span> es mucho más configurable.
+      Cuando las condiciones exactas de un StateFlow no son suficientes para nosotros, podemos configurar el <span
+        class="r-word">SharedFlow</span> para que se comporte exactamente como necesitamos.</p>
 
 
-    <p><span class="r-word">SharedFlow</span> has a series of configuration values ​​to be more flexible in the number
-      of values ​​we store,
-      what happens when we are consuming those values ​​more slowly than at the rate at which they are being emitted,
-      and what is the maximum number of values ​​that we want to store.</p>
+    <p><span class="r-word">SharedFlow</span> tiene una serie de valores de configuración para ser más flexible en el
+      número
+      de valores que almacenamos,
+      qué ocurre cuando consumimos esos valores más lentamente que el ritmo al que se están emitiendo,
+      y cuál es el número máximo de valores que queremos almacenar.</p>
 
 
-    <p>Let's see how we would use these options. We go back to the previous example of Notes.
-      In this case we use a <span class="negrita">MutableSharedFlow</span> </p>
+    <p>Veamos cómo usaríamos estas opciones. Volvemos al ejemplo anterior de Notes.
+      En este caso usamos un <span class="negrita">MutableSharedFlow</span> </p>
 
 
     <section>
@@ -1743,22 +1813,22 @@ val state:StateFlow<Note> = _state.asStateFlow()</code></pre>
 val state:SharedFlow&lt;Note> = _state.asSharedFlow()</code></pre>
     </section><br>
 
-    <p>We can see that the <span class="r-word">SharedFlows</span> do not pass an initial value in the constructor.</p>
+    <p>Podemos ver que los <span class="r-word">SharedFlows</span> no pasan un valor inicial en el constructor.</p>
 
-    <p>To change values ​​we do not use the <span class="negrita">value</span> property, since it is not a single value,
-      but we use the <span class="negrita">emit</span> function. </p>
+    <p>Para cambiar valores no usamos la propiedad <span class="negrita">value</span>, ya que no es un único valor,
+      sino que usamos la función <span class="negrita">emit</span>. </p>
     <section>
       <pre><code class="language-kotlin">_state.emit(Note("Title $counter", "Description $counter"))</code></pre>
     </section><br>
 
-    <p>To collect it we do it in the same way.</p>
+    <p>Para recolectarlo lo hacemos de la misma forma.</p>
 
 
     <section>
       <pre><code class="language-kotlin">viewModel.state.collect(::println)</code></pre>
     </section><br>
 
-    <p>For now, the complete code looks like this:</p>
+    <p>Por ahora, el código completo queda así:</p>
 
 
     <section>
@@ -1794,7 +1864,7 @@ viewModel.state.collect(::println)
 }</code></pre>
     </section><br>
 
-    <p>Output:</p>
+    <p>Salida:</p>
     <section>
       <pre><code class="language-kotlin">Note(title=Title 1, description=Description 1)
 Note(title=Title 2, description=Description 2)
@@ -1806,8 +1876,8 @@ Note(title=Title 7, description=Description 7)
 ....</code></pre>
     </section><br>
 
-    <p>At the moment it is working exactly the same as we had it before. Now let's see what happens if we start
-      collecting after a second (line 7)</p>
+    <p>De momento está funcionando exactamente igual que antes. Ahora veamos qué pasa si empezamos a
+      recolectar después de un segundo (línea 7)</p>
 
 
     <section>
@@ -1822,7 +1892,7 @@ viewModel.state.collect(::println)
 }</code></pre>
     </section><br>
 
-    <p>In this case we see that we have lost the first two values, it starts cocllecting from 3.</p>
+    <p>En este caso vemos que hemos perdido los dos primeros valores: empieza a recolectar desde el 3.</p>
 
 
     <section>
@@ -1832,24 +1902,24 @@ Note(title=Title 5, description=Description 5)
 ....</code></pre>
     </section><br>
 
-    <p>If we do not tell it anything, by default this <span class="r-word">SharedFlow</span> will not store any value
-      and therefore the old values ​​are not emitted.</p>
+    <p>Si no le indicamos nada, por defecto este <span class="r-word">SharedFlow</span> no almacenará ningún valor,
+      y por tanto los valores antiguos no se vuelven a emitir.</p>
 
 
-    <p>How can we configure this? If we go to the creation of the <span class="negrita">MutableSharedFlow</span> we will
-      see that it has 3 arguments,
+    <p>¿Cómo podemos configurar esto? Si vamos a la creación del <span class="negrita">MutableSharedFlow</span> veremos
+      que tiene 3 argumentos:
       <span class="negrita">replay</span>, <span class="negrita">extraBufferCapacity</span> , <span
         class="negrita">onBufferOverflow</span>.
     </p>
 
 
-    <p>Let's see what each of them is for:</p>
+    <p>Veamos para qué sirve cada uno:</p>
 
 
-    <p><span class="r-word">replay</span> . Of integer type, we can tell it how many values ​​we want it to store so
-      that when we subscribe it
-      starts with the first one stored. Default value is 0.
-      In this case we are going to set it to 1</p>
+    <p><span class="r-word">replay</span> . De tipo entero, podemos decirle cuántos valores queremos que almacene para
+      que cuando nos suscribamos
+      empiece por el primero almacenado. El valor por defecto es 0.
+      En este caso vamos a configurarlo a 1</p>
 
 
     <section>
@@ -1858,7 +1928,7 @@ Note(title=Title 5, description=Description 5)
 )</code></pre>
     </section><br>
 
-    <p>We see as a result, that before it issued us from 3, and when we put 1 it also recovers 2.</p>
+    <p>Vemos como resultado que antes nos emitía desde el 3, y cuando ponemos 1 también recupera el 2.</p>
 
     <section>
       <pre><code class="language-kotlin">Note(title=Title 2, description=Description 2)
@@ -1867,8 +1937,9 @@ Note(title=Title 4, description=Description 4)
 .....</code></pre>
     </section><br>
 
-    <p>If instead of <span class="negrita">replay=1</span> we set 2,
-      then it will return the 2 stored, that is, the first and the second, then it already emits the third normally.</p>
+    <p>Si en lugar de <span class="negrita">replay=1</span> configuramos 2,
+      entonces devolverá los 2 almacenados, es decir, el primero y el segundo, y después ya emite el tercero con
+      normalidad.</p>
 
 
     <section>
@@ -1877,7 +1948,7 @@ replay = 2
 )</code></pre>
     </section><br>
 
-    <p>Output: </p>
+    <p>Salida: </p>
 
     <section>
       <pre><code class="language-kotlin">Note(title=Title 1, description=Description 1)
@@ -1888,9 +1959,9 @@ Note(title=Title 4, description=Description 4)
     </section><br>
 
 
-    <p><span class="r-word">extraBufferCapacity</span> . It will store values ​​in a buffer.
-      Let's imagine that the values ​​are being collected more slowly than they are being emitted.
-      To do the test we will add a println to see when the values ​​are being emitted (line 4).</p>
+    <p><span class="r-word">extraBufferCapacity</span> . Almacenará valores en un buffer.
+      Imaginemos que los valores se están recolectando más lentamente de lo que se están emitiendo.
+      Para hacer la prueba añadiremos un println para ver cuándo se están emitiendo los valores (línea 4).</p>
 
 
     <section>
@@ -1902,7 +1973,7 @@ counter++
 }</code></pre>
     </section><br>
 
-    <p>Also, when we collect we will set a delay of 1 second. For this we pass the lambda.</p>
+    <p>Además, al recolectar vamos a poner un delay de 1 segundo. Para ello pasamos la lambda.</p>
 
 
     <section>
@@ -1912,7 +1983,7 @@ println(it)
 }</code></pre>
     </section><br>
 
-    <p>Let's see the output</p>
+    <p>Veamos la salida</p>
 
 
     <section>
@@ -1929,15 +2000,15 @@ Note(title=Title 4, description=Description 4)
 Emitting Title= 7</code></pre>
     </section><br><br>
 
-    <p>We see that, since we have a <span class="negrita">replay</span> of 2, the first 2 are broadcast without being
-      collected, a third is broadcast and we collect the first,
-      once the first is collected a fourth is broadcast, once the second is collected a fifth is broadcast.
-      In other words, once the replay capacity is exhausted, no more are broadcast until one of the replays is
-      collected, the broadcast function remains suspended.</p>
+    <p>Vemos que, como tenemos un <span class="negrita">replay</span> de 2, los dos primeros se emiten sin ser
+      recolectados, se emite un tercero y recolectamos el primero;
+      una vez se recolecta el primero se emite un cuarto; una vez se recolecta el segundo se emite un quinto.
+      Es decir: una vez se agota la capacidad de replay, no se emiten más hasta que uno de los replays se
+      recolecte; la función de emisión queda suspendida.</p>
 
 
-    <p>To give it more storage capacity we use the <span class="r-word">extraBufferCapacity</span> parameter,
-      we are going to give it a value of two so that it stores 4 elements in total (2 replay + 2 extraBufferCapacity).
+    <p>Para darle más capacidad de almacenamiento usamos el parámetro <span class="r-word">extraBufferCapacity</span>,
+      vamos a darle un valor de dos para que almacene 4 elementos en total (2 replay + 2 extraBufferCapacity).
     </p>
 
 
@@ -1948,7 +2019,7 @@ extraBufferCapacity = 2
 )</code></pre>
     </section><br>
 
-    <p>Output:</p>
+    <p>Salida:</p>
 
     <section>
       <pre><code class="language-kotlin">Emitting Title= 1
@@ -1967,24 +2038,25 @@ Emitting Title= 9
 ....</code></pre>
     </section><br>
 
-    <p>We see that it is emitting until the buffer is full, once it is full it is suspended until one is collected to be
-      able to emit another.</p>
+    <p>Vemos que va emitiendo hasta que el buffer se llena; una vez lleno se suspende hasta que se recolecta uno, para
+      poder
+      emitir otro.</p>
 
 
-    <p>It may be that we want the emit function to be suspended but simply discard the old or the new ones. We can do
-      this with the third parameter,
+    <p>Puede que no queramos que la función emit se suspenda, sino descartar los antiguos o los nuevos. Podemos hacer
+      esto con el tercer parámetro,
       <span class="negrita">onBufferOverflow</span>
     </p>
 
 
-    <p><span class="r-word">onBufferOverflow</span> . Its default value is configured with <span
-        class="negrita">BuffeOverFlow.SUSPEND</span>, that is, if the buffer is full,
-      it is suspended and does not continue emitting until some element is collected.
-      Other values ​​of this parameter are:</p>
+    <p><span class="r-word">onBufferOverflow</span> . Su valor por defecto está configurado como <span
+        class="negrita">BuffeOverFlow.SUSPEND</span>, es decir, si el buffer está lleno,
+      se suspende y no continúa emitiendo hasta que algún elemento se recolecta.
+      Otros valores de este parámetro son:</p>
 
 
-    <p><span class="negrita">BufferOverFlow.DROP_OLDEST</span> , that is, it eliminates the oldest ones in order to have
-      room in the buffer and continue emitting.</p>
+    <p><span class="negrita">BufferOverFlow.DROP_OLDEST</span> , es decir, elimina los más antiguos para tener
+      hueco en el buffer y seguir emitiendo.</p>
 
 
     <section>
@@ -1995,7 +2067,7 @@ onBufferOverflow = BufferOverflow.DROP_OLDEST
 )</code></pre>
     </section><br>
 
-    <p>If we put this value in our example we see the following output.</p>
+    <p>Si ponemos este valor en nuestro ejemplo vemos la siguiente salida.</p>
 
     <section>
       <pre><code class="language-kotlin">Emitting Title= 5
@@ -2017,15 +2089,16 @@ Emitting Title= 14
 </code></pre>
     </section><br>
 
-    <p>If we look at element 5 (which was the oldest) it has not been collected, it has been discarded in order to emit
-      element 10</p>
+    <p>Si nos fijamos en el elemento 5 (que era el más antiguo), no se ha recolectado: se ha descartado para poder
+      emitir
+      el elemento 10</p>
 
 
-    <p><span class="negrita">BufferOverFlow.DROP_LATEST</span>. In this case we will discard the new ones that enter
-      until we consume the old ones.</p>
+    <p><span class="negrita">BufferOverFlow.DROP_LATEST</span>. En este caso descartaremos los nuevos que entren
+      hasta que consumamos los antiguos.</p>
 
 
-    <p>Let's see the examples:</p>
+    <p>Veamos los ejemplos:</p>
 
     <section>
       <pre><code class="language-kotlin">private val _state = MutableSharedFlow&lt;Note>(
@@ -2035,7 +2108,7 @@ onBufferOverflow = BufferOverflow.DROP_LATEST
 )</code></pre>
     </section><br>
 
-    <p>Output:</p>
+    <p>Salida:</p>
 
     <section>
       <pre><code class="language-kotlin">Emitting Title= 8
@@ -2060,41 +2133,43 @@ Emitting Title= 20
 ....</code></pre>
     </section><br>
 
-    <p>In this case he had to discard the 9 to be able to issue the 10.</p>
+    <p>En este caso tuvo que descartar el 9 para poder emitir el 10.</p>
 
 
-    <p>Another difference with the <span class="r-word">StateFlow</span> is that if we emit the same value with the
-      <span class="r-word">SharedFlow</span>
-      it will emit it again, while with the <span class="r-word">StateFlow</span> it would not emit the same value
-      again.</p>
+    <p>Otra diferencia con <span class="r-word">StateFlow</span> es que si emitimos el mismo valor con <span
+        class="r-word">SharedFlow</span>
+      lo volverá a emitir, mientras que con <span class="r-word">StateFlow</span> no volvería a emitir el mismo valor
+      de nuevo.
+    </p>
 
 
-    <p>How do we make a <span class="r-word">SharedFlow</span> behave exactly like a <span
+    <p>¿Cómo hacemos que un <span class="r-word">SharedFlow</span> se comporte exactamente como un <span
         class="r-word">StateFlow</span>?</p>
 
 
-    <p>For this, we only store the last value, <span class="negrita">replay=1</span>, we don't give extra buffer
-      capacity, and if we delete the oldest one.</p>
+    <p>Para ello, solo almacenamos el último valor, <span class="negrita">replay=1</span>, no damos capacidad extra de
+      buffer,
+      y eliminamos el más antiguo cuando haya overflow.</p>
 
 
     <section>
-      <pre><code class="language-kotlin"> private val _state = MutableSharedFlow<Note>(
+      <pre><code class="language-kotlin"> private val _state = MutableSharedFlow&lt;Note&gt;(
 replay = 1,
 extraBufferCapacity = 0,
 onBufferOverflow = BufferOverflow.DROP_OLDEST
 )</code></pre>
     </section><br>
 
-    <p>We would only need one thing, so that it behaves exactly like a <span class="r-word">StateFlow</span>,
-      and that is precisely that it does not emit again if the value does not change. </p>
-    <p>If we always emit the same value, it continues to be emitted.</p>
+    <p>Solo nos faltaría una cosa para que se comportase exactamente como un <span class="r-word">StateFlow</span>,
+      y es precisamente que no vuelva a emitir si el valor no cambia. </p>
+    <p>Si emitimos siempre el mismo valor, se seguirá emitiendo.</p>
 
 
     <section>
       <pre><code class="language-kotlin">_state.emit(Note("Title 1", "Description 1"))</code></pre>
     </section><br>
 
-    <p>Output:</p>
+    <p>Salida:</p>
 
     <section>
       <pre><code class="language-kotlin">Note(title=Title 1, description=Description 1)
@@ -2111,14 +2186,15 @@ Note(title=Title 1, description=Description 1)</code></pre>
 
 
     <section class="marco-t inf">
-      <span class="icono info"> </span> Remember that one data class is equal to another if its properties are the same.
+      <span class="icono info"> </span> Recuerda que una data class es igual a otra si sus propiedades son las mismas.
     </section>
     <section class="marco-b">
 
     </section>
 
-    <p>We could check before emitting that the element has changed to emit it, but SharedFlow provides us with a
-      function that allows us to do this. <span class="r-word">distinctUntilChanged()</span> .</p>
+    <p>Podríamos comprobar antes de emitir que el elemento ha cambiado para emitirlo, pero SharedFlow nos proporciona
+      una
+      función que nos permite hacer esto: <span class="r-word">distinctUntilChanged()</span> .</p>
 
 
     <section>
@@ -2128,7 +2204,7 @@ println(it)
 }</code></pre>
     </section><br>
 
-    <p>Now we see that it continues to be issued but it does not collect it.</p>
+    <p>Ahora vemos que se sigue emitiendo, pero no se recolecta.</p>
 
     <section>
       <pre><code class="language-kotlin">Emitting Title= 1
@@ -2142,40 +2218,43 @@ Emitting Title= 7
 Emitting Title= 8</code></pre>
     </section><br>
 
-    <p>Obviously if what we want to do is that, it is best to use a <span class="r-word">StateFlow</span> ,
-      we simply wanted to show that <span class="r-word">StateFlow</span> is a specialization of <span
+    <p>Obviamente, si lo que queremos es eso, lo mejor es usar un <span class="r-word">StateFlow</span>:
+      simplemente queríamos mostrar que <span class="r-word">StateFlow</span> es una especialización de <span
         class="r-word">SharedFlow</span>.</p>
 
 
   </section><!-- End section -->
 
 
-  <!--*********************************************************Activities***********************************************************-->
+
+  <!--*********************************************************Actividades***********************************************************-->
   <section class="apartado">
     <a id="sActividades"></a>
-    <h2>Activities</h2>
+    <h2>Actividades</h2>
     <div class="tarea">
-      <p>Replicate the practical case above.</p>
-      <p>You have <a class="enlace" target="_blank"
-          href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD9/booksviewmodel">here</a> the implementation
+      <p>Replica el caso práctico anterior.</p>
+      <p>Tienes <a class="enlace" target="_blank"
+          href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD9/booksviewmodel">aquí</a> la implementación
       </p>
     </div>
 
     <div class="tarea">
-      <p><span class="negrita">Activity 2</span></p>
-      <p>Replicate the book list example from the notes, but in the main window, add a photo of yourself (ID style) at
-        the bottom and your full name.</p>
-      <p>Additionally, add the necessary functionality to mark/unmark an item as a favorite from the item information
-        screen. The main screen should display whether the item is marked as a favorite.</p>
-      <p>It should look similar to this:</p>
+      <p><span class="negrita">Actividad 2</span></p>
+      <p>Replica el ejemplo de la lista de libros de los apuntes, pero en la ventana principal añade una foto tuya (tipo
+        carnet) en
+        la parte inferior y tu nombre completo.</p>
+      <p>Además, añade la funcionalidad necesaria para marcar/desmarcar un elemento como favorito desde la pantalla de
+        información
+        del elemento. La pantalla principal debe mostrar si el elemento está marcado como favorito.</p>
+      <p>Debería verse similar a esto:</p>
       <figure><img src="UD9/images/BookListDemo.gif" /><br>
         <figcaption></figcaption>
       </figure>
       <br>
 
       <p><a class="enlace" target="_blank"
-          href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD9/BooksViewModelFavorites">Here</a> is a
-        possible implementation. Note that a search element has been added.</p>
+          href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD9/BooksViewModelFavorites">Aquí</a> tienes una
+        posible implementación. Ten en cuenta que se ha añadido un elemento de búsqueda.</p>
 
     </div>
     <br>
@@ -2183,85 +2262,93 @@ Emitting Title= 8</code></pre>
 
     <a class="tarea" id="sP07" href="https://aules.edu.gva.es/semipresencial/mod/assign/view.php?id=2399564"
       target="_blank" class="tarea">
-      <p><span class="negrita">Practice 7</span></p>
+      <p><span class="negrita">Práctica 7</span></p>
 
-      <p>Create a project in Android Studio called <span class="negrita">WorkoutYourName</span>.</p>
+      <p>Crea un proyecto en Android Studio llamado <span class="negrita">WorkoutYourName</span>.</p>
 
-      <p>The app will allow the user to enter their name and the number of repetitions to perform exercise sets. When
-        the user presses the start button, a gif of the exercise will appear and the repetitions will decrease (every 2
-        seconds). Once it reaches zero, the gif will change to a new exercise, and the repetition count will restart.
+      <p>La app permitirá al usuario introducir su nombre y el número de repeticiones a realizar en las series de
+        ejercicios. Cuando
+        el usuario pulse el botón de inicio, aparecerá un gif del ejercicio y las repeticiones irán disminuyendo (cada 2
+        segundos). Cuando llegue a cero, el gif cambiará a un nuevo ejercicio y el contador de repeticiones se
+        reiniciará.
       </p>
 
-      <p>The app will have two screens and routes/navigation should be used.</p>
+      <p>La app tendrá dos pantallas y se deben usar rutas/navegación.</p>
 
-      <p><span class="negrita">Main Window</span>:
+      <p><span class="negrita">Ventana principal</span>:
         <ul>
-          <li>A motivational phrase.</li>
-          <li>A field for the user to enter their name.</li>
-          <li>A method by which the user can enter the number of repetitions for the exercises. Negative numbers should
-            not be allowed. It doesn't make sense to perform only one repetition, so a minimum of 3 repetitions should
-            be required to begin.</li>
-          <li>A button to navigate to the next window. This button should not be active unless the name field has a
-            value.</li>
-          <li>A photo of yourself (ID style) at the bottom, along with your first and last name.</li>
+          <li>Una frase motivadora.</li>
+          <li>Un campo para que el usuario introduzca su nombre.</li>
+          <li>Un método mediante el cual el usuario pueda introducir el número de repeticiones de los ejercicios. No se
+            deben permitir
+            números negativos. No tiene sentido hacer solo una repetición, así que se debería exigir un mínimo de 3
+            repeticiones para
+            comenzar.</li>
+          <li>Un botón para navegar a la siguiente ventana. Este botón no debe estar activo si el campo del nombre está
+            vacío.</li>
+          <li>Una foto tuya (tipo carnet) en la parte inferior, junto con tu nombre y apellidos.</li>
         </ul>
       </p>
 
-      <p><span class="negrita">Exercise Window</span>:
+      <p><span class="negrita">Ventana de ejercicio</span>:
         <ul>
-          <li>The user's name should be displayed.</li>
-          <li>The number of repetitions.</li>
-          <li>An area where the gif of the exercise to be performed will appear.</li>
-          <li>A button to start the exercise.</li>
-          <li>A button to go back to the previous window (popBackStack).</li>
+          <li>Debe mostrarse el nombre del usuario.</li>
+          <li>El número de repeticiones.</li>
+          <li>Un área donde aparecerá el gif del ejercicio a realizar.</li>
+          <li>Un botón para iniciar el ejercicio.</li>
+          <li>Un botón para volver a la ventana anterior (popBackStack).</li>
         </ul>
       </p>
 
-      <p>To make data available on both windows, a ViewModel should be used.</p>
+      <p>Para que los datos estén disponibles en ambas ventanas, se debe usar un ViewModel.</p>
 
       <p><span class="negrita">ViewModel</span>:</p>
-      <p>The ViewModel should contain <span class="negrita">LiveData</span> to store the data and all the necessary
-        methods for the app to function properly.</p>
+      <p>El ViewModel debe contener <span class="negrita">LiveData</span> para almacenar los datos y todos los métodos
+        necesarios
+        para que la app funcione correctamente.</p>
 
-      <p>The required data in the ViewModel are: "username", "number of repetitions", "current exercise" (to notify
-        which exercise should be performed),
-        and "doing exercise" (to indicate that exercise is ongoing).</p>
+      <p>Los datos necesarios en el ViewModel son: "username", "number of repetitions", "current exercise" (para
+        notificar
+        qué ejercicio se debe realizar),
+        y "doing exercise" (para indicar que el ejercicio está en marcha).</p>
 
-      <p>The methods needed in the <span class="negrita">ViewModel</span> are:
+      <p>Los métodos necesarios en el <span class="negrita">ViewModel</span> son:
         <ul>
-          <li>One to update the username</li>
-          <li>One to update the number of repetitions</li>
-          <li>One to stop the exercise</li>
-          <li>One to start the exercise</li>
+          <li>Uno para actualizar el username</li>
+          <li>Uno para actualizar el número de repeticiones</li>
+          <li>Uno para parar el ejercicio</li>
+          <li>Uno para iniciar el ejercicio</li>
         </ul>
       </p>
 
-      <p>Below is a possible algorithm for the method to start the exercise:
+      <p>A continuación tienes un posible algoritmo para el método de iniciar el ejercicio:
         <ul>
-          <li>Create a list of drawables with all the exercise gifs.</li>
-          <li>Update "doing exercise" to indicate that the user is doing exercise.</li>
-          <li>Update "current exercise" with a random drawable from the previously created list.</li>
-          <li>Create a coroutine with a loop that repeats while "doing exercise" is true:</li>
-          <li>Wait for 2 seconds.</li>
-          <li>Subtract one from "number of repetitions".</li>
-          <li>If "number of repetitions" is zero, reset "number of repetitions" and update "current exercise" with a
-            random drawable from the list.</li>
+          <li>Crear una lista de drawables con todos los gifs de ejercicios.</li>
+          <li>Actualizar "doing exercise" para indicar que el usuario está haciendo ejercicio.</li>
+          <li>Actualizar "current exercise" con un drawable aleatorio de la lista creada anteriormente.</li>
+          <li>Crear una corrutina con un bucle que se repita mientras "doing exercise" sea true:</li>
+          <li>Esperar 2 segundos.</li>
+          <li>Restar uno a "number of repetitions".</li>
+          <li>Si "number of repetitions" es cero, reiniciar "number of repetitions" y actualizar "current exercise" con
+            un
+            drawable aleatorio de la lista.</li>
         </ul>
       </p>
 
-      <p>Additional <span class="negrita">LiveData</span> and methods can be created if necessary.</p>
+      <p>Se pueden crear <span class="negrita">LiveData</span> y métodos adicionales si fuese necesario.</p>
 
-      <p>Submission Instructions:
+      <p>Instrucciones de entrega:
         <ul>
-          <li>To run the app if it's running.</li>
-          <li>Click the menu option: Build -> Clean Project.</li>
-          <li>Close Android Studio.</li>
-          <li>Compress the project folder into a .rar or .zip file. (Select the folder, not the files inside it).</li>
-          <li>Attach the compressed file to the task.</li>
+          <li>Detener la app si está ejecutándose.</li>
+          <li>Hacer clic en la opción de menú: Build -> Clean Project.</li>
+          <li>Cerrar Android Studio.</li>
+          <li>Comprimir la carpeta del proyecto en un archivo .rar o .zip (selecciona la carpeta, no los archivos de
+            dentro).</li>
+          <li>Adjuntar el archivo comprimido a la tarea.</li>
         </ul>
       </p>
     </a>
-    <p>To use a GIF, you can use the following @Composable by passing an integer (drawable reference):
+    <p>Para usar un GIF, puedes utilizar el siguiente @Composable pasando un entero (referencia a drawable):
     <section>
       <pre><code class="language-kotlin">@Composable
     fun GifImage(gifImage: Int) {
@@ -2293,7 +2380,7 @@ Emitting Title= 8</code></pre>
     </section><br><br>
     </p>
     <section class="marco-t warn">
-      <span class="icono warning"> </span> Remember to add coil dependencies
+      <span class="icono warning"> </span> Recuerda añadir las dependencias de Coil
     </section>
     <section class="marco-b">
       <p><span class="inline-file">libs.versions.toml</span> &rarr;
@@ -2311,15 +2398,16 @@ Emitting Title= 8</code></pre>
         </li>
       </ul>
 
-      <p><span class="inline-file">build.gradle.kts (Module:app)</span> &rarr; <span class="cursiva">dependencies</span>
-        section</p>
+      <p><span class="inline-file">build.gradle.kts (Module:app)</span> &rarr; sección <span
+          class="cursiva">dependencies</span>
+      </p>
       <section>
         <pre><code class="language-kotlin">implementation(libs.coil.compose)
 implementation(libs.coil.gif)</code></pre>
       </section><br><br>
     </section>
 
-    <p>Here's an example of how the app might look:</p>
+    <p>Aquí tienes un ejemplo de cómo podría verse la app:</p>
     <figure><img src="UD9/images/WorkoutDemo.gif" /><br>
       <figcaption></figcaption>
     </figure>
@@ -2327,6 +2415,8 @@ implementation(libs.coil.gif)</code></pre>
 
 
   </section><!-- End section Activities-->
+
+
 
 
 
