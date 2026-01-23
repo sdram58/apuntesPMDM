@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>U10. Persistencia (BIS)</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/prism.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <script src="../script/script.js"></script>
+</head>
+
+<body class="line-numbers">
+    <div class="logos"></div>
+
+    <nav id="menu-lateral" class="main-menu-lateral oculto">
+        <div class="fila">
+            <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
+            <a href="#sFileSystem" title="2.- Sistema de archivos">2.- Sistema de archivos</a>
+            <a href="#sAlamacenamientoEspecificodelaapp" title="3.- Almacenamiento específico de la app">3.-
+                Almacenamiento específico de la app</a>
+        </div>
+
+        <div class="fila">
+            <a href="#sAccesoalalmacenamientoexterno" title="4.- Acceso al almacenamiento externo">4.- Acceso al
+                almacenamiento externo</a>
+            <a href="#sDataStore" title="5.- DataStore">5.- DataStore</a>
+            <a href="#sROOM" title="6.- Room">6.- Room</a>
+        </div>
+
+        <div class="fila oculto">
+            <a href="#sP05" title="7.- P05. Lista de la compra">7.- P05. Lista de la compra</a>
+        </div>
+    </nav> <!-- BTM_MENU-->
+
+    <h1>U10.- Persistencia (Actualizado 2026)</h1>
+
+    <div class="main-menu">
+        <div class="fila">
+            <a href="#sIntroduccion" title="1.- Introducción">1.- Introducción</a>
+            <a href="#sFileSystem" title="2.- Sistema de archivos">2.- Sistema de archivos</a>
+            <a href="#sAlamacenamientoEspecificodelaapp" title="3.- Almacenamiento específico de la app">3.-
+                Almacenamiento específico de la app</a>
+        </div>
+
+        <div class="fila">
+            <a href="#sAccesoalalmacenamientoexterno" title="4.- Acceso al almacenamiento externo">4.- Acceso al
+                almacenamiento externo</a>
+            <a href="#sDataStore" title="5.- DataStore">5.- DataStore</a>
+            <a href="#sROOM" title="6.- Room">6.- Room</a>
+        </div>
+        <div class="fila oculto">
+            <a href="#sP05" title="7.- P05. Lista de la compra">7.- P05. Lista de la compra</a>
+            <a href="" class="relleno"></a><a href="" class="relleno"></a>
+        </div>
+    </div>
+
+
+
+    <!--*********************************************************Introducción***********************************************************-->
+    <section class="apartado">
+        <a id="sIntroduccion"></a>
+        <h2>Introducción</h2>
+
+        <p>La persistencia de datos es un aspecto muy importante en las aplicaciones móviles.</p>
+        <p>La primera situación conocida ocurre al cambiar la orientación/configuración del dispositivo; esto se
+            resuelve con estados y <span class="cursiva">ViewModel</span>.</p>
+        <p>Además, existen otras situaciones en las que interesa guardar datos para usarlos más adelante.</p>
+        <p>En esta unidad se estudiarán las siguientes herramientas para implementar la persistencia de datos:
+        <ul>
+            <li><span class="negrita">File System</span>.</li>
+            <li><span class="negrita">Datastore</span>.</li>
+            <li><span class="negrita">Room</span>.</li>
+        </ul>
+        </p>
+
+    </section><!-- End section Introduction-->
+
+
+    <!--*********************************************************File System***********************************************************-->
+    <section class="apartado">
+        <a id="sFileSystem"></a>
+        <h2>Sistema de archivos</h2>
+
+        <p>Como cualquier sistema operativo, Android utiliza un sistema de ficheros.</p>
+
+        <p>Este sistema de ficheros ofrece varias opciones para almacenar datos de la aplicación:
+        <ul>
+            <li>Almacenamiento específico de la app (<span class="cursiva">App-specific storage</span>).</li>
+            <li>Almacenamiento compartido (<span class="cursiva">Shared storage</span>).</li>
+            <li>Preferencias (clave–valor).</li>
+            <li>Bases de datos.</li>
+        </ul>
+        </p>
+
+        <h3>Almacenamiento específico de la app</h3>
+        <p>Guarda archivos destinados solo para el uso de la propia aplicación.</p>
+        <p>Se pueden crear carpetas dedicadas tanto en el almacenamiento interno como externo.</p>
+        <p>El almacenamiento interno debe usarse para información confidencial (otras apps no tendrán acceso a ella).
+        </p>
+
+        <h3>Almacenamiento compartido</h3>
+        <p>Guarda archivos que la aplicación puede compartir con otras apps, como documentos, medios (audio, video…) u
+            otros archivos.</p>
+
+
+        <h3>Preferencias</h3>
+        <p>Almacenamiento privado para la aplicación. Permite pares clave-valor.</p>
+
+        <h3>Bases de datos</h3>
+
+        <p>Guarda datos estructurados de forma privada usando la librería Room (un framework que utiliza SQLite).</p>
+
+
+        <p>Se puede consultar la siguiente tabla resumen en la <a class="enlace" target="_blank"
+                href="https://developer.android.com/training/data-storage?hl=es-419">documentación oficial</a>:</p>
+
+        <figure><img src="UD10/images/ud10-2023-12-17-20-11-08.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+        <figure><img src="UD10/images/ud10-2023-12-17-20-13-05.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+
+        <h3>¿Qué opción elegir?</h3>
+        <p>Al elegir un tipo de almacenamiento influyen varias variables:
+        <ul>
+            <li><span class="negrita">Tamaño de los datos</span>: el almacenamiento interno tiene espacio limitado.</li>
+            <li><span class="negrita">Accesibilidad</span>: almacenamiento interno o base de datos garantizan mejor
+                acceso; el externo puede no estar disponible.</li>
+            <li><span class="negrita">Tipo de datos</span>: si no deben compartirse, usar almacenamiento específico de
+                la app.</li>
+            <li><span class="negrita">Privacidad</span>: los datos sensibles deben guardarse en preferencias, base de
+                datos o almacenamiento interno.</li>
+        </ul>
+        </p>
+
+    </section><!-- End section File System-->
+
+
+    <!--*********************************************************App-Specific Storage***********************************************************-->
+    <section class="apartado">
+        <a id="sAlamacenamientoEspecificodelaapp"></a>
+        <h2>Almacenamiento específico de la app</h2>
+
+        <p>Android ofrece las siguientes ubicaciones para uso exclusivo de la aplicación.</p>
+
+        <p>Directorios en <span class="negrita">almacenamiento interno</span>:
+        <ul>
+            <li>Android impide que otras apps accedan a estas ubicaciones.</li>
+            <li>A partir de Android 10 (API 29) estas ubicaciones pueden estar encriptadas.</li>
+            <li>Son adecuadas para datos sensibles.</li>
+            <li>Suelen disponer de espacio limitado.</li>
+        </ul>
+        </p>
+
+        <p>Directorios en <span class="negrita">almacenamiento externo</span>:
+        <ul>
+            <li>Estas ubicaciones pueden ser de uso exclusivo de la app, pero otras apps con permisos pueden acceder a
+                ellas.</li>
+            <li>Si los archivos deben compartirse con otras apps, deben ubicarse en el espacio compartido del
+                almacenamiento externo.</li>
+        </ul>
+        </p>
+
+        <p>Ambas opciones incluyen un directorio para almacenar <span class="negrita">archivos persistentes</span> y
+            otro para <span class="negrita">caché</span>.</p>
+
+        <h3>Acceso a archivos en almacenamiento interno</h3>
+        <p>Los archivos comunes y persistentes se encuentran en un directorio accesible mediante la propiedad <span
+                class="r-word">filesDir</span> de un objeto <span class="negrita">context</span>.</p>
+
+        <p>Usando la API de <span class="r-word">File</span> (similar a Java), se pueden acceder y almacenar archivos.
+        </p>
+
+        <p>Para evitar afectar el rendimiento de la app, no se debe abrir y cerrar el mismo archivo múltiples veces.</p>
+
+        <p>Así es como se abre un archivo usando la API:</p>
+
+        <section>
+            <pre><code class="language-kotlin">val file = File(applicationContext.filesDir, "file_name")</code></pre>
+        </section><br><br>
+
+        <p class="sub-section">Almacenar un archivo usando un Stream</p>
+        <p>Como alternativa a la API de File, se puede usar el método <span class="r-word">openFileOutput()</span> para
+            obtener un objeto <span class="r-word">FileOutputStream</span>, que permite escribir en un archivo dentro
+            del directorio <span class="r-word">filesDir</span>.</p>
+        <section>
+            <pre><code class="language-kotlin">val myFile = "myFile"
+  val content = "My first Android file!"
+  
+  applicationContext.openFileOutput(myFile, Context.MODE_PRIVATE).use {
+      it.write(content.toByteArray())
+  }
+  </code></pre>
+        </section><br><br>
+
+        <p>Desde Android Studio, se pueden ver los archivos creados usando el <span class="negrita">Device File
+                Explorer</span>:
+        <ul>
+            <li><span class="negrita">data -> data -> package_name -> files</span></li>
+        </ul>
+        </p>
+        <figure><img src="UD10/images/ud10-2023-12-17-20-41-46.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+
+        <figure><img src="UD10/images/ud10-2023-12-17-20-42-26.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+
+        <p>En Android 7 (API 24) o superior, si no se especifica <span class="negrita">Context.MODE_PRIVATE</span>, se
+            lanzará una excepción de seguridad</p>
+
+        <figure><img src="UD10/images/ud10-2023-12-17-20-43-21.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+
+        <p>Si se desea permitir que otras aplicaciones accedan a los archivos del almacenamiento interno, se debe usar
+            un
+            <a class="enlace" target="_blank"
+                href="https://developer.android.com/reference/androidx/core/content/FileProvider">FileProvider</a>
+            con el atributo <span class="negrita">FLAG_GRANT_READ_URI_PERMISSION</span>.
+        </p>
+
+        <p>Para leer el contenido de un archivo, use el método <span class="r-word">openFileInput()</span>
+            para obtener un objeto <span class="r-word">BufferedReader</span> que devuelve una secuencia de cadenas:</p>
+
+        <section>
+            <pre><code class="language-kotlin">// Access file using Stream
+  applicationContext.openFileInput(myFile).bufferedReader().useLines { fileContent ->
+      var text = ""
+      fileContent.forEach { 
+          text += it
+      }
+      Text(text = text)
+  }
+  </code></pre>
+        </section><br><br>
+
+        <p class="sub-section">Visualizar lista de archivos</p>
+
+        <p>Se puede obtener un array con los nombres de los archivos en el directorio <span
+                class="r-word">filesDir</span> usando el método <span class="r-word">fileList()</span>:</p>
+
+        <section>
+            <pre><code class="language-kotlin">val files: Array<String> = applicationContext.fileList()
+  
+  Column() {
+      files.forEach { 
+          Text(text = it)
+      }
+  }
+  </code></pre>
+        </section><br><br>
+
+        <p class="sub-section">Subdirectorios</p>
+
+        <p>Si es necesario, se pueden crear subdirectorios usando el método <span class="r-word">getDir()</span>.</p>
+
+        <p>Este método también permite acceder a los subdirectorios creados.</p>
+        <section>
+            <pre><code class="language-kotlin">applicationContext.getDir("subdirectory", Context.MODE_PRIVATE)</code></pre>
+        </section><br><br>
+
+        <p>Este método tiene un pequeño inconveniente: crea el directorio con el prefijo <span
+                class="negrita">app_</span>
+            y fuera del directorio <span class="negrita">files</span>:</p>
+
+        <figure><img src="UD10/images/ud10-2023-12-17-20-50-18.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+
+        <p>Para crear subdirectorios dentro de <span class="negrita">files</span>, se pueden usar los métodos de la
+            clase <span class="r-word">File</span> como en <span class="d-word">Java</span>.</p>
+        <section>
+            <pre><code class="language-kotlin">val appDir: File = applicationContext.filesDir
+  val subDir = File(appDir, "subDirectory")
+  if (!subDir.exists()) subDir.mkdir()
+  </code></pre>
+        </section><br><br>
+        <figure><img src="UD10/images/ud10-2023-12-17-21-33-45.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+
+
+        <h3>Caché</h3>
+        <p>Si necesitas almacenar temporalmente ficheros (incluidos datos sensibles), utiliza el directorio <span
+                class="inline-folder">cache</span>.</p>
+
+        <p>Para crear un archivo en el almacenamiento de caché, usa
+            <span class="r-word">File.createTempFile()</span>, especifica el prefijo (nombre),
+            el sufijo (extensión, por defecto .tmp) y un objeto de contexto:
+        </p>
+        <section>
+            <pre><code class="language-kotlin">File.createTempFile("temporaryFile", null, applicationContext.cacheDir)</code></pre>
+        </section><br><br>
+        <a href="UD10/images/ud_10-2025-01-28-17-15-04.png" target="_BLANK">
+            <figure><img src="UD10/images/ud_10-2025-01-28-17-15-04.png" /><br>
+                <figcaption></figcaption>
+            </figure>
+        </a>
+        <br>
+
+
+        <p>Para acceder a los archivos en el directorio de caché, usa la propiedad <span class="r-word">cacheDir</span>
+            en un contexto y la clase <span class="negrita">File</span>:</p>
+
+        <section>
+            <pre><code class="language-kotlin">val cacheFile = File(applicationContext.cacheDir, "fileName")</code></pre>
+        </section><br><br>
+
+        <p>El directorio <span class="inline-folder">cache</span> es gestionado por Android,
+            si la app se queda sin espacio, Android eliminará los archivos almacenados en ese directorio.</p>
+
+        <p>Se pueden eliminar archivos del directorio de caché usando uno de los siguientes métodos.
+        <ul>
+            <li>Si el archivo está en la carpeta <span class="inline-folder">files</span>:
+                <section>
+                    <pre><code class="language-kotlin">applicationContext.deleteFile("fileName")</code></pre>
+                </section><br><br>
+
+            </li>
+            <li>Usando un objeto <span class="r-word">File</span> dependiendo de la ubicación del archivo:
+                <section>
+                    <pre><code class="language-kotlin">val fileToDelete = File(applicationContext.filesDir, "fileName")
+  
+  fileToDelete.delete()
+  </code></pre>
+                </section>
+
+                <section>
+                    <pre><code class="language-kotlin">//En caché
+  val cacheFile = File(applicationContext.cacheDir, "fileName")
+  
+  cacheFile.delete()
+  </code></pre>
+                </section><br><br>
+
+            </li>
+        </ul>
+        </p>
+
+
+    </section><!-- End section App-Specific Storage-->
+
+
+    <!--*********************************************************Access to External Storage***********************************************************-->
+    <section class="apartado">
+        <a id="sAccesoalalmacenamientoexterno"></a>
+        <h2>Acceso al almacenamiento externo</h2>
+        <p>Si se necesita espacio adicional para ficheros específicos de la aplicación, se puede usar el almacenamiento
+            externo siempre que esté disponible.</p>
+
+        <p>El almacenamiento externo puede residir en una partición de la memoria interna o en un dispositivo externo
+            como una tarjeta SD o un pendrive conectado por USB.</p>
+
+        <p>Si el almacenamiento externo está en un dispositivo conectado, puede dejar de estar disponible (por ejemplo,
+            al extraer la SD).</p>
+
+        <p>Por ello, no conviene depender de ficheros en almacenamiento externo para el funcionamiento crítico de la
+            aplicación.</p>
+
+        <h3>Comprobar la disponibilidad del almacenamiento externo</h3>
+        <p>Es importante comprobar que el almacenamiento externo está disponible antes de leer o escribir en él.</p>
+
+        <p>Usando la clase <span class="r-word">Environment</span> y su método <span
+                class="r-word">getExternalStorageState</span> se puede comprobar su estado y permisos.</p>
+
+        <p>Si el estado es <span class="d-word">MEDIA_MOUNTED</span> hay permisos de lectura y escritura; si es <span
+                class="d-word">MEDIA_MOUNTED_READ_ONLY</span> solo lectura.</p>
+        <p>Una buena forma de comprobar esto sería con las siguientes funciones:</p>
+
+        <section>
+            <pre><code class="language-kotlin">fun isExternalStorageWritable(): Boolean {
+      return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
+  }
+  
+  fun isExternalStorageReadable(): Boolean {
+      return Environment.getExternalStorageState() in
+          setOf(Environment.MEDIA_MOUNTED, Environment.MEDIA_MOUNTED_READ_ONLY)
+  }
+  </code></pre>
+        </section><br><br>
+        <h3>Seleccionar una ubicación en el almacenamiento externo</h3>
+
+        <p>Dado que el almacenamiento externo puede estar en la memoria interna o en un dispositivo conectado,
+            al almacenar información en él, se debe elegir la ubicación.</p>
+        <p>Para acceder a las ubicaciones, usa la clase <span class="r-word">ContextCompat</span> y su método <span
+                class="r-word">getExternalFilesDirs</span>.</p>
+        <p>Esto devolverá un array con todos los volúmenes disponibles.</p>
+        <p>Generalmente, el primer elemento del array será el volumen principal de almacenamiento externo,
+            y este debe ser utilizado a menos que esté lleno o no disponible.</p>
+
+        <p>El siguiente código obtiene la ruta al volumen principal de almacenamiento externo.</p>
+
+        <section>
+            <pre><code class="language-kotlin">val externalStorageVolumes: Array<out File> =
+      ContextCompat.getExternalFilesDirs(applicationContext, null)
+  
+  val primaryExternalStorage = externalStorageVolumes[0]
+  </code></pre>
+        </section><br><br>
+
+        <p>Al comprobar el tamaño del array <span class="negrita">externalStorageVolumes</span>, se puede determinar si
+            hay volúmenes adicionales.</p>
+
+        <p>El primer elemento (índice 0) es el almacenamiento interno.</p>
+
+        <p>La tarjeta microSD suele ser el segundo elemento (índice 1).</p>
+
+        <p>Si hay otros dispositivos como pendrives conectados, aparecerán después.</p>
+
+        <p>Con el índice 1, se puede acceder a todo el almacenamiento externo.</p>
+        <section>
+            <pre><code class="language-kotlin">val externalStorage = applicationContext.getExternalFilesDirs(null)[1]</code></pre>
+        </section><br><br>
+
+        <p>Se puede especificar un directorio particular dentro del almacenamiento externo:</p>
+
+        <section>
+            <pre><code class="language-kotlin">val externalDownloads = applicationContext.getExternalFilesDirs(Environment.DIRECTORY_DOWNLOADS)</code></pre>
+        </section><br><br>
+        <a href="UD10/images/ud_10-2025-01-28-17-35-17.png" target="_BLANK">
+            <figure><img src="UD10/images/ud_10-2025-01-28-17-35-17.png" /><br>
+                <figcaption></figcaption>
+            </figure>
+        </a>
+        <br>
+
+        <h3>Accediendo a archivos en almacenamiento externo</h3>
+        <p>Para acceder a archivos en el almacenamiento externo, usa el método <span
+                class="negrita">getExternalFilesDir</span>
+            de un objeto <span class="negrita">context</span>.</p>
+
+        <p>Para evitar afectar el rendimiento de la aplicación, no se debe abrir y cerrar el mismo archivo múltiples
+            veces.</p>
+
+        <section>
+            <pre><code class="language-kotlin">val fileName = "myFile"
+  
+  val appSpecificExternalDir = File(applicationContext.getExternalFilesDir(null), fileName)
+  </code></pre>
+        </section><br><br>
+        <p>En Android 11 (API 30) y versiones superiores, no se permite crear subdirectorios en el almacenamiento
+            externo.</p>
+
+        <h3>Creando archivos en la caché del almacenamiento externo</h3>
+
+
+        <p>Para crear un archivo en la caché del almacenamiento externo, usa la propiedad <span
+                class="r-word">externalCacheDir</span> de un <span class="negrita">context</span>:</p>
+
+        <section>
+            <pre><code class="language-kotlin">val cacheFileName = "myTemporaryFile"
+  
+  val externalCacheFile = File(applicationContext.externalCacheDir, cacheFileName)
+  </code></pre>
+        </section><br><br>
+
+        <h3>Eliminando archivos de la caché del almacenamiento externo</h3>
+
+        <p>Se debe usar el método <span class="r-word">delete</span> en un objeto <span class="negrita">File</span> que
+            represente el archivo a eliminar.</p>
+        <figure><img src="UD10/images/ud10-2023-12-17-23-16-13.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+
+        <h3>Contenido multimedia</h3>
+
+        <p>Si la app trabaja con archivos multimedia que no son esenciales pero añaden valor a la experiencia del
+            usuario,
+            es mejor almacenarlos en el almacenamiento externo:</p>
+        <section>
+            <pre><code class="language-kotlin">fun getAppSpecificAlbumStorageDir(context: Context, albumName: String): File? {
+      val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), albumName)
+      if (!file.mkdirs()) {
+          // Error creating the directory
+      }
+      return file
+  }
+  </code></pre>
+        </section><br><br>
+        <p>Para el correcto funcionamiento de la aplicación, es importante usar los nombres de directorio que
+            proporciona la API
+            con las constantes de la clase <span class="r-word">Environment</span>:</p>
+        <figure><img src="UD10/images/ud10-2023-12-17-23-19-32.png" /><br>
+            <figcaption></figcaption>
+        </figure>
+        <br>
+
+        <p><a class="enlace" target="_blank"
+                href="https://developer.android.com/reference/android/os/Environment#fields">https://developer.android.com/reference/android/os/Environment#fields</a>
+        </p>
+
+        <p>Si ninguno de los nombres predefinidos se ajusta a las necesidades de la aplicación, se puede pasar null al
+            método <span class="r-word">getExternalFilesDir</span>.</p>
+
+        <p>Esto almacenará los archivos directamente en el directorio raíz del almacenamiento externo específico de la
+            aplicación.</p>
+
+
+        <h3>Comprobando el espacio libre</h3>
+        <p>Algunos dispositivos tienen muy poco espacio de almacenamiento, por lo que al desarrollar una aplicación, se
+            debe
+            tener especial cuidado con el espacio que ocupa.</p>
+
+        <p>Una buena práctica antes de almacenar un archivo es comprobar si cabe en el espacio disponible.</p>
+
+        <p>No obstante, no siempre es necesario comprobar el espacio libre, ya que a veces no se sabe cuánto espacio
+            ocupará
+            el archivo.
+            En estos casos, se puede intentar guardar el archivo y capturar la <span class="r-word">IOException</span>
+            que se
+            lanzará si no se puede almacenar.</p>
+
+        <p>Para comprobar el espacio libre que el dispositivo puede proporcionar, usa el método <span
+                class="r-word">getAllocatableBytes</span>.</p>
+
+        <p>Este método puede mostrar a veces más capacidad de la real porque el sistema puede haber detectado archivos
+            en
+            las cachés de otras aplicaciones y puede eliminarlos si es necesario.</p>
+
+        <p>Si hay suficiente espacio, se debe usar el método <span class="r-word">allocateBytes</span>.
+            Si no se usa este método, la app puede solicitar al usuario que elimine archivos o limpie toda la caché del
+            dispositivo.</p>
+
+        <p>El siguiente código muestra cómo obtener el espacio libre del dispositivo:</p>
+
+        <section>
+            <pre><code class="language-kotlin">// 10 MB of storage is needed.
+  val NUM_BYTES_NEEDED_FOR_MY_APP = 1024 * 1024 * 10L;
+  
+  val storageManager = applicationContext.getSystemService&lt;StorageManager&gt;()!!
+  val appSpecificInternalDirUuid: UUID = storageManager.getUuidForPath(filesDir)
+  val availableBytes: Long = storageManager.getAllocatableBytes(appSpecificInternalDirUuid)
+  
+  if (availableBytes >= NUM_BYTES_NEEDED_FOR_MY_APP) {
+      storageManager.allocateBytes(appSpecificInternalDirUuid, NUM_BYTES_NEEDED_FOR_MY_APP)
+  } else {
+      val storageIntent = Intent().apply {
+          action = ACTION_MANAGE_STORAGE
+      }
+  }
+  </code></pre>
+        </section><br><br>
+
+    </section><!-- End section Access to External Storage-->
+
+
+
+    <!--*********************************************************DataStore***********************************************************-->
+    <section class="apartado">
+        <a id="sDataStore"></a>
+        <h2>DataStore</h2>
+
+        <p><span class="d-word">DataStore</span> permite almacenar pequeños conjuntos de datos en el dispositivo.</p>
+
+        <p>Los datos guardados con <span class="negrita">DataStore</span> se almacenan en el almacenamiento interno de
+            la
+            app y no son accesibles por otras apps.</p>
+
+        <p>DataStore tiene dos implementaciones:
+        <ul>
+            <li><span class="negrita">Preferences DataStore</span>: almacena pares clave–valor.</li>
+            <li><span class="negrita">Proto DataStore</span>: almacena objetos (instancias de clases).</li>
+        </ul>
+        </p>
+
+        <p>Por la complejidad de <span class="negrita">Proto DataStore</span>, en clase nos centraremos en <span
+                class="negrita">Preferences DataStore</span>.</p>
+
+        <p>DataStore permite crear archivos para almacenar información, generalmente preferencias.</p>
+
+        <p>La ventaja de <span class="negrita">DataStore</span> es que el sistema operativo se encarga de toda la
+            gestión de
+            los archivos de preferencias.</p>
+
+        <p><span class="negrita">Reglas para usar DataStore</span>:
+        <ul>
+            <li>Solo mantener una instancia abierta de DataStore en el mismo archivo.</li>
+            <li>El tipo genérico de DataStore debe ser inmutable.</li>
+            <li>Nunca mezclar SingleProcessDataStore y MultiProcessDataStore para el mismo archivo.</li>
+        </ul>
+        </p>
+
+        <section>
+            <pre><code class="language-kotlin">// Declarado fuera de la clase para asegurar una única instancia (Singleton)
+private val Context.dataStore: DataStore&lt;Preferences> by preferencesDataStore(name = "preferences")
+
+class AppPreferences(val context: Context) {
+    companion object{
+        val NAME = stringPreferencesKey("NAME")
+    }
+
+    suspend fun saveFullName(name: String){
+        context.dataStore.edit { preferences ->
+            preferences[NAME] = name
+        }
+    }
+
+    fun loadName(): Flow&lt;String> = context.dataStore.data.map { preferences ->
+        preferences[NAME] ?: ""
+    }
+}</code></pre>
+        </section><br>
+
+        <h3>Integración con ViewModel y UI (State-of-the-art)</h3>
+        <p>En el ViewModel, convertiremos el Flow de DataStore en un <span class="negrita">StateFlow</span> para que la
+            UI pueda observar el estado de forma eficiente.</p>
+
+        <p>Recuerda añadir las dependencias necesarias:
+        <ul>
+            <li><span class="inline-file">libs.versions.toml</span>:
+                <section>
+                    <pre><code class="language-kotlin">datastorePreferences = "1.1.2"
+lifecycleCompose = "2.8.7" // Requerido para collectAsStateWithLifecycle</code></pre>
+                </section>
+            </li>
+            <li><span class="inline-file">build.gradle.kts (Módulo: app)</span>:
+                <section>
+                    <pre><code class="language-kotlin">implementation(libs.androidx.datastore)
+implementation(libs.androidx.lifecycle.runtime.compose)</code></pre>
+                </section>
+            </li>
+        </ul>
+        </p>
+
+        <p class="sub-section">ViewModel con StateFlow</p>
+        <section>
+            <pre><code class="language-kotlin">class PreferencesViewModel(application: Application): AndroidViewModel(application) {
+    private val preferences = AppPreferences(application.applicationContext)
+
+    // Usamos StateFlow para representar el estado actual
+    private val _fullName = MutableStateFlow("")
+    val fullName: StateFlow&lt;String> = _fullName.asStateFlow()
+
+    fun onFullNameChange(name: String){
+        _fullName.value = name
+    }
+
+    fun saveFullName(name: String){
+        viewModelScope.launch {
+            preferences.saveFullName(name)
+            _fullName.value = "" // Opcional: limpiar tras guardar
+        }
+    }
+    
+    fun loadFullName(){
+        viewModelScope.launch { 
+            preferences.loadName().collect { name ->
+                _fullName.value = name
+            }
+        }
+    }
+}</code></pre>
+        </section><br><br>
+
+        <p class="sub-section">Consumo en Jetpack Compose</p>
+        <p>Para observar flujos en Compose de forma segura para el ciclo de vida, usamos <span
+                class="negrita">collectAsStateWithLifecycle()</span>.</p>
+
+        <section>
+            <pre><code class="language-kotlin">// En tu pantalla composable
+val fullName by viewModel.fullName.collectAsStateWithLifecycle()
+
+TextField(
+    value = fullName,
+    onValueChange = { viewModel.onFullNameChange(it) },
+    label = { Text("Nombre Completo") }
+)</code></pre>
+        </section><br><br>
+
+        <a href="UD10/images/ud_10-2025-02-03-13-10-50.png" target="_BLANK">
+            <figure><img src="UD10/images/ud_10-2025-02-03-13-10-50.png" /><br>
+                <figcaption></figcaption>
+            </figure>
+        </a>
+
+    </section><!-- End section DataStore-->
+
+
+
+    <!--*********************************************************ROOM***********************************************************-->
+    <section class="apartado">
+        <a id="sROOM"></a>
+        <h2>ROOM</h2>
+
+        <h3>Introducción</h3>
+
+        <p>Room es la capa de persistencia recomendada por Google. Proporciona una abstracción sobre SQLite que ofrece:
+        </p>
+        <ul>
+            <li>Verificación de consultas en tiempo de compilación.</li>
+            <li>Integración nativa con <span class="negrita">Kotlin Coroutines</span> y <span
+                    class="negrita">Flow</span>.</li>
+            <li>Facilidad para migraciones de esquemas.</li>
+        </ul>
+
+        <p>En el desarrollo actual, es fundamental desacoplar la base de datos de la UI usando Repositorios y flujos de
+            datos asíncronos.</p>
+
+        <h3>Configurando Room (KSP)</h3>
+
+        <p>Asegúrate de tener configurado KSP (Kotlin Symbol Processing), que es el sucesor de KAPT para el
+            procesamiento de anotaciones.</p>
+
+        <p><span class="inline-file">libs.versions.toml</span>:</p>
+        <section>
+            <pre><code class="language-kotlin">room = "2.6.1"
+ksp = "2.0.21-1.0.27" // Versión compatible con tu versión de Kotlin</code></pre>
+        </section>
+
+        <h3>Estudio de caso: Gestor de tareas Reactivo</h3>
+
+        <p>Crearemos una app de tareas donde la UI reacciona automáticamente a cualquier cambio en la base de datos sin
+            necesidad de recargar manualmente.</p>
+
+        <p class="sub-section">Entidad</p>
+        <section>
+            <pre><code class="language-kotlin">@Entity(tableName = "tasks")
+data class TaskEntity(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val name: String,
+    val isDone: Boolean = false
+)</code></pre>
+        </section><br><br>
+
+        <p class="sub-section">DAO (Data Access Object) con Flow</p>
+        <p>El uso de <span class="negrita">Flow</span> permite que la consulta emita una nueva lista cada vez que los
+            datos en la tabla cambien.</p>
+
+        <section>
+            <pre><code class="language-kotlin">@Dao
+interface TaskDAO {
+    @Query("SELECT * FROM tasks ORDER BY name")
+    fun getAllTasks(): Flow&lt;List&lt;TaskEntity>> // Emite cambios automáticamente
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addTask(item: TaskEntity)
+
+    @Update
+    suspend fun updateTask(item: TaskEntity)
+
+    @Delete
+    suspend fun deleteTask(item: TaskEntity)
+
+    @Query("SELECT EXISTS (SELECT 1 FROM tasks WHERE name = :name)")
+    suspend fun taskExists(name: String): Boolean
+}</code></pre>
+        </section><br><br>
+
+        <p class="sub-section">Repositorio y Casos de Uso</p>
+        <p>El Repositorio actúa como puente, transformando las entidades de base de datos en modelos de dominio.</p>
+
+        <section>
+            <pre><code class="language-kotlin">class TaskRepository(private val taskDAO: TaskDAO) {
+    val tasks: Flow&lt;List&lt;Task>> = taskDAO.getAllTasks().map { entities ->
+        entities.map { Task(it.id, it.name, it.isDone) }
+    }
+
+    suspend fun addTask(task: Task) = taskDAO.addTask(TaskEntity(name = task.name))
+    // ... resto de métodos suspendidos
+}</code></pre>
+        </section><br><br>
+
+        <p class="sub-section">ViewModel (Patrón Moderno)</p>
+        <p>En el ViewModel, transformamos el Flow del repositorio en un <span class="negrita">StateFlow</span> usando el
+            operador <span class="cursiva">stateIn</span>.</p>
+
+        <section>
+            <pre><code class="language-kotlin">class TaskViewModel(application: Application) : AndroidViewModel(application) {
+    private val taskDAO = TasksDatabase.getInstance(application).taskDAO()
+    private val repository = TaskRepository(taskDAO)
+    private val useCase = TaskUseCase(repository)
+
+    // El flujo se mantiene activo mientras se observa en la UI
+    val taskList: StateFlow&lt;List&lt;Task>> = useCase.getAllTasks()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+
+    fun addTask(name: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            useCase.addTask(name)
+        }
+    }
+}</code></pre>
+        </section><br><br>
+
+        <p class="sub-section">UI en MainScreen.kt</p>
+        <p>Implementación correcta para instanciar ViewModels y observar estados en Compose.</p>
+
+        <section>
+            <pre><code class="language-kotlin">@Composable
+fun MainScreen(taskViewModel: TaskViewModel = viewModel()) {
+    // Usamos viewModel() para obtener la instancia correcta que sobrevive a rotaciones
+    // NUNCA uses remember { TaskViewModel() }
+    
+    val tasks by taskViewModel.taskList.collectAsStateWithLifecycle()
+    
+    // ViewModel local para estados efímeros de la pantalla
+    val mainScreenViewModel: MainScreenViewModel = viewModel()
+    val inputTaskName by mainScreenViewModel.taskName.collectAsStateWithLifecycle()
+
+    AppScaffold {
+        Column {
+            TextField(
+                value = inputTaskName,
+                onValueChange = { mainScreenViewModel.onTaskNameChange(it) }
+            )
+            LazyColumn {
+                items(tasks, key = { it.id }) { task ->
+                    TaskItem(task = task, ...)
+                }
+            }
+        }
+    }
+}</code></pre>
+        </section><br><br>
+
+        <section class="marco-t warn">
+            <span class="icono warning"> </span> <span class="negrita">Importante:</span> El uso de StateFlow +
+            collectAsStateWithLifecycle garantiza que la app no consuma recursos si está en segundo plano y que los
+            datos persistentes se muestren de forma instantánea.
+        </section>
+        <br>
+
+        <a href="UD10/images/TaskManagerRunning.gif" target="_BLANK">
+            <figure><img src="UD10/images/TaskManagerRunning.gif" /><br>
+                <figcaption>App en ejecución</figcaption>
+            </figure>
+        </a>
+
+        <p><a class="enlace" target="_blank"
+                href="https://github.com/sdram58/ExamplesPMDM2425/tree/main/UD10/taskmanager">Aquí</a> puedes ver el
+            ejemplo completo original</p>
+
+    </section><!-- End section ROOM-->
+
+
+    <!--*********************************************************Shopping List Practice***********************************************************-->
+    <section class="apartado oculto">
+        <a id="sP05"></a>
+        <h2>P05 Lista de la compra</h2>
+
+        <div class="tarea">
+            <p>La práctica consiste en realizar una aplicación de lista de la compra con Room y DataStore siguiendo los
+                patrones reactivos estudiados:</p>
+            <ul>
+                <li><span class="negrita">OnBoarding:</span> Guardar el nombre en DataStore (Singleton).</li>
+                <li><span class="negrita">MainScreen:</span> Mostrar lista reactiva desde Room usando Flows.</li>
+                <li><span class="negrita">Cálculos:</span> Calcula el total de la lista de forma reactiva en el
+                    ViewModel.</li>
+                <li><span class="negrita">Lifecycle:</span> Usa collectAsStateWithLifecycle para toda observación de
+                    flujos.</li>
+            </ul>
+        </div>
+
+    </section><!-- End section Shopping List-->
+
+    <!---BTM_MENU--->
+    <script src="../script/prism.js"></script>
+</body>
+
+</html>
