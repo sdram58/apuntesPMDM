@@ -1962,11 +1962,12 @@ ksp(libs.androidx.room.compiler)</code></pre>
           <li><span class="negrita">OnBoarding:</span> Crea una simple pantalla de Onboarding donde pidas el nombre al
             usuario, este nombre se guardará en un <span class="negrita">DataStore</span>.
             Si ya hubiera uno guardado, esta pantalla no debe aparecer y después del SplashScreen ir directamente al
-            MainScreen.</li>
+            MainScreen.</span></li>
           <li><span class="negrita">MainScreen:</span> Esta pantalla tendrá los siguientes componentes (Usa un
             Scaffold):
             <ul>
-              <li><span class="negrita">FloatingActionButton</span>: Con el símbolo de + nos llevará a otra pantalla
+              <li><span class="negrita">FloatingActionButton</span>: Con el símbolo de <span class="negrita">+</span>
+                nos llevará a otra pantalla
                 (<span class="negrita">AddScreen</span>) donde habrá un formulario para
                 crear un nuevo producto.</li>
               <li><span class="negrita">Lista Elementos</span>: Será una <span class="cursiva">LazyColumn</span> con un
@@ -2000,8 +2001,36 @@ ksp(libs.androidx.room.compiler)</code></pre>
         </ul>
       </p>
 
+      <p>Puntuación:</p>
+      <ul>
+        <li><span class="negrita">1.25pt</span> SplashScreen (Existe splashscreen y carga datos)</li>
+        <li><span class="negrita">1.25pt</span> OnBoarding (Existe OnBoarding y carga datos y no aparece si ya hay uno
+          guardado)</li>
+        <li><span class="negrita">1pt</span>Aplicacion General (aspectos visuales, uso de componentes, etc.)</li>
+        <li><span class="negrita">1pt</span> AddScreen</li>
+        <li><span class="negrita">1pt</span> EditScreen</li>
+        <li><span class="negrita">1pt</span> Saludo</li>
+        <li><span class="negrita">1pt</span> Delete</li>
+        <li><span class="negrita">1pt</span> Total</li>
+        <li><span class="negrita">1pt</span> Logout</li>
+        <li><span class="negrita">0.5pt</span> Comentarios</li>
+        <li><span class="negrita">1pt</span> Extra (opcional)</li>
+        <li><span class="negrita">1pt</span> Extra2 (uso flows)</li>
+      </ul>
+
+      <p></p>
+
       <p><span class="negrita">Extra</span>: Puedes hacer que al darle a logout no borre los datos de la BDD,
         simplemente con cada usuario nuevo creas una nueva BDD, y cada uno se conectará a la suya.</p>
+
+
+      <section class="marco-t tip">
+        <span class="icono info"></span>
+        <p>Se recomienda hacerlo usando Flows ya que es la recomendación actual de Google en Android. No obstante se
+          puede realizar usando LiveData.</p>
+      </section>
+      <section class="marco-b"></section>
+
     </a>
 
   </section><!-- End section Shopping List-->
