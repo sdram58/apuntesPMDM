@@ -2351,32 +2351,39 @@ Emitting Title= 8</code></pre>
     <p>Para usar un GIF, puedes utilizar el siguiente @Composable pasando un entero (referencia a drawable):
     <section>
       <pre><code class="language-kotlin">@Composable
-    fun GifImage(gifImage: Int) {
-        val imageLoader = ImageLoader.Builder(LocalContext.current)
+fun GifImage(gifRes: Int) {
+    val context = LocalContext.current
+
+    val imageLoader = remember {
+        ImageLoader.Builder(context)
             .components {
-                if (Build.VERSION.SDK_INT >= 28) {
-                    add(AnimatedImageDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
+                if (SDK_INT >= 28) add(AnimatedImageDecoder.Factory())
+                else add(GifDecoder.Factory())
             }
             .build()
-    
+    }
+
+    val request = remember(gifRes) {
+        ImageRequest.Builder(context)
+            .data(gifRes)
+            .size(Size.ORIGINAL)
+            // clave única para que Coil no “reutilice” el anterior
+            .memoryCacheKey("gif_$gifRes")
+            .diskCacheKey("gif_$gifRes")
+            .build()
+    }
+
+    key(gifRes) {
         Image(
             painter = rememberAsyncImagePainter(
-                ImageRequest.Builder(LocalContext.current)
-                    .data(data = gifImage)
-                    .apply(
-                        block = fun ImageRequest.Builder.() {
-                            size(Size.ORIGINAL)
-                        }
-                    )
-                    .build(),
+                model = request,
                 imageLoader = imageLoader
             ),
-            contentDescription = null,
+            contentDescription = null
         )
-    }</code></pre>
+    }
+}
+</code></pre>
     </section><br><br>
     </p>
     <section class="marco-t warn">
