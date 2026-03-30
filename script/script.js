@@ -12,11 +12,11 @@ function start(){
 }
 */
 
-function start(){
+function start() {
 
-  const primerEnlace = document.querySelectorAll('a[name]')[0];
+  const primerEnlace = document.querySelectorAll('a[id]')[0];
 
-// Obtener la posición del elemento en el documento
+  // Obtener la posición del elemento en el documento
   posicion = primerEnlace.getBoundingClientRect().bottom;
 
   window.addEventListener("scroll", mostrarElemento);
@@ -27,7 +27,7 @@ function mostrarElemento() {
   const elemento = document.getElementById("menu-lateral");
   const posicionScroll = window.scrollY;
   //const umbral = 200; // Cambia este valor según tus preferencias
-  
+
   if (posicionScroll > posicion) {
     elemento.classList.remove("oculto");
   } else {
