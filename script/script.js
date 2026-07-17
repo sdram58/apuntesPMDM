@@ -14,7 +14,7 @@ function start(){
 
 function start() {
 
-  const primerEnlace = document.querySelectorAll('a[id]')[0];
+  const primerEnlace = document.querySelectorAll('a[id]')[0] || document.querySelectorAll('a[name]')[0];
 
   // Obtener la posición del elemento en el documento
   posicion = primerEnlace.getBoundingClientRect().bottom;
